@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "317844737816",
+    "project_id": "munatasksv2",
+    "storage_bucket": "munatasksv2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317844737816:android:ee20310e84481b77f8d86d",
+        "android_client_info": {
+          "package_name": "munacorp.munatasks2.br.munatasks2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317844737816-7lhu56geq38rq0ig6tsiavk9nbf31362.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "munacorp.munatasks2.br.munatasks2",
+            "certificate_hash": "2dbc2a5e266b97f8c16dfb30fec0428b127389c1"
+          }
+        },
+        {
+          "client_id": "317844737816-drrl68v9ffuq35ld9i8qpiirc434mqqk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfQPCDgWW0RhDfyHM8Y9yT_0EAvkjqNaY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317844737816-drrl68v9ffuq35ld9i8qpiirc434mqqk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
