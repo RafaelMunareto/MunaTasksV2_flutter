@@ -33,7 +33,7 @@ abstract class _LoginStoreBase with Store {
   bool errOrGoal = false;
 
   @observable
-  List<String>? loginStorage;
+  List<String> loginStorage = [];
 
   @action
   setErrOrGoal(value) => errOrGoal = value;
@@ -118,7 +118,7 @@ abstract class _LoginStoreBase with Store {
     auth.authenticateWithBiometrics(faceOrFinger).then((value) {
       if(value == 'Authorized'){
         setLoading(true);
-        auth.getEmailPasswordLogin(loginStorage![0], loginStorage![1]).then((value) {
+        auth.getEmailPasswordLogin(loginStorage[0], loginStorage[1]).then((value) {
           if (value.user.emailVerified) {
             Modular.to.navigate('/home');
           }
@@ -168,7 +168,7 @@ abstract class _LoginStoreBase with Store {
     await getStorageLogin();
     if(!kIsWeb) {
       await bio.isDeviceSupported().then((isSupported) => supportState =
-      isSupported && loginStorage!.isNotEmpty
+      isSupported && loginStorage.isNotEmpty
           ? SupportState.supported
           : SupportState.unsupported);
       await checkBiometrics();
