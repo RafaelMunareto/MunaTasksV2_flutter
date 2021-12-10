@@ -73,7 +73,7 @@ flutter:
 
 scripts:
   mobx: flutter pub run build_runner watch --delete-conflicting-outputs
-  chrome: flutter run -d chrome --web-renderer html --web-port 64657
+  chrome: flutter run -d chrome --web-renderer html --web-port 52230
   build_bundle: flutter build appbundle --build-name=1.1.1+3 --build-number=3
   build_web: flutter build web --web-renderer html --release && firebase deploy
   build_apk: flutter build apk
