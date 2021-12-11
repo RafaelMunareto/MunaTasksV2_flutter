@@ -49,9 +49,9 @@ class _SplashWidgetState extends State<SplashWidget> {
       body: Center(
         child: Container(
           child: lightMode
-              ? const Image(image: AssetImage('assets/img/splash_light.png'))
+              ? const Image(image: AssetImage('assets/icon/icon.png'))
               : const Image(
-                  image: AssetImage('assets/img/splash_dark.png'),
+                  image: AssetImage('assets/icon/icon.png'),
                 ),
         ),
       ),

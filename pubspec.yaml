@@ -57,12 +57,12 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon/icon_padrao.png"
+  image_path: "assets/icon/icon.png"
   adaptive_icon_background: '#ffffff'
 
 flutter_native_splash:
-  color: "#42a5f5"
-  image: "assets/icon/icon_padrao.png"
+  color: "#f7f6f4"
+  image: "assets/icon/icon.png"
 
 
 flutter:
