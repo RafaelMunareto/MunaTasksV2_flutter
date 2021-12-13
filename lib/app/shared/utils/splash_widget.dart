@@ -43,16 +43,19 @@ class _SplashWidgetState extends State<SplashWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width * 0.60;
     return Scaffold(
       backgroundColor:
-          lightMode ? const Color(0xffe1f5fe) : const Color(0xff042a49),
+          lightMode ? const Color(0xfff7f6f4) : const Color(0xff042a49),
       body: Center(
         child: Container(
           child: lightMode
-              ? const Image(image: AssetImage('assets/icon/icon.png'))
-              : const Image(
-                  image: AssetImage('assets/icon/icon.png'),
-                ),
+              ? Center(child: Image(image: const AssetImage('assets/icon/icon.png'), width: width))
+              : Center(
+                child: Image(
+                    image: const AssetImage('assets/icon/icon.png'), width: width
+                  ),
+              ),
         ),
       ),
     );

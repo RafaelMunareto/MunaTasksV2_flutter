@@ -1,12 +1,12 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
-import 'package:mobx/mobx.dart';
 
-part 'settings_store.g.dart';
+part 'principal_store.g.dart';
 
-class SettingsStore = _SettingsStoreBase with _$SettingsStore;
-abstract class _SettingsStoreBase with Store {
+class PrincipalStore = _PrincipalStoreBase with _$PrincipalStore;
+abstract class _PrincipalStoreBase with Store {
   final ILocalStorage storage = Modular.get();
 
   @observable

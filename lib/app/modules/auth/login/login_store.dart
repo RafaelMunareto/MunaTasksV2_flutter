@@ -116,6 +116,7 @@ abstract class _LoginStoreBase with Store {
   {
 
     auth.authenticateWithBiometrics(faceOrFinger).then((value) {
+      print(value);
       if(value == 'Authorized'){
         setLoading(true);
         auth.getEmailPasswordLogin(loginStorage![0], loginStorage![1]).then((value) {

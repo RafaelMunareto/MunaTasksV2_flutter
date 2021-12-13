@@ -1,21 +1,19 @@
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/app_widget.dart';
-import 'package:munatasks2/app/modules/settings/settings_store.dart';
+import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 
-class SettingsPage extends StatefulWidget {
+import '../../../app_widget.dart';
+
+class PrincipalPage extends StatefulWidget {
   final String title;
-
-  const SettingsPage({Key? key, this.title = 'Configurações'}) : super(key: key);
-
+  const PrincipalPage({Key? key, this.title = 'PrincipalPage'}) : super(key: key);
   @override
-  SettingsPageState createState() => SettingsPageState();
+  PrincipalPageState createState() => PrincipalPageState();
 }
-
-class SettingsPageState extends State<SettingsPage> {
-  final SettingsStore store = Modular.get();
+class PrincipalPageState extends State<PrincipalPage> {
+  final PrincipalStore store = Modular.get();
 
   @override
   void initState() {
@@ -68,9 +66,9 @@ class SettingsPageState extends State<SettingsPage> {
                                 await store.changeSwitch(value);
                                 store.isSwitched
                                     ? AppWidget.of(context)!
-                                        .changeTheme(ThemeMode.dark)
+                                    .changeTheme(ThemeMode.dark)
                                     : AppWidget.of(context)!
-                                        .changeTheme(ThemeMode.light);
+                                    .changeTheme(ThemeMode.light);
                               }),
                           trailing: const Icon(Icons.nights_stay),
                         );

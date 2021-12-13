@@ -67,6 +67,14 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
             title: Text('Configurações'),
           ),
         ),
+        PopupMenuItem(
+          mouseCursor: SystemMouseCursors.click,
+          onTap: () => Modular.to.navigate('/settings/perfil'),
+          child: const ListTile(
+            leading: Icon(Icons.account_circle),
+            title: Text('Perfil'),
+          ),
+        ),
       ],
     );
   }

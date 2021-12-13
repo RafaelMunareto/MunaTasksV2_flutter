@@ -1,20 +1,8 @@
 name: munatasks2
-description: A new Flutter project.
+description: MunaTasks versão 2.0.
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+1
 
 environment:
@@ -43,6 +31,7 @@ dependencies:
   validadores: ^1.0.5
   string_validator: 0.3.0
   google_sign_in: ^5.2.0
+  layout: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +59,7 @@ flutter:
 
   assets:
     - assets/img/
+    - assets/icon/icon.png
 
 scripts:
   mobx: flutter pub run build_runner watch --delete-conflicting-outputs
