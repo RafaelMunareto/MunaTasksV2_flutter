@@ -79,7 +79,6 @@ abstract class _LoginStoreBase with Store {
   //gooole
   @action
   loginWithGoogle() async {
-
     try {
       await setLoading(true);
       await auth.loginWithGoogle();
@@ -112,14 +111,13 @@ abstract class _LoginStoreBase with Store {
   }
 
   @action
-  authenticateBiometric()
-  {
-
+  authenticateBiometric() {
     auth.authenticateWithBiometrics(faceOrFinger).then((value) {
-      print(value);
-      if(value == 'Authorized'){
+      if (value == 'Authorized') {
         setLoading(true);
-        auth.getEmailPasswordLogin(loginStorage![0], loginStorage![1]).then((value) {
+        auth
+            .getEmailPasswordLogin(loginStorage![0], loginStorage![1])
+            .then((value) {
           if (value.user.emailVerified) {
             Modular.to.navigate('/home');
           }
@@ -135,7 +133,6 @@ abstract class _LoginStoreBase with Store {
     });
   }
 
-
   @computed
   get login {
     List<String> login = [client.email, client.password];
@@ -149,8 +146,8 @@ abstract class _LoginStoreBase with Store {
   }
 
   @action
-  void setStorageLoginNormal()  {
-     storage.put('login-normal', login);
+  void setStorageLoginNormal() {
+    storage.put('login-normal', login);
   }
 
   @action
@@ -167,33 +164,31 @@ abstract class _LoginStoreBase with Store {
   @action
   checkSupportDevice() async {
     await getStorageLogin();
-    if(!kIsWeb) {
+    if (!kIsWeb) {
       await bio.isDeviceSupported().then((isSupported) => supportState =
-      isSupported && loginStorage!.isNotEmpty
-          ? SupportState.supported
-          : SupportState.unsupported);
+          isSupported && loginStorage!.isNotEmpty
+              ? SupportState.supported
+              : SupportState.unsupported);
       await checkBiometrics();
       await getAvailableBiometrics();
     }
   }
 
   @action
-  submitStorage()
-  {
-    storage.get('login-normal').then((value)  {
-        if(value == []) {
-          auth.getEmailPasswordLogin(value[0], value[1]).then((value) {
-            setLoading(false);
-            setErrOrGoal(false);
-            setMsg('Você deve validar o email primeiro!');
-            Modular.to.navigate('/home');
-          }).catchError((e) {
-            setLoading(false);
-            setErrOrGoal(false);
-            setMsg(ErrorPtBr().verificaCodeErro('auth/' + e.code));
-          });
-        }
-
+  submitStorage() {
+    storage.get('login-normal').then((value) {
+      if (value == []) {
+        auth.getEmailPasswordLogin(value[0], value[1]).then((value) {
+          setLoading(false);
+          setErrOrGoal(false);
+          setMsg('Você deve validar o email primeiro!');
+          Modular.to.navigate('/home');
+        }).catchError((e) {
+          setLoading(false);
+          setErrOrGoal(false);
+          setMsg(ErrorPtBr().verificaCodeErro('auth/' + e.code));
+        });
+      }
     });
   }
 }

@@ -10,6 +10,6 @@ class PrincipalModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child: (_, args) => PrincipalPage()),
+    ChildRoute('/', child: (_, args) => const PrincipalPage()),
   ];
 }

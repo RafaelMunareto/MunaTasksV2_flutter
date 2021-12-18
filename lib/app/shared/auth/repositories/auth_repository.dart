@@ -21,13 +21,11 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future getFacebookLogin() {
-    // TODO: implement getFacebookLogin
     throw UnimplementedError();
   }
 
   @override
   Future<String> getToken() {
-    // TODO: implement getToken
     throw UnimplementedError();
   }
 
@@ -68,9 +66,9 @@ class AuthRepository implements IAuthRepository {
         androidPackageName: 'br.flutter_padrao.fl.flutter_padrao',
         handleCodeInApp: true,
       );
-      if(kIsWeb){
+      if (kIsWeb) {
         await user!.sendEmailVerification();
-      }else{
+      } else {
         if (user != null && !getUser().emailVerified) {
           await user.sendEmailVerification(actionCodeSettings);
         }
