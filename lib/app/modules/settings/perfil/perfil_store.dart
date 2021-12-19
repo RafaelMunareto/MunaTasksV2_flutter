@@ -1,7 +1,11 @@
-import 'dart:async';
+// ignore_for_file: unused_local_variable
 
+import 'dart:async';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/services/interfaces/perfil_service_interface.dart';
@@ -16,16 +20,26 @@ abstract class _PerfilStoreBase with Store {
   final IPerfilService perfilService;
   final AuthController auth = Modular.get();
   final FirebaseFirestore bd = Modular.get();
+  final ImagePicker picker = ImagePicker();
 
   _PerfilStoreBase({required this.perfilService}) {
     getById();
   }
 
   @observable
+  String urlImagemRecuperada = '';
+
+  @observable
   PerfilModel perfil = PerfilModel();
 
   @observable
   bool loading = false;
+
+  @observable
+  bool loadingImagem = false;
+
+  @action
+  setLoadingImagem(value) => loadingImagem = value;
 
   @action
   setLoading(value) => loading = true;
@@ -50,7 +64,57 @@ abstract class _PerfilStoreBase with Store {
         );
       }
     }).then((value) {
-      Timer(const Duration(seconds: 1), () => setLoading(true));
+      Timer(const Duration(seconds: 2), () => setLoading(true));
     });
+  }
+
+  @action
+  Future recuperarImagem(String origemImagem) async {
+    XFile? image;
+    switch (origemImagem) {
+      case "camera":
+        image = await picker.pickImage(source: ImageSource.camera);
+        break;
+      case "galeria":
+        image = await picker.pickImage(source: ImageSource.gallery);
+        break;
+    }
+    if (image != null) {
+      setLoadingImagem(true);
+      uploadImagem(image);
+    }
+  }
+
+  @action
+  Future uploadImagem(XFile image) async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference pastaRaiz = storage.ref();
+    Reference arquivo =
+        pastaRaiz.child("perfil").child(auth.user!.uid + ".jpg");
+
+    File file = File(image.path);
+    UploadTask task = arquivo.putFile(file);
+
+    task.snapshotEvents.listen((TaskSnapshot snapshot) {
+      if (snapshot.state == TaskState.running) {
+        setLoadingImagem(true);
+      } else if (snapshot.state == TaskState.success) {
+        recuperarUrlImagem(snapshot).then((value) => setLoading(false));
+      }
+    });
+  }
+
+  @action
+  Future recuperarUrlImagem(TaskSnapshot snapshot) async {
+    String url = await snapshot.ref.getDownloadURL();
+    atualizarUrlImagemFirestore(url);
+    urlImagemRecuperada = url;
+  }
+
+  @action
+  atualizarUrlImagemFirestore(String url) {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    Map<String, dynamic> dadosAtualizar = {"urlPhoto": url};
+    db.collection("usuarios").doc(auth.user!.uid).update(dadosAtualizar);
   }
 }

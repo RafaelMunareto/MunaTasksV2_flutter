@@ -1,8 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
 import 'package:flutter/material.dart';
-import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/button_widget.dart';
 
@@ -37,17 +38,40 @@ class PerfilPageState extends State<PerfilPage> {
                   child: Column(
                     children: [
                       Center(
-                        child: Container(
-                          width: 190.0,
-                          height: 190.0,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: NetworkImage(store.perfil.urlPhoto),
-                            ),
-                          ),
-                        ),
+                        child: !store.loadingImagem
+                            ? Container(
+                                width: 190.0,
+                                height: 190.0,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: NetworkImage(store.perfil.urlPhoto),
+                                  ),
+                                ),
+                              )
+                            : CircularProgressIndicator(),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                              padding: EdgeInsets.all(8),
+                              child: GestureDetector(
+                                  child: Icon(Icons.camera_alt,
+                                      color: Colors.deepPurple, size: 48),
+                                  onTap: () {
+                                    store.recuperarImagem("camera");
+                                  })),
+                          Padding(
+                              padding: EdgeInsets.all(8),
+                              child: GestureDetector(
+                                  child: Icon(Icons.image,
+                                      color: Colors.deepPurple, size: 48),
+                                  onTap: () {
+                                    store.recuperarImagem("galeria");
+                                  })),
+                        ],
                       ),
                       Chip(label: Text(store.perfil.name)),
                       TextFormField(
@@ -63,19 +87,19 @@ class PerfilPageState extends State<PerfilPage> {
                             onChanged: (value) async {}),
                         trailing: const Text('Gerente'),
                       ),
-                      store.perfil.manager
-                          ? Row(
-                              children: [
-                                Expanded(
+                      Row(
+                        children: [
+                          store.perfil.manager
+                              ? Expanded(
                                   child: Text(
                                     'Equipe',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                                ),
-                              ],
-                            )
-                          : Container(),
+                                )
+                              : Container(),
+                        ],
+                      ),
                       store.perfil.manager
                           ? store.userModel.isNotEmpty
                               ? Wrap(
@@ -96,7 +120,7 @@ class PerfilPageState extends State<PerfilPage> {
                                 )
                               : Container()
                           : Container(),
-                      ButtonWidget(
+                      const ButtonWidget(
                         label: 'Editar',
                       )
                     ],
