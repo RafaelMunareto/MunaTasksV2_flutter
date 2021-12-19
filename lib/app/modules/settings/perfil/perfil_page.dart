@@ -5,7 +5,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
-import 'package:munatasks2/app/shared/components/button_widget.dart';
 
 class PerfilPage extends StatefulWidget {
   final String title;
@@ -50,7 +49,12 @@ class PerfilPageState extends State<PerfilPage> {
                                   ),
                                 ),
                               )
-                            : CircularProgressIndicator(),
+                            : SizedBox(
+                                width: 190,
+                                height: 190,
+                                child: CircularProgressIndicator(
+                                  color: Colors.amber,
+                                )),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -59,7 +63,8 @@ class PerfilPageState extends State<PerfilPage> {
                               padding: EdgeInsets.all(8),
                               child: GestureDetector(
                                   child: Icon(Icons.camera_alt,
-                                      color: Colors.deepPurple, size: 48),
+                                      color: ThemeData.light().primaryColor,
+                                      size: 48),
                                   onTap: () {
                                     store.recuperarImagem("camera");
                                   })),
@@ -67,13 +72,53 @@ class PerfilPageState extends State<PerfilPage> {
                               padding: EdgeInsets.all(8),
                               child: GestureDetector(
                                   child: Icon(Icons.image,
-                                      color: Colors.deepPurple, size: 48),
+                                      color: ThemeData.light().primaryColor,
+                                      size: 48),
                                   onTap: () {
                                     store.recuperarImagem("galeria");
                                   })),
                         ],
                       ),
-                      Chip(label: Text(store.perfil.name)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Observer(builder: (_) {
+                            print(store.textFieldNameBool);
+                            return store.textFieldNameBool
+                                ? SizedBox(
+                                    width: 200,
+                                    child: Chip(
+                                      label: Text(store.perfil.name),
+                                    ),
+                                  )
+                                : SizedBox(
+                                    width: 200,
+                                    child: TextFormField(
+                                      initialValue: store.perfil.name,
+                                      decoration: const InputDecoration(
+                                        label: Text('Nome'),
+                                      ),
+                                    ),
+                                  );
+                          }),
+                          MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  store.showTextFieldName(
+                                      !store.textFieldNameBool);
+                                });
+                              },
+                              child: Icon(
+                                Icons.edit,
+                                color: ThemeData.light().primaryColor,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                       TextFormField(
                         initialValue: store.perfil.nameTime,
                         decoration: const InputDecoration(
@@ -110,8 +155,10 @@ class PerfilPageState extends State<PerfilPage> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: InputChip(
-                                          avatar:
-                                              Image.network(userModel.urlImage),
+                                          avatar: userModel.urlImage != null
+                                              ? Image.network(
+                                                  userModel.urlImage)
+                                              : CircularProgressIndicator(),
                                           label: Text(userModel.name),
                                           onSelected: (bool value) {},
                                         ),
@@ -120,9 +167,6 @@ class PerfilPageState extends State<PerfilPage> {
                                 )
                               : Container()
                           : Container(),
-                      const ButtonWidget(
-                        label: 'Editar',
-                      )
                     ],
                   ),
                 ),

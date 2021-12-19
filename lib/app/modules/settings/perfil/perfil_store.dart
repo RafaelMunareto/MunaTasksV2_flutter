@@ -48,26 +48,46 @@ abstract class _PerfilStoreBase with Store {
   @observable
   List<dynamic> userModel = [];
 
+  @computed
+  bool get isValideNameTime {
+    return validateTime() == null;
+  }
+
+  String? validateTime() {
+    if (perfil.nameTime.isEmpty) {
+      return 'Campo obrigatório';
+    } else if (perfil.nameTime.length < 6) {
+      return 'Necessário ser maior que 6 caracteres';
+    }
+    return null;
+  }
+
   @action
   getById() {
     perfilService.getByDocumentId(auth.user!.uid).then((value) {
       perfil = value;
     }).then((value) {
-      for (var element in perfil.idStaff!) {
-        bd.collection('usuarios').doc(element.id).get().then(
-          (doc) {
-            dynamic user = UserModel(
-                name: doc['name'],
-                email: doc['email'],
-                urlImage: doc['urlImage']);
-            userModel.add(user);
-          },
-        );
+      if (perfil.idStaff!.isNotEmpty) {
+        for (var element in perfil.idStaff!) {
+          bd.collection('usuarios').doc(element.id).get().then(
+            (doc) {
+              dynamic user = UserModel(
+                  name: doc['name'],
+                  email: doc['email'],
+                  urlImage: doc['urlImage']);
+              userModel.add(user);
+            },
+          ).whenComplete(() => setLoading(true));
+        }
       }
-    }).then((value) {
-      Timer(const Duration(seconds: 2), () => setLoading(true));
     });
   }
+
+  @observable
+  bool textFieldNameBool = false;
+
+  @action
+  showTextFieldName(value) => textFieldNameBool = value;
 
   @action
   Future recuperarImagem(String origemImagem) async {
@@ -100,7 +120,7 @@ abstract class _PerfilStoreBase with Store {
       if (snapshot.state == TaskState.running) {
         setLoadingImagem(true);
       } else if (snapshot.state == TaskState.success) {
-        recuperarUrlImagem(snapshot).then((value) => setLoading(false));
+        recuperarUrlImagem(snapshot).then((value) => setLoadingImagem(false));
       }
     });
   }
@@ -119,9 +139,9 @@ abstract class _PerfilStoreBase with Store {
     db.collection("perfil").doc(auth.user!.uid).update(atualizarImage);
     firebaseAuth.currentUser?.updatePhotoURL(url).then((value) {
       userModel = [];
-      getById();
     }).then((value) {
-      setLoadingImagem(false);
-    });
+      getById();
+    }).whenComplete(
+        () => Timer(const Duration(seconds: 2), () => setLoadingImagem(false)));
   }
 }
