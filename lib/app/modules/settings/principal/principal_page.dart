@@ -8,10 +8,12 @@ import '../../../app_widget.dart';
 
 class PrincipalPage extends StatefulWidget {
   final String title;
-  const PrincipalPage({Key? key, this.title = 'PrincipalPage'}) : super(key: key);
+  const PrincipalPage({Key? key, this.title = 'PrincipalPage'})
+      : super(key: key);
   @override
   PrincipalPageState createState() => PrincipalPageState();
 }
+
 class PrincipalPageState extends State<PrincipalPage> {
   final PrincipalStore store = Modular.get();
 
@@ -58,19 +60,21 @@ class PrincipalPageState extends State<PrincipalPage> {
                     padding: const EdgeInsets.all(32),
                     children: [
                       Observer(builder: (_) {
-                        return ListTile(
-                          leading: const Icon(Icons.wb_sunny),
-                          title: Switch(
-                              value: store.isSwitched,
-                              onChanged: (value) async {
-                                await store.changeSwitch(value);
-                                store.isSwitched
-                                    ? AppWidget.of(context)!
-                                    .changeTheme(ThemeMode.dark)
-                                    : AppWidget.of(context)!
-                                    .changeTheme(ThemeMode.light);
-                              }),
-                          trailing: const Icon(Icons.nights_stay),
+                        return Expanded(
+                          child: ListTile(
+                            leading: const Icon(Icons.wb_sunny),
+                            title: Switch(
+                                value: store.isSwitched,
+                                onChanged: (value) async {
+                                  await store.changeSwitch(value);
+                                  store.isSwitched
+                                      ? AppWidget.of(context)!
+                                          .changeTheme(ThemeMode.dark)
+                                      : AppWidget.of(context)!
+                                          .changeTheme(ThemeMode.light);
+                                }),
+                            trailing: const Icon(Icons.nights_stay),
+                          ),
                         );
                       }),
                       ListTile(

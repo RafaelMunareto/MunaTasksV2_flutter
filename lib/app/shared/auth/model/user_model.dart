@@ -1,16 +1,37 @@
-import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-part 'user_model.freezed.dart';
+class UserModel {
+  String email;
+  String name;
+  DocumentReference? reference;
+  String urlImage;
+  bool verificado;
 
-@freezed
-abstract class UserModel with _$UserModel {
-  const factory UserModel(
-      {@Default('') String email,
-      @Default('') String name,
-      @Default('') String urlImage,
-      @Default(false) bool verificado}) = _UserModel;
+  UserModel({
+    this.email = '',
+    this.name = '',
+    this.urlImage = '',
+    this.reference,
+    this.verificado = false,
+  });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) =>
-      _$UserModelFromJson(json);
+  factory UserModel.fromDocument(DocumentSnapshot doc) {
+    return UserModel(
+      email: doc['email'],
+      name: doc['name'],
+      reference: doc.reference,
+      urlImage: doc['urlImage'],
+      verificado: doc['verificado'],
+    );
+  }
+
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+        email: json['email'],
+        name: json['name'],
+        urlImage: json['urlImage'],
+        verificado: json['verificado']);
+  }
+
+  Map<String, dynamic> toJson() => {};
 }

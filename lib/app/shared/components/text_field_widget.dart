@@ -29,7 +29,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget>
     super.initState();
 
     _controller =
-        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
 
     _animacaoSize = Tween<double>(begin: 0, end: 500).animate(
         CurvedAnimation(parent: _controller, curve: Curves.decelerate));

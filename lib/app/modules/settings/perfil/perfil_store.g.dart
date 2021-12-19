@@ -9,18 +9,48 @@ part of 'perfil_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PerfilStore on _PerfilStoreBase, Store {
-  final _$valueAtom = Atom(name: '_PerfilStoreBase.value');
+  final _$perfilAtom = Atom(name: '_PerfilStoreBase.perfil');
 
   @override
-  int get value {
-    _$valueAtom.reportRead();
-    return super.value;
+  PerfilModel get perfil {
+    _$perfilAtom.reportRead();
+    return super.perfil;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.reportWrite(value, super.value, () {
-      super.value = value;
+  set perfil(PerfilModel value) {
+    _$perfilAtom.reportWrite(value, super.perfil, () {
+      super.perfil = value;
+    });
+  }
+
+  final _$loadingAtom = Atom(name: '_PerfilStoreBase.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
+  final _$userModelAtom = Atom(name: '_PerfilStoreBase.userModel');
+
+  @override
+  List<dynamic> get userModel {
+    _$userModelAtom.reportRead();
+    return super.userModel;
+  }
+
+  @override
+  set userModel(List<dynamic> value) {
+    _$userModelAtom.reportWrite(value, super.userModel, () {
+      super.userModel = value;
     });
   }
 
@@ -28,11 +58,22 @@ mixin _$PerfilStore on _PerfilStoreBase, Store {
       ActionController(name: '_PerfilStoreBase');
 
   @override
-  void increment() {
+  dynamic setLoading(dynamic value) {
     final _$actionInfo = _$_PerfilStoreBaseActionController.startAction(
-        name: '_PerfilStoreBase.increment');
+        name: '_PerfilStoreBase.setLoading');
     try {
-      return super.increment();
+      return super.setLoading(value);
+    } finally {
+      _$_PerfilStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic getById() {
+    final _$actionInfo = _$_PerfilStoreBaseActionController.startAction(
+        name: '_PerfilStoreBase.getById');
+    try {
+      return super.getById();
     } finally {
       _$_PerfilStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -41,7 +82,9 @@ mixin _$PerfilStore on _PerfilStoreBase, Store {
   @override
   String toString() {
     return '''
-value: ${value}
+perfil: ${perfil},
+loading: ${loading},
+userModel: ${userModel}
     ''';
   }
 }
