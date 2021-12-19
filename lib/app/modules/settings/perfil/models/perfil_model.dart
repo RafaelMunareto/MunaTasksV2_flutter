@@ -5,7 +5,7 @@ class PerfilModel {
   bool manager;
   DocumentReference? reference;
   String name;
-  String urlPhoto;
+  String urlImage;
   String nameTime;
 
   PerfilModel(
@@ -13,7 +13,7 @@ class PerfilModel {
       this.manager = false,
       this.reference,
       this.name = '',
-      this.urlPhoto = '',
+      this.urlImage = '',
       this.nameTime = ''});
 
   factory PerfilModel.fromDocument(DocumentSnapshot doc) {
@@ -22,7 +22,7 @@ class PerfilModel {
       manager: doc['manager'],
       reference: doc.reference,
       name: doc['name'],
-      urlPhoto: doc['urlPhoto'],
+      urlImage: doc['urlImage'],
       nameTime: doc['nameTime'],
     );
   }
@@ -32,7 +32,7 @@ class PerfilModel {
         idStaff: json['idStaff'],
         manager: json['manager'],
         name: json['name'],
-        urlPhoto: json['urlPhoto'],
+        urlImage: json['urlImage'],
         nameTime: json['nameTime']);
   }
 

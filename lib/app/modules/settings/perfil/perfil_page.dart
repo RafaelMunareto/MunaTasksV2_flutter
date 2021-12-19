@@ -46,7 +46,7 @@ class PerfilPageState extends State<PerfilPage> {
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     fit: BoxFit.fill,
-                                    image: NetworkImage(store.perfil.urlPhoto),
+                                    image: NetworkImage(store.perfil.urlImage),
                                   ),
                                 ),
                               )

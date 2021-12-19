@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,7 +22,7 @@ abstract class _PerfilStoreBase with Store {
   final AuthController auth = Modular.get();
   final FirebaseFirestore bd = Modular.get();
   final ImagePicker picker = ImagePicker();
-
+  final FirebaseAuth firebaseAuth = Modular.get();
   _PerfilStoreBase({required this.perfilService}) {
     getById();
   }
@@ -108,13 +109,19 @@ abstract class _PerfilStoreBase with Store {
   Future recuperarUrlImagem(TaskSnapshot snapshot) async {
     String url = await snapshot.ref.getDownloadURL();
     atualizarUrlImagemFirestore(url);
-    urlImagemRecuperada = url;
   }
 
   @action
   atualizarUrlImagemFirestore(String url) {
     FirebaseFirestore db = FirebaseFirestore.instance;
-    Map<String, dynamic> dadosAtualizar = {"urlPhoto": url};
-    db.collection("usuarios").doc(auth.user!.uid).update(dadosAtualizar);
+    Map<String, dynamic> atualizarImage = {"urlImage": url};
+    db.collection("usuarios").doc(auth.user!.uid).update(atualizarImage);
+    db.collection("perfil").doc(auth.user!.uid).update(atualizarImage);
+    firebaseAuth.currentUser?.updatePhotoURL(url).then((value) {
+      userModel = [];
+      getById();
+    }).then((value) {
+      setLoadingImagem(false);
+    });
   }
 }
