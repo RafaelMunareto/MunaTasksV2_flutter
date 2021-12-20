@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/auth/repositories/auth_repository_interface.dart';
 import 'package:munatasks2/app/shared/auth/repositories/biometric_repository_interface.dart';
 import 'package:mobx/mobx.dart';
@@ -17,8 +18,9 @@ abstract class _AuthControllerBase with Store {
   @observable
   User? user;
 
-  _AuthControllerBase({required this.authRepository, required this.biometricRepository}){
-   setUser(authRepository.getUser());
+  _AuthControllerBase(
+      {required this.authRepository, required this.biometricRepository}) {
+    setUser(authRepository.getUser());
   }
 
   @action
@@ -33,36 +35,33 @@ abstract class _AuthControllerBase with Store {
   }
 
   @action
-  Future createUserLinkEmail(name, email, password)  {
-     return authRepository.createUserSendEmailLink(name, email, password);
+  Future createUserLinkEmail(name, email, password) {
+    return authRepository.createUserSendEmailLink(name, email, password);
   }
 
   @action
-  Future createUserEmailPassword(name, email, password)  {
+  Future createUserEmailPassword(name, email, password) {
     return authRepository.createUserEmailPassword(name, email, password);
   }
 
   @action
-  Future getGrupoEmail()
-  {
+  Future getGrupoEmail() {
     return authRepository.getGrupoEmail();
   }
 
   @action
-  Future getEmailPasswordLogin(email, password)
-  {
+  Future getEmailPasswordLogin(email, password) {
     return authRepository.getEmailPasswordLogin(email, password);
   }
 
   @action
-  Future sendChangePasswordEmail(email){
+  Future sendChangePasswordEmail(email) {
     return authRepository.sendChangePasswordEmail(email);
   }
 
   @action
-  Future changeResetPassword(password, code)
-  {
-    return authRepository.changeResetPassword(password,code);
+  Future changeResetPassword(password, code) {
+    return authRepository.changeResetPassword(password, code);
   }
 
   @action
@@ -71,45 +70,45 @@ abstract class _AuthControllerBase with Store {
   }
 
   @action
-  Future emailVerify(code)
-  {
+  Future emailVerify(code) {
     return authRepository.emailVerify(code);
+  }
+
+  @action
+  Stream<List<UserModel>> getUsers() {
+    return authRepository.getUsers();
   }
 
   //controle de acesso
   @action
-  usuarioNaoLogado()
-  {
+  usuarioNaoLogado() {
     setUser(authRepository.getUser());
-    if(user == null){
-     return Modular.to.navigate('/auth/');
+    if (user == null) {
+      return Modular.to.navigate('/auth/');
     }
     return false;
   }
 
   //biometric
   @action
-  Future checkBiometrics()
-  {
+  Future checkBiometrics() {
     return biometricRepository.checkBiometrics();
   }
+
   @action
-  Future getAvailableBiometrics()
-  {
+  Future getAvailableBiometrics() {
     return biometricRepository.getAvailableBiometrics();
   }
 
   @action
-  Future<String> authenticateWithBiometrics(bool faceOrFinger)
-  {
+  Future<String> authenticateWithBiometrics(bool faceOrFinger) {
     return biometricRepository.authenticateWithBiometrics(faceOrFinger);
   }
+
   @action
-  cancelAuthentication()
-  {
+  cancelAuthentication() {
     return biometricRepository.cancelAuthentication();
   }
-
 }
 
 enum AuthStatus { loading, login, logoff }

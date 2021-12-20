@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
 import 'package:flutter/material.dart';
+import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 
 class PerfilPage extends StatefulWidget {
@@ -84,7 +85,6 @@ class PerfilPageState extends State<PerfilPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Observer(builder: (_) {
-                            print(store.textFieldNameBool);
                             return store.textFieldNameBool
                                 ? SizedBox(
                                     width: 200,
@@ -96,6 +96,7 @@ class PerfilPageState extends State<PerfilPage> {
                                     width: 200,
                                     child: TextFormField(
                                       initialValue: store.perfil.name,
+                                      onChanged: store.changeName,
                                       decoration: const InputDecoration(
                                         label: Text('Nome'),
                                       ),
@@ -109,27 +110,65 @@ class PerfilPageState extends State<PerfilPage> {
                                 setState(() {
                                   store.showTextFieldName(
                                       !store.textFieldNameBool);
+                                  if (store.textFieldNameBool) {
+                                    store.save();
+                                  }
                                 });
                               },
                               child: Icon(
-                                Icons.edit,
+                                store.textFieldNameBool
+                                    ? Icons.edit
+                                    : Icons.save,
                                 color: ThemeData.light().primaryColor,
                               ),
                             ),
                           )
                         ],
                       ),
-                      TextFormField(
-                        initialValue: store.perfil.nameTime,
-                        decoration: const InputDecoration(
-                          label: Text('Time'),
-                        ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 300,
+                            height: 100,
+                            child: ListTile(
+                              leading: SizedBox(
+                                width: 250,
+                                child: TextFormField(
+                                  initialValue: store.perfil.nameTime,
+                                  onChanged: store.changeTime,
+                                  decoration: const InputDecoration(
+                                    label: Text('Time'),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            child: GestureDetector(
+                              child: SizedBox(
+                                width: 50,
+                                child: Icon(
+                                  Icons.save,
+                                  color: ThemeData().primaryColor,
+                                ),
+                              ),
+                              onTap: () {
+                                store.save();
+                              },
+                            ),
+                          )
+                        ],
                       ),
                       ListTile(
                         leading: const Text('Técnico'),
                         title: Switch(
                             value: store.perfil.manager,
-                            onChanged: (value) async {}),
+                            onChanged: (value) {
+                              setState(() {
+                                store.changeManager(value);
+                                store.save();
+                              });
+                            }),
                         trailing: const Text('Gerente'),
                       ),
                       Row(
@@ -138,11 +177,16 @@ class PerfilPageState extends State<PerfilPage> {
                               ? Expanded(
                                   child: Text(
                                     'Equipe',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
                                   ),
                                 )
                               : Container(),
+                          Icon(
+                            Icons.edit,
+                            color: ThemeData().primaryColor,
+                          )
                         ],
                       ),
                       store.perfil.manager
@@ -167,6 +211,40 @@ class PerfilPageState extends State<PerfilPage> {
                                 )
                               : Container()
                           : Container(),
+                      Observer(builder: (_) {
+                        if (store.usuarios!.data == null) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (store.usuarios!.hasError) {
+                          return Center(
+                            child: ElevatedButton(
+                              onPressed: store.getUsers(),
+                              child: const Text('Error'),
+                            ),
+                          );
+                        } else {
+                          List<UserModel> list = store.usuarios!.data;
+                          return SizedBox(
+                            height: 100,
+                            child: ListView.builder(
+                              itemCount: list.length,
+                              itemBuilder: (context, i) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InputChip(
+                                    avatar: list[i].urlImage != null
+                                        ? Image.network(list[i].urlImage)
+                                        : CircularProgressIndicator(),
+                                    label: Text(list[i].name),
+                                    onSelected: (bool value) {},
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }
+                      })
                     ],
                   ),
                 ),

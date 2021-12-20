@@ -23,12 +23,18 @@ abstract class _PerfilStoreBase with Store {
   final FirebaseFirestore bd = Modular.get();
   final ImagePicker picker = ImagePicker();
   final FirebaseAuth firebaseAuth = Modular.get();
+
   _PerfilStoreBase({required this.perfilService}) {
     getById();
+    showTextFieldName(true);
+    getUsers();
   }
 
   @observable
   String urlImagemRecuperada = '';
+
+  @observable
+  ObservableStream<List<UserModel>>? usuarios;
 
   @observable
   PerfilModel perfil = PerfilModel();
@@ -56,8 +62,36 @@ abstract class _PerfilStoreBase with Store {
   String? validateTime() {
     if (perfil.nameTime.isEmpty) {
       return 'Campo obrigatório';
-    } else if (perfil.nameTime.length < 6) {
-      return 'Necessário ser maior que 6 caracteres';
+    } else if (perfil.nameTime.length < 3) {
+      return 'Necessário ser maior que 3 caracteres';
+    }
+    return null;
+  }
+
+  @action
+  save() {
+    perfilService.save(perfil);
+  }
+
+  @action
+  changeName(value) => perfil.name = value;
+
+  @action
+  changeManager(value) => perfil.manager = value;
+
+  @action
+  changeTime(value) => perfil.nameTime = value;
+
+  @computed
+  bool get isValideName {
+    return validateTime() == null;
+  }
+
+  String? validateName() {
+    if (perfil.name.isEmpty) {
+      return 'Campo obrigatório';
+    } else if (perfil.nameTime.length < 3) {
+      return 'Necessário ser maior que 3 caracteres';
     }
     return null;
   }
@@ -81,6 +115,11 @@ abstract class _PerfilStoreBase with Store {
         }
       }
     });
+  }
+
+  @action
+  getUsers() async {
+    usuarios = auth.getUsers().asObservable();
   }
 
   @observable

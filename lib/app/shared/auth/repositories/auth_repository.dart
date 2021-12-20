@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/utils/error_pt_br.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'auth_repository_interface.dart';
@@ -149,5 +150,11 @@ class AuthRepository implements IAuthRepository {
           'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
       "verificado": true
     });
+  }
+
+  @override
+  Stream<List<UserModel>> getUsers() {
+    return db.collection('usuarios').snapshots().map((query) =>
+        query.docs.map((doc) => UserModel.fromDocument(doc)).toList());
   }
 }
