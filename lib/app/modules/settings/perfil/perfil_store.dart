@@ -37,6 +37,9 @@ abstract class _PerfilStoreBase with Store {
   ObservableStream<List<UserModel>>? usuarios;
 
   @observable
+  bool showTeams = false;
+
+  @observable
   PerfilModel perfil = PerfilModel();
 
   @observable
@@ -44,6 +47,9 @@ abstract class _PerfilStoreBase with Store {
 
   @observable
   bool loadingImagem = false;
+
+  @action
+  setShowTeams(value) => showTeams = value;
 
   @action
   setLoadingImagem(value) => loadingImagem = value;
@@ -82,6 +88,9 @@ abstract class _PerfilStoreBase with Store {
   @action
   changeTime(value) => perfil.nameTime = value;
 
+  @action
+  setIdStaff(value) => perfil.idStaff?.add(value);
+
   @computed
   bool get isValideName {
     return validateTime() == null;
@@ -99,6 +108,7 @@ abstract class _PerfilStoreBase with Store {
   @action
   getById() {
     perfilService.getByDocumentId(auth.user!.uid).then((value) {
+      userModel = [];
       perfil = value;
     }).then((value) {
       if (perfil.idStaff!.isNotEmpty) {
@@ -111,14 +121,19 @@ abstract class _PerfilStoreBase with Store {
                   urlImage: doc['urlImage']);
               userModel.add(user);
             },
-          ).whenComplete(() => setLoading(true));
+          ).whenComplete(() {
+            if (perfil.idStaff!.length == userModel.length) {
+              getUsers();
+              setLoading(true);
+            }
+          });
         }
       }
     });
   }
 
   @action
-  getUsers() async {
+  getUsers() {
     usuarios = auth.getUsers().asObservable();
   }
 

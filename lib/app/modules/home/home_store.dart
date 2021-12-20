@@ -17,7 +17,7 @@ abstract class HomeStoreBase with Store {
   @observable
   ObservableStream<List<VersionModel>>? versionList;
 
-  HomeStoreBase({required this.versionService}){
+  HomeStoreBase({required this.versionService}) {
     getList();
   }
 
@@ -37,9 +37,7 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  void logout()
-  {
+  void logout() {
     auth.logout();
   }
-
 }

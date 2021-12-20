@@ -21,7 +21,14 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   Widget build(BuildContext context) {
     var altura = MediaQuery.of(context).size.height * 0.2;
     return Scaffold(
-      appBar: AppBarWidget(title: widget.title, context: context, size: altura, settings: true, back: false, user: store.auth.user,),
+      appBar: AppBarWidget(
+        title: widget.title,
+        context: context,
+        size: altura,
+        settings: true,
+        back: false,
+        user: store.auth.user,
+      ),
       body: Observer(builder: (_) {
         if (controller.versionList!.data == null) {
           return const Center(

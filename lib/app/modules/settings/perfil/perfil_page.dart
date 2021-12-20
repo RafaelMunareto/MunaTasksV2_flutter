@@ -183,19 +183,40 @@ class PerfilPageState extends State<PerfilPage> {
                                   ),
                                 )
                               : Container(),
-                          Icon(
-                            Icons.edit,
-                            color: ThemeData().primaryColor,
+                          GestureDetector(
+                            child: Icon(
+                              Icons.edit,
+                              color: ThemeData().primaryColor,
+                            ),
+                            onTap: () {
+                              setState(() {
+                                store.setShowTeams(!store.showTeams);
+                              });
+                            },
                           )
                         ],
                       ),
-                      store.perfil.manager
-                          ? store.userModel.isNotEmpty
-                              ? Wrap(
+                      store.showTeams
+                          ? Observer(builder: (_) {
+                              if (store.usuarios!.data == null) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (store.usuarios!.hasError) {
+                                return Center(
+                                  child: ElevatedButton(
+                                    onPressed: store.getUsers(),
+                                    child: Text('Error ' +
+                                        store.usuarios!.error.toString()),
+                                  ),
+                                );
+                              } else {
+                                List<UserModel> list = store.usuarios!.data;
+                                return Wrap(
                                   alignment: WrapAlignment.start,
                                   runAlignment: WrapAlignment.start,
                                   children: [
-                                    for (var userModel in store.userModel)
+                                    for (var userModel in list)
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: InputChip(
@@ -204,47 +225,40 @@ class PerfilPageState extends State<PerfilPage> {
                                                   userModel.urlImage)
                                               : CircularProgressIndicator(),
                                           label: Text(userModel.name),
-                                          onSelected: (bool value) {},
+                                          onSelected: (bool value) {
+                                            store.setIdStaff(
+                                                userModel.reference);
+                                            store.save();
+                                            store.getById();
+                                          },
                                         ),
                                       )
                                   ],
-                                )
-                              : Container()
-                          : Container(),
-                      Observer(builder: (_) {
-                        if (store.usuarios!.data == null) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else if (store.usuarios!.hasError) {
-                          return Center(
-                            child: ElevatedButton(
-                              onPressed: store.getUsers(),
-                              child: const Text('Error'),
-                            ),
-                          );
-                        } else {
-                          List<UserModel> list = store.usuarios!.data;
-                          return SizedBox(
-                            height: 100,
-                            child: ListView.builder(
-                              itemCount: list.length,
-                              itemBuilder: (context, i) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: InputChip(
-                                    avatar: list[i].urlImage != null
-                                        ? Image.network(list[i].urlImage)
-                                        : CircularProgressIndicator(),
-                                    label: Text(list[i].name),
-                                    onSelected: (bool value) {},
-                                  ),
                                 );
-                              },
-                            ),
-                          );
-                        }
-                      })
+                              }
+                            })
+                          : store.perfil.manager
+                              ? store.userModel.isNotEmpty
+                                  ? Wrap(
+                                      alignment: WrapAlignment.start,
+                                      runAlignment: WrapAlignment.start,
+                                      children: [
+                                        for (var userModel in store.userModel)
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: InputChip(
+                                              avatar: userModel.urlImage != null
+                                                  ? Image.network(
+                                                      userModel.urlImage)
+                                                  : CircularProgressIndicator(),
+                                              label: Text(userModel.name),
+                                              onSelected: (bool value) {},
+                                            ),
+                                          )
+                                      ],
+                                    )
+                                  : Container()
+                              : Container(),
                     ],
                   ),
                 ),
