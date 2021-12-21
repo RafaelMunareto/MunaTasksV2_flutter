@@ -1,12 +1,10 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
 import 'package:flutter/material.dart';
-import 'package:munatasks2/app/settings/perfil/shared/widget/equipes_widget.dart';
-import 'package:munatasks2/app/settings/perfil/shared/widget/imagem_perfil_widget.dart';
-import 'package:munatasks2/app/settings/perfil/shared/widget/names_widget.dart';
+import 'package:munatasks2/app/modules/settings/perfil/shared/widget/equipes_widget.dart';
+import 'package:munatasks2/app/modules/settings/perfil/shared/widget/imagem_perfil_widget.dart';
+import 'package:munatasks2/app/modules/settings/perfil/shared/widget/names_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 
 class PerfilPage extends StatefulWidget {
@@ -33,29 +31,33 @@ class PerfilPageState extends State<PerfilPage> {
       body: SingleChildScrollView(
         child: Observer(
           builder: (_) {
-            if (store.loading) {
+            if (store.client.loading) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
                   child: Column(
                     children: [
                       ImagemPerfilWidget(
-                        loadingImagem: store.loadingImagem,
-                        perfil: store.perfil,
-                        recuperarImagem: store.recuperarImagem,
+                        loadingImagem: store.client.loadingImagem,
+                        setLoadingImagem: store.client.setLoadingImagem,
+                        perfil: store.client.perfil,
+                        userModel: store.client.userModel,
+                        getById: store.getById,
+                        atualizarUrlImagemPerfilProfile: store
+                            .imageRepository.atualizarUrlImagemPerfilProfile,
                       ),
                       NamesWidget(
-                          textFieldNameBool: store.textFieldNameBool,
-                          perfil: store.perfil,
-                          changeName: store.changeName,
+                          textFieldNameBool: store.client.textFieldNameBool,
+                          perfil: store.client.perfil,
+                          changeName: store.client.changeName,
                           save: store.save,
-                          showTextFieldName: store.showTextFieldName,
-                          changeTime: store.changeTime,
-                          changeManager: store.changeManager),
+                          showTextFieldName: store.client.showTextFieldName,
+                          changeTime: store.client.changeTime,
+                          changeManager: store.client.changeManager),
                       Row(
                         children: [
-                          store.perfil.manager
-                              ? Expanded(
+                          store.client.perfil.manager
+                              ? const Expanded(
                                   child: Text(
                                     'Equipe',
                                     style: TextStyle(
@@ -71,29 +73,30 @@ class PerfilPageState extends State<PerfilPage> {
                             ),
                             onTap: () {
                               setState(() {
-                                store.setShowTeams(!store.showTeams);
+                                store.client
+                                    .setShowTeams(!store.client.showTeams);
                               });
                             },
                           )
                         ],
                       ),
                       EquipesWidget(
-                          showTeams: store.showTeams,
-                          usuarios: store.usuarios,
+                          showTeams: store.client.showTeams,
+                          usuarios: store.client.usuarios,
                           getUsers: store.getUsers,
-                          individualChip: store.individualChip,
-                          setIdStaff: store.setIdStaff,
-                          perfil: store.perfil,
+                          individualChip: store.client.individualChip,
+                          setIdStaff: store.client.setIdStaff,
+                          perfil: store.client.perfil,
                           getById: store.getById,
-                          users: store.userModel,
-                          inputChipChecked: store.inputChipChecked,
+                          users: store.client.userModel,
+                          inputChipChecked: store.client.inputChipChecked,
                           save: store.save)
                     ],
                   ),
                 ),
               );
             } else {
-              return Center(
+              return const Center(
                 child: Padding(
                   padding: EdgeInsets.all(32.0),
                   child: CircularProgressIndicator(),
