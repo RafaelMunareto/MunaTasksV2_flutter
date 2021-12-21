@@ -28,16 +28,19 @@ class AppModule extends Module {
     Bind.singleton<ThemePreferences>((i) => ThemePreferences()),
     Bind.singleton<IAuthRepository>((i) => AuthRepository()),
     Bind.singleton<IBiometricRepository>((i) => BiometricRepository()),
-    Bind.singleton<AuthController>((i) => AuthController(authRepository: i.get(), biometricRepository:  i.get())),
-
+    Bind.singleton<AuthController>((i) =>
+        AuthController(authRepository: i.get(), biometricRepository: i.get())),
   ];
 
   @override
   final List<ModularRoute> routes = [
     ChildRoute('/', child: (_, args) => const SplashWidget()),
-    ModuleRoute('/auth', module: AuthModule(), transition: TransitionType.leftToRightWithFade),
-    ModuleRoute('/home', module: HomeModule(), transition: TransitionType.leftToRightWithFade),
-    ModuleRoute('/settings', module: SettingsModule(), transition: TransitionType.leftToRightWithFade),
+    ModuleRoute('/auth',
+        module: AuthModule(), transition: TransitionType.leftToRightWithFade),
+    ModuleRoute('/home',
+        module: HomeModule(), transition: TransitionType.leftToRightWithFade),
+    ModuleRoute('/settings',
+        module: SettingsModule(),
+        transition: TransitionType.leftToRightWithFade),
   ];
-
 }

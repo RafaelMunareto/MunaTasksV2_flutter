@@ -152,6 +152,17 @@ mixin _$AuthController on _AuthControllerBase, Store {
   }
 
   @override
+  Stream<List<UserModel>> getUsers() {
+    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
+        name: '_AuthControllerBase.getUsers');
+    try {
+      return super.getUsers();
+    } finally {
+      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic usuarioNaoLogado() {
     final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
         name: '_AuthControllerBase.usuarioNaoLogado');

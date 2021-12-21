@@ -58,7 +58,16 @@ abstract class _PerfilStoreBase with Store {
   setLoading(value) => loading = true;
 
   @observable
-  List<dynamic> userModel = [];
+  List<UserModel> userModel = [];
+
+  @observable
+  bool inputChip = false;
+
+  @observable
+  List<int>? individualChip = [];
+
+  @action
+  setInputChip(value) => inputChip = value;
 
   @computed
   bool get isValideNameTime {
@@ -89,7 +98,22 @@ abstract class _PerfilStoreBase with Store {
   changeTime(value) => perfil.nameTime = value;
 
   @action
-  setIdStaff(value) => perfil.idStaff?.add(value);
+  setIdStaff(value) {
+    if (!userModel.map((e) => e.reference).contains(value)) {
+      perfil.idStaff?.add(value);
+    } else {
+      perfil.idStaff?.remove(value);
+    }
+  }
+
+  @action
+  inputChipChecked(value) {
+    if (userModel.map((e) => e.reference).contains(value)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   @computed
   bool get isValideName {
@@ -118,16 +142,38 @@ abstract class _PerfilStoreBase with Store {
               dynamic user = UserModel(
                   name: doc['name'],
                   email: doc['email'],
+                  reference: doc.reference,
                   urlImage: doc['urlImage']);
               userModel.add(user);
             },
           ).whenComplete(() {
             if (perfil.idStaff!.length == userModel.length) {
-              getUsers();
+              if (userModel.isNotEmpty) {
+                List<UserModel> list = userModel;
+                individualChip!.clear();
+                for (var i = 0; i < list.length; i++) {
+                  if (inputChipChecked(list[i].reference)) {
+                    individualChip!.add(i);
+                  }
+                }
+              }
               setLoading(true);
             }
           });
         }
+      } else {
+        setLoading(true);
+      }
+    });
+  }
+
+  @action
+  checkInput(String reference) {
+    userModel.where((value) {
+      if (value.reference == reference) {
+        return true;
+      } else {
+        return false;
       }
     });
   }
