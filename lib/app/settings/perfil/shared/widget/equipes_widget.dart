@@ -8,7 +8,7 @@ class EquipesWidget extends StatefulWidget {
   final bool showTeams;
   final Function getUsers;
   final ObservableStream<List<UserModel>>? usuarios;
-  final List<int>? individualChip;
+  final List<dynamic>? individualChip;
   final Function setIdStaff;
   final Function save;
   final PerfilModel perfil;
@@ -61,8 +61,10 @@ class _EquipesWidgetState extends State<EquipesWidget> {
                             padding: const EdgeInsets.all(8.0),
                             child: InputChip(
                               key: ObjectKey(list[i].reference),
-                              selected: widget.individualChip!.contains(i),
-                              avatar: Image.network(list[i].urlImage),
+                              selected: widget.individualChip!
+                                  .contains(list[i].reference),
+                              avatar: ClipOval(
+                                  child: Image.network(list[i].urlImage)),
                               label: Text(
                                 list[i].name,
                               ),
@@ -94,7 +96,8 @@ class _EquipesWidgetState extends State<EquipesWidget> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: InputChip(
-                            avatar: Image.network(userModel.urlImage),
+                            avatar: ClipOval(
+                                child: Image.network(userModel.urlImage)),
                             label: Text(userModel.name),
                             onSelected: (bool value) {},
                           ),

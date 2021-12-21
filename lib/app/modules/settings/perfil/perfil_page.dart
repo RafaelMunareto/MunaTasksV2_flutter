@@ -5,6 +5,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/settings/perfil/shared/widget/equipes_widget.dart';
+import 'package:munatasks2/app/settings/perfil/shared/widget/imagem_perfil_widget.dart';
+import 'package:munatasks2/app/settings/perfil/shared/widget/names_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 
 class PerfilPage extends StatefulWidget {
@@ -37,140 +39,19 @@ class PerfilPageState extends State<PerfilPage> {
                 child: Center(
                   child: Column(
                     children: [
-                      // Center(
-                      //   child: !store.loadingImagem
-                      //       ? Container(
-                      //           width: 190.0,
-                      //           height: 190.0,
-                      //           decoration: BoxDecoration(
-                      //             shape: BoxShape.circle,
-                      //             image: DecorationImage(
-                      //               fit: BoxFit.fill,
-                      //               image: NetworkImage(store.perfil.urlImage),
-                      //             ),
-                      //           ),
-                      //         )
-                      //       : SizedBox(
-                      //           width: 190,
-                      //           height: 190,
-                      //           child: CircularProgressIndicator(
-                      //             color: Colors.amber,
-                      //           )),
-                      // ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: <Widget>[
-                      //     Padding(
-                      //         padding: EdgeInsets.all(8),
-                      //         child: GestureDetector(
-                      //             child: Icon(Icons.camera_alt,
-                      //                 color: ThemeData.light().primaryColor,
-                      //                 size: 48),
-                      //             onTap: () {
-                      //               store.recuperarImagem("camera");
-                      //             })),
-                      //     Padding(
-                      //         padding: EdgeInsets.all(8),
-                      //         child: GestureDetector(
-                      //             child: Icon(Icons.image,
-                      //                 color: ThemeData.light().primaryColor,
-                      //                 size: 48),
-                      //             onTap: () {
-                      //               store.recuperarImagem("galeria");
-                      //             })),
-                      //   ],
-                      // ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   crossAxisAlignment: CrossAxisAlignment.center,
-                      //   children: [
-                      //     Observer(builder: (_) {
-                      //       return store.textFieldNameBool
-                      //           ? SizedBox(
-                      //               width: 200,
-                      //               child: Chip(
-                      //                 label: Text(store.perfil.name),
-                      //               ),
-                      //             )
-                      //           : SizedBox(
-                      //               width: 200,
-                      //               child: TextFormField(
-                      //                 initialValue: store.perfil.name,
-                      //                 onChanged: store.changeName,
-                      //                 decoration: const InputDecoration(
-                      //                   label: Text('Nome'),
-                      //                 ),
-                      //               ),
-                      //             );
-                      //     }),
-                      //     MouseRegion(
-                      //       cursor: SystemMouseCursors.click,
-                      //       child: GestureDetector(
-                      //         onTap: () {
-                      //           setState(() {
-                      //             store.showTextFieldName(
-                      //                 !store.textFieldNameBool);
-                      //             if (store.textFieldNameBool) {
-                      //               store.save();
-                      //             }
-                      //           });
-                      //         },
-                      //         child: Icon(
-                      //           store.textFieldNameBool
-                      //               ? Icons.edit
-                      //               : Icons.save,
-                      //           color: ThemeData.light().primaryColor,
-                      //         ),
-                      //       ),
-                      //     )
-                      //   ],
-                      // ),
-                      // Row(
-                      //   children: [
-                      //     SizedBox(
-                      //       width: 300,
-                      //       height: 100,
-                      //       child: ListTile(
-                      //         leading: SizedBox(
-                      //           width: 250,
-                      //           child: TextFormField(
-                      //             initialValue: store.perfil.nameTime,
-                      //             onChanged: store.changeTime,
-                      //             decoration: const InputDecoration(
-                      //               label: Text('Time'),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     SizedBox(
-                      //       child: GestureDetector(
-                      //         child: SizedBox(
-                      //           width: 50,
-                      //           child: Icon(
-                      //             Icons.save,
-                      //             color: ThemeData().primaryColor,
-                      //           ),
-                      //         ),
-                      //         onTap: () {
-                      //           store.save();
-                      //         },
-                      //       ),
-                      //     )
-                      //   ],
-                      // ),
-                      // ListTile(
-                      //   leading: const Text('Técnico'),
-                      //   title: Switch(
-                      //       value: store.perfil.manager,
-                      //       onChanged: (value) {
-                      //         setState(() {
-                      //           store.changeManager(value);
-                      //           store.save();
-                      //         });
-                      //       }),
-                      //   trailing: const Text('Gerente'),
-                      // ),
+                      ImagemPerfilWidget(
+                        loadingImagem: store.loadingImagem,
+                        perfil: store.perfil,
+                        recuperarImagem: store.recuperarImagem,
+                      ),
+                      NamesWidget(
+                          textFieldNameBool: store.textFieldNameBool,
+                          perfil: store.perfil,
+                          changeName: store.changeName,
+                          save: store.save,
+                          showTextFieldName: store.showTextFieldName,
+                          changeTime: store.changeTime,
+                          changeManager: store.changeManager),
                       Row(
                         children: [
                           store.perfil.manager

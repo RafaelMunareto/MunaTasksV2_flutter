@@ -148,13 +148,13 @@ mixin _$PerfilStore on _PerfilStoreBase, Store {
   final _$individualChipAtom = Atom(name: '_PerfilStoreBase.individualChip');
 
   @override
-  List<int>? get individualChip {
+  List<dynamic>? get individualChip {
     _$individualChipAtom.reportRead();
     return super.individualChip;
   }
 
   @override
-  set individualChip(List<int>? value) {
+  set individualChip(List<dynamic>? value) {
     _$individualChipAtom.reportWrite(value, super.individualChip, () {
       super.individualChip = value;
     });

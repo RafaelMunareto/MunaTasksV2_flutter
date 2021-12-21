@@ -64,7 +64,7 @@ abstract class _PerfilStoreBase with Store {
   bool inputChip = false;
 
   @observable
-  List<int>? individualChip = [];
+  List<dynamic>? individualChip = [];
 
   @action
   setInputChip(value) => inputChip = value;
@@ -103,6 +103,9 @@ abstract class _PerfilStoreBase with Store {
       perfil.idStaff?.add(value);
     } else {
       perfil.idStaff?.remove(value);
+      if (perfil.idStaff!.isEmpty) {
+        individualChip = [];
+      }
     }
   }
 
@@ -153,7 +156,7 @@ abstract class _PerfilStoreBase with Store {
                 individualChip!.clear();
                 for (var i = 0; i < list.length; i++) {
                   if (inputChipChecked(list[i].reference)) {
-                    individualChip!.add(i);
+                    individualChip!.add(list[i].reference);
                   }
                 }
               }
