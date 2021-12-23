@@ -19,12 +19,12 @@ class PerfilPageState extends State<PerfilPage> {
 
   @override
   Widget build(BuildContext context) {
-    var altura = MediaQuery.of(context).size.height * 0.2;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBarWidget(
           title: widget.title,
           context: context,
-          size: altura,
+          icon: Icons.account_circle,
           settings: true,
           rota: '/home',
           back: true),
@@ -32,68 +32,66 @@ class PerfilPageState extends State<PerfilPage> {
         child: Observer(
           builder: (_) {
             if (store.client.loading) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Column(
-                    children: [
-                      ImagemPerfilWidget(
-                        loadingImagem: store.client.loadingImagem,
-                        setLoadingImagem: store.client.setLoadingImagem,
-                        perfil: store.client.perfil,
-                        userModel: store.client.userModel,
-                        getById: store.getById,
-                        atualizarUrlImagemPerfilProfile: store
-                            .imageRepository.atualizarUrlImagemPerfilProfile,
-                      ),
-                      NamesWidget(
-                          textFieldNameBool: store.client.textFieldNameBool,
-                          perfil: store.client.perfil,
-                          changeName: store.client.changeName,
-                          save: store.save,
-                          showTextFieldName: store.client.showTextFieldName,
-                          changeTime: store.client.changeTime,
-                          changeManager: store.client.changeManager),
-                      Row(
-                        children: [
-                          store.client.perfil.manager
-                              ? const Expanded(
-                                  child: Text(
-                                    'Equipe',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
-                                  ),
-                                )
-                              : Container(),
-                          GestureDetector(
-                            child: Icon(
-                              Icons.edit,
-                              color: ThemeData().primaryColor,
-                            ),
-                            onTap: () {
-                              setState(() {
-                                store.client
-                                    .setShowTeams(!store.client.showTeams);
-                              });
-                            },
-                          )
-                        ],
-                      ),
-                      EquipesWidget(
-                          showTeams: store.client.showTeams,
-                          usuarios: store.client.usuarios,
-                          getUsers: store.getUsers,
-                          individualChip: store.client.individualChip,
-                          setIdStaff: store.client.setIdStaff,
-                          perfil: store.client.perfil,
-                          getById: store.getById,
-                          users: store.client.userModel,
-                          inputChipChecked: store.client.inputChipChecked,
-                          save: store.save)
-                    ],
-                  ),
-                ),
+              return Column(
+                children: [
+                  ImagemPerfilWidget(
+                      loadingImagem: store.client.loadingImagem,
+                      setLoadingImagem: store.client.setLoadingImagem,
+                      perfil: store.client.perfil,
+                      userModel: store.client.userModel,
+                      getById: store.getById,
+                      atualizarUrlImagemPerfilProfile:
+                          store.imageRepository.atualizarUrlImagemPerfilProfile,
+                      textFieldNameBool: store.client.textFieldNameBool,
+                      changeName: store.client.changeName,
+                      save: store.save,
+                      validateName: store.client.isValideName,
+                      showTextFieldName: store.client.showTextFieldName,
+                      errorName: store.client.validateName),
+                  // NamesWidget(
+                  //     textFieldNameBool: store.client.textFieldNameBool,
+                  //     perfil: store.client.perfil,
+                  //     changeName: store.client.changeName,
+                  //     save: store.save,
+                  //     showTextFieldName: store.client.showTextFieldName,
+                  //     changeTime: store.client.changeTime,
+                  //     changeManager: store.client.changeManager),
+                  // Row(
+                  //   children: [
+                  //     store.client.perfil.manager
+                  //         ? const Expanded(
+                  //             child: Text(
+                  //               'Equipe',
+                  //               style: TextStyle(
+                  //                   fontWeight: FontWeight.bold, fontSize: 18),
+                  //             ),
+                  //           )
+                  //         : Container(),
+                  //     GestureDetector(
+                  //       child: Icon(
+                  //         Icons.edit,
+                  //         color: ThemeData().primaryColor,
+                  //       ),
+                  //       onTap: () {
+                  //         setState(() {
+                  //           store.client.setShowTeams(!store.client.showTeams);
+                  //         });
+                  //       },
+                  //     )
+                  //   ],
+                  // ),
+                  // EquipesWidget(
+                  //     showTeams: store.client.showTeams,
+                  //     usuarios: store.client.usuarios,
+                  //     getUsers: store.getUsers,
+                  //     individualChip: store.client.individualChip,
+                  //     setIdStaff: store.client.setIdStaff,
+                  //     perfil: store.client.perfil,
+                  //     getById: store.getById,
+                  //     users: store.client.userModel,
+                  //     inputChipChecked: store.client.inputChipChecked,
+                  //     save: store.save)
+                ],
               );
             } else {
               return const Center(

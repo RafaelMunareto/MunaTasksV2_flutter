@@ -31,13 +31,12 @@ class LoginPageState extends State<LoginPage> {
     autorun(
       (_) {
         if (store.msg != '') {
-          FocusScope.of(context).requestFocus(FocusNode());
           SnackbarCustom().createSnackBareErrOrGoal(_scaffoldKey,
               message: store.msg, errOrGoal: store.errOrGoal);
           store.setMsg('');
-          if(store.errOrGoal) {
+          if (store.errOrGoal) {
             Timer(const Duration(seconds: 2),
-                    () => store.client.setCleanVariables());
+                () => store.client.setCleanVariables());
           }
         }
       },
@@ -45,7 +44,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   @override
-  void initState()  {
+  void initState() {
     store.submitStorage();
     store.checkSupportDevice();
     super.initState();

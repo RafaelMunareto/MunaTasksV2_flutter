@@ -6,6 +6,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   final double size;
   final dynamic context;
   final dynamic controller;
+  final IconData icon;
   final dynamic user;
   final bool settings;
   final bool back;
@@ -13,11 +14,12 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
 
   AppBarWidget(
       {Key? key,
-      this.title = "AppBarWidget",
-      this.size = 200,
+      this.title = "",
+      this.size = 125,
       this.context,
       this.controller,
-      this.user='',
+      this.icon = Icons.person,
+      this.user = '',
       this.settings = false,
       this.back = true,
       this.rota = '/auth'})
@@ -31,16 +33,31 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
     return PreferredSize(
       preferredSize: Size.fromHeight(size),
       child: AppBar(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.elliptical(150, 50),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/img/fundo_app_bar.png'),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
+        backgroundColor: Colors.transparent,
         actions: [settings ? _popMenu() : Container()],
-        title: Text(title),
+        title: RichText(
+          text: TextSpan(
+            children: [
+              WidgetSpan(
+                child: Icon(icon, size: 24),
+              ),
+              TextSpan(
+                  text: ' ' + title.toUpperCase(),
+                  style: const TextStyle(fontSize: 20, color: Colors.white)),
+            ],
+          ),
+        ),
         leading: back
             ? IconButton(
-                icon: const Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () => Modular.to.navigate(rota))
             : Container(),
       ),
@@ -51,13 +68,15 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
     return PopupMenuButton(
       icon: const Icon(Icons.more_vert),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-       PopupMenuItem(
-          child:   user != '' ? InputChip(
-            avatar: CircleAvatar(
-              backgroundImage: NetworkImage(user.photoURL.toString()),
-            ),
-            label: Text(user.displayName),
-          ) : Container(),
+        PopupMenuItem(
+          child: user != ''
+              ? InputChip(
+                  avatar: CircleAvatar(
+                    backgroundImage: NetworkImage(user.photoURL.toString()),
+                  ),
+                  label: Text(user.displayName),
+                )
+              : Container(),
         ),
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,

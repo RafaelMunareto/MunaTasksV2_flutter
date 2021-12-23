@@ -30,48 +30,48 @@ class _NamesWidgetState extends State<NamesWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Observer(builder: (_) {
-              return widget.textFieldNameBool
-                  ? SizedBox(
-                      width: 200,
-                      child: Chip(
-                        label: Text(widget.perfil.name),
-                      ),
-                    )
-                  : SizedBox(
-                      width: 200,
-                      child: TextFormField(
-                        initialValue: widget.perfil.name,
-                        onChanged: (value) {
-                          widget.changeName(value);
-                        },
-                        decoration: const InputDecoration(
-                          label: Text('Nome'),
-                        ),
-                      ),
-                    );
-            }),
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    widget.showTextFieldName(!widget.textFieldNameBool);
-                    widget.save();
-                  });
-                },
-                child: Icon(
-                  widget.textFieldNameBool ? Icons.edit : Icons.save,
-                  color: ThemeData.light().primaryColor,
-                ),
-              ),
-            )
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   crossAxisAlignment: CrossAxisAlignment.center,
+        //   children: [
+        //     Observer(builder: (_) {
+        //       return widget.textFieldNameBool
+        //           ? SizedBox(
+        //               width: 200,
+        //               child: Chip(
+        //                 label: Text(widget.perfil.name),
+        //               ),
+        //             )
+        //           : SizedBox(
+        //               width: 200,
+        //               child: TextFormField(
+        //                 initialValue: widget.perfil.name,
+        //                 onChanged: (value) {
+        //                   widget.changeName(value);
+        //                 },
+        //                 decoration: const InputDecoration(
+        //                   label: Text('Nome'),
+        //                 ),
+        //               ),
+        //             );
+        //     }),
+        //     MouseRegion(
+        //       cursor: SystemMouseCursors.click,
+        //       child: GestureDetector(
+        //         onTap: () {
+        //           setState(() {
+        //             widget.showTextFieldName(!widget.textFieldNameBool);
+        //             widget.save();
+        //           });
+        //         },
+        //         child: Icon(
+        //           widget.textFieldNameBool ? Icons.edit : Icons.save,
+        //           color: ThemeData.light().primaryColor,
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
         Row(
           children: [
             SizedBox(

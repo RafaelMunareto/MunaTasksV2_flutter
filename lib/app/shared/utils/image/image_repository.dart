@@ -45,6 +45,7 @@ class ImageRepository {
       if (snapshot.state == TaskState.running) {
         loading(true);
       } else if (snapshot.state == TaskState.success) {
+        loading(false);
         recuperarUrlImagem(snapshot);
       }
     });
@@ -56,23 +57,17 @@ class ImageRepository {
 
   atualizarUrlImagemPerfilProfile(String origemImagem, Function loading,
       List<UserModel> userModel, Function getById) {
-    recuperarImagem(origemImagem, loading).whenComplete(() {
-      if (url != null) {
-        FirebaseFirestore db = FirebaseFirestore.instance;
-        Map<String, dynamic> atualizarImage = {"urlImage": url};
-        db.collection("usuarios").doc(auth.user!.uid).update(atualizarImage);
-        db.collection("perfil").doc(auth.user!.uid).update(atualizarImage);
-        firebaseAuth.currentUser?.updatePhotoURL(url).then((value) {
-          userModel = [];
-        }).then((value) {
-          getById();
-        }).whenComplete(
-          () => Timer(
-            const Duration(seconds: 2),
-            () => loading(false),
-          ),
-        );
-      }
-    });
+    recuperarImagem(origemImagem, loading);
+    if (url != null) {
+      FirebaseFirestore db = FirebaseFirestore.instance;
+      Map<String, dynamic> atualizarImage = {"urlImage": url};
+      db.collection("usuarios").doc(auth.user!.uid).update(atualizarImage);
+      db.collection("perfil").doc(auth.user!.uid).update(atualizarImage);
+      firebaseAuth.currentUser?.updatePhotoURL(url).then((value) {
+        userModel = [];
+      }).then((value) {
+        getById();
+      });
+    }
   }
 }

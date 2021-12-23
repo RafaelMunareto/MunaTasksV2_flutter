@@ -98,14 +98,14 @@ abstract class _ClientStoreBase with Store {
 
   @computed
   bool get isValideName {
-    return validateTime() == null;
+    return validateName() == null;
   }
 
   String? validateName() {
     if (perfil.name.isEmpty) {
       return 'Campo obrigatório';
-    } else if (perfil.nameTime.length < 3) {
-      return 'Necessário ser maior que 3 caracteres';
+    } else if (perfil.name.length < 3) {
+      return 'Min de 3 caracteres';
     }
     return null;
   }
