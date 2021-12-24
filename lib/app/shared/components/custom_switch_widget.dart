@@ -19,7 +19,7 @@ class CustomSwitchWidget extends StatelessWidget {
           800.milliseconds)
       ..add(_SwitchBoxProps.text, ConstantTween("TEC"), 800.milliseconds)
       ..add(_SwitchBoxProps.text, ConstantTween("GER"), 800.milliseconds)
-      ..add(_SwitchBoxProps.rotation, (-2 * pi).tweenTo(0.0), 800.milliseconds);
+      ..add(_SwitchBoxProps.rotation, (-2 * pi).tweenTo(0.0), 900.milliseconds);
 
     return CustomAnimation<MultiTweenValues<_SwitchBoxProps>>(
       control: switched

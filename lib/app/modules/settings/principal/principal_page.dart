@@ -3,6 +3,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
+import 'package:munatasks2/app/shared/components/custom_switch_widget.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
+import 'package:rolling_switch/rolling_switch.dart';
 
 import '../../../app_widget.dart';
 
@@ -52,18 +55,35 @@ class PrincipalPageState extends State<PrincipalPage> {
               children: [
                 Observer(builder: (_) {
                   return ListTile(
-                    leading: const Icon(Icons.wb_sunny),
-                    title: Switch(
-                        value: store.isSwitched,
-                        onChanged: (value) async {
-                          await store.changeSwitch(value);
-                          store.isSwitched
-                              ? AppWidget.of(context)!
-                                  .changeTheme(ThemeMode.dark)
-                              : AppWidget.of(context)!
-                                  .changeTheme(ThemeMode.light);
-                        }),
-                    trailing: const Icon(Icons.nights_stay),
+                    leading: const Text('Tema', style: TextStyle(fontSize: 18)),
+                    title: RollingSwitch.icon(
+                      initialState: store.isSwitched,
+                      width: 250,
+                      animationDuration: const Duration(milliseconds: 600),
+                      onChanged: (bool state) {
+                        setState(() {
+                          AppWidget.of(context)!.changeTheme(
+                              state ? ThemeMode.dark : ThemeMode.light);
+                        });
+                      },
+                      rollingInfoRight: const RollingIconInfo(
+                        backgroundColor: Colors.deepPurple,
+                        icon: Icons.nights_stay,
+                        text: Text(
+                          'Dark',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      rollingInfoLeft: const RollingIconInfo(
+                        backgroundColor: Colors.amber,
+                        icon: Icons.wb_sunny,
+                        text: Text(
+                          'Light',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
                   );
                 }),
                 ListTile(

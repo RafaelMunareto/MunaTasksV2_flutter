@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
-import 'package:munatasks2/app/shared/components/custom_switch_widget.dart';
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
