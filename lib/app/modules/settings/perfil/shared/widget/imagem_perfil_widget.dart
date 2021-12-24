@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class ImagemPerfilWidget extends StatefulWidget {
   final bool loadingImagem;
@@ -46,7 +47,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
     return PopupMenuButton(
       icon: IconRedondedWidget(
         icon: Icons.photo_camera,
-        color: ThemeData().primaryColor,
+        color: lightThemeData(context).primaryColor,
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
@@ -145,7 +146,6 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                     ? SizedBox(
                         width: _animacaoSize.value,
                         child: Chip(
-                          backgroundColor: Colors.grey[200],
                           label: SizedBox(
                               width: 180,
                               child: Text(
@@ -159,15 +159,24 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                           return SizedBox(
                             width: _animacaoSize2.value,
                             child: TextFormField(
-                              style: const TextStyle(
-                                  height: 1.0, fontWeight: FontWeight.bold),
+                              style: const TextStyle(shadows: <Shadow>[
+                                Shadow(
+                                  offset: Offset(0.5, 0.5),
+                                  blurRadius: 3.0,
+                                  color: Colors.white,
+                                ),
+                                Shadow(
+                                  offset: Offset(0.5, 0.5),
+                                  blurRadius: 8.0,
+                                  color: Colors.white,
+                                ),
+                              ], height: 1.0, fontWeight: FontWeight.bold),
                               initialValue: widget.perfil.name,
                               onChanged: (value) {
                                 widget.changeName(value);
                               },
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.grey[100],
                                 errorText: widget.errorName == null
                                     ? null
                                     : widget.errorName(),
@@ -211,7 +220,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                                   widget.perfil.name.length >= 3
                               ? Icons.task_alt
                               : Icons.task_alt,
-                      color: ThemeData.light().primaryColor,
+                      color: lightThemeData(context).primaryColor,
                     );
                   },
                 ),
