@@ -9,13 +9,6 @@ part of 'client_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ClientStore on _ClientStoreBase, Store {
-  Computed<bool>? _$isValideNameTimeComputed;
-
-  @override
-  bool get isValideNameTime => (_$isValideNameTimeComputed ??= Computed<bool>(
-          () => super.isValideNameTime,
-          name: '_ClientStoreBase.isValideNameTime'))
-      .value;
   Computed<bool>? _$isValideNameComputed;
 
   @override
@@ -23,6 +16,13 @@ mixin _$ClientStore on _ClientStoreBase, Store {
       (_$isValideNameComputed ??= Computed<bool>(() => super.isValideName,
               name: '_ClientStoreBase.isValideName'))
           .value;
+  Computed<bool>? _$isValideNameTimeComputed;
+
+  @override
+  bool get isValideNameTime => (_$isValideNameTimeComputed ??= Computed<bool>(
+          () => super.isValideNameTime,
+          name: '_ClientStoreBase.isValideNameTime'))
+      .value;
 
   final _$urlImagemRecuperadaAtom =
       Atom(name: '_ClientStoreBase.urlImagemRecuperada');
@@ -302,8 +302,8 @@ userModel: ${userModel},
 inputChip: ${inputChip},
 individualChip: ${individualChip},
 textFieldNameBool: ${textFieldNameBool},
-isValideNameTime: ${isValideNameTime},
-isValideName: ${isValideName}
+isValideName: ${isValideName},
+isValideNameTime: ${isValideNameTime}
     ''';
   }
 }

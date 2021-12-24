@@ -2,9 +2,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
 import 'package:flutter/material.dart';
+import 'package:munatasks2/app/modules/settings/perfil/shared/widget/equipes_widget.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/widget/imagem_perfil_widget.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/widget/names_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
+import 'package:munatasks2/app/shared/components/custom_switch_widget.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
+import 'package:rolling_switch/rolling_switch.dart';
 
 class PerfilPage extends StatefulWidget {
   final String title;
@@ -18,7 +22,8 @@ class PerfilPageState extends State<PerfilPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    bool enableSwitch = store.client.perfil.manager;
+
     return Scaffold(
       appBar: AppBarWidget(
           title: widget.title,
@@ -30,6 +35,8 @@ class PerfilPageState extends State<PerfilPage> {
       body: SingleChildScrollView(
         child: Observer(
           builder: (_) {
+            bool enableSwitch = store.client.perfil.manager;
+
             if (store.client.loading) {
               return GestureDetector(
                 onTap: () {
@@ -50,6 +57,34 @@ class PerfilPageState extends State<PerfilPage> {
                         save: store.save,
                         showTextFieldName: store.client.showTextFieldName,
                         errorName: store.client.validateName),
+                    RollingSwitch.icon(
+                      initialState: enableSwitch,
+                      width: 200,
+                      animationDuration: const Duration(milliseconds: 600),
+                      onChanged: (bool state) {
+                        setState(() {
+                          store.client.changeManager(state);
+                        });
+                        store.save();
+                      },
+                      rollingInfoRight: RollingIconInfo(
+                        backgroundColor: lightThemeData(context).primaryColor,
+                        icon: Icons.work,
+                        text: const Text(
+                          'Gerente',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      rollingInfoLeft: const RollingIconInfo(
+                        backgroundColor: Colors.grey,
+                        icon: Icons.engineering,
+                        text: Text(
+                          'Técnico',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
                     NamesWidget(
                         textFieldNameBool: store.client.textFieldNameBool,
                         perfil: store.client.perfil,
@@ -58,42 +93,21 @@ class PerfilPageState extends State<PerfilPage> {
                         showTextFieldName: store.client.showTextFieldName,
                         changeTime: store.client.changeTime,
                         errorTime: store.client.validateTime,
-                        changeManager: store.client.changeManager),
-                    // Row(
-                    //   children: [
-                    //     store.client.perfil.manager
-                    //         ? const Expanded(
-                    //             child: Text(
-                    //               'Equipe',
-                    //               style: TextStyle(
-                    //                   fontWeight: FontWeight.bold, fontSize: 18),
-                    //             ),
-                    //           )
-                    //         : Container(),
-                    //     GestureDetector(
-                    //       child: Icon(
-                    //         Icons.edit,
-                    //         color: ThemeData().primaryColor,
-                    //       ),
-                    //       onTap: () {
-                    //         setState(() {
-                    //           store.client.setShowTeams(!store.client.showTeams);
-                    //         });
-                    //       },
-                    //     )
-                    //   ],
-                    // ),
-                    // EquipesWidget(
-                    //     showTeams: store.client.showTeams,
-                    //     usuarios: store.client.usuarios,
-                    //     getUsers: store.getUsers,
-                    //     individualChip: store.client.individualChip,
-                    //     setIdStaff: store.client.setIdStaff,
-                    //     perfil: store.client.perfil,
-                    //     getById: store.getById,
-                    //     users: store.client.userModel,
-                    //     inputChipChecked: store.client.inputChipChecked,
-                    //     save: store.save)
+                        changeManager: store.client.changeManager,
+                        enableSwitch: enableSwitch),
+                    EquipesWidget(
+                        showTeams: store.client.showTeams,
+                        setShowTeams: store.client.setShowTeams,
+                        usuarios: store.client.usuarios,
+                        getUsers: store.getUsers,
+                        individualChip: store.client.individualChip,
+                        setIdStaff: store.client.setIdStaff,
+                        perfil: store.client.perfil,
+                        getById: store.getById,
+                        users: store.client.userModel,
+                        inputChipChecked: store.client.inputChipChecked,
+                        save: store.save,
+                        enableSwitch: enableSwitch)
                   ],
                 ),
               );

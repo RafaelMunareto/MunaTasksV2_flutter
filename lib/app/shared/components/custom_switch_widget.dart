@@ -8,24 +8,25 @@ enum _SwitchBoxProps { paddingLeft, color, text, rotation }
 class CustomSwitchWidget extends StatelessWidget {
   final bool switched;
 
-  CustomSwitchWidget({required this.switched});
+  const CustomSwitchWidget({Key? key, required this.switched})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var tween = MultiTween<_SwitchBoxProps>()
-      ..add(_SwitchBoxProps.paddingLeft, 0.0.tweenTo(160.0), 600.milliseconds)
+      ..add(_SwitchBoxProps.paddingLeft, 0.0.tweenTo(200.0), 800.milliseconds)
       ..add(_SwitchBoxProps.color, Colors.grey.tweenTo(Colors.blue),
-          600.milliseconds)
-      ..add(_SwitchBoxProps.text, ConstantTween("TEC"), 600.milliseconds)
-      ..add(_SwitchBoxProps.text, ConstantTween("GER"), 600.milliseconds)
-      ..add(_SwitchBoxProps.rotation, (-2 * pi).tweenTo(0.0), 600.milliseconds);
+          800.milliseconds)
+      ..add(_SwitchBoxProps.text, ConstantTween("TEC"), 800.milliseconds)
+      ..add(_SwitchBoxProps.text, ConstantTween("GER"), 800.milliseconds)
+      ..add(_SwitchBoxProps.rotation, (-2 * pi).tweenTo(0.0), 800.milliseconds);
 
     return CustomAnimation<MultiTweenValues<_SwitchBoxProps>>(
       control: switched
           ? CustomAnimationControl.play
           : CustomAnimationControl.playReverse,
       startPosition: switched ? 1.0 : 0.0,
-      duration: tween.duration * 1,
+      duration: tween.duration * 1.2,
       tween: tween,
       curve: Curves.easeInOut,
       builder: _buildSwitchBox,

@@ -25,8 +25,6 @@ class PrincipalPageState extends State<PrincipalPage> {
 
   @override
   Widget build(BuildContext context) {
-    var altura = MediaQuery.of(context).size.height * 0.17;
-
     return Scaffold(
       appBar: AppBarWidget(
           title: widget.title,

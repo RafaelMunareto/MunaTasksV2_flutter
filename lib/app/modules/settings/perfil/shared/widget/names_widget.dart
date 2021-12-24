@@ -1,7 +1,10 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/components/custom_switch_widget.dart';
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class NamesWidget extends StatefulWidget {
   final bool textFieldNameBool;
@@ -12,6 +15,7 @@ class NamesWidget extends StatefulWidget {
   final Function changeTime;
   final Function errorTime;
   final Function changeManager;
+  final bool enableSwitch;
 
   const NamesWidget(
       {Key? key,
@@ -22,7 +26,8 @@ class NamesWidget extends StatefulWidget {
       required this.showTextFieldName,
       required this.changeTime,
       required this.errorTime,
-      required this.changeManager})
+      required this.changeManager,
+      required this.enableSwitch})
       : super(key: key);
 
   @override
@@ -64,8 +69,7 @@ class _NamesWidgetState extends State<NamesWidget>
   }
 
   Widget _buildAnimation(BuildContext context, Widget? child) {
-    bool enableSwitch = widget.perfil.manager;
-    enableSwitch ? _controller.forward() : _controller.reverse();
+    widget.enableSwitch ? _controller.forward() : _controller.reverse();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,31 +77,21 @@ class _NamesWidgetState extends State<NamesWidget>
         const SizedBox(
           height: 10,
         ),
-        GestureDetector(
-          child: CustomSwitchWidget(switched: enableSwitch),
-          onTap: () {
-            setState(() {
-              widget.changeManager(!enableSwitch);
-            });
-            widget.save();
-          },
-          behavior: HitTestBehavior.translucent,
-        ),
         FadeTransition(
           opacity: _animacaoOpacity,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Center(
+              Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
+                  padding: const EdgeInsets.only(top: 8.0),
                   child: SizedBox(
                     width: 350,
                     height: 80,
                     child: ListTile(
                       leading: IconRedondedWidget(
                         icon: Icons.admin_panel_settings,
-                        color: ThemeData().primaryColor,
+                        color: lightThemeData(context).primaryColor,
                         size: 48,
                       ),
                       title: SizedBox(
@@ -126,7 +120,7 @@ class _NamesWidgetState extends State<NamesWidget>
                           !enabledField
                               ? Icons.drive_file_rename_outline
                               : Icons.task_alt,
-                          color: ThemeData().primaryColor,
+                          color: lightThemeData(context).primaryColor,
                         ),
                       ),
                     ),
