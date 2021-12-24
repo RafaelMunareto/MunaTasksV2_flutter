@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class IconRedondedWidget extends StatelessWidget {
   final IconData icon;
   final Color color;
-  const IconRedondedWidget({Key? key, required this.icon, required this.color})
+  final double size;
+  const IconRedondedWidget(
+      {Key? key, required this.icon, required this.color, this.size = 24})
       : super(key: key);
 
   @override
@@ -15,6 +17,7 @@ class IconRedondedWidget extends StatelessWidget {
         child: Icon(
           icon,
           color: color,
+          size: size,
         ));
   }
 }

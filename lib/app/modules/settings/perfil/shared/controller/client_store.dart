@@ -52,20 +52,6 @@ abstract class _ClientStoreBase with Store {
   @action
   setLoading(value) => loading = true;
 
-  @computed
-  bool get isValideNameTime {
-    return validateTime() == null;
-  }
-
-  String? validateTime() {
-    if (perfil.nameTime.isEmpty) {
-      return 'Campo obrigatório';
-    } else if (perfil.nameTime.length < 3) {
-      return 'Necessário ser maior que 3 caracteres';
-    }
-    return null;
-  }
-
   @action
   changeName(value) => perfil.name = value;
 
@@ -105,6 +91,20 @@ abstract class _ClientStoreBase with Store {
     if (perfil.name.isEmpty) {
       return 'Campo obrigatório';
     } else if (perfil.name.length < 3) {
+      return 'Min de 3 caracteres';
+    }
+    return null;
+  }
+
+  @computed
+  bool get isValideNameTime {
+    return validateTime() == null;
+  }
+
+  String? validateTime() {
+    if (perfil.nameTime.isEmpty) {
+      return 'Campo obrigatório';
+    } else if (perfil.nameTime.length < 3) {
       return 'Min de 3 caracteres';
     }
     return null;

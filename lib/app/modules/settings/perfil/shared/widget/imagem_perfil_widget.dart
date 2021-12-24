@@ -16,7 +16,6 @@ class ImagemPerfilWidget extends StatefulWidget {
   final Function save;
   final Function showTextFieldName;
   final dynamic errorName;
-  final bool validateName;
   const ImagemPerfilWidget(
       {Key? key,
       required this.loadingImagem,
@@ -29,8 +28,7 @@ class ImagemPerfilWidget extends StatefulWidget {
       required this.changeName,
       required this.save,
       required this.errorName,
-      required this.showTextFieldName,
-      required this.validateName})
+      required this.showTextFieldName})
       : super(key: key);
 
   @override
@@ -82,17 +80,12 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
   void initState() {
     super.initState();
 
-    _controller =
-        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 700), vsync: this);
     _controller2 =
         AnimationController(duration: const Duration(seconds: 1), vsync: this);
 
-    _animacaoSize = Tween<double>(begin: 0, end: 250).animate(
-        CurvedAnimation(parent: _controller, curve: Curves.decelerate));
-    _animacaoSize2 = Tween<double>(begin: 0, end: 225).animate(
-        CurvedAnimation(parent: _controller2, curve: Curves.decelerate));
     _controller.forward();
-    _controller2.forward();
   }
 
   @override
@@ -104,6 +97,11 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
 
   @override
   Widget build(BuildContext context) {
+    _animacaoSize = Tween<double>(begin: 0, end: 250).animate(
+        CurvedAnimation(parent: _controller, curve: Curves.decelerate));
+    _animacaoSize2 = Tween<double>(begin: 0, end: 220).animate(
+        CurvedAnimation(parent: _controller2, curve: Curves.decelerate));
+
     return AnimatedBuilder(animation: _animacaoSize, builder: _buildAnimation);
   }
 
@@ -147,13 +145,12 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                     ? SizedBox(
                         width: _animacaoSize.value,
                         child: Chip(
+                          backgroundColor: Colors.grey[200],
                           label: SizedBox(
                               width: 180,
                               child: Text(
                                 widget.perfil.name,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.00),
+                                style: const TextStyle(fontSize: 18.00),
                               )),
                         ),
                       )
@@ -163,38 +160,14 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                             width: _animacaoSize2.value,
                             child: TextFormField(
                               style: const TextStyle(
-                                  height: 2.0, fontWeight: FontWeight.bold),
+                                  height: 1.0, fontWeight: FontWeight.bold),
                               initialValue: widget.perfil.name,
                               onChanged: (value) {
                                 widget.changeName(value);
                               },
                               decoration: InputDecoration(
-                                errorStyle: const TextStyle(
-                                    color: Colors.red, fontSize: 12),
-                                fillColor: Colors.blue[100],
                                 filled: true,
-                                contentPadding: const EdgeInsets.only(
-                                    left: 14.0, bottom: 2.0, top: 4.0),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(25.7),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(25.7),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(25.7),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(25.7),
-                                ),
+                                fillColor: Colors.grey[100],
                                 errorText: widget.errorName == null
                                     ? null
                                     : widget.errorName(),

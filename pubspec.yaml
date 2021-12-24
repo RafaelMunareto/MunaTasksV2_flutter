@@ -32,6 +32,8 @@ dependencies:
   google_sign_in: ^5.2.0
   layout: ^1.0.2
   http: ^0.13.4
+  simple_animations: ^4.0.1
+  supercharged: ^2.1.1
 
 dev_dependencies:
   flutter_test:
