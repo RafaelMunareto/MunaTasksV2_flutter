@@ -3,8 +3,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
-import 'package:munatasks2/app/shared/components/custom_switch_widget.dart';
-import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 
 import '../../../app_widget.dart';
@@ -33,6 +31,7 @@ class PrincipalPageState extends State<PrincipalPage> {
           title: widget.title,
           icon: Icons.settings,
           context: context,
+          settings: true,
           rota: '/home'),
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -55,10 +54,9 @@ class PrincipalPageState extends State<PrincipalPage> {
               children: [
                 Observer(builder: (_) {
                   return ListTile(
-                    leading: const Text('Tema', style: TextStyle(fontSize: 18)),
-                    title: RollingSwitch.icon(
+                    title: const Text('Tema'),
+                    trailing: RollingSwitch.icon(
                       initialState: store.isSwitched,
-                      width: 250,
                       animationDuration: const Duration(milliseconds: 600),
                       onChanged: (bool state) {
                         setState(() {

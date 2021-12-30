@@ -35,6 +35,9 @@ dependencies:
   rolling_switch: ^0.0.2
   simple_animations: ^4.0.1
   supercharged: ^2.1.1
+  accordion: ^2.1.2
+  badges: ^2.0.2
+  flutter_zoom_drawer: ^2.1.2
 
 dev_dependencies:
   flutter_test:

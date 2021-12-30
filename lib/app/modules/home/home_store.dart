@@ -15,6 +15,18 @@ abstract class HomeStoreBase with Store {
   final AuthController auth = Modular.get();
 
   @observable
+  String cardSelection = '';
+
+  @observable
+  int navigateBarSelection = 0;
+
+  @action
+  setNavigateBarSelection(value) => navigateBarSelection = value;
+
+  @action
+  setSelection(value) => cardSelection = value;
+
+  @observable
   ObservableStream<List<VersionModel>>? versionList;
 
   HomeStoreBase({required this.versionService}) {

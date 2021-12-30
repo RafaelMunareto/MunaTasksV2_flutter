@@ -6,7 +6,6 @@ import 'package:munatasks2/app/modules/settings/perfil/shared/widget/equipes_wid
 import 'package:munatasks2/app/modules/settings/perfil/shared/widget/imagem_perfil_widget.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/widget/names_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
-import 'package:munatasks2/app/shared/components/custom_switch_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 
@@ -22,8 +21,6 @@ class PerfilPageState extends State<PerfilPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool enableSwitch = store.client.perfil.manager;
-
     return Scaffold(
       appBar: AppBarWidget(
           title: widget.title,

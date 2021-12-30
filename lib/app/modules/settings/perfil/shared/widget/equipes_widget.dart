@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
+import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
@@ -111,10 +112,14 @@ class _EquipesWidgetState extends State<EquipesWidget>
                     );
                   } else if (widget.usuarios!.hasError) {
                     return Center(
-                      child: ElevatedButton(
-                        onPressed: widget.getUsers(),
-                        child:
-                            Text('Error ' + widget.usuarios!.error.toString()),
+                      child: Wrap(
+                        children: [
+                          ElevatedButton(
+                            onPressed: widget.getUsers(),
+                            child: Text(
+                                'Error ' + widget.usuarios!.error.toString()),
+                          ),
+                        ],
                       ),
                     );
                   } else {
@@ -134,9 +139,9 @@ class _EquipesWidgetState extends State<EquipesWidget>
                                       selected: widget.individualChip!
                                           .contains(list[i].reference),
                                       elevation: 4.0,
-                                      avatar: ClipOval(
-                                          child:
-                                              Image.network(list[i].urlImage)),
+                                      avatar: CircleAvatarWidget(
+                                        url: list[i].urlImage,
+                                      ),
                                       label: SizedBox(
                                         width: 100,
                                         child: Text(
@@ -176,8 +181,9 @@ class _EquipesWidgetState extends State<EquipesWidget>
                                   isEnabled: false,
                                   labelPadding: const EdgeInsets.all(2),
                                   elevation: 4.0,
-                                  avatar: ClipOval(
-                                      child: Image.network(userModel.urlImage)),
+                                  avatar: CircleAvatarWidget(
+                                    url: userModel.urlImage,
+                                  ),
                                   label: SizedBox(
                                     width: 100,
                                     child: Text(

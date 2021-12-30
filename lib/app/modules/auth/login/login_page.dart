@@ -35,8 +35,10 @@ class LoginPageState extends State<LoginPage> {
               message: store.msg, errOrGoal: store.errOrGoal);
           store.setMsg('');
           if (store.errOrGoal) {
-            Timer(const Duration(seconds: 2),
-                () => store.client.setCleanVariables());
+            Timer(
+              const Duration(seconds: 2),
+              () => store.client.setCleanVariables(),
+            );
           }
         }
       },

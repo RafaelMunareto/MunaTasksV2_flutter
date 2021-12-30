@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 
 class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   final String title;
@@ -7,10 +8,11 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   final dynamic context;
   final dynamic controller;
   final IconData icon;
-  final dynamic user;
   final bool settings;
   final bool back;
   final String rota;
+  final zoomController;
+  final AuthController auth = Modular.get();
 
   AppBarWidget(
       {Key? key,
@@ -19,9 +21,9 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       this.context,
       this.controller,
       this.icon = Icons.person,
-      this.user = '',
       this.settings = false,
       this.back = true,
+      this.zoomController,
       this.rota = '/auth'})
       : super(key: key);
 
@@ -59,7 +61,10 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
             ? IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () => Modular.to.navigate(rota))
-            : Container(),
+            : InkWell(
+                onTap: () => zoomController.toggle(),
+                child: const Icon(Icons.menu),
+              ),
       ),
     );
   }
@@ -69,12 +74,13 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       icon: const Icon(Icons.more_vert),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
-          child: user != ''
+          child: auth.user!.photoURL != ''
               ? InputChip(
                   avatar: CircleAvatar(
-                    backgroundImage: NetworkImage(user.photoURL.toString()),
+                    backgroundImage:
+                        NetworkImage(auth.user!.photoURL.toString()),
                   ),
-                  label: Text(user.displayName),
+                  label: Text(auth.user!.displayName.toString()),
                 )
               : Container(),
         ),
@@ -91,7 +97,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
           onTap: () => Modular.to.navigate('/settings/perfil'),
           child: const ListTile(
             leading: Icon(Icons.account_circle),
-            title: Text('Perfil'),
+            title: Text('Perfil e Equipes'),
           ),
         ),
       ],

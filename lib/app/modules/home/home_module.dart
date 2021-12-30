@@ -12,13 +12,16 @@ import 'home_page.dart';
 class HomeModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.lazySingleton<IVersionService>((i) => VersionService(versionRepository: i.get())),
-    Bind.lazySingleton<IVersionRepository>((i) => VersionRepository(firestore: FirebaseFirestore.instance)),
+    Bind.lazySingleton<IVersionService>(
+        (i) => VersionService(versionRepository: i.get())),
+    Bind.lazySingleton<IVersionRepository>(
+        (i) => VersionRepository(firestore: FirebaseFirestore.instance)),
     Bind.lazySingleton((i) => HomeStore(versionService: i.get())),
   ];
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child:  (context, args) => const HomePage(), guards: [AuthGuard()]),
+    ChildRoute('/',
+        child: (context, args) => const HomePage(), guards: [AuthGuard()]),
   ];
 }
