@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/sub_item_widget.dart';
 
 class BodyTextWidget extends StatelessWidget {
-  final TarefafaModel tarefa;
+  final TarefaModel tarefa;
 
   const BodyTextWidget({Key? key, required this.tarefa}) : super(key: key);
 

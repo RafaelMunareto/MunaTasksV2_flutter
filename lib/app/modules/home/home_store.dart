@@ -1,8 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/modules/home/models/version_model.dart';
-import 'package:munatasks2/app/modules/home/services/interfaces/version_service_interface.dart';
+import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
+import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
-import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:mobx/mobx.dart';
 
 part 'home_store.g.dart';
@@ -10,8 +9,7 @@ part 'home_store.g.dart';
 class HomeStore = HomeStoreBase with _$HomeStore;
 
 abstract class HomeStoreBase with Store {
-  final IVersionService versionService;
-  final ILocalStorage storage = Modular.get();
+  final IDashboardService dashboardService;
   final AuthController auth = Modular.get();
 
   @observable
@@ -27,25 +25,25 @@ abstract class HomeStoreBase with Store {
   setSelection(value) => cardSelection = value;
 
   @observable
-  ObservableStream<List<VersionModel>>? versionList;
+  ObservableStream<List<TarefaModel>>? dashboardList;
 
-  HomeStoreBase({required this.versionService}) {
+  HomeStoreBase({required this.dashboardService}) {
     getList();
   }
 
   @action
   void getList() {
-    versionList = versionService.get().asObservable();
+    dashboardList = dashboardService.get().asObservable();
   }
 
   @action
-  void save(VersionModel model) {
-    versionService.save(model);
+  void save(TarefaModel model) {
+    dashboardService.save(model);
   }
 
   @action
-  void delete(VersionModel model) {
-    versionService.delete(model);
+  void delete(TarefaModel model) {
+    dashboardService.delete(model);
   }
 
   @action

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
-import 'package:munatasks2/app/shared/components/menu_screen.dart';
 
 class MenuScreen extends StatefulWidget {
-  final controller;
+  final dynamic controller;
   const MenuScreen({Key? key, required this.controller}) : super(key: key);
   @override
   _MenuScreenState createState() => _MenuScreenState();

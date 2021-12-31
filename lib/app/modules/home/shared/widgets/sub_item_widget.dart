@@ -32,7 +32,7 @@ class SubItemWidget extends StatelessWidget {
                 color: kPrimaryColor,
               ),
               trailing:
-                  CircleAvatarWidget(url: subTarefa.user!.photoURL.toString()),
+                  CircleAvatarWidget(url: subTarefa.user!.urlImage.toString()),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16.0, bottom: 8),

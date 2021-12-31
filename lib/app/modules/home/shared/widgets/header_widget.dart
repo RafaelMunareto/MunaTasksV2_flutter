@@ -3,7 +3,7 @@ import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 
 class HeaderWidget extends StatelessWidget {
-  final TarefafaModel tarefa;
+  final TarefaModel tarefa;
   const HeaderWidget({Key? key, required this.tarefa}) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class HeaderWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: CircleAvatarWidget(
-                    url: tarefa.users![i]!.photoURL.toString()),
+                    url: tarefa.users![i]!.urlImage.toString()),
               ),
             Text(
               tarefa.texto,

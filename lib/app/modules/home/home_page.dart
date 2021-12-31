@@ -7,7 +7,7 @@ import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
-import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
+import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,48 +25,113 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
 
   @override
   Widget build(BuildContext context) {
-    List<TarefafaModel> tarefa = [
-      TarefafaModel(
+    List<TarefaModel> tarefa = [
+      TarefaModel(
           etiqueta: 'Desenvolvimento',
           texto: 'Aplicativo GESUN para Windows. ELECTRON. ',
           data: '30/12/2021',
-          tarefa: 'Fazer interface de backend',
           users: [
-            store.auth.user
+            UserModel(
+                email: 'rafael.munareto@caixa.gov.br',
+                name: 'Rafael',
+                urlImage:
+                    'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
+                verificado: true)
           ],
           subTarefa: [
             SubtarefaModel(
                 status: 'check',
                 title: 'especificacao',
                 texto: 'especificar o sistema',
-                user: store.auth.user),
+                user: UserModel(
+                    email: 'rafael.munareto@caixa.gov.br',
+                    name: 'Rafael',
+                    urlImage:
+                        'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
+                    verificado: true)),
             SubtarefaModel(
                 status: 'play',
                 title: 'frontend',
                 texto: 'fazer o layout',
-                user: store.auth.user),
+                user: UserModel(
+                    email: 'rafael.munareto@caixa.gov.br',
+                    name: 'Rafael',
+                    urlImage:
+                        'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
+                    verificado: true)),
           ]),
-      TarefafaModel(
+      TarefaModel(
           etiqueta: 'Desenvolvimento',
           texto: 'Aplicativo GESUN para Windows. ELECTRON. ',
           data: '30/12/2021',
-          tarefa: 'Fazer interface de backend',
           users: [
-            store.auth.user
+            UserModel(
+                email: 'rafael.munareto@caixa.gov.br',
+                name: 'Rafael',
+                urlImage:
+                    'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
+                verificado: true)
           ],
           subTarefa: [
             SubtarefaModel(
                 status: 'check',
                 title: 'especificacao',
                 texto: 'especificar o sistema',
-                user: store.auth.user),
+                user: UserModel(
+                    email: 'rafael.munareto@caixa.gov.br',
+                    name: 'Rafael',
+                    urlImage:
+                        'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
+                    verificado: true)),
             SubtarefaModel(
                 status: 'play',
                 title: 'frontend',
                 texto: 'fazer o layout',
-                user: store.auth.user),
+                user: UserModel(
+                    email: 'rafael.munareto@caixa.gov.br',
+                    name: 'Rafael',
+                    urlImage:
+                        'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
+                    verificado: true)),
           ])
     ];
+
+    TarefaModel tarefaSave = TarefaModel(
+        etiqueta: 'Desenvolvimento',
+        texto: 'Aplicativo GESUN para Windows. ELECTRON. ',
+        data: '30/12/2021',
+        users: [
+          UserModel(
+              email: 'rafael.munareto@caixa.gov.br',
+              name: 'Rafael',
+              urlImage:
+                  'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
+              verificado: true)
+        ],
+        subTarefa: [
+          SubtarefaModel(
+              status: 'check',
+              title: 'especificacao',
+              texto: 'especificar o sistema',
+              user: UserModel(
+                  email: 'rafael.munareto@caixa.gov.br',
+                  name: 'Rafael',
+                  urlImage:
+                      'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
+                  verificado: true)),
+          SubtarefaModel(
+              status: 'play',
+              title: 'frontend',
+              texto: 'fazer o layout',
+              user: UserModel(
+                  email: 'rafael.munareto@caixa.gov.br',
+                  name: 'Rafael',
+                  urlImage:
+                      'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
+                  verificado: true)),
+        ]);
+
+    store.save(tarefaSave);
 
     return Scaffold(
       appBar: AppBar(

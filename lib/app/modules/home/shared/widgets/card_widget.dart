@@ -7,7 +7,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/header_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 
 class CardWidget extends StatefulWidget {
-  final List<TarefafaModel> tarefa;
+  final List<TarefaModel> tarefa;
   const CardWidget({Key? key, required this.tarefa}) : super(key: key);
 
   @override

@@ -41,18 +41,18 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
-  final _$versionListAtom = Atom(name: 'HomeStoreBase.versionList');
+  final _$dashboardListAtom = Atom(name: 'HomeStoreBase.dashboardList');
 
   @override
-  ObservableStream<List<VersionModel>>? get versionList {
-    _$versionListAtom.reportRead();
-    return super.versionList;
+  ObservableStream<List<TarefaModel>>? get dashboardList {
+    _$dashboardListAtom.reportRead();
+    return super.dashboardList;
   }
 
   @override
-  set versionList(ObservableStream<List<VersionModel>>? value) {
-    _$versionListAtom.reportWrite(value, super.versionList, () {
-      super.versionList = value;
+  set dashboardList(ObservableStream<List<TarefaModel>>? value) {
+    _$dashboardListAtom.reportWrite(value, super.dashboardList, () {
+      super.dashboardList = value;
     });
   }
 
@@ -93,7 +93,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  void save(VersionModel model) {
+  void save(TarefaModel model) {
     final _$actionInfo =
         _$HomeStoreBaseActionController.startAction(name: 'HomeStoreBase.save');
     try {
@@ -104,7 +104,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  void delete(VersionModel model) {
+  void delete(TarefaModel model) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.delete');
     try {
@@ -130,7 +130,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
     return '''
 cardSelection: ${cardSelection},
 navigateBarSelection: ${navigateBarSelection},
-versionList: ${versionList}
+dashboardList: ${dashboardList}
     ''';
   }
 }

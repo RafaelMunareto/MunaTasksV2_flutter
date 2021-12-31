@@ -11,7 +11,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   final bool settings;
   final bool back;
   final String rota;
-  final zoomController;
+  final dynamic zoomController;
   final AuthController auth = Modular.get();
 
   AppBarWidget(
@@ -62,7 +62,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () => Modular.to.navigate(rota))
             : InkWell(
-                onTap: () => zoomController.toggle(),
+                onTap: () => zoomController.toggle!(),
                 child: const Icon(Icons.menu),
               ),
       ),

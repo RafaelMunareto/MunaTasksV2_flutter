@@ -29,18 +29,14 @@ class ButtonActionWidget extends StatelessWidget {
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    print('oi');
-                  },
+                  onTap: () {},
                   child: const Icon(
                     Icons.play_circle,
                     color: Colors.yellow,
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    print('oi');
-                  },
+                  onTap: () {},
                   child: const Icon(
                     Icons.task_alt,
                     color: kPrimaryColor,
@@ -48,9 +44,7 @@ class ButtonActionWidget extends StatelessWidget {
                 ),
                 SizedBox(
                   child: GestureDetector(
-                    onTap: () {
-                      print('oi');
-                    },
+                    onTap: () {},
                     child: const Icon(
                       Icons.cancel,
                       color: Colors.red,

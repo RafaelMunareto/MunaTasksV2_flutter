@@ -25,6 +25,16 @@ class UserModel {
     );
   }
 
+  Map<String, dynamic> toMap() {
+    return {
+      'email': email,
+      'name': name,
+      'urlImage': urlImage,
+      'verificado': verificado,
+      'referece': reference
+    };
+  }
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
         email: json['email'],
