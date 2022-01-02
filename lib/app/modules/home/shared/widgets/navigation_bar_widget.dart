@@ -5,10 +5,12 @@ import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 class NavigationBarWidget extends StatefulWidget {
   final int navigateBarSelection;
   final Function setNavigateBarSelection;
+  final List<int> badgets;
   const NavigationBarWidget(
       {Key? key,
       required this.navigateBarSelection,
-      required this.setNavigateBarSelection})
+      required this.setNavigateBarSelection,
+      required this.badgets})
       : super(key: key);
 
   @override
@@ -35,7 +37,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
           label: 'Backlog',
           icon: Badge(
             badgeColor: kPrimaryColor,
-            badgeContent: const Text('3'),
+            badgeContent: Text(widget.badgets[0].toString()),
             child: const Icon(Icons.pause_circle),
           ),
         ),
@@ -43,7 +45,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
           label: 'Fazendo',
           icon: Badge(
             badgeColor: kPrimaryColor,
-            badgeContent: const Text('3'),
+            badgeContent: Text(widget.badgets[1].toString()),
             child: const Icon(Icons.play_circle_filled),
           ),
         ),
@@ -51,7 +53,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
           label: 'Feito',
           icon: Badge(
             badgeColor: kPrimaryColor,
-            badgeContent: const Text('3'),
+            badgeContent: Text(widget.badgets[2].toString()),
             child: const Icon(Icons.check_circle),
           ),
         ),

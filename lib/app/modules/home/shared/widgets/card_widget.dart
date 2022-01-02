@@ -9,8 +9,15 @@ import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 
 class CardWidget extends StatefulWidget {
   final List<TarefaModel> tarefa;
-  final Function delete;
-  const CardWidget({Key? key, required this.tarefa, required this.delete})
+  final Function deleteTasks;
+  final int navigate;
+  final Function save;
+  const CardWidget(
+      {Key? key,
+      required this.tarefa,
+      required this.deleteTasks,
+      required this.navigate,
+      required this.save})
       : super(key: key);
 
   @override
@@ -37,9 +44,10 @@ class _CardWidgetState extends State<CardWidget> {
                 ),
                 const Divider(),
                 ButtonActionWidget(
-                  tarefa: linha,
-                  delete: delete,
-                ),
+                    tarefa: linha,
+                    deleteTasks: widget.deleteTasks,
+                    navigate: widget.navigate,
+                    save: widget.save),
               ],
             ),
           ),

@@ -8,6 +8,7 @@ class TarefaModel {
   String etiqueta;
   DocumentReference? reference;
   String texto;
+  int fase;
   String data;
   List<dynamic>? users;
   List<dynamic>? subTarefa;
@@ -15,6 +16,7 @@ class TarefaModel {
   TarefaModel(
       {this.etiqueta = '',
       this.texto = '',
+      this.fase = 0,
       this.reference,
       this.data = '',
       this.subTarefa,
@@ -24,6 +26,7 @@ class TarefaModel {
     return TarefaModel(
         etiqueta: doc['etiqueta'],
         texto: doc['texto'],
+        fase: doc['fase'],
         reference: doc.reference,
         data: doc['data'],
         subTarefa: doc['subTarefa']
@@ -36,6 +39,7 @@ class TarefaModel {
     return TarefaModel(
         etiqueta: json['etiqueta'],
         texto: json['texto'],
+        fase: json['fase'],
         data: json['data'],
         subTarefa: json['subTarefa'],
         users: json['users']);
@@ -50,6 +54,7 @@ class TarefaModel {
     return {
       'etiqueta': etiqueta,
       'texto': texto,
+      'fase': fase,
       'data': data,
       'subTarefa': subTarefa?.map((e) => e.toMap()).toList(),
       'users': users

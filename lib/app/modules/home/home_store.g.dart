@@ -9,6 +9,21 @@ part of 'home_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeStore on HomeStoreBase, Store {
+  final _$badgetNavigateAtom = Atom(name: 'HomeStoreBase.badgetNavigate');
+
+  @override
+  List<int> get badgetNavigate {
+    _$badgetNavigateAtom.reportRead();
+    return super.badgetNavigate;
+  }
+
+  @override
+  set badgetNavigate(List<int> value) {
+    _$badgetNavigateAtom.reportWrite(value, super.badgetNavigate, () {
+      super.badgetNavigate = value;
+    });
+  }
+
   final _$cardSelectionAtom = Atom(name: 'HomeStoreBase.cardSelection');
 
   @override
@@ -36,6 +51,21 @@ mixin _$HomeStore on HomeStoreBase, Store {
   set tarefas(List<TarefaModel> value) {
     _$tarefasAtom.reportWrite(value, super.tarefas, () {
       super.tarefas = value;
+    });
+  }
+
+  final _$tarefasBaseAtom = Atom(name: 'HomeStoreBase.tarefasBase');
+
+  @override
+  List<TarefaModel> get tarefasBase {
+    _$tarefasBaseAtom.reportRead();
+    return super.tarefasBase;
+  }
+
+  @override
+  set tarefasBase(List<TarefaModel> value) {
+    _$tarefasBaseAtom.reportWrite(value, super.tarefasBase, () {
+      super.tarefasBase = value;
     });
   }
 
@@ -90,6 +120,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
       ActionController(name: 'HomeStoreBase');
 
   @override
+  dynamic setBadgetNavigate(dynamic value) {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.setBadgetNavigate');
+    try {
+      return super.setBadgetNavigate(value);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setLoading(dynamic value) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.setLoading');
@@ -106,6 +147,28 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.setTarefa');
     try {
       return super.setTarefa(value);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeTarefa(dynamic value) {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.changeTarefa');
+    try {
+      return super.changeTarefa(value);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanTarefas() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.cleanTarefas');
+    try {
+      return super.cleanTarefas();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -156,11 +219,11 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  void delete(TarefaModel model) {
+  void deleteTasks(TarefaModel model) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.delete');
+        name: 'HomeStoreBase.deleteTasks');
     try {
-      return super.delete(model);
+      return super.deleteTasks(model);
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -180,8 +243,10 @@ mixin _$HomeStore on HomeStoreBase, Store {
   @override
   String toString() {
     return '''
+badgetNavigate: ${badgetNavigate},
 cardSelection: ${cardSelection},
 tarefas: ${tarefas},
+tarefasBase: ${tarefasBase},
 loading: ${loading},
 navigateBarSelection: ${navigateBarSelection},
 dashboardList: ${dashboardList}

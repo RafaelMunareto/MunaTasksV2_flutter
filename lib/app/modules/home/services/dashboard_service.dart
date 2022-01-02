@@ -17,7 +17,7 @@ class DashboardService extends Disposable implements IDashboardService {
   }
 
   @override
-  Future delete(TarefaModel model) {
+  delete(TarefaModel model) {
     return dashboardRepository.delete(model);
   }
 

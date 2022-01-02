@@ -26,7 +26,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   Widget build(BuildContext context) {
     TarefaModel tarefaSave = TarefaModel(
         etiqueta: 'Desenvolvimento',
-        texto: 'Aplicativo GESUN para Windows. ELECTRON. ',
+        texto: 'backlog Aplicativo GESUN para Windows. ELECTRON. ',
+        fase: 0,
         data: '30/12/2021',
         users: [
           'usuarios/uRVW36YywWcM4PUl48fqcHzTGDW2'
@@ -65,9 +66,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
       ),
       bottomSheet: Observer(builder: (_) {
         return NavigationBarWidget(
-          navigateBarSelection: store.navigateBarSelection,
-          setNavigateBarSelection: store.setNavigateBarSelection,
-        );
+            navigateBarSelection: store.navigateBarSelection,
+            setNavigateBarSelection: store.setNavigateBarSelection,
+            badgets: store.badgetNavigate);
       }),
       body: ZoomDrawer(
         controller: _drawerController,
@@ -77,9 +78,13 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
         ),
         mainScreen: Observer(builder: (_) {
           return !store.loading
-              ? CardWidget(
-                  tarefa: store.tarefas,
-                  delete: store.delete,
+              ? Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 32),
+                  child: CardWidget(
+                      tarefa: store.tarefas,
+                      navigate: store.navigateBarSelection,
+                      deleteTasks: store.deleteTasks,
+                      save: store.save),
                 )
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,

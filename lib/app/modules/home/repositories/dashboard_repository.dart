@@ -26,8 +26,8 @@ class DashboardRepository implements IDashboardRepository {
   }
 
   @override
-  Future delete(TarefaModel model) {
-    return model.reference!.delete();
+  delete(TarefaModel model) {
+    firestore.collection('tasks').doc(model.reference!.id).delete();
   }
 
   @override
@@ -35,7 +35,7 @@ class DashboardRepository implements IDashboardRepository {
     if (model.reference == null) {
       model.reference = await firestore.collection('tasks').add(model.toMap());
     } else {
-      model.reference!.update(model.toMap());
+      firestore.collection('tasks').doc(model.reference!.id).set(model.toMap());
     }
   }
 }

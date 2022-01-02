@@ -16,10 +16,19 @@ abstract class HomeStoreBase with Store {
   final FirebaseFirestore firestore = Modular.get();
 
   @observable
+  List<int> badgetNavigate = [0, 0, 0];
+
+  @action
+  setBadgetNavigate(value) => badgetNavigate = value;
+
+  @observable
   String cardSelection = '';
 
   @observable
   List<TarefaModel> tarefas = [];
+
+  @observable
+  List<TarefaModel> tarefasBase = [];
 
   @observable
   bool loading = true;
@@ -28,13 +37,23 @@ abstract class HomeStoreBase with Store {
   setLoading(value) => loading = value;
 
   @action
-  setTarefa(value) => tarefas.add(value);
+  setTarefa(value) => tarefasBase.add(value);
+
+  @action
+  changeTarefa(value) => tarefas = value;
+
+  @action
+  cleanTarefas() => tarefas = [];
 
   @observable
   int navigateBarSelection = 0;
 
   @action
-  setNavigateBarSelection(value) => navigateBarSelection = value;
+  setNavigateBarSelection(value) {
+    navigateBarSelection = value;
+    changeTarefa(
+        tarefasBase.where((element) => element.fase == value).toList());
+  }
 
   @action
   setSelection(value) => cardSelection = value;
@@ -52,6 +71,7 @@ abstract class HomeStoreBase with Store {
     UserModel? userSubtarefa;
     dashboardList = dashboardService.get();
     dashboardList!.forEach((e) {
+      cleanTarefas();
       e.forEach((element) {
         for (var subtarefa in element!.subTarefa!) {
           var str = subtarefa.user.split('/');
@@ -74,12 +94,29 @@ abstract class HomeStoreBase with Store {
                 if (element.users!.length == users.length) {
                   element.users = users;
                   setTarefa(element);
-                  if (tarefas.isNotEmpty) {
-                    setLoading(false);
-                  }
+                  changeTarefa(tarefasBase
+                      .where((element) => element.fase == navigateBarSelection)
+                      .toList());
+                  List<int> badgets = [
+                    tarefasBase
+                        .where((element) => element.fase == 0)
+                        .toList()
+                        .length,
+                    tarefasBase
+                        .where((element) => element.fase == 1)
+                        .toList()
+                        .length,
+                    tarefasBase
+                        .where((element) => element.fase == 2)
+                        .toList()
+                        .length
+                  ];
+                  setBadgetNavigate(badgets);
                 }
               });
             }
+          }).whenComplete(() {
+            setLoading(false);
           });
         }
       });
@@ -92,7 +129,7 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  void delete(TarefaModel model) {
+  void deleteTasks(TarefaModel model) {
     dashboardService.delete(model);
   }
 
