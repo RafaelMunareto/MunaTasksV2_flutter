@@ -6,7 +6,7 @@ class SubtarefaModel {
   DocumentReference? reference;
   String status;
   String texto;
-  UserModel? user;
+  dynamic user;
 
   SubtarefaModel({
     this.title = '',
@@ -34,13 +34,7 @@ class SubtarefaModel {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'title': title,
-      'status': status,
-      'texto': texto,
-      'user': user,
-      'referece': reference
-    };
+    return {'title': title, 'status': status, 'texto': texto, 'user': user};
   }
 
   Map<String, dynamic> toJson() => {};

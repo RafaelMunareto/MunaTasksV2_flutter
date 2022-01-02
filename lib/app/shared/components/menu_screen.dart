@@ -20,9 +20,9 @@ class _MenuScreenState extends State<MenuScreen> {
           onTap: () => widget.controller.toggle!(),
           child: Container(
             decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/img/fundo_gesun.png'),
-              ),
+              // image: DecorationImage(
+              //   image: AssetImage('assets/img/fundo_gesun.png'),
+              // ),
               gradient: LinearGradient(
                 begin: Alignment.bottomRight,
                 end: Alignment.bottomLeft,

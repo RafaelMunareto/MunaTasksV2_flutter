@@ -24,6 +24,36 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
+  final _$tarefasAtom = Atom(name: 'HomeStoreBase.tarefas');
+
+  @override
+  List<TarefaModel> get tarefas {
+    _$tarefasAtom.reportRead();
+    return super.tarefas;
+  }
+
+  @override
+  set tarefas(List<TarefaModel> value) {
+    _$tarefasAtom.reportWrite(value, super.tarefas, () {
+      super.tarefas = value;
+    });
+  }
+
+  final _$loadingAtom = Atom(name: 'HomeStoreBase.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
   final _$navigateBarSelectionAtom =
       Atom(name: 'HomeStoreBase.navigateBarSelection');
 
@@ -44,13 +74,13 @@ mixin _$HomeStore on HomeStoreBase, Store {
   final _$dashboardListAtom = Atom(name: 'HomeStoreBase.dashboardList');
 
   @override
-  ObservableStream<List<TarefaModel>>? get dashboardList {
+  Stream<List<TarefaModel?>>? get dashboardList {
     _$dashboardListAtom.reportRead();
     return super.dashboardList;
   }
 
   @override
-  set dashboardList(ObservableStream<List<TarefaModel>>? value) {
+  set dashboardList(Stream<List<TarefaModel?>>? value) {
     _$dashboardListAtom.reportWrite(value, super.dashboardList, () {
       super.dashboardList = value;
     });
@@ -58,6 +88,28 @@ mixin _$HomeStore on HomeStoreBase, Store {
 
   final _$HomeStoreBaseActionController =
       ActionController(name: 'HomeStoreBase');
+
+  @override
+  dynamic setLoading(dynamic value) {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.setLoading');
+    try {
+      return super.setLoading(value);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setTarefa(dynamic value) {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.setTarefa');
+    try {
+      return super.setTarefa(value);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic setNavigateBarSelection(dynamic value) {
@@ -129,6 +181,8 @@ mixin _$HomeStore on HomeStoreBase, Store {
   String toString() {
     return '''
 cardSelection: ${cardSelection},
+tarefas: ${tarefas},
+loading: ${loading},
 navigateBarSelection: ${navigateBarSelection},
 dashboardList: ${dashboardList}
     ''';

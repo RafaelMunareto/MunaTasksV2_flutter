@@ -1,5 +1,4 @@
 class ErrorPtBr {
-
   verificaCodeErro(errorCode) {
     switch (errorCode) {
       case 'auth/app-deleted':
@@ -174,6 +173,8 @@ class ErrorPtBr {
         return 'A credencial utilizada não tem permissão para acessar o recurso solicitado.';
       case 'auth/internal-error':
         return 'O servidor de autenticação encontrou um erro inesperado ao tentar processar a solicitação.';
+      case 'firebase_auth/wrong-password':
+        return 'Senha incorreta.';
       default:
         return '';
     }

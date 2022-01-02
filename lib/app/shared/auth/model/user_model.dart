@@ -15,7 +15,7 @@ class UserModel {
     this.verificado = false,
   });
 
-  factory UserModel.fromDocument(DocumentSnapshot doc) {
+  factory UserModel.fromDocument(dynamic doc) {
     return UserModel(
       email: doc['email'],
       name: doc['name'],
@@ -31,7 +31,6 @@ class UserModel {
       'name': name,
       'urlImage': urlImage,
       'verificado': verificado,
-      'referece': reference
     };
   }
 

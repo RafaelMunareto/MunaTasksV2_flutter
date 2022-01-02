@@ -94,13 +94,13 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   final _$loginStorageAtom = Atom(name: '_LoginStoreBase.loginStorage');
 
   @override
-  List<String>? get loginStorage {
+  List<String?> get loginStorage {
     _$loginStorageAtom.reportRead();
     return super.loginStorage;
   }
 
   @override
-  set loginStorage(List<String>? value) {
+  set loginStorage(List<String?> value) {
     _$loginStorageAtom.reportWrite(value, super.loginStorage, () {
       super.loginStorage = value;
     });
