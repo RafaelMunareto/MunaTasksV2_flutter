@@ -98,7 +98,10 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                widget.tarefa.fase = 1;
+                widget.save(widget.tarefa);
+              },
               child: const Icon(
                 Icons.task_alt,
                 color: kPrimaryColor,
@@ -123,14 +126,20 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                widget.tarefa.fase = 0;
+                widget.save(widget.tarefa);
+              },
               child: const Icon(
                 Icons.pause_circle,
                 color: Colors.grey,
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                widget.tarefa.fase = 2;
+                widget.save(widget.tarefa);
+              },
               child: const Icon(
                 Icons.task_alt,
                 color: kPrimaryColor,
@@ -155,14 +164,20 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                widget.tarefa.fase = 0;
+                widget.save(widget.tarefa);
+              },
               child: const Icon(
                 Icons.pause_circle,
                 color: Colors.grey,
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                widget.tarefa.fase = 1;
+                widget.save(widget.tarefa);
+              },
               child: const Icon(
                 Icons.play_circle,
                 color: Colors.amber,

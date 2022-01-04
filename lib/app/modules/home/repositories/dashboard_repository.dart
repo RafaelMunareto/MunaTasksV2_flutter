@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:munatasks2/app/modules/home/repositories/interfaces/dashboard_interfaces.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
-import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
 class DashboardRepository implements IDashboardRepository {
   final FirebaseFirestore firestore;
@@ -27,7 +26,7 @@ class DashboardRepository implements IDashboardRepository {
 
   @override
   delete(TarefaModel model) {
-    firestore.collection('tasks').doc(model.reference!.id).delete();
+    model.reference!.delete();
   }
 
   @override
@@ -35,7 +34,8 @@ class DashboardRepository implements IDashboardRepository {
     if (model.reference == null) {
       model.reference = await firestore.collection('tasks').add(model.toMap());
     } else {
-      firestore.collection('tasks').doc(model.reference!.id).set(model.toMap());
+      print(model.toReverseMap());
+      //model.reference!.update(model.toMap());
     }
   }
 }

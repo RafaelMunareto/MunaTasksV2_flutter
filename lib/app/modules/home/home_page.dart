@@ -26,8 +26,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   Widget build(BuildContext context) {
     TarefaModel tarefaSave = TarefaModel(
         etiqueta: 'Desenvolvimento',
-        texto: 'backlog Aplicativo GESUN para Windows. ELECTRON. ',
-        fase: 0,
+        texto: 'feito Aplicativo GESUN para Windows. ELECTRON. ',
+        fase: 2,
         data: '30/12/2021',
         users: [
           'usuarios/uRVW36YywWcM4PUl48fqcHzTGDW2'
@@ -40,7 +40,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
               user: 'usuarios/uRVW36YywWcM4PUl48fqcHzTGDW2'),
         ]);
 
-    //store.save(tarefaSave);
+    store.save(tarefaSave);
+    store.save(tarefaSave);
+    store.save(tarefaSave);
 
     return Scaffold(
       appBar: AppBar(

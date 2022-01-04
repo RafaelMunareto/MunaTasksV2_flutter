@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
@@ -40,6 +42,9 @@ abstract class HomeStoreBase with Store {
   setTarefa(value) => tarefasBase.add(value);
 
   @action
+  cleanTarefasBase() => tarefasBase = [];
+
+  @action
   changeTarefa(value) => tarefas = value;
 
   @action
@@ -69,9 +74,10 @@ abstract class HomeStoreBase with Store {
   void getList() {
     List<UserModel> users = [];
     UserModel? userSubtarefa;
+    tarefasBase = [];
     dashboardList = dashboardService.get();
+
     dashboardList!.forEach((e) {
-      cleanTarefas();
       e.forEach((element) {
         for (var subtarefa in element!.subTarefa!) {
           var str = subtarefa.user.split('/');
@@ -126,11 +132,13 @@ abstract class HomeStoreBase with Store {
   @action
   void save(TarefaModel model) {
     dashboardService.save(model);
+    //cleanTarefasBase();
   }
 
   @action
   void deleteTasks(TarefaModel model) {
     dashboardService.delete(model);
+    cleanTarefasBase();
   }
 
   @action

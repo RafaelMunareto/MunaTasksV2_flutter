@@ -31,8 +31,7 @@ class SubItemWidget extends StatelessWidget {
                 ConvertIcon().iconStatus(subTarefa.status),
                 color: kPrimaryColor,
               ),
-              trailing:
-                  CircleAvatarWidget(url: subTarefa.user!.urlImage.toString()),
+              trailing: CircleAvatarWidget(url: subTarefa.user.urlImage),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16.0, bottom: 8),

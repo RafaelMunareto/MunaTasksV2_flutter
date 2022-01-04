@@ -34,6 +34,10 @@ class UserModel {
     };
   }
 
+  Map<String, dynamic> toReverseMap() {
+    return {'user': reference};
+  }
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
         email: json['email'],

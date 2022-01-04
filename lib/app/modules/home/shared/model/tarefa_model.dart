@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
+import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
 class TarefaModel {
   String etiqueta;
@@ -24,15 +25,15 @@ class TarefaModel {
 
   factory TarefaModel.fromDocument(DocumentSnapshot doc) {
     return TarefaModel(
-        etiqueta: doc['etiqueta'],
-        texto: doc['texto'],
-        fase: doc['fase'],
-        reference: doc.reference,
-        data: doc['data'],
-        subTarefa: doc['subTarefa']
-            ?.map((doc) => SubtarefaModel.fromJson(doc))
-            .toList(),
-        users: doc['users']);
+      etiqueta: doc['etiqueta'],
+      texto: doc['texto'],
+      fase: doc['fase'],
+      reference: doc.reference,
+      data: doc['data'],
+      subTarefa:
+          doc['subTarefa']?.map((doc) => SubtarefaModel.fromJson(doc)).toList(),
+      users: doc['users']?.map((doc) => UserModel.fromJson(doc)).toList(),
+    );
   }
 
   factory TarefaModel.fromJson(Map<String, dynamic> json) {
@@ -57,7 +58,18 @@ class TarefaModel {
       'fase': fase,
       'data': data,
       'subTarefa': subTarefa?.map((e) => e.toMap()).toList(),
-      'users': users
+      'users': users?.map((e) => e.toMap()).toList(),
+    };
+  }
+
+  Map<String, dynamic> toReverseMap() {
+    return {
+      'etiqueta': etiqueta,
+      'texto': texto,
+      'fase': fase,
+      'data': data,
+      'subTarefa': subTarefa?.map((e) => e.toReverseMap()).toList(),
+      'users': users?.map((e) => e.toReverseMap()).toList(),
     };
   }
 

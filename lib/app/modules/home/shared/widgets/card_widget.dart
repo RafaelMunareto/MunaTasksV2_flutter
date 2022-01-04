@@ -1,6 +1,5 @@
 import 'package:accordion/accordion.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_text_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/button_action_widget.dart';

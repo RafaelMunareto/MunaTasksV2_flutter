@@ -11,7 +11,7 @@ class SubtarefaModel {
   SubtarefaModel({
     this.title = '',
     this.status = '',
-    this.user,
+    this.user = '',
     this.reference,
     this.texto = '',
   });
@@ -35,6 +35,15 @@ class SubtarefaModel {
 
   Map<String, dynamic> toMap() {
     return {'title': title, 'status': status, 'texto': texto, 'user': user};
+  }
+
+  Map<String, dynamic> toReverseMap() {
+    return {
+      'title': title,
+      'status': status,
+      'texto': texto,
+      'user': user.reference
+    };
   }
 
   Map<String, dynamic> toJson() => {};

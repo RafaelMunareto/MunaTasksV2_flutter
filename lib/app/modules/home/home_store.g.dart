@@ -153,6 +153,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
+  dynamic cleanTarefasBase() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.cleanTarefasBase');
+    try {
+      return super.cleanTarefasBase();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic changeTarefa(dynamic value) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.changeTarefa');
