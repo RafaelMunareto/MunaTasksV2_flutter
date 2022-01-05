@@ -34,8 +34,8 @@ class DashboardRepository implements IDashboardRepository {
     if (model.reference == null) {
       model.reference = await firestore.collection('tasks').add(model.toMap());
     } else {
-      print(model.toReverseMap());
-      //model.reference!.update(model.toMap());
+      //print(model.toReverseMap());
+      model.reference!.update(model.toReverseMap());
     }
   }
 }

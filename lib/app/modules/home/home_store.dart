@@ -80,7 +80,7 @@ abstract class HomeStoreBase with Store {
     dashboardList!.forEach((e) {
       e.forEach((element) {
         for (var subtarefa in element!.subTarefa!) {
-          var str = subtarefa.user.split('/');
+          var str = subtarefa.user.toString().split('/');
           var id = str[1];
           firestore.collection('usuarios').doc(id).get().then((doc) {
             // ignore: prefer_conditional_assignment
@@ -90,7 +90,7 @@ abstract class HomeStoreBase with Store {
           }).whenComplete(() {
             subtarefa.user = userSubtarefa;
             for (var linha in element.users!) {
-              var str = linha.split('/');
+              var str = linha.toString().split('/');
               var id = str[1];
               firestore.collection('usuarios').doc(id).get().then((doc) {
                 if (users.isEmpty) {
@@ -132,7 +132,7 @@ abstract class HomeStoreBase with Store {
   @action
   void save(TarefaModel model) {
     dashboardService.save(model);
-    //cleanTarefasBase();
+    cleanTarefasBase();
   }
 
   @action
