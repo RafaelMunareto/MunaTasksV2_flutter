@@ -84,7 +84,8 @@ abstract class HomeStoreBase with Store {
               .toString()
               .replaceAll('/usuarios', 'usuarios')
               .split('/');
-          var id = str[1];
+          var id = str[1].replaceAll(')', '');
+
           firestore.collection('usuarios').doc(id).get().then((doc) {
             // ignore: prefer_conditional_assignment
             if (userSubtarefa == null) {
@@ -97,7 +98,7 @@ abstract class HomeStoreBase with Store {
                   .toString()
                   .replaceAll('/usuarios', 'usuarios')
                   .split('/');
-              var id = str[1];
+              var id = str[1].replaceAll(')', '');
               firestore.collection('usuarios').doc(id).get().then((doc) {
                 if (users.isEmpty) {
                   users.add(UserModel.fromDocument(doc));

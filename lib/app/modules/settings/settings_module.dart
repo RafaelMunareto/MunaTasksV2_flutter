@@ -1,3 +1,5 @@
+import 'package:munatasks2/app/modules/settings/etiquetas/etiquetas_page.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/etiquetas_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_page.dart';
@@ -21,6 +23,7 @@ class SettingsModule extends Module {
     Bind.lazySingleton<IPerfilRepository>(
         (i) => PerfilRepository(firestore: FirebaseFirestore.instance)),
     Bind.lazySingleton((i) => PrincipalStore()),
+    Bind.lazySingleton((i) => EtiquetasStore()),
     Bind.lazySingleton<ImageRepository>((i) => ImageRepository()),
     Bind.lazySingleton(
         (i) => PerfilStore(perfilService: i.get(), imageRepository: i.get())),
@@ -32,5 +35,7 @@ class SettingsModule extends Module {
         child: (_, args) => const PrincipalPage(), guards: [AuthGuard()]),
     ChildRoute('/perfil',
         child: (_, args) => const PerfilPage(), guards: [AuthGuard()]),
+    ChildRoute('/etiquetas',
+        child: (_, args) => const EtiquetasPage(), guards: [AuthGuard()]),
   ];
 }
