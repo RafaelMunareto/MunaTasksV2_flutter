@@ -9,18 +9,48 @@ part of 'etiquetas_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
-  final _$valueAtom = Atom(name: '_EtiquetasStoreBase.value');
+  final _$colorsListAtom = Atom(name: '_EtiquetasStoreBase.colorsList');
 
   @override
-  int get value {
-    _$valueAtom.reportRead();
-    return super.value;
+  ObservableStream<List<ColorsModel>>? get colorsList {
+    _$colorsListAtom.reportRead();
+    return super.colorsList;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.reportWrite(value, super.value, () {
-      super.value = value;
+  set colorsList(ObservableStream<List<ColorsModel>>? value) {
+    _$colorsListAtom.reportWrite(value, super.colorsList, () {
+      super.colorsList = value;
+    });
+  }
+
+  final _$etiquetaAtom = Atom(name: '_EtiquetasStoreBase.etiqueta');
+
+  @override
+  String get etiqueta {
+    _$etiquetaAtom.reportRead();
+    return super.etiqueta;
+  }
+
+  @override
+  set etiqueta(String value) {
+    _$etiquetaAtom.reportWrite(value, super.etiqueta, () {
+      super.etiqueta = value;
+    });
+  }
+
+  final _$colorAtom = Atom(name: '_EtiquetasStoreBase.color');
+
+  @override
+  String get color {
+    _$colorAtom.reportRead();
+    return super.color;
+  }
+
+  @override
+  set color(String value) {
+    _$colorAtom.reportWrite(value, super.color, () {
+      super.color = value;
     });
   }
 
@@ -28,11 +58,11 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
       ActionController(name: '_EtiquetasStoreBase');
 
   @override
-  void increment() {
+  void getColors() {
     final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
-        name: '_EtiquetasStoreBase.increment');
+        name: '_EtiquetasStoreBase.getColors');
     try {
-      return super.increment();
+      return super.getColors();
     } finally {
       _$_EtiquetasStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -41,7 +71,9 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
   @override
   String toString() {
     return '''
-value: ${value}
+colorsList: ${colorsList},
+etiqueta: ${etiqueta},
+color: ${color}
     ''';
   }
 }

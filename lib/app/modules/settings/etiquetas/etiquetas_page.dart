@@ -1,7 +1,10 @@
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/etiquetas_store.dart';
 import 'package:flutter/material.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/models/colors_model.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
+import 'package:munatasks2/app/shared/components/text_field_widget.dart';
 
 class EtiquetasPage extends StatefulWidget {
   final String title;
@@ -22,28 +25,32 @@ class EtiquetasPageState extends State<EtiquetasPage> {
           context: context,
           settings: true,
           rota: '/home'),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: LayoutBuilder(builder: (context, constraint) {
-          double withDevice = constraint.maxWidth;
-
-          if (withDevice < 600) {
-            withDevice = withDevice * 1;
-          } else if (withDevice < 960) {
-            withDevice = withDevice * 0.7;
-          } else if (withDevice < 1025) {
-            withDevice = withDevice * 0.5;
-          } else {
-            withDevice = withDevice * 0.4;
-          }
-          return SizedBox(
-            width: withDevice,
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(32, 0, 32, 8),
+      body: Observer(builder: (_) {
+        if (store.colorsList!.data == null) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (store.colorsList!.hasError) {
+          return Center(
+            child: ElevatedButton(
+              onPressed: store.getColors,
+              child: const Text('Error'),
             ),
           );
-        }),
-      ),
+        } else {
+          List<ColorsModel> list = store.colorsList!.data;
+          return ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (_, index) {
+                var model = list[index];
+                return Column(
+                  children: [
+                    Text(model.color.toString()),
+                  ],
+                );
+              });
+        }
+      }),
     );
   }
 }
