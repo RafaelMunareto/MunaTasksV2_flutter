@@ -15,7 +15,7 @@ class UserModel {
     this.verificado = false,
   });
 
-  factory UserModel.fromDocument(dynamic doc) {
+  factory UserModel.fromDocument(doc) {
     return UserModel(
       email: doc['email'],
       name: doc['name'],

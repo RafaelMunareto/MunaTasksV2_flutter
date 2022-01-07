@@ -1,4 +1,3 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -22,27 +21,26 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   @override
   final HomeStore store = Modular.get();
   final _drawerController = ZoomDrawerController();
-  Reference user = "/usuarios/uRVW36YywWcM4PUl48fqcHzTGDW2" as Reference;
+
   @override
   Widget build(BuildContext context) {
-    TarefaModel tarefaSave = TarefaModel(
-        etiqueta: 'Desenvolvimento',
-        texto: 'feito Aplicativo GESUN para Windows. ELECTRON. ',
-        fase: 2,
-        data: '30/12/2021',
-        users: [
-          user,
-          user
-        ],
-        subTarefa: [
-          SubtarefaModel(
-              status: 'check',
-              title: 'especificacao',
-              texto: 'especificar o sistema',
-              user: user),
-        ]);
+    // TarefaModel tarefaSave = TarefaModel(
+    //     etiqueta: 'Desenvolvimento',
+    //     texto: 'feito Aplicativo GESUN para Windows. ELECTRON. ',
+    //     fase: 2,
+    //     data: '30/12/2021',
+    //     users: [
+    //       '/usuarios/uRVW36YywWcM4PUl48fqcHzTGDW2'
+    //     ],
+    //     subTarefa: [
+    //       SubtarefaModel(
+    //           status: 'check',
+    //           title: 'especificacao',
+    //           texto: 'especificar o sistema',
+    //           user: '/usuarios/uRVW36YywWcM4PUl48fqcHzTGDW2'),
+    //     ]);
 
-    store.save(tarefaSave);
+    // store.save(tarefaSave);
     // store.save(tarefaSave);
     // store.save(tarefaSave);
 

@@ -104,13 +104,13 @@ mixin _$HomeStore on HomeStoreBase, Store {
   final _$dashboardListAtom = Atom(name: 'HomeStoreBase.dashboardList');
 
   @override
-  Stream<List<TarefaModel?>>? get dashboardList {
+  Stream<List<dynamic>>? get dashboardList {
     _$dashboardListAtom.reportRead();
     return super.dashboardList;
   }
 
   @override
-  set dashboardList(Stream<List<TarefaModel?>>? value) {
+  set dashboardList(Stream<List<dynamic>>? value) {
     _$dashboardListAtom.reportWrite(value, super.dashboardList, () {
       super.dashboardList = value;
     });

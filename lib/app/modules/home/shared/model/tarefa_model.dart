@@ -32,7 +32,7 @@ class TarefaModel {
       data: doc['data'],
       subTarefa:
           doc['subTarefa']?.map((doc) => SubtarefaModel.fromJson(doc)).toList(),
-      users: doc['users']?.map((doc) => doc).toList(),
+      users: doc['users'],
     );
   }
 
@@ -58,7 +58,7 @@ class TarefaModel {
       'fase': fase,
       'data': data,
       'subTarefa': subTarefa?.map((e) => e.toMap()).toList(),
-      'users': users?.map((e) => e.toMap()).toList(),
+      'users': users,
     };
   }
 
