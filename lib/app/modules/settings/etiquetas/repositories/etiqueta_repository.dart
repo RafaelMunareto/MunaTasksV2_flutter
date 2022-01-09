@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/models/colors_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/colors_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/repositories/interfaces/etiqueta_interfaces.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
-import 'package:munatasks2/app/modules/settings/perfil/repositories/interfaces/perfil_interfaces.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 
 class EtiquetaRepository implements IEtiquetaRepository {
   final FirebaseFirestore firestore;
@@ -12,9 +11,9 @@ class EtiquetaRepository implements IEtiquetaRepository {
   void dispose() {}
 
   @override
-  Stream<List<PerfilModel>> get() {
-    return firestore.collection('perfil').snapshots().map((query) =>
-        query.docs.map((doc) => PerfilModel.fromDocument(doc)).toList());
+  Stream<List<EtiquetaModel>> get() {
+    return firestore.collection('etiqueta').snapshots().map((query) =>
+        query.docs.map((doc) => EtiquetaModel.fromDocument(doc)).toList());
   }
 
   @override
@@ -24,34 +23,32 @@ class EtiquetaRepository implements IEtiquetaRepository {
   }
 
   @override
-  Future<PerfilModel> getByDocumentId(String documentId) async {
+  Future<EtiquetaModel> getByDocumentId(String documentId) async {
     return firestore
-        .collection('perfil')
+        .collection('etiqueta')
         .doc(documentId)
         .get()
-        .then((doc) => PerfilModel.fromDocument(doc));
+        .then((doc) => EtiquetaModel.fromDocument(doc));
   }
 
   @override
-  Future delete(PerfilModel model) {
+  Future delete(EtiquetaModel model) {
     return model.reference!.delete();
   }
 
   @override
-  Future save(PerfilModel model) async {
+  Future save(EtiquetaModel model) async {
     if (model.reference == null) {
-      model.reference = await firestore.collection('perfil').add({
-        'idStaff': model.idStaff,
-        'manager': model.manager,
-        'name': model.name,
-        'nameTime': model.nameTime,
+      model.reference = await firestore.collection('etiqueta').add({
+        'etiqueta': model.etiqueta,
+        'color': model.color,
+        'icon': model.icon,
       });
     } else {
       model.reference!.update({
-        'idStaff': model.idStaff,
-        'manager': model.manager,
-        'name': model.name,
-        'nameTime': model.nameTime,
+        'etiqueta': model.etiqueta,
+        'color': model.color,
+        'icon': model.icon,
       });
     }
   }

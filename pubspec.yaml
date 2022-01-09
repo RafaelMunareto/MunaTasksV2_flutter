@@ -38,6 +38,7 @@ dependencies:
   accordion: ^2.1.2
   badges: ^2.0.2
   flutter_zoom_drawer: ^2.1.2
+  flutter_iconpicker: ^3.1.2
 
 dev_dependencies:
   flutter_test:

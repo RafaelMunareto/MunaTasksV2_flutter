@@ -1,10 +1,10 @@
-import 'package:munatasks2/app/modules/settings/etiquetas/models/colors_model.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/colors_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 
 abstract class IEtiquetaService {
-  Stream<List<PerfilModel>> get();
+  Stream<List<EtiquetaModel>> get();
   Stream<List<ColorsModel>> getColor();
-  Future<PerfilModel> getByDocumentId(String documentId);
-  Future save(PerfilModel model);
-  Future delete(PerfilModel model);
+  Future<EtiquetaModel> getByDocumentId(String documentId);
+  Future save(EtiquetaModel model);
+  Future delete(EtiquetaModel model);
 }

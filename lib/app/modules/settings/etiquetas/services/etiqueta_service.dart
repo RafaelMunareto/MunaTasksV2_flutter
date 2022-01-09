@@ -1,7 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/models/colors_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/colors_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/repositories/interfaces/etiqueta_interfaces.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 
 class EtiquetaService extends Disposable implements IEtiquetaService {
@@ -13,7 +14,7 @@ class EtiquetaService extends Disposable implements IEtiquetaService {
   void dispose() {}
 
   @override
-  Stream<List<PerfilModel>> get() {
+  Stream<List<EtiquetaModel>> get() {
     return etiquetaRepository.get();
   }
 
@@ -23,17 +24,17 @@ class EtiquetaService extends Disposable implements IEtiquetaService {
   }
 
   @override
-  Future delete(PerfilModel model) {
+  Future delete(EtiquetaModel model) {
     return etiquetaRepository.delete(model);
   }
 
   @override
-  Future save(PerfilModel model) {
+  Future save(EtiquetaModel model) {
     return etiquetaRepository.save(model);
   }
 
   @override
-  Future<PerfilModel> getByDocumentId(String documentId) {
+  Future<EtiquetaModel> getByDocumentId(String documentId) {
     return etiquetaRepository.getByDocumentId(documentId);
   }
 }
