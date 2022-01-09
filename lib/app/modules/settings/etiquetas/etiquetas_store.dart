@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/colors_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
@@ -13,10 +13,20 @@ abstract class _EtiquetasStoreBase with Store {
 
   _EtiquetasStoreBase({required this.etiquetaService}) {
     getColors();
+    getList();
   }
 
   @observable
+  EtiquetaModel etiquetaModel = EtiquetaModel();
+
+  @action
+  setEtiquetaModel(value) => etiquetaModel = value;
+
+  @observable
   ObservableStream<List<ColorsModel>>? colorsList;
+
+  @observable
+  ObservableStream<List<EtiquetaModel>>? etiquetaList;
 
   @observable
   String etiqueta = '';
@@ -25,7 +35,7 @@ abstract class _EtiquetasStoreBase with Store {
   changeEtiqueta(value) => etiqueta = value;
 
   @observable
-  dynamic icon;
+  int? icon;
 
   @action
   setIcon(value) => icon = value;
@@ -64,15 +74,16 @@ abstract class _EtiquetasStoreBase with Store {
   setMsg(value) => msg = value;
 
   @observable
-  List<IconData> iconData = [
-    Icons.settings,
-    Icons.error,
-    Icons.bookmark,
-    Icons.card_membership,
-    Icons.double_arrow,
-    Icons.vignette,
-    Icons.local_library
-  ];
+  bool updateLoading = false;
+
+  @action
+  setUpdateLoading(value) => updateLoading = value;
+
+  @observable
+  DocumentReference? reference;
+
+  @action
+  setReference(value) => reference = value;
 
   @action
   setColor(value) => color = value;
@@ -80,6 +91,11 @@ abstract class _EtiquetasStoreBase with Store {
   @action
   void getColors() {
     colorsList = etiquetaService.getColor().asObservable();
+  }
+
+  @action
+  void getList() {
+    etiquetaList = etiquetaService.get().asObservable();
   }
 
   String? validateEtiqueta() {
@@ -115,14 +131,16 @@ abstract class _EtiquetasStoreBase with Store {
   @action
   submit() {
     setLoading(true);
-    EtiquetaModel etiquetaModel =
-        EtiquetaModel(color: color, icon: icon, etiqueta: etiqueta);
     if (isValidateEtiqueta) {
+      if (!updateLoading) {
+        setEtiquetaModel(
+            EtiquetaModel(color: color, icon: icon, etiqueta: etiqueta));
+      }
       etiquetaService.save(etiquetaModel).then((value) {
-        setCleanVariables();
         setMsg('Salvo com sucesso');
         setErrOrGoal(false);
         setLoading(false);
+        setCleanVariables();
       }, onError: (erro) {
         setMsg(erro);
         setErrOrGoal(true);
@@ -131,10 +149,20 @@ abstract class _EtiquetasStoreBase with Store {
     }
   }
 
-  @action
   setCleanVariables() {
     changeEtiqueta('');
     setIcon(null);
     setColor('');
+  }
+
+  @action
+  delete(EtiquetaModel model) {
+    etiquetaService.delete(model);
+  }
+
+  @action
+  loadingUpdate(model) {
+    setUpdateLoading(true);
+    setEtiquetaModel(model);
   }
 }

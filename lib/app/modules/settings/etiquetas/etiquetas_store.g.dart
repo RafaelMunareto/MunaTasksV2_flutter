@@ -17,6 +17,21 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
               name: '_EtiquetasStoreBase.isValidateEtiqueta'))
       .value;
 
+  final _$etiquetaModelAtom = Atom(name: '_EtiquetasStoreBase.etiquetaModel');
+
+  @override
+  EtiquetaModel get etiquetaModel {
+    _$etiquetaModelAtom.reportRead();
+    return super.etiquetaModel;
+  }
+
+  @override
+  set etiquetaModel(EtiquetaModel value) {
+    _$etiquetaModelAtom.reportWrite(value, super.etiquetaModel, () {
+      super.etiquetaModel = value;
+    });
+  }
+
   final _$colorsListAtom = Atom(name: '_EtiquetasStoreBase.colorsList');
 
   @override
@@ -29,6 +44,21 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
   set colorsList(ObservableStream<List<ColorsModel>>? value) {
     _$colorsListAtom.reportWrite(value, super.colorsList, () {
       super.colorsList = value;
+    });
+  }
+
+  final _$etiquetaListAtom = Atom(name: '_EtiquetasStoreBase.etiquetaList');
+
+  @override
+  ObservableStream<List<EtiquetaModel>>? get etiquetaList {
+    _$etiquetaListAtom.reportRead();
+    return super.etiquetaList;
+  }
+
+  @override
+  set etiquetaList(ObservableStream<List<EtiquetaModel>>? value) {
+    _$etiquetaListAtom.reportWrite(value, super.etiquetaList, () {
+      super.etiquetaList = value;
     });
   }
 
@@ -50,13 +80,13 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
   final _$iconAtom = Atom(name: '_EtiquetasStoreBase.icon');
 
   @override
-  dynamic get icon {
+  int? get icon {
     _$iconAtom.reportRead();
     return super.icon;
   }
 
   @override
-  set icon(dynamic value) {
+  set icon(int? value) {
     _$iconAtom.reportWrite(value, super.icon, () {
       super.icon = value;
     });
@@ -152,23 +182,49 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
     });
   }
 
-  final _$iconDataAtom = Atom(name: '_EtiquetasStoreBase.iconData');
+  final _$updateLoadingAtom = Atom(name: '_EtiquetasStoreBase.updateLoading');
 
   @override
-  List<IconData> get iconData {
-    _$iconDataAtom.reportRead();
-    return super.iconData;
+  bool get updateLoading {
+    _$updateLoadingAtom.reportRead();
+    return super.updateLoading;
   }
 
   @override
-  set iconData(List<IconData> value) {
-    _$iconDataAtom.reportWrite(value, super.iconData, () {
-      super.iconData = value;
+  set updateLoading(bool value) {
+    _$updateLoadingAtom.reportWrite(value, super.updateLoading, () {
+      super.updateLoading = value;
+    });
+  }
+
+  final _$referenceAtom = Atom(name: '_EtiquetasStoreBase.reference');
+
+  @override
+  DocumentReference<Object?>? get reference {
+    _$referenceAtom.reportRead();
+    return super.reference;
+  }
+
+  @override
+  set reference(DocumentReference<Object?>? value) {
+    _$referenceAtom.reportWrite(value, super.reference, () {
+      super.reference = value;
     });
   }
 
   final _$_EtiquetasStoreBaseActionController =
       ActionController(name: '_EtiquetasStoreBase');
+
+  @override
+  dynamic setEtiquetaModel(dynamic value) {
+    final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
+        name: '_EtiquetasStoreBase.setEtiquetaModel');
+    try {
+      return super.setEtiquetaModel(value);
+    } finally {
+      _$_EtiquetasStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic changeEtiqueta(dynamic value) {
@@ -248,6 +304,28 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
   }
 
   @override
+  dynamic setUpdateLoading(dynamic value) {
+    final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
+        name: '_EtiquetasStoreBase.setUpdateLoading');
+    try {
+      return super.setUpdateLoading(value);
+    } finally {
+      _$_EtiquetasStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setReference(dynamic value) {
+    final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
+        name: '_EtiquetasStoreBase.setReference');
+    try {
+      return super.setReference(value);
+    } finally {
+      _$_EtiquetasStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setColor(dynamic value) {
     final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
         name: '_EtiquetasStoreBase.setColor');
@@ -270,6 +348,17 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
   }
 
   @override
+  void getList() {
+    final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
+        name: '_EtiquetasStoreBase.getList');
+    try {
+      return super.getList();
+    } finally {
+      _$_EtiquetasStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic submit() {
     final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
         name: '_EtiquetasStoreBase.submit');
@@ -281,11 +370,22 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
   }
 
   @override
-  dynamic setCleanVariables() {
+  dynamic delete(EtiquetaModel model) {
     final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
-        name: '_EtiquetasStoreBase.setCleanVariables');
+        name: '_EtiquetasStoreBase.delete');
     try {
-      return super.setCleanVariables();
+      return super.delete(model);
+    } finally {
+      _$_EtiquetasStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic loadingUpdate(dynamic model) {
+    final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
+        name: '_EtiquetasStoreBase.loadingUpdate');
+    try {
+      return super.loadingUpdate(model);
     } finally {
       _$_EtiquetasStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -294,7 +394,9 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
   @override
   String toString() {
     return '''
+etiquetaModel: ${etiquetaModel},
 colorsList: ${colorsList},
+etiquetaList: ${etiquetaList},
 etiqueta: ${etiqueta},
 icon: ${icon},
 iconAction: ${iconAction},
@@ -303,7 +405,8 @@ color: ${color},
 loading: ${loading},
 errOrGoal: ${errOrGoal},
 msg: ${msg},
-iconData: ${iconData},
+updateLoading: ${updateLoading},
+reference: ${reference},
 isValidateEtiqueta: ${isValidateEtiqueta}
     ''';
   }

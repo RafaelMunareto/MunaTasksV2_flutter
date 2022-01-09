@@ -5,6 +5,7 @@ import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/etiquetas_store.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/colors_widget.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/etiquetas_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/button_widget.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
@@ -23,12 +24,23 @@ class EtiquetasPageState extends State<EtiquetasPage>
   Icon? _icon;
 
   _pickIcon() async {
-    IconData? icon = await FlutterIconPicker.showIconPicker(context,
-        iconPackModes: [IconPack.cupertino]);
+    IconData? icon = await FlutterIconPicker.showIconPicker(
+      context,
+      title: const Text('Escolha um ícone'),
+      searchHintText: 'Pesquisar',
+      closeChild: const Text('Fechar',textScaleFactor: 1.25,)
+      iconPackModes: [IconPack.material],
+    );
     setState(() {
-      store.setIcon(icon.toString());
+      if(icon != null){
+        store.setIcon(icon.codePoint);
+      }
     });
-    _icon = Icon(icon);
+    
+    store.icon != null ? 
+    _icon = Icon(icon) : _icon = Icon(
+                          IconData(store.icon ?? 0,
+                              fontFamily: 'MaterialIcons'),);
   }
 
   @override
@@ -65,28 +77,30 @@ class EtiquetasPageState extends State<EtiquetasPage>
           child: Wrap(
             direction: Axis.vertical,
             children: [
-              Observer(builder: (_) {
-                return SizedBox(
+              
+                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8),
-                    child: TextFormField(
+                    child: Observer(builder: (_) {
+                    return TextFormField(
+                       key: Key(store.etiqueta),
                       initialValue: store.etiqueta,
-                      onChanged: (value) {
-                        store.changeEtiqueta(value);
-                      },
+                      onChanged:store.changeEtiqueta,
                       decoration: InputDecoration(
                         label: const Text('Etiqueta'),
                         icon: const Icon(Icons.bookmark),
+                        // ignore: unnecessary_null_comparison
                         errorText: store.validateEtiqueta == null
                             ? null
                             : store.validateEtiqueta(),
                       ),
-                    ),
+                    );
+                    }),
                   ),
-                );
-              }),
+                ),
+                    
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
@@ -95,9 +109,12 @@ class EtiquetasPageState extends State<EtiquetasPage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      ElevatedButton(
-                        onPressed: _pickIcon,
-                        child: const Text('Escolha um ícone'),
+                      GestureDetector(
+                        child: const ListTile(
+                          leading: Icon(Icons.settings),
+                          title: Text('Escolha uma ícone'),
+                        ),
+                        onTap: _pickIcon,
                       ),
                       const SizedBox(height: 10),
                       AnimatedSwitcher(
@@ -116,12 +133,13 @@ class EtiquetasPageState extends State<EtiquetasPage>
                   child: Center(
                     child: GestureDetector(
                       child: const ListTile(
-                        leading: Icon(Icons.color_lens),
-                        title: Text('Escolha uma cor'),
+                        leading: Icon(Icons.color_lens, color: Colors.deepPurple,),
+                        title: Text('Escolha uma cor', style: TextStyle(color: Colors.deepPurple),),
                       ),
                       onTap: () {
                         setState(
                           () {
+                             FocusScope.of(context).requestFocus(FocusNode());
                             store.setColorAction(!store.colorAction);
                           },
                         );
@@ -145,12 +163,13 @@ class EtiquetasPageState extends State<EtiquetasPage>
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ButtonWidget(
-                      label: 'SALVAR',
+                      label: store.updateLoading ? 'ATUALIZAR' : 'SALVAR',
                       width: MediaQuery.of(context).size.width * 0.5,
                       loading: store.loading,
                       function: store.isValidateEtiqueta ? store.submit : null),
                 );
-              })
+              }),
+              EtiquetasWidget(etiquetasList: store.etiquetaList, getList: store.getList, delete: store.delete, loadingUpdate: store.loadingUpdate,),
             ],
           ),
         ),

@@ -1,9 +1,7 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
-import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
 class TarefaModel {
   String etiqueta;

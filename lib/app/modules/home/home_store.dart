@@ -78,7 +78,7 @@ abstract class HomeStoreBase with Store {
     dashboardList = dashboardService.get();
 
     dashboardList!.forEach((e) {
-      e.forEach((element) {
+      for (var element in e) {
         for (var subtarefa in element!.subTarefa!) {
           var str = subtarefa.user
               .toString()
@@ -132,7 +132,7 @@ abstract class HomeStoreBase with Store {
             setLoading(false);
           });
         }
-      });
+      }
     });
   }
 

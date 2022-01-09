@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 
 class ConvertIcon {
   iconStatus(String icon) {
@@ -18,7 +17,7 @@ class ConvertIcon {
       case 'blue':
         return ['Azul', Colors.blue];
       case 'red':
-        return ['Vermleho', Colors.red];
+        return ['Vermelho', Colors.red];
       case 'green':
         return ['Verde', Colors.green];
       case 'grey':
@@ -29,6 +28,25 @@ class ConvertIcon {
         return ['Amarelo', Colors.yellow];
       case 'orange':
         return ['Laranja', Colors.orange];
+    }
+  }
+
+  convertColor(String colors) {
+    switch (colors) {
+      case 'blue':
+        return Colors.blue;
+      case 'red':
+        return Colors.red;
+      case 'green':
+        return Colors.green;
+      case 'grey':
+        return Colors.grey;
+      case 'dark':
+        return Colors.black;
+      case 'yellow':
+        return Colors.yellow;
+      case 'orange':
+        return Colors.orange;
     }
   }
 }

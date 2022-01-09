@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
 class SubtarefaModel {
   String title;

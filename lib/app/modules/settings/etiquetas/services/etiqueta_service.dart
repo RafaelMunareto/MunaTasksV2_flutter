@@ -3,7 +3,6 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/colors_m
 import 'package:munatasks2/app/modules/settings/etiquetas/repositories/interfaces/etiqueta_interfaces.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 
 class EtiquetaService extends Disposable implements IEtiquetaService {
   final IEtiquetaRepository etiquetaRepository;

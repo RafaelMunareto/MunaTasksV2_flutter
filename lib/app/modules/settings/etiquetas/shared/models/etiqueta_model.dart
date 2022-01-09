@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class EtiquetaModel {
   String etiqueta;
   DocumentReference? reference;
   String color;
-  dynamic icon;
+  int? icon;
 
   EtiquetaModel(
       {this.color = '', this.reference, this.icon, this.etiqueta = ''});
