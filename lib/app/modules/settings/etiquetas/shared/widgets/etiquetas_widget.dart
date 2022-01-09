@@ -94,15 +94,15 @@ class _EtiquetasWidgetState extends State<EtiquetasWidget> {
                 'Tem certeza que deseja excluír a etiqueta ${model!.etiqueta}'),
             actions: [
               ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('CANCELAR'),
+              ),
+              ElevatedButton(
                 onPressed: () {
                   widget.delete(model);
                   Navigator.pop(context);
                 },
                 child: const Text('EXCLUIR'),
-              ),
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('CANCELAR'),
               ),
             ],
           );

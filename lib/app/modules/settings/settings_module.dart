@@ -4,6 +4,7 @@ import 'package:munatasks2/app/modules/settings/etiquetas/repositories/etiqueta_
 import 'package:munatasks2/app/modules/settings/etiquetas/repositories/interfaces/etiqueta_interfaces.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/services/etiqueta_service.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/controller/etiqueta_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_page.dart';
@@ -21,6 +22,7 @@ class SettingsModule extends Module {
   @override
   final List<Bind> binds = [
     Bind.lazySingleton((i) => ClientStore()),
+    Bind.lazySingleton((i) => EtiquetaStore()),
     Bind.lazySingleton<IPerfilService>(
         (i) => PerfilService(perfilRepository: i.get())),
     Bind.lazySingleton<IPerfilRepository>(
