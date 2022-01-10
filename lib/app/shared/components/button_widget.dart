@@ -80,7 +80,10 @@ class _ButtonWidgetState extends State<ButtonWidget>
                   borderRadius: BorderRadius.circular(radius.value),
                 ),
               ),
-              onPressed: widget.function,
+              onPressed: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+                widget.function();
+              },
               child: widget.loading
                   ? const CircularProgressIndicator(
                       color: Colors.white,

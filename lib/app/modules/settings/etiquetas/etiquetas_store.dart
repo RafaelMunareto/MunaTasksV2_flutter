@@ -30,22 +30,29 @@ abstract class _EtiquetasStoreBase with Store {
 
   @action
   submit() async {
-    await etiquetaStore.setLoading(true);
-    EtiquetaModel etiquetaModel = EtiquetaModel(
-        color: etiquetaStore.color,
-        icon: etiquetaStore.icon,
-        etiqueta: etiquetaStore.etiqueta,
-        reference: etiquetaStore.reference);
-    etiquetaService.save(etiquetaModel).then((value) {
-      etiquetaStore.setMsg('Salvo com sucesso');
-      etiquetaStore.setErrOrGoal(false);
-      etiquetaStore.setLoading(false);
-      etiquetaStore.setCleanVariables();
-    }, onError: (erro) {
-      etiquetaStore.setMsg(erro);
-      etiquetaStore.setErrOrGoal(true);
-      etiquetaStore.setLoading(false);
-    });
+    if (etiquetaStore.isValidateEtiqueta) {
+      etiquetaStore.setShowValidation(false);
+      await etiquetaStore.setLoading(true);
+      etiquetaStore.setColorAction(false);
+      EtiquetaModel etiquetaModel = EtiquetaModel(
+          color: etiquetaStore.color,
+          icon: etiquetaStore.icon,
+          etiqueta: etiquetaStore.etiqueta,
+          reference: etiquetaStore.reference);
+      etiquetaService.save(etiquetaModel).then((value) {
+        etiquetaStore.setEtiqueta('teste');
+        etiquetaStore.setMsg('Salvo com sucesso');
+        etiquetaStore.setErrOrGoal(false);
+        etiquetaStore.setLoading(false);
+        etiquetaStore.setCleanVariables();
+      }, onError: (erro) {
+        etiquetaStore.setMsg(erro);
+        etiquetaStore.setErrOrGoal(true);
+        etiquetaStore.setLoading(false);
+      });
+    } else {
+      etiquetaStore.setShowValidation(true);
+    }
   }
 
   @action

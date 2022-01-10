@@ -62,6 +62,21 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
+  final _$showValidationAtom = Atom(name: '_EtiquetaStoreBase.showValidation');
+
+  @override
+  bool get showValidation {
+    _$showValidationAtom.reportRead();
+    return super.showValidation;
+  }
+
+  @override
+  set showValidation(bool value) {
+    _$showValidationAtom.reportWrite(value, super.showValidation, () {
+      super.showValidation = value;
+    });
+  }
+
   final _$iconAtom = Atom(name: '_EtiquetaStoreBase.icon');
 
   @override
@@ -212,6 +227,17 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
   }
 
   @override
+  dynamic setShowValidation(dynamic value) {
+    final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
+        name: '_EtiquetaStoreBase.setShowValidation');
+    try {
+      return super.setShowValidation(value);
+    } finally {
+      _$_EtiquetaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setIcon(dynamic value) {
     final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
         name: '_EtiquetaStoreBase.setIcon');
@@ -316,6 +342,7 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
 colorsList: ${colorsList},
 etiquetaList: ${etiquetaList},
 etiqueta: ${etiqueta},
+showValidation: ${showValidation},
 icon: ${icon},
 iconAction: ${iconAction},
 colorAction: ${colorAction},

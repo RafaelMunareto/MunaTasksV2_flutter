@@ -17,6 +17,7 @@ import 'package:munatasks2/app/modules/settings/principal/principal_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:munatasks2/app/shared/auth/repositories/guard.dart';
+import 'package:munatasks2/app/shared/utils/image/image_repository.dart';
 
 class SettingsModule extends Module {
   @override
@@ -33,6 +34,7 @@ class SettingsModule extends Module {
         (i) => EtiquetaRepository(firestore: FirebaseFirestore.instance)),
     Bind.lazySingleton((i) => PrincipalStore()),
     Bind.lazySingleton((i) => EtiquetasStore(etiquetaService: i.get())),
+    Bind.lazySingleton<ImageRepository>((i) => ImageRepository()),
     Bind.lazySingleton(
         (i) => PerfilStore(perfilService: i.get(), imageRepository: i.get())),
   ];

@@ -21,6 +21,12 @@ abstract class _EtiquetaStoreBase with Store {
   String etiqueta = '';
 
   @observable
+  bool showValidation = false;
+
+  @action
+  setShowValidation(value) => showValidation = value;
+
+  @observable
   int? icon;
 
   @action
@@ -84,7 +90,7 @@ abstract class _EtiquetaStoreBase with Store {
   }
 
   String? validateIcon() {
-    if (etiqueta.isEmpty) {
+    if (icon == null) {
       return 'Campo obrigatório';
     }
     return null;
@@ -104,6 +110,7 @@ abstract class _EtiquetaStoreBase with Store {
         validateIcon() == null;
   }
 
+  @action
   setCleanVariables() {
     setEtiqueta('');
     setIcon(null);

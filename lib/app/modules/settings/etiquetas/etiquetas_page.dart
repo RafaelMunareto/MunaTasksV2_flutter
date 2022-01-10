@@ -8,6 +8,7 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/colors_
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/etiquetas_widget.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/icon_widget.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/text_field_widget.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/validate_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/button_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
@@ -67,6 +68,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
         child: GestureDetector(
           onTap: () {
             store.etiquetaStore.setColorAction(false);
+            FocusScope.of(context).requestFocus(FocusNode());
           },
           child: Wrap(
             direction: Axis.vertical,
@@ -85,59 +87,39 @@ class EtiquetasPageState extends State<EtiquetasPage>
                     icon: store.etiquetaStore.icon,
                     color: store.etiquetaStore.color);
               }),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
+              Observer(builder: (_) {
+                return SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  child: Center(
-                    child: Observer(builder: (_) {
-                      return GestureDetector(
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.color_lens,
-                            color: ConvertIcon()
-                                .convertColor(store.etiquetaStore.color),
-                          ),
-                          title: Text(
-                            'Escolha uma cor',
-                            style: TextStyle(
-                              color: ConvertIcon()
-                                  .convertColor(store.etiquetaStore.color),
-                            ),
-                          ),
-                        ),
-                        onTap: () {
-                          setState(
-                            () {
-                              FocusScope.of(context).requestFocus(FocusNode());
-                              store.etiquetaStore.setColorAction(
-                                  !store.etiquetaStore.colorAction);
-                              setState(() {
-                                store.etiquetaStore.colorAction
-                                    ? controller.forward()
-                                    : controller.reverse();
-                              });
-                            },
+                  child: ExpansionTile(
+                    leading: Icon(
+                      Icons.color_lens,
+                      color:
+                          ConvertIcon().convertColor(store.etiquetaStore.color),
+                    ),
+                    title: Text(
+                      'Escolha uma cor',
+                      style: TextStyle(
+                        color: ConvertIcon()
+                            .convertColor(store.etiquetaStore.color),
+                      ),
+                    ),
+                    children: <Widget>[
+                      Observer(
+                        builder: (_) {
+                          return ColorsWidget(
+                            colorAction: store.etiquetaStore.colorAction,
+                            colorsList: store.etiquetaStore.colorsList,
+                            getColors: store.getColors,
+                            color: store.etiquetaStore.color,
+                            setColor: store.etiquetaStore.setColor,
+                            controller: controller,
                           );
                         },
-                      );
-                    }),
+                      ),
+                    ],
                   ),
-                ),
-              ),
-              Observer(
-                builder: (_) {
-                  return ColorsWidget(
-                    colorAction: store.etiquetaStore.colorAction,
-                    colorsList: store.etiquetaStore.colorsList,
-                    getColors: store.getColors,
-                    color: store.etiquetaStore.color,
-                    setColor: store.etiquetaStore.setColor,
-                    controller: controller,
-                  );
-                },
-              ),
+                );
+              }),
               Observer(builder: (_) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -150,6 +132,17 @@ class EtiquetasPageState extends State<EtiquetasPage>
                       function: store.submit),
                 );
               }),
+              Observer(
+                builder: (_) {
+                  return store.etiquetaStore.showValidation
+                      ? ValidateWidget(
+                          validateEtiqueta:
+                              store.etiquetaStore.validateEtiqueta,
+                          validateColor: store.etiquetaStore.validateColor,
+                          validateIcon: store.etiquetaStore.validateIcon)
+                      : Container();
+                },
+              ),
               EtiquetasWidget(
                 etiquetasList: store.etiquetaStore.etiquetaList,
                 getList: store.getList,

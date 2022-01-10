@@ -20,66 +20,102 @@ class EtiquetasWidget extends StatefulWidget {
   State<EtiquetasWidget> createState() => _EtiquetasWidgetState();
 }
 
-class _EtiquetasWidgetState extends State<EtiquetasWidget> {
+class _EtiquetasWidgetState extends State<EtiquetasWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> opacidade;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 1400), vsync: this);
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.4,
-      child: Observer(
-        builder: (_) {
-          if (widget.etiquetasList.data == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (widget.etiquetasList.hasError) {
-            return Center(
-              child: ElevatedButton(
-                onPressed: widget.getList(),
-                child: const Text('Error'),
-              ),
-            );
-          } else {
-            List<EtiquetaModel> list = widget.etiquetasList.data;
-            return ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (_, index) {
-                var model = list[index];
-                return Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        widget.loadingUpdate(model);
-                      },
-                      child: ListTile(
-                        leading: Icon(
-                          IconData(model.icon ?? 0,
-                              fontFamily: 'MaterialIcons'),
-                          color: ConvertIcon().convertColor(model.color),
-                        ),
-                        title: Text(
-                          model.etiqueta,
-                          style: TextStyle(
+    opacidade = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(parent: _controller, curve: const Interval(0.6, 0.8)));
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: _buildAnimation,
+      ),
+    );
+  }
+
+  Widget _buildAnimation(BuildContext context, Widget? child) {
+    return FadeTransition(
+      opacity: opacidade,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 0.4,
+        child: Observer(
+          builder: (_) {
+            if (widget.etiquetasList.data == null) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (widget.etiquetasList.hasError) {
+              return Center(
+                child: ElevatedButton(
+                  onPressed: widget.getList(),
+                  child: const Text('Error'),
+                ),
+              );
+            } else {
+              List<EtiquetaModel> list = widget.etiquetasList.data;
+              return ListView.builder(
+                itemCount: list.length,
+                itemBuilder: (_, index) {
+                  var model = list[index];
+                  return Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          widget.loadingUpdate(model);
+                        },
+                        child: ListTile(
+                          leading: Icon(
+                            IconData(model.icon ?? 0,
+                                fontFamily: 'MaterialIcons'),
                             color: ConvertIcon().convertColor(model.color),
                           ),
-                        ),
-                        trailing: GestureDetector(
-                          child: const Icon(
-                            Icons.delete,
-                            color: Colors.red,
+                          title: Text(
+                            model.etiqueta,
+                            style: TextStyle(
+                              color: ConvertIcon().convertColor(model.color),
+                            ),
                           ),
-                          onTap: () {
-                            _showDialog(model: model);
-                          },
+                          trailing: GestureDetector(
+                            child: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                            onTap: () {
+                              _showDialog(model: model);
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
-            );
-          }
-        },
+                      Divider(),
+                    ],
+                  );
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }
@@ -90,19 +126,52 @@ class _EtiquetasWidgetState extends State<EtiquetasWidget> {
         context: context,
         builder: (_) {
           return AlertDialog(
-            title: Text(
-                'Tem certeza que deseja excluír a etiqueta ${model!.etiqueta}'),
+            title: const Text('Excluir etiqueta.'),
+            content: Text(
+              'Tem certeza que deseja excluír a etiqueta ${model!.etiqueta} ?',
+              style: const TextStyle(fontSize: 16, color: Colors.deepPurple),
+            ),
             actions: [
               ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: const BorderSide(
+                        color: Colors.deepPurple,
+                        width: 2.0,
+                      ),
+                    ),
+                  ),
+                ),
                 onPressed: () => Navigator.pop(context),
-                child: const Text('CANCELAR'),
+                child: const Text(
+                  'CANCELAR',
+                  style: TextStyle(color: Colors.deepPurple),
+                ),
               ),
               ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: const BorderSide(
+                        color: Colors.deepPurple,
+                        width: 2.0,
+                      ),
+                    ),
+                  ),
+                ),
                 onPressed: () {
                   widget.delete(model);
                   Navigator.pop(context);
                 },
-                child: const Text('EXCLUIR'),
+                child: const Text(
+                  'EXCLUIR',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           );

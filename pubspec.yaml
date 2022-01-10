@@ -39,7 +39,6 @@ dependencies:
   badges: ^2.0.2
   flutter_zoom_drawer: ^2.1.2
   flutter_iconpicker: ^3.1.2
-  expansion_tile_card: ^1.1.0
   
 dev_dependencies:
   flutter_test:
