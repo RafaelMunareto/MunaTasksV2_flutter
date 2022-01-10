@@ -29,25 +29,23 @@ abstract class _EtiquetasStoreBase with Store {
   }
 
   @action
-  submit() {
-    etiquetaStore.setLoading(true);
-    if (etiquetaStore.isValidateEtiqueta) {
-      EtiquetaModel etiquetaModel = EtiquetaModel(
-          color: etiquetaStore.color,
-          icon: etiquetaStore.icon,
-          etiqueta: etiquetaStore.etiqueta,
-          reference: etiquetaStore.reference);
-      etiquetaService.save(etiquetaModel).then((value) {
-        etiquetaStore.setMsg('Salvo com sucesso');
-        etiquetaStore.setErrOrGoal(false);
-        etiquetaStore.setLoading(false);
-        etiquetaStore.setCleanVariables();
-      }, onError: (erro) {
-        etiquetaStore.setMsg(erro);
-        etiquetaStore.setErrOrGoal(true);
-        etiquetaStore.setLoading(false);
-      });
-    }
+  submit() async {
+    await etiquetaStore.setLoading(true);
+    EtiquetaModel etiquetaModel = EtiquetaModel(
+        color: etiquetaStore.color,
+        icon: etiquetaStore.icon,
+        etiqueta: etiquetaStore.etiqueta,
+        reference: etiquetaStore.reference);
+    etiquetaService.save(etiquetaModel).then((value) {
+      etiquetaStore.setMsg('Salvo com sucesso');
+      etiquetaStore.setErrOrGoal(false);
+      etiquetaStore.setLoading(false);
+      etiquetaStore.setCleanVariables();
+    }, onError: (erro) {
+      etiquetaStore.setMsg(erro);
+      etiquetaStore.setErrOrGoal(true);
+      etiquetaStore.setLoading(false);
+    });
   }
 
   @action

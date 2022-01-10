@@ -29,8 +29,9 @@ class _IconWidgetState extends State<IconWidget> {
         widget.setIcon(icon.codePoint);
       }
     });
-    
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -56,7 +57,7 @@ class _IconWidgetState extends State<IconWidget> {
                                 fontFamily: 'MaterialIcons'),
                             size: 48,
                             color: ConvertIcon()
-                                .convertColor(widget.color)),
+                                .convertColor(widget.color) ?? Colors.black54),
                       )
                     ],
                   ),

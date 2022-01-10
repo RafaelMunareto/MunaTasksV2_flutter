@@ -1,3 +1,4 @@
+// ignore_for_file: unnecessary_null_comparison
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/colors_widget.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/etiquetas_widget.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/icon_widget.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/text_field_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/button_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
@@ -22,6 +24,16 @@ class EtiquetasPageState extends State<EtiquetasPage>
     with SingleTickerProviderStateMixin {
   final EtiquetasStore store = Modular.get();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late AnimationController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    controller.forward();
+  }
 
   @override
   void didChangeDependencies() {
@@ -59,27 +71,14 @@ class EtiquetasPageState extends State<EtiquetasPage>
           child: Wrap(
             direction: Axis.vertical,
             children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
-                  child: Observer(builder: (_) {
-                    return TextFormField(
-                      key: Key(store.etiquetaStore.etiqueta),
-                      initialValue: store.etiquetaStore.etiqueta,
-                      onChanged: store.etiquetaStore.setEtiqueta,
-                      decoration: InputDecoration(
-                        label: const Text('Etiqueta'),
-                        icon: const Icon(Icons.bookmark),
-                        errorText: store.etiquetaStore.validateEtiqueta == null
-                            ? null
-                            : store.etiquetaStore.validateEtiqueta(),
-                      ),
-                    );
-                  }),
-                ),
-              ),
+              Observer(builder: (_) {
+                return TextFieldWidget(
+                  etiqueta: store.etiquetaStore.etiqueta,
+                  loading: store.etiquetaStore.loading,
+                  reference: store.etiquetaStore.reference,
+                  setEtiqueta: store.etiquetaStore.setEtiqueta,
+                );
+              }),
               Observer(builder: (_) {
                 return IconWidget(
                     setIcon: store.etiquetaStore.setIcon,
@@ -103,8 +102,9 @@ class EtiquetasPageState extends State<EtiquetasPage>
                           title: Text(
                             'Escolha uma cor',
                             style: TextStyle(
-                                color: ConvertIcon()
-                                    .convertColor(store.etiquetaStore.color)),
+                              color: ConvertIcon()
+                                  .convertColor(store.etiquetaStore.color),
+                            ),
                           ),
                         ),
                         onTap: () {
@@ -113,6 +113,11 @@ class EtiquetasPageState extends State<EtiquetasPage>
                               FocusScope.of(context).requestFocus(FocusNode());
                               store.etiquetaStore.setColorAction(
                                   !store.etiquetaStore.colorAction);
+                              setState(() {
+                                store.etiquetaStore.colorAction
+                                    ? controller.forward()
+                                    : controller.reverse();
+                              });
                             },
                           );
                         },
@@ -129,6 +134,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
                     getColors: store.getColors,
                     color: store.etiquetaStore.color,
                     setColor: store.etiquetaStore.setColor,
+                    controller: controller,
                   );
                 },
               ),
@@ -141,9 +147,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
                           : 'SALVAR',
                       width: MediaQuery.of(context).size.width * 0.5,
                       loading: store.etiquetaStore.loading,
-                      function: store.etiquetaStore.isValidateEtiqueta
-                          ? store.submit
-                          : null),
+                      function: store.submit),
                 );
               }),
               EtiquetasWidget(

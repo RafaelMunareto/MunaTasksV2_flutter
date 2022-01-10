@@ -9,13 +9,15 @@ class ColorsWidget extends StatefulWidget {
   final Function getColors;
   final String color;
   final Function setColor;
+  final dynamic controller;
   const ColorsWidget(
       {Key? key,
       required this.colorAction,
       required this.colorsList,
       required this.getColors,
       required this.color,
-      required this.setColor})
+      required this.setColor,
+      required this.controller})
       : super(key: key);
 
   @override
@@ -24,20 +26,11 @@ class ColorsWidget extends StatefulWidget {
 
 class _ColorsWidgetState extends State<ColorsWidget>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
   late Animation<double> altura;
 
   @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-        duration: const Duration(milliseconds: 600), vsync: this);
-  }
-
-  @override
   void dispose() {
-    _controller.dispose();
+    widget.controller.dispose();
     super.dispose();
   }
 
@@ -47,23 +40,21 @@ class _ColorsWidgetState extends State<ColorsWidget>
         Tween<double>(begin: 0, end: MediaQuery.of(context).size.height * 0.4)
             .animate(
       CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.3, 0.8),
+        parent: widget.controller,
+        curve: const Interval(0.6, 0.9),
       ),
     );
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: AnimatedBuilder(
-        animation: _controller,
+        animation: widget.controller,
         builder: _buildAnimation,
       ),
     );
   }
 
   Widget _buildAnimation(BuildContext context, Widget? child) {
-    widget.colorAction ? _controller.forward() : _controller.reverse();
-
     return widget.colorAction
         ? SizedBox(
             width: MediaQuery.of(context).size.width,
