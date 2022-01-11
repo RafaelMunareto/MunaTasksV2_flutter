@@ -11,6 +11,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   final bool settings;
   final bool back;
   final String rota;
+  final bool home;
   final dynamic zoomController;
   final AuthController auth = Modular.get();
 
@@ -19,6 +20,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       this.title = "",
       this.size = 125,
       this.context,
+      this.home = false,
       this.controller,
       this.icon = Icons.person,
       this.settings = false,
@@ -44,7 +46,22 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
           ),
         ),
         backgroundColor: Colors.transparent,
-        actions: [settings ? _popMenu() : Container()],
+        actions: [
+          home
+              ? const Padding(
+                  padding: EdgeInsets.only(right: 16),
+                  child: Icon(Icons.low_priority),
+                )
+              : Container(),
+          home
+              ? const Padding(
+                  padding: EdgeInsets.only(right: 16.0),
+                  child: Icon(Icons.search),
+                )
+              : settings
+                  ? _popMenu()
+                  : Container()
+        ],
         title: RichText(
           text: TextSpan(
             children: [

@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/auth/auth_module.dart';
-import 'package:munatasks2/app/modules/create/create_module.dart';
 import 'package:munatasks2/app/modules/settings/settings_module.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/auth/repositories/auth_repository.dart';
@@ -43,7 +42,5 @@ class AppModule extends Module {
     ModuleRoute('/settings',
         module: SettingsModule(),
         transition: TransitionType.leftToRightWithFade),
-    ModuleRoute('/create',
-        module: CreateModule(), transition: TransitionType.leftToRightWithFade),
   ];
 }

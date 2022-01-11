@@ -79,37 +79,40 @@ class _EtiquetasWidgetState extends State<EtiquetasWidget>
                 itemCount: list.length,
                 itemBuilder: (_, index) {
                   var model = list[index];
-                  return Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          widget.loadingUpdate(model);
-                        },
-                        child: ListTile(
-                          leading: Icon(
-                            IconData(model.icon ?? 0,
-                                fontFamily: 'MaterialIcons'),
-                            color: ConvertIcon().convertColor(model.color),
-                          ),
-                          title: Text(
-                            model.etiqueta,
-                            style: TextStyle(
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            widget.loadingUpdate(model);
+                          },
+                          child: ListTile(
+                            leading: Icon(
+                              IconData(model.icon ?? 0,
+                                  fontFamily: 'MaterialIcons'),
                               color: ConvertIcon().convertColor(model.color),
                             ),
-                          ),
-                          trailing: GestureDetector(
-                            child: const Icon(
-                              Icons.delete,
-                              color: Colors.red,
+                            title: Text(
+                              model.etiqueta,
+                              style: TextStyle(
+                                color: ConvertIcon().convertColor(model.color),
+                              ),
                             ),
-                            onTap: () {
-                              _showDialog(model: model);
-                            },
+                            trailing: GestureDetector(
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              ),
+                              onTap: () {
+                                _showDialog(model: model);
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                      const Divider(),
-                    ],
+                        const Divider(),
+                      ],
+                    ),
                   );
                 },
               );

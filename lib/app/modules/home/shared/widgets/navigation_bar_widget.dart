@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 
@@ -20,42 +21,57 @@ class NavigationBarWidget extends StatefulWidget {
 class _NavigationBarWidgetState extends State<NavigationBarWidget> {
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      selectedItemColor: Colors.white,
-      backgroundColor: Colors.blueGrey.shade300,
-      selectedFontSize: 14,
-      unselectedFontSize: 14,
+    return BubbleBottomBar(
+      opacity: .2,
       currentIndex: widget.navigateBarSelection,
       onTap: (value) {
-        setState(() {
-          widget.setNavigateBarSelection(value);
-        });
+        widget.setNavigateBarSelection(value);
       },
-      items: [
-        BottomNavigationBarItem(
-          label: 'Backlog',
-          icon: Badge(
-            badgeColor: kPrimaryColor,
-            badgeContent: Text(widget.badgets[0].toString()),
-            child: const Icon(Icons.pause_circle),
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+      elevation: 8,
+      fabLocation: BubbleBottomBarFabLocation.end, //new
+      hasNotch: true, //new
+      hasInk: true, //new, gives a cute ink effect
+      inkColor: Colors.black12, //optional, uses theme color if not specified
+      items: <BubbleBottomBarItem>[
+        BubbleBottomBarItem(
+          showBadge: true,
+          badge: Text(widget.badgets[0].toString()),
+          backgroundColor: Colors.amber,
+          badgeColor: ThemeData().primaryColor,
+          icon: const Icon(
+            Icons.pause_circle,
           ),
+          activeIcon: const Icon(
+            Icons.pause_circle,
+          ),
+          title: const Text("Backlog"),
         ),
-        BottomNavigationBarItem(
-          label: 'Fazendo',
-          icon: Badge(
-            badgeColor: kPrimaryColor,
-            badgeContent: Text(widget.badgets[1].toString()),
-            child: const Icon(Icons.play_circle_filled),
+        BubbleBottomBarItem(
+          showBadge: true,
+          badge: Text(widget.badgets[1].toString()),
+          badgeColor: ThemeData().primaryColor,
+          backgroundColor: Colors.green,
+          icon: const Icon(
+            Icons.play_circle,
           ),
+          activeIcon: const Icon(
+            Icons.play_circle,
+          ),
+          title: const Text("Fazendo"),
         ),
-        BottomNavigationBarItem(
-          label: 'Feito',
-          icon: Badge(
-            badgeColor: kPrimaryColor,
-            badgeContent: Text(widget.badgets[2].toString()),
-            child: const Icon(Icons.check_circle),
+        BubbleBottomBarItem(
+          showBadge: true,
+          badge: Text(widget.badgets[2].toString()),
+          backgroundColor: Colors.blue,
+          badgeColor: ThemeData().primaryColor,
+          icon: const Icon(
+            Icons.check_circle,
           ),
+          activeIcon: const Icon(
+            Icons.check_circle,
+          ),
+          title: const Text("Feito"),
         ),
       ],
     );

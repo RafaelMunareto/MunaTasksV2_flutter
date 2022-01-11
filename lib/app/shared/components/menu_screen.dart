@@ -20,16 +20,9 @@ class _MenuScreenState extends State<MenuScreen> {
           onTap: () => widget.controller.toggle!(),
           child: Container(
             decoration: const BoxDecoration(
-              // image: DecorationImage(
-              //   image: AssetImage('assets/img/fundo_gesun.png'),
-              // ),
-              gradient: LinearGradient(
-                begin: Alignment.bottomRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Colors.blueGrey,
-                  Colors.white,
-                ],
+              image: DecorationImage(
+                image: AssetImage('assets/icon/icon.png'),
+                opacity: 0.4,
               ),
             ),
             child: ListView(
@@ -56,9 +49,7 @@ class _MenuScreenState extends State<MenuScreen> {
                         const Text(
                           "Olá",
                           style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400),
+                              fontSize: 20, fontWeight: FontWeight.w400),
                         ),
                         Text(
                           auth.user!.displayName.toString(),
@@ -69,97 +60,46 @@ class _MenuScreenState extends State<MenuScreen> {
                           onTap: () {
                             Modular.to.navigate('/settings/perfil');
                           },
-                          child: const Text(
-                            "Edite Perfil",
-                            style: TextStyle(fontSize: 14, color: Colors.red),
+                          child: const Padding(
+                            padding: EdgeInsets.only(bottom: 16.0),
+                            child: Text(
+                              "Edite Perfil",
+                              style: TextStyle(fontSize: 14, color: Colors.red),
+                            ),
                           ),
                         ),
                         ListTile(
-                          title: const Text(
-                            "Home",
-                            style: TextStyle(
-                              shadows: <Shadow>[
-                                Shadow(
-                                  offset: Offset(0.5, 0.5),
-                                  blurRadius: 3.0,
-                                  color: Colors.white,
+                          title: Row(
+                            children: const [
+                              Padding(
+                                padding: EdgeInsets.only(right: 8.0),
+                                child: Icon(
+                                  Icons.settings,
                                 ),
-                                Shadow(
-                                  offset: Offset(0.5, 0.5),
-                                  blurRadius: 8.0,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                          ),
-                          onTap: () {
-                            Modular.to.navigate('/home');
-                          },
-                        ),
-                        ListTile(
-                          title: const Text(
-                            "Configurações",
-                            style: TextStyle(
-                              shadows: <Shadow>[
-                                Shadow(
-                                  offset: Offset(0.5, 0.5),
-                                  blurRadius: 3.0,
-                                  color: Colors.white,
-                                ),
-                                Shadow(
-                                  offset: Offset(0.5, 0.5),
-                                  blurRadius: 8.0,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
+                              ),
+                              Text("Configurações"),
+                            ],
                           ),
                           onTap: () {
                             Modular.to.navigate('/settings');
                           },
                         ),
                         ListTile(
-                          title: const Text(
-                            "Etiquetas",
-                            style: TextStyle(
-                              shadows: <Shadow>[
-                                Shadow(
-                                  offset: Offset(0.5, 0.5),
-                                  blurRadius: 3.0,
-                                  color: Colors.white,
+                          title: Row(
+                            children: const [
+                              Padding(
+                                padding: EdgeInsets.only(right: 8.0),
+                                child: Icon(
+                                  Icons.bookmark,
                                 ),
-                                Shadow(
-                                  offset: Offset(0.5, 0.5),
-                                  blurRadius: 8.0,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
+                              ),
+                              Text(
+                                "Etiquetas",
+                              ),
+                            ],
                           ),
                           onTap: () {
                             Modular.to.navigate('/settings/etiquetas');
-                          },
-                        ),
-                        ListTile(
-                          title: const Text(
-                            "Nova Tarefa",
-                            style: TextStyle(
-                              shadows: <Shadow>[
-                                Shadow(
-                                  offset: Offset(0.5, 0.5),
-                                  blurRadius: 3.0,
-                                  color: Colors.white,
-                                ),
-                                Shadow(
-                                  offset: Offset(0.5, 0.5),
-                                  blurRadius: 8.0,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                          ),
-                          onTap: () {
-                            Modular.to.navigate('/create');
                           },
                         ),
                       ],

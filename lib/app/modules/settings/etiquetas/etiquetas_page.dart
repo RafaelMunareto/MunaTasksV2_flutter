@@ -105,8 +105,8 @@ class EtiquetasPageState extends State<EtiquetasPage>
                             padding: const EdgeInsets.only(left: 12),
                             child: ElevatedButton.icon(
                                 style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.white),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.transparent),
                                   shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                     RoundedRectangleBorder(

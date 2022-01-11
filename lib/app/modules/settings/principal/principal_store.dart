@@ -6,27 +6,30 @@ import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_in
 part 'principal_store.g.dart';
 
 class PrincipalStore = _PrincipalStoreBase with _$PrincipalStore;
+
 abstract class _PrincipalStoreBase with Store {
   final ILocalStorage storage = Modular.get();
+
+  _PrincipalStoreBase() {
+    buscaTheme();
+  }
 
   @observable
   bool isSwitched = false;
 
   @action
-  buscaTheme()
-  {
+  buscaTheme() {
     storage.get('theme').then((value) {
-      if(value?[0] == 'dark'){
+      if (value?[0] == 'dark') {
         isSwitched = true;
-      }else{
+      } else {
         isSwitched = false;
       }
     });
   }
 
   @action
-  changeSwitch(value)
-  {
+  changeSwitch(value) {
     List<String> data = [];
     isSwitched = value;
     isSwitched ? data = ['dark'] : data = ['light'];
@@ -38,6 +41,4 @@ abstract class _PrincipalStoreBase with Store {
     await Modular.get<AuthController>().logout();
     Modular.to.navigate('/auth');
   }
-
-
 }

@@ -19,12 +19,6 @@ class PrincipalPageState extends State<PrincipalPage> {
   final PrincipalStore store = Modular.get();
 
   @override
-  void initState() {
-    super.initState();
-    store.buscaTheme();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
@@ -56,12 +50,14 @@ class PrincipalPageState extends State<PrincipalPage> {
                   return ListTile(
                     title: const Text('Tema'),
                     trailing: RollingSwitch.icon(
+                      key: Key(store.isSwitched.toString()),
                       initialState: store.isSwitched,
                       animationDuration: const Duration(milliseconds: 600),
                       onChanged: (bool state) {
                         setState(() {
                           AppWidget.of(context)!.changeTheme(
                               state ? ThemeMode.dark : ThemeMode.light);
+                          store.changeSwitch(state);
                         });
                       },
                       rollingInfoRight: const RollingIconInfo(

@@ -5,6 +5,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
+import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,7 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends ModularState<HomePage, HomeStore> {
   @override
   final HomeStore store = Modular.get();
-  final _drawerController = ZoomDrawerController();
+  final drawerController = ZoomDrawerController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,27 +44,20 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
     // store.save(tarefaSave);
 
     return Scaffold(
-      appBar: AppBar(
-        leading: InkWell(
-          onTap: () => _drawerController.toggle!(),
-          child: const Icon(Icons.menu),
-        ),
-        title: const Text('MunaTasks'),
-        actions: const [
-          Icon(
-            Icons.bookmark_border,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Icon(Icons.reorder),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Icon(Icons.search),
-          ),
-        ],
-        backgroundColor: Colors.blueGrey,
+      appBar: AppBarWidget(
+        icon: Icons.bookmark,
+        home: true,
+        context: context,
+        zoomController: drawerController,
+        settings: true,
+        back: false,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
+        backgroundColor: Colors.red,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomSheet: Observer(builder: (_) {
         return NavigationBarWidget(
             navigateBarSelection: store.navigateBarSelection,
@@ -71,10 +65,10 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
             badgets: store.badgetNavigate);
       }),
       body: ZoomDrawer(
-        controller: _drawerController,
+        controller: drawerController,
         style: DrawerStyle.Style1,
         menuScreen: MenuScreen(
-          controller: _drawerController,
+          controller: drawerController,
         ),
         mainScreen: Observer(builder: (_) {
           return !store.loading
