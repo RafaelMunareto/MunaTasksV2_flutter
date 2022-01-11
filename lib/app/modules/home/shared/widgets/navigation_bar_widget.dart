@@ -1,7 +1,5 @@
-import 'package:badges/badges.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 
 class NavigationBarWidget extends StatefulWidget {
   final int navigateBarSelection;
@@ -9,7 +7,7 @@ class NavigationBarWidget extends StatefulWidget {
   final List<int> badgets;
   const NavigationBarWidget(
       {Key? key,
-      required this.navigateBarSelection,
+      this.navigateBarSelection = 0,
       required this.setNavigateBarSelection,
       required this.badgets})
       : super(key: key);

@@ -58,7 +58,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
         backgroundColor: Colors.red,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomSheet: Observer(builder: (_) {
+      bottomNavigationBar: Observer(builder: (_) {
         return NavigationBarWidget(
             navigateBarSelection: store.navigateBarSelection,
             setNavigateBarSelection: store.setNavigateBarSelection,
