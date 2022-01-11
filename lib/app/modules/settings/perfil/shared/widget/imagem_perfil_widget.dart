@@ -141,53 +141,49 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
           Positioned(
             top: 125,
             left: 90,
-            child: Observer(
-              builder: (_) {
-                return widget.textFieldNameBool
-                    ? SizedBox(
-                        width: _animacaoSize.value,
-                        child: Chip(
-                          label: SizedBox(
-                              width: 180,
-                              child: Text(
-                                widget.perfil.name,
-                                style: const TextStyle(fontSize: 18.00),
-                              )),
-                        ),
-                      )
-                    : Observer(
-                        builder: (_) {
-                          return SizedBox(
-                            width: _animacaoSize2.value,
-                            child: TextFormField(
-                              style: const TextStyle(shadows: <Shadow>[
-                                Shadow(
-                                  offset: Offset(0.5, 0.5),
-                                  blurRadius: 3.0,
-                                  color: Colors.white,
-                                ),
-                                Shadow(
-                                  offset: Offset(0.5, 0.5),
-                                  blurRadius: 8.0,
-                                  color: Colors.white,
-                                ),
-                              ], height: 1.0, fontWeight: FontWeight.bold),
-                              initialValue: widget.perfil.name,
-                              onChanged: (value) {
-                                widget.changeName(value);
-                              },
-                              decoration: InputDecoration(
-                                filled: true,
-                                errorText: widget.errorName == null
-                                    ? null
-                                    : widget.errorName(),
-                              ),
+            child: widget.textFieldNameBool
+                ? SizedBox(
+                    width: _animacaoSize.value,
+                    child: Chip(
+                      label: SizedBox(
+                          width: 180,
+                          child: Text(
+                            widget.perfil.name,
+                            style: const TextStyle(fontSize: 18.00),
+                          )),
+                    ),
+                  )
+                : Observer(
+                    builder: (_) {
+                      return SizedBox(
+                        width: _animacaoSize2.value,
+                        child: TextFormField(
+                          style: const TextStyle(shadows: <Shadow>[
+                            Shadow(
+                              offset: Offset(0.5, 0.5),
+                              blurRadius: 3.0,
+                              color: Colors.white,
                             ),
-                          );
-                        },
+                            Shadow(
+                              offset: Offset(0.5, 0.5),
+                              blurRadius: 8.0,
+                              color: Colors.white,
+                            ),
+                          ], height: 1.0, fontWeight: FontWeight.bold),
+                          initialValue: widget.perfil.name,
+                          onChanged: (value) {
+                            widget.changeName(value);
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            errorText: widget.errorName == null
+                                ? null
+                                : widget.errorName(),
+                          ),
+                        ),
                       );
-              },
-            ),
+                    },
+                  ),
           ),
           Positioned(
             top: 135,

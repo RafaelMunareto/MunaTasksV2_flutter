@@ -12,8 +12,9 @@ class EtiquetaRepository implements IEtiquetaRepository {
 
   @override
   Stream<List<EtiquetaModel>> get() {
-    return firestore.collection('etiqueta').snapshots().map((query) =>
-        query.docs.map((doc) => EtiquetaModel.fromDocument(doc)).toList());
+    return firestore.collection('etiqueta').orderBy('etiqueta').snapshots().map(
+        (query) =>
+            query.docs.map((doc) => EtiquetaModel.fromDocument(doc)).toList());
   }
 
   @override

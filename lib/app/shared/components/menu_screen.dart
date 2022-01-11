@@ -140,6 +140,28 @@ class _MenuScreenState extends State<MenuScreen> {
                             Modular.to.navigate('/settings/etiquetas');
                           },
                         ),
+                        ListTile(
+                          title: const Text(
+                            "Nova Tarefa",
+                            style: TextStyle(
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: Offset(0.5, 0.5),
+                                  blurRadius: 3.0,
+                                  color: Colors.white,
+                                ),
+                                Shadow(
+                                  offset: Offset(0.5, 0.5),
+                                  blurRadius: 8.0,
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
+                          ),
+                          onTap: () {
+                            Modular.to.navigate('/create');
+                          },
+                        ),
                       ],
                     ),
                   ),

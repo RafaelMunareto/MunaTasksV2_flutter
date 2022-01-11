@@ -21,9 +21,28 @@ class EtiquetasPage extends StatefulWidget {
   EtiquetasPageState createState() => EtiquetasPageState();
 }
 
-class EtiquetasPageState extends State<EtiquetasPage> {
+class EtiquetasPageState extends State<EtiquetasPage>
+    with SingleTickerProviderStateMixin {
   final EtiquetasStore store = Modular.get();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  late AnimationController _controller;
+  late Animation<double> opacidade;
+  late Animation<double> radius;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 200), vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   void didChangeDependencies() {
@@ -39,12 +58,27 @@ class EtiquetasPageState extends State<EtiquetasPage> {
                 .createSnackBar(store.etiquetaStore.msg, Colors.red, context);
           }
         }
+        store.etiquetaStore.updateLoading
+            ? _controller.forward()
+            : _controller.reverse();
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    opacidade = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(parent: _controller, curve: const Interval(0.2, 0.8)));
+    radius = Tween<double>(begin: 0, end: 40).animate(
+        CurvedAnimation(parent: _controller, curve: const Interval(0.2, 1)));
+
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: _buildAnimation,
+    );
+  }
+
+  Widget _buildAnimation(BuildContext context, Widget? child) {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBarWidget(
@@ -61,40 +95,47 @@ class EtiquetasPageState extends State<EtiquetasPage> {
           child: Wrap(
             direction: Axis.vertical,
             children: [
-              Observer(builder: (_) {
-                return store.etiquetaStore.updateLoading
-                    ? Padding(
-                        padding: const EdgeInsets.only(left: 12),
-                        child: ElevatedButton.icon(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.white),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                  side: const BorderSide(
-                                    color: Colors.deepPurple,
-                                    width: 2.0,
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.05,
+                child: Observer(builder: (_) {
+                  return store.etiquetaStore.updateLoading
+                      ? FadeTransition(
+                          opacity: opacidade,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 12),
+                            child: ElevatedButton.icon(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(radius.value),
+                                      side: const BorderSide(
+                                        color: Colors.deepPurple,
+                                        width: 2.0,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            onPressed: () {
-                              store.etiquetaStore.setCleanVariables();
-                              store.etiquetaStore.setUpdateLoading(false);
-                            },
-                            icon: const Icon(
-                              Icons.add,
-                              color: Colors.deepPurple,
-                            ),
-                            label: const Text(
-                              'Novo',
-                              style: TextStyle(color: Colors.deepPurple),
-                            )),
-                      )
-                    : Container();
-              }),
+                                onPressed: () {
+                                  store.etiquetaStore.setCleanVariables();
+                                  store.etiquetaStore.setUpdateLoading(false);
+                                },
+                                icon: const Icon(
+                                  Icons.add,
+                                  color: Colors.deepPurple,
+                                ),
+                                label: const Text(
+                                  'Novo',
+                                  style: TextStyle(color: Colors.deepPurple),
+                                )),
+                          ),
+                        )
+                      : Container();
+                }),
+              ),
               Observer(builder: (_) {
                 return TextFieldWidget(
                   etiqueta: store.etiquetaStore.etiqueta,
