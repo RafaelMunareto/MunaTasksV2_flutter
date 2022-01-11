@@ -6,13 +6,13 @@ class TextFieldWidget extends StatefulWidget {
   final bool loading;
   final Function setEtiqueta;
   final DocumentReference? reference;
-  const TextFieldWidget({
-    Key? key,
-    this.etiqueta = "",
-    this.loading = false,
-    required this.setEtiqueta,
-    required this.reference,
-  }) : super(key: key);
+  const TextFieldWidget(
+      {Key? key,
+      this.etiqueta = "",
+      this.loading = false,
+      required this.setEtiqueta,
+      required this.reference})
+      : super(key: key);
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -30,7 +30,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               ? Key(widget.reference.toString())
               : widget.loading
                   ? Key(widget.etiqueta.toString())
-                  : const Key('etiqueta'),
+                  : null,
           initialValue: widget.etiqueta,
           onChanged: (value) {
             widget.setEtiqueta(value);

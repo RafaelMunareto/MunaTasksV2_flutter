@@ -107,21 +107,6 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$colorActionAtom = Atom(name: '_EtiquetaStoreBase.colorAction');
-
-  @override
-  bool get colorAction {
-    _$colorActionAtom.reportRead();
-    return super.colorAction;
-  }
-
-  @override
-  set colorAction(bool value) {
-    _$colorActionAtom.reportWrite(value, super.colorAction, () {
-      super.colorAction = value;
-    });
-  }
-
   final _$loadingAtom = Atom(name: '_EtiquetaStoreBase.loading');
 
   @override
@@ -260,17 +245,6 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
   }
 
   @override
-  dynamic setColorAction(dynamic value) {
-    final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
-        name: '_EtiquetaStoreBase.setColorAction');
-    try {
-      return super.setColorAction(value);
-    } finally {
-      _$_EtiquetaStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic setLoading(dynamic value) {
     final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
         name: '_EtiquetaStoreBase.setLoading');
@@ -337,6 +311,17 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
   }
 
   @override
+  dynamic setCleanVariables() {
+    final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
+        name: '_EtiquetaStoreBase.setCleanVariables');
+    try {
+      return super.setCleanVariables();
+    } finally {
+      _$_EtiquetaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 colorsList: ${colorsList},
@@ -345,7 +330,6 @@ etiqueta: ${etiqueta},
 showValidation: ${showValidation},
 icon: ${icon},
 iconAction: ${iconAction},
-colorAction: ${colorAction},
 loading: ${loading},
 errOrGoal: ${errOrGoal},
 msg: ${msg},

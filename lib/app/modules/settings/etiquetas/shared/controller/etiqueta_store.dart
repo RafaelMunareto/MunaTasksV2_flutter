@@ -39,12 +39,6 @@ abstract class _EtiquetaStoreBase with Store {
   setIconAction(value) => iconAction = value;
 
   @observable
-  bool colorAction = false;
-
-  @action
-  setColorAction(value) => colorAction = value;
-
-  @observable
   bool loading = false;
 
   @action
@@ -113,6 +107,7 @@ abstract class _EtiquetaStoreBase with Store {
   @action
   setCleanVariables() {
     setEtiqueta('');
+    setReference(null);
     setIcon(null);
     setColor('');
   }

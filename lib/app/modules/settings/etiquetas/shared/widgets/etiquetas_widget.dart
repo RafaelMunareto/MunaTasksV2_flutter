@@ -108,7 +108,7 @@ class _EtiquetasWidgetState extends State<EtiquetasWidget>
                           ),
                         ),
                       ),
-                      Divider(),
+                      const Divider(),
                     ],
                   );
                 },
@@ -126,11 +126,12 @@ class _EtiquetasWidgetState extends State<EtiquetasWidget>
         context: context,
         builder: (_) {
           return AlertDialog(
-            title: const Text('Excluir etiqueta.'),
-            content: Text(
-              'Tem certeza que deseja excluír a etiqueta ${model!.etiqueta} ?',
-              style: const TextStyle(fontSize: 16, color: Colors.deepPurple),
+            title: const Text(
+              'Excluir etiqueta.',
+              style: TextStyle(fontSize: 20, color: Colors.deepPurple),
             ),
+            content: Text(
+                'Tem certeza que deseja excluír a etiqueta ${model!.etiqueta} ?'),
             actions: [
               ElevatedButton(
                 style: ButtonStyle(

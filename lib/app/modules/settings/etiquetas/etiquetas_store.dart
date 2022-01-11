@@ -33,7 +33,6 @@ abstract class _EtiquetasStoreBase with Store {
     if (etiquetaStore.isValidateEtiqueta) {
       etiquetaStore.setShowValidation(false);
       await etiquetaStore.setLoading(true);
-      etiquetaStore.setColorAction(false);
       EtiquetaModel etiquetaModel = EtiquetaModel(
           color: etiquetaStore.color,
           icon: etiquetaStore.icon,
@@ -45,6 +44,7 @@ abstract class _EtiquetasStoreBase with Store {
         etiquetaStore.setErrOrGoal(false);
         etiquetaStore.setLoading(false);
         etiquetaStore.setCleanVariables();
+        etiquetaStore.setUpdateLoading(false);
       }, onError: (erro) {
         etiquetaStore.setMsg(erro);
         etiquetaStore.setErrOrGoal(true);

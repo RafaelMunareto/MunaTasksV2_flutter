@@ -21,20 +21,9 @@ class EtiquetasPage extends StatefulWidget {
   EtiquetasPageState createState() => EtiquetasPageState();
 }
 
-class EtiquetasPageState extends State<EtiquetasPage>
-    with SingleTickerProviderStateMixin {
+class EtiquetasPageState extends State<EtiquetasPage> {
   final EtiquetasStore store = Modular.get();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  late AnimationController controller;
-
-  @override
-  void initState() {
-    super.initState();
-
-    controller =
-        AnimationController(duration: const Duration(seconds: 1), vsync: this);
-    controller.forward();
-  }
 
   @override
   void didChangeDependencies() {
@@ -67,12 +56,45 @@ class EtiquetasPageState extends State<EtiquetasPage>
       body: SingleChildScrollView(
         child: GestureDetector(
           onTap: () {
-            store.etiquetaStore.setColorAction(false);
             FocusScope.of(context).requestFocus(FocusNode());
           },
           child: Wrap(
             direction: Axis.vertical,
             children: [
+              Observer(builder: (_) {
+                return store.etiquetaStore.updateLoading
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 12),
+                        child: ElevatedButton.icon(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.white),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                  side: const BorderSide(
+                                    color: Colors.deepPurple,
+                                    width: 2.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              store.etiquetaStore.setCleanVariables();
+                              store.etiquetaStore.setUpdateLoading(false);
+                            },
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.deepPurple,
+                            ),
+                            label: const Text(
+                              'Novo',
+                              style: TextStyle(color: Colors.deepPurple),
+                            )),
+                      )
+                    : Container();
+              }),
               Observer(builder: (_) {
                 return TextFieldWidget(
                   etiqueta: store.etiquetaStore.etiqueta,
@@ -83,14 +105,17 @@ class EtiquetasPageState extends State<EtiquetasPage>
               }),
               Observer(builder: (_) {
                 return IconWidget(
-                    setIcon: store.etiquetaStore.setIcon,
-                    icon: store.etiquetaStore.icon,
-                    color: store.etiquetaStore.color);
+                  setIcon: store.etiquetaStore.setIcon,
+                  icon: store.etiquetaStore.icon,
+                  color: store.etiquetaStore.color,
+                );
               }),
               Observer(builder: (_) {
                 return SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: ExpansionTile(
+                    onExpansionChanged: (value) =>
+                        FocusScope.of(context).requestFocus(FocusNode()),
                     leading: Icon(
                       Icons.color_lens,
                       color:
@@ -107,12 +132,10 @@ class EtiquetasPageState extends State<EtiquetasPage>
                       Observer(
                         builder: (_) {
                           return ColorsWidget(
-                            colorAction: store.etiquetaStore.colorAction,
                             colorsList: store.etiquetaStore.colorsList,
                             getColors: store.getColors,
                             color: store.etiquetaStore.color,
                             setColor: store.etiquetaStore.setColor,
-                            controller: controller,
                           );
                         },
                       ),

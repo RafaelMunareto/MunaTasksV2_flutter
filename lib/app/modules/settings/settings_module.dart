@@ -44,8 +44,12 @@ class SettingsModule extends Module {
     ChildRoute('/',
         child: (_, args) => const PrincipalPage(), guards: [AuthGuard()]),
     ChildRoute('/perfil',
-        child: (_, args) => const PerfilPage(), guards: [AuthGuard()]),
+        child: (_, args) => const PerfilPage(),
+        guards: [AuthGuard()],
+        transition: TransitionType.leftToRightWithFade),
     ChildRoute('/etiquetas',
-        child: (_, args) => const EtiquetasPage(), guards: [AuthGuard()]),
+        child: (_, args) => const EtiquetasPage(),
+        guards: [AuthGuard()],
+        transition: TransitionType.leftToRightWithFade),
   ];
 }

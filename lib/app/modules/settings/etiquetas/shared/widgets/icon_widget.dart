@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class IconWidget extends StatefulWidget {
@@ -14,7 +13,7 @@ class IconWidget extends StatefulWidget {
 }
 
 class _IconWidgetState extends State<IconWidget> {
-   Icon? _icon;
+  Icon? _icon;
 
   _pickIcon() async {
     IconData? icon = await FlutterIconPicker.showIconPicker(
@@ -30,38 +29,37 @@ class _IconWidgetState extends State<IconWidget> {
       }
     });
   }
-
-
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      GestureDetector(
-                        child: const ListTile(
-                          leading: Icon(Icons.settings),
-                          title: Text('Escolha uma ícone'),
-                        ),
-                        onTap: _pickIcon,
-                      ),
-                      const SizedBox(height: 10),
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 300),
-                        child: Icon(
-                            IconData(widget.icon ?? 0,
-                                fontFamily: 'MaterialIcons'),
-                            size: 48,
-                            color: ConvertIcon()
-                                .convertColor(widget.color) ?? Colors.black54),
-                      )
-                    ],
-                  ),
-                ),
-              );
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            GestureDetector(
+              child: const ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Escolha uma ícone'),
+              ),
+              onTap: _pickIcon,
+            ),
+            const SizedBox(height: 10),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 600),
+                child: Icon(
+                    IconData(widget.icon ?? 0,
+                        fontFamily: 'MaterialIcons'),
+                    size: 48,
+                    color: ConvertIcon()
+                        .convertColor(widget.color) ?? Colors.black54),
+              ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -4,21 +4,17 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/colors_m
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class ColorsWidget extends StatefulWidget {
-  final bool colorAction;
   final dynamic colorsList;
   final Function getColors;
   final String color;
   final Function setColor;
-  final dynamic controller;
-  const ColorsWidget(
-      {Key? key,
-      required this.colorAction,
-      required this.colorsList,
-      required this.getColors,
-      required this.color,
-      required this.setColor,
-      required this.controller})
-      : super(key: key);
+  const ColorsWidget({
+    Key? key,
+    required this.colorsList,
+    required this.getColors,
+    required this.color,
+    required this.setColor,
+  }) : super(key: key);
 
   @override
   State<ColorsWidget> createState() => _ColorsWidgetState();
