@@ -65,7 +65,10 @@ class _CardWidgetState extends State<CardWidget> {
                       ),
                     ),
                     Text(
-                      linha.data.toString(),
+                      DateFormat('dd/MM/yyyy')
+                          .format(DateTime.fromMillisecondsSinceEpoch(
+                              linha.data.seconds * 1000))
+                          .toString(),
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],
@@ -93,10 +96,10 @@ class _CardWidgetState extends State<CardWidget> {
 
   changeIconeAndColorTime(data) {
     DateTime now = DateTime.now();
-    //var data = data.second * 1000;
-    if (data.isBefore(now)) {
+    var date = DateTime.fromMillisecondsSinceEpoch(data.seconds * 1000);
+    if (date.isBefore(now)) {
       return [Colors.blue, Icons.timelapse_sharp];
-    } else if (data == now) {
+    } else if (date == now) {
       return [Colors.amber, Icons.alarm];
     } else {
       return [Colors.red, Icons.history];
