@@ -8,7 +8,7 @@ class TarefaModel {
   DocumentReference? reference;
   String texto;
   int fase;
-  String data;
+  dynamic data;
   List<dynamic>? users;
   List<dynamic>? subTarefa;
 
@@ -17,7 +17,7 @@ class TarefaModel {
       this.texto = '',
       this.fase = 0,
       this.reference,
-      this.data = '',
+      this.data,
       this.subTarefa,
       this.users});
 

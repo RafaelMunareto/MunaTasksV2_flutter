@@ -7,6 +7,7 @@ import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 
 part 'home_store.g.dart';
 
@@ -14,6 +15,7 @@ class HomeStore = HomeStoreBase with _$HomeStore;
 
 abstract class HomeStoreBase with Store {
   final IDashboardService dashboardService;
+  final ILocalStorage storage = Modular.get();
   final AuthController auth = Modular.get();
   final FirebaseFirestore firestore = Modular.get();
 
@@ -34,6 +36,20 @@ abstract class HomeStoreBase with Store {
 
   @observable
   bool loading = true;
+
+  @observable
+  bool theme = false;
+
+  @action
+  buscaTheme() {
+    storage.get('theme').then((value) {
+      if (value?[0] == 'dark') {
+        theme = true;
+      } else {
+        theme = false;
+      }
+    });
+  }
 
   @action
   setLoading(value) => loading = value;
@@ -68,6 +84,7 @@ abstract class HomeStoreBase with Store {
 
   HomeStoreBase({required this.dashboardService}) {
     getList();
+    buscaTheme();
   }
 
   @action

@@ -10,41 +10,38 @@ class HeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Wrap(
-          direction: Axis.horizontal,
-          alignment: WrapAlignment.spaceBetween,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            InputChip(
-              disabledColor: Colors.green.shade100,
-              label: Text(
-                tarefa.etiqueta,
-                style: const TextStyle(fontSize: 12),
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Wrap(
+            direction: Axis.horizontal,
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              InputChip(
+                label: Text(
+                  tarefa.etiqueta,
+                  style: const TextStyle(fontSize: 12),
+                ),
               ),
-            ),
-            for (var i = 0; i < tarefa.users!.length; i++)
-              Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: CircleAvatarWidget(
-                    url: tarefa.users![i].urlImage.toString()),
-              ),
-            Text(
-              tarefa.texto,
-              textAlign: TextAlign.justify,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              style: const TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            tarefa.data,
-            style: const TextStyle(color: Colors.white),
+              for (var i = 0; i < tarefa.users!.length; i++)
+                Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: CircleAvatarWidget(
+                      url: tarefa.users![i].urlImage.toString()),
+                ),
+            ],
           ),
-        )
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Text(
+            tarefa.texto,
+            textAlign: TextAlign.justify,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 25,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+          ),
+        ),
       ],
     );
   }

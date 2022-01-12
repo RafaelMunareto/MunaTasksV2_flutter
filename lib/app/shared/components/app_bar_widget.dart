@@ -6,7 +6,6 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   final String title;
   final double size;
   final dynamic context;
-  final dynamic controller;
   final IconData icon;
   final bool settings;
   final bool back;
@@ -21,7 +20,6 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       this.size = 125,
       this.context,
       this.home = false,
-      this.controller,
       this.icon = Icons.person,
       this.settings = false,
       this.back = true,
@@ -47,12 +45,6 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
         ),
         backgroundColor: Colors.transparent,
         actions: [
-          home
-              ? const Padding(
-                  padding: EdgeInsets.only(right: 16),
-                  child: Icon(Icons.low_priority),
-                )
-              : Container(),
           home
               ? const Padding(
                   padding: EdgeInsets.only(right: 16.0),

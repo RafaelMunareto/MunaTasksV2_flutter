@@ -37,14 +37,14 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
             ),
           ),
         ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.05,
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 4, top: 4),
-            child: convertButton(widget.navigate),
-          ),
-        ),
+        Container(
+            decoration: const BoxDecoration(color: Colors.black54),
+            height: MediaQuery.of(context).size.height * 0.05,
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: convertButton(widget.navigate),
+            )),
       ],
     );
   }
@@ -85,7 +85,6 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
       case 0:
         return Wrap(
           alignment: WrapAlignment.spaceAround,
-          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             GestureDetector(
               onTap: () {

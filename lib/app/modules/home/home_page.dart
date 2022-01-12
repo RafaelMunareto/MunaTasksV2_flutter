@@ -60,6 +60,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: Observer(builder: (_) {
         return NavigationBarWidget(
+            key: UniqueKey(),
+            theme: store.theme,
             navigateBarSelection: store.navigateBarSelection,
             setNavigateBarSelection: store.setNavigateBarSelection,
             badgets: store.badgetNavigate);

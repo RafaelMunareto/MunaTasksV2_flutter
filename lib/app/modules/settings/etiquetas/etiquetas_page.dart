@@ -106,7 +106,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
                             child: ElevatedButton.icon(
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
-                                      Colors.transparent),
+                                      Colors.deepPurple),
                                   shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
@@ -125,11 +125,11 @@ class EtiquetasPageState extends State<EtiquetasPage>
                                 },
                                 icon: const Icon(
                                   Icons.add,
-                                  color: Colors.deepPurple,
+                                  color: Colors.white,
                                 ),
                                 label: const Text(
                                   'Novo',
-                                  style: TextStyle(color: Colors.deepPurple),
+                                  style: TextStyle(color: Colors.white),
                                 )),
                           ),
                         )

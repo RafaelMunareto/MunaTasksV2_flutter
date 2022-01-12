@@ -17,7 +17,6 @@ class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> {
-
   ThemeMode _themeMode = ThemeMode.system;
   final ILocalStorage theme = LocalStorageShare();
   late String darkLight = '';
@@ -30,28 +29,30 @@ class _AppWidgetState extends State<AppWidget> {
   }
 
   void initDynamicLinks() async {
-    FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (dynamicLink) async {
-          final Uri? deepLink = dynamicLink?.link;
-          if (deepLink != null) {
-            var actionCode = deepLink.queryParameters['oobCode'];
-            var tipo = deepLink.queryParameters['mode'];
-            if(tipo == 'verifyEmail'){
-              Modular.to.navigate('/auth/verify?oobCode=$actionCode&mode=$tipo');
-            }else if(tipo == 'resetPassword'){
-              Modular.to.navigate('/auth/change/$actionCode');
-            }
-          }
-        }, onError: (OnLinkErrorException e) async {
-            SnackbarCustom().createSnackBarErrorFirebase(e.message, Colors.red, context);
+    FirebaseDynamicLinks.instance.onLink(onSuccess: (dynamicLink) async {
+      final Uri? deepLink = dynamicLink?.link;
+      if (deepLink != null) {
+        var actionCode = deepLink.queryParameters['oobCode'];
+        var tipo = deepLink.queryParameters['mode'];
+        if (tipo == 'verifyEmail') {
+          Modular.to.navigate('/auth/verify?oobCode=$actionCode&mode=$tipo');
+        } else if (tipo == 'resetPassword') {
+          Modular.to.navigate('/auth/change/$actionCode');
+        }
+      }
+    }, onError: (OnLinkErrorException e) async {
+      SnackbarCustom()
+          .createSnackBarErrorFirebase(e.message, Colors.red, context);
     });
   }
 
   void changeThemeStorage() async {
     await theme.get('theme').then((value) {
-        setState(() {
-          value?[0] == 'dark' ? _themeMode = ThemeMode.dark :  _themeMode = ThemeMode.light;
-        });
+      setState(() {
+        value?[0] == 'dark'
+            ? _themeMode = ThemeMode.dark
+            : _themeMode = ThemeMode.light;
+      });
     });
   }
 
@@ -66,6 +67,7 @@ class _AppWidgetState extends State<AppWidget> {
       themeMode: _themeMode,
     ).modular();
   }
+
   void changeTheme(ThemeMode themeMode) {
     setState(() {
       _themeMode = themeMode;

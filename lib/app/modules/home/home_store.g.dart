@@ -84,6 +84,21 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
+  final _$themeAtom = Atom(name: 'HomeStoreBase.theme');
+
+  @override
+  bool get theme {
+    _$themeAtom.reportRead();
+    return super.theme;
+  }
+
+  @override
+  set theme(bool value) {
+    _$themeAtom.reportWrite(value, super.theme, () {
+      super.theme = value;
+    });
+  }
+
   final _$navigateBarSelectionAtom =
       Atom(name: 'HomeStoreBase.navigateBarSelection');
 
@@ -125,6 +140,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.setBadgetNavigate');
     try {
       return super.setBadgetNavigate(value);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic buscaTheme() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.buscaTheme');
+    try {
+      return super.buscaTheme();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -259,6 +285,7 @@ cardSelection: ${cardSelection},
 tarefas: ${tarefas},
 tarefasBase: ${tarefasBase},
 loading: ${loading},
+theme: ${theme},
 navigateBarSelection: ${navigateBarSelection},
 dashboardList: ${dashboardList}
     ''';

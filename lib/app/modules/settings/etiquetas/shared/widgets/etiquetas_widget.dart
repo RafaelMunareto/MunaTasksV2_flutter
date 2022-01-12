@@ -138,7 +138,7 @@ class _EtiquetasWidgetState extends State<EtiquetasWidget>
             actions: [
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.white),
+                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
@@ -152,7 +152,7 @@ class _EtiquetasWidgetState extends State<EtiquetasWidget>
                 onPressed: () => Navigator.pop(context),
                 child: const Text(
                   'CANCELAR',
-                  style: TextStyle(color: Colors.deepPurple),
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
               ElevatedButton(
