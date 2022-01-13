@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
+import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class HeaderWidget extends StatelessWidget {
-  final TarefaModel tarefa;
-  const HeaderWidget({Key? key, required this.tarefa}) : super(key: key);
+  final dynamic tarefa;
+  final bool theme;
+  const HeaderWidget({Key? key, required this.tarefa, required this.theme})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +19,12 @@ class HeaderWidget extends StatelessWidget {
             alignment: WrapAlignment.spaceBetween,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              InputChip(
-                label: Text(
-                  tarefa.etiqueta,
-                  style: const TextStyle(fontSize: 12),
+              Chip(
+                label: Text(tarefa.etiqueta.etiqueta),
+                avatar: Icon(
+                  IconData(tarefa.etiqueta.icon ?? 0,
+                      fontFamily: 'MaterialIcons'),
+                  color: ConvertIcon().convertColor(tarefa.etiqueta.color),
                 ),
               ),
               for (var i = 0; i < tarefa.users!.length; i++)
@@ -39,7 +43,10 @@ class HeaderWidget extends StatelessWidget {
             textAlign: TextAlign.justify,
             overflow: TextOverflow.ellipsis,
             maxLines: 25,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                color: theme ? Colors.white : Colors.black),
           ),
         ),
       ],

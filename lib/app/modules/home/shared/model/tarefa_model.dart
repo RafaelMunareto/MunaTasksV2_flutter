@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 
 class TarefaModel {
-  String etiqueta;
+  dynamic etiqueta;
   DocumentReference? reference;
   String texto;
   int fase;

@@ -54,18 +54,21 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
                   ? _popMenu()
                   : Container()
         ],
-        title: RichText(
-          text: TextSpan(
-            children: [
-              WidgetSpan(
-                child: Icon(icon, size: 24),
+        title: home
+            ? _popTune()
+            : RichText(
+                text: TextSpan(
+                  children: [
+                    WidgetSpan(
+                      child: Icon(icon),
+                    ),
+                    TextSpan(
+                        text: ' ' + title.toUpperCase(),
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.white)),
+                  ],
+                ),
               ),
-              TextSpan(
-                  text: ' ' + title.toUpperCase(),
-                  style: const TextStyle(fontSize: 20, color: Colors.white)),
-            ],
-          ),
-        ),
         leading: back
             ? IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -81,6 +84,41 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   _popMenu() {
     return PopupMenuButton(
       icon: const Icon(Icons.more_vert),
+      itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+        PopupMenuItem(
+          child: auth.user!.photoURL != ''
+              ? InputChip(
+                  avatar: CircleAvatar(
+                    backgroundImage:
+                        NetworkImage(auth.user!.photoURL.toString()),
+                  ),
+                  label: Text(auth.user!.displayName.toString()),
+                )
+              : Container(),
+        ),
+        PopupMenuItem(
+          mouseCursor: SystemMouseCursors.click,
+          onTap: () => Modular.to.navigate('/settings'),
+          child: const ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Configurações'),
+          ),
+        ),
+        PopupMenuItem(
+          mouseCursor: SystemMouseCursors.click,
+          onTap: () => Modular.to.navigate('/settings/perfil'),
+          child: const ListTile(
+            leading: Icon(Icons.account_circle),
+            title: Text('Perfil e Equipes'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  _popTune() {
+    return PopupMenuButton(
+      icon: const Icon(Icons.tune),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
           child: auth.user!.photoURL != ''

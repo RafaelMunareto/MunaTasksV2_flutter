@@ -1,22 +1,27 @@
-import 'package:accordion/accordion.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_text_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/button_action_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/header_widget.dart';
-import 'package:munatasks2/app/shared/utils/themes/constants.dart';
+import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class CardWidget extends StatefulWidget {
   final List<TarefaModel> tarefa;
   final Function deleteTasks;
+  final int navigateBarSelection;
   final int navigate;
   final Function save;
+  final bool theme;
+  final Animation<double> opacidade;
   const CardWidget(
       {Key? key,
       required this.tarefa,
       required this.deleteTasks,
+      required this.navigateBarSelection,
       required this.navigate,
+      required this.opacidade,
+      required this.theme,
       required this.save})
       : super(key: key);
 
@@ -37,60 +42,67 @@ class _CardWidgetState extends State<CardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ReorderableListView(
-      onReorder: reorderData,
-      children: [
-        for (var linha in widget.tarefa)
-          Card(
-            shape: const Border(
-              right: BorderSide(color: Colors.red, width: 5),
-            ),
-            elevation: 8,
-            key: ValueKey(linha),
-            child: ExpansionTile(
-              backgroundColor: const Color(0xff719CFF),
-              textColor: Colors.black,
-              title: HeaderWidget(
-                tarefa: linha,
-              ),
-              subtitle: Align(
-                alignment: Alignment.topLeft,
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 4.0),
-                      child: Icon(
-                        changeIconeAndColorTime(linha.data)[1],
-                        color: changeIconeAndColorTime(linha.data)[0],
-                      ),
-                    ),
-                    Text(
-                      DateFormat('dd/MM/yyyy')
-                          .format(DateTime.fromMillisecondsSinceEpoch(
-                              linha.data.seconds * 1000))
-                          .toString(),
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
+    card(linha) {
+      return Card(
+        shape: Border(
+          right: BorderSide(
+              color: ConvertIcon().convertColor(linha.etiqueta.color),
+              width: 5),
+        ),
+        elevation: 8,
+        key: ValueKey(linha),
+        child: ExpansionTile(
+          key: UniqueKey(),
+          textColor: Colors.black,
+          title: HeaderWidget(tarefa: linha, theme: widget.theme),
+          subtitle: Align(
+            alignment: Alignment.topLeft,
+            child: Row(
               children: [
-                Wrap(
-                  children: [
-                    BodyTextWidget(
-                      tarefa: linha,
-                    ),
-                    ButtonActionWidget(
-                        tarefa: linha,
-                        deleteTasks: widget.deleteTasks,
-                        navigate: widget.navigate,
-                        save: widget.save),
-                  ],
-                )
+                Padding(
+                  padding: const EdgeInsets.only(right: 4.0),
+                  child: Icon(
+                    changeIconeAndColorTime(linha.data)[1],
+                    color: changeIconeAndColorTime(linha.data)[0],
+                  ),
+                ),
+                Text(
+                  DateFormat('dd/MM/yyyy')
+                      .format(DateTime.fromMillisecondsSinceEpoch(
+                          linha.data.seconds * 1000))
+                      .toString(),
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: widget.theme ? Colors.white : Colors.black),
+                ),
               ],
             ),
           ),
-      ],
+          children: [
+            Wrap(
+              children: [
+                BodyTextWidget(
+                  tarefa: linha,
+                  theme: widget.theme,
+                ),
+                ButtonActionWidget(
+                    tarefa: linha,
+                    deleteTasks: widget.deleteTasks,
+                    navigate: widget.navigate,
+                    save: widget.save),
+              ],
+            )
+          ],
+        ),
+      );
+    }
+
+    return FadeTransition(
+      opacity: widget.opacidade,
+      child: ReorderableListView(
+        onReorder: reorderData,
+        children: [for (var linha in widget.tarefa) card(linha)],
+      ),
     );
   }
 

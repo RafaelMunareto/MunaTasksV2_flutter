@@ -16,33 +16,38 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends ModularState<HomePage, HomeStore> {
+class _HomePageState extends ModularState<HomePage, HomeStore>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> opacidade;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 1500), vsync: this);
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   final HomeStore store = Modular.get();
   final drawerController = ZoomDrawerController();
 
   @override
   Widget build(BuildContext context) {
-    // TarefaModel tarefaSave = TarefaModel(
-    //     etiqueta: 'Desenvolvimento',
-    //     texto: 'feito Aplicativo GESUN para Windows. ELECTRON. ',
-    //     fase: 2,
-    //     data: '30/12/2021',
-    //     users: [
-    //       '/usuarios/uRVW36YywWcM4PUl48fqcHzTGDW2'
-    //     ],
-    //     subTarefa: [
-    //       SubtarefaModel(
-    //           status: 'check',
-    //           title: 'especificacao',
-    //           texto: 'especificar o sistema',
-    //           user: '/usuarios/uRVW36YywWcM4PUl48fqcHzTGDW2'),
-    //     ]);
-
-    // store.save(tarefaSave);
-    // store.save(tarefaSave);
-    // store.save(tarefaSave);
-
+    opacidade = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.1, 0.9),
+      ),
+    );
     return Scaffold(
       appBar: AppBarWidget(
         icon: Icons.bookmark,
@@ -59,12 +64,15 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: Observer(builder: (_) {
-        return NavigationBarWidget(
-            key: UniqueKey(),
-            theme: store.theme,
-            navigateBarSelection: store.navigateBarSelection,
-            setNavigateBarSelection: store.setNavigateBarSelection,
-            badgets: store.badgetNavigate);
+        return GestureDetector(
+          child: NavigationBarWidget(
+              key: UniqueKey(),
+              theme: store.theme,
+              controller: _controller,
+              navigateBarSelection: store.navigateBarSelection,
+              setNavigateBarSelection: store.setNavigateBarSelection,
+              badgets: store.badgetNavigate),
+        );
       }),
       body: ZoomDrawer(
         controller: drawerController,
@@ -77,6 +85,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 32),
                   child: CardWidget(
+                      theme: store.theme,
+                      navigateBarSelection: store.navigateBarSelection,
+                      opacidade: opacidade,
                       tarefa: store.tarefas,
                       navigate: store.navigateBarSelection,
                       deleteTasks: store.deleteTasks,

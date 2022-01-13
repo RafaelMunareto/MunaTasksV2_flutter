@@ -1,16 +1,21 @@
+import 'dart:async';
+
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 
 class NavigationBarWidget extends StatefulWidget {
   final int navigateBarSelection;
   final Function setNavigateBarSelection;
   final List<int> badgets;
+  final AnimationController controller;
   final bool theme;
   const NavigationBarWidget(
       {Key? key,
       this.navigateBarSelection = 0,
       required this.setNavigateBarSelection,
       required this.badgets,
+      required this.controller,
       required this.theme})
       : super(key: key);
 
@@ -26,6 +31,9 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
       opacity: .2,
       currentIndex: widget.navigateBarSelection,
       onTap: (value) {
+        if (widget.navigateBarSelection != value) {
+          widget.controller.forward();
+        }
         widget.setNavigateBarSelection(value);
       },
       borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),

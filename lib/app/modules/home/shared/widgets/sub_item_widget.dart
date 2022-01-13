@@ -6,16 +6,18 @@ import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 
 class SubItemWidget extends StatelessWidget {
   final SubtarefaModel subTarefa;
+  final bool theme;
 
-  const SubItemWidget({Key? key, required this.subTarefa}) : super(key: key);
+  const SubItemWidget({Key? key, required this.subTarefa, required this.theme})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.grey.shade200,
+            color: theme ? Colors.black38 : Colors.black26,
             borderRadius: BorderRadius.circular(10)),
         child: Wrap(
           direction: Axis.horizontal,

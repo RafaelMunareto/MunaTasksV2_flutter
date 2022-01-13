@@ -31,14 +31,10 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
           alignment: Alignment.center,
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.88,
-            child: Divider(
-              height: 6,
-              color: Colors.grey.shade600,
-            ),
           ),
         ),
-        Container(
-            decoration: const BoxDecoration(color: Colors.black54),
+        SizedBox(
+            //decoration: const BoxDecoration(color: Colors.white),
             height: MediaQuery.of(context).size.height * 0.05,
             width: MediaQuery.of(context).size.width,
             child: Padding(
@@ -93,7 +89,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
               },
               child: const Icon(
                 Icons.play_circle,
-                color: Colors.yellow,
+                color: Colors.amber,
               ),
             ),
             GestureDetector(
@@ -102,7 +98,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.save(widget.tarefa);
               },
               child: const Icon(
-                Icons.task_alt,
+                Icons.check_circle,
                 color: kPrimaryColor,
               ),
             ),
