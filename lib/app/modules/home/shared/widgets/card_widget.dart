@@ -55,26 +55,35 @@ class _CardWidgetState extends State<CardWidget> {
           key: UniqueKey(),
           textColor: Colors.black,
           title: HeaderWidget(tarefa: linha, theme: widget.theme),
-          subtitle: Align(
-            alignment: Alignment.topLeft,
-            child: Row(
+          subtitle: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 4.0),
-                  child: Icon(
-                    changeIconeAndColorTime(linha.data)[1],
-                    color: changeIconeAndColorTime(linha.data)[0],
-                  ),
+                Wrap(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 4.0),
+                      child: Icon(
+                        changeIconeAndColorTime(linha.data)[1],
+                        color: changeIconeAndColorTime(linha.data)[0],
+                      ),
+                    ),
+                    Text(
+                      DateFormat('dd/MM/yyyy')
+                          .format(DateTime.fromMillisecondsSinceEpoch(
+                              linha.data.seconds * 1000))
+                          .toString(),
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: widget.theme ? Colors.white : Colors.black),
+                    ),
+                  ],
                 ),
-                Text(
-                  DateFormat('dd/MM/yyyy')
-                      .format(DateTime.fromMillisecondsSinceEpoch(
-                          linha.data.seconds * 1000))
-                      .toString(),
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: widget.theme ? Colors.white : Colors.black),
-                ),
+                Icon(
+                  Icons.flag,
+                  color: ConvertIcon().convertColorFlaf(linha.prioridade),
+                )
               ],
             ),
           ),

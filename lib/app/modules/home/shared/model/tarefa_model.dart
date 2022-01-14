@@ -8,6 +8,7 @@ class TarefaModel {
   DocumentReference? reference;
   String texto;
   int fase;
+  int prioridade;
   dynamic data;
   List<dynamic>? users;
   List<dynamic>? subTarefa;
@@ -17,6 +18,7 @@ class TarefaModel {
       this.texto = '',
       this.fase = 0,
       this.reference,
+      this.prioridade = 0,
       this.data,
       this.subTarefa,
       this.users});
@@ -26,6 +28,7 @@ class TarefaModel {
       etiqueta: doc['etiqueta'],
       texto: doc['texto'],
       fase: doc['fase'],
+      prioridade: doc['prioridade'],
       reference: doc.reference,
       data: doc['data'],
       subTarefa:
@@ -38,6 +41,7 @@ class TarefaModel {
     return TarefaModel(
         etiqueta: json['etiqueta'],
         texto: json['texto'],
+        prioridade: json['prioridade'],
         fase: json['fase'],
         data: json['data'],
         subTarefa: json['subTarefa'],
@@ -54,6 +58,7 @@ class TarefaModel {
       'etiqueta': etiqueta,
       'texto': texto,
       'fase': fase,
+      'prioridade': prioridade,
       'data': data,
       'subTarefa': subTarefa?.map((e) => e.toMap()).toList(),
       'users': users,
@@ -62,8 +67,9 @@ class TarefaModel {
 
   Map<String, dynamic> toReverseMap() {
     return {
-      'etiqueta': etiqueta,
+      'etiqueta': etiqueta.reference,
       'texto': texto,
+      'prioridade': prioridade,
       'fase': fase,
       'data': data,
       'subTarefa': subTarefa?.map((e) => e.toReverseMap()).toList(),

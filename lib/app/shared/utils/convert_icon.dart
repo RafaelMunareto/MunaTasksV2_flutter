@@ -49,4 +49,15 @@ class ConvertIcon {
         return Colors.orange;
     }
   }
+
+  convertColorFlaf(int color) {
+    switch (color) {
+      case 1:
+        return Colors.red;
+      case 2:
+        return Colors.amber;
+      case 3:
+        return Colors.grey;
+    }
+  }
 }

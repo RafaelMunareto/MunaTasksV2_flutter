@@ -13,6 +13,7 @@ class IconWidget extends StatefulWidget {
 }
 
 class _IconWidgetState extends State<IconWidget> {
+  // ignore: unused_field
   Icon? _icon;
 
   _pickIcon() async {

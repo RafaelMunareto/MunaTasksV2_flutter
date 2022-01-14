@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:munatasks2/app/modules/home/repositories/interfaces/dashboard_interfaces.dart';
+import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 
 class DashboardRepository implements IDashboardRepository {
   final FirebaseFirestore firestore;
@@ -14,6 +16,18 @@ class DashboardRepository implements IDashboardRepository {
     return firestore.collection('tasks').orderBy('data').snapshots().map(
         (query) =>
             query.docs.map((doc) => TarefaModel.fromDocument(doc)).toList());
+  }
+
+  @override
+  Stream<List<EtiquetaModel>> getEtiquetas() {
+    return firestore.collection('etiqueta').snapshots().map((query) =>
+        query.docs.map((doc) => EtiquetaModel.fromDocument(doc)).toList());
+  }
+
+  @override
+  Stream<List<OrderModel>> getOrder() {
+    return firestore.collection('order').snapshots().map((query) =>
+        query.docs.map((doc) => OrderModel.fromDocument(doc)).toList());
   }
 
   @override
@@ -35,7 +49,6 @@ class DashboardRepository implements IDashboardRepository {
     if (model.reference == null) {
       model.reference = await firestore.collection('tasks').add(model.toMap());
     } else {
-      //print(model.toReverseMap());
       model.reference!.update(model.toReverseMap());
     }
   }

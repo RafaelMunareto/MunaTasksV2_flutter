@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:mobx/mobx.dart';
 
 class NavigationBarWidget extends StatefulWidget {
   final int navigateBarSelection;

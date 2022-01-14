@@ -22,5 +22,13 @@ class EtiquetaModel {
         etiqueta: json['etiqueta'], color: json['color'], icon: json['icon']);
   }
 
+  Map<String, dynamic> toMap() {
+    return {'etiqueta': etiqueta, 'color': color, 'icon': icon};
+  }
+
+  Map<String, dynamic> toReverseMap() {
+    return {'etiqueta': reference};
+  }
+
   Map<String, dynamic> toJson() => {};
 }

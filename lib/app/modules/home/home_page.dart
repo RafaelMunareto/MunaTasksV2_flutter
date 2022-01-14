@@ -5,8 +5,10 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
+import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -20,6 +22,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> opacidade;
+  final GlobalKey expansionTile = GlobalKey();
 
   @override
   void initState() {
@@ -50,13 +53,16 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     );
     return Scaffold(
       appBar: AppBarWidget(
-        icon: Icons.bookmark,
-        home: true,
-        context: context,
-        zoomController: drawerController,
-        settings: true,
-        back: false,
-      ),
+          icon: Icons.bookmark,
+          home: true,
+          context: context,
+          zoomController: drawerController,
+          setOpen: store.setOpen,
+          settings: true,
+          back: false,
+          etiquetaList: store.tarefas,
+          etiquetaSelection: store.etiquetaSelection,
+          setEtiquetaSelection: store.setEtiquetaSelection),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(Icons.add),
@@ -64,34 +70,114 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: Observer(builder: (_) {
-        return GestureDetector(
-          child: NavigationBarWidget(
-              key: UniqueKey(),
-              theme: store.theme,
-              controller: _controller,
-              navigateBarSelection: store.navigateBarSelection,
-              setNavigateBarSelection: store.setNavigateBarSelection,
-              badgets: store.badgetNavigate),
-        );
+        return NavigationBarWidget(
+            key: UniqueKey(),
+            theme: store.theme,
+            controller: _controller,
+            navigateBarSelection: store.navigateBarSelection,
+            setNavigateBarSelection: store.setNavigateBarSelection,
+            badgets: store.badgetNavigate);
       }),
       body: ZoomDrawer(
         controller: drawerController,
         style: DrawerStyle.Style1,
-        menuScreen: MenuScreen(
-          controller: drawerController,
+        menuScreen: Observer(
+          builder: (_) {
+            return MenuScreen(
+              open: store.open,
+              controller: drawerController,
+            );
+          },
         ),
         mainScreen: Observer(builder: (_) {
           return !store.loading
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 32),
-                  child: CardWidget(
-                      theme: store.theme,
-                      navigateBarSelection: store.navigateBarSelection,
-                      opacidade: opacidade,
-                      tarefa: store.tarefas,
-                      navigate: store.navigateBarSelection,
-                      deleteTasks: store.deleteTasks,
-                      save: store.save),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ExpansionTile(
+                          leading: store.icon != 0
+                              ? Icon(
+                                  IconData(store.icon,
+                                      fontFamily: 'MaterialIcons'),
+                                  color:
+                                      ConvertIcon().convertColor(store.color),
+                                )
+                              : const Icon(
+                                  Icons.bookmark,
+                                  color: Colors.blue,
+                                ),
+                          title: Text(
+                            store.etiquetaSelection,
+                            style: TextStyle(
+                              color: ConvertIcon().convertColor(
+                                  store.color != '' ? store.color : 'blue'),
+                            ),
+                          ),
+                          children: <Widget>[
+                            Observer(
+                              builder: (_) {
+                                return RadioEtiquetasFilterWidget(
+                                  changeFilterEtiquetaList:
+                                      store.changeFilterEtiquetaList,
+                                  etiquetaList: store.etiquetaList,
+                                  etiquetaSelection: store.etiquetaSelection,
+                                  setColor: store.setColor,
+                                  setClosedListExpanded:
+                                      store.setClosedListExpanded,
+                                  closedListExpanded: store.closedListExpanded,
+                                  setIcon: store.setIcon,
+                                  setEtiquetaSelection:
+                                      store.setEtiquetaSelection,
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        ExpansionTile(
+                          leading: const Icon(
+                            Icons.filter_alt,
+                            color: Colors.black45,
+                          ),
+                          title: Text(
+                            store.ordenamentoSelection,
+                          ),
+                          children: <Widget>[
+                            Observer(
+                              builder: (_) {
+                                return RadioEtiquetasFilterWidget(
+                                  changeFilterEtiquetaList:
+                                      store.changeFilterEtiquetaList,
+                                  etiquetaList: store.etiquetaList,
+                                  etiquetaSelection: store.etiquetaSelection,
+                                  setColor: store.setColor,
+                                  setClosedListExpanded:
+                                      store.setClosedListExpanded,
+                                  closedListExpanded: store.closedListExpanded,
+                                  setIcon: store.setIcon,
+                                  setEtiquetaSelection:
+                                      store.setEtiquetaSelection,
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.9,
+                          child: CardWidget(
+                              theme: store.theme,
+                              navigateBarSelection: store.navigateBarSelection,
+                              opacidade: opacidade,
+                              tarefa: store.tarefas,
+                              navigate: store.navigateBarSelection,
+                              deleteTasks: store.deleteTasks,
+                              save: store.save),
+                        ),
+                      ],
+                    ),
+                  ),
                 )
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,

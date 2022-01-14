@@ -12,7 +12,11 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   final String rota;
   final bool home;
   final dynamic zoomController;
+  final Function? setOpen;
+  final String etiquetaSelection;
+  final Function? setEtiquetaSelection;
   final AuthController auth = Modular.get();
+  final dynamic etiquetaList;
 
   AppBarWidget(
       {Key? key,
@@ -23,7 +27,11 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       this.icon = Icons.person,
       this.settings = false,
       this.back = true,
+      this.setOpen,
       this.zoomController,
+      this.etiquetaSelection = '',
+      this.setEtiquetaSelection,
+      this.etiquetaList,
       this.rota = '/auth'})
       : super(key: key);
 
@@ -54,9 +62,8 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
                   ? _popMenu()
                   : Container()
         ],
-        title: home
-            ? _popTune()
-            : RichText(
+        title: !home
+            ? RichText(
                 text: TextSpan(
                   children: [
                     WidgetSpan(
@@ -68,13 +75,20 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
                             const TextStyle(fontSize: 20, color: Colors.white)),
                   ],
                 ),
-              ),
+              )
+            : Container(),
         leading: back
             ? IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () => Modular.to.navigate(rota))
             : InkWell(
-                onTap: () => zoomController.toggle!(),
+                onTap: () {
+                  zoomController.toggle!();
+                  setOpen!(zoomController.stateNotifier.value.toString() ==
+                          'DrawerState.opening'
+                      ? true
+                      : false);
+                },
                 child: const Icon(Icons.menu),
               ),
       ),
@@ -84,41 +98,6 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   _popMenu() {
     return PopupMenuButton(
       icon: const Icon(Icons.more_vert),
-      itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-        PopupMenuItem(
-          child: auth.user!.photoURL != ''
-              ? InputChip(
-                  avatar: CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(auth.user!.photoURL.toString()),
-                  ),
-                  label: Text(auth.user!.displayName.toString()),
-                )
-              : Container(),
-        ),
-        PopupMenuItem(
-          mouseCursor: SystemMouseCursors.click,
-          onTap: () => Modular.to.navigate('/settings'),
-          child: const ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Configurações'),
-          ),
-        ),
-        PopupMenuItem(
-          mouseCursor: SystemMouseCursors.click,
-          onTap: () => Modular.to.navigate('/settings/perfil'),
-          child: const ListTile(
-            leading: Icon(Icons.account_circle),
-            title: Text('Perfil e Equipes'),
-          ),
-        ),
-      ],
-    );
-  }
-
-  _popTune() {
-    return PopupMenuButton(
-      icon: const Icon(Icons.tune),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
           child: auth.user!.photoURL != ''
