@@ -6,6 +6,7 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/radio_order_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
@@ -51,18 +52,73 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
         curve: const Interval(0.1, 0.9),
       ),
     );
+
+    order() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Ordenamento'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Modular.to.pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+            content: Observer(builder: (_) {
+              return RadioOrderWidget(
+                  orderAscDesc: store.client.orderAscDesc,
+                  setOrderAscDesc: store.client.setOrderAscDesc,
+                  orderList: store.client.orderList,
+                  orderSelection: store.client.orderSelection,
+                  changeOrderList: store.changeOrderList,
+                  setOrderSelection: store.client.setOrderSelection);
+            }),
+          );
+        },
+      );
+    }
+
+    etiquetas() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Etiquetas'),
+            content: Observer(
+              builder: (_) {
+                store.client.closedListExpanded ? Modular.to.pop() : null;
+                return RadioEtiquetasFilterWidget(
+                  closedListExpanded: store.client.closedListExpanded,
+                  setClosedListExpanded: store.client.setClosedListExpanded,
+                  changeFilterEtiquetaList: store.changeFilterEtiquetaList,
+                  etiquetaList: store.client.etiquetaList,
+                  etiquetaSelection: store.client.etiquetaSelection,
+                  setColor: store.client.setColor,
+                  setIcon: store.client.setIcon,
+                  setEtiquetaSelection: store.client.setEtiquetaSelection,
+                );
+              },
+            ),
+          );
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBarWidget(
           icon: Icons.bookmark,
           home: true,
           context: context,
           zoomController: drawerController,
-          setOpen: store.setOpen,
+          setOpen: store.client.setOpen,
           settings: true,
           back: false,
-          etiquetaList: store.tarefas,
-          etiquetaSelection: store.etiquetaSelection,
-          setEtiquetaSelection: store.setEtiquetaSelection),
+          etiquetaList: store.client.tarefas,
+          etiquetaSelection: store.client.etiquetaSelection,
+          setEtiquetaSelection: store.client.setEtiquetaSelection),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(Icons.add),
@@ -72,11 +128,11 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
       bottomNavigationBar: Observer(builder: (_) {
         return NavigationBarWidget(
             key: UniqueKey(),
-            theme: store.theme,
+            theme: store.client.theme,
             controller: _controller,
-            navigateBarSelection: store.navigateBarSelection,
+            navigateBarSelection: store.client.navigateBarSelection,
             setNavigateBarSelection: store.setNavigateBarSelection,
-            badgets: store.badgetNavigate);
+            badgets: store.client.badgetNavigate);
       }),
       body: ZoomDrawer(
         controller: drawerController,
@@ -84,94 +140,72 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
         menuScreen: Observer(
           builder: (_) {
             return MenuScreen(
-              open: store.open,
+              open: store.client.open,
               controller: drawerController,
             );
           },
         ),
         mainScreen: Observer(builder: (_) {
-          return !store.loading
+          return !store.client.loading
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 32),
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        ExpansionTile(
-                          leading: store.icon != 0
-                              ? Icon(
-                                  IconData(store.icon,
-                                      fontFamily: 'MaterialIcons'),
-                                  color:
-                                      ConvertIcon().convertColor(store.color),
-                                )
-                              : const Icon(
-                                  Icons.bookmark,
-                                  color: Colors.blue,
+                        ListTile(
+                          leading: GestureDetector(
+                            child: store.client.icon != 0
+                                ? Icon(
+                                    IconData(store.client.icon,
+                                        fontFamily: 'MaterialIcons'),
+                                    color: ConvertIcon()
+                                        .convertColor(store.client.color),
+                                  )
+                                : const Icon(Icons.bookmark),
+                            onTap: () {
+                              setState(() {
+                                store.client.setClosedListExpanded(false);
+                              });
+                              etiquetas();
+                            },
+                          ),
+                          title: Center(
+                            child: GestureDetector(
+                              child: ListTile(
+                                title: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.filter_alt,
+                                      color: Colors.grey,
+                                    ),
+                                    Text(
+                                      store.client.orderAscDesc
+                                          ? '${store.client.orderSelection} DESC'
+                                          : '${store.client.orderSelection} ASC',
+                                      style: const TextStyle(fontSize: 12),
+                                    ),
+                                  ],
                                 ),
-                          title: Text(
-                            store.etiquetaSelection,
-                            style: TextStyle(
-                              color: ConvertIcon().convertColor(
-                                  store.color != '' ? store.color : 'blue'),
+                              ),
+                              onTap: () => order(),
                             ),
                           ),
-                          children: <Widget>[
-                            Observer(
-                              builder: (_) {
-                                return RadioEtiquetasFilterWidget(
-                                  changeFilterEtiquetaList:
-                                      store.changeFilterEtiquetaList,
-                                  etiquetaList: store.etiquetaList,
-                                  etiquetaSelection: store.etiquetaSelection,
-                                  setColor: store.setColor,
-                                  setClosedListExpanded:
-                                      store.setClosedListExpanded,
-                                  closedListExpanded: store.closedListExpanded,
-                                  setIcon: store.setIcon,
-                                  setEtiquetaSelection:
-                                      store.setEtiquetaSelection,
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                        ExpansionTile(
-                          leading: const Icon(
-                            Icons.filter_alt,
-                            color: Colors.black45,
+                          trailing: GestureDetector(
+                            child: const Icon(Icons.people),
+                            onTap: () => order(),
                           ),
-                          title: Text(
-                            store.ordenamentoSelection,
-                          ),
-                          children: <Widget>[
-                            Observer(
-                              builder: (_) {
-                                return RadioEtiquetasFilterWidget(
-                                  changeFilterEtiquetaList:
-                                      store.changeFilterEtiquetaList,
-                                  etiquetaList: store.etiquetaList,
-                                  etiquetaSelection: store.etiquetaSelection,
-                                  setColor: store.setColor,
-                                  setClosedListExpanded:
-                                      store.setClosedListExpanded,
-                                  closedListExpanded: store.closedListExpanded,
-                                  setIcon: store.setIcon,
-                                  setEtiquetaSelection:
-                                      store.setEtiquetaSelection,
-                                );
-                              },
-                            ),
-                          ],
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.9,
                           child: CardWidget(
-                              theme: store.theme,
-                              navigateBarSelection: store.navigateBarSelection,
+                              theme: store.client.theme,
+                              navigateBarSelection:
+                                  store.client.navigateBarSelection,
                               opacidade: opacidade,
-                              tarefa: store.tarefas,
-                              navigate: store.navigateBarSelection,
+                              tarefa: store.client.tarefas,
+                              navigate: store.client.navigateBarSelection,
                               deleteTasks: store.deleteTasks,
                               save: store.save),
                         ),

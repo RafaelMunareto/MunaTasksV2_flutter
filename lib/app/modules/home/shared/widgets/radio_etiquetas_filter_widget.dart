@@ -10,8 +10,8 @@ class RadioEtiquetasFilterWidget extends StatefulWidget {
   final Function? setEtiquetaSelection;
   final Function setIcon;
   final Function setColor;
-  final Function setClosedListExpanded;
   final bool closedListExpanded;
+  final Function setClosedListExpanded;
   const RadioEtiquetasFilterWidget(
       {Key? key,
       required this.etiquetaList,
@@ -19,8 +19,8 @@ class RadioEtiquetasFilterWidget extends StatefulWidget {
       required this.changeFilterEtiquetaList,
       required this.setColor,
       required this.setIcon,
-      required this.setClosedListExpanded,
       required this.closedListExpanded,
+      required this.setClosedListExpanded,
       this.setEtiquetaSelection})
       : super(key: key);
 
@@ -35,7 +35,6 @@ class _RadioEtiquetasFilterWidgetState
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.40,
       child: Observer(
         builder: (_) {
           if (widget.etiquetaList!.data == null) {
@@ -45,44 +44,42 @@ class _RadioEtiquetasFilterWidgetState
           } else {
             List<EtiquetaModel> list = widget.etiquetaList!.data;
             var todos =
-                EtiquetaModel(color: 'blue', icon: 57585, etiqueta: 'TODOS');
+                EtiquetaModel(color: 'black', icon: 57585, etiqueta: 'TODOS');
             if (!list.map((e) => e.etiqueta.contains('TODOS')).contains(true)) {
               list.insert(0, todos);
             }
-            return ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (_, index) {
-                var model = list[index];
-                return Center(
-                  child: ListTile(
-                    key: Key(model.etiqueta.toString()),
-                    title: Text(
-                      model.etiqueta,
-                      style: TextStyle(
-                        color: ConvertIcon().convertColor(model.color),
+            return Wrap(
+              runAlignment: WrapAlignment.spaceAround,
+              spacing: 16,
+              children: [
+                for (var index = 0; index < list.length; index++)
+                  InputChip(
+                    key: ObjectKey(list[index].reference),
+                    labelPadding: const EdgeInsets.all(2),
+                    elevation: 4.0,
+                    avatar: Icon(
+                      IconData(list[index].icon ?? 0,
+                          fontFamily: 'MaterialIcons'),
+                      color: ConvertIcon().convertColor(list[index].color),
+                    ),
+                    label: SizedBox(
+                      child: Text(
+                        list[index].etiqueta,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 12),
                       ),
                     ),
-                    leading: Radio(
-                      value: model.etiqueta,
-                      groupValue: widget.etiquetaSelection,
-                      onChanged: (value) {
-                        setState(() {
-                          widget.setEtiquetaSelection!(value);
-                          widget.changeFilterEtiquetaList(value);
-                          widget.setIcon(model.icon);
-                          widget.setColor(model.color);
-                          widget.setClosedListExpanded(
-                              !widget.closedListExpanded);
-                        });
-                      },
-                    ),
-                    trailing: Icon(
-                      IconData(model.icon ?? 0, fontFamily: 'MaterialIcons'),
-                      color: ConvertIcon().convertColor(model.color),
-                    ),
+                    onPressed: () {
+                      setState(() {
+                        widget.setEtiquetaSelection!(list[index].etiqueta);
+                        widget.changeFilterEtiquetaList();
+                        widget.setIcon(list[index].icon);
+                        widget.setColor(list[index].color);
+                        widget.setClosedListExpanded(true);
+                      });
+                    },
                   ),
-                );
-              },
+              ],
             );
           }
         },

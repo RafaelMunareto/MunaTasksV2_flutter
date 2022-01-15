@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
-import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
+import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
@@ -20,129 +20,52 @@ abstract class HomeStoreBase with Store {
   final ILocalStorage storage = Modular.get();
   final AuthController auth = Modular.get();
   final FirebaseFirestore firestore = Modular.get();
+  final ClientStore client = Modular.get();
 
   HomeStoreBase({required this.dashboardService}) {
     getList();
     buscaTheme();
     getEtiquetas();
+    getOrder();
   }
-
-  @observable
-  List<int> badgetNavigate = [0, 0, 0];
-
-  @action
-  setBadgetNavigate(value) => badgetNavigate = value;
-
-  @observable
-  String cardSelection = '';
-
-  @observable
-  List<TarefaModel> tarefas = [];
-
-  @observable
-  ObservableStream<List<EtiquetaModel>>? etiquetaList;
-
-  @observable
-  ObservableStream<List<OrderModel>>? orderList;
-
-  @observable
-  bool open = false;
-
-  @observable
-  String etiquetaSelection = 'TODOS';
-
-  @observable
-  String ordenamentoSelection = 'ORDENAMENTO';
-
-  @action
-  setOrdenamentoSelection(value) => ordenamentoSelection = value;
-
-  @action
-  setEtiquetaSelection(value) => etiquetaSelection = value;
-
-  @action
-  setOpen(value) => open = value;
-
-  @observable
-  List<TarefaModel> tarefasBase = [];
-
-  @observable
-  bool loading = true;
-
-  @observable
-  bool theme = false;
 
   @action
   buscaTheme() {
     storage.get('theme').then((value) {
       if (value?[0] == 'dark') {
-        theme = true;
+        client.theme = true;
       } else {
-        theme = false;
+        client.theme = false;
       }
     });
   }
 
   @action
-  setLoading(value) => loading = value;
-
-  @action
-  setTarefa(value) => tarefasBase.add(value);
-
-  @action
-  cleanTarefasBase() => tarefasBase = [];
-
-  @action
-  changeTarefa(value) => tarefas = value;
-
-  @action
-  cleanTarefas() => tarefas = [];
-
-  @observable
-  int navigateBarSelection = 0;
-
-  @action
-  setColor(value) => color = value;
-
-  @action
-  setIcon(value) => icon = value;
-
-  @observable
-  String color = '';
-
-  @observable
-  int icon = 0;
-
-  @observable
-  bool closedListExpanded = false;
-
-  @action
-  setClosedListExpanded(value) => closedListExpanded = value;
-
-  @action
   setNavigateBarSelection(value) {
-    navigateBarSelection = value;
-    setEtiquetaSelection('TODOS');
-    setColor('blue');
-    setIcon(0);
-    changeTarefa(
-        tarefasBase.where((element) => element.fase == value).toList());
+    client.navigateBarSelection = value;
+    client.setEtiquetaSelection('TODOS');
+    client.setOrderAscDesc(true);
+    client.setOrderSelection('DATA');
+    client.setColor('blue');
+    client.setIcon(0);
+    client.changeTarefa(
+        client.tarefasBase.where((element) => element.fase == value).toList());
   }
 
   @action
-  setSelection(value) => cardSelection = value;
+  setSelection(value) => client.cardSelection = value;
 
   @observable
   Stream<List<dynamic>>? dashboardList;
 
   @action
   void getEtiquetas() {
-    etiquetaList = dashboardService.getEtiquetas().asObservable();
+    client.etiquetaList = dashboardService.getEtiquetas().asObservable();
   }
 
   @action
   void getOrder() {
-    orderList = dashboardService.getOrder().asObservable();
+    client.orderList = dashboardService.getOrder().asObservable();
   }
 
   @action
@@ -155,7 +78,7 @@ abstract class HomeStoreBase with Store {
   tratamentoBase(Stream<List<dynamic>>? dashboardList) {
     UserModel? userSubtarefa;
     List<UserModel> users = [];
-    tarefasBase = [];
+    client.tarefasBase = [];
     dashboardList!.forEach((e) {
       for (var element in e) {
         var etiqueta = element.etiqueta
@@ -193,30 +116,31 @@ abstract class HomeStoreBase with Store {
               }).whenComplete(() {
                 if (element.users!.length == users.length) {
                   element.users = users;
-                  setTarefa(element);
-                  changeTarefa(tarefasBase
-                      .where((element) => element.fase == navigateBarSelection)
+                  client.setTarefa(element);
+                  client.changeTarefa(client.tarefasBase
+                      .where((element) =>
+                          element.fase == client.navigateBarSelection)
                       .toList());
                   List<int> badgets = [
-                    tarefasBase
+                    client.tarefasBase
                         .where((element) => element.fase == 0)
                         .toList()
                         .length,
-                    tarefasBase
+                    client.tarefasBase
                         .where((element) => element.fase == 1)
                         .toList()
                         .length,
-                    tarefasBase
+                    client.tarefasBase
                         .where((element) => element.fase == 2)
                         .toList()
                         .length
                   ];
-                  setBadgetNavigate(badgets);
+                  client.setBadgetNavigate(badgets);
                 }
               });
             }
           }).whenComplete(() {
-            setLoading(false);
+            client.setLoading(false);
           });
         }
       }
@@ -226,13 +150,13 @@ abstract class HomeStoreBase with Store {
   @action
   void save(TarefaModel model) {
     dashboardService.save(model);
-    cleanTarefasBase();
+    client.cleanTarefasBase();
   }
 
   @action
   void deleteTasks(TarefaModel model) {
     dashboardService.delete(model);
-    cleanTarefasBase();
+    client.cleanTarefasBase();
   }
 
   @action
@@ -241,17 +165,42 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  changeFilterEtiquetaList(String value) {
-    changeTarefa(tarefasBase);
+  changeFilterEtiquetaList() {
+    client.changeTarefa(client.tarefasBase);
 
-    if (etiquetaSelection != 'TODOS') {
-      changeTarefa(tarefas
-          .where((e) => e.etiqueta.etiqueta == etiquetaSelection)
-          .where((b) => b.fase == navigateBarSelection)
+    if (client.etiquetaSelection != 'TODOS') {
+      client.changeTarefa(client.tarefas
+          .where((e) => e.etiqueta.etiqueta == client.etiquetaSelection)
+          .where((b) => b.fase == client.navigateBarSelection)
           .toList());
     } else {
-      changeTarefa(
-          tarefas.where((b) => b.fase == navigateBarSelection).toList());
+      client.changeTarefa(client.tarefas
+          .where((b) => b.fase == client.navigateBarSelection)
+          .toList());
+    }
+  }
+
+  @action
+  changeOrderList() {
+    switch (client.orderSelection) {
+      case 'ETIQUETA':
+        return client.tarefas.sort((a, b) => client.orderAscDesc
+            ? a.etiqueta.etiqueta.compareTo(b.etiqueta.etiqueta)
+            : b.etiqueta.etiqueta.compareTo(a.etiqueta.etiqueta));
+      case 'ASSUNTO':
+        return client.tarefas.sort((a, b) => client.orderAscDesc
+            ? a.texto.compareTo(b.texto)
+            : b.texto.compareTo(a.texto));
+      case 'DATA':
+        return client.tarefas.sort((a, b) => client.orderAscDesc
+            ? a.data.compareTo(b.data)
+            : b.data.compareTo(a.data));
+      case 'PRIORIDADE':
+        return client.tarefas.sort((a, b) => client.orderAscDesc
+            ? a.prioridade.compareTo(b.prioridade)
+            : b.prioridade.compareTo(a.prioridade));
+      default:
+        return client.tarefas;
     }
   }
 }
