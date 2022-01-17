@@ -118,7 +118,7 @@ class _CardWidgetState extends State<CardWidget> {
   changeIconeAndColorTime(data) {
     DateTime now = DateTime.now();
     var date = DateTime.fromMillisecondsSinceEpoch(data.seconds * 1000);
-    if (date.isBefore(now)) {
+    if (date.isAfter(now)) {
       return [Colors.blue, Icons.timelapse_sharp];
     } else if (date == now) {
       return [Colors.amber, Icons.alarm];

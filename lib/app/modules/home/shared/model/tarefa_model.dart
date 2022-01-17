@@ -14,7 +14,7 @@ class TarefaModel {
   List<dynamic>? subTarefa;
 
   TarefaModel(
-      {this.etiqueta = '',
+      {this.etiqueta,
       this.texto = '',
       this.fase = 0,
       this.reference,

@@ -75,76 +75,66 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  tratamentoBase(Stream<List<dynamic>>? dashboardList) {
-    UserModel? userSubtarefa;
-    List<UserModel> users = [];
-    client.tarefasBase = [];
-    dashboardList!.forEach((e) {
+  tratamentoBase(Stream<List<dynamic>>? dashboardList) async {
+    UserModel? subTarefaUsuario;
+    dashboardList!.forEach((e) async {
       for (var element in e) {
-        var etiqueta = element.etiqueta
-            .toString()
-            .replaceAll('/etiqueta', 'etiqueta')
-            .split('/');
-        var idEtiqueta = etiqueta[1].replaceAll(')', '');
-        firestore.collection('etiqueta').doc(idEtiqueta).get().then(
-            (value) => element.etiqueta = EtiquetaModel.fromDocument(value));
-
-        for (var subtarefa in element!.subTarefa!) {
-          var str = subtarefa.user
-              .toString()
-              .replaceAll('/usuarios', 'usuarios')
-              .split('/');
-          var id = str[1].replaceAll(')', '');
-
-          firestore.collection('usuarios').doc(id).get().then((doc) {
-            // ignore: prefer_conditional_assignment
-            if (userSubtarefa == null) {
-              userSubtarefa = UserModel.fromDocument(doc);
-            }
+        //user
+        for (var user in element.users) {
+          firestore.collection('usuarios').doc(user.id).get().then((doc) {
+            client.setUsersBase(UserModel.fromDocument(doc));
           }).whenComplete(() {
-            subtarefa.user = userSubtarefa;
-            for (var linha in element.users!) {
-              var str = linha
-                  .toString()
-                  .replaceAll('/usuarios', 'usuarios')
-                  .split('/');
-              var id = str[1].replaceAll(')', '');
-              firestore.collection('usuarios').doc(id).get().then((doc) {
-                if (users.isEmpty) {
-                  users.add(UserModel.fromDocument(doc));
-                }
-              }).whenComplete(() {
-                if (element.users!.length == users.length) {
-                  element.users = users;
-                  client.setTarefa(element);
-                  client.changeTarefa(client.tarefasBase
-                      .where((element) =>
-                          element.fase == client.navigateBarSelection)
-                      .toList());
-                  List<int> badgets = [
-                    client.tarefasBase
-                        .where((element) => element.fase == 0)
-                        .toList()
-                        .length,
-                    client.tarefasBase
-                        .where((element) => element.fase == 1)
-                        .toList()
-                        .length,
-                    client.tarefasBase
-                        .where((element) => element.fase == 2)
-                        .toList()
-                        .length
-                  ];
-                  client.setBadgetNavigate(badgets);
-                }
-              });
+            if (element.users.length == client.usersBase.length) {
+              element.users = client.usersBase;
             }
+          });
+        }
+        //etiqueta
+        await firestore
+            .collection('etiqueta')
+            .doc(element.etiqueta.id)
+            .get()
+            .then((value) {
+          element.etiqueta = EtiquetaModel.fromDocument(value);
+        });
+        for (var subtarefa in element!.subTarefa!) {
+          firestore
+              .collection('usuarios')
+              .doc(subtarefa.user.id)
+              .get()
+              .then((doc) {
+            subTarefaUsuario = UserModel.fromDocument(doc);
+          }).whenComplete(() async {
+            subtarefa.user = subTarefaUsuario;
+            badgets(element, e.length);
           }).whenComplete(() {
             client.setLoading(false);
           });
         }
       }
     });
+  }
+
+  @action
+  badgets(TarefaModel element, int total) async {
+    await client.setTarefa(element);
+    if (total == client.tarefasBase.length) {
+      client.changeTarefa(client.tarefasBase
+          .where((element) => element.fase == client.navigateBarSelection)
+          .toList());
+      List<int> badgets = [
+        client.tarefasBase
+            .where((element) => element.fase == 0)
+            .toList()
+            .length,
+        client.tarefasBase
+            .where((element) => element.fase == 1)
+            .toList()
+            .length,
+        client.tarefasBase.where((element) => element.fase == 2).toList().length
+      ];
+      client.setBadgetNavigate(badgets);
+    }
   }
 
   @action

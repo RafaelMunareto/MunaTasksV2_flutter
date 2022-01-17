@@ -253,6 +253,53 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$usersBaseAtom = Atom(name: '_ClientStoreBase.usersBase');
+
+  @override
+  List<dynamic> get usersBase {
+    _$usersBaseAtom.reportRead();
+    return super.usersBase;
+  }
+
+  @override
+  set usersBase(List<dynamic> value) {
+    _$usersBaseAtom.reportWrite(value, super.usersBase, () {
+      super.usersBase = value;
+    });
+  }
+
+  final _$etiquetasRelacionadasAtom =
+      Atom(name: '_ClientStoreBase.etiquetasRelacionadas');
+
+  @override
+  EtiquetaModel? get etiquetasRelacionadas {
+    _$etiquetasRelacionadasAtom.reportRead();
+    return super.etiquetasRelacionadas;
+  }
+
+  @override
+  set etiquetasRelacionadas(EtiquetaModel? value) {
+    _$etiquetasRelacionadasAtom.reportWrite(value, super.etiquetasRelacionadas,
+        () {
+      super.etiquetasRelacionadas = value;
+    });
+  }
+
+  final _$userSubtarefaAtom = Atom(name: '_ClientStoreBase.userSubtarefa');
+
+  @override
+  UserModel? get userSubtarefa {
+    _$userSubtarefaAtom.reportRead();
+    return super.userSubtarefa;
+  }
+
+  @override
+  set userSubtarefa(UserModel? value) {
+    _$userSubtarefaAtom.reportWrite(value, super.userSubtarefa, () {
+      super.userSubtarefa = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -400,6 +447,39 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setUsersBase(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setUsersBase');
+    try {
+      return super.setUsersBase(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setEtiquetasRelacionadas(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setEtiquetasRelacionadas');
+    try {
+      return super.setEtiquetasRelacionadas(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setUserSubtarefa(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setUserSubtarefa');
+    try {
+      return super.setUserSubtarefa(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -417,7 +497,10 @@ theme: ${theme},
 navigateBarSelection: ${navigateBarSelection},
 color: ${color},
 icon: ${icon},
-closedListExpanded: ${closedListExpanded}
+closedListExpanded: ${closedListExpanded},
+usersBase: ${usersBase},
+etiquetasRelacionadas: ${etiquetasRelacionadas},
+userSubtarefa: ${userSubtarefa}
     ''';
   }
 }

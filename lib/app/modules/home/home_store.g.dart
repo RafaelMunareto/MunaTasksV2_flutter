@@ -24,6 +24,22 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
+  final _$tratamentoBaseAsyncAction =
+      AsyncAction('HomeStoreBase.tratamentoBase');
+
+  @override
+  Future tratamentoBase(Stream<List<dynamic>>? dashboardList) {
+    return _$tratamentoBaseAsyncAction
+        .run(() => super.tratamentoBase(dashboardList));
+  }
+
+  final _$badgetsAsyncAction = AsyncAction('HomeStoreBase.badgets');
+
+  @override
+  Future badgets(TarefaModel element, int total) {
+    return _$badgetsAsyncAction.run(() => super.badgets(element, total));
+  }
+
   final _$HomeStoreBaseActionController =
       ActionController(name: 'HomeStoreBase');
 
@@ -88,17 +104,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.getList');
     try {
       return super.getList();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic tratamentoBase(Stream<List<dynamic>>? dashboardList) {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.tratamentoBase');
-    try {
-      return super.tratamentoBase(dashboardList);
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
