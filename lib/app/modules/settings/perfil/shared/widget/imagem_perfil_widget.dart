@@ -208,18 +208,14 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                     }
                   });
                 },
-                child: Observer(
-                  builder: (_) {
-                    return Icon(
-                      widget.textFieldNameBool
-                          ? Icons.drive_file_rename_outline
-                          : widget.perfil.name.isNotEmpty &&
-                                  widget.perfil.name.length >= 3
-                              ? Icons.task_alt
-                              : Icons.task_alt,
-                      color: lightThemeData(context).primaryColor,
-                    );
-                  },
+                child: Icon(
+                  widget.textFieldNameBool
+                      ? Icons.drive_file_rename_outline
+                      : widget.perfil.name.isNotEmpty &&
+                              widget.perfil.name.length >= 3
+                          ? Icons.task_alt
+                          : Icons.task_alt,
+                  color: lightThemeData(context).primaryColor,
                 ),
               ),
             ),

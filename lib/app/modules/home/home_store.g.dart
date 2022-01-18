@@ -36,8 +36,8 @@ mixin _$HomeStore on HomeStoreBase, Store {
   final _$badgetsAsyncAction = AsyncAction('HomeStoreBase.badgets');
 
   @override
-  Future badgets(TarefaModel element, int total) {
-    return _$badgetsAsyncAction.run(() => super.badgets(element, total));
+  Future badgets() {
+    return _$badgetsAsyncAction.run(() => super.badgets());
   }
 
   final _$HomeStoreBaseActionController =

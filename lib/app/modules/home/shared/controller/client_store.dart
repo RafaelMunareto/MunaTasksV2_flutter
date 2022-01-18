@@ -97,7 +97,10 @@ abstract class _ClientStoreBase with Store {
   setClosedListExpanded(value) => closedListExpanded = value;
 
   @observable
-  List<dynamic> usersBase = [];
+  List<UserModel> usersBase = [];
+
+  @action
+  cleanUsersBase() => usersBase = [];
 
   @action
   setUsersBase(value) => usersBase.add(value);

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
@@ -76,65 +77,64 @@ abstract class HomeStoreBase with Store {
 
   @action
   tratamentoBase(Stream<List<dynamic>>? dashboardList) async {
-    UserModel? subTarefaUsuario;
+    client.cleanUsersBase();
+    client.cleanUsersBase();
     dashboardList!.forEach((e) async {
       for (var element in e) {
-        //user
-        for (var user in element.users) {
-          firestore.collection('usuarios').doc(user.id).get().then((doc) {
-            client.setUsersBase(UserModel.fromDocument(doc));
-          }).whenComplete(() {
-            if (element.users.length == client.usersBase.length) {
-              element.users = client.usersBase;
-            }
-          });
+        await relacionamentoUsers(element.users);
+        if (client.usersBase.length == element.users.length) {
+          element.users = [];
+          element.users = client.usersBase;
+          client.cleanUsersBase();
         }
-        //etiqueta
-        await firestore
-            .collection('etiqueta')
-            .doc(element.etiqueta.id)
-            .get()
-            .then((value) {
-          element.etiqueta = EtiquetaModel.fromDocument(value);
-        });
+
+        await relacionamentoEtiqueta(element)
+            .then((value) => element.etiqueta = value);
+
         for (var subtarefa in element!.subTarefa!) {
-          firestore
-              .collection('usuarios')
-              .doc(subtarefa.user.id)
-              .get()
-              .then((doc) {
-            subTarefaUsuario = UserModel.fromDocument(doc);
-          }).whenComplete(() async {
-            subtarefa.user = subTarefaUsuario;
-            badgets(element, e.length);
-          }).whenComplete(() {
-            client.setLoading(false);
-          });
+          //relacionamentoSubTarefa
+          await relacionamentoUserSubtarefa(subtarefa);
+          await client.setTarefa(element);
         }
+        badgets();
+        client.setLoading(false);
       }
     });
   }
 
-  @action
-  badgets(TarefaModel element, int total) async {
-    await client.setTarefa(element);
-    if (total == client.tarefasBase.length) {
-      client.changeTarefa(client.tarefasBase
-          .where((element) => element.fase == client.navigateBarSelection)
-          .toList());
-      List<int> badgets = [
-        client.tarefasBase
-            .where((element) => element.fase == 0)
-            .toList()
-            .length,
-        client.tarefasBase
-            .where((element) => element.fase == 1)
-            .toList()
-            .length,
-        client.tarefasBase.where((element) => element.fase == 2).toList().length
-      ];
-      client.setBadgetNavigate(badgets);
+  relacionamentoUsers(List element) async {
+    for (var user in element) {
+      await firestore.collection('usuarios').doc(user.id).get().then((doc) {
+        client.setUsersBase(UserModel.fromDocument(doc));
+      });
     }
+  }
+
+  Future relacionamentoEtiqueta(TarefaModel element) {
+    return firestore
+        .collection('etiqueta')
+        .doc(element.etiqueta.id)
+        .get()
+        .then((value) => EtiquetaModel.fromDocument(value));
+  }
+
+  relacionamentoUserSubtarefa(SubtarefaModel element) {
+    firestore.collection('usuarios').doc(element.user.id).get().then((doc) {
+      return element.user = UserModel.fromDocument(doc);
+    });
+  }
+
+  @action
+  badgets() async {
+    client.changeTarefa(client.tarefasBase
+        .where((element) => element.fase == client.navigateBarSelection)
+        .toList());
+    List<int> badgets = [
+      client.tarefasBase.where((element) => element.fase == 0).toList().length,
+      client.tarefasBase.where((element) => element.fase == 1).toList().length,
+      client.tarefasBase.where((element) => element.fase == 2).toList().length
+    ];
+    client.setBadgetNavigate(badgets);
   }
 
   @action

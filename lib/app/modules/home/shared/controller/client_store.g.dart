@@ -256,13 +256,13 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   final _$usersBaseAtom = Atom(name: '_ClientStoreBase.usersBase');
 
   @override
-  List<dynamic> get usersBase {
+  List<UserModel> get usersBase {
     _$usersBaseAtom.reportRead();
     return super.usersBase;
   }
 
   @override
-  set usersBase(List<dynamic> value) {
+  set usersBase(List<UserModel> value) {
     _$usersBaseAtom.reportWrite(value, super.usersBase, () {
       super.usersBase = value;
     });
@@ -441,6 +441,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
         name: '_ClientStoreBase.setClosedListExpanded');
     try {
       return super.setClosedListExpanded(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanUsersBase() {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.cleanUsersBase');
+    try {
+      return super.cleanUsersBase();
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
