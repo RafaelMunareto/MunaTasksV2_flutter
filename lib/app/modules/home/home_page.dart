@@ -93,11 +93,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
               builder: (_) {
                 store.client.closedListExpanded ? Modular.to.pop() : null;
                 return RadioEtiquetasFilterWidget(
-                  closedListExpanded: store.client.closedListExpanded,
                   setClosedListExpanded: store.client.setClosedListExpanded,
                   changeFilterEtiquetaList: store.changeFilterEtiquetaList,
                   etiquetaList: store.client.etiquetaList,
-                  etiquetaSelection: store.client.etiquetaSelection,
                   setColor: store.client.setColor,
                   setIcon: store.client.setIcon,
                   setEtiquetaSelection: store.client.setEtiquetaSelection,
@@ -114,17 +112,15 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Etiquetas'),
+            title: const Text('Times'),
             content: Observer(
               builder: (_) {
                 store.client.closedListUserExpanded ? Modular.to.pop() : null;
                 return TeamsSelectionWidget(
-                  closedListUserExpanded: store.client.closedListUserExpanded,
                   setClosedListUserExpanded:
                       store.client.setclosedListUserExpanded,
                   changeFilterUserList: store.changeFilterUserList,
                   userLista: store.client.userList,
-                  userSelection: store.client.userSelection,
                   setImageUser: store.client.setImgUrl,
                   setUserSelection: store.client.setUserSelection,
                 );
@@ -223,7 +219,12 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                             child: CircleAvatarWidget(
                               url: store.client.imgUrl,
                             ),
-                            onTap: () => teams(),
+                            onTap: () {
+                              setState(() {
+                                store.client.setclosedListUserExpanded(false);
+                              });
+                              teams();
+                            },
                           ),
                         ),
                         SizedBox(

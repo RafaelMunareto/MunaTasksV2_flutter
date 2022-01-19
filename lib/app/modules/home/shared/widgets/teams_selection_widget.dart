@@ -5,20 +5,16 @@ import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 
 class TeamsSelectionWidget extends StatefulWidget {
   final dynamic userLista;
-  final dynamic userSelection;
   final Function changeFilterUserList;
   final Function? setUserSelection;
   final Function setImageUser;
-  final bool closedListUserExpanded;
   final Function setClosedListUserExpanded;
   const TeamsSelectionWidget({
     Key? key,
     required this.userLista,
-    required this.userSelection,
     required this.changeFilterUserList,
     required this.setUserSelection,
     required this.setImageUser,
-    required this.closedListUserExpanded,
     required this.setClosedListUserExpanded,
   }) : super(key: key);
 

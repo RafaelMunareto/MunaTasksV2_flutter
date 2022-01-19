@@ -5,21 +5,17 @@ import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class RadioEtiquetasFilterWidget extends StatefulWidget {
   final dynamic etiquetaList;
-  final dynamic etiquetaSelection;
   final Function changeFilterEtiquetaList;
   final Function? setEtiquetaSelection;
   final Function setIcon;
   final Function setColor;
-  final bool closedListExpanded;
   final Function setClosedListExpanded;
   const RadioEtiquetasFilterWidget(
       {Key? key,
       required this.etiquetaList,
-      required this.etiquetaSelection,
       required this.changeFilterEtiquetaList,
       required this.setColor,
       required this.setIcon,
-      required this.closedListExpanded,
       required this.setClosedListExpanded,
       this.setEtiquetaSelection})
       : super(key: key);
