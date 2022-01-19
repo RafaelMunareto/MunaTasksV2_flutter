@@ -28,6 +28,7 @@ abstract class HomeStoreBase with Store {
     buscaTheme();
     getEtiquetas();
     getOrder();
+    getUsers();
   }
 
   @action
@@ -56,9 +57,6 @@ abstract class HomeStoreBase with Store {
   @action
   setSelection(value) => client.cardSelection = value;
 
-  @observable
-  Stream<List<dynamic>>? dashboardList;
-
   @action
   void getEtiquetas() {
     client.etiquetaList = dashboardService.getEtiquetas().asObservable();
@@ -71,8 +69,13 @@ abstract class HomeStoreBase with Store {
 
   @action
   void getList() {
-    dashboardList = dashboardService.get();
-    tratamentoBase(dashboardList);
+    client.dashboardList = dashboardService.get();
+    tratamentoBase(client.dashboardList);
+  }
+
+  @action
+  void getUsers() {
+    client.userList = dashboardService.getUsers().asObservable();
   }
 
   @action
@@ -183,6 +186,9 @@ abstract class HomeStoreBase with Store {
           .toList());
     }
   }
+
+  @action
+  changeFilterUserList() {}
 
   @action
   changeOrderList() {

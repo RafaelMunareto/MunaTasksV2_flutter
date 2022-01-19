@@ -7,7 +7,9 @@ import 'package:munatasks2/app/modules/home/shared/widgets/card_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_order_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/teams_selection_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
+import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
@@ -107,6 +109,32 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
       );
     }
 
+    teams() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Etiquetas'),
+            content: Observer(
+              builder: (_) {
+                store.client.closedListUserExpanded ? Modular.to.pop() : null;
+                return TeamsSelectionWidget(
+                  closedListUserExpanded: store.client.closedListUserExpanded,
+                  setClosedListUserExpanded:
+                      store.client.setclosedListUserExpanded,
+                  changeFilterUserList: store.changeFilterUserList,
+                  userLista: store.client.userList,
+                  userSelection: store.client.userSelection,
+                  setImageUser: store.client.setImgUrl,
+                  setUserSelection: store.client.setUserSelection,
+                );
+              },
+            ),
+          );
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBarWidget(
           icon: Icons.bookmark,
@@ -192,8 +220,10 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                             ),
                           ),
                           trailing: GestureDetector(
-                            child: const Icon(Icons.people),
-                            onTap: () => order(),
+                            child: CircleAvatarWidget(
+                              url: store.client.imgUrl,
+                            ),
+                            onTap: () => teams(),
                           ),
                         ),
                         SizedBox(

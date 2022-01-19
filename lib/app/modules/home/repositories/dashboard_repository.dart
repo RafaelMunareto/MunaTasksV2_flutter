@@ -3,6 +3,7 @@ import 'package:munatasks2/app/modules/home/repositories/interfaces/dashboard_in
 import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
+import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
 class DashboardRepository implements IDashboardRepository {
   final FirebaseFirestore firestore;
@@ -28,6 +29,12 @@ class DashboardRepository implements IDashboardRepository {
   Stream<List<OrderModel>> getOrder() {
     return firestore.collection('order').snapshots().map((query) =>
         query.docs.map((doc) => OrderModel.fromDocument(doc)).toList());
+  }
+
+  @override
+  Stream<List<UserModel>> getUsers() {
+    return firestore.collection('usuarios').snapshots().map((query) =>
+        query.docs.map((doc) => UserModel.fromDocument(doc)).toList());
   }
 
   @override

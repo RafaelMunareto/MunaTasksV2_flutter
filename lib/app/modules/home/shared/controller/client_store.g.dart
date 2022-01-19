@@ -54,6 +54,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$dashboardListAtom = Atom(name: '_ClientStoreBase.dashboardList');
+
+  @override
+  Stream<List<dynamic>>? get dashboardList {
+    _$dashboardListAtom.reportRead();
+    return super.dashboardList;
+  }
+
+  @override
+  set dashboardList(Stream<List<dynamic>>? value) {
+    _$dashboardListAtom.reportWrite(value, super.dashboardList, () {
+      super.dashboardList = value;
+    });
+  }
+
   final _$etiquetaListAtom = Atom(name: '_ClientStoreBase.etiquetaList');
 
   @override
@@ -66,6 +81,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set etiquetaList(ObservableStream<List<EtiquetaModel>>? value) {
     _$etiquetaListAtom.reportWrite(value, super.etiquetaList, () {
       super.etiquetaList = value;
+    });
+  }
+
+  final _$userListAtom = Atom(name: '_ClientStoreBase.userList');
+
+  @override
+  ObservableStream<List<UserModel>>? get userList {
+    _$userListAtom.reportRead();
+    return super.userList;
+  }
+
+  @override
+  set userList(ObservableStream<List<UserModel>>? value) {
+    _$userListAtom.reportWrite(value, super.userList, () {
+      super.userList = value;
     });
   }
 
@@ -112,6 +142,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set etiquetaSelection(String value) {
     _$etiquetaSelectionAtom.reportWrite(value, super.etiquetaSelection, () {
       super.etiquetaSelection = value;
+    });
+  }
+
+  final _$userSelectionAtom = Atom(name: '_ClientStoreBase.userSelection');
+
+  @override
+  String get userSelection {
+    _$userSelectionAtom.reportRead();
+    return super.userSelection;
+  }
+
+  @override
+  set userSelection(String value) {
+    _$userSelectionAtom.reportWrite(value, super.userSelection, () {
+      super.userSelection = value;
     });
   }
 
@@ -253,6 +298,23 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$closedListUserExpandedAtom =
+      Atom(name: '_ClientStoreBase.closedListUserExpanded');
+
+  @override
+  bool get closedListUserExpanded {
+    _$closedListUserExpandedAtom.reportRead();
+    return super.closedListUserExpanded;
+  }
+
+  @override
+  set closedListUserExpanded(bool value) {
+    _$closedListUserExpandedAtom
+        .reportWrite(value, super.closedListUserExpanded, () {
+      super.closedListUserExpanded = value;
+    });
+  }
+
   final _$usersBaseAtom = Atom(name: '_ClientStoreBase.usersBase');
 
   @override
@@ -265,6 +327,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set usersBase(List<UserModel> value) {
     _$usersBaseAtom.reportWrite(value, super.usersBase, () {
       super.usersBase = value;
+    });
+  }
+
+  final _$subtarefaModelAtom = Atom(name: '_ClientStoreBase.subtarefaModel');
+
+  @override
+  List<SubtarefaModel> get subtarefaModel {
+    _$subtarefaModelAtom.reportRead();
+    return super.subtarefaModel;
+  }
+
+  @override
+  set subtarefaModel(List<SubtarefaModel> value) {
+    _$subtarefaModelAtom.reportWrite(value, super.subtarefaModel, () {
+      super.subtarefaModel = value;
     });
   }
 
@@ -300,6 +377,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$imgUrlAtom = Atom(name: '_ClientStoreBase.imgUrl');
+
+  @override
+  String get imgUrl {
+    _$imgUrlAtom.reportRead();
+    return super.imgUrl;
+  }
+
+  @override
+  set imgUrl(String value) {
+    _$imgUrlAtom.reportWrite(value, super.imgUrl, () {
+      super.imgUrl = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -331,6 +423,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
         name: '_ClientStoreBase.setEtiquetaSelection');
     try {
       return super.setEtiquetaSelection(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setUserSelection(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setUserSelection');
+    try {
+      return super.setUserSelection(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -447,6 +550,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setclosedListUserExpanded(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setclosedListUserExpanded');
+    try {
+      return super.setclosedListUserExpanded(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic cleanUsersBase() {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.cleanUsersBase');
@@ -463,6 +577,28 @@ mixin _$ClientStore on _ClientStoreBase, Store {
         name: '_ClientStoreBase.setUsersBase');
     try {
       return super.setUsersBase(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanSubtarefaModel() {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.cleanSubtarefaModel');
+    try {
+      return super.cleanSubtarefaModel();
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setSubtarefaModel(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setSubtarefaModel');
+    try {
+      return super.setSubtarefaModel(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -491,15 +627,29 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setImgUrl(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setImgUrl');
+    try {
+      return super.setImgUrl(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
 cardSelection: ${cardSelection},
 tarefas: ${tarefas},
+dashboardList: ${dashboardList},
 etiquetaList: ${etiquetaList},
+userList: ${userList},
 orderList: ${orderList},
 open: ${open},
 etiquetaSelection: ${etiquetaSelection},
+userSelection: ${userSelection},
 orderSelection: ${orderSelection},
 orderAscDesc: ${orderAscDesc},
 tarefasBase: ${tarefasBase},
@@ -509,9 +659,12 @@ navigateBarSelection: ${navigateBarSelection},
 color: ${color},
 icon: ${icon},
 closedListExpanded: ${closedListExpanded},
+closedListUserExpanded: ${closedListUserExpanded},
 usersBase: ${usersBase},
+subtarefaModel: ${subtarefaModel},
 etiquetasRelacionadas: ${etiquetasRelacionadas},
-userSubtarefa: ${userSubtarefa}
+userSubtarefa: ${userSubtarefa},
+imgUrl: ${imgUrl}
     ''';
   }
 }

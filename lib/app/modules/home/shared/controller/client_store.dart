@@ -23,7 +23,13 @@ abstract class _ClientStoreBase with Store {
   List<TarefaModel> tarefas = [];
 
   @observable
+  Stream<List<dynamic>>? dashboardList;
+
+  @observable
   ObservableStream<List<EtiquetaModel>>? etiquetaList;
+
+  @observable
+  ObservableStream<List<UserModel>>? userList;
 
   @observable
   ObservableStream<List<OrderModel>>? orderList;
@@ -35,6 +41,9 @@ abstract class _ClientStoreBase with Store {
   String etiquetaSelection = 'TODOS';
 
   @observable
+  String userSelection = 'TODOS';
+
+  @observable
   String orderSelection = 'DATA';
 
   @action
@@ -42,6 +51,9 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setEtiquetaSelection(value) => etiquetaSelection = value;
+
+  @action
+  setUserSelection(value) => userSelection = value;
 
   @action
   setOpen(value) => open = value;
@@ -98,6 +110,12 @@ abstract class _ClientStoreBase with Store {
   setClosedListExpanded(value) => closedListExpanded = value;
 
   @observable
+  bool closedListUserExpanded = false;
+
+  @action
+  setclosedListUserExpanded(value) => closedListUserExpanded = value;
+
+  @observable
   List<UserModel> usersBase = [];
 
   @action
@@ -126,4 +144,11 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setUserSubtarefa(value) => userSubtarefa = value;
+
+  @observable
+  String imgUrl =
+      'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/allPeople.png?alt=media&token=19a38226-7467-4f83-a201-20214af45bc1';
+
+  @action
+  setImgUrl(value) => imgUrl = value;
 }
