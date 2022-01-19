@@ -79,6 +79,7 @@ abstract class HomeStoreBase with Store {
   tratamentoBase(Stream<List<dynamic>>? dashboardList) async {
     client.cleanUsersBase();
     client.cleanUsersBase();
+    client.cleanSubtarefaModel();
     dashboardList!.forEach((e) async {
       for (var element in e) {
         await relacionamentoUsers(element.users);
@@ -92,9 +93,18 @@ abstract class HomeStoreBase with Store {
             .then((value) => element.etiqueta = value);
 
         for (var subtarefa in element!.subTarefa!) {
-          await relacionamentoUserSubtarefa(SubtarefaModel.fromJson(subtarefa));
-          await client.setTarefa(element);
+          subtarefa = SubtarefaModel.fromJson(subtarefa);
+          await relacionamentoUserSubtarefa(subtarefa).then((value) {
+            subtarefa.user = value;
+            client.setSubtarefaModel(subtarefa);
+          });
         }
+        if (client.subtarefaModel.length == element.subTarefa.length) {
+          element.subTarefa = [];
+          element.subTarefa = client.subtarefaModel;
+          client.cleanSubtarefaModel();
+        }
+        await client.setTarefa(element);
         badgets();
         client.setLoading(false);
       }
@@ -117,9 +127,14 @@ abstract class HomeStoreBase with Store {
         .then((value) => EtiquetaModel.fromDocument(value));
   }
 
-  relacionamentoUserSubtarefa(SubtarefaModel element) {
-    firestore.collection('usuarios').doc(element.user.id).get().then((doc) {
-      return element.user = UserModel.fromDocument(doc);
+  Future relacionamentoUserSubtarefa(element) {
+    return firestore
+        .collection('usuarios')
+        .doc(element.user.id)
+        .get()
+        .then((doc) {
+      var user = UserModel.fromDocument(doc);
+      return user;
     });
   }
 

@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
@@ -104,6 +105,15 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setUsersBase(value) => usersBase.add(value);
+
+  @observable
+  List<SubtarefaModel> subtarefaModel = [];
+
+  @action
+  cleanSubtarefaModel() => subtarefaModel = [];
+
+  @action
+  setSubtarefaModel(value) => subtarefaModel.add(value);
 
   @observable
   EtiquetaModel? etiquetasRelacionadas;
