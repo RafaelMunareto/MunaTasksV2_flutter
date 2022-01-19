@@ -92,8 +92,7 @@ abstract class HomeStoreBase with Store {
             .then((value) => element.etiqueta = value);
 
         for (var subtarefa in element!.subTarefa!) {
-          //relacionamentoSubTarefa
-          await relacionamentoUserSubtarefa(subtarefa);
+          await relacionamentoUserSubtarefa(SubtarefaModel.fromJson(subtarefa));
           await client.setTarefa(element);
         }
         badgets();

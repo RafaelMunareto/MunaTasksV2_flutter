@@ -11,7 +11,7 @@ class TarefaModel {
   int prioridade;
   dynamic data;
   List<dynamic>? users;
-  List<dynamic>? subTarefa;
+  dynamic subTarefa;
 
   TarefaModel(
       {this.etiqueta,
@@ -31,8 +31,7 @@ class TarefaModel {
       prioridade: doc['prioridade'],
       reference: doc.reference,
       data: doc['data'],
-      subTarefa:
-          doc['subTarefa']?.map((doc) => SubtarefaModel.fromJson(doc)).toList(),
+      subTarefa: doc['subTarefa'],
       users: doc['users'],
     );
   }
