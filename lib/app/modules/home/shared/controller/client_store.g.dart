@@ -148,13 +148,13 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   final _$userSelectionAtom = Atom(name: '_ClientStoreBase.userSelection');
 
   @override
-  String get userSelection {
+  UserModel? get userSelection {
     _$userSelectionAtom.reportRead();
     return super.userSelection;
   }
 
   @override
-  set userSelection(String value) {
+  set userSelection(UserModel? value) {
     _$userSelectionAtom.reportWrite(value, super.userSelection, () {
       super.userSelection = value;
     });
@@ -389,6 +389,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set imgUrl(String value) {
     _$imgUrlAtom.reportWrite(value, super.imgUrl, () {
       super.imgUrl = value;
+    });
+  }
+
+  final _$searchValueAtom = Atom(name: '_ClientStoreBase.searchValue');
+
+  @override
+  String get searchValue {
+    _$searchValueAtom.reportRead();
+    return super.searchValue;
+  }
+
+  @override
+  set searchValue(String value) {
+    _$searchValueAtom.reportWrite(value, super.searchValue, () {
+      super.searchValue = value;
     });
   }
 
@@ -638,6 +653,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setSearchValue(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setSearchValue');
+    try {
+      return super.setSearchValue(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -664,7 +690,8 @@ usersBase: ${usersBase},
 subtarefaModel: ${subtarefaModel},
 etiquetasRelacionadas: ${etiquetasRelacionadas},
 userSubtarefa: ${userSubtarefa},
-imgUrl: ${imgUrl}
+imgUrl: ${imgUrl},
+searchValue: ${searchValue}
     ''';
   }
 }

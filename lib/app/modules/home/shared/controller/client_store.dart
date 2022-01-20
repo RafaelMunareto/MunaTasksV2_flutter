@@ -41,7 +41,7 @@ abstract class _ClientStoreBase with Store {
   String etiquetaSelection = 'TODOS';
 
   @observable
-  String userSelection = 'TODOS';
+  UserModel? userSelection;
 
   @observable
   String orderSelection = 'DATA';
@@ -151,4 +151,10 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setImgUrl(value) => imgUrl = value;
+
+  @observable
+  String searchValue = '';
+
+  @action
+  setSearchValue(value) => searchValue = value;
 }

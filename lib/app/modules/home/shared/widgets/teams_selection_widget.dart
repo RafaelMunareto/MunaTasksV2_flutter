@@ -64,7 +64,7 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget> {
                     ),
                     onPressed: () {
                       setState(() {
-                        widget.setUserSelection!(list[index].name);
+                        widget.setUserSelection!(list[index]);
                         widget.changeFilterUserList();
                         widget.setImageUser(list[index].urlImage);
                         widget.setClosedListUserExpanded(true);

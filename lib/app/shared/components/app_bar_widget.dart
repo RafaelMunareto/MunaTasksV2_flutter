@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
+import 'package:simple_animations/simple_animations.dart';
 
-class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
+class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   final String title;
   final double size;
   final dynamic context;
@@ -10,38 +12,50 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   final bool settings;
   final bool back;
   final String rota;
+  final dynamic tarefas;
   final bool home;
   final dynamic zoomController;
   final Function? setOpen;
   final String etiquetaSelection;
   final Function? setEtiquetaSelection;
-  final AuthController auth = Modular.get();
   final dynamic etiquetaList;
+  final Function? setValueSearch;
+  final Function? changeFilterSearch;
+  AppBarWidget({
+    Key? key,
+    this.title = "",
+    this.size = 125,
+    this.context,
+    this.home = false,
+    this.icon = Icons.person,
+    this.settings = false,
+    this.back = true,
+    this.setOpen,
+    this.zoomController,
+    this.etiquetaSelection = '',
+    this.setEtiquetaSelection,
+    this.etiquetaList,
+    this.tarefas,
+    this.rota = '/auth',
+    this.setValueSearch,
+    this.changeFilterSearch,
+  }) : super(key: key);
 
-  AppBarWidget(
-      {Key? key,
-      this.title = "",
-      this.size = 125,
-      this.context,
-      this.home = false,
-      this.icon = Icons.person,
-      this.settings = false,
-      this.back = true,
-      this.setOpen,
-      this.zoomController,
-      this.etiquetaSelection = '',
-      this.setEtiquetaSelection,
-      this.etiquetaList,
-      this.rota = '/auth'})
-      : super(key: key);
+  @override
+  State<AppBarWidget> createState() => _AppBarWidgetState();
 
   @override
   Size get preferredSize => Size.fromHeight(size);
+}
+
+class _AppBarWidgetState extends State<AppBarWidget> {
+  final AuthController auth = Modular.get();
+  bool search = false;
 
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
-      preferredSize: Size.fromHeight(size),
+      preferredSize: Size.fromHeight(widget.size),
       child: AppBar(
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -53,41 +67,50 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
         ),
         backgroundColor: Colors.transparent,
         actions: [
-          home
-              ? const Padding(
-                  padding: EdgeInsets.only(right: 16.0),
-                  child: Icon(Icons.search),
-                )
-              : settings
-                  ? _popMenu()
-                  : Container()
+          widget.settings && !widget.home
+              ? _popMenu()
+              : GestureDetector(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: !search
+                        ? const Icon(Icons.search, color: Colors.white)
+                        : const Icon(Icons.close, color: Colors.white),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      search = !search;
+                    });
+                  })
         ],
-        title: !home
+        title: !widget.home
             ? RichText(
                 text: TextSpan(
                   children: [
                     WidgetSpan(
-                      child: Icon(icon),
+                      child: Icon(widget.icon),
                     ),
                     TextSpan(
-                        text: ' ' + title.toUpperCase(),
-                        style:
-                            const TextStyle(fontSize: 20, color: Colors.white)),
+                      text: ' ' + widget.title.toUpperCase(),
+                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                    ),
                   ],
                 ),
               )
-            : Container(),
-        leading: back
+            : search
+                ? _popSearch()
+                : Container(),
+        leading: widget.back
             ? IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () => Modular.to.navigate(rota))
+                onPressed: () => Modular.to.navigate(widget.rota))
             : InkWell(
                 onTap: () {
-                  zoomController.toggle!();
-                  setOpen!(zoomController.stateNotifier.value.toString() ==
-                          'DrawerState.opening'
-                      ? true
-                      : false);
+                  widget.zoomController.toggle!();
+                  widget.setOpen!(
+                      widget.zoomController.stateNotifier.value.toString() ==
+                              'DrawerState.opening'
+                          ? true
+                          : false);
                 },
                 child: const Icon(Icons.menu),
               ),
@@ -127,6 +150,39 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
           ),
         ),
       ],
+    );
+  }
+
+  _popSearch() {
+    return PlayAnimation<double>(
+      tween: Tween(begin: 0.1, end: MediaQuery.of(context).size.width),
+      duration: const Duration(milliseconds: 600),
+      delay: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      builder: (context, child, value) {
+        return Container(
+          width: value,
+          decoration: BoxDecoration(
+            color: Colors.black26,
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: TextFormField(
+            onChanged: (value) {
+              setState(() {
+                widget.setValueSearch!(value);
+              });
+              widget.changeFilterSearch!();
+            },
+            style: const TextStyle(color: Colors.white),
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.all(8),
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+            ),
+            autofocus: true,
+          ),
+        );
+      },
     );
   }
 }

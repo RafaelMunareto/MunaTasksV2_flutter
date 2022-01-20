@@ -25,6 +25,15 @@ mixin _$HomeStore on HomeStoreBase, Store {
     return _$badgetsAsyncAction.run(() => super.badgets());
   }
 
+  final _$changeFilterUserListAsyncAction =
+      AsyncAction('HomeStoreBase.changeFilterUserList');
+
+  @override
+  Future changeFilterUserList() {
+    return _$changeFilterUserListAsyncAction
+        .run(() => super.changeFilterUserList());
+  }
+
   final _$HomeStoreBaseActionController =
       ActionController(name: 'HomeStoreBase');
 
@@ -150,11 +159,11 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  dynamic changeFilterUserList() {
+  dynamic changeFilterSearchList() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.changeFilterUserList');
+        name: 'HomeStoreBase.changeFilterSearchList');
     try {
-      return super.changeFilterUserList();
+      return super.changeFilterSearchList();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }

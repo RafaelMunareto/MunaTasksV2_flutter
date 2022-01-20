@@ -188,7 +188,42 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  changeFilterUserList() {}
+  changeFilterSearchList() {
+    if (client.searchValue != '') {
+      Timer(const Duration(milliseconds: 600), () {
+        client.changeTarefa(client.tarefas
+            .where((t) => t.texto.contains(client.searchValue))
+            .where((b) => b.fase == client.navigateBarSelection)
+            .toList());
+      });
+    } else {
+      client.changeTarefa(client.tarefasBase
+          .where((b) => b.fase == client.navigateBarSelection)
+          .toList());
+    }
+  }
+
+  @action
+  changeFilterUserList() async {
+    await client.changeTarefa(client.tarefasBase
+        .where((b) => b.fase == client.navigateBarSelection)
+        .toList());
+
+    if (client.userSelection?.name != 'TODOS') {
+      client.changeTarefa(client.tarefas
+          .where((t) {
+            bool eSelecaodoUser = false;
+            t.users?.forEach((element) {
+              if (element.reference.id == client.userSelection?.reference?.id) {
+                eSelecaodoUser = true;
+              }
+            });
+            return eSelecaodoUser;
+          })
+          .where((b) => b.fase == client.navigateBarSelection)
+          .toList());
+    }
+  }
 
   @action
   changeOrderList() {
