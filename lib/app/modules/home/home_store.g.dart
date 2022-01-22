@@ -34,6 +34,13 @@ mixin _$HomeStore on HomeStoreBase, Store {
         .run(() => super.changeFilterUserList());
   }
 
+  final _$getUserLogadoAsyncAction = AsyncAction('HomeStoreBase.getUserLogado');
+
+  @override
+  Future getUserLogado() {
+    return _$getUserLogadoAsyncAction.run(() => super.getUserLogado());
+  }
+
   final _$HomeStoreBaseActionController =
       ActionController(name: 'HomeStoreBase');
 
@@ -115,6 +122,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
+  void getRetard() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.getRetard');
+    try {
+      return super.getRetard();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic updateList() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.updateList');
@@ -175,6 +193,28 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.changeFilterSearchList');
     try {
       return super.changeFilterSearchList();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic userAcess() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.userAcess');
+    try {
+      return super.userAcess();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic updateDate(TarefaModel model) {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.updateDate');
+    try {
+      return super.updateDate(model);
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }

@@ -224,10 +224,12 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                               url: store.client.imgUrl,
                             ),
                             onTap: () {
-                              setState(() {
-                                store.client.setclosedListUserExpanded(false);
-                              });
-                              teams();
+                              if (store.client.perfilUserLogado.manager) {
+                                setState(() {
+                                  store.client.setclosedListUserExpanded(false);
+                                });
+                                teams();
+                              }
                             },
                           ),
                         ),
@@ -242,6 +244,11 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                               tarefa: store.client.tarefas,
                               navigate: store.client.navigateBarSelection,
                               deleteTasks: store.deleteTasks,
+                              retard: store.client.retardList,
+                              retardSelection: store.client.retardSelection,
+                              setRetardSelection:
+                                  store.client.setRetardSelection,
+                              updateDate: store.updateDate,
                               save: store.save),
                         ),
                       ],

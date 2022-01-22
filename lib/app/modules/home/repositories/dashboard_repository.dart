@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:munatasks2/app/modules/home/repositories/interfaces/dashboard_interfaces.dart';
 import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
@@ -35,6 +36,13 @@ class DashboardRepository implements IDashboardRepository {
   Stream<List<UserModel>> getUsers() {
     return firestore.collection('usuarios').snapshots().map((query) =>
         query.docs.map((doc) => UserModel.fromDocument(doc)).toList());
+  }
+
+  @override
+  Stream<List<RetardModel>> getRetard() {
+    return firestore.collection('retard').orderBy('tempoName').snapshots().map(
+        (query) =>
+            query.docs.map((doc) => RetardModel.fromDocument(doc)).toList());
   }
 
   @override

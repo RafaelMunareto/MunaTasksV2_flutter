@@ -1,8 +1,10 @@
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
 part 'client_store.g.dart';
@@ -35,6 +37,9 @@ abstract class _ClientStoreBase with Store {
   ObservableStream<List<OrderModel>>? orderList;
 
   @observable
+  ObservableStream<List<RetardModel>>? retardList;
+
+  @observable
   bool open = false;
 
   @observable
@@ -48,6 +53,12 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setOrderSelection(value) => orderSelection = value;
+
+  @observable
+  int retardSelection = 0;
+
+  @action
+  setRetardSelection(value) => retardSelection = value;
 
   @action
   setEtiquetaSelection(value) => etiquetaSelection = value;
@@ -157,4 +168,10 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setSearchValue(value) => searchValue = value;
+
+  @observable
+  PerfilModel perfilUserLogado = PerfilModel();
+
+  @action
+  setPerfilUserlogado(value) => perfilUserLogado = value;
 }

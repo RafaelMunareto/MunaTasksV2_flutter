@@ -7,6 +7,7 @@ import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart'
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
@@ -24,11 +25,13 @@ abstract class HomeStoreBase with Store {
   final ClientStore client = Modular.get();
 
   HomeStoreBase({required this.dashboardService}) {
+    getUserLogado();
     getList();
     buscaTheme();
     getEtiquetas();
     getOrder();
     getUsers();
+    getRetard();
   }
 
   @action
@@ -79,12 +82,19 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
+  void getRetard() {
+    client.retardList = dashboardService.getRetard().asObservable();
+  }
+
+  @action
   tratamentoBase(ObservableStream<List<TarefaModel>>? dashboardList) async {
-    client.cleanUsersBase();
     client.cleanUsersBase();
     client.cleanSubtarefaModel();
     dashboardList!.forEach((e) async {
       for (var element in e) {
+        element.data =
+            DateTime.fromMillisecondsSinceEpoch(element.data.seconds * 1000);
+
         await relacionamentoUsers(element);
         if (client.usersBase.length == element.users?.length) {
           element.users = [];
@@ -162,12 +172,14 @@ abstract class HomeStoreBase with Store {
   @action
   void save(TarefaModel model) {
     dashboardService.save(model);
+    client.cleanTarefas();
     client.cleanTarefasBase();
   }
 
   @action
   void deleteTasks(TarefaModel model) {
     dashboardService.delete(model);
+    client.cleanTarefas();
     client.cleanTarefasBase();
   }
 
@@ -231,6 +243,28 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
+  userAcess() {
+    client.changeTarefa(client.tarefas
+        .where((t) {
+          bool eSelecaodoUser = false;
+          t.users?.forEach((element) {
+            if (element.reference.id == client.userSelection?.reference?.id) {
+              eSelecaodoUser = true;
+            }
+          });
+          return eSelecaodoUser;
+        })
+        .where((b) => b.fase == client.navigateBarSelection)
+        .toList());
+  }
+
+  @action
+  updateDate(TarefaModel model) {
+    model.data = model.data.add(Duration(hours: client.retardSelection));
+    save(model);
+  }
+
+  @action
   changeOrderList() {
     switch (client.orderSelection) {
       case 'ETIQUETA':
@@ -251,6 +285,31 @@ abstract class HomeStoreBase with Store {
             : b.prioridade.compareTo(a.prioridade));
       default:
         return client.tarefas;
+    }
+  }
+
+  @action
+  getUserLogado() async {
+    await firestore.collection('perfil').doc(auth.user!.uid).get().then(
+          (value) => client.setPerfilUserlogado(
+            PerfilModel.fromDocument(value),
+          ),
+        );
+    if (!client.perfilUserLogado.manager) {
+      client.setImgUrl(client.perfilUserLogado.urlImage);
+      client.changeTarefa(client.tarefas
+          .where((t) {
+            bool eSelecaodoUser = false;
+            t.users?.forEach((element) {
+              if (element.reference.id ==
+                  client.perfilUserLogado.reference?.id) {
+                eSelecaodoUser = true;
+              }
+            });
+            return eSelecaodoUser;
+          })
+          .where((b) => b.fase == client.navigateBarSelection)
+          .toList());
     }
   }
 }

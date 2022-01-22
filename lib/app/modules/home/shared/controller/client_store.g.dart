@@ -114,6 +114,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$retardListAtom = Atom(name: '_ClientStoreBase.retardList');
+
+  @override
+  ObservableStream<List<RetardModel>>? get retardList {
+    _$retardListAtom.reportRead();
+    return super.retardList;
+  }
+
+  @override
+  set retardList(ObservableStream<List<RetardModel>>? value) {
+    _$retardListAtom.reportWrite(value, super.retardList, () {
+      super.retardList = value;
+    });
+  }
+
   final _$openAtom = Atom(name: '_ClientStoreBase.open');
 
   @override
@@ -172,6 +187,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set orderSelection(String value) {
     _$orderSelectionAtom.reportWrite(value, super.orderSelection, () {
       super.orderSelection = value;
+    });
+  }
+
+  final _$retardSelectionAtom = Atom(name: '_ClientStoreBase.retardSelection');
+
+  @override
+  int get retardSelection {
+    _$retardSelectionAtom.reportRead();
+    return super.retardSelection;
+  }
+
+  @override
+  set retardSelection(int value) {
+    _$retardSelectionAtom.reportWrite(value, super.retardSelection, () {
+      super.retardSelection = value;
     });
   }
 
@@ -407,6 +437,22 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$perfilUserLogadoAtom =
+      Atom(name: '_ClientStoreBase.perfilUserLogado');
+
+  @override
+  PerfilModel get perfilUserLogado {
+    _$perfilUserLogadoAtom.reportRead();
+    return super.perfilUserLogado;
+  }
+
+  @override
+  set perfilUserLogado(PerfilModel value) {
+    _$perfilUserLogadoAtom.reportWrite(value, super.perfilUserLogado, () {
+      super.perfilUserLogado = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -427,6 +473,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
         name: '_ClientStoreBase.setOrderSelection');
     try {
       return super.setOrderSelection(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setRetardSelection(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setRetardSelection');
+    try {
+      return super.setRetardSelection(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -664,6 +721,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setPerfilUserlogado(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setPerfilUserlogado');
+    try {
+      return super.setPerfilUserlogado(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -673,10 +741,12 @@ dashboardList: ${dashboardList},
 etiquetaList: ${etiquetaList},
 userList: ${userList},
 orderList: ${orderList},
+retardList: ${retardList},
 open: ${open},
 etiquetaSelection: ${etiquetaSelection},
 userSelection: ${userSelection},
 orderSelection: ${orderSelection},
+retardSelection: ${retardSelection},
 orderAscDesc: ${orderAscDesc},
 tarefasBase: ${tarefasBase},
 loading: ${loading},
@@ -691,7 +761,8 @@ subtarefaModel: ${subtarefaModel},
 etiquetasRelacionadas: ${etiquetasRelacionadas},
 userSubtarefa: ${userSubtarefa},
 imgUrl: ${imgUrl},
-searchValue: ${searchValue}
+searchValue: ${searchValue},
+perfilUserLogado: ${perfilUserLogado}
     ''';
   }
 }

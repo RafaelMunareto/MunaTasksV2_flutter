@@ -4,6 +4,7 @@ import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_text_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/button_action_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/header_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/retard_action_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class CardWidget extends StatefulWidget {
@@ -13,17 +14,25 @@ class CardWidget extends StatefulWidget {
   final int navigate;
   final Function save;
   final bool theme;
+  final dynamic retard;
   final Animation<double> opacidade;
-  const CardWidget(
-      {Key? key,
-      required this.tarefa,
-      required this.deleteTasks,
-      required this.navigateBarSelection,
-      required this.navigate,
-      required this.opacidade,
-      required this.theme,
-      required this.save})
-      : super(key: key);
+  final int retardSelection;
+  final Function setRetardSelection;
+  final Function updateDate;
+  const CardWidget({
+    Key? key,
+    required this.tarefa,
+    required this.deleteTasks,
+    required this.navigateBarSelection,
+    required this.navigate,
+    required this.opacidade,
+    required this.theme,
+    required this.retard,
+    required this.retardSelection,
+    required this.setRetardSelection,
+    required this.save,
+    required this.updateDate,
+  }) : super(key: key);
 
   @override
   State<CardWidget> createState() => _CardWidgetState();
@@ -42,6 +51,24 @@ class _CardWidgetState extends State<CardWidget> {
 
   @override
   Widget build(BuildContext context) {
+    _retard(TarefaModel model) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Adiamento'),
+            content: RetardActionWidget(
+              retard: widget.retard,
+              retardSelection: widget.retardSelection,
+              setRetardSelection: widget.setRetardSelection,
+              updateDate: widget.updateDate,
+              model: model,
+            ),
+          );
+        },
+      );
+    }
+
     card(linha) {
       return Card(
         shape: Border(
@@ -60,25 +87,26 @@ class _CardWidgetState extends State<CardWidget> {
             child: Wrap(
               alignment: WrapAlignment.spaceBetween,
               children: [
-                Wrap(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 4.0),
-                      child: Icon(
-                        changeIconeAndColorTime(linha.data)[1],
-                        color: changeIconeAndColorTime(linha.data)[0],
+                GestureDetector(
+                  onTap: () => _retard(linha),
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 4.0),
+                        child: Icon(
+                          changeIconeAndColorTime(linha.data)[1],
+                          color: changeIconeAndColorTime(linha.data)[0],
+                        ),
                       ),
-                    ),
-                    Text(
-                      DateFormat('dd/MM/yyyy')
-                          .format(DateTime.fromMillisecondsSinceEpoch(
-                              linha.data.seconds * 1000))
-                          .toString(),
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: widget.theme ? Colors.white : Colors.black),
-                    ),
-                  ],
+                      Text(
+                        DateFormat('dd/MM/yyyy').format(linha.data).toString(),
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: widget.theme ? Colors.white : Colors.black),
+                      ),
+                    ],
+                  ),
                 ),
                 Icon(
                   Icons.flag,
@@ -115,9 +143,8 @@ class _CardWidgetState extends State<CardWidget> {
     );
   }
 
-  changeIconeAndColorTime(data) {
+  changeIconeAndColorTime(date) {
     DateTime now = DateTime.now();
-    var date = DateTime.fromMillisecondsSinceEpoch(data.seconds * 1000);
     if (date.isAfter(now)) {
       return [Colors.blue, Icons.timelapse_sharp];
     } else if (date == now) {
