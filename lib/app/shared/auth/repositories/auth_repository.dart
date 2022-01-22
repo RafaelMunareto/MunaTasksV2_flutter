@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/utils/error_pt_br.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -63,7 +64,7 @@ class AuthRepository implements IAuthRepository {
         .then((firebaseUser) async {
       User? user = FirebaseAuth.instance.currentUser;
       var actionCodeSettings = ActionCodeSettings(
-        url: 'https://flutterpadrao.firebaseapp.com/auth/verify',
+        url: 'https://munatasksV2.firebaseapp.com/auth/verify',
         androidPackageName: 'br.flutter_padrao.fl.flutter_padrao',
         handleCodeInApp: true,
       );
@@ -142,8 +143,8 @@ class AuthRepository implements IAuthRepository {
     }
   }
 
-  changeUserVerificacao() {
-    db.collection('usuarios').doc(getUser().uid).update({
+  changeUserVerificacao() async {
+    await db.collection('usuarios').doc(getUser().uid).update({
       "name": getUser().displayName,
       "email": getUser().email,
       "urlImage":
