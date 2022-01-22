@@ -64,8 +64,8 @@ class AuthRepository implements IAuthRepository {
         .then((firebaseUser) async {
       User? user = FirebaseAuth.instance.currentUser;
       var actionCodeSettings = ActionCodeSettings(
-        url: 'https://munatasksV2.firebaseapp.com/auth/verify',
-        androidPackageName: 'br.flutter_padrao.fl.flutter_padrao',
+        url: 'https://munatasksv2.firebaseapp.com/auth/verify',
+        androidPackageName: "munacorp.munatasks2.br.munatasks2",
         handleCodeInApp: true,
       );
       if (kIsWeb) {
@@ -120,8 +120,8 @@ class AuthRepository implements IAuthRepository {
   @override
   Future sendChangePasswordEmail(email) {
     var actionCodeSettings = ActionCodeSettings(
-      url: 'https://flutterpadrao.firebaseapp.com/auth/verify',
-      androidPackageName: 'br.flutter_padrao.fl.flutter_padrao',
+      url: 'https://munatasksv2.firebaseapp.com/auth/verify',
+      androidPackageName: '"munacorp.munatasks2.br.munatasks2',
       handleCodeInApp: true,
     );
     if (kIsWeb) {

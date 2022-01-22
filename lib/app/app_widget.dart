@@ -59,7 +59,7 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Padrão',
+      title: 'MunaTasks V2',
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       theme: lightThemeData(context),
