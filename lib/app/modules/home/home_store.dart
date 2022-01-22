@@ -69,7 +69,7 @@ abstract class HomeStoreBase with Store {
 
   @action
   void getList() {
-    client.dashboardList = dashboardService.get();
+    client.dashboardList = dashboardService.get().asObservable();
     tratamentoBase(client.dashboardList);
   }
 
@@ -79,14 +79,14 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  tratamentoBase(Stream<List<dynamic>>? dashboardList) async {
+  tratamentoBase(ObservableStream<List<TarefaModel>>? dashboardList) async {
     client.cleanUsersBase();
     client.cleanUsersBase();
     client.cleanSubtarefaModel();
     dashboardList!.forEach((e) async {
       for (var element in e) {
-        await relacionamentoUsers(element.users);
-        if (client.usersBase.length == element.users.length) {
+        await relacionamentoUsers(element);
+        if (client.usersBase.length == element.users?.length) {
           element.users = [];
           element.users = client.usersBase;
           client.cleanUsersBase();
@@ -95,7 +95,7 @@ abstract class HomeStoreBase with Store {
         await relacionamentoEtiqueta(element)
             .then((value) => element.etiqueta = value);
 
-        for (var subtarefa in element!.subTarefa!) {
+        for (var subtarefa in element.subTarefa!) {
           subtarefa = SubtarefaModel.fromJson(subtarefa);
           await relacionamentoUserSubtarefa(subtarefa).then((value) {
             subtarefa.user = value;
@@ -114,8 +114,8 @@ abstract class HomeStoreBase with Store {
     });
   }
 
-  relacionamentoUsers(List element) async {
-    for (var user in element) {
+  relacionamentoUsers(TarefaModel element) async {
+    for (var user in element.users!) {
       await firestore.collection('usuarios').doc(user.id).get().then((doc) {
         client.setUsersBase(UserModel.fromDocument(doc));
       });
@@ -142,10 +142,15 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  badgets() async {
+  updateList() {
     client.changeTarefa(client.tarefasBase
         .where((element) => element.fase == client.navigateBarSelection)
         .toList());
+  }
+
+  @action
+  badgets() async {
+    updateList();
     List<int> badgets = [
       client.tarefasBase.where((element) => element.fase == 0).toList().length,
       client.tarefasBase.where((element) => element.fase == 1).toList().length,

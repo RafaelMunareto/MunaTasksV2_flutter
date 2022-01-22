@@ -23,7 +23,7 @@ abstract class _ClientStoreBase with Store {
   List<TarefaModel> tarefas = [];
 
   @observable
-  Stream<List<dynamic>>? dashboardList;
+  ObservableStream<List<TarefaModel>>? dashboardList;
 
   @observable
   ObservableStream<List<EtiquetaModel>>? etiquetaList;

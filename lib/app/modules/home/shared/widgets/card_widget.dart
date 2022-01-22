@@ -50,7 +50,7 @@ class _CardWidgetState extends State<CardWidget> {
               width: 5),
         ),
         elevation: 8,
-        key: ValueKey(linha),
+        key: UniqueKey(),
         child: ExpansionTile(
           key: UniqueKey(),
           textColor: Colors.black,

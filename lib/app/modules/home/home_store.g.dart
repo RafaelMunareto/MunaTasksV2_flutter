@@ -13,7 +13,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
       AsyncAction('HomeStoreBase.tratamentoBase');
 
   @override
-  Future tratamentoBase(Stream<List<dynamic>>? dashboardList) {
+  Future tratamentoBase(ObservableStream<List<TarefaModel>>? dashboardList) {
     return _$tratamentoBaseAsyncAction
         .run(() => super.tratamentoBase(dashboardList));
   }
@@ -109,6 +109,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.getUsers');
     try {
       return super.getUsers();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic updateList() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.updateList');
+    try {
+      return super.updateList();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
