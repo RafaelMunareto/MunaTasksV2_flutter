@@ -32,6 +32,7 @@ abstract class HomeStoreBase with Store {
     getOrder();
     getUsers();
     getRetard();
+    getPrioridade();
   }
 
   @action
@@ -84,6 +85,11 @@ abstract class HomeStoreBase with Store {
   @action
   void getRetard() {
     client.retardList = dashboardService.getRetard().asObservable();
+  }
+
+  @action
+  void getPrioridade() {
+    client.prioridadeList = dashboardService.getPrioridade().asObservable();
   }
 
   @action
@@ -201,6 +207,7 @@ abstract class HomeStoreBase with Store {
     dashboardService.save(model);
     client.cleanTarefas();
     client.cleanTarefasBase();
+    client.setLoading(false);
   }
 
   @action
@@ -208,6 +215,7 @@ abstract class HomeStoreBase with Store {
     dashboardService.delete(model);
     client.cleanTarefas();
     client.cleanTarefasBase();
+    client.setLoading(false);
   }
 
   @action
@@ -267,6 +275,13 @@ abstract class HomeStoreBase with Store {
           .where((b) => b.fase == client.navigateBarSelection)
           .toList());
     }
+  }
+
+  @action
+  changePrioridadeList(TarefaModel model) {
+    client.setLoading(true);
+    model.prioridade = client.prioridadeSelection;
+    save(model);
   }
 
   @action

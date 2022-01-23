@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/prioridade_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
@@ -40,6 +41,9 @@ abstract class _ClientStoreBase with Store {
   ObservableStream<List<RetardModel>>? retardList;
 
   @observable
+  ObservableStream<List<PrioridadeModel>>? prioridadeList;
+
+  @observable
   bool open = false;
 
   @observable
@@ -53,6 +57,12 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setOrderSelection(value) => orderSelection = value;
+
+  @observable
+  int prioridadeSelection = 0;
+
+  @action
+  setPrioridadeSelection(value) => prioridadeSelection = value;
 
   @observable
   int retardSelection = 0;
@@ -116,6 +126,13 @@ abstract class _ClientStoreBase with Store {
 
   @observable
   int icon = 0;
+
+  @observable
+  bool closedPrioridadeListExpanded = false;
+
+  @action
+  setClosedPrioridadeListExpanded(value) =>
+      closedPrioridadeListExpanded = value;
 
   @observable
   bool closedListExpanded = false;

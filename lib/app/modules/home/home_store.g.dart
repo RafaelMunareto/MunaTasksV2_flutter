@@ -119,6 +119,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
+  void getPrioridade() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.getPrioridade');
+    try {
+      return super.getPrioridade();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic perfilUser() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.perfilUser');
@@ -201,6 +212,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.changeFilterSearchList');
     try {
       return super.changeFilterSearchList();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changePrioridadeList(TarefaModel model) {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.changePrioridadeList');
+    try {
+      return super.changePrioridadeList(model);
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }

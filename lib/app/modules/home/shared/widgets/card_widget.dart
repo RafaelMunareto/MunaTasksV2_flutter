@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_text_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/button_action_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/header_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/retard_action_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
@@ -19,6 +21,10 @@ class CardWidget extends StatefulWidget {
   final int retardSelection;
   final Function setRetardSelection;
   final Function updateDate;
+  final dynamic prioridadeList;
+  final Function changePrioridadeList;
+  final Function setPrioridadeSelection;
+  final int prioridadeSelection;
   const CardWidget({
     Key? key,
     required this.tarefa,
@@ -32,6 +38,10 @@ class CardWidget extends StatefulWidget {
     required this.setRetardSelection,
     required this.save,
     required this.updateDate,
+    required this.prioridadeList,
+    required this.changePrioridadeList,
+    required this.prioridadeSelection,
+    required this.setPrioridadeSelection,
   }) : super(key: key);
 
   @override
@@ -63,6 +73,24 @@ class _CardWidgetState extends State<CardWidget> {
               setRetardSelection: widget.setRetardSelection,
               updateDate: widget.updateDate,
               model: model,
+            ),
+          );
+        },
+      );
+    }
+
+    prioridade(tarefaModel) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Prioridade'),
+            content: PrioridadeSelectionWidget(
+              prioridadeSelection: widget.prioridadeSelection,
+              prioridadeList: widget.prioridadeList,
+              setPrioridadeSelection: widget.setPrioridadeSelection,
+              tarefaModel: tarefaModel,
+              changePrioridadeList: widget.changePrioridadeList,
             ),
           );
         },
@@ -108,9 +136,12 @@ class _CardWidgetState extends State<CardWidget> {
                     ],
                   ),
                 ),
-                Icon(
-                  Icons.flag,
-                  color: ConvertIcon().convertColorFlaf(linha.prioridade),
+                GestureDetector(
+                  onTap: () => prioridade(linha),
+                  child: Icon(
+                    Icons.flag,
+                    color: ConvertIcon().convertColorFlaf(linha.prioridade),
+                  ),
                 )
               ],
             ),

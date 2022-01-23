@@ -1,4 +1,5 @@
 import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/prioridade_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
@@ -10,6 +11,7 @@ abstract class IDashboardRepository {
   Stream<List<OrderModel>> getOrder();
   Stream<List<UserModel>> getUsers();
   Stream<List<RetardModel>> getRetard();
+  Stream<List<PrioridadeModel>> getPrioridade();
   Future save(TarefaModel model);
   delete(TarefaModel model);
   Future<Stream<TarefaModel>> getByDocumentId(String documentId);

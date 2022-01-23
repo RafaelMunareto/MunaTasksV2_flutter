@@ -129,6 +129,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$prioridadeListAtom = Atom(name: '_ClientStoreBase.prioridadeList');
+
+  @override
+  ObservableStream<List<PrioridadeModel>>? get prioridadeList {
+    _$prioridadeListAtom.reportRead();
+    return super.prioridadeList;
+  }
+
+  @override
+  set prioridadeList(ObservableStream<List<PrioridadeModel>>? value) {
+    _$prioridadeListAtom.reportWrite(value, super.prioridadeList, () {
+      super.prioridadeList = value;
+    });
+  }
+
   final _$openAtom = Atom(name: '_ClientStoreBase.open');
 
   @override
@@ -187,6 +202,22 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set orderSelection(String value) {
     _$orderSelectionAtom.reportWrite(value, super.orderSelection, () {
       super.orderSelection = value;
+    });
+  }
+
+  final _$prioridadeSelectionAtom =
+      Atom(name: '_ClientStoreBase.prioridadeSelection');
+
+  @override
+  int get prioridadeSelection {
+    _$prioridadeSelectionAtom.reportRead();
+    return super.prioridadeSelection;
+  }
+
+  @override
+  set prioridadeSelection(int value) {
+    _$prioridadeSelectionAtom.reportWrite(value, super.prioridadeSelection, () {
+      super.prioridadeSelection = value;
     });
   }
 
@@ -309,6 +340,23 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set icon(int value) {
     _$iconAtom.reportWrite(value, super.icon, () {
       super.icon = value;
+    });
+  }
+
+  final _$closedPrioridadeListExpandedAtom =
+      Atom(name: '_ClientStoreBase.closedPrioridadeListExpanded');
+
+  @override
+  bool get closedPrioridadeListExpanded {
+    _$closedPrioridadeListExpandedAtom.reportRead();
+    return super.closedPrioridadeListExpanded;
+  }
+
+  @override
+  set closedPrioridadeListExpanded(bool value) {
+    _$closedPrioridadeListExpandedAtom
+        .reportWrite(value, super.closedPrioridadeListExpanded, () {
+      super.closedPrioridadeListExpanded = value;
     });
   }
 
@@ -479,6 +527,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setPrioridadeSelection(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setPrioridadeSelection');
+    try {
+      return super.setPrioridadeSelection(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setRetardSelection(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setRetardSelection');
@@ -622,6 +681,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setClosedPrioridadeListExpanded(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setClosedPrioridadeListExpanded');
+    try {
+      return super.setClosedPrioridadeListExpanded(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setClosedListExpanded(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setClosedListExpanded');
@@ -753,10 +823,12 @@ etiquetaList: ${etiquetaList},
 userList: ${userList},
 orderList: ${orderList},
 retardList: ${retardList},
+prioridadeList: ${prioridadeList},
 open: ${open},
 etiquetaSelection: ${etiquetaSelection},
 userSelection: ${userSelection},
 orderSelection: ${orderSelection},
+prioridadeSelection: ${prioridadeSelection},
 retardSelection: ${retardSelection},
 orderAscDesc: ${orderAscDesc},
 tarefasBase: ${tarefasBase},
@@ -765,6 +837,7 @@ theme: ${theme},
 navigateBarSelection: ${navigateBarSelection},
 color: ${color},
 icon: ${icon},
+closedPrioridadeListExpanded: ${closedPrioridadeListExpanded},
 closedListExpanded: ${closedListExpanded},
 closedListUserExpanded: ${closedListUserExpanded},
 usersBase: ${usersBase},

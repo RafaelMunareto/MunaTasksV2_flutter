@@ -5,6 +5,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_order_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/teams_selection_widget.dart';
@@ -237,19 +238,25 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.9,
                           child: CardWidget(
-                              theme: store.client.theme,
-                              navigateBarSelection:
-                                  store.client.navigateBarSelection,
-                              opacidade: opacidade,
-                              tarefa: store.client.tarefas,
-                              navigate: store.client.navigateBarSelection,
-                              deleteTasks: store.deleteTasks,
-                              retard: store.client.retardList,
-                              retardSelection: store.client.retardSelection,
-                              setRetardSelection:
-                                  store.client.setRetardSelection,
-                              updateDate: store.updateDate,
-                              save: store.save),
+                            theme: store.client.theme,
+                            navigateBarSelection:
+                                store.client.navigateBarSelection,
+                            opacidade: opacidade,
+                            tarefa: store.client.tarefas,
+                            navigate: store.client.navigateBarSelection,
+                            deleteTasks: store.deleteTasks,
+                            retard: store.client.retardList,
+                            retardSelection: store.client.retardSelection,
+                            setRetardSelection: store.client.setRetardSelection,
+                            updateDate: store.updateDate,
+                            save: store.save,
+                            changePrioridadeList: store.changePrioridadeList,
+                            prioridadeList: store.client.prioridadeList,
+                            setPrioridadeSelection:
+                                store.client.setPrioridadeSelection,
+                            prioridadeSelection:
+                                store.client.prioridadeSelection,
+                          ),
                         ),
                       ],
                     ),
