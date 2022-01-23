@@ -91,6 +91,9 @@ abstract class _ClientStoreBase with Store {
   setTarefa(value) => tarefasBase.add(value);
 
   @action
+  setTarefasBase(value) => tarefasBase = value;
+
+  @action
   cleanTarefasBase() => tarefasBase = [];
 
   @action

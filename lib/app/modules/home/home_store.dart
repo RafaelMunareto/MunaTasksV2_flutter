@@ -25,7 +25,7 @@ abstract class HomeStoreBase with Store {
   final ClientStore client = Modular.get();
 
   HomeStoreBase({required this.dashboardService}) {
-    getUserLogado();
+    perfilUser();
     getList();
     buscaTheme();
     getEtiquetas();
@@ -152,15 +152,42 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  updateList() {
-    client.changeTarefa(client.tarefasBase
-        .where((element) => element.fase == client.navigateBarSelection)
-        .toList());
+  perfilUser() {
+    firestore
+        .collection('perfil')
+        .doc(auth.user!.uid)
+        .get()
+        .then((value) => PerfilModel.fromDocument(value))
+        .then((value) => client.setPerfilUserlogado(value));
   }
 
   @action
-  badgets() async {
+  updateList() {
+    if (client.perfilUserLogado.manager == false) {
+      client.setImgUrl(client.perfilUserLogado.urlImage);
+      client.setTarefasBase(
+        client.tarefasBase
+            .where((t) {
+              bool eSelecaodoUser = false;
+              t.users?.forEach((element) {
+                if (element.reference.id == auth.user!.uid) {
+                  eSelecaodoUser = true;
+                }
+              });
+              return eSelecaodoUser;
+            })
+            .where((b) => b.fase == client.navigateBarSelection)
+            .toList(),
+      );
+    }
+  }
+
+  @action
+  badgets() {
     updateList();
+    client.changeTarefa(client.tarefasBase
+        .where((element) => element.fase == client.navigateBarSelection)
+        .toList());
     List<int> badgets = [
       client.tarefasBase.where((element) => element.fase == 0).toList().length,
       client.tarefasBase.where((element) => element.fase == 1).toList().length,
@@ -243,22 +270,6 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  userAcess() {
-    client.changeTarefa(client.tarefas
-        .where((t) {
-          bool eSelecaodoUser = false;
-          t.users?.forEach((element) {
-            if (element.reference.id == client.userSelection?.reference?.id) {
-              eSelecaodoUser = true;
-            }
-          });
-          return eSelecaodoUser;
-        })
-        .where((b) => b.fase == client.navigateBarSelection)
-        .toList());
-  }
-
-  @action
   updateDate(TarefaModel model) {
     model.data = model.data.add(Duration(hours: client.retardSelection));
     save(model);
@@ -285,31 +296,6 @@ abstract class HomeStoreBase with Store {
             : b.prioridade.compareTo(a.prioridade));
       default:
         return client.tarefas;
-    }
-  }
-
-  @action
-  getUserLogado() async {
-    await firestore.collection('perfil').doc(auth.user!.uid).get().then(
-          (value) => client.setPerfilUserlogado(
-            PerfilModel.fromDocument(value),
-          ),
-        );
-    if (!client.perfilUserLogado.manager) {
-      client.setImgUrl(client.perfilUserLogado.urlImage);
-      client.changeTarefa(client.tarefas
-          .where((t) {
-            bool eSelecaodoUser = false;
-            t.users?.forEach((element) {
-              if (element.reference.id ==
-                  client.perfilUserLogado.reference?.id) {
-                eSelecaodoUser = true;
-              }
-            });
-            return eSelecaodoUser;
-          })
-          .where((b) => b.fase == client.navigateBarSelection)
-          .toList());
     }
   }
 }

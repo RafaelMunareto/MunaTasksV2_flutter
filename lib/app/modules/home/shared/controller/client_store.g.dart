@@ -556,6 +556,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setTarefasBase(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setTarefasBase');
+    try {
+      return super.setTarefasBase(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic cleanTarefasBase() {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.cleanTarefasBase');

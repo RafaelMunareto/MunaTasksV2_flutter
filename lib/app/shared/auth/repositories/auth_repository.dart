@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/utils/error_pt_br.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,9 +15,12 @@ class AuthRepository implements IAuthRepository {
   final FirebaseDynamicLinks fdl = Modular.get();
 
   @override
-  Future getEmailPasswordLogin(email, password) async {
-    return await auth.signInWithEmailAndPassword(
-        email: email, password: password);
+  Future getEmailPasswordLogin(email, password) {
+    return auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .catchError(
+          (e) => ErrorPtBr().verificaCodeErro('auth/' + e.code),
+        );
   }
 
   @override
@@ -99,7 +101,19 @@ class AuthRepository implements IAuthRepository {
     await auth.checkActionCode(code);
     await auth.applyActionCode(code);
     getUser().reload();
-    db.collection('usuarios').doc(getUser().uid).update({"verificado": true});
+    await db
+        .collection('usuarios')
+        .doc(getUser().uid)
+        .update({"verificado": true});
+
+    await db.collection('perfil').doc(getUser().uid).set({
+      "name": getUser().displayName,
+      "urlImage":
+          'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
+      "manager": false,
+      "nameTime": "false",
+      "idStaff": []
+    });
     User? user = FirebaseAuth.instance.currentUser;
     return user;
   }

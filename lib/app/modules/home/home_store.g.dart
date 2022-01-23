@@ -18,13 +18,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
         .run(() => super.tratamentoBase(dashboardList));
   }
 
-  final _$badgetsAsyncAction = AsyncAction('HomeStoreBase.badgets');
-
-  @override
-  Future badgets() {
-    return _$badgetsAsyncAction.run(() => super.badgets());
-  }
-
   final _$changeFilterUserListAsyncAction =
       AsyncAction('HomeStoreBase.changeFilterUserList');
 
@@ -32,13 +25,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
   Future changeFilterUserList() {
     return _$changeFilterUserListAsyncAction
         .run(() => super.changeFilterUserList());
-  }
-
-  final _$getUserLogadoAsyncAction = AsyncAction('HomeStoreBase.getUserLogado');
-
-  @override
-  Future getUserLogado() {
-    return _$getUserLogadoAsyncAction.run(() => super.getUserLogado());
   }
 
   final _$HomeStoreBaseActionController =
@@ -133,11 +119,33 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
+  dynamic perfilUser() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.perfilUser');
+    try {
+      return super.perfilUser();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic updateList() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.updateList');
     try {
       return super.updateList();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic badgets() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.badgets');
+    try {
+      return super.badgets();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -193,17 +201,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.changeFilterSearchList');
     try {
       return super.changeFilterSearchList();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic userAcess() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.userAcess');
-    try {
-      return super.userAcess();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
