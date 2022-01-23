@@ -6,9 +6,20 @@ class ConvertIcon {
       case 'play':
         return Icons.play_circle;
       case 'pause':
-        return Icons.stop_circle_rounded;
+        return Icons.pause_circle;
       case 'check':
-        return Icons.check;
+        return Icons.check_circle;
+    }
+  }
+
+  iconStatusColor(String icon) {
+    switch (icon) {
+      case 'play':
+        return Colors.amber;
+      case 'pause':
+        return Colors.grey;
+      case 'check':
+        return Colors.blue;
     }
   }
 

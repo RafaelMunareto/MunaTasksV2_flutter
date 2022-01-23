@@ -96,6 +96,7 @@ abstract class HomeStoreBase with Store {
   tratamentoBase(ObservableStream<List<TarefaModel>>? dashboardList) async {
     client.cleanUsersBase();
     client.cleanSubtarefaModel();
+    client.setLoading(true);
     dashboardList!.forEach((e) async {
       for (var element in e) {
         element.data =
@@ -125,7 +126,6 @@ abstract class HomeStoreBase with Store {
         }
         await client.setTarefa(element);
         badgets();
-        client.setLoading(false);
       }
     });
   }
@@ -200,6 +200,7 @@ abstract class HomeStoreBase with Store {
       client.tarefasBase.where((element) => element.fase == 2).toList().length
     ];
     client.setBadgetNavigate(badgets);
+    client.setLoading(false);
   }
 
   @action
@@ -207,7 +208,6 @@ abstract class HomeStoreBase with Store {
     dashboardService.save(model);
     client.cleanTarefas();
     client.cleanTarefasBase();
-    client.setLoading(false);
   }
 
   @action
@@ -215,7 +215,6 @@ abstract class HomeStoreBase with Store {
     dashboardService.delete(model);
     client.cleanTarefas();
     client.cleanTarefasBase();
-    client.setLoading(false);
   }
 
   @action
