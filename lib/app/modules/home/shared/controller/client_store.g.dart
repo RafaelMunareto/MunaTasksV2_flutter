@@ -144,6 +144,22 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$subtarefaActionListAtom =
+      Atom(name: '_ClientStoreBase.subtarefaActionList');
+
+  @override
+  List<String> get subtarefaActionList {
+    _$subtarefaActionListAtom.reportRead();
+    return super.subtarefaActionList;
+  }
+
+  @override
+  set subtarefaActionList(List<String> value) {
+    _$subtarefaActionListAtom.reportWrite(value, super.subtarefaActionList, () {
+      super.subtarefaActionList = value;
+    });
+  }
+
   final _$openAtom = Atom(name: '_ClientStoreBase.open');
 
   @override
@@ -218,6 +234,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set prioridadeSelection(int value) {
     _$prioridadeSelectionAtom.reportWrite(value, super.prioridadeSelection, () {
       super.prioridadeSelection = value;
+    });
+  }
+
+  final _$subtarefaActionAtom = Atom(name: '_ClientStoreBase.subtarefaAction');
+
+  @override
+  String get subtarefaAction {
+    _$subtarefaActionAtom.reportRead();
+    return super.subtarefaAction;
+  }
+
+  @override
+  set subtarefaAction(String value) {
+    _$subtarefaActionAtom.reportWrite(value, super.subtarefaAction, () {
+      super.subtarefaAction = value;
     });
   }
 
@@ -340,23 +371,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set icon(int value) {
     _$iconAtom.reportWrite(value, super.icon, () {
       super.icon = value;
-    });
-  }
-
-  final _$closedPrioridadeListExpandedAtom =
-      Atom(name: '_ClientStoreBase.closedPrioridadeListExpanded');
-
-  @override
-  bool get closedPrioridadeListExpanded {
-    _$closedPrioridadeListExpandedAtom.reportRead();
-    return super.closedPrioridadeListExpanded;
-  }
-
-  @override
-  set closedPrioridadeListExpanded(bool value) {
-    _$closedPrioridadeListExpandedAtom
-        .reportWrite(value, super.closedPrioridadeListExpanded, () {
-      super.closedPrioridadeListExpanded = value;
     });
   }
 
@@ -538,6 +552,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setSubtarefaAction(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setSubtarefaAction');
+    try {
+      return super.setSubtarefaAction(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setRetardSelection(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setRetardSelection');
@@ -681,17 +706,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
-  dynamic setClosedPrioridadeListExpanded(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setClosedPrioridadeListExpanded');
-    try {
-      return super.setClosedPrioridadeListExpanded(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic setClosedListExpanded(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setClosedListExpanded');
@@ -824,11 +838,13 @@ userList: ${userList},
 orderList: ${orderList},
 retardList: ${retardList},
 prioridadeList: ${prioridadeList},
+subtarefaActionList: ${subtarefaActionList},
 open: ${open},
 etiquetaSelection: ${etiquetaSelection},
 userSelection: ${userSelection},
 orderSelection: ${orderSelection},
 prioridadeSelection: ${prioridadeSelection},
+subtarefaAction: ${subtarefaAction},
 retardSelection: ${retardSelection},
 orderAscDesc: ${orderAscDesc},
 tarefasBase: ${tarefasBase},
@@ -837,7 +853,6 @@ theme: ${theme},
 navigateBarSelection: ${navigateBarSelection},
 color: ${color},
 icon: ${icon},
-closedPrioridadeListExpanded: ${closedPrioridadeListExpanded},
 closedListExpanded: ${closedListExpanded},
 closedListUserExpanded: ${closedListUserExpanded},
 usersBase: ${usersBase},

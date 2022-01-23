@@ -44,6 +44,9 @@ abstract class _ClientStoreBase with Store {
   ObservableStream<List<PrioridadeModel>>? prioridadeList;
 
   @observable
+  List<String> subtarefaActionList = ['pause', 'play', 'check'];
+
+  @observable
   bool open = false;
 
   @observable
@@ -63,6 +66,12 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setPrioridadeSelection(value) => prioridadeSelection = value;
+
+  @observable
+  String subtarefaAction = '';
+
+  @action
+  setSubtarefaAction(value) => subtarefaAction = value;
 
   @observable
   int retardSelection = 0;
@@ -126,13 +135,6 @@ abstract class _ClientStoreBase with Store {
 
   @observable
   int icon = 0;
-
-  @observable
-  bool closedPrioridadeListExpanded = false;
-
-  @action
-  setClosedPrioridadeListExpanded(value) =>
-      closedPrioridadeListExpanded = value;
 
   @observable
   bool closedListExpanded = false;

@@ -23,6 +23,17 @@ class ConvertIcon {
     }
   }
 
+  labelStatus(String status) {
+    switch (status) {
+      case 'play':
+        return 'Fazendo';
+      case 'pause':
+        return 'Backlog';
+      case 'check':
+        return 'Feito';
+    }
+  }
+
   convertColorAndName(String colors) {
     switch (colors) {
       case 'blue':

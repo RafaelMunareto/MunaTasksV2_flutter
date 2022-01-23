@@ -290,10 +290,17 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
+  changeSubtarefaAction(
+      SubtarefaModel subtarefaModel, TarefaModel tarefaModel) {
+    client.setLoading(true);
+    subtarefaModel.status = client.subtarefaAction;
+    save(tarefaModel);
+  }
+
+  @action
   updateDate(TarefaModel model) {
     client.setLoading(true);
     model.data = model.data.add(Duration(hours: client.retardSelection));
-    save(model);
   }
 
   @action

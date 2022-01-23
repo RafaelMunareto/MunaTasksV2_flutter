@@ -229,6 +229,18 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
+  dynamic changeSubtarefaAction(
+      SubtarefaModel subtarefaModel, TarefaModel tarefaModel) {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.changeSubtarefaAction');
+    try {
+      return super.changeSubtarefaAction(subtarefaModel, tarefaModel);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic updateDate(TarefaModel model) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.updateDate');

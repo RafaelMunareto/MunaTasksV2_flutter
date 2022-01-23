@@ -25,24 +25,30 @@ class CardWidget extends StatefulWidget {
   final Function changePrioridadeList;
   final Function setPrioridadeSelection;
   final int prioridadeSelection;
-  const CardWidget({
-    Key? key,
-    required this.tarefa,
-    required this.deleteTasks,
-    required this.navigateBarSelection,
-    required this.navigate,
-    required this.opacidade,
-    required this.theme,
-    required this.retard,
-    required this.retardSelection,
-    required this.setRetardSelection,
-    required this.save,
-    required this.updateDate,
-    required this.prioridadeList,
-    required this.changePrioridadeList,
-    required this.prioridadeSelection,
-    required this.setPrioridadeSelection,
-  }) : super(key: key);
+  final Function changeSubtarefaModelAction;
+  final Function setSubtarefaModel;
+  final List<String> subtarefaActionList;
+  const CardWidget(
+      {Key? key,
+      required this.tarefa,
+      required this.deleteTasks,
+      required this.navigateBarSelection,
+      required this.navigate,
+      required this.opacidade,
+      required this.theme,
+      required this.retard,
+      required this.retardSelection,
+      required this.setRetardSelection,
+      required this.save,
+      required this.updateDate,
+      required this.prioridadeList,
+      required this.changePrioridadeList,
+      required this.prioridadeSelection,
+      required this.setPrioridadeSelection,
+      required this.changeSubtarefaModelAction,
+      required this.setSubtarefaModel,
+      required this.subtarefaActionList})
+      : super(key: key);
 
   @override
   State<CardWidget> createState() => _CardWidgetState();
@@ -152,6 +158,9 @@ class _CardWidgetState extends State<CardWidget> {
                 BodyTextWidget(
                   tarefa: linha,
                   theme: widget.theme,
+                  changeSubtarefaModelAction: widget.changeSubtarefaModelAction,
+                  setSubtarefaModel: widget.setSubtarefaModel,
+                  subtarefaActionList: widget.subtarefaActionList,
                 ),
                 ButtonActionWidget(
                     tarefa: linha,

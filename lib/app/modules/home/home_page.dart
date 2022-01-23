@@ -260,6 +260,12 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                                       store.client.setPrioridadeSelection,
                                   prioridadeSelection:
                                       store.client.prioridadeSelection,
+                                  changeSubtarefaModelAction:
+                                      store.changeSubtarefaAction,
+                                  setSubtarefaModel:
+                                      store.client.setSubtarefaAction,
+                                  subtarefaActionList:
+                                      store.client.subtarefaActionList,
                                 ),
                         ),
                       ],

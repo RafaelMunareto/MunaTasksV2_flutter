@@ -1,17 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/subitem_actions_widget.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class SubItemWidget extends StatelessWidget {
   final SubtarefaModel subTarefa;
+  final TarefaModel tarefaModel;
+  final Function changeSubtarefaModelAction;
+  final Function setSubtarefaModel;
+  final List<String> subtarefaActionList;
   final bool theme;
 
-  const SubItemWidget({Key? key, required this.subTarefa, required this.theme})
-      : super(key: key);
+  const SubItemWidget({
+    Key? key,
+    required this.subTarefa,
+    required this.theme,
+    required this.tarefaModel,
+    required this.changeSubtarefaModelAction,
+    required this.setSubtarefaModel,
+    required this.subtarefaActionList,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    actionSubtarefa(subTarefaModel) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Status'),
+            content: SubitemActionsWidget(
+              subtarefaActionList: subtarefaActionList,
+              setSubtarefaAction: setSubtarefaModel,
+              subtarefaModel: subTarefaModel,
+              tarefaModel: tarefaModel,
+              changeSubtarefaModelAction: changeSubtarefaModelAction,
+            ),
+          );
+        },
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
       child: Container(
@@ -28,9 +59,12 @@ class SubItemWidget extends StatelessWidget {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            title: Icon(
-              ConvertIcon().iconStatus(subTarefa.status),
-              color: ConvertIcon().iconStatusColor(subTarefa.status),
+            title: GestureDetector(
+              onTap: () => actionSubtarefa(subTarefa),
+              child: Icon(
+                ConvertIcon().iconStatus(subTarefa.status),
+                color: ConvertIcon().iconStatusColor(subTarefa.status),
+              ),
             ),
             trailing: CircleAvatarWidget(url: subTarefa.user.urlImage),
           ),
