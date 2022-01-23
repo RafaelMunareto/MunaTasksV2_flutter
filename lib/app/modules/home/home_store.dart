@@ -205,6 +205,7 @@ abstract class HomeStoreBase with Store {
 
   @action
   void save(TarefaModel model) {
+    client.setLoading(true);
     dashboardService.save(model);
     client.cleanTarefas();
     client.cleanTarefasBase();
@@ -212,6 +213,7 @@ abstract class HomeStoreBase with Store {
 
   @action
   void deleteTasks(TarefaModel model) {
+    client.setLoading(true);
     dashboardService.delete(model);
     client.cleanTarefas();
     client.cleanTarefasBase();
@@ -224,6 +226,7 @@ abstract class HomeStoreBase with Store {
 
   @action
   changeFilterEtiquetaList() {
+    client.setLoading(true);
     client.changeTarefa(client.tarefasBase);
 
     if (client.etiquetaSelection != 'TODOS') {
@@ -258,6 +261,7 @@ abstract class HomeStoreBase with Store {
 
   @action
   changeFilterUserList() async {
+    client.setLoading(true);
     await client.changeTarefa(client.tarefasBase
         .where((b) => b.fase == client.navigateBarSelection)
         .toList());
@@ -287,6 +291,7 @@ abstract class HomeStoreBase with Store {
 
   @action
   updateDate(TarefaModel model) {
+    client.setLoading(true);
     model.data = model.data.add(Duration(hours: client.retardSelection));
     save(model);
   }
