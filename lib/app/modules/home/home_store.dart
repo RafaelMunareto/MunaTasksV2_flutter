@@ -244,7 +244,9 @@ abstract class HomeStoreBase with Store {
     if (client.searchValue != '') {
       Timer(const Duration(milliseconds: 600), () {
         client.changeTarefa(client.tarefas
-            .where((t) => t.texto.contains(client.searchValue))
+            .where((t) => t.texto
+                .toLowerCase()
+                .contains(client.searchValue.toLowerCase()))
             .where((b) => b.fase == client.navigateBarSelection)
             .toList());
       });
