@@ -217,11 +217,7 @@ abstract class HomeStoreBase with Store {
     dashboardService.delete(model);
     client.cleanTarefas();
     client.cleanTarefasBase();
-  }
-
-  @action
-  void logout() {
-    auth.logout();
+    client.setLoading(false);
   }
 
   @action
@@ -284,7 +280,6 @@ abstract class HomeStoreBase with Store {
 
   @action
   changePrioridadeList(TarefaModel model) {
-    client.setLoading(true);
     model.prioridade = client.prioridadeSelection;
     save(model);
   }

@@ -185,17 +185,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  void logout() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.logout');
-    try {
-      return super.logout();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic changeFilterEtiquetaList() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.changeFilterEtiquetaList');

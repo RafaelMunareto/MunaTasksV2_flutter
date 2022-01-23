@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
@@ -149,7 +150,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
         changeFilterSearch: store.changeFilterSearchList,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          store.client.setCreate(!store.client.create);
+        },
         child: const Icon(Icons.add),
         backgroundColor: Colors.red,
       ),
@@ -234,6 +237,12 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                             },
                           ),
                         ),
+                        store.client.create
+                            ? const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: CreateWidget(),
+                              )
+                            : Container(),
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.9,

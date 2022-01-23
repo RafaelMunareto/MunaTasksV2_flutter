@@ -515,6 +515,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$createAtom = Atom(name: '_ClientStoreBase.create');
+
+  @override
+  bool get create {
+    _$createAtom.reportRead();
+    return super.create;
+  }
+
+  @override
+  set create(bool value) {
+    _$createAtom.reportWrite(value, super.create, () {
+      super.create = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -827,6 +842,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setCreate(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setCreate');
+    try {
+      return super.setCreate(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -861,7 +887,8 @@ etiquetasRelacionadas: ${etiquetasRelacionadas},
 userSubtarefa: ${userSubtarefa},
 imgUrl: ${imgUrl},
 searchValue: ${searchValue},
-perfilUserLogado: ${perfilUserLogado}
+perfilUserLogado: ${perfilUserLogado},
+create: ${create}
     ''';
   }
 }

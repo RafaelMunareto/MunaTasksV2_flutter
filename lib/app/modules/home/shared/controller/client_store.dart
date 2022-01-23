@@ -196,4 +196,10 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setPerfilUserlogado(value) => perfilUserLogado = value;
+
+  @observable
+  bool create = false;
+
+  @action
+  setCreate(value) => create = value;
 }
