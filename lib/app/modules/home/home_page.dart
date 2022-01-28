@@ -118,7 +118,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
         useSafeArea: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Times'),
+            title: const Text('Equipe'),
             content: Observer(
               builder: (_) {
                 return TeamsSelectionWidget(
@@ -251,6 +251,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                               saveIdStaff: store.client.saveIdStaff,
                               setIdReferenceStaff:
                                   store.client.setIdReferenceStaff,
+                              setTarefaTextSave: store.client.setTarefaTextSave,
+                              tarefaTextSave: store.client.tarefaTextSave,
                             );
                           },
                         ),

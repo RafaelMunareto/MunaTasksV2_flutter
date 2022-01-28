@@ -572,6 +572,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$tarefaTextSaveAtom = Atom(name: '_ClientStoreBase.tarefaTextSave');
+
+  @override
+  String get tarefaTextSave {
+    _$tarefaTextSaveAtom.reportRead();
+    return super.tarefaTextSave;
+  }
+
+  @override
+  set tarefaTextSave(String value) {
+    _$tarefaTextSaveAtom.reportWrite(value, super.tarefaTextSave, () {
+      super.tarefaTextSave = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -928,6 +943,39 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic cleanIndividualChip() {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.cleanIndividualChip');
+    try {
+      return super.cleanIndividualChip();
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setTarefaTextSave(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setTarefaTextSave');
+    try {
+      return super.setTarefaTextSave(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanTarefaTextSave() {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.cleanTarefaTextSave');
+    try {
+      return super.cleanTarefaTextSave();
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic cleanSave() {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.cleanSave');
@@ -999,7 +1047,8 @@ tarefaModelSave: ${tarefaModelSave},
 saveEtiqueta: ${saveEtiqueta},
 usersSave: ${usersSave},
 saveIdStaff: ${saveIdStaff},
-individualChip: ${individualChip}
+individualChip: ${individualChip},
+tarefaTextSave: ${tarefaTextSave}
     ''';
   }
 }

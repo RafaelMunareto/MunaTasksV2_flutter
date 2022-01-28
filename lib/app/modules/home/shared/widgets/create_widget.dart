@@ -18,19 +18,23 @@ class CreateWidget extends StatefulWidget {
   final Function setIdReferenceStaff;
   final List individualChip;
   final List saveIdStaff;
-  const CreateWidget({
-    Key? key,
-    required this.controller,
-    required this.tarefaModel,
-    required this.saveSetEtiqueta,
-    required this.etiquetaList,
-    required this.etiquetaModel,
-    required this.userList,
-    required this.setIdStaff,
-    required this.individualChip,
-    required this.setIdReferenceStaff,
-    required this.saveIdStaff,
-  }) : super(key: key);
+  final String tarefaTextSave;
+  final Function setTarefaTextSave;
+  const CreateWidget(
+      {Key? key,
+      required this.controller,
+      required this.tarefaModel,
+      required this.saveSetEtiqueta,
+      required this.etiquetaList,
+      required this.etiquetaModel,
+      required this.userList,
+      required this.setIdStaff,
+      required this.individualChip,
+      required this.setIdReferenceStaff,
+      required this.saveIdStaff,
+      required this.tarefaTextSave,
+      required this.setTarefaTextSave})
+      : super(key: key);
 
   @override
   State<CreateWidget> createState() => _CreateWidgetState();
@@ -185,7 +189,26 @@ class _CreateWidgetState extends State<CreateWidget>
                             ),
                           ),
                       ],
-                    )
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        autocorrect: true,
+                        initialValue: widget.tarefaTextSave,
+                        onChanged: (value) => widget.setTarefaTextSave(value),
+                        minLines: 1,
+                        maxLines: 20,
+                        decoration: InputDecoration(
+                            suffixIcon: InkWell(
+                                child: const Icon(Icons.close_outlined),
+                                onTap: () {
+                                  setState(() {
+                                    widget.setTarefaTextSave('');
+                                  });
+                                }),
+                            hintText: "Insira sua tarefa"),
+                      ),
+                    ),
                   ],
                 ),
               ),

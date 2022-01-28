@@ -211,18 +211,6 @@ abstract class _ClientStoreBase with Store {
   @action
   setUsersSave(value) => usersSave.add(value);
 
-  @action
-  cleanUsersSave() => saveIdStaff = [];
-
-  @action
-  cleanSaveEtiqueta() => saveEtiqueta = EtiquetaModel();
-
-  @action
-  cleanSave() {
-    cleanUsersSave();
-    cleanSaveEtiqueta();
-  }
-
   @observable
   List saveIdStaff = [];
 
@@ -230,11 +218,37 @@ abstract class _ClientStoreBase with Store {
   List individualChip = [];
 
   @action
+  cleanUsersSave() => saveIdStaff = [];
+
+  @action
+  cleanSaveEtiqueta() => saveEtiqueta = EtiquetaModel();
+
+  @action
+  cleanIndividualChip() => individualChip = [];
+
+  @observable
+  String tarefaTextSave = "";
+
+  @action
+  setTarefaTextSave(value) => tarefaTextSave = value;
+
+  @action
+  cleanTarefaTextSave() => tarefaTextSave = '';
+
+  @action
+  cleanSave() {
+    cleanUsersSave();
+    cleanSaveEtiqueta();
+    cleanIndividualChip();
+    cleanTarefaTextSave();
+  }
+
+  @action
   setIdStaff(value) {
-    if (!saveIdStaff.map((e) => e).contains(value)) {
+    if (!saveIdStaff.map((e) => e.reference).contains(value.reference)) {
       saveIdStaff.add(value);
     } else {
-      saveIdStaff.remove(value);
+      saveIdStaff.removeWhere((e) => e.reference == value.reference);
       if (saveIdStaff.isEmpty) {
         saveIdStaff = [];
       }

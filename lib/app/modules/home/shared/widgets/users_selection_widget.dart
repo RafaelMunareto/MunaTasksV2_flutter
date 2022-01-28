@@ -104,7 +104,6 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                             list[i].reference);
                                         widget.setSaveIdStaff(list[i]);
                                       });
-                                      print(widget.saveIdStaff);
                                     },
                                   ),
                                 ),
