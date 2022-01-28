@@ -6,7 +6,6 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_order_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/teams_selection_widget.dart';
@@ -28,6 +27,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
   late AnimationController _controller;
   late Animation<double> opacidade;
   final GlobalKey expansionTile = GlobalKey();
+  late AnimationController createController;
 
   @override
   void initState() {
@@ -35,12 +35,15 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
 
     _controller = AnimationController(
         duration: const Duration(milliseconds: 1500), vsync: this);
+    createController = AnimationController(
+        duration: const Duration(milliseconds: 600), vsync: this);
     _controller.forward();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    createController.dispose();
     super.dispose();
   }
 
@@ -93,9 +96,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
             title: const Text('Etiquetas'),
             content: Observer(
               builder: (_) {
-                store.client.closedListExpanded ? Modular.to.pop() : null;
                 return RadioEtiquetasFilterWidget(
-                  setClosedListExpanded: store.client.setClosedListExpanded,
                   changeFilterEtiquetaList: store.changeFilterEtiquetaList,
                   etiquetaList: store.client.etiquetaList,
                   setColor: store.client.setColor,
@@ -117,10 +118,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
             title: const Text('Times'),
             content: Observer(
               builder: (_) {
-                store.client.closedListUserExpanded ? Modular.to.pop() : null;
                 return TeamsSelectionWidget(
-                  setClosedListUserExpanded:
-                      store.client.setclosedListUserExpanded,
                   changeFilterUserList: store.changeFilterUserList,
                   userLista: store.client.userList,
                   setImageUser: store.client.setImgUrl,
@@ -151,7 +149,12 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          store.client.setCreate(!store.client.create);
+          store.client.setExpand(!store.client.expand);
+          setState(() {
+            store.client.expand
+                ? createController.forward()
+                : createController.reverse();
+          });
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.red,
@@ -195,9 +198,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                                   )
                                 : const Icon(Icons.bookmark),
                             onTap: () {
-                              setState(() {
-                                store.client.setClosedListExpanded(false);
-                              });
                               etiquetas();
                             },
                           ),
@@ -229,20 +229,21 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                             ),
                             onTap: () {
                               if (store.client.perfilUserLogado.manager) {
-                                setState(() {
-                                  store.client.setclosedListUserExpanded(false);
-                                });
                                 teams();
                               }
                             },
                           ),
                         ),
-                        store.client.create
-                            ? const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: CreateWidget(),
-                              )
-                            : Container(),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CreateWidget(
+                            etiquetaModel: store.client.saveEtiqueta,
+                            saveSetEtiqueta: store.client.setSaveEtiqueta,
+                            etiquetaList: store.client.etiquetaList,
+                            tarefaModel: store.client.tarefaModelSave,
+                            controller: createController,
+                          ),
+                        ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.9,

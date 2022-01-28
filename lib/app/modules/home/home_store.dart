@@ -222,7 +222,6 @@ abstract class HomeStoreBase with Store {
 
   @action
   changeFilterEtiquetaList() {
-    client.setLoading(true);
     client.changeTarefa(client.tarefasBase);
 
     if (client.etiquetaSelection != 'TODOS') {
@@ -257,7 +256,6 @@ abstract class HomeStoreBase with Store {
 
   @action
   changeFilterUserList() async {
-    client.setLoading(true);
     await client.changeTarefa(client.tarefasBase
         .where((b) => b.fase == client.navigateBarSelection)
         .toList());

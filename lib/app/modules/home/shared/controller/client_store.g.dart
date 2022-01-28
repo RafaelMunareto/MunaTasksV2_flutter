@@ -374,39 +374,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$closedListExpandedAtom =
-      Atom(name: '_ClientStoreBase.closedListExpanded');
-
-  @override
-  bool get closedListExpanded {
-    _$closedListExpandedAtom.reportRead();
-    return super.closedListExpanded;
-  }
-
-  @override
-  set closedListExpanded(bool value) {
-    _$closedListExpandedAtom.reportWrite(value, super.closedListExpanded, () {
-      super.closedListExpanded = value;
-    });
-  }
-
-  final _$closedListUserExpandedAtom =
-      Atom(name: '_ClientStoreBase.closedListUserExpanded');
-
-  @override
-  bool get closedListUserExpanded {
-    _$closedListUserExpandedAtom.reportRead();
-    return super.closedListUserExpanded;
-  }
-
-  @override
-  set closedListUserExpanded(bool value) {
-    _$closedListUserExpandedAtom
-        .reportWrite(value, super.closedListUserExpanded, () {
-      super.closedListUserExpanded = value;
-    });
-  }
-
   final _$usersBaseAtom = Atom(name: '_ClientStoreBase.usersBase');
 
   @override
@@ -515,18 +482,63 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$createAtom = Atom(name: '_ClientStoreBase.create');
+  final _$expandAtom = Atom(name: '_ClientStoreBase.expand');
 
   @override
-  bool get create {
-    _$createAtom.reportRead();
-    return super.create;
+  bool get expand {
+    _$expandAtom.reportRead();
+    return super.expand;
   }
 
   @override
-  set create(bool value) {
-    _$createAtom.reportWrite(value, super.create, () {
-      super.create = value;
+  set expand(bool value) {
+    _$expandAtom.reportWrite(value, super.expand, () {
+      super.expand = value;
+    });
+  }
+
+  final _$tarefaModelSaveAtom = Atom(name: '_ClientStoreBase.tarefaModelSave');
+
+  @override
+  TarefaModel get tarefaModelSave {
+    _$tarefaModelSaveAtom.reportRead();
+    return super.tarefaModelSave;
+  }
+
+  @override
+  set tarefaModelSave(TarefaModel value) {
+    _$tarefaModelSaveAtom.reportWrite(value, super.tarefaModelSave, () {
+      super.tarefaModelSave = value;
+    });
+  }
+
+  final _$saveEtiquetaAtom = Atom(name: '_ClientStoreBase.saveEtiqueta');
+
+  @override
+  EtiquetaModel get saveEtiqueta {
+    _$saveEtiquetaAtom.reportRead();
+    return super.saveEtiqueta;
+  }
+
+  @override
+  set saveEtiqueta(EtiquetaModel value) {
+    _$saveEtiquetaAtom.reportWrite(value, super.saveEtiqueta, () {
+      super.saveEtiqueta = value;
+    });
+  }
+
+  final _$usersSaveAtom = Atom(name: '_ClientStoreBase.usersSave');
+
+  @override
+  List<UserModel> get usersSave {
+    _$usersSaveAtom.reportRead();
+    return super.usersSave;
+  }
+
+  @override
+  set usersSave(List<UserModel> value) {
+    _$usersSaveAtom.reportWrite(value, super.usersSave, () {
+      super.usersSave = value;
     });
   }
 
@@ -721,28 +733,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
-  dynamic setClosedListExpanded(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setClosedListExpanded');
-    try {
-      return super.setClosedListExpanded(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setclosedListUserExpanded(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setclosedListUserExpanded');
-    try {
-      return super.setclosedListUserExpanded(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic cleanUsersBase() {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.cleanUsersBase');
@@ -842,11 +832,44 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
-  dynamic setCreate(dynamic value) {
+  dynamic setExpand(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setCreate');
+        name: '_ClientStoreBase.setExpand');
     try {
-      return super.setCreate(value);
+      return super.setExpand(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setTarefaModelSave(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setTarefaModelSave');
+    try {
+      return super.setTarefaModelSave(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setSaveEtiqueta(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setSaveEtiqueta');
+    try {
+      return super.setSaveEtiqueta(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setUsersSave(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setUsersSave');
+    try {
+      return super.setUsersSave(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -879,8 +902,6 @@ theme: ${theme},
 navigateBarSelection: ${navigateBarSelection},
 color: ${color},
 icon: ${icon},
-closedListExpanded: ${closedListExpanded},
-closedListUserExpanded: ${closedListUserExpanded},
 usersBase: ${usersBase},
 subtarefaModel: ${subtarefaModel},
 etiquetasRelacionadas: ${etiquetasRelacionadas},
@@ -888,7 +909,10 @@ userSubtarefa: ${userSubtarefa},
 imgUrl: ${imgUrl},
 searchValue: ${searchValue},
 perfilUserLogado: ${perfilUserLogado},
-create: ${create}
+expand: ${expand},
+tarefaModelSave: ${tarefaModelSave},
+saveEtiqueta: ${saveEtiqueta},
+usersSave: ${usersSave}
     ''';
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 
@@ -8,14 +9,12 @@ class TeamsSelectionWidget extends StatefulWidget {
   final Function changeFilterUserList;
   final Function? setUserSelection;
   final Function setImageUser;
-  final Function setClosedListUserExpanded;
   const TeamsSelectionWidget({
     Key? key,
     required this.userLista,
     required this.changeFilterUserList,
     required this.setUserSelection,
     required this.setImageUser,
-    required this.setClosedListUserExpanded,
   }) : super(key: key);
 
   @override
@@ -67,7 +66,7 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget> {
                         widget.setUserSelection!(list[index]);
                         widget.changeFilterUserList();
                         widget.setImageUser(list[index].urlImage);
-                        widget.setClosedListUserExpanded(true);
+                        Modular.to.pop();
                       });
                     },
                   ),

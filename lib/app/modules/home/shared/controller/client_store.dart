@@ -137,18 +137,6 @@ abstract class _ClientStoreBase with Store {
   int icon = 0;
 
   @observable
-  bool closedListExpanded = false;
-
-  @action
-  setClosedListExpanded(value) => closedListExpanded = value;
-
-  @observable
-  bool closedListUserExpanded = false;
-
-  @action
-  setclosedListUserExpanded(value) => closedListUserExpanded = value;
-
-  @observable
   List<UserModel> usersBase = [];
 
   @action
@@ -198,8 +186,26 @@ abstract class _ClientStoreBase with Store {
   setPerfilUserlogado(value) => perfilUserLogado = value;
 
   @observable
-  bool create = false;
+  bool expand = false;
 
   @action
-  setCreate(value) => create = value;
+  setExpand(value) => expand = value;
+
+  @observable
+  TarefaModel tarefaModelSave = TarefaModel();
+
+  @action
+  setTarefaModelSave(value) => tarefaModelSave = value;
+
+  @observable
+  EtiquetaModel saveEtiqueta = EtiquetaModel();
+
+  @action
+  setSaveEtiqueta(value) => saveEtiqueta = value;
+
+  @observable
+  List<UserModel> usersSave = [];
+
+  @action
+  setUsersSave(value) => usersSave.add(value);
 }
