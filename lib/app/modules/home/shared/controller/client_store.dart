@@ -208,4 +208,22 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setUsersSave(value) => usersSave.add(value);
+
+  @observable
+  List saveIdStaff = [];
+
+  @observable
+  List individualChip = [];
+
+  @action
+  setIdStaff(value) {
+    if (!saveIdStaff.map((e) => e).contains(value)) {
+      saveIdStaff.add(value);
+    } else {
+      saveIdStaff.remove(value);
+      if (saveIdStaff.isEmpty) {
+        saveIdStaff = [];
+      }
+    }
+  }
 }

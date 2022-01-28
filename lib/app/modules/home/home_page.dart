@@ -162,9 +162,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: Observer(builder: (_) {
         return NavigationBarWidget(
-            key: UniqueKey(),
             theme: store.client.theme,
-            controller: _controller,
             navigateBarSelection: store.client.navigateBarSelection,
             setNavigateBarSelection: store.setNavigateBarSelection,
             badgets: store.client.badgetNavigate);
@@ -236,12 +234,20 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: CreateWidget(
-                            etiquetaModel: store.client.saveEtiqueta,
-                            saveSetEtiqueta: store.client.setSaveEtiqueta,
-                            etiquetaList: store.client.etiquetaList,
-                            tarefaModel: store.client.tarefaModelSave,
-                            controller: createController,
+                          child: Observer(
+                            builder: (_) {
+                              return CreateWidget(
+                                userList: store.client.userList,
+                                etiquetaModel: store.client.saveEtiqueta,
+                                saveSetEtiqueta: store.client.setSaveEtiqueta,
+                                etiquetaList: store.client.etiquetaList,
+                                tarefaModel: store.client.tarefaModelSave,
+                                controller: createController,
+                                individualChip: store.client.individualChip,
+                                setIdStaff: store.client.setIdStaff,
+                                saveIdStaff: store.client.saveIdStaff,
+                              );
+                            },
                           ),
                         ),
                         SizedBox(

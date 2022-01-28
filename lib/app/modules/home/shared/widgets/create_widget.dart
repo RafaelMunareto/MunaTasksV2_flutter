@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/users_selection_widget.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
+import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class CreateWidget extends StatefulWidget {
@@ -10,7 +12,11 @@ class CreateWidget extends StatefulWidget {
   final AnimationController controller;
   final Function saveSetEtiqueta;
   final dynamic etiquetaList;
+  final dynamic userList;
   final EtiquetaModel etiquetaModel;
+  final Function setIdStaff;
+  final List individualChip;
+  final List saveIdStaff;
   const CreateWidget({
     Key? key,
     required this.controller,
@@ -18,6 +24,10 @@ class CreateWidget extends StatefulWidget {
     required this.saveSetEtiqueta,
     required this.etiquetaList,
     required this.etiquetaModel,
+    required this.userList,
+    required this.setIdStaff,
+    required this.individualChip,
+    required this.saveIdStaff,
   }) : super(key: key);
 
   @override
@@ -52,15 +62,23 @@ class _CreateWidgetState extends State<CreateWidget>
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Etiquetas'),
-            content: Observer(
-              builder: (_) {
-                return RadioEtiquetasFilterWidget(
-                  etiquetaList: widget.etiquetaList,
-                  create: true,
-                  setEtiquetaSelection: widget.saveSetEtiqueta,
-                );
-              },
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Modular.to.pop();
+                  setState(() {
+                    widget.saveIdStaff;
+                  });
+                },
+                child: const Text('OK'),
+              ),
+            ],
+            title: const Text('Responsáveis'),
+            content: UsersSelectionWidget(
+              userList: widget.userList,
+              setSaveIdStaff: widget.setIdStaff,
+              individualChip: widget.individualChip,
+              saveIdStaff: widget.saveIdStaff,
             ),
           );
         },
@@ -76,8 +94,12 @@ class _CreateWidgetState extends State<CreateWidget>
       ),
     );
 
-    opacidade = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
-        parent: widget.controller, curve: const Interval(0.6, 0.8)));
+    opacidade = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: widget.controller,
+        curve: const Interval(0.6, 0.8),
+      ),
+    );
 
     return AnimatedBuilder(
       animation: widget.controller,
@@ -94,27 +116,73 @@ class _CreateWidgetState extends State<CreateWidget>
                     width: 5),
               ),
               elevation: 8,
-              child: Wrap(
-                children: [
-                  GestureDetector(
-                    child: ListTile(
-                      leading: Chip(
-                        label: Text(widget.etiquetaModel.icon != null
-                            ? widget.etiquetaModel.etiqueta
-                            : 'Escolha uma etiqueta'),
-                        avatar: Icon(
-                          widget.etiquetaModel.icon != null
-                              ? IconData(widget.etiquetaModel.icon ?? 0,
-                                  fontFamily: 'MaterialIcons')
-                              : Icons.bookmark,
-                          color: ConvertIcon()
-                              .convertColor(widget.etiquetaModel.color),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Wrap(
+                  direction: Axis.horizontal,
+                  alignment: WrapAlignment.spaceBetween,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    GestureDetector(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Chip(
+                          label: Text(widget.etiquetaModel.icon != null
+                              ? widget.etiquetaModel.etiqueta
+                              : 'Etiqueta'),
+                          avatar: Icon(
+                            widget.etiquetaModel.icon != null
+                                ? IconData(widget.etiquetaModel.icon ?? 0,
+                                    fontFamily: 'MaterialIcons')
+                                : Icons.bookmark,
+                            color: ConvertIcon()
+                                .convertColor(widget.etiquetaModel.color),
+                          ),
                         ),
                       ),
+                      onTap: () => etiquetas(),
                     ),
-                    onTap: () => etiquetas(),
-                  ),
-                ],
+                    Wrap(
+                      children: [
+                        if (widget.saveIdStaff.isEmpty)
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                widget.saveIdStaff;
+                                widget.userList;
+                              });
+                              users();
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Chip(
+                                label: Text('Equipe'),
+                                avatar: Icon(
+                                  Icons.people,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ),
+                        for (var i = 0; i < widget.saveIdStaff.length; i++)
+                          GestureDetector(
+                            onTap: () => users(),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                              child: GestureDetector(
+                                onTap: () => users(),
+                                child: CircleAvatarWidget(
+                                    key: Key(widget.saveIdStaff[i].reference
+                                        .toString()),
+                                    url: widget.saveIdStaff[i].urlImage
+                                        .toString()),
+                              ),
+                            ),
+                          ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),

@@ -542,6 +542,36 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$saveIdStaffAtom = Atom(name: '_ClientStoreBase.saveIdStaff');
+
+  @override
+  List<dynamic> get saveIdStaff {
+    _$saveIdStaffAtom.reportRead();
+    return super.saveIdStaff;
+  }
+
+  @override
+  set saveIdStaff(List<dynamic> value) {
+    _$saveIdStaffAtom.reportWrite(value, super.saveIdStaff, () {
+      super.saveIdStaff = value;
+    });
+  }
+
+  final _$individualChipAtom = Atom(name: '_ClientStoreBase.individualChip');
+
+  @override
+  List<dynamic> get individualChip {
+    _$individualChipAtom.reportRead();
+    return super.individualChip;
+  }
+
+  @override
+  set individualChip(List<dynamic> value) {
+    _$individualChipAtom.reportWrite(value, super.individualChip, () {
+      super.individualChip = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -876,6 +906,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setIdStaff(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setIdStaff');
+    try {
+      return super.setIdStaff(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -912,7 +953,9 @@ perfilUserLogado: ${perfilUserLogado},
 expand: ${expand},
 tarefaModelSave: ${tarefaModelSave},
 saveEtiqueta: ${saveEtiqueta},
-usersSave: ${usersSave}
+usersSave: ${usersSave},
+saveIdStaff: ${saveIdStaff},
+individualChip: ${individualChip}
     ''';
   }
 }

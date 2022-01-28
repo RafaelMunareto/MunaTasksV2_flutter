@@ -27,13 +27,17 @@ class HeaderWidget extends StatelessWidget {
                   color: ConvertIcon().convertColor(tarefa.etiqueta.color),
                 ),
               ),
-              for (var i = 0; i < tarefa.users!.length; i++)
-                Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: CircleAvatarWidget(
-                      key: Key(tarefa.users![i].reference.toString()),
-                      url: tarefa.users![i].urlImage.toString()),
-                ),
+              Wrap(
+                children: [
+                  for (var i = 0; i < tarefa.users!.length; i++)
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: CircleAvatarWidget(
+                          key: Key(tarefa.users![i].reference.toString()),
+                          url: tarefa.users![i].urlImage.toString()),
+                    ),
+                ],
+              )
             ],
           ),
         ),

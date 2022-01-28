@@ -69,6 +69,8 @@ class ConvertIcon {
         return Colors.yellow;
       case 'orange':
         return Colors.orange;
+      default:
+        return Colors.grey;
     }
   }
 

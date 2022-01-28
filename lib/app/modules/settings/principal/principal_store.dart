@@ -15,17 +15,27 @@ abstract class _PrincipalStoreBase with Store {
   }
 
   @observable
+  bool finalize = false;
+
+  @action
+  setfinalize(value) => finalize = value;
+
+  @observable
   bool isSwitched = false;
 
   @action
-  buscaTheme() {
-    storage.get('theme').then((value) {
+  setIsSwitched(value) => isSwitched = value;
+
+  @action
+  buscaTheme() async {
+    await storage.get('theme').then((value) {
       if (value?[0] == 'dark') {
-        isSwitched = true;
+        setIsSwitched(true);
       } else {
-        isSwitched = false;
+        setIsSwitched(false);
       }
     });
+    setfinalize(true);
   }
 
   @action
