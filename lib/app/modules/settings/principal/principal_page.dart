@@ -53,7 +53,6 @@ class PrincipalPageState extends State<PrincipalPage> {
                             ListTile(
                               title: const Text('Tema'),
                               trailing: RollingSwitch.icon(
-                                //key: Key(store.isSwitched.toString()),
                                 initialState: store.isSwitched,
                                 animationDuration:
                                     const Duration(milliseconds: 600),

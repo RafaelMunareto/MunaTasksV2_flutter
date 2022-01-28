@@ -8,12 +8,14 @@ class UsersSelectionWidget extends StatefulWidget {
   final Function setSaveIdStaff;
   final dynamic saveIdStaff;
   final List<dynamic>? individualChip;
+  final Function setIdReferenceStaff;
   const UsersSelectionWidget({
     Key? key,
     required this.userList,
     this.individualChip,
     required this.saveIdStaff,
     required this.setSaveIdStaff,
+    required this.setIdReferenceStaff,
   }) : super(key: key);
 
   @override
@@ -60,56 +62,60 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
       child: Wrap(
         direction: Axis.vertical,
         children: [
-          Observer(builder: (_) {
-            if (widget.userList!.data == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (widget.userList!.hasError) {
-              return Center(
-                child: Text('Error ' + widget.userList!.error.toString()),
-              );
-            } else {
-              List<UserModel> list = widget.userList!.data;
-              return list.isNotEmpty
-                  ? SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      child: Wrap(
-                        children: [
-                          for (var i = 0; i < list.length; i++)
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SizedBox(
-                                child: InputChip(
-                                  key: UniqueKey(),
-                                  labelPadding: const EdgeInsets.all(2),
-                                  selected:
-                                      widget.saveIdStaff!.contains(list[i]),
-                                  elevation: 4.0,
-                                  avatar: CircleAvatarWidget(
-                                    url: list[i].urlImage,
-                                  ),
-                                  label: SizedBox(
-                                    child: Text(
-                                      list[i].name,
-                                      overflow: TextOverflow.ellipsis,
+          Observer(
+            builder: (_) {
+              if (widget.userList!.data == null) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (widget.userList!.hasError) {
+                return Center(
+                  child: Text('Error ' + widget.userList!.error.toString()),
+                );
+              } else {
+                List<UserModel> list = widget.userList!.data;
+                return list.isNotEmpty
+                    ? SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: Wrap(
+                          children: [
+                            for (var i = 0; i < list.length; i++)
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  child: InputChip(
+                                    key: ObjectKey(list[i].reference),
+                                    labelPadding: const EdgeInsets.all(2),
+                                    selected: widget.individualChip!
+                                        .contains(list[i].reference),
+                                    elevation: 4.0,
+                                    avatar: CircleAvatarWidget(
+                                      url: list[i].urlImage,
                                     ),
+                                    label: SizedBox(
+                                      child: Text(
+                                        list[i].name,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    onSelected: (bool value) {
+                                      setState(() {
+                                        widget.setIdReferenceStaff(
+                                            list[i].reference);
+                                        widget.setSaveIdStaff(list[i]);
+                                      });
+                                      print(widget.saveIdStaff);
+                                    },
                                   ),
-                                  onSelected: (bool value) {
-                                    setState(() {
-                                      widget.setSaveIdStaff(list[i]);
-                                    });
-                                    print(widget.saveIdStaff);
-                                  },
                                 ),
-                              ),
-                            )
-                        ],
-                      ),
-                    )
-                  : Container();
-            }
-          })
+                              )
+                          ],
+                        ),
+                      )
+                    : Container();
+              }
+            },
+          )
         ],
       ),
     );

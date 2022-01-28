@@ -15,6 +15,7 @@ class CreateWidget extends StatefulWidget {
   final dynamic userList;
   final EtiquetaModel etiquetaModel;
   final Function setIdStaff;
+  final Function setIdReferenceStaff;
   final List individualChip;
   final List saveIdStaff;
   const CreateWidget({
@@ -27,6 +28,7 @@ class CreateWidget extends StatefulWidget {
     required this.userList,
     required this.setIdStaff,
     required this.individualChip,
+    required this.setIdReferenceStaff,
     required this.saveIdStaff,
   }) : super(key: key);
 
@@ -43,6 +45,7 @@ class _CreateWidgetState extends State<CreateWidget>
   Widget build(BuildContext context) {
     etiquetas() {
       showDialog(
+        useSafeArea: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -60,6 +63,7 @@ class _CreateWidgetState extends State<CreateWidget>
     users() {
       showDialog(
         context: context,
+        useSafeArea: false,
         builder: (BuildContext context) {
           return AlertDialog(
             actions: [
@@ -79,6 +83,7 @@ class _CreateWidgetState extends State<CreateWidget>
               setSaveIdStaff: widget.setIdStaff,
               individualChip: widget.individualChip,
               saveIdStaff: widget.saveIdStaff,
+              setIdReferenceStaff: widget.setIdReferenceStaff,
             ),
           );
         },
@@ -97,7 +102,7 @@ class _CreateWidgetState extends State<CreateWidget>
     opacidade = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: widget.controller,
-        curve: const Interval(0.6, 0.8),
+        curve: const Interval(0.1, 0.7),
       ),
     );
 

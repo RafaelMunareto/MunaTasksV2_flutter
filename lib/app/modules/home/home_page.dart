@@ -34,9 +34,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     super.initState();
 
     _controller = AnimationController(
-        duration: const Duration(milliseconds: 1500), vsync: this);
+        duration: const Duration(milliseconds: 900), vsync: this);
     createController = AnimationController(
-        duration: const Duration(milliseconds: 600), vsync: this);
+        duration: const Duration(milliseconds: 900), vsync: this);
     _controller.forward();
   }
 
@@ -63,6 +63,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     order() {
       showDialog(
         context: context,
+        useSafeArea: false,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Ordenamento'),
@@ -91,6 +92,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     etiquetas() {
       showDialog(
         context: context,
+        useSafeArea: false,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Etiquetas'),
@@ -113,6 +115,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     teams() {
       showDialog(
         context: context,
+        useSafeArea: false,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Times'),
@@ -154,6 +157,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
             store.client.expand
                 ? createController.forward()
                 : createController.reverse();
+            store.client.cleanSave();
           });
         },
         child: const Icon(Icons.add),
@@ -174,6 +178,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
           builder: (_) {
             return MenuScreen(
               open: store.client.open,
+              setOpen: store.client.setOpen,
               controller: drawerController,
             );
           },
@@ -232,23 +237,22 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                             },
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Observer(
-                            builder: (_) {
-                              return CreateWidget(
-                                userList: store.client.userList,
-                                etiquetaModel: store.client.saveEtiqueta,
-                                saveSetEtiqueta: store.client.setSaveEtiqueta,
-                                etiquetaList: store.client.etiquetaList,
-                                tarefaModel: store.client.tarefaModelSave,
-                                controller: createController,
-                                individualChip: store.client.individualChip,
-                                setIdStaff: store.client.setIdStaff,
-                                saveIdStaff: store.client.saveIdStaff,
-                              );
-                            },
-                          ),
+                        Observer(
+                          builder: (_) {
+                            return CreateWidget(
+                              userList: store.client.userList,
+                              etiquetaModel: store.client.saveEtiqueta,
+                              saveSetEtiqueta: store.client.setSaveEtiqueta,
+                              etiquetaList: store.client.etiquetaList,
+                              tarefaModel: store.client.tarefaModelSave,
+                              controller: createController,
+                              individualChip: store.client.individualChip,
+                              setIdStaff: store.client.setIdStaff,
+                              saveIdStaff: store.client.saveIdStaff,
+                              setIdReferenceStaff:
+                                  store.client.setIdReferenceStaff,
+                            );
+                          },
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width,

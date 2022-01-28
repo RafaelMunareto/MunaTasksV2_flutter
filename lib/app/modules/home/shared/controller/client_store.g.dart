@@ -587,6 +587,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setOpen(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setOpen');
+    try {
+      return super.setOpen(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setOrderSelection(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setOrderSelection');
@@ -647,17 +658,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
         name: '_ClientStoreBase.setUserSelection');
     try {
       return super.setUserSelection(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setOpen(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setOpen');
-    try {
-      return super.setOpen(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -906,11 +906,55 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic cleanUsersSave() {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.cleanUsersSave');
+    try {
+      return super.cleanUsersSave();
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanSaveEtiqueta() {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.cleanSaveEtiqueta');
+    try {
+      return super.cleanSaveEtiqueta();
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanSave() {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.cleanSave');
+    try {
+      return super.cleanSave();
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setIdStaff(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setIdStaff');
     try {
       return super.setIdStaff(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setIdReferenceStaff(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setIdReferenceStaff');
+    try {
+      return super.setIdReferenceStaff(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }

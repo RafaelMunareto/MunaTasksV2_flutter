@@ -74,13 +74,13 @@ class _PrioridadeSelectionWidgetState extends State<PrioridadeSelectionWidget>
               List<PrioridadeModel> list = widget.prioridadeList!.data;
               return Wrap(
                 runAlignment: WrapAlignment.spaceAround,
-                spacing: 16,
+                spacing: 8,
                 children: [
                   for (var index = 0; index < list.length; index++)
                     InputChip(
                       key: ObjectKey(list[index].reference),
                       labelPadding: const EdgeInsets.all(2),
-                      elevation: 4.0,
+                      elevation: 8.0,
                       avatar: list[index].prioridade == 4
                           ? const Icon(Icons.all_inbox, color: Colors.grey)
                           : Icon(

@@ -69,6 +69,7 @@ class _CardWidgetState extends State<CardWidget> {
     _retard(TarefaModel model) {
       showDialog(
         context: context,
+        useSafeArea: false,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Adiamento'),
@@ -87,6 +88,7 @@ class _CardWidgetState extends State<CardWidget> {
     prioridade(tarefaModel) {
       showDialog(
         context: context,
+        useSafeArea: false,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Prioridade'),

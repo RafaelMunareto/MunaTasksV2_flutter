@@ -5,7 +5,12 @@ import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 class MenuScreen extends StatefulWidget {
   final dynamic controller;
   final bool open;
-  const MenuScreen({Key? key, required this.controller, this.open = false})
+  final Function setOpen;
+  const MenuScreen(
+      {Key? key,
+      required this.controller,
+      this.open = false,
+      required this.setOpen})
       : super(key: key);
   @override
   _MenuScreenState createState() => _MenuScreenState();
@@ -19,7 +24,12 @@ class _MenuScreenState extends State<MenuScreen> {
     return Scaffold(
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => widget.controller.toggle!(),
+          onTap: () {
+            widget.controller.toggle!();
+            setState(() {
+              widget.setOpen(!widget.open);
+            });
+          },
           child: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(

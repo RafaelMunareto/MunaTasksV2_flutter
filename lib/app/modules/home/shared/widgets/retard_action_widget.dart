@@ -72,7 +72,7 @@ class _RetardActionWidgetState extends State<RetardActionWidget>
               List<RetardModel> list = widget.retard!.data;
               return Wrap(
                 runAlignment: WrapAlignment.spaceAround,
-                spacing: 16,
+                spacing: 20,
                 children: [
                   for (var index = 0; index < list.length; index++)
                     InputChip(

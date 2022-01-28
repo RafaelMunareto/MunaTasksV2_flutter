@@ -49,6 +49,9 @@ abstract class _ClientStoreBase with Store {
   @observable
   bool open = false;
 
+  @action
+  setOpen(value) => open = value;
+
   @observable
   String etiquetaSelection = 'TODOS';
 
@@ -84,9 +87,6 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setUserSelection(value) => userSelection = value;
-
-  @action
-  setOpen(value) => open = value;
 
   @observable
   bool orderAscDesc = true;
@@ -191,6 +191,8 @@ abstract class _ClientStoreBase with Store {
   @action
   setExpand(value) => expand = value;
 
+  //create
+
   @observable
   TarefaModel tarefaModelSave = TarefaModel();
 
@@ -209,6 +211,18 @@ abstract class _ClientStoreBase with Store {
   @action
   setUsersSave(value) => usersSave.add(value);
 
+  @action
+  cleanUsersSave() => saveIdStaff = [];
+
+  @action
+  cleanSaveEtiqueta() => saveEtiqueta = EtiquetaModel();
+
+  @action
+  cleanSave() {
+    cleanUsersSave();
+    cleanSaveEtiqueta();
+  }
+
   @observable
   List saveIdStaff = [];
 
@@ -223,6 +237,18 @@ abstract class _ClientStoreBase with Store {
       saveIdStaff.remove(value);
       if (saveIdStaff.isEmpty) {
         saveIdStaff = [];
+      }
+    }
+  }
+
+  @action
+  setIdReferenceStaff(value) {
+    if (!individualChip.map((e) => e).contains(value)) {
+      individualChip.add(value);
+    } else {
+      individualChip.remove(value);
+      if (individualChip.isEmpty) {
+        individualChip = [];
       }
     }
   }

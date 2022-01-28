@@ -28,6 +28,7 @@ class SubItemWidget extends StatelessWidget {
     actionSubtarefa(subTarefaModel) {
       showDialog(
         context: context,
+        useSafeArea: false,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Status'),
