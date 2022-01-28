@@ -70,7 +70,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               ? _popMenu()
               : GestureDetector(
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
+                    padding: const EdgeInsets.only(right: 12.0),
                     child: !search
                         ? const Icon(Icons.search, color: Colors.white)
                         : const Icon(Icons.close, color: Colors.white),
@@ -79,6 +79,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                     setState(() {
                       search = !search;
                     });
+                    if (search == false) {
+                      setState(() {
+                        widget.setValueSearch!('');
+                      });
+                      widget.changeFilterSearch!();
+                    }
                   })
         ],
         title: !widget.home
@@ -155,15 +161,15 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   _popSearch() {
     return PlayAnimation<double>(
       tween: Tween(begin: 0.1, end: MediaQuery.of(context).size.width),
-      duration: const Duration(milliseconds: 600),
-      delay: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 400),
       curve: Curves.easeInOut,
       builder: (context, child, value) {
         return Container(
+          height: MediaQuery.of(context).size.height * 0.05,
           width: value,
           decoration: BoxDecoration(
             color: Colors.black26,
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(20),
           ),
           child: TextFormField(
             onChanged: (value) {
@@ -174,7 +180,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             },
             style: const TextStyle(color: Colors.white),
             decoration: const InputDecoration(
-              contentPadding: EdgeInsets.all(8),
+              contentPadding: EdgeInsets.all(16),
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),
