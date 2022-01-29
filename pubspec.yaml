@@ -12,6 +12,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   local_auth: ^1.1.8
   cloud_firestore: ^3.1.0
   firebase_storage: ^10.1.0
@@ -42,6 +44,7 @@ dependencies:
   bubble_bottom_bar: ^2.0.0
   boardview: ^0.2.2
   intl: ^0.17.0
+  date_format: ^2.0.5
 
 dev_dependencies:
   flutter_test:

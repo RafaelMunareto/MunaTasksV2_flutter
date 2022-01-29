@@ -235,12 +235,28 @@ abstract class _ClientStoreBase with Store {
   @action
   cleanTarefaTextSave() => tarefaTextSave = '';
 
+  @observable
+  DateTime tarefaDateSave = DateTime.now();
+
+  @action
+  setTarefaDateSave(value) => tarefaDateSave = value;
+
+  @observable
+  int prioridadeSaveSelection = 0;
+
+  @action
+  setPrioridadeSaveSelection(value) => prioridadeSaveSelection = value;
+
+  @action
+  cleanPrioridadeSaveSelection() => prioridadeSaveSelection = 0;
+
   @action
   cleanSave() {
     cleanUsersSave();
     cleanSaveEtiqueta();
     cleanIndividualChip();
     cleanTarefaTextSave();
+    cleanPrioridadeSaveSelection();
   }
 
   @action

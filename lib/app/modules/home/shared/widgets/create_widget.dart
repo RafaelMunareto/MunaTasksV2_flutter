@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mobx/mobx.dart';
+import 'package:intl/intl.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/users_selection_widget.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
@@ -21,21 +22,31 @@ class CreateWidget extends StatefulWidget {
   final List saveIdStaff;
   final String tarefaTextSave;
   final Function setTarefaTextSave;
-  const CreateWidget(
-      {Key? key,
-      required this.controller,
-      required this.tarefaModel,
-      required this.saveSetEtiqueta,
-      required this.etiquetaList,
-      required this.etiquetaModel,
-      required this.userList,
-      required this.setIdStaff,
-      required this.individualChip,
-      required this.setIdReferenceStaff,
-      required this.saveIdStaff,
-      required this.tarefaTextSave,
-      required this.setTarefaTextSave})
-      : super(key: key);
+  final DateTime tarefaDateSave;
+  final Function setTarefaDateSave;
+  final dynamic prioridadeList;
+  final Function setPrioridadeSaveSelection;
+  final int prioridadeSaveSelection;
+  const CreateWidget({
+    Key? key,
+    required this.controller,
+    required this.tarefaModel,
+    required this.saveSetEtiqueta,
+    required this.etiquetaList,
+    required this.etiquetaModel,
+    required this.userList,
+    required this.setIdStaff,
+    required this.individualChip,
+    required this.setIdReferenceStaff,
+    required this.saveIdStaff,
+    required this.tarefaTextSave,
+    required this.setTarefaTextSave,
+    required this.tarefaDateSave,
+    required this.setTarefaDateSave,
+    required this.prioridadeList,
+    required this.setPrioridadeSaveSelection,
+    required this.prioridadeSaveSelection,
+  }) : super(key: key);
 
   @override
   State<CreateWidget> createState() => _CreateWidgetState();
@@ -46,6 +57,23 @@ class _CreateWidgetState extends State<CreateWidget>
   late Animation altura;
   late Animation<double> opacidade;
   TextEditingController textController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+
+  void _selectDate() async {
+    final DateTime? newDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2018),
+      lastDate: DateTime(2030),
+      helpText: 'Selecione uma data',
+    );
+    if (newDate != null) {
+      var dateFormat = DateFormat('dd/MM/yyyy').format(newDate);
+      setState(() {
+        dateController.text = dateFormat;
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -102,6 +130,24 @@ class _CreateWidgetState extends State<CreateWidget>
       );
     }
 
+    prioridade() {
+      showDialog(
+        context: context,
+        useSafeArea: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Prioridade'),
+            content: PrioridadeSelectionWidget(
+              create: true,
+              prioridadeSelection: widget.prioridadeSaveSelection,
+              prioridadeList: widget.prioridadeList,
+              setPrioridadeSelection: widget.setPrioridadeSaveSelection,
+            ),
+          );
+        },
+      );
+    }
+
     altura =
         Tween<double>(begin: 0, end: MediaQuery.of(context).size.height * 0.3)
             .animate(
@@ -136,7 +182,6 @@ class _CreateWidgetState extends State<CreateWidget>
                           Colors.grey,
                       width: 5),
                 ),
-                elevation: 8,
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Wrap(
@@ -225,6 +270,46 @@ class _CreateWidgetState extends State<CreateWidget>
                               hintText: "Insira sua tarefa"),
                         ),
                       ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              child: TextField(
+                                autofocus: false,
+                                controller: dateController,
+                                onChanged: (value) =>
+                                    widget.setTarefaDateSave(value),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(0, 14, 0, 0),
+                                  prefixIcon: InkWell(
+                                    child: const Icon(Icons.calendar_today),
+                                    onTap: () => _selectDate(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () => prioridade(),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 12, 24, 12),
+                                child: Icon(
+                                  widget.prioridadeSaveSelection == 0
+                                      ? Icons.flag_outlined
+                                      : Icons.flag,
+                                  color: ConvertIcon().convertColorFlaf(
+                                      widget.prioridadeSaveSelection),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),

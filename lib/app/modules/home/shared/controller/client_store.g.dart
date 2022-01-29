@@ -587,6 +587,38 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$tarefaDateSaveAtom = Atom(name: '_ClientStoreBase.tarefaDateSave');
+
+  @override
+  DateTime get tarefaDateSave {
+    _$tarefaDateSaveAtom.reportRead();
+    return super.tarefaDateSave;
+  }
+
+  @override
+  set tarefaDateSave(DateTime value) {
+    _$tarefaDateSaveAtom.reportWrite(value, super.tarefaDateSave, () {
+      super.tarefaDateSave = value;
+    });
+  }
+
+  final _$prioridadeSaveSelectionAtom =
+      Atom(name: '_ClientStoreBase.prioridadeSaveSelection');
+
+  @override
+  int get prioridadeSaveSelection {
+    _$prioridadeSaveSelectionAtom.reportRead();
+    return super.prioridadeSaveSelection;
+  }
+
+  @override
+  set prioridadeSaveSelection(int value) {
+    _$prioridadeSaveSelectionAtom
+        .reportWrite(value, super.prioridadeSaveSelection, () {
+      super.prioridadeSaveSelection = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -976,6 +1008,39 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setTarefaDateSave(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setTarefaDateSave');
+    try {
+      return super.setTarefaDateSave(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setPrioridadeSaveSelection(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setPrioridadeSaveSelection');
+    try {
+      return super.setPrioridadeSaveSelection(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanPrioridadeSaveSelection() {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.cleanPrioridadeSaveSelection');
+    try {
+      return super.cleanPrioridadeSaveSelection();
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic cleanSave() {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.cleanSave');
@@ -1048,7 +1113,9 @@ saveEtiqueta: ${saveEtiqueta},
 usersSave: ${usersSave},
 saveIdStaff: ${saveIdStaff},
 individualChip: ${individualChip},
-tarefaTextSave: ${tarefaTextSave}
+tarefaTextSave: ${tarefaTextSave},
+tarefaDateSave: ${tarefaDateSave},
+prioridadeSaveSelection: ${prioridadeSaveSelection}
     ''';
   }
 }

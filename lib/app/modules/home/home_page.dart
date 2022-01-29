@@ -253,6 +253,13 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                                   store.client.setIdReferenceStaff,
                               setTarefaTextSave: store.client.setTarefaTextSave,
                               tarefaTextSave: store.client.tarefaTextSave,
+                              setTarefaDateSave: store.client.setTarefaDateSave,
+                              tarefaDateSave: store.client.tarefaDateSave,
+                              prioridadeList: store.client.prioridadeList,
+                              prioridadeSaveSelection:
+                                  store.client.prioridadeSaveSelection,
+                              setPrioridadeSaveSelection:
+                                  store.client.setPrioridadeSaveSelection,
                             );
                           },
                         ),

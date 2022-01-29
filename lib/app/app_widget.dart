@@ -5,6 +5,7 @@ import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_in
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class AppWidget extends StatefulWidget {
   @override
@@ -65,6 +66,11 @@ class _AppWidgetState extends State<AppWidget> {
       theme: lightThemeData(context),
       darkTheme: darkThemeData(context),
       themeMode: _themeMode,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('pt', 'BR')],
     ).modular();
   }
 

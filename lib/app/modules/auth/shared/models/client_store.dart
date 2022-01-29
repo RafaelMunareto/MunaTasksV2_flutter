@@ -30,8 +30,7 @@ abstract class _ClientStoreBase with Store {
   changeConfirmPassword(String value) => confirmPassword = value;
 
   @action
-  setCleanVariables()
-  {
+  setCleanVariables() {
     changeName('');
     changePassword('');
     changeConfirmPassword('');

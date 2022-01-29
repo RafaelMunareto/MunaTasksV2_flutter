@@ -9,16 +9,18 @@ class PrioridadeSelectionWidget extends StatefulWidget {
   final dynamic prioridadeList;
   final Function setPrioridadeSelection;
   final int prioridadeSelection;
-  final TarefaModel tarefaModel;
-  final Function changePrioridadeList;
-  const PrioridadeSelectionWidget({
-    Key? key,
-    required this.prioridadeList,
-    required this.setPrioridadeSelection,
-    required this.prioridadeSelection,
-    required this.tarefaModel,
-    required this.changePrioridadeList,
-  }) : super(key: key);
+  final TarefaModel? tarefaModel;
+  final bool create;
+  final Function? changePrioridadeList;
+  const PrioridadeSelectionWidget(
+      {Key? key,
+      required this.prioridadeList,
+      required this.setPrioridadeSelection,
+      required this.prioridadeSelection,
+      this.tarefaModel,
+      this.changePrioridadeList,
+      this.create = false})
+      : super(key: key);
 
   @override
   State<PrioridadeSelectionWidget> createState() =>
@@ -82,7 +84,7 @@ class _PrioridadeSelectionWidgetState extends State<PrioridadeSelectionWidget>
                       labelPadding: const EdgeInsets.all(2),
                       elevation: 8.0,
                       avatar: list[index].prioridade == 4
-                          ? const Icon(Icons.all_inbox, color: Colors.grey)
+                          ? const Icon(Icons.flag_outlined, color: Colors.grey)
                           : Icon(
                               Icons.flag,
                               color: ConvertIcon()
@@ -101,7 +103,9 @@ class _PrioridadeSelectionWidgetState extends State<PrioridadeSelectionWidget>
                       onPressed: () {
                         setState(() {
                           widget.setPrioridadeSelection(list[index].prioridade);
-                          widget.changePrioridadeList(widget.tarefaModel);
+                          if (!widget.create) {
+                            widget.changePrioridadeList!(widget.tarefaModel!);
+                          }
                           Modular.to.pop();
                         });
                       },
