@@ -108,77 +108,82 @@ class _CardWidgetState extends State<CardWidget> {
       return PhysicalModel(
         key: UniqueKey(),
         color: Colors.transparent,
-        child: PhysicalModel(
-          color: Colors.transparent,
-          elevation: 4,
-          child: Card(
-            shape: Border(
-              right: BorderSide(
-                  color: ConvertIcon().convertColor(linha.etiqueta.color),
-                  width: 5),
-            ),
-            child: ExpansionTile(
-              key: UniqueKey(),
-              textColor: Colors.black,
-              title: HeaderWidget(tarefa: linha, theme: widget.theme),
-              subtitle: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () => _retard(linha),
-                      child: Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 4.0),
-                            child: Icon(
-                              changeIconeAndColorTime(linha.data)[1],
-                              color: changeIconeAndColorTime(linha.data)[0],
-                            ),
-                          ),
-                          Text(
-                            DateFormat('dd/MM/yyyy')
-                                .format(linha.data)
-                                .toString(),
-                            style: TextStyle(
-                                fontSize: 12,
-                                color:
-                                    widget.theme ? Colors.white : Colors.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => prioridade(linha),
-                      child: Icon(
-                        Icons.flag,
-                        color: ConvertIcon().convertColorFlaf(linha.prioridade),
-                      ),
-                    )
-                  ],
-                ),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 4.0),
+          child: PhysicalModel(
+            color: Colors.transparent,
+            elevation: 8,
+            child: Card(
+              shape: Border(
+                right: BorderSide(
+                    color: ConvertIcon().convertColor(linha.etiqueta.color),
+                    width: 5),
               ),
-              children: [
-                Wrap(
-                  children: [
-                    BodyTextWidget(
-                      tarefa: linha,
-                      theme: widget.theme,
-                      changeSubtarefaModelAction:
-                          widget.changeSubtarefaModelAction,
-                      setSubtarefaModel: widget.setSubtarefaModel,
-                      subtarefaActionList: widget.subtarefaActionList,
-                    ),
-                    ButtonActionWidget(
+              child: ExpansionTile(
+                key: UniqueKey(),
+                textColor: Colors.black,
+                title: HeaderWidget(tarefa: linha, theme: widget.theme),
+                subtitle: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () => _retard(linha),
+                        child: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 4.0),
+                              child: Icon(
+                                changeIconeAndColorTime(linha.data)[1],
+                                color: changeIconeAndColorTime(linha.data)[0],
+                              ),
+                            ),
+                            Text(
+                              DateFormat('dd/MM/yyyy')
+                                  .format(linha.data)
+                                  .toString(),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: widget.theme
+                                      ? Colors.white
+                                      : Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => prioridade(linha),
+                        child: Icon(
+                          Icons.flag,
+                          color:
+                              ConvertIcon().convertColorFlaf(linha.prioridade),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                children: [
+                  Wrap(
+                    children: [
+                      BodyTextWidget(
                         tarefa: linha,
-                        deleteTasks: widget.deleteTasks,
-                        navigate: widget.navigate,
-                        save: widget.save),
-                  ],
-                )
-              ],
+                        theme: widget.theme,
+                        changeSubtarefaModelAction:
+                            widget.changeSubtarefaModelAction,
+                        setSubtarefaModel: widget.setSubtarefaModel,
+                        subtarefaActionList: widget.subtarefaActionList,
+                      ),
+                      ButtonActionWidget(
+                          tarefa: linha,
+                          deleteTasks: widget.deleteTasks,
+                          navigate: widget.navigate,
+                          save: widget.save),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

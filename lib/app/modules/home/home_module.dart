@@ -1,3 +1,4 @@
+import 'package:munatasks2/app/modules/home/shared/controller/client_create_store.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:munatasks2/app/modules/home/repositories/interfaces/dashboard_interfaces.dart';
@@ -14,6 +15,7 @@ class HomeModule extends Module {
   @override
   final List<Bind> binds = [
     Bind.lazySingleton((i) => ClientStore()),
+    Bind.lazySingleton((i) => ClientCreateStore()),
     Bind.lazySingleton<IDashboardService>(
         (i) => DashboardService(dashboardRepository: i.get())),
     Bind.lazySingleton<IDashboardRepository>(

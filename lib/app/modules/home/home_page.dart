@@ -157,7 +157,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
             store.client.expand
                 ? createController.forward()
                 : createController.reverse();
-            store.client.cleanSave();
+            store.clientCreate.cleanSave();
           });
         },
         child: const Icon(Icons.add),
@@ -239,27 +239,36 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                         ),
                         Observer(
                           builder: (_) {
-                            return CreateWidget(
-                              userList: store.client.userList,
-                              etiquetaModel: store.client.saveEtiqueta,
-                              saveSetEtiqueta: store.client.setSaveEtiqueta,
-                              etiquetaList: store.client.etiquetaList,
-                              tarefaModel: store.client.tarefaModelSave,
-                              controller: createController,
-                              individualChip: store.client.individualChip,
-                              setIdStaff: store.client.setIdStaff,
-                              saveIdStaff: store.client.saveIdStaff,
-                              setIdReferenceStaff:
-                                  store.client.setIdReferenceStaff,
-                              setTarefaTextSave: store.client.setTarefaTextSave,
-                              tarefaTextSave: store.client.tarefaTextSave,
-                              setTarefaDateSave: store.client.setTarefaDateSave,
-                              tarefaDateSave: store.client.tarefaDateSave,
-                              prioridadeList: store.client.prioridadeList,
-                              prioridadeSaveSelection:
-                                  store.client.prioridadeSaveSelection,
-                              setPrioridadeSaveSelection:
-                                  store.client.setPrioridadeSaveSelection,
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: CreateWidget(
+                                userList: store.client.userList,
+                                etiquetaModel: store.clientCreate.saveEtiqueta,
+                                saveSetEtiqueta:
+                                    store.clientCreate.setSaveEtiqueta,
+                                etiquetaList: store.client.etiquetaList,
+                                tarefaModel: store.clientCreate.tarefaModelSave,
+                                controller: createController,
+                                individualChip:
+                                    store.clientCreate.individualChip,
+                                setIdStaff: store.clientCreate.setIdStaff,
+                                saveIdStaff: store.clientCreate.saveIdStaff,
+                                setIdReferenceStaff:
+                                    store.clientCreate.setIdReferenceStaff,
+                                setTarefaTextSave:
+                                    store.clientCreate.setTarefaTextSave,
+                                tarefaTextSave:
+                                    store.clientCreate.tarefaTextSave,
+                                setTarefaDateSave:
+                                    store.clientCreate.setTarefaDateSave,
+                                tarefaDateSave:
+                                    store.clientCreate.tarefaDateSave,
+                                prioridadeList: store.client.prioridadeList,
+                                prioridadeSaveSelection:
+                                    store.clientCreate.prioridadeSaveSelection,
+                                setPrioridadeSaveSelection: store
+                                    .clientCreate.setPrioridadeSaveSelection,
+                              ),
                             );
                           },
                         ),

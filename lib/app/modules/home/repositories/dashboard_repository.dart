@@ -3,6 +3,7 @@ import 'package:munatasks2/app/modules/home/repositories/interfaces/dashboard_in
 import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/prioridade_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefa_insert_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
@@ -23,8 +24,9 @@ class DashboardRepository implements IDashboardRepository {
 
   @override
   Stream<List<EtiquetaModel>> getEtiquetas() {
-    return firestore.collection('etiqueta').snapshots().map((query) =>
-        query.docs.map((doc) => EtiquetaModel.fromDocument(doc)).toList());
+    return firestore.collection('etiqueta').orderBy('etiqueta').snapshots().map(
+        (query) =>
+            query.docs.map((doc) => EtiquetaModel.fromDocument(doc)).toList());
   }
 
   @override
@@ -35,8 +37,9 @@ class DashboardRepository implements IDashboardRepository {
 
   @override
   Stream<List<UserModel>> getUsers() {
-    return firestore.collection('usuarios').snapshots().map((query) =>
-        query.docs.map((doc) => UserModel.fromDocument(doc)).toList());
+    return firestore.collection('usuarios').orderBy('name').snapshots().map(
+        (query) =>
+            query.docs.map((doc) => UserModel.fromDocument(doc)).toList());
   }
 
   @override
@@ -44,6 +47,17 @@ class DashboardRepository implements IDashboardRepository {
     return firestore.collection('retard').orderBy('tempoName').snapshots().map(
         (query) =>
             query.docs.map((doc) => RetardModel.fromDocument(doc)).toList());
+  }
+
+  @override
+  Stream<List<SubtarefaInsertModel>> getSubtarefaInsert() {
+    return firestore
+        .collection('subtarefa_insert')
+        .orderBy('subtarefa')
+        .snapshots()
+        .map((query) => query.docs
+            .map((doc) => SubtarefaInsertModel.fromDocument(doc))
+            .toList());
   }
 
   @override

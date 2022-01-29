@@ -4,6 +4,7 @@ import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_servic
 import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/prioridade_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefa_insert_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
@@ -44,6 +45,11 @@ class DashboardService extends Disposable implements IDashboardService {
   @override
   Stream<List<PrioridadeModel>> getPrioridade() {
     return dashboardRepository.getPrioridade();
+  }
+
+  @override
+  Stream<List<SubtarefaInsertModel>> getSubtarefaInsert() {
+    return dashboardRepository.getSubtarefaInsert();
   }
 
   @override
