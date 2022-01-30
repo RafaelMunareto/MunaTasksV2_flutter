@@ -12,6 +12,39 @@ class ConvertIcon {
     }
   }
 
+  colorStatus(String status) {
+    switch (status) {
+      case 'play':
+        return Colors.green[100];
+      case 'pause':
+        return Colors.amber[100];
+      case 'check':
+        return Colors.blue[100];
+    }
+  }
+
+  colorStatusDark(String status) {
+    switch (status) {
+      case 'play':
+        return Colors.green;
+      case 'pause':
+        return Colors.amber;
+      case 'check':
+        return Colors.blue;
+    }
+  }
+
+  nameStatus(String status) {
+    switch (status) {
+      case 'play':
+        return 'Fazendo';
+      case 'pause':
+        return 'Backlog';
+      case 'check':
+        return 'Feito';
+    }
+  }
+
   iconStatusColor(String icon) {
     switch (icon) {
       case 'play':
@@ -67,6 +100,29 @@ class ConvertIcon {
         return Colors.black;
       case 'yellow':
         return Colors.yellow;
+      case 'orange':
+        return Colors.orange;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  convertColorFase(String colors) {
+    switch (colors) {
+      case 'blue':
+        return Colors.blue;
+      case 'red':
+        return Colors.red;
+      case 'green':
+        return Colors.green;
+      case 'grey':
+        return Colors.grey;
+      case 'dark':
+        return Colors.black;
+      case 'yellow':
+        return Colors.yellow;
+      case 'amber':
+        return Colors.amber;
       case 'orange':
         return Colors.orange;
       default:

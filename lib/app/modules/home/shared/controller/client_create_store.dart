@@ -1,5 +1,7 @@
 import 'package:mobx/mobx.dart';
+import 'package:munatasks2/app/modules/home/shared/model/fase_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_insert_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
@@ -13,61 +15,79 @@ abstract class _ClientCreateStoreBase with Store {
   ObservableStream<List<SubtarefaInsertModel>>? subtarefaInsertList;
 
   @observable
+  ObservableStream<List<FaseModel>>? faseList;
+
+  @observable
   TarefaModel tarefaModelSave = TarefaModel();
 
-  @action
-  setTarefaModelSave(value) => tarefaModelSave = value;
+  @observable
+  SubtarefaModel subtarefaModel = SubtarefaModel();
 
   @observable
-  EtiquetaModel saveEtiqueta = EtiquetaModel();
-
-  @action
-  setSaveEtiqueta(value) => saveEtiqueta = value;
+  List<UserModel> users = [];
 
   @observable
-  List<UserModel> usersSave = [];
-
-  @action
-  setUsersSave(value) => usersSave.add(value);
+  EtiquetaModel tarefaModelSaveEtiqueta = EtiquetaModel();
 
   @observable
-  List saveIdStaff = [];
+  String tarefaModelSaveTexto = '';
+
+  @observable
+  dynamic tarefaModelData = '';
+
+  @observable
+  int tarefaModelPrioritario = 0;
+
+  @observable
+  String subtarefaModelSaveTitle = '';
 
   @observable
   List individualChip = [];
 
-  @action
-  cleanUsersSave() => saveIdStaff = [];
+  @observable
+  String fase = 'pause';
 
   @action
-  cleanSaveEtiqueta() => saveEtiqueta = EtiquetaModel();
+  setTarefaModelSave(value) => tarefaModelSave = value;
+
+  @action
+  setUsersSave(value) => users.add(value);
+
+  @action
+  setSaveEtiqueta(value) => tarefaModelSaveEtiqueta = value;
+
+  @action
+  setTarefaDateSave(value) => tarefaModelData = value;
+
+  @action
+  setPrioridadeSaveSelection(value) => tarefaModelPrioritario = value;
+
+  @action
+  setTarefaTextSave(value) => tarefaModelSaveTexto = value;
+
+  @action
+  setSubtarefaInsertCreate(value) => subtarefaModelSaveTitle = value;
+
+  @action
+  setFase(value) => fase = value;
+
+  @action
+  cleanTarefaTextSave() => tarefaModelSaveTexto = '';
+
+  @action
+  cleanSubtarefaInsertCreate() => subtarefaModelSaveTitle = '';
+
+  @action
+  cleanPrioridadeSaveSelection() => tarefaModelPrioritario = 0;
+
+  @action
+  cleanUsersSave() => users = [];
+
+  @action
+  cleanSaveEtiqueta() => tarefaModelSave.etiqueta = EtiquetaModel();
 
   @action
   cleanIndividualChip() => individualChip = [];
-
-  @observable
-  String tarefaTextSave = "";
-
-  @action
-  setTarefaTextSave(value) => tarefaTextSave = value;
-
-  @action
-  cleanTarefaTextSave() => tarefaTextSave = '';
-
-  @observable
-  DateTime tarefaDateSave = DateTime.now();
-
-  @action
-  setTarefaDateSave(value) => tarefaDateSave = value;
-
-  @observable
-  int prioridadeSaveSelection = 0;
-
-  @action
-  setPrioridadeSaveSelection(value) => prioridadeSaveSelection = value;
-
-  @action
-  cleanPrioridadeSaveSelection() => prioridadeSaveSelection = 0;
 
   @action
   cleanSave() {
@@ -76,16 +96,17 @@ abstract class _ClientCreateStoreBase with Store {
     cleanIndividualChip();
     cleanTarefaTextSave();
     cleanPrioridadeSaveSelection();
+    cleanSubtarefaInsertCreate();
   }
 
   @action
   setIdStaff(value) {
-    if (!saveIdStaff.map((e) => e.reference).contains(value.reference)) {
-      saveIdStaff.add(value);
+    if (!users.map((e) => e.reference).contains(value.reference)) {
+      users.add(value);
     } else {
-      saveIdStaff.removeWhere((e) => e.reference == value.reference);
-      if (saveIdStaff.isEmpty) {
-        saveIdStaff = [];
+      users.removeWhere((e) => e.reference == value.reference);
+      if (users.isEmpty) {
+        users = [];
       }
     }
   }

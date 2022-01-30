@@ -1,51 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
-import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create_subtarefa_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/users_selection_widget.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
+import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class CreateWidget extends StatefulWidget {
-  final TarefaModel tarefaModel;
   final AnimationController controller;
-  final Function saveSetEtiqueta;
+  final List individualChip;
   final dynamic etiquetaList;
+  final dynamic prioridadeList;
   final dynamic userList;
-  final EtiquetaModel etiquetaModel;
+  final dynamic faseList;
+  final EtiquetaModel tarefaModelSaveEtiqueta;
+  final String tarefaModelSaveTexto;
+  final dynamic tarefaModelData;
+  final int tarefaModelPrioritario;
+  final String subtarefaModelSaveTitle;
+  final String fase;
+  final Function setFase;
   final Function setIdStaff;
   final Function setIdReferenceStaff;
-  final List individualChip;
-  final List saveIdStaff;
-  final String tarefaTextSave;
   final Function setTarefaTextSave;
-  final DateTime tarefaDateSave;
   final Function setTarefaDateSave;
-  final dynamic prioridadeList;
   final Function setPrioridadeSaveSelection;
-  final int prioridadeSaveSelection;
+  final Function setSubtarefaInsertCreate;
+  final Function setTarefaEtiquetaSave;
+  final dynamic subtarefaList;
+  final dynamic theme;
+  final List<UserModel> users;
+
   const CreateWidget({
     Key? key,
     required this.controller,
-    required this.tarefaModel,
-    required this.saveSetEtiqueta,
-    required this.etiquetaList,
-    required this.etiquetaModel,
-    required this.userList,
-    required this.setIdStaff,
     required this.individualChip,
-    required this.setIdReferenceStaff,
-    required this.saveIdStaff,
-    required this.tarefaTextSave,
-    required this.setTarefaTextSave,
-    required this.tarefaDateSave,
-    required this.setTarefaDateSave,
+    required this.etiquetaList,
     required this.prioridadeList,
+    required this.userList,
+    required this.faseList,
+    required this.tarefaModelSaveEtiqueta,
+    required this.tarefaModelSaveTexto,
+    required this.tarefaModelData,
+    required this.subtarefaModelSaveTitle,
+    required this.fase,
+    required this.setFase,
+    required this.tarefaModelPrioritario,
+    required this.setIdStaff,
+    required this.setIdReferenceStaff,
+    required this.setTarefaTextSave,
+    required this.setTarefaDateSave,
     required this.setPrioridadeSaveSelection,
-    required this.prioridadeSaveSelection,
+    required this.setSubtarefaInsertCreate,
+    required this.setTarefaEtiquetaSave,
+    required this.subtarefaList,
+    required this.theme,
+    required this.users,
   }) : super(key: key);
 
   @override
@@ -78,7 +92,7 @@ class _CreateWidgetState extends State<CreateWidget>
   @override
   void initState() {
     super.initState();
-    textController.text = widget.tarefaTextSave;
+    textController.text = widget.tarefaModelSaveTexto;
   }
 
   @override
@@ -93,7 +107,7 @@ class _CreateWidgetState extends State<CreateWidget>
             content: RadioEtiquetasFilterWidget(
               etiquetaList: widget.etiquetaList,
               create: true,
-              setEtiquetaSave: widget.saveSetEtiqueta,
+              setEtiquetaSave: widget.setTarefaEtiquetaSave,
             ),
           );
         },
@@ -111,7 +125,7 @@ class _CreateWidgetState extends State<CreateWidget>
                 onPressed: () {
                   Modular.to.pop();
                   setState(() {
-                    widget.saveIdStaff;
+                    widget.users;
                   });
                 },
                 child: const Text('OK'),
@@ -122,7 +136,7 @@ class _CreateWidgetState extends State<CreateWidget>
               userList: widget.userList,
               setSaveIdStaff: widget.setIdStaff,
               individualChip: widget.individualChip,
-              saveIdStaff: widget.saveIdStaff,
+              saveIdStaff: widget.users,
               setIdReferenceStaff: widget.setIdReferenceStaff,
             ),
           );
@@ -139,7 +153,7 @@ class _CreateWidgetState extends State<CreateWidget>
             title: const Text('Prioridade'),
             content: PrioridadeSelectionWidget(
               create: true,
-              prioridadeSelection: widget.prioridadeSaveSelection,
+              prioridadeSelection: widget.tarefaModelPrioritario,
               prioridadeList: widget.prioridadeList,
               setPrioridadeSelection: widget.setPrioridadeSaveSelection,
             ),
@@ -149,7 +163,7 @@ class _CreateWidgetState extends State<CreateWidget>
     }
 
     altura =
-        Tween<double>(begin: 0, end: MediaQuery.of(context).size.height * 0.3)
+        Tween<double>(begin: 0, end: MediaQuery.of(context).size.height * 0.5)
             .animate(
       CurvedAnimation(
         parent: widget.controller,
@@ -177,8 +191,8 @@ class _CreateWidgetState extends State<CreateWidget>
               child: Card(
                 shape: Border(
                   top: BorderSide(
-                      color: ConvertIcon()
-                              .convertColor(widget.etiquetaModel.color) ??
+                      color: ConvertIcon().convertColor(
+                              widget.tarefaModelSaveEtiqueta.color) ??
                           Colors.grey,
                       width: 5),
                 ),
@@ -193,28 +207,34 @@ class _CreateWidgetState extends State<CreateWidget>
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Chip(
-                            label: Text(widget.etiquetaModel.icon != null
-                                ? widget.etiquetaModel.etiqueta
-                                : 'Etiqueta'),
+                            label: Text(
+                                widget.tarefaModelSaveEtiqueta.icon != null
+                                    ? widget.tarefaModelSaveEtiqueta.etiqueta
+                                    : 'Etiqueta'),
                             avatar: Icon(
-                              widget.etiquetaModel.icon != null
-                                  ? IconData(widget.etiquetaModel.icon ?? 0,
+                              widget.tarefaModelSaveEtiqueta.icon != null
+                                  ? IconData(
+                                      widget.tarefaModelSaveEtiqueta.icon ?? 0,
                                       fontFamily: 'MaterialIcons')
                                   : Icons.bookmark,
-                              color: ConvertIcon()
-                                  .convertColor(widget.etiquetaModel.color),
+                              color: ConvertIcon().convertColor(
+                                  widget.tarefaModelSaveEtiqueta.color),
                             ),
                           ),
                         ),
-                        onTap: () => etiquetas(),
+                        onTap: () {
+                          setState(() {
+                            etiquetas();
+                          });
+                        },
                       ),
                       Wrap(
                         children: [
-                          if (widget.saveIdStaff.isEmpty)
+                          if (widget.users.isEmpty)
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  widget.saveIdStaff;
+                                  widget.users;
                                   widget.userList;
                                 });
                                 users();
@@ -230,21 +250,23 @@ class _CreateWidgetState extends State<CreateWidget>
                                 ),
                               ),
                             ),
-                          for (var i = 0; i < widget.saveIdStaff.length; i++)
-                            GestureDetector(
-                              onTap: () => users(),
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-                                child: GestureDetector(
-                                  onTap: () => users(),
-                                  child: CircleAvatarWidget(
-                                      key: Key(widget.saveIdStaff[i].reference
-                                          .toString()),
-                                      url: widget.saveIdStaff[i].urlImage
-                                          .toString()),
+                          if (widget.users.isNotEmpty)
+                            for (var i = 0; i < widget.users.length; i++)
+                              GestureDetector(
+                                onTap: () => users(),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                                  child: GestureDetector(
+                                    onTap: () => users(),
+                                    child: CircleAvatarWidget(
+                                        key: Key(widget.users[i].reference
+                                            .toString()),
+                                        url: widget.users[i].urlImage
+                                            .toString()),
+                                  ),
                                 ),
                               ),
-                            ),
                         ],
                       ),
                       Padding(
@@ -296,17 +318,36 @@ class _CreateWidgetState extends State<CreateWidget>
                             GestureDetector(
                               onTap: () => prioridade(),
                               child: Padding(
+                                key: UniqueKey(),
                                 padding:
                                     const EdgeInsets.fromLTRB(0, 12, 24, 12),
                                 child: Icon(
-                                  widget.prioridadeSaveSelection == 0
+                                  widget.tarefaModelPrioritario == 0
                                       ? Icons.flag_outlined
                                       : Icons.flag,
                                   color: ConvertIcon().convertColorFlaf(
-                                      widget.prioridadeSaveSelection),
+                                    widget.tarefaModelPrioritario,
+                                  ),
                                 ),
                               ),
-                            )
+                            ),
+                          ],
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        child: Wrap(
+                          children: [
+                            CreateSubtarefaWidget(
+                              subtarefaList: widget.subtarefaList,
+                              subtarefaInserSelection:
+                                  widget.subtarefaModelSaveTitle,
+                              setSubtarefaSelection:
+                                  widget.setSubtarefaInsertCreate,
+                              theme: widget.theme,
+                              fase: widget.fase,
+                              setFase: widget.setFase,
+                              faseList: widget.faseList,
+                            ),
                           ],
                         ),
                       )

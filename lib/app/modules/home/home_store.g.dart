@@ -130,6 +130,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
+  void getFase() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.getFase');
+    try {
+      return super.getFase();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void getSubtarefaInsert() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.getSubtarefaInsert');

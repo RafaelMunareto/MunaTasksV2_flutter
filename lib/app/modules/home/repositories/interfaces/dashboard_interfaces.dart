@@ -1,3 +1,4 @@
+import 'package:munatasks2/app/modules/home/shared/model/fase_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/prioridade_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
@@ -14,6 +15,7 @@ abstract class IDashboardRepository {
   Stream<List<RetardModel>> getRetard();
   Stream<List<PrioridadeModel>> getPrioridade();
   Stream<List<SubtarefaInsertModel>> getSubtarefaInsert();
+  Stream<List<FaseModel>> getFase();
   Future save(TarefaModel model);
   delete(TarefaModel model);
   Future<Stream<TarefaModel>> getByDocumentId(String documentId);

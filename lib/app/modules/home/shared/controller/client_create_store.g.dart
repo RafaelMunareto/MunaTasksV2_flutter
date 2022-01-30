@@ -25,6 +25,21 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
+  final _$faseListAtom = Atom(name: '_ClientCreateStoreBase.faseList');
+
+  @override
+  ObservableStream<List<FaseModel>>? get faseList {
+    _$faseListAtom.reportRead();
+    return super.faseList;
+  }
+
+  @override
+  set faseList(ObservableStream<List<FaseModel>>? value) {
+    _$faseListAtom.reportWrite(value, super.faseList, () {
+      super.faseList = value;
+    });
+  }
+
   final _$tarefaModelSaveAtom =
       Atom(name: '_ClientCreateStoreBase.tarefaModelSave');
 
@@ -41,48 +56,118 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$saveEtiquetaAtom = Atom(name: '_ClientCreateStoreBase.saveEtiqueta');
+  final _$subtarefaModelAtom =
+      Atom(name: '_ClientCreateStoreBase.subtarefaModel');
 
   @override
-  EtiquetaModel get saveEtiqueta {
-    _$saveEtiquetaAtom.reportRead();
-    return super.saveEtiqueta;
+  SubtarefaModel get subtarefaModel {
+    _$subtarefaModelAtom.reportRead();
+    return super.subtarefaModel;
   }
 
   @override
-  set saveEtiqueta(EtiquetaModel value) {
-    _$saveEtiquetaAtom.reportWrite(value, super.saveEtiqueta, () {
-      super.saveEtiqueta = value;
+  set subtarefaModel(SubtarefaModel value) {
+    _$subtarefaModelAtom.reportWrite(value, super.subtarefaModel, () {
+      super.subtarefaModel = value;
     });
   }
 
-  final _$usersSaveAtom = Atom(name: '_ClientCreateStoreBase.usersSave');
+  final _$usersAtom = Atom(name: '_ClientCreateStoreBase.users');
 
   @override
-  List<UserModel> get usersSave {
-    _$usersSaveAtom.reportRead();
-    return super.usersSave;
+  List<UserModel> get users {
+    _$usersAtom.reportRead();
+    return super.users;
   }
 
   @override
-  set usersSave(List<UserModel> value) {
-    _$usersSaveAtom.reportWrite(value, super.usersSave, () {
-      super.usersSave = value;
+  set users(List<UserModel> value) {
+    _$usersAtom.reportWrite(value, super.users, () {
+      super.users = value;
     });
   }
 
-  final _$saveIdStaffAtom = Atom(name: '_ClientCreateStoreBase.saveIdStaff');
+  final _$tarefaModelSaveEtiquetaAtom =
+      Atom(name: '_ClientCreateStoreBase.tarefaModelSaveEtiqueta');
 
   @override
-  List<dynamic> get saveIdStaff {
-    _$saveIdStaffAtom.reportRead();
-    return super.saveIdStaff;
+  EtiquetaModel get tarefaModelSaveEtiqueta {
+    _$tarefaModelSaveEtiquetaAtom.reportRead();
+    return super.tarefaModelSaveEtiqueta;
   }
 
   @override
-  set saveIdStaff(List<dynamic> value) {
-    _$saveIdStaffAtom.reportWrite(value, super.saveIdStaff, () {
-      super.saveIdStaff = value;
+  set tarefaModelSaveEtiqueta(EtiquetaModel value) {
+    _$tarefaModelSaveEtiquetaAtom
+        .reportWrite(value, super.tarefaModelSaveEtiqueta, () {
+      super.tarefaModelSaveEtiqueta = value;
+    });
+  }
+
+  final _$tarefaModelSaveTextoAtom =
+      Atom(name: '_ClientCreateStoreBase.tarefaModelSaveTexto');
+
+  @override
+  String get tarefaModelSaveTexto {
+    _$tarefaModelSaveTextoAtom.reportRead();
+    return super.tarefaModelSaveTexto;
+  }
+
+  @override
+  set tarefaModelSaveTexto(String value) {
+    _$tarefaModelSaveTextoAtom.reportWrite(value, super.tarefaModelSaveTexto,
+        () {
+      super.tarefaModelSaveTexto = value;
+    });
+  }
+
+  final _$tarefaModelDataAtom =
+      Atom(name: '_ClientCreateStoreBase.tarefaModelData');
+
+  @override
+  dynamic get tarefaModelData {
+    _$tarefaModelDataAtom.reportRead();
+    return super.tarefaModelData;
+  }
+
+  @override
+  set tarefaModelData(dynamic value) {
+    _$tarefaModelDataAtom.reportWrite(value, super.tarefaModelData, () {
+      super.tarefaModelData = value;
+    });
+  }
+
+  final _$tarefaModelPrioritarioAtom =
+      Atom(name: '_ClientCreateStoreBase.tarefaModelPrioritario');
+
+  @override
+  int get tarefaModelPrioritario {
+    _$tarefaModelPrioritarioAtom.reportRead();
+    return super.tarefaModelPrioritario;
+  }
+
+  @override
+  set tarefaModelPrioritario(int value) {
+    _$tarefaModelPrioritarioAtom
+        .reportWrite(value, super.tarefaModelPrioritario, () {
+      super.tarefaModelPrioritario = value;
+    });
+  }
+
+  final _$subtarefaModelSaveTitleAtom =
+      Atom(name: '_ClientCreateStoreBase.subtarefaModelSaveTitle');
+
+  @override
+  String get subtarefaModelSaveTitle {
+    _$subtarefaModelSaveTitleAtom.reportRead();
+    return super.subtarefaModelSaveTitle;
+  }
+
+  @override
+  set subtarefaModelSaveTitle(String value) {
+    _$subtarefaModelSaveTitleAtom
+        .reportWrite(value, super.subtarefaModelSaveTitle, () {
+      super.subtarefaModelSaveTitle = value;
     });
   }
 
@@ -102,52 +187,18 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$tarefaTextSaveAtom =
-      Atom(name: '_ClientCreateStoreBase.tarefaTextSave');
+  final _$faseAtom = Atom(name: '_ClientCreateStoreBase.fase');
 
   @override
-  String get tarefaTextSave {
-    _$tarefaTextSaveAtom.reportRead();
-    return super.tarefaTextSave;
+  String get fase {
+    _$faseAtom.reportRead();
+    return super.fase;
   }
 
   @override
-  set tarefaTextSave(String value) {
-    _$tarefaTextSaveAtom.reportWrite(value, super.tarefaTextSave, () {
-      super.tarefaTextSave = value;
-    });
-  }
-
-  final _$tarefaDateSaveAtom =
-      Atom(name: '_ClientCreateStoreBase.tarefaDateSave');
-
-  @override
-  DateTime get tarefaDateSave {
-    _$tarefaDateSaveAtom.reportRead();
-    return super.tarefaDateSave;
-  }
-
-  @override
-  set tarefaDateSave(DateTime value) {
-    _$tarefaDateSaveAtom.reportWrite(value, super.tarefaDateSave, () {
-      super.tarefaDateSave = value;
-    });
-  }
-
-  final _$prioridadeSaveSelectionAtom =
-      Atom(name: '_ClientCreateStoreBase.prioridadeSaveSelection');
-
-  @override
-  int get prioridadeSaveSelection {
-    _$prioridadeSaveSelectionAtom.reportRead();
-    return super.prioridadeSaveSelection;
-  }
-
-  @override
-  set prioridadeSaveSelection(int value) {
-    _$prioridadeSaveSelectionAtom
-        .reportWrite(value, super.prioridadeSaveSelection, () {
-      super.prioridadeSaveSelection = value;
+  set fase(String value) {
+    _$faseAtom.reportWrite(value, super.fase, () {
+      super.fase = value;
     });
   }
 
@@ -166,6 +217,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic setUsersSave(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setUsersSave');
+    try {
+      return super.setUsersSave(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setSaveEtiqueta(dynamic value) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setSaveEtiqueta');
@@ -177,11 +239,88 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
-  dynamic setUsersSave(dynamic value) {
+  dynamic setTarefaDateSave(dynamic value) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
-        name: '_ClientCreateStoreBase.setUsersSave');
+        name: '_ClientCreateStoreBase.setTarefaDateSave');
     try {
-      return super.setUsersSave(value);
+      return super.setTarefaDateSave(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setPrioridadeSaveSelection(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setPrioridadeSaveSelection');
+    try {
+      return super.setPrioridadeSaveSelection(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setTarefaTextSave(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setTarefaTextSave');
+    try {
+      return super.setTarefaTextSave(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setSubtarefaInsertCreate(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setSubtarefaInsertCreate');
+    try {
+      return super.setSubtarefaInsertCreate(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setFase(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setFase');
+    try {
+      return super.setFase(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanTarefaTextSave() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanTarefaTextSave');
+    try {
+      return super.cleanTarefaTextSave();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanSubtarefaInsertCreate() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanSubtarefaInsertCreate');
+    try {
+      return super.cleanSubtarefaInsertCreate();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanPrioridadeSaveSelection() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanPrioridadeSaveSelection');
+    try {
+      return super.cleanPrioridadeSaveSelection();
     } finally {
       _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -215,61 +354,6 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
         name: '_ClientCreateStoreBase.cleanIndividualChip');
     try {
       return super.cleanIndividualChip();
-    } finally {
-      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setTarefaTextSave(dynamic value) {
-    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
-        name: '_ClientCreateStoreBase.setTarefaTextSave');
-    try {
-      return super.setTarefaTextSave(value);
-    } finally {
-      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic cleanTarefaTextSave() {
-    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
-        name: '_ClientCreateStoreBase.cleanTarefaTextSave');
-    try {
-      return super.cleanTarefaTextSave();
-    } finally {
-      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setTarefaDateSave(dynamic value) {
-    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
-        name: '_ClientCreateStoreBase.setTarefaDateSave');
-    try {
-      return super.setTarefaDateSave(value);
-    } finally {
-      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setPrioridadeSaveSelection(dynamic value) {
-    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
-        name: '_ClientCreateStoreBase.setPrioridadeSaveSelection');
-    try {
-      return super.setPrioridadeSaveSelection(value);
-    } finally {
-      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic cleanPrioridadeSaveSelection() {
-    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
-        name: '_ClientCreateStoreBase.cleanPrioridadeSaveSelection');
-    try {
-      return super.cleanPrioridadeSaveSelection();
     } finally {
       _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -312,14 +396,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   String toString() {
     return '''
 subtarefaInsertList: ${subtarefaInsertList},
+faseList: ${faseList},
 tarefaModelSave: ${tarefaModelSave},
-saveEtiqueta: ${saveEtiqueta},
-usersSave: ${usersSave},
-saveIdStaff: ${saveIdStaff},
+subtarefaModel: ${subtarefaModel},
+users: ${users},
+tarefaModelSaveEtiqueta: ${tarefaModelSaveEtiqueta},
+tarefaModelSaveTexto: ${tarefaModelSaveTexto},
+tarefaModelData: ${tarefaModelData},
+tarefaModelPrioritario: ${tarefaModelPrioritario},
+subtarefaModelSaveTitle: ${subtarefaModelSaveTitle},
 individualChip: ${individualChip},
-tarefaTextSave: ${tarefaTextSave},
-tarefaDateSave: ${tarefaDateSave},
-prioridadeSaveSelection: ${prioridadeSaveSelection}
+fase: ${fase}
     ''';
   }
 }

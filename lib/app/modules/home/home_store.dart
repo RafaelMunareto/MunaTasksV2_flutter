@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:http/http.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_create_store.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
@@ -37,6 +36,7 @@ abstract class HomeStoreBase with Store {
     getRetard();
     getPrioridade();
     getSubtarefaInsert();
+    getFase();
   }
 
   @action
@@ -94,6 +94,11 @@ abstract class HomeStoreBase with Store {
   @action
   void getPrioridade() {
     client.prioridadeList = dashboardService.getPrioridade().asObservable();
+  }
+
+  @action
+  void getFase() {
+    clientCreate.faseList = dashboardService.getFase().asObservable();
   }
 
   @action

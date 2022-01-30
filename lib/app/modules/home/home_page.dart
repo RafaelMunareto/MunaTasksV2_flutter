@@ -242,32 +242,42 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: CreateWidget(
-                                userList: store.client.userList,
-                                etiquetaModel: store.clientCreate.saveEtiqueta,
-                                saveSetEtiqueta:
-                                    store.clientCreate.setSaveEtiqueta,
-                                etiquetaList: store.client.etiquetaList,
-                                tarefaModel: store.clientCreate.tarefaModelSave,
                                 controller: createController,
+                                theme: store.client.theme,
                                 individualChip:
                                     store.clientCreate.individualChip,
+                                userList: store.client.userList,
+                                etiquetaList: store.client.etiquetaList,
+                                prioridadeList: store.client.prioridadeList,
+                                subtarefaList:
+                                    store.clientCreate.subtarefaInsertList,
+                                faseList: store.clientCreate.faseList,
+                                fase: store.clientCreate.fase,
+                                setFase: store.clientCreate.setFase,
                                 setIdStaff: store.clientCreate.setIdStaff,
-                                saveIdStaff: store.clientCreate.saveIdStaff,
                                 setIdReferenceStaff:
                                     store.clientCreate.setIdReferenceStaff,
                                 setTarefaTextSave:
                                     store.clientCreate.setTarefaTextSave,
-                                tarefaTextSave:
-                                    store.clientCreate.tarefaTextSave,
                                 setTarefaDateSave:
                                     store.clientCreate.setTarefaDateSave,
-                                tarefaDateSave:
-                                    store.clientCreate.tarefaDateSave,
-                                prioridadeList: store.client.prioridadeList,
-                                prioridadeSaveSelection:
-                                    store.clientCreate.prioridadeSaveSelection,
                                 setPrioridadeSaveSelection: store
                                     .clientCreate.setPrioridadeSaveSelection,
+                                setSubtarefaInsertCreate:
+                                    store.clientCreate.setSubtarefaInsertCreate,
+                                setTarefaEtiquetaSave:
+                                    store.clientCreate.setSaveEtiqueta,
+                                tarefaModelSaveEtiqueta:
+                                    store.clientCreate.tarefaModelSaveEtiqueta,
+                                tarefaModelSaveTexto:
+                                    store.clientCreate.tarefaModelSaveTexto,
+                                tarefaModelData:
+                                    store.clientCreate.tarefaModelData,
+                                tarefaModelPrioritario:
+                                    store.clientCreate.tarefaModelPrioritario,
+                                subtarefaModelSaveTitle:
+                                    store.clientCreate.subtarefaModelSaveTitle,
+                                users: store.clientCreate.users,
                               ),
                             );
                           },
