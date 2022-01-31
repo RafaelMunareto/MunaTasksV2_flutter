@@ -76,10 +76,10 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                 padding: const EdgeInsets.all(8.0),
                                 child: SizedBox(
                                   child: InputChip(
-                                    key: ObjectKey(list[i].reference),
+                                    key: ObjectKey(list[i].email),
                                     labelPadding: const EdgeInsets.all(2),
                                     selected: store.clientCreate.individualChip
-                                        .contains(list[i].reference),
+                                        .contains(list[i].email),
                                     elevation: 4.0,
                                     avatar: CircleAvatarWidget(
                                       url: list[i].urlImage,
@@ -92,10 +92,12 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                     ),
                                     onSelected: (bool value) {
                                       setState(() {
-                                        store.clientCreate.setIdReferenceStaff(
-                                            list[i].reference);
+                                        store.clientCreate
+                                            .setIdReferenceStaff(list[i].email);
                                         store.clientCreate.setIdStaff(list[i]);
                                         FocusScope.of(context).unfocus();
+                                        store.clientCreate
+                                            .setLoadingUser(false);
                                       });
                                     },
                                   ),

@@ -227,6 +227,16 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
+  void saveNewTarefa() {
+    clientCreate.setLoadingTarefa(true);
+    clientCreate.setTarefa();
+    dashboardService.save(clientCreate.tarefaModelSave);
+    clientCreate.setLoadingTarefa(false);
+    client.cleanTarefas();
+    client.cleanTarefasBase();
+  }
+
+  @action
   void deleteTasks(TarefaModel model) {
     client.setLoading(true);
     dashboardService.delete(model);

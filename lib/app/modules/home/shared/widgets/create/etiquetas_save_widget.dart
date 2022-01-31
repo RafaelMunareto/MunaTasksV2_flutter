@@ -38,7 +38,7 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
         child: Observer(builder: (_) {
           return Chip(
             label: Text(store.clientCreate.tarefaModelSaveEtiqueta.icon != null

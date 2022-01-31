@@ -196,6 +196,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
+  void saveNewTarefa() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.saveNewTarefa');
+    try {
+      return super.saveNewTarefa();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void deleteTasks(TarefaModel model) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.deleteTasks');

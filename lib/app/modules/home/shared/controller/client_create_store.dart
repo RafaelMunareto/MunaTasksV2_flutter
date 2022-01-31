@@ -48,6 +48,9 @@ abstract class _ClientCreateStoreBase with Store {
   String fase = 'pause';
 
   @observable
+  String faseTarefa = 'pause';
+
+  @observable
   String imageUser = '';
 
   @observable
@@ -60,7 +63,13 @@ abstract class _ClientCreateStoreBase with Store {
   List<SubtarefaModel> subtarefas = [];
 
   @observable
-  bool loading = false;
+  bool loadingSubtarefa = false;
+
+  @observable
+  bool loadingUser = false;
+
+  @observable
+  bool loadingTarefa = false;
 
   @action
   cleanImageUser() => imageUser = "";
@@ -69,7 +78,13 @@ abstract class _ClientCreateStoreBase with Store {
   cleanSubaterafaText() => subtarefaTextSave = "";
 
   @action
-  setLoading(value) => loading = value;
+  setLoadingSubtarefa(value) => loadingSubtarefa = value;
+
+  @action
+  setLoadingUser(value) => loadingUser = value;
+
+  @action
+  setLoadingTarefa(value) => loadingTarefa = value;
 
   @action
   setTarefaModelSave(value) => tarefaModelSave = value;
@@ -96,6 +111,9 @@ abstract class _ClientCreateStoreBase with Store {
   setFase(value) => fase = value;
 
   @action
+  setFaseTarefa(value) => faseTarefa = value;
+
+  @action
   cleanTarefaTextSave() => tarefaModelSaveTexto = '';
 
   @action
@@ -106,6 +124,9 @@ abstract class _ClientCreateStoreBase with Store {
 
   @action
   cleanUsersSave() => users = [];
+
+  @action
+  cleanSubtarefas() => subtarefas = [];
 
   @action
   cleanSaveEtiqueta() => tarefaModelSave.etiqueta = EtiquetaModel();
@@ -123,6 +144,7 @@ abstract class _ClientCreateStoreBase with Store {
     cleanSubtarefaInsertCreate();
     cleanImageUser();
     cleanSubaterafaText();
+    cleanSubtarefas();
   }
 
   @action
@@ -177,30 +199,85 @@ abstract class _ClientCreateStoreBase with Store {
   setTarefa() {
     tarefaModelSave.etiqueta = tarefaModelSaveEtiqueta.reference;
     tarefaModelSave.texto = tarefaModelSaveTexto;
+    tarefaModelSave.fase = changeFaseTarefa(faseTarefa);
     tarefaModelSave.data = tarefaModelData;
     tarefaModelSave.subTarefa = subtarefas;
+    tarefaModelSave.subTarefa.forEach((e) => e.user = e.user.reference);
     tarefaModelSave.users = users.map((e) => e.reference).toList();
     tarefaModelSave.prioridade = tarefaModelPrioritario;
   }
 
+  changeFaseTarefa(faseTarefa) {
+    switch (faseTarefa) {
+      case 'pause':
+        return 0;
+      case 'play':
+        return 1;
+      case 'check':
+        return 2;
+    }
+  }
+
   @action
   setSubtarefas() {
-    setLoading(true);
+    setLoadingSubtarefa(true);
     subtarefaModel.title = subtarefaModelSaveTitle;
     subtarefaModel.status = fase;
     subtarefaModel.user = createUser;
     subtarefaModel.texto = subtarefaTextSave;
-    if (!users.map((e) => e.reference).contains(createUser.reference)) {
+    users.where((e) => e.email == createUser.email).length;
+    // ignore: prefer_is_empty
+    if (users.where((e) => e.email == createUser.email).length < 1) {
+      setLoadingUser(true);
       users.add(createUser);
-    } else {
-      users.removeWhere((e) => e.reference == createUser.reference);
+      setIdReferenceStaff(createUser.email);
+    } else if (users.where((e) => e.email == createUser.email).length > 1) {
+      users.removeWhere((e) => e.email == createUser.email);
       if (users.isEmpty) {
         users = [];
       }
     }
     subtarefas.add(subtarefaModel);
     subtarefaModel = SubtarefaModel();
-    setLoading(false);
+    setLoadingSubtarefa(false);
+    setLoadingUser(false);
+  }
+
+  @computed
+  bool get isValidTarefa {
+    return validTextoTarefa() == null &&
+        validTitleTarefa() == null &&
+        validaUserTarefa() == null &&
+        validaDataTarefa() == null;
+  }
+
+  String? validTextoTarefa() {
+    if (tarefaModelSaveTexto.length < 3) {
+      return 'Descrição deve ser > 3 caracteres.';
+    }
+    return null;
+  }
+
+  String? validTitleTarefa() {
+    if (tarefaModelSaveEtiqueta.etiqueta.isEmpty ||
+        tarefaModelSaveEtiqueta.etiqueta == "Etiqueta") {
+      return 'Etiqueta obrigatório.';
+    }
+    return null;
+  }
+
+  String? validaUserTarefa() {
+    if (users.isEmpty) {
+      return 'Responsável obrigatório.';
+    }
+    return null;
+  }
+
+  String? validaDataTarefa() {
+    if (tarefaModelData.isEmpty) {
+      return 'Data obrigatória.';
+    }
+    return null;
   }
 
   @computed

@@ -9,6 +9,13 @@ part of 'client_create_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
+  Computed<bool>? _$isValidTarefaComputed;
+
+  @override
+  bool get isValidTarefa =>
+      (_$isValidTarefaComputed ??= Computed<bool>(() => super.isValidTarefa,
+              name: '_ClientCreateStoreBase.isValidTarefa'))
+          .value;
   Computed<bool>? _$isValidSubtarefaComputed;
 
   @override
@@ -210,6 +217,21 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
+  final _$faseTarefaAtom = Atom(name: '_ClientCreateStoreBase.faseTarefa');
+
+  @override
+  String get faseTarefa {
+    _$faseTarefaAtom.reportRead();
+    return super.faseTarefa;
+  }
+
+  @override
+  set faseTarefa(String value) {
+    _$faseTarefaAtom.reportWrite(value, super.faseTarefa, () {
+      super.faseTarefa = value;
+    });
+  }
+
   final _$imageUserAtom = Atom(name: '_ClientCreateStoreBase.imageUser');
 
   @override
@@ -271,18 +293,50 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$loadingAtom = Atom(name: '_ClientCreateStoreBase.loading');
+  final _$loadingSubtarefaAtom =
+      Atom(name: '_ClientCreateStoreBase.loadingSubtarefa');
 
   @override
-  bool get loading {
-    _$loadingAtom.reportRead();
-    return super.loading;
+  bool get loadingSubtarefa {
+    _$loadingSubtarefaAtom.reportRead();
+    return super.loadingSubtarefa;
   }
 
   @override
-  set loading(bool value) {
-    _$loadingAtom.reportWrite(value, super.loading, () {
-      super.loading = value;
+  set loadingSubtarefa(bool value) {
+    _$loadingSubtarefaAtom.reportWrite(value, super.loadingSubtarefa, () {
+      super.loadingSubtarefa = value;
+    });
+  }
+
+  final _$loadingUserAtom = Atom(name: '_ClientCreateStoreBase.loadingUser');
+
+  @override
+  bool get loadingUser {
+    _$loadingUserAtom.reportRead();
+    return super.loadingUser;
+  }
+
+  @override
+  set loadingUser(bool value) {
+    _$loadingUserAtom.reportWrite(value, super.loadingUser, () {
+      super.loadingUser = value;
+    });
+  }
+
+  final _$loadingTarefaAtom =
+      Atom(name: '_ClientCreateStoreBase.loadingTarefa');
+
+  @override
+  bool get loadingTarefa {
+    _$loadingTarefaAtom.reportRead();
+    return super.loadingTarefa;
+  }
+
+  @override
+  set loadingTarefa(bool value) {
+    _$loadingTarefaAtom.reportWrite(value, super.loadingTarefa, () {
+      super.loadingTarefa = value;
     });
   }
 
@@ -312,11 +366,33 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
-  dynamic setLoading(dynamic value) {
+  dynamic setLoadingSubtarefa(dynamic value) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
-        name: '_ClientCreateStoreBase.setLoading');
+        name: '_ClientCreateStoreBase.setLoadingSubtarefa');
     try {
-      return super.setLoading(value);
+      return super.setLoadingSubtarefa(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setLoadingUser(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setLoadingUser');
+    try {
+      return super.setLoadingUser(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setLoadingTarefa(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setLoadingTarefa');
+    try {
+      return super.setLoadingTarefa(value);
     } finally {
       _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -411,6 +487,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic setFaseTarefa(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setFaseTarefa');
+    try {
+      return super.setFaseTarefa(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic cleanTarefaTextSave() {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.cleanTarefaTextSave');
@@ -449,6 +536,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
         name: '_ClientCreateStoreBase.cleanUsersSave');
     try {
       return super.cleanUsersSave();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanSubtarefas() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanSubtarefas');
+    try {
+      return super.cleanSubtarefas();
     } finally {
       _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -579,11 +677,15 @@ tarefaModelPrioritario: ${tarefaModelPrioritario},
 subtarefaModelSaveTitle: ${subtarefaModelSaveTitle},
 individualChip: ${individualChip},
 fase: ${fase},
+faseTarefa: ${faseTarefa},
 imageUser: ${imageUser},
 createUser: ${createUser},
 subtarefaTextSave: ${subtarefaTextSave},
 subtarefas: ${subtarefas},
-loading: ${loading},
+loadingSubtarefa: ${loadingSubtarefa},
+loadingUser: ${loadingUser},
+loadingTarefa: ${loadingTarefa},
+isValidTarefa: ${isValidTarefa},
 isValidSubtarefa: ${isValidSubtarefa}
     ''';
   }

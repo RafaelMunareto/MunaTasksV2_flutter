@@ -46,7 +46,11 @@ class _DateSaveWidgetState extends State<DateSaveWidget> {
           border: InputBorder.none,
           contentPadding: const EdgeInsets.fromLTRB(0, 14, 0, 0),
           prefixIcon: InkWell(
-            child: const Icon(Icons.calendar_today),
+            child: Icon(
+              Icons.calendar_today,
+              color:
+                  widget.dateController.text != "" ? Colors.blue : Colors.grey,
+            ),
             onTap: () => _selectDate(),
           ),
         ),

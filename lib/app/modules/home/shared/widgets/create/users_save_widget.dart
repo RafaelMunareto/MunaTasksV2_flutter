@@ -24,6 +24,7 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
           actions: [
             TextButton(
               onPressed: () {
+                store.clientCreate.setLoadingUser(false);
                 Modular.to.pop();
               },
               child: const Text('OK'),
@@ -41,12 +42,14 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
     return Observer(
       builder: (_) {
         return Wrap(
+          crossAxisAlignment: WrapCrossAlignment.end,
           children: [
-            if (store.clientCreate.users.isEmpty & !store.clientCreate.loading)
+            if (store.clientCreate.users.isEmpty &
+                !store.clientCreate.loadingUser)
               GestureDetector(
                 onTap: () => users(),
                 child: const Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.fromLTRB(0, 0, 2, 0),
                   child: Chip(
                     label: Text('Equipe'),
                     avatar: Icon(
@@ -57,18 +60,23 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                 ),
               ),
             if (store.clientCreate.users.isNotEmpty &&
-                !store.clientCreate.loading)
+                !store.clientCreate.loadingUser)
               for (var i = 0; i < store.clientCreate.users.length; i++)
-                GestureDetector(
-                  onTap: () => users(),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 16, 8, 2),
-                    child: GestureDetector(
-                      onTap: () => users(),
-                      child: CircleAvatarWidget(
-                          key: Key(
-                              store.clientCreate.users[i].reference.toString()),
-                          url: store.clientCreate.users[i].urlImage.toString()),
+                Baseline(
+                  baseline: 38,
+                  baselineType: TextBaseline.alphabetic,
+                  child: GestureDetector(
+                    onTap: () => users(),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                      child: GestureDetector(
+                        onTap: () => users(),
+                        child: CircleAvatarWidget(
+                            key: Key(store.clientCreate.users[i].reference
+                                .toString()),
+                            url: store.clientCreate.users[i].urlImage
+                                .toString()),
+                      ),
                     ),
                   ),
                 ),

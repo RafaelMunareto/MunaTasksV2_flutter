@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/action_fase_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/button_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/date_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/etiquetas_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/prioridade_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_subtarefa_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/subtarefas_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/text_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/users_save_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
@@ -89,6 +89,7 @@ class _CreateWidgetState extends State<CreateWidget>
                                 alignment: WrapAlignment.spaceBetween,
                                 children: const [
                                   EtiquetasSaveWidget(),
+                                  ActionFaseSaveWidget(),
                                   UsersSaveWidget(),
                                 ],
                               ),
@@ -97,7 +98,7 @@ class _CreateWidgetState extends State<CreateWidget>
                             SizedBox(
                               width: double.infinity,
                               child: Wrap(
-                                alignment: WrapAlignment.spaceBetween,
+                                alignment: WrapAlignment.spaceAround,
                                 children: [
                                   DateSaveWidget(
                                       dateController: dateController),

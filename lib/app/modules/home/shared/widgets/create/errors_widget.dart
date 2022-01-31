@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/home/home_store.dart';
 
 class ErrorsWidget extends StatelessWidget {
-  final dynamic erroTexto;
-  final dynamic erroTitle;
-  final dynamic erroUser;
+  final bool tarefa;
   const ErrorsWidget({
     Key? key,
-    required this.erroTexto,
-    required this.erroTitle,
-    required this.erroUser,
+    this.tarefa = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List errors = [erroTexto, erroTitle, erroUser];
+    final HomeStore store = Modular.get();
+    List? errors;
+    tarefa
+        ? errors = [
+            store.clientCreate.validTextoSubtarefa(),
+            store.clientCreate.validTitleSubtarefa(),
+            store.clientCreate.validaUserSubtarefa(),
+          ]
+        : errors = [
+            store.clientCreate.validTextoTarefa(),
+            store.clientCreate.validTitleTarefa(),
+            store.clientCreate.validaUserTarefa(),
+            store.clientCreate.validaDataTarefa(),
+          ];
+
     return Wrap(
       children: [
         for (var erro in errors)

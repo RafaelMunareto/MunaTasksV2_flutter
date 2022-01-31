@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
-import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/actions_fase_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/errors_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_subtarefa_insert_widget.dart';
@@ -88,13 +87,9 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
         context: context,
         useSafeArea: false,
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Erros'),
-            content: ErrorsWidget(
-              erroTexto: store.clientCreate.validTextoSubtarefa(),
-              erroTitle: store.clientCreate.validTitleSubtarefa(),
-              erroUser: store.clientCreate.validaUserSubtarefa(),
-            ),
+          return const AlertDialog(
+            title: Text('Erros'),
+            content: ErrorsWidget(),
           );
         },
       );
@@ -142,9 +137,10 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                             .colorStatusDark(store.clientCreate.fase)),
                   ),
                   avatar: Icon(
-                      ConvertIcon().iconStatus(store.clientCreate.fase),
-                      color: ConvertIcon()
-                          .colorStatusDark(store.clientCreate.fase)),
+                    ConvertIcon().iconStatus(store.clientCreate.fase),
+                    color:
+                        ConvertIcon().colorStatusDark(store.clientCreate.fase),
+                  ),
                 ),
               ),
               onTap: () => _actions(),
@@ -186,7 +182,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                     controller: textSubtarefaController,
                     onChanged: (value) =>
                         store.clientCreate.setSubtarefaTextSave(value),
-                    minLines: 3,
+                    minLines: 2,
                     maxLines: 20,
                     decoration: InputDecoration(
                         suffixIcon: InkWell(
@@ -211,18 +207,25 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(4, 0, 4, 4),
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        store.clientCreate.isValidSubtarefa
-                            ? store.clientCreate.setSubtarefas()
-                            : errors();
-                        FocusScope.of(context).unfocus();
-                      },
-                      icon: const Icon(Icons.add, size: 18),
-                      label: store.clientCreate.loading
-                          ? const CircularProgressIndicator()
-                          : const Text("INCLUIR"),
-                    ),
+                    child: store.clientCreate.loadingSubtarefa
+                        ? const CircularProgressIndicator()
+                        : OutlinedButton.icon(
+                            style: TextButton.styleFrom(
+                              backgroundColor: store.client.theme
+                                  ? Colors.black38
+                                  : Colors.grey[100],
+                            ),
+                            onPressed: () {
+                              store.clientCreate.isValidSubtarefa
+                                  ? store.clientCreate.setSubtarefas()
+                                  : errors();
+                              FocusScope.of(context).unfocus();
+                            },
+                            icon: const Icon(Icons.add_circle, size: 18),
+                            label: const Text(
+                              "INCLUIR",
+                            ),
+                          ),
                   )
                 ],
               ),
