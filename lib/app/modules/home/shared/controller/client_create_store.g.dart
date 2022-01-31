@@ -9,6 +9,14 @@ part of 'client_create_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
+  Computed<bool>? _$isValidSubtarefaComputed;
+
+  @override
+  bool get isValidSubtarefa => (_$isValidSubtarefaComputed ??= Computed<bool>(
+          () => super.isValidSubtarefa,
+          name: '_ClientCreateStoreBase.isValidSubtarefa'))
+      .value;
+
   final _$subtarefaInsertListAtom =
       Atom(name: '_ClientCreateStoreBase.subtarefaInsertList');
 
@@ -202,8 +210,95 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
+  final _$imageUserAtom = Atom(name: '_ClientCreateStoreBase.imageUser');
+
+  @override
+  String get imageUser {
+    _$imageUserAtom.reportRead();
+    return super.imageUser;
+  }
+
+  @override
+  set imageUser(String value) {
+    _$imageUserAtom.reportWrite(value, super.imageUser, () {
+      super.imageUser = value;
+    });
+  }
+
+  final _$createUserAtom = Atom(name: '_ClientCreateStoreBase.createUser');
+
+  @override
+  UserModel get createUser {
+    _$createUserAtom.reportRead();
+    return super.createUser;
+  }
+
+  @override
+  set createUser(UserModel value) {
+    _$createUserAtom.reportWrite(value, super.createUser, () {
+      super.createUser = value;
+    });
+  }
+
+  final _$subtarefaTextSaveAtom =
+      Atom(name: '_ClientCreateStoreBase.subtarefaTextSave');
+
+  @override
+  String get subtarefaTextSave {
+    _$subtarefaTextSaveAtom.reportRead();
+    return super.subtarefaTextSave;
+  }
+
+  @override
+  set subtarefaTextSave(String value) {
+    _$subtarefaTextSaveAtom.reportWrite(value, super.subtarefaTextSave, () {
+      super.subtarefaTextSave = value;
+    });
+  }
+
+  final _$subtarefasAtom = Atom(name: '_ClientCreateStoreBase.subtarefas');
+
+  @override
+  List<SubtarefaModel> get subtarefas {
+    _$subtarefasAtom.reportRead();
+    return super.subtarefas;
+  }
+
+  @override
+  set subtarefas(List<SubtarefaModel> value) {
+    _$subtarefasAtom.reportWrite(value, super.subtarefas, () {
+      super.subtarefas = value;
+    });
+  }
+
+  final _$loadingAtom = Atom(name: '_ClientCreateStoreBase.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
   final _$_ClientCreateStoreBaseActionController =
       ActionController(name: '_ClientCreateStoreBase');
+
+  @override
+  dynamic setLoading(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setLoading');
+    try {
+      return super.setLoading(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic setTarefaModelSave(dynamic value) {
@@ -393,6 +488,50 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic setSubtarefaTextSave(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setSubtarefaTextSave');
+    try {
+      return super.setSubtarefaTextSave(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setCreateImageUser(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setCreateImageUser');
+    try {
+      return super.setCreateImageUser(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setUserCreateSelection(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setUserCreateSelection');
+    try {
+      return super.setUserCreateSelection(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setSubtarefas() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setSubtarefas');
+    try {
+      return super.setSubtarefas();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 subtarefaInsertList: ${subtarefaInsertList},
@@ -406,7 +545,13 @@ tarefaModelData: ${tarefaModelData},
 tarefaModelPrioritario: ${tarefaModelPrioritario},
 subtarefaModelSaveTitle: ${subtarefaModelSaveTitle},
 individualChip: ${individualChip},
-fase: ${fase}
+fase: ${fase},
+imageUser: ${imageUser},
+createUser: ${createUser},
+subtarefaTextSave: ${subtarefaTextSave},
+subtarefas: ${subtarefas},
+loading: ${loading},
+isValidSubtarefa: ${isValidSubtarefa}
     ''';
   }
 }

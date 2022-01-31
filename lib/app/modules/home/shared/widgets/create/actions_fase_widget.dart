@@ -99,6 +99,7 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
                         onPressed: () {
                           setState(() {
                             widget.setActionsFase(list[index].status);
+                            FocusScope.of(context).unfocus();
                             Modular.to.pop();
                           });
                         },

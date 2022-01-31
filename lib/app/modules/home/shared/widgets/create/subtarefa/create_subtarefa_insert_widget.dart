@@ -43,7 +43,11 @@ class _CreateSubtarefaInsertWidgetState
   @override
   Widget build(BuildContext context) {
     _animacaoOpacity = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: _controller, curve: const Interval(0.6, 0.9)));
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.6, 0.9),
+      ),
+    );
     _controller.forward();
     return AnimatedBuilder(
       animation: _controller,
@@ -94,6 +98,7 @@ class _CreateSubtarefaInsertWidgetState
                       onPressed: () {
                         setState(() {
                           widget.setSubtarefaSelection(list[index].subtarefa);
+                          FocusScope.of(context).unfocus();
                           Modular.to.pop();
                         });
                       },

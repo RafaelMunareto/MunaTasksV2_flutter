@@ -124,6 +124,7 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
                           } else {
                             widget.setEtiquetaSave!(list[index]);
                           }
+                          FocusScope.of(context).unfocus();
                           Modular.to.pop();
                         });
                       },

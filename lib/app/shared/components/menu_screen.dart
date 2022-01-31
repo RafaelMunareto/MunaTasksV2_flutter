@@ -27,7 +27,7 @@ class _MenuScreenState extends State<MenuScreen> {
           onTap: () {
             widget.controller.toggle!();
             setState(() {
-              widget.setOpen(!widget.open);
+              widget.setOpen(false);
             });
           },
           child: Container(

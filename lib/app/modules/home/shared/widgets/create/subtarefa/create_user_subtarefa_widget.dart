@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
+import 'package:munatasks2/app/shared/auth/model/user_model.dart';
+import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 
-class RetardActionWidget extends StatefulWidget {
-  final Function updateDate;
-  final dynamic retard;
-  final int retardSelection;
-  final Function setRetardSelection;
-  final TarefaModel model;
-  const RetardActionWidget({
+class CreateUserSubtarefaWidget extends StatefulWidget {
+  final dynamic userLista;
+  final Function setUserCreateSelection;
+  final Function setCreateImageUser;
+  const CreateUserSubtarefaWidget({
     Key? key,
-    required this.retard,
-    required this.updateDate,
-    required this.retardSelection,
-    required this.setRetardSelection,
-    required this.model,
+    required this.userLista,
+    required this.setCreateImageUser,
+    required this.setUserCreateSelection,
   }) : super(key: key);
 
   @override
-  State<RetardActionWidget> createState() => _RetardActionWidgetState();
+  State<CreateUserSubtarefaWidget> createState() =>
+      _CreateUserSubtarefaWidgetState();
 }
 
-class _RetardActionWidgetState extends State<RetardActionWidget>
+class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animacaoOpacity;
@@ -46,7 +43,11 @@ class _RetardActionWidgetState extends State<RetardActionWidget>
   @override
   Widget build(BuildContext context) {
     _animacaoOpacity = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: _controller, curve: const Interval(0.6, 0.9)));
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.6, 0.9),
+      ),
+    );
     _controller.forward();
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -64,35 +65,38 @@ class _RetardActionWidgetState extends State<RetardActionWidget>
         width: MediaQuery.of(context).size.width,
         child: Observer(
           builder: (_) {
-            if (widget.retard!.data == null) {
+            if (widget.userLista!.data == null) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             } else {
-              List<RetardModel> list = widget.retard!.data;
+              List<UserModel> list = widget.userLista!.data;
+
               return Wrap(
                 runAlignment: WrapAlignment.spaceAround,
-                spacing: 20,
+                spacing: 16,
                 children: [
                   for (var index = 0; index < list.length; index++)
                     InputChip(
                       key: ObjectKey(list[index].reference),
                       labelPadding: const EdgeInsets.all(2),
                       elevation: 4.0,
-                      avatar: const Icon(Icons.more_time_rounded),
+                      avatar: CircleAvatarWidget(
+                        url: list[index].urlImage,
+                      ),
                       label: SizedBox(
                         child: Text(
-                          list[index].tempoName,
+                          list[index].name,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(fontSize: 12),
                         ),
                       ),
                       onPressed: () {
                         setState(() {
-                          widget.setRetardSelection(list[index].tempoValue);
+                          widget.setUserCreateSelection(list[index]);
+                          widget.setCreateImageUser(list[index].urlImage);
+                          FocusScope.of(context).unfocus();
                           Modular.to.pop();
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          widget.updateDate(widget.model);
                         });
                       },
                     ),

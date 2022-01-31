@@ -47,6 +47,24 @@ abstract class _ClientCreateStoreBase with Store {
   @observable
   String fase = 'pause';
 
+  @observable
+  String imageUser = '';
+
+  @observable
+  UserModel createUser = UserModel();
+
+  @observable
+  String subtarefaTextSave = '';
+
+  @observable
+  List<SubtarefaModel> subtarefas = [];
+
+  @observable
+  bool loading = false;
+
+  @action
+  setLoading(value) => loading = value;
+
   @action
   setTarefaModelSave(value) => tarefaModelSave = value;
 
@@ -121,5 +139,78 @@ abstract class _ClientCreateStoreBase with Store {
         individualChip = [];
       }
     }
+  }
+
+  @action
+  setSubtarefaTextSave(value) => subtarefaTextSave = value;
+
+  @action
+  setCreateImageUser(value) {
+    if (users.map((e) => e.reference).contains(createUser.reference)) {
+      users.removeWhere((e) => e.reference == createUser.reference);
+    }
+
+    imageUser = value;
+  }
+
+  @action
+  setUserCreateSelection(value) {
+    if (!users.map((e) => e.reference).contains(value.reference)) {
+      createUser = value;
+    } else {
+      users.removeWhere((e) => e.reference == createUser.reference);
+      if (users.isEmpty) {
+        users = [];
+      }
+    }
+  }
+
+  @action
+  setSubtarefas() {
+    setLoading(true);
+    subtarefaModel.title = subtarefaModelSaveTitle;
+    subtarefaModel.status = fase;
+    subtarefaModel.user = createUser;
+    subtarefaModel.texto = subtarefaTextSave;
+    if (!users.map((e) => e.reference).contains(createUser.reference)) {
+      users.add(createUser);
+    } else {
+      users.removeWhere((e) => e.reference == createUser.reference);
+      if (users.isEmpty) {
+        users = [];
+      }
+    }
+    subtarefas.add(subtarefaModel);
+    subtarefaModel = SubtarefaModel();
+    setLoading(false);
+  }
+
+  @computed
+  bool get isValidSubtarefa {
+    return validTextoSubtarefa() == null &&
+        validTitleSubtarefa() == null &&
+        validaUserSubtarefa() == null;
+  }
+
+  String? validTextoSubtarefa() {
+    if (subtarefaTextSave.length < 3) {
+      return 'Descrição deve ser > 3 caracteres.';
+    }
+    return null;
+  }
+
+  String? validTitleSubtarefa() {
+    if (subtarefaModelSaveTitle.isEmpty ||
+        subtarefaModelSaveTitle == 'Subtarefa') {
+      return 'Escolha o tipo da tarefa.';
+    }
+    return null;
+  }
+
+  String? validaUserSubtarefa() {
+    if (createUser.name == '') {
+      return 'Responsável obrigatório.';
+    }
+    return null;
   }
 }

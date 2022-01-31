@@ -103,6 +103,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                         widget.setIdReferenceStaff(
                                             list[i].reference);
                                         widget.setSaveIdStaff(list[i]);
+                                        FocusScope.of(context).unfocus();
                                       });
                                     },
                                   ),

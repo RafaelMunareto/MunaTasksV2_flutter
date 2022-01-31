@@ -106,6 +106,7 @@ class _PrioridadeSelectionWidgetState extends State<PrioridadeSelectionWidget>
                           if (!widget.create) {
                             widget.changePrioridadeList!(widget.tarefaModel!);
                           }
+                          FocusScope.of(context).unfocus();
                           Modular.to.pop();
                         });
                       },

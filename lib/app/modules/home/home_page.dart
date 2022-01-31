@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_order_widget.dart';
@@ -237,54 +237,15 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                             },
                           ),
                         ),
-                        Observer(
-                          builder: (_) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: CreateWidget(
-                                controller: createController,
-                                theme: store.client.theme,
-                                individualChip:
-                                    store.clientCreate.individualChip,
-                                userList: store.client.userList,
-                                etiquetaList: store.client.etiquetaList,
-                                prioridadeList: store.client.prioridadeList,
-                                subtarefaList:
-                                    store.clientCreate.subtarefaInsertList,
-                                faseList: store.clientCreate.faseList,
-                                fase: store.clientCreate.fase,
-                                setFase: store.clientCreate.setFase,
-                                setIdStaff: store.clientCreate.setIdStaff,
-                                setIdReferenceStaff:
-                                    store.clientCreate.setIdReferenceStaff,
-                                setTarefaTextSave:
-                                    store.clientCreate.setTarefaTextSave,
-                                setTarefaDateSave:
-                                    store.clientCreate.setTarefaDateSave,
-                                setPrioridadeSaveSelection: store
-                                    .clientCreate.setPrioridadeSaveSelection,
-                                setSubtarefaInsertCreate:
-                                    store.clientCreate.setSubtarefaInsertCreate,
-                                setTarefaEtiquetaSave:
-                                    store.clientCreate.setSaveEtiqueta,
-                                tarefaModelSaveEtiqueta:
-                                    store.clientCreate.tarefaModelSaveEtiqueta,
-                                tarefaModelSaveTexto:
-                                    store.clientCreate.tarefaModelSaveTexto,
-                                tarefaModelData:
-                                    store.clientCreate.tarefaModelData,
-                                tarefaModelPrioritario:
-                                    store.clientCreate.tarefaModelPrioritario,
-                                subtarefaModelSaveTitle:
-                                    store.clientCreate.subtarefaModelSaveTitle,
-                                users: store.clientCreate.users,
-                              ),
-                            );
-                          },
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: CreateWidget(
+                            controller: createController,
+                          ),
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.9,
+                          height: MediaQuery.of(context).size.height,
                           child: store.client.loading
                               ? const CircularProgressIndicator()
                               : CardWidget(
