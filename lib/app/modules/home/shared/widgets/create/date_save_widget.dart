@@ -29,7 +29,9 @@ class _DateSaveWidgetState extends State<DateSaveWidget> {
       if (newDate != null) {
         var dateFormat = DateFormat('dd/MM/yyyy').format(newDate);
         setState(() {
+          store.clientCreate.setTarefaDateSave(newDate);
           widget.dateController.text = dateFormat;
+          FocusScope.of(context).unfocus();
         });
       }
     }

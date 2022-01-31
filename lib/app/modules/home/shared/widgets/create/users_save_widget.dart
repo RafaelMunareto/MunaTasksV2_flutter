@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/users_selection_widget.dart';
@@ -24,21 +25,12 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
             TextButton(
               onPressed: () {
                 Modular.to.pop();
-                setState(() {
-                  store.clientCreate.users;
-                });
               },
               child: const Text('OK'),
             ),
           ],
           title: const Text('Responsáveis'),
-          content: UsersSelectionWidget(
-            userList: store.client.userList,
-            setSaveIdStaff: store.clientCreate.setIdStaff,
-            individualChip: store.clientCreate.individualChip,
-            saveIdStaff: store.clientCreate.users,
-            setIdReferenceStaff: store.clientCreate.setIdReferenceStaff,
-          ),
+          content: const UsersSelectionWidget(),
         );
       },
     );
@@ -46,44 +38,43 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      children: [
-        if (store.clientCreate.users.isEmpty)
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                store.clientCreate.users;
-                store.client.userList;
-              });
-              users();
-            },
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Chip(
-                label: Text('Equipe'),
-                avatar: Icon(
-                  Icons.people,
-                  color: Colors.grey,
+    return Observer(
+      builder: (_) {
+        return Wrap(
+          children: [
+            if (store.clientCreate.users.isEmpty & !store.clientCreate.loading)
+              GestureDetector(
+                onTap: () => users(),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Chip(
+                    label: Text('Equipe'),
+                    avatar: Icon(
+                      Icons.people,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        if (store.clientCreate.users.isNotEmpty)
-          for (var i = 0; i < store.clientCreate.users.length; i++)
-            GestureDetector(
-              onTap: () => users(),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-                child: GestureDetector(
+            if (store.clientCreate.users.isNotEmpty &&
+                !store.clientCreate.loading)
+              for (var i = 0; i < store.clientCreate.users.length; i++)
+                GestureDetector(
                   onTap: () => users(),
-                  child: CircleAvatarWidget(
-                      key:
-                          Key(store.clientCreate.users[i].reference.toString()),
-                      url: store.clientCreate.users[i].urlImage.toString()),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 16, 8, 2),
+                    child: GestureDetector(
+                      onTap: () => users(),
+                      child: CircleAvatarWidget(
+                          key: Key(
+                              store.clientCreate.users[i].reference.toString()),
+                          url: store.clientCreate.users[i].urlImage.toString()),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-      ],
+          ],
+        );
+      },
     );
   }
 }

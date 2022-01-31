@@ -63,6 +63,12 @@ abstract class _ClientCreateStoreBase with Store {
   bool loading = false;
 
   @action
+  cleanImageUser() => imageUser = "";
+
+  @action
+  cleanSubaterafaText() => subtarefaTextSave = "";
+
+  @action
   setLoading(value) => loading = value;
 
   @action
@@ -115,6 +121,8 @@ abstract class _ClientCreateStoreBase with Store {
     cleanTarefaTextSave();
     cleanPrioridadeSaveSelection();
     cleanSubtarefaInsertCreate();
+    cleanImageUser();
+    cleanSubaterafaText();
   }
 
   @action
@@ -163,6 +171,16 @@ abstract class _ClientCreateStoreBase with Store {
         users = [];
       }
     }
+  }
+
+  @action
+  setTarefa() {
+    tarefaModelSave.etiqueta = tarefaModelSaveEtiqueta.reference;
+    tarefaModelSave.texto = tarefaModelSaveTexto;
+    tarefaModelSave.data = tarefaModelData;
+    tarefaModelSave.subTarefa = subtarefas;
+    tarefaModelSave.users = users.map((e) => e.reference).toList();
+    tarefaModelSave.prioridade = tarefaModelPrioritario;
   }
 
   @action

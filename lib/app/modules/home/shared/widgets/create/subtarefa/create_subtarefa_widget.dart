@@ -7,7 +7,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/create/actions_fase_w
 import 'package:munatasks2/app/modules/home/shared/widgets/create/errors_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_subtarefa_insert_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_user_subtarefa_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefas_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/subtarefas_widget.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
@@ -153,21 +153,25 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
               children: [
                 GestureDetector(
                   onTap: () => users(),
-                  child: store.clientCreate.imageUser == ""
-                      ? Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 18, 8, 0),
-                          child: Icon(
-                            Icons.people,
-                            color: store.client.theme
-                                ? Colors.grey[200]
-                                : Colors.grey[600],
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
-                          child: CircleAvatarWidget(
-                              url: store.clientCreate.imageUser),
-                        ),
+                  child: Observer(
+                    builder: (_) {
+                      return store.clientCreate.imageUser == ""
+                          ? Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 18, 8, 0),
+                              child: Icon(
+                                Icons.people,
+                                color: store.client.theme
+                                    ? Colors.grey[200]
+                                    : Colors.grey[600],
+                              ),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+                              child: CircleAvatarWidget(
+                                  url: store.clientCreate.imageUser),
+                            );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -208,9 +212,12 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(4, 0, 4, 4),
                     child: ElevatedButton.icon(
-                      onPressed: () => store.clientCreate.isValidSubtarefa
-                          ? store.clientCreate.setSubtarefas()
-                          : errors(),
+                      onPressed: () {
+                        store.clientCreate.isValidSubtarefa
+                            ? store.clientCreate.setSubtarefas()
+                            : errors();
+                        FocusScope.of(context).unfocus();
+                      },
                       icon: const Icon(Icons.add, size: 18),
                       label: store.clientCreate.loading
                           ? const CircularProgressIndicator()

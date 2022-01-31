@@ -290,6 +290,28 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
       ActionController(name: '_ClientCreateStoreBase');
 
   @override
+  dynamic cleanImageUser() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanImageUser');
+    try {
+      return super.cleanImageUser();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanSubaterafaText() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanSubaterafaText');
+    try {
+      return super.cleanSubaterafaText();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setLoading(dynamic value) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setLoading');
@@ -515,6 +537,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
         name: '_ClientCreateStoreBase.setUserCreateSelection');
     try {
       return super.setUserCreateSelection(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setTarefa() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setTarefa');
+    try {
+      return super.setTarefa();
     } finally {
       _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
     }

@@ -6,7 +6,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/create/date_save_widg
 import 'package:munatasks2/app/modules/home/shared/widgets/create/etiquetas_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/prioridade_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_subtarefa_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefas_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/subtarefas_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/text_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/users_save_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';

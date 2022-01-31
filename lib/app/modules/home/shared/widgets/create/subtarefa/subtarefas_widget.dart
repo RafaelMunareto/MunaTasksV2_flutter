@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/sub_item_save_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/sub_item_save_widget.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class SubtarefasWidget extends StatefulWidget {
@@ -34,12 +34,18 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                       key: UniqueKey(),
                       onDismissed: (direction) {
                         setState(() {
+                          store.clientCreate.setLoading(true);
+                          store.clientCreate.users.removeWhere((element) =>
+                              element.reference ==
+                              store.clientCreate.subtarefas[index].user
+                                  .reference);
                           store.clientCreate.subtarefas.removeWhere(
                             (e) =>
                                 e.texto == model.texto &&
                                 e.title == model.title &&
                                 e.user.name == model.user.name,
                           );
+                          store.clientCreate.setLoading(false);
                         });
                         SnackbarCustom().createSnackBar(
                             '${model.title} excluída', Colors.green, context);

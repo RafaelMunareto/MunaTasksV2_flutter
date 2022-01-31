@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 
 class UsersSelectionWidget extends StatefulWidget {
-  final dynamic userList;
-  final Function setSaveIdStaff;
-  final dynamic saveIdStaff;
-  final List<dynamic>? individualChip;
-  final Function setIdReferenceStaff;
-  const UsersSelectionWidget({
-    Key? key,
-    required this.userList,
-    this.individualChip,
-    required this.saveIdStaff,
-    required this.setSaveIdStaff,
-    required this.setIdReferenceStaff,
-  }) : super(key: key);
+  const UsersSelectionWidget({Key? key}) : super(key: key);
 
   @override
   State<UsersSelectionWidget> createState() => _UsersSelectionWidgetState();
@@ -57,6 +47,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
   }
 
   Widget _buildAnimation(BuildContext context, Widget? child) {
+    final HomeStore store = Modular.get();
     return FadeTransition(
       opacity: _animacaoOpacity,
       child: Wrap(
@@ -64,16 +55,17 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
         children: [
           Observer(
             builder: (_) {
-              if (widget.userList!.data == null) {
+              if (store.client.userList!.data == null) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (widget.userList!.hasError) {
+              } else if (store.client.userList!.hasError) {
                 return Center(
-                  child: Text('Error ' + widget.userList!.error.toString()),
+                  child:
+                      Text('Error ' + store.client.userList!.error.toString()),
                 );
               } else {
-                List<UserModel> list = widget.userList!.data;
+                List<UserModel> list = store.client.userList!.data;
                 return list.isNotEmpty
                     ? SizedBox(
                         width: MediaQuery.of(context).size.width * 0.7,
@@ -86,7 +78,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                   child: InputChip(
                                     key: ObjectKey(list[i].reference),
                                     labelPadding: const EdgeInsets.all(2),
-                                    selected: widget.individualChip!
+                                    selected: store.clientCreate.individualChip
                                         .contains(list[i].reference),
                                     elevation: 4.0,
                                     avatar: CircleAvatarWidget(
@@ -100,9 +92,9 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                     ),
                                     onSelected: (bool value) {
                                       setState(() {
-                                        widget.setIdReferenceStaff(
+                                        store.clientCreate.setIdReferenceStaff(
                                             list[i].reference);
-                                        widget.setSaveIdStaff(list[i]);
+                                        store.clientCreate.setIdStaff(list[i]);
                                         FocusScope.of(context).unfocus();
                                       });
                                     },
