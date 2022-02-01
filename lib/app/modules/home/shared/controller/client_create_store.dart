@@ -62,6 +62,9 @@ abstract class _ClientCreateStoreBase with Store {
   @observable
   List<SubtarefaModel> subtarefas = [];
 
+  @action
+  setSubtarefasUpdate(value) => subtarefas = value;
+
   @observable
   bool loadingSubtarefa = false;
 
@@ -70,6 +73,12 @@ abstract class _ClientCreateStoreBase with Store {
 
   @observable
   bool loadingTarefa = false;
+
+  @observable
+  dynamic reference;
+
+  @action
+  setReference(value) => reference = value;
 
   @action
   cleanImageUser() => imageUser = "";
@@ -91,6 +100,9 @@ abstract class _ClientCreateStoreBase with Store {
 
   @action
   setUsersSave(value) => users.add(value);
+
+  @action
+  setUsersUpdate(value) => users = value;
 
   @action
   setSaveEtiqueta(value) => tarefaModelSaveEtiqueta = value;
@@ -123,6 +135,9 @@ abstract class _ClientCreateStoreBase with Store {
   cleanPrioridadeSaveSelection() => tarefaModelPrioritario = 0;
 
   @action
+  cleanTarefaModelSave() => tarefaModelSave = TarefaModel();
+
+  @action
   cleanUsersSave() => users = [];
 
   @action
@@ -141,7 +156,16 @@ abstract class _ClientCreateStoreBase with Store {
   cleanFase() => fase = 'pause';
 
   @action
+  cleanTarefaModelData() => tarefaModelData = '';
+
+  @action
   cleanFaseTarefa() => faseTarefa = 'pause';
+
+  @action
+  cleanReference() => reference = null;
+
+  @action
+  cleanTarefaModelSaveEtiqueta() => tarefaModelSaveEtiqueta = EtiquetaModel();
 
   @action
   cleanSave() {
@@ -153,6 +177,10 @@ abstract class _ClientCreateStoreBase with Store {
     cleanFaseTarefa();
     cleanSubtarefas();
     cleanSubtarefa();
+    cleanTarefaModelSave();
+    cleanTarefaModelData();
+    cleanReference();
+    cleanTarefaModelSaveEtiqueta();
   }
 
   @action
@@ -207,14 +235,26 @@ abstract class _ClientCreateStoreBase with Store {
 
   @action
   setTarefa() {
-    tarefaModelSave.etiqueta = tarefaModelSaveEtiqueta.reference;
+    tarefaModelSave.etiqueta = tarefaModelSaveEtiqueta;
+    tarefaModelSave.reference = reference;
     tarefaModelSave.texto = tarefaModelSaveTexto;
     tarefaModelSave.fase = changeFaseTarefa(faseTarefa);
     tarefaModelSave.data = tarefaModelData;
     tarefaModelSave.subTarefa = subtarefas;
-    tarefaModelSave.subTarefa.forEach((e) => e.user = e.user.reference);
-    tarefaModelSave.users = users.map((e) => e.reference).toList();
+    tarefaModelSave.users = users.map((e) => e).toList();
     tarefaModelSave.prioridade = tarefaModelPrioritario;
+  }
+
+  @action
+  setTarefaUpdate(TarefaModel tarefa) {
+    setSaveEtiqueta(tarefa.etiqueta);
+    setTarefaTextSave(tarefa.texto);
+    setFaseTarefa(changeFaseTarefaReverse(tarefa.fase));
+    setSubtarefasUpdate(tarefa.subTarefa);
+    setTarefaDateSave(tarefa.data);
+    setUsersUpdate(tarefa.users);
+    setPrioridadeSaveSelection(tarefa.prioridade);
+    setReference(tarefa.reference);
   }
 
   changeFaseTarefa(faseTarefa) {
@@ -225,6 +265,17 @@ abstract class _ClientCreateStoreBase with Store {
         return 1;
       case 'check':
         return 2;
+    }
+  }
+
+  changeFaseTarefaReverse(faseTarefa) {
+    switch (faseTarefa) {
+      case 0:
+        return 'pause';
+      case 1:
+        return 'play';
+      case 2:
+        return 'check';
     }
   }
 

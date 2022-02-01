@@ -34,9 +34,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     super.initState();
 
     _controller = AnimationController(
-        duration: const Duration(milliseconds: 900), vsync: this);
+        duration: const Duration(milliseconds: 400), vsync: this);
     createController = AnimationController(
-        duration: const Duration(milliseconds: 900), vsync: this);
+        duration: const Duration(milliseconds: 400), vsync: this);
     _controller.forward();
   }
 
@@ -250,6 +250,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                                   ? const CircularProgressIndicator()
                                   : CardWidget(
                                       opacidade: opacidade,
+                                      controller: createController,
                                     ),
                             ),
                           ),

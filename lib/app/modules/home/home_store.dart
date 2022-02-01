@@ -113,6 +113,9 @@ abstract class HomeStoreBase with Store {
     client.cleanSubtarefaModel();
     client.setLoading(true);
     dashboardList!.forEach((e) async {
+      if (e.isEmpty) {
+        client.setLoading(false);
+      }
       for (var element in e) {
         element.data =
             DateTime.fromMillisecondsSinceEpoch(element.data.seconds * 1000);
@@ -231,9 +234,9 @@ abstract class HomeStoreBase with Store {
     clientCreate.setLoadingTarefa(true);
     clientCreate.setTarefa();
     dashboardService.save(clientCreate.tarefaModelSave);
-    clientCreate.setLoadingTarefa(false);
     client.cleanTarefas();
     client.cleanTarefasBase();
+    clientCreate.setLoadingTarefa(false);
   }
 
   @action
@@ -242,7 +245,6 @@ abstract class HomeStoreBase with Store {
     dashboardService.delete(model);
     client.cleanTarefas();
     client.cleanTarefasBase();
-    client.setLoading(false);
   }
 
   @action

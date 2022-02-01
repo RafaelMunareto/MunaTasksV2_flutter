@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/errors_widget.dart';
+import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class ButtonSaveWidget extends StatelessWidget {
   final AnimationController? controller;
@@ -39,15 +40,24 @@ class ButtonSaveWidget extends StatelessWidget {
                   : ElevatedButton.icon(
                       onPressed: () {
                         if (store.clientCreate.isValidTarefa) {
-                          store.saveNewTarefa();
                           controller!.reverse();
+                          store.client.setExpand(false);
+                          store.saveNewTarefa();
+                          SnackbarCustom().createSnackBar(
+                              'Salvo com sucesso!', Colors.green, context);
                         } else {
                           errors();
                         }
                         FocusScope.of(context).unfocus();
                       },
-                      icon: const Icon(Icons.add_circle, size: 18),
-                      label: const Text("SALVAR"),
+                      icon: Icon(
+                          store.clientCreate.reference != null
+                              ? Icons.update
+                              : Icons.add_circle,
+                          size: 18),
+                      label: Text(store.clientCreate.reference != null
+                          ? "EDITAR"
+                          : 'SALVAR'),
                     ),
             );
           })

@@ -18,6 +18,18 @@ class _DateSaveWidgetState extends State<DateSaveWidget> {
   final HomeStore store = Modular.get();
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      try {
+        widget.dateController.text =
+            DateFormat('dd/MM/yyyy').format(store.clientCreate.tarefaModelData);
+      } catch (e) {
+        widget.dateController.text =
+            DateFormat('dd/MM/yyyy').format(DateTime.now());
+        store.clientCreate
+            .setTarefaDateSave(DateFormat('dd/MM/yyyy').format(DateTime.now()));
+      }
+    });
+
     void _selectDate() async {
       final DateTime? newDate = await showDatePicker(
         context: context,

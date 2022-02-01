@@ -20,7 +20,10 @@ class HeaderWidget extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Chip(
-                label: Text(tarefa.etiqueta.etiqueta),
+                label: Text(
+                  tarefa.etiqueta.etiqueta,
+                  style: const TextStyle(fontSize: 12),
+                ),
                 avatar: Icon(
                   IconData(tarefa.etiqueta.icon ?? 0,
                       fontFamily: 'MaterialIcons'),

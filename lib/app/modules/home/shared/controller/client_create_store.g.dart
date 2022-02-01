@@ -340,8 +340,45 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
+  final _$referenceAtom = Atom(name: '_ClientCreateStoreBase.reference');
+
+  @override
+  dynamic get reference {
+    _$referenceAtom.reportRead();
+    return super.reference;
+  }
+
+  @override
+  set reference(dynamic value) {
+    _$referenceAtom.reportWrite(value, super.reference, () {
+      super.reference = value;
+    });
+  }
+
   final _$_ClientCreateStoreBaseActionController =
       ActionController(name: '_ClientCreateStoreBase');
+
+  @override
+  dynamic setSubtarefasUpdate(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setSubtarefasUpdate');
+    try {
+      return super.setSubtarefasUpdate(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setReference(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setReference');
+    try {
+      return super.setReference(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic cleanImageUser() {
@@ -415,6 +452,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
         name: '_ClientCreateStoreBase.setUsersSave');
     try {
       return super.setUsersSave(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setUsersUpdate(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setUsersUpdate');
+    try {
+      return super.setUsersUpdate(value);
     } finally {
       _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -531,6 +579,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic cleanTarefaModelSave() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanTarefaModelSave');
+    try {
+      return super.cleanTarefaModelSave();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic cleanUsersSave() {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.cleanUsersSave');
@@ -597,11 +656,44 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic cleanTarefaModelData() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanTarefaModelData');
+    try {
+      return super.cleanTarefaModelData();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic cleanFaseTarefa() {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.cleanFaseTarefa');
     try {
       return super.cleanFaseTarefa();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanReference() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanReference');
+    try {
+      return super.cleanReference();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanTarefaModelSaveEtiqueta() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanTarefaModelSaveEtiqueta');
+    try {
+      return super.cleanTarefaModelSaveEtiqueta();
     } finally {
       _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -696,6 +788,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic setTarefaUpdate(TarefaModel tarefa) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setTarefaUpdate');
+    try {
+      return super.setTarefaUpdate(tarefa);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic removeDismissSubtarefa(dynamic model) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.removeDismissSubtarefa');
@@ -740,6 +843,7 @@ subtarefas: ${subtarefas},
 loadingSubtarefa: ${loadingSubtarefa},
 loadingUser: ${loadingUser},
 loadingTarefa: ${loadingTarefa},
+reference: ${reference},
 isValidTarefa: ${isValidTarefa},
 isValidSubtarefa: ${isValidSubtarefa}
     ''';

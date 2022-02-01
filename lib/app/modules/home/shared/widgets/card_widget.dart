@@ -13,9 +13,12 @@ import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class CardWidget extends StatefulWidget {
   final Animation<double> opacidade;
+  final AnimationController controller;
+
   const CardWidget({
     Key? key,
     required this.opacidade,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -200,32 +203,10 @@ class _CardWidgetState extends State<CardWidget> {
               background: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  color: Colors.red,
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children: const [
-                        Icon(
-                          Icons.delete,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          'Excluir',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              secondaryBackground: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
                   color: Colors.green,
                   child: Padding(
                     padding: const EdgeInsets.all(15),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
                       children: const [
                         Icon(
                           Icons.edit,
@@ -240,19 +221,40 @@ class _CardWidgetState extends State<CardWidget> {
                   ),
                 ),
               ),
+              secondaryBackground: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  color: Colors.red,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: const [
+                        Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'Excluir',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               key: UniqueKey(),
               onDismissed: (direction) {
                 if (direction == DismissDirection.startToEnd) {
                   setState(() {
-                    dialogDelete(linha.texto, linha, context);
+                    store.clientCreate.setTarefaUpdate(linha);
+                    store.client.setExpand(!store.client.expand);
+                    widget.controller.forward();
                   });
                 } else {
                   setState(() {
-                    print('editado');
-                    //store.clientCreate.removeDismissSubtarefa(model);
+                    dialogDelete(linha.texto, linha, context);
                   });
-                  SnackbarCustom()
-                      .createSnackBar('editado', Colors.green, context);
                 }
               },
               child: card(linha),

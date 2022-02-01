@@ -41,9 +41,12 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
         padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
         child: Observer(builder: (_) {
           return Chip(
-            label: Text(store.clientCreate.tarefaModelSaveEtiqueta.icon != null
-                ? store.clientCreate.tarefaModelSaveEtiqueta.etiqueta
-                : 'Etiqueta'),
+            label: Text(
+              store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+                  ? store.clientCreate.tarefaModelSaveEtiqueta.etiqueta
+                  : 'Etiqueta',
+              style: const TextStyle(fontSize: 12),
+            ),
             avatar: Icon(
               store.clientCreate.tarefaModelSaveEtiqueta.icon != null
                   ? IconData(

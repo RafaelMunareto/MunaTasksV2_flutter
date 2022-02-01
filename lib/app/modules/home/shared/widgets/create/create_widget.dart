@@ -35,7 +35,6 @@ class _CreateWidgetState extends State<CreateWidget>
   @override
   void initState() {
     super.initState();
-    textController.text = store.clientCreate.tarefaModelSaveTexto;
   }
 
   @override

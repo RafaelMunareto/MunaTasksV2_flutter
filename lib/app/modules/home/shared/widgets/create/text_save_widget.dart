@@ -17,6 +17,14 @@ class _TextSaveWidgetState extends State<TextSaveWidget> {
   final HomeStore store = Modular.get();
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      if (store.clientCreate.tarefaModelSaveTexto.isNotEmpty) {
+        widget.controller.text = store.clientCreate.tarefaModelSaveTexto;
+      } else {
+        widget.controller.text = '';
+      }
+    });
+
     return Padding(
       padding: const EdgeInsets.all(4),
       child: SizedBox(
