@@ -13,7 +13,7 @@ class ErrorsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final HomeStore store = Modular.get();
     List? errors;
-    tarefa
+    !tarefa
         ? errors = [
             store.clientCreate.validTextoSubtarefa(),
             store.clientCreate.validTitleSubtarefa(),

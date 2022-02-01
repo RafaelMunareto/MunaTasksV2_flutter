@@ -89,7 +89,9 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
         builder: (BuildContext context) {
           return const AlertDialog(
             title: Text('Erros'),
-            content: ErrorsWidget(),
+            content: ErrorsWidget(
+              tarefa: false,
+            ),
           );
         },
       );
@@ -174,30 +176,35 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
             Wrap(
               alignment: WrapAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(4, 0, 4, 4),
-                  child: TextFormField(
-                    autocorrect: true,
-                    autofocus: false,
-                    controller: textSubtarefaController,
-                    onChanged: (value) =>
-                        store.clientCreate.setSubtarefaTextSave(value),
-                    minLines: 2,
-                    maxLines: 20,
-                    decoration: InputDecoration(
-                        suffixIcon: InkWell(
-                            child: const Icon(Icons.close_outlined),
-                            onTap: () {
-                              setState(() {
-                                store.clientCreate.setSubtarefaTextSave('');
-                                textSubtarefaController.text = '';
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
-                              });
-                            }),
-                        hintText: "Insira sua subtarefa"),
-                  ),
-                ),
+                Observer(builder: (_) {
+                  if (store.clientCreate.subtarefaTextSave == "") {
+                    textSubtarefaController.text = '';
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(4, 0, 4, 4),
+                    child: TextFormField(
+                      autocorrect: true,
+                      autofocus: false,
+                      controller: textSubtarefaController,
+                      onChanged: (value) =>
+                          store.clientCreate.setSubtarefaTextSave(value),
+                      minLines: 2,
+                      maxLines: 20,
+                      decoration: InputDecoration(
+                          suffixIcon: InkWell(
+                              child: const Icon(Icons.close_outlined),
+                              onTap: () {
+                                setState(() {
+                                  store.clientCreate.setSubtarefaTextSave('');
+                                  textSubtarefaController.text = '';
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                });
+                              }),
+                          hintText: "Insira sua subtarefa"),
+                    ),
+                  );
+                })
               ],
             ),
             SizedBox(

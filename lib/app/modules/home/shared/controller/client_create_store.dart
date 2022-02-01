@@ -135,24 +135,41 @@ abstract class _ClientCreateStoreBase with Store {
   cleanIndividualChip() => individualChip = [];
 
   @action
+  cleanCreateUser() => createUser = UserModel();
+
+  @action
+  cleanFase() => fase = 'pause';
+
+  @action
+  cleanFaseTarefa() => faseTarefa = 'pause';
+
+  @action
   cleanSave() {
     cleanUsersSave();
     cleanSaveEtiqueta();
     cleanIndividualChip();
     cleanTarefaTextSave();
     cleanPrioridadeSaveSelection();
-    cleanSubtarefaInsertCreate();
-    cleanImageUser();
-    cleanSubaterafaText();
+    cleanFaseTarefa();
     cleanSubtarefas();
+    cleanSubtarefa();
+  }
+
+  @action
+  cleanSubtarefa() {
+    cleanSubaterafaText();
+    cleanImageUser();
+    cleanSubtarefaInsertCreate();
+    cleanFase();
+    cleanCreateUser();
   }
 
   @action
   setIdStaff(value) {
-    if (!users.map((e) => e.reference).contains(value.reference)) {
+    if (!users.map((e) => e.email).contains(value.email)) {
       users.add(value);
     } else {
-      users.removeWhere((e) => e.reference == value.reference);
+      users.removeWhere((e) => e.email == value.email);
       if (users.isEmpty) {
         users = [];
       }
@@ -185,14 +202,7 @@ abstract class _ClientCreateStoreBase with Store {
 
   @action
   setUserCreateSelection(value) {
-    if (!users.map((e) => e.reference).contains(value.reference)) {
-      createUser = value;
-    } else {
-      users.removeWhere((e) => e.reference == createUser.reference);
-      if (users.isEmpty) {
-        users = [];
-      }
-    }
+    createUser = value;
   }
 
   @action
@@ -219,6 +229,27 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   @action
+  removeDismissSubtarefa(model) {
+    setLoadingSubtarefa(true);
+    setLoadingUser(true);
+    if (subtarefas.map((e) => e.user.email == model.user.email).length > 2) {
+      users.removeWhere((e) => e.email == model.user.email);
+    } else if (subtarefas.map((e) => e.user.email == model.user.email).length ==
+        1) {
+      users.removeWhere((e) => e.email == model.user.email);
+    }
+
+    subtarefas.removeWhere(
+      (e) =>
+          e.texto == model.texto &&
+          e.title == model.title &&
+          e.user.name == model.user.name,
+    );
+    setLoadingSubtarefa(false);
+    setLoadingUser(false);
+  }
+
+  @action
   setSubtarefas() {
     setLoadingSubtarefa(true);
     subtarefaModel.title = subtarefaModelSaveTitle;
@@ -241,6 +272,7 @@ abstract class _ClientCreateStoreBase with Store {
     subtarefaModel = SubtarefaModel();
     setLoadingSubtarefa(false);
     setLoadingUser(false);
+    cleanSubtarefa();
   }
 
   @computed
@@ -303,7 +335,7 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   String? validaUserSubtarefa() {
-    if (createUser.name == '') {
+    if (createUser.email == '') {
       return 'Responsável obrigatório.';
     }
     return null;

@@ -34,21 +34,7 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                       key: UniqueKey(),
                       onDismissed: (direction) {
                         setState(() {
-                          store.clientCreate.setLoadingSubtarefa(true);
-                          store.clientCreate.setLoadingUser(true);
-                          store.clientCreate.users.removeWhere((element) =>
-                              element.reference ==
-                              store.clientCreate.subtarefas[index].user
-                                  .reference);
-
-                          store.clientCreate.subtarefas.removeWhere(
-                            (e) =>
-                                e.texto == model.texto &&
-                                e.title == model.title &&
-                                e.user.name == model.user.name,
-                          );
-                          store.clientCreate.setLoadingSubtarefa(false);
-                          store.clientCreate.setLoadingUser(false);
+                          store.clientCreate.removeDismissSubtarefa(model);
                         });
                         SnackbarCustom().createSnackBar(
                             '${model.title} excluída', Colors.green, context);
