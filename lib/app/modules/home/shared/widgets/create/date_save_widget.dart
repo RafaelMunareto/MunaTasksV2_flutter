@@ -22,11 +22,12 @@ class _DateSaveWidgetState extends State<DateSaveWidget> {
       try {
         widget.dateController.text =
             DateFormat('dd/MM/yyyy').format(store.clientCreate.tarefaModelData);
+        store.clientCreate
+            .setTarefaDateSave(store.clientCreate.tarefaModelData);
       } catch (e) {
         widget.dateController.text =
             DateFormat('dd/MM/yyyy').format(DateTime.now());
-        store.clientCreate
-            .setTarefaDateSave(DateFormat('dd/MM/yyyy').format(DateTime.now()));
+        store.clientCreate.setTarefaDateSave(DateTime.now());
       }
     });
 

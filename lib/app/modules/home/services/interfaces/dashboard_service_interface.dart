@@ -16,6 +16,6 @@ abstract class IDashboardService {
   Stream<List<PrioridadeModel>> getPrioridade();
   Stream<List<SubtarefaInsertModel>> getSubtarefaInsert();
   Stream<List<FaseModel>> getFase();
-  Future save(TarefaModel model);
+  save(TarefaModel model);
   delete(TarefaModel model);
 }

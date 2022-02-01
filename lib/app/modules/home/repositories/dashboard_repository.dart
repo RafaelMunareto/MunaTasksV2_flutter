@@ -94,9 +94,10 @@ class DashboardRepository implements IDashboardRepository {
   }
 
   @override
-  Future save(TarefaModel model) async {
+  save(TarefaModel model) async {
     if (model.reference == null) {
-      model.reference = await firestore.collection('tasks').add(model.toMap());
+      model.reference =
+          await firestore.collection('tasks').add(model.toReverseMap());
     } else {
       model.reference!.update(model.toReverseMap());
     }

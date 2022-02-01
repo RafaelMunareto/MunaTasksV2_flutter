@@ -36,7 +36,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     _controller = AnimationController(
         duration: const Duration(milliseconds: 400), vsync: this);
     createController = AnimationController(
-        duration: const Duration(milliseconds: 400), vsync: this);
+        duration: const Duration(milliseconds: 600), vsync: this);
     _controller.forward();
   }
 
@@ -56,7 +56,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     opacidade = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.1, 0.9),
+        curve: const Interval(0.4, 0.9),
       ),
     );
 
