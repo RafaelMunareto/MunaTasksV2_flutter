@@ -5,7 +5,8 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/errors_widget.dart';
 
 class ButtonSaveWidget extends StatelessWidget {
-  const ButtonSaveWidget({Key? key}) : super(key: key);
+  final AnimationController? controller;
+  const ButtonSaveWidget({Key? key, this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,9 @@ class ButtonSaveWidget extends StatelessWidget {
         builder: (BuildContext context) {
           return const AlertDialog(
             title: Text('Erros'),
-            content: ErrorsWidget(),
+            content: ErrorsWidget(
+              tarefa: true,
+            ),
           );
         },
       );
@@ -35,9 +38,12 @@ class ButtonSaveWidget extends StatelessWidget {
                   ? const CircularProgressIndicator()
                   : ElevatedButton.icon(
                       onPressed: () {
-                        store.clientCreate.isValidSubtarefa
-                            ? store.saveNewTarefa()
-                            : errors();
+                        if (store.clientCreate.isValidTarefa) {
+                          store.saveNewTarefa();
+                          controller!.reverse();
+                        } else {
+                          errors();
+                        }
                         FocusScope.of(context).unfocus();
                       },
                       icon: const Icon(Icons.add_circle, size: 18),

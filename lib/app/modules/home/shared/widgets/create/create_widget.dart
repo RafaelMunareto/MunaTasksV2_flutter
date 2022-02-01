@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/action_fase_save_widget.dart';
@@ -61,66 +62,72 @@ class _CreateWidgetState extends State<CreateWidget>
         }
         return opacidade.value == 0
             ? Container()
-            : Padding(
-                padding: const EdgeInsets.fromLTRB(2, 0, 2, 8),
-                child: FadeTransition(
-                  opacity: opacidade,
-                  child: GestureDetector(
-                    onTap: () =>
-                        FocusScope.of(context).requestFocus(FocusNode()),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Card(
-                        elevation: 4,
-                        shape: Border(
-                          top: BorderSide(
-                              color: ConvertIcon().convertColor(store
-                                      .clientCreate
-                                      .tarefaModelSaveEtiqueta
-                                      .color) ??
-                                  Colors.grey,
-                              width: 5),
-                        ),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              width: double.infinity,
-                              child: Wrap(
-                                alignment: WrapAlignment.spaceBetween,
-                                children: const [
-                                  EtiquetasSaveWidget(),
-                                  ActionFaseSaveWidget(),
-                                  UsersSaveWidget(),
-                                ],
-                              ),
+            : Observer(
+                builder: (_) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(2, 0, 2, 8),
+                    child: FadeTransition(
+                      opacity: opacidade,
+                      child: GestureDetector(
+                        onTap: () =>
+                            FocusScope.of(context).requestFocus(FocusNode()),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Card(
+                            elevation: 4,
+                            shape: Border(
+                              top: BorderSide(
+                                  color: ConvertIcon().convertColor(store
+                                          .clientCreate
+                                          .tarefaModelSaveEtiqueta
+                                          .color) ??
+                                      Colors.grey,
+                                  width: 5),
                             ),
-                            TextSaveWidget(controller: textController),
-                            SizedBox(
-                              width: double.infinity,
-                              child: Wrap(
-                                alignment: WrapAlignment.spaceAround,
-                                children: [
-                                  DateSaveWidget(
-                                      dateController: dateController),
-                                  const PrioridadeSaveWidget(),
-                                ],
-                              ),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Wrap(
+                                    alignment: WrapAlignment.spaceBetween,
+                                    children: const [
+                                      EtiquetasSaveWidget(),
+                                      ActionFaseSaveWidget(),
+                                      UsersSaveWidget(),
+                                    ],
+                                  ),
+                                ),
+                                TextSaveWidget(controller: textController),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Wrap(
+                                    alignment: WrapAlignment.spaceAround,
+                                    children: [
+                                      DateSaveWidget(
+                                          dateController: dateController),
+                                      const PrioridadeSaveWidget(),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Wrap(
+                                    children: [
+                                      const CreateSubtarefaWidget(),
+                                      ButtonSaveWidget(
+                                        controller: widget.controller,
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Wrap(
-                                children: const [
-                                  CreateSubtarefaWidget(),
-                                  ButtonSaveWidget()
-                                ],
-                              ),
-                            )
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               );
       },
     );

@@ -306,7 +306,7 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   String? validaDataTarefa() {
-    if (tarefaModelData.isEmpty) {
+    if (tarefaModelData == '') {
       return 'Data obrigatória.';
     }
     return null;
