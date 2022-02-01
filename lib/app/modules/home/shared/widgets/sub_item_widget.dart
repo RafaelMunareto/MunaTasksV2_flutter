@@ -33,11 +33,8 @@ class SubItemWidget extends StatelessWidget {
           return AlertDialog(
             title: const Text('Status'),
             content: SubitemActionsWidget(
-              subtarefaActionList: subtarefaActionList,
-              setSubtarefaAction: setSubtarefaModel,
               subtarefaModel: subTarefaModel,
               tarefaModel: tarefaModel,
-              changeSubtarefaModelAction: changeSubtarefaModelAction,
             ),
           );
         },

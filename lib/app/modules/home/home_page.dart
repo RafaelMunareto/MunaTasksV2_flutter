@@ -186,98 +186,75 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
         mainScreen: Observer(builder: (_) {
           return !store.client.loading
               ? Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 32),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ListTile(
-                          leading: GestureDetector(
-                            child: store.client.icon != 0
-                                ? Icon(
-                                    IconData(store.client.icon,
-                                        fontFamily: 'MaterialIcons'),
-                                    color: ConvertIcon()
-                                        .convertColor(store.client.color),
-                                  )
-                                : const Icon(Icons.bookmark),
-                            onTap: () {
-                              etiquetas();
-                            },
-                          ),
-                          title: Center(
-                            child: GestureDetector(
-                              child: ListTile(
-                                title: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.filter_alt,
-                                      color: Colors.grey,
-                                    ),
-                                    Text(
-                                      store.client.orderAscDesc
-                                          ? '${store.client.orderSelection} DESC'
-                                          : '${store.client.orderSelection} ASC',
-                                      style: const TextStyle(fontSize: 12),
-                                    ),
-                                  ],
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          ListTile(
+                            leading: GestureDetector(
+                              child: store.client.icon != 0
+                                  ? Icon(
+                                      IconData(store.client.icon,
+                                          fontFamily: 'MaterialIcons'),
+                                      color: ConvertIcon()
+                                          .convertColor(store.client.color),
+                                    )
+                                  : const Icon(Icons.bookmark),
+                              onTap: () {
+                                etiquetas();
+                              },
+                            ),
+                            title: Center(
+                              child: GestureDetector(
+                                child: ListTile(
+                                  title: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.filter_alt,
+                                        color: Colors.grey,
+                                      ),
+                                      Text(
+                                        store.client.orderAscDesc
+                                            ? '${store.client.orderSelection} DESC'
+                                            : '${store.client.orderSelection} ASC',
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
                                 ),
+                                onTap: () => order(),
                               ),
-                              onTap: () => order(),
+                            ),
+                            trailing: GestureDetector(
+                              child: CircleAvatarWidget(
+                                url: store.client.imgUrl,
+                              ),
+                              onTap: () {
+                                if (store.client.perfilUserLogado.manager) {
+                                  teams();
+                                }
+                              },
                             ),
                           ),
-                          trailing: GestureDetector(
-                            child: CircleAvatarWidget(
-                              url: store.client.imgUrl,
-                            ),
-                            onTap: () {
-                              if (store.client.perfilUserLogado.manager) {
-                                teams();
-                              }
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: CreateWidget(
+                          CreateWidget(
                             controller: createController,
                           ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height,
-                          child: store.client.loading
-                              ? const CircularProgressIndicator()
-                              : CardWidget(
-                                  theme: store.client.theme,
-                                  navigateBarSelection:
-                                      store.client.navigateBarSelection,
-                                  opacidade: opacidade,
-                                  tarefa: store.client.tarefas,
-                                  navigate: store.client.navigateBarSelection,
-                                  deleteTasks: store.deleteTasks,
-                                  retard: store.client.retardList,
-                                  retardSelection: store.client.retardSelection,
-                                  setRetardSelection:
-                                      store.client.setRetardSelection,
-                                  updateDate: store.updateDate,
-                                  save: store.save,
-                                  changePrioridadeList:
-                                      store.changePrioridadeList,
-                                  prioridadeList: store.client.prioridadeList,
-                                  setPrioridadeSelection:
-                                      store.client.setPrioridadeSelection,
-                                  prioridadeSelection:
-                                      store.client.prioridadeSelection,
-                                  changeSubtarefaModelAction:
-                                      store.changeSubtarefaAction,
-                                  setSubtarefaModel:
-                                      store.client.setSubtarefaAction,
-                                  subtarefaActionList:
-                                      store.client.subtarefaActionList,
-                                ),
-                        ),
-                      ],
+                          SingleChildScrollView(
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.62,
+                              child: store.client.loading
+                                  ? const CircularProgressIndicator()
+                                  : CardWidget(
+                                      opacidade: opacidade,
+                                    ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 )

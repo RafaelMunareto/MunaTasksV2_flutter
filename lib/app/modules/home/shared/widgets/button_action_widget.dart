@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
-import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 
 class ButtonActionWidget extends StatefulWidget {
   final TarefaModel tarefa;
-  final Function deleteTasks;
   final int navigate;
   final Function save;
   const ButtonActionWidget(
       {Key? key,
       required this.tarefa,
-      required this.deleteTasks,
       required this.navigate,
       required this.save})
       : super(key: key);
@@ -45,37 +41,6 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
     );
   }
 
-  dialogDelete(String message, TarefaModel tarefa, context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Tem certeza que deseja deletar?'),
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Modular.to.pop();
-                SnackbarCustom()
-                    .createSnackBar('Cancelado', Colors.grey, context);
-              },
-              child: const Text('CANCELAR'),
-            ),
-            TextButton(
-              onPressed: () {
-                Modular.to.pop();
-                widget.deleteTasks(tarefa);
-                SnackbarCustom().createSnackBar(
-                    'Deletado com sucesso!', Colors.green, context);
-              },
-              child: const Text('DELETAR'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   convertButton(int navigate) {
     switch (navigate) {
       case 0:
@@ -102,17 +67,6 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 color: kPrimaryColor,
               ),
             ),
-            SizedBox(
-              child: GestureDetector(
-                onTap: () {
-                  dialogDelete(widget.tarefa.texto, widget.tarefa, context);
-                },
-                child: const Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                ),
-              ),
-            )
           ],
         );
       case 1:
@@ -140,17 +94,6 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 color: kPrimaryColor,
               ),
             ),
-            SizedBox(
-              child: GestureDetector(
-                onTap: () {
-                  dialogDelete(widget.tarefa.texto, widget.tarefa, context);
-                },
-                child: const Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                ),
-              ),
-            )
           ],
         );
       case 2:
@@ -178,17 +121,6 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 color: Colors.amber,
               ),
             ),
-            SizedBox(
-              child: GestureDetector(
-                onTap: () {
-                  dialogDelete(widget.tarefa.texto, widget.tarefa, context);
-                },
-                child: const Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                ),
-              ),
-            )
           ],
         );
     }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
+import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_text_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/button_action_widget.dart';
@@ -7,65 +9,64 @@ import 'package:munatasks2/app/modules/home/shared/widgets/header_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/retard_action_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class CardWidget extends StatefulWidget {
-  final List<TarefaModel> tarefa;
-  final Function deleteTasks;
-  final int navigateBarSelection;
-  final int navigate;
-  final Function save;
-  final bool theme;
-  final dynamic retard;
   final Animation<double> opacidade;
-  final int retardSelection;
-  final Function setRetardSelection;
-  final Function updateDate;
-  final dynamic prioridadeList;
-  final Function changePrioridadeList;
-  final Function setPrioridadeSelection;
-  final int prioridadeSelection;
-  final Function changeSubtarefaModelAction;
-  final Function setSubtarefaModel;
-  final List<String> subtarefaActionList;
-  const CardWidget(
-      {Key? key,
-      required this.tarefa,
-      required this.deleteTasks,
-      required this.navigateBarSelection,
-      required this.navigate,
-      required this.opacidade,
-      required this.theme,
-      required this.retard,
-      required this.retardSelection,
-      required this.setRetardSelection,
-      required this.save,
-      required this.updateDate,
-      required this.prioridadeList,
-      required this.changePrioridadeList,
-      required this.prioridadeSelection,
-      required this.setPrioridadeSelection,
-      required this.changeSubtarefaModelAction,
-      required this.setSubtarefaModel,
-      required this.subtarefaActionList})
-      : super(key: key);
+  const CardWidget({
+    Key? key,
+    required this.opacidade,
+  }) : super(key: key);
 
   @override
   State<CardWidget> createState() => _CardWidgetState();
 }
 
 class _CardWidgetState extends State<CardWidget> {
+  final HomeStore store = Modular.get();
   void reorderData(int oldindex, int newindex) {
     setState(() {
       if (newindex > oldindex) {
         newindex -= 1;
       }
-      final items = widget.tarefa.removeAt(oldindex);
-      widget.tarefa.insert(newindex, items);
+      final items = store.client.tarefas.removeAt(oldindex);
+      store.client.tarefas.insert(newindex, items);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    dialogDelete(String message, TarefaModel tarefa, context) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Tem certeza que deseja excluir?'),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Modular.to.pop();
+                  SnackbarCustom()
+                      .createSnackBar('Cancelado', Colors.grey, context);
+                },
+                child: const Text('CANCELAR'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Modular.to.pop();
+                  store.deleteTasks(tarefa);
+                  SnackbarCustom().createSnackBar(
+                      'Deletado com sucesso!', Colors.green, context);
+                },
+                child: const Text('DELETAR'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     _retard(TarefaModel model) {
       showDialog(
         context: context,
@@ -74,10 +75,10 @@ class _CardWidgetState extends State<CardWidget> {
           return AlertDialog(
             title: const Text('Adiamento'),
             content: RetardActionWidget(
-              retard: widget.retard,
-              retardSelection: widget.retardSelection,
-              setRetardSelection: widget.setRetardSelection,
-              updateDate: widget.updateDate,
+              retard: store.client.retardList,
+              retardSelection: store.client.retardSelection,
+              setRetardSelection: store.client.setRetardSelection,
+              updateDate: store.updateDate,
               model: model,
             ),
           );
@@ -93,11 +94,11 @@ class _CardWidgetState extends State<CardWidget> {
           return AlertDialog(
             title: const Text('Prioridade'),
             content: PrioridadeSelectionWidget(
-              prioridadeSelection: widget.prioridadeSelection,
-              prioridadeList: widget.prioridadeList,
-              setPrioridadeSelection: widget.setPrioridadeSelection,
+              prioridadeSelection: store.client.prioridadeSelection,
+              prioridadeList: store.client.prioridadeList,
+              setPrioridadeSelection: store.client.setPrioridadeSelection,
               tarefaModel: tarefaModel,
-              changePrioridadeList: widget.changePrioridadeList,
+              changePrioridadeList: store.changePrioridadeList,
             ),
           );
         },
@@ -122,7 +123,7 @@ class _CardWidgetState extends State<CardWidget> {
               child: ExpansionTile(
                 key: UniqueKey(),
                 textColor: Colors.black,
-                title: HeaderWidget(tarefa: linha, theme: widget.theme),
+                title: HeaderWidget(tarefa: linha, theme: store.client.theme),
                 subtitle: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Wrap(
@@ -146,7 +147,7 @@ class _CardWidgetState extends State<CardWidget> {
                                   .toString(),
                               style: TextStyle(
                                   fontSize: 12,
-                                  color: widget.theme
+                                  color: store.client.theme
                                       ? Colors.white
                                       : Colors.black),
                             ),
@@ -169,17 +170,16 @@ class _CardWidgetState extends State<CardWidget> {
                     children: [
                       BodyTextWidget(
                         tarefa: linha,
-                        theme: widget.theme,
-                        changeSubtarefaModelAction:
-                            widget.changeSubtarefaModelAction,
-                        setSubtarefaModel: widget.setSubtarefaModel,
-                        subtarefaActionList: widget.subtarefaActionList,
+                        theme: store.client.theme,
+                        changeSubtarefaModelAction: store.changeSubtarefaAction,
+                        setSubtarefaModel: store.client.setSubtarefaModel,
+                        subtarefaActionList: store.client.subtarefaActionList,
                       ),
                       ButtonActionWidget(
-                          tarefa: linha,
-                          deleteTasks: widget.deleteTasks,
-                          navigate: widget.navigate,
-                          save: widget.save),
+                        tarefa: linha,
+                        navigate: store.client.navigateBarSelection,
+                        save: store.save,
+                      ),
                     ],
                   )
                 ],
@@ -194,7 +194,70 @@ class _CardWidgetState extends State<CardWidget> {
       opacity: widget.opacidade,
       child: ReorderableListView(
         onReorder: reorderData,
-        children: [for (var linha in widget.tarefa) card(linha)],
+        children: [
+          for (var linha in store.client.tarefas)
+            Dismissible(
+              background: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  color: Colors.red,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'Excluir',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              secondaryBackground: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  color: Colors.green,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: const [
+                        Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'Editar',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              key: UniqueKey(),
+              onDismissed: (direction) {
+                if (direction == DismissDirection.startToEnd) {
+                  setState(() {
+                    dialogDelete(linha.texto, linha, context);
+                  });
+                } else {
+                  setState(() {
+                    print('editado');
+                    //store.clientCreate.removeDismissSubtarefa(model);
+                  });
+                  SnackbarCustom()
+                      .createSnackBar('editado', Colors.green, context);
+                }
+              },
+              child: card(linha),
+            ),
+        ],
       ),
     );
   }

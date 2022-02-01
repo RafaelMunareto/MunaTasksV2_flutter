@@ -30,7 +30,27 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                   itemBuilder: (BuildContext context, int index) {
                     var model = store.clientCreate.subtarefas[index];
                     return Dismissible(
-                      background: Container(color: Colors.red),
+                      background: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          color: Colors.red,
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  'Excluir',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                       key: UniqueKey(),
                       onDismissed: (direction) {
                         setState(() {

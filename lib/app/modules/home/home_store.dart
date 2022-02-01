@@ -319,6 +319,7 @@ abstract class HomeStoreBase with Store {
   updateDate(TarefaModel model) {
     client.setLoading(true);
     model.data = model.data.add(Duration(hours: client.retardSelection));
+    save(model);
   }
 
   @action

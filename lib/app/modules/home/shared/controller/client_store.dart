@@ -190,4 +190,15 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setExpand(value) => expand = value;
+
+  changeFaseTarefa(faseTarefa) {
+    switch (faseTarefa) {
+      case 'pause':
+        return 0;
+      case 'play':
+        return 1;
+      case 'check':
+        return 2;
+    }
+  }
 }
