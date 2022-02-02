@@ -230,10 +230,10 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  void saveNewTarefa() async {
-    await clientCreate.setLoadingTarefa(true);
-    await clientCreate.setTarefa();
-    await dashboardService.save(clientCreate.tarefaModelSave);
+  void saveNewTarefa() {
+    clientCreate.setLoadingTarefa(true);
+    clientCreate.setTarefa();
+    dashboardService.save(clientCreate.tarefaModelSave);
     client.cleanTarefas();
     client.cleanTarefasBase();
     clientCreate.setLoadingTarefa(false);
