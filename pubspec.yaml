@@ -84,3 +84,5 @@ scripts:
   build_apk: flutter build apk
   launch_icon: flutter pub run flutter_launcher_icons:main
   launch_splash: flutter pub run flutter_native_splash:create
+  functions: firebase deploy --only functions
+  simulador_functions: firebase emulators:start --only functions

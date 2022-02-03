@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_create_store.dart';
@@ -25,6 +26,7 @@ abstract class HomeStoreBase with Store {
   final FirebaseFirestore firestore = Modular.get();
   final ClientStore client = Modular.get();
   final ClientCreateStore clientCreate = Modular.get();
+  final FirebaseFunctions functions = Modular.get();
 
   HomeStoreBase({required this.dashboardService}) {
     perfilUser();
@@ -37,6 +39,7 @@ abstract class HomeStoreBase with Store {
     getPrioridade();
     getSubtarefaInsert();
     getFase();
+    //testeFunctions();
   }
 
   @action
@@ -346,5 +349,12 @@ abstract class HomeStoreBase with Store {
       default:
         return client.tarefas;
     }
+  }
+
+  testeFunctions() async {
+    HttpsCallable callable = functions.httpsCallable('setTasks');
+    final results = await callable();
+    List fruit = results.data;
+    print(fruit);
   }
 }

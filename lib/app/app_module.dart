@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -22,6 +23,7 @@ class AppModule extends Module {
   final List<Bind> binds = [
     Bind.singleton<ILocalStorage>((i) => LocalStorageShare()),
     Bind.instance<FirebaseFirestore>(FirebaseFirestore.instance),
+    Bind.instance<FirebaseFunctions>(FirebaseFunctions.instance),
     Bind.instance<FirebaseAuth>(FirebaseAuth.instance),
     Bind.instance<FirebaseDynamicLinks>(FirebaseDynamicLinks.instance),
     Bind.instance<LocalAuthentication>(LocalAuthentication()),
