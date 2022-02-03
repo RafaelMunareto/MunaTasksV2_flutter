@@ -56,7 +56,6 @@ exports.tasks = functions.https.onRequest(async (req, res) => {
           }
         }
           
-        
     }).catch(reason => {
         res.send(reason)
     })
