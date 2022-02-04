@@ -18,6 +18,13 @@ mixin _$HomeStore on HomeStoreBase, Store {
         .run(() => super.tratamentoBase(dashboardList));
   }
 
+  final _$perfilUserAsyncAction = AsyncAction('HomeStoreBase.perfilUser');
+
+  @override
+  Future perfilUser() {
+    return _$perfilUserAsyncAction.run(() => super.perfilUser());
+  }
+
   final _$changeFilterUserListAsyncAction =
       AsyncAction('HomeStoreBase.changeFilterUserList');
 
@@ -146,17 +153,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.getSubtarefaInsert');
     try {
       return super.getSubtarefaInsert();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic perfilUser() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.perfilUser');
-    try {
-      return super.perfilUser();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }

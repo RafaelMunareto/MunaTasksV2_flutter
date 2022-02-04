@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -8,11 +7,9 @@ import 'package:munatasks2/app/modules/home/shared/controller/client_create_stor
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:mobx/mobx.dart';
-import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 
 part 'home_store.g.dart';
@@ -30,16 +27,15 @@ abstract class HomeStoreBase with Store {
 
   HomeStoreBase({required this.dashboardService}) {
     perfilUser();
+    getUsers();
     getList();
     buscaTheme();
     getEtiquetas();
     getOrder();
-    getUsers();
     getRetard();
     getPrioridade();
     getSubtarefaInsert();
     getFase();
-    //testeFunctions();
   }
 
   @action
@@ -123,22 +119,22 @@ abstract class HomeStoreBase with Store {
         element.data =
             DateTime.fromMillisecondsSinceEpoch(element.data.seconds * 1000);
 
-        await relacionamentoUsers(element);
-        if (client.usersBase.length == element.users?.length) {
-          element.users = [];
-          element.users = client.usersBase;
-          client.cleanUsersBase();
+        for (var i = 0; i < element.users!.length; i++) {
+          client.userList
+              ?.map((event) =>
+                  event.where((w) => w.reference!.id == element.users![i].id))
+              .first
+              .then((value) {
+            element.users![i] = value.first;
+          });
         }
 
-        await relacionamentoEtiqueta(element)
-            .then((value) => element.etiqueta = value);
+        element.etiqueta = await relacionamentoEtiqueta(element);
 
         for (var subtarefa in element.subTarefa!) {
           subtarefa = SubtarefaModel.fromJson(subtarefa);
-          await relacionamentoUserSubtarefa(subtarefa).then((value) {
-            subtarefa.user = value;
-            client.setSubtarefaModel(subtarefa);
-          });
+          subtarefa.user = await relacionamentoUserSubtarefa(subtarefa);
+          client.setSubtarefaModel(subtarefa);
         }
         if (client.subtarefaModel.length == element.subTarefa.length) {
           element.subTarefa = [];
@@ -151,35 +147,27 @@ abstract class HomeStoreBase with Store {
     });
   }
 
-  relacionamentoUsers(TarefaModel element) async {
-    for (var user in element.users!) {
-      await firestore.collection('usuarios').doc(user.id).get().then((doc) {
-        client.setUsersBase(UserModel.fromDocument(doc));
-      });
-    }
+  relacionamentoEtiqueta(TarefaModel element) async {
+    return client.etiquetaList
+        ?.map((event) =>
+            event.where((w) => w.reference!.id == element.etiqueta.id))
+        .first
+        .then((value) {
+      return value.first;
+    });
   }
 
-  Future relacionamentoEtiqueta(TarefaModel element) {
-    return firestore
-        .collection('etiqueta')
-        .doc(element.etiqueta.id)
-        .get()
-        .then((value) => EtiquetaModel.fromDocument(value));
-  }
-
-  Future relacionamentoUserSubtarefa(element) {
-    return firestore
-        .collection('usuarios')
-        .doc(element.user.id)
-        .get()
-        .then((doc) {
-      var user = UserModel.fromDocument(doc);
-      return user;
+  relacionamentoUserSubtarefa(element) {
+    return client.userList
+        ?.map((event) => event.where((w) => w.reference!.id == element.user.id))
+        .first
+        .then((value) {
+      return value.first;
     });
   }
 
   @action
-  perfilUser() {
+  perfilUser() async {
     firestore
         .collection('perfil')
         .doc(auth.user!.uid)
@@ -349,12 +337,5 @@ abstract class HomeStoreBase with Store {
       default:
         return client.tarefas;
     }
-  }
-
-  testeFunctions() async {
-    HttpsCallable callable = functions.httpsCallable('setTasks');
-    final results = await callable();
-    List fruit = results.data;
-    print(fruit);
   }
 }
