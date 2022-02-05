@@ -10,7 +10,10 @@ class VerifyPage extends StatefulWidget {
   final String mode;
 
   const VerifyPage(
-      {Key? key, this.title = 'Verificação de email', this.code = '', this.mode=''})
+      {Key? key,
+      this.title = 'Verificação de email',
+      this.code = '',
+      this.mode = ''})
       : super(key: key);
 
   @override
@@ -92,7 +95,9 @@ class VerifyPageState extends State<VerifyPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                              child: store.msg != '' ? _card() : Container()),
+                              child: store.msg != ''
+                                  ? _card()
+                                  : const CircularProgressIndicator()),
                         ]),
                   );
                 })

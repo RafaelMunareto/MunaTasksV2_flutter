@@ -72,7 +72,7 @@ abstract class _LoginStoreBase with Store {
     }).catchError((e) {
       setLoading(false);
       setErrOrGoal(false);
-      setMsg(ErrorPtBr().verificaCodeErro('auth/' + e.code));
+      setMsg(ErrorPtBr().verificaCodeErro(e.code));
     });
   }
 

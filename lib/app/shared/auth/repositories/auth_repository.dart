@@ -16,11 +16,7 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future getEmailPasswordLogin(email, password) {
-    return auth
-        .signInWithEmailAndPassword(email: email, password: password)
-        .catchError(
-          (e) => ErrorPtBr().verificaCodeErro('auth/' + e.code),
-        );
+    return auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
   @override
@@ -135,7 +131,7 @@ class AuthRepository implements IAuthRepository {
   Future sendChangePasswordEmail(email) {
     var actionCodeSettings = ActionCodeSettings(
       url: 'https://munatasksv2.firebaseapp.com/auth/verify',
-      androidPackageName: '"munacorp.munatasks2.br.munatasks2',
+      androidPackageName: "munacorp.munatasks2.br.munatasks2",
       handleCodeInApp: true,
     );
     if (kIsWeb) {
