@@ -42,6 +42,7 @@ class ButtonSaveWidget extends StatelessWidget {
                         if (store.clientCreate.isValidTarefa) {
                           controller!.reverse();
                           store.client.setExpand(false);
+                          store.clientCreate.setTarefa();
                           store.saveNewTarefa();
                           SnackbarCustom().createSnackBar(
                               'Salvo com sucesso!', Colors.green, context);

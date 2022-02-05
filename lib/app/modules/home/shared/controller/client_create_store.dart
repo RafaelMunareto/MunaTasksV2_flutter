@@ -24,7 +24,7 @@ abstract class _ClientCreateStoreBase with Store {
   SubtarefaModel subtarefaModel = SubtarefaModel();
 
   @observable
-  List users = [];
+  List<UserModel> users = [];
 
   @observable
   EtiquetaModel tarefaModelSaveEtiqueta = EtiquetaModel();

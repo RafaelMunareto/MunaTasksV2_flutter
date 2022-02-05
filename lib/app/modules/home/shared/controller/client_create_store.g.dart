@@ -90,13 +90,13 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   final _$usersAtom = Atom(name: '_ClientCreateStoreBase.users');
 
   @override
-  List<dynamic> get users {
+  List<UserModel> get users {
     _$usersAtom.reportRead();
     return super.users;
   }
 
   @override
-  set users(List<dynamic> value) {
+  set users(List<UserModel> value) {
     _$usersAtom.reportWrite(value, super.users, () {
       super.users = value;
     });

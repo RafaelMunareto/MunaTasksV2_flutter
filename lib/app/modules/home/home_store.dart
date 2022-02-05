@@ -111,40 +111,65 @@ abstract class HomeStoreBase with Store {
     client.cleanUsersBase();
     client.cleanSubtarefaModel();
     client.setLoading(true);
-    dashboardList!.forEach((e) async {
+    await dashboardList!.forEach((e) async {
       if (e.isEmpty) {
         client.setLoading(false);
       }
       for (var element in e) {
-        element.data =
-            DateTime.fromMillisecondsSinceEpoch(element.data.seconds * 1000);
-
-        for (var i = 0; i < element.users!.length; i++) {
-          client.userList
-              ?.map((event) =>
-                  event.where((w) => w.reference!.id == element.users![i].id))
-              .first
-              .then((value) {
-            element.users![i] = value.first;
-          });
+        await relacionamentos(element);
+        if (client.tarefasBase.length == e.length) {
+          badgets();
         }
-
-        element.etiqueta = await relacionamentoEtiqueta(element);
-
-        for (var subtarefa in element.subTarefa!) {
-          subtarefa = SubtarefaModel.fromJson(subtarefa);
-          subtarefa.user = await relacionamentoUserSubtarefa(subtarefa);
-          client.setSubtarefaModel(subtarefa);
-        }
-        if (client.subtarefaModel.length == element.subTarefa.length) {
-          element.subTarefa = [];
-          element.subTarefa = client.subtarefaModel;
-          client.cleanSubtarefaModel();
-        }
-        await client.setTarefa(element);
-        badgets();
       }
     });
+  }
+
+  relacionamentos(element) async {
+    element.data =
+        DateTime.fromMillisecondsSinceEpoch(element.data.seconds * 1000);
+
+    for (var i = 0; i < element.users!.length; i++) {
+      await client.userList
+          ?.map((event) =>
+              event.where((w) => w.reference!.id == element.users![i].id))
+          .first
+          .then((value) async {
+        await client.setUsersBase(value.first);
+        if (element.users!.length == client.usersBase.length) {
+          element.users = [];
+          element.users = client.usersBase;
+          client.cleanUsersBase();
+          element.etiqueta = await relacionamentoEtiqueta(element);
+
+          for (var subtarefa in element.subTarefa!) {
+            subtarefa = SubtarefaModel.fromJson(subtarefa);
+            subtarefa.user = await relacionamentoUserSubtarefa(subtarefa);
+            client.setSubtarefaModel(subtarefa);
+          }
+          if (client.subtarefaModel.length == element.subTarefa.length) {
+            element.subTarefa = [];
+            element.subTarefa = client.subtarefaModel;
+            client.cleanSubtarefaModel();
+          }
+          await client.setTarefa(element);
+        }
+      });
+    }
+  }
+
+  @action
+  badgets() {
+    updateList();
+    client.changeTarefa(client.tarefasBase
+        .where((element) => element.fase == client.navigateBarSelection)
+        .toList());
+    List<int> badgets = [
+      client.tarefasBase.where((element) => element.fase == 0).toList().length,
+      client.tarefasBase.where((element) => element.fase == 1).toList().length,
+      client.tarefasBase.where((element) => element.fase == 2).toList().length
+    ];
+    client.setBadgetNavigate(badgets);
+    client.setLoading(false);
   }
 
   relacionamentoEtiqueta(TarefaModel element) async {
@@ -198,21 +223,6 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  badgets() {
-    updateList();
-    client.changeTarefa(client.tarefasBase
-        .where((element) => element.fase == client.navigateBarSelection)
-        .toList());
-    List<int> badgets = [
-      client.tarefasBase.where((element) => element.fase == 0).toList().length,
-      client.tarefasBase.where((element) => element.fase == 1).toList().length,
-      client.tarefasBase.where((element) => element.fase == 2).toList().length
-    ];
-    client.setBadgetNavigate(badgets);
-    client.setLoading(false);
-  }
-
-  @action
   void save(TarefaModel model) {
     client.setLoading(true);
     dashboardService.save(model);
@@ -222,12 +232,9 @@ abstract class HomeStoreBase with Store {
 
   @action
   void saveNewTarefa() {
-    clientCreate.setLoadingTarefa(true);
-    clientCreate.setTarefa();
     dashboardService.save(clientCreate.tarefaModelSave);
     client.cleanTarefas();
     client.cleanTarefasBase();
-    clientCreate.setLoadingTarefa(false);
   }
 
   @action

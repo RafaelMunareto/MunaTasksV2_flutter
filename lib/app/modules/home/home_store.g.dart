@@ -159,22 +159,22 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  dynamic updateList() {
+  dynamic badgets() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.updateList');
+        name: 'HomeStoreBase.badgets');
     try {
-      return super.updateList();
+      return super.badgets();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic badgets() {
+  dynamic updateList() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.badgets');
+        name: 'HomeStoreBase.updateList');
     try {
-      return super.badgets();
+      return super.updateList();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
