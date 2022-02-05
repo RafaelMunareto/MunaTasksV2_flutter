@@ -25,9 +25,13 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Fase'),
-            content: ActionsFaseWidget(
-              faseList: store.clientCreate.faseList,
-              setActionsFase: store.clientCreate.setFaseTarefa,
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: ActionsFaseWidget(
+                faseList: store.clientCreate.faseList,
+                setActionsFase: store.clientCreate.setFaseTarefa,
+              ),
             ),
           );
         },

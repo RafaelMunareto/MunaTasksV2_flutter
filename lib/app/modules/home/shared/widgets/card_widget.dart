@@ -78,12 +78,16 @@ class _CardWidgetState extends State<CardWidget> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Adiamento'),
-            content: RetardActionWidget(
-              retard: store.client.retardList,
-              retardSelection: store.client.retardSelection,
-              setRetardSelection: store.client.setRetardSelection,
-              updateDate: store.updateDate,
-              model: model,
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.25,
+              child: RetardActionWidget(
+                retard: store.client.retardList,
+                retardSelection: store.client.retardSelection,
+                setRetardSelection: store.client.setRetardSelection,
+                updateDate: store.updateDate,
+                model: model,
+              ),
             ),
           );
         },
@@ -97,12 +101,16 @@ class _CardWidgetState extends State<CardWidget> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Prioridade'),
-            content: PrioridadeSelectionWidget(
-              prioridadeSelection: store.client.prioridadeSelection,
-              prioridadeList: store.client.prioridadeList,
-              setPrioridadeSelection: store.client.setPrioridadeSelection,
-              tarefaModel: tarefaModel,
-              changePrioridadeList: store.changePrioridadeList,
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.2,
+              child: PrioridadeSelectionWidget(
+                prioridadeSelection: store.client.prioridadeSelection,
+                prioridadeList: store.client.prioridadeList,
+                setPrioridadeSelection: store.client.setPrioridadeSelection,
+                tarefaModel: tarefaModel,
+                changePrioridadeList: store.changePrioridadeList,
+              ),
             ),
           );
         },

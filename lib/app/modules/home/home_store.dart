@@ -229,7 +229,6 @@ abstract class HomeStoreBase with Store {
     dashboardService.save(clientCreate.tarefaModelSave);
     client.cleanTarefas();
     client.cleanTarefasBase();
-    client.setExpand(false);
   }
 
   @action

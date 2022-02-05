@@ -24,10 +24,14 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Etiquetas'),
-          content: RadioEtiquetasFilterWidget(
-            etiquetaList: store.client.etiquetaList,
-            create: true,
-            setEtiquetaSave: store.clientCreate.setSaveEtiqueta,
+          content: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: RadioEtiquetasFilterWidget(
+              etiquetaList: store.client.etiquetaList,
+              create: true,
+              setEtiquetaSave: store.clientCreate.setSaveEtiqueta,
+            ),
           ),
         );
       },

@@ -31,7 +31,11 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
             ),
           ],
           title: const Text('Responsáveis'),
-          content: const UsersSelectionWidget(),
+          content: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: const UsersSelectionWidget(),
+          ),
         );
       },
     );

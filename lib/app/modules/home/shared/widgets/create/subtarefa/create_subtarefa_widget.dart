@@ -38,12 +38,16 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Subtarefa'),
-            content: CreateSubtarefaInsertWidget(
-                subtarefaInserSelection:
-                    store.clientCreate.subtarefaModelSaveTitle,
-                setSubtarefaSelection:
-                    store.clientCreate.setSubtarefaInsertCreate,
-                subtarefaList: store.clientCreate.subtarefaInsertList),
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.2,
+              child: CreateSubtarefaInsertWidget(
+                  subtarefaInserSelection:
+                      store.clientCreate.subtarefaModelSaveTitle,
+                  setSubtarefaSelection:
+                      store.clientCreate.setSubtarefaInsertCreate,
+                  subtarefaList: store.clientCreate.subtarefaInsertList),
+            ),
           );
         },
       );
@@ -56,9 +60,13 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Fase'),
-            content: ActionsFaseWidget(
-              faseList: store.clientCreate.faseList,
-              setActionsFase: store.clientCreate.setFase,
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: ActionsFaseWidget(
+                faseList: store.clientCreate.faseList,
+                setActionsFase: store.clientCreate.setFase,
+              ),
             ),
           );
         },
@@ -72,10 +80,15 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Responsável'),
-            content: CreateUserSubtarefaWidget(
-              userLista: store.client.userList,
-              setCreateImageUser: store.clientCreate.setCreateImageUser,
-              setUserCreateSelection: store.clientCreate.setUserCreateSelection,
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: CreateUserSubtarefaWidget(
+                userLista: store.client.userList,
+                setCreateImageUser: store.clientCreate.setCreateImageUser,
+                setUserCreateSelection:
+                    store.clientCreate.setUserCreateSelection,
+              ),
             ),
           );
         },
@@ -87,10 +100,14 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
         context: context,
         useSafeArea: false,
         builder: (BuildContext context) {
-          return const AlertDialog(
-            title: Text('Erros'),
-            content: ErrorsWidget(
-              tarefa: false,
+          return AlertDialog(
+            title: const Text('Erros'),
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: const ErrorsWidget(
+                tarefa: false,
+              ),
             ),
           );
         },

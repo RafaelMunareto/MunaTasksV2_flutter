@@ -32,9 +32,13 @@ class SubItemWidget extends StatelessWidget {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Status'),
-            content: SubitemActionsWidget(
-              subtarefaModel: subTarefaModel,
-              tarefaModel: tarefaModel,
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.15,
+              child: SubitemActionsWidget(
+                subtarefaModel: subTarefaModel,
+                tarefaModel: tarefaModel,
+              ),
             ),
           );
         },

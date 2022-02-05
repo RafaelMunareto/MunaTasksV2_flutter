@@ -17,10 +17,14 @@ class ButtonSaveWidget extends StatelessWidget {
         context: context,
         useSafeArea: false,
         builder: (BuildContext context) {
-          return const AlertDialog(
-            title: Text('Erros'),
-            content: ErrorsWidget(
-              tarefa: true,
+          return AlertDialog(
+            title: const Text('Erros'),
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: const ErrorsWidget(
+                tarefa: true,
+              ),
             ),
           );
         },

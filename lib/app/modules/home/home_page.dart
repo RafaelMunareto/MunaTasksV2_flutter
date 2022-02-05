@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
@@ -28,6 +29,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
   late Animation<double> opacidade;
   final GlobalKey expansionTile = GlobalKey();
   late AnimationController createController;
+  bool appVisible = true;
 
   @override
   void initState() {
@@ -45,6 +47,18 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     _controller.dispose();
     createController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    autorun(
+      (_) {
+        setState(() {
+          appVisible = !store.client.expand;
+        });
+      },
+    );
   }
 
   @override
@@ -76,13 +90,17 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
               ),
             ],
             content: Observer(builder: (_) {
-              return RadioOrderWidget(
-                  orderAscDesc: store.client.orderAscDesc,
-                  setOrderAscDesc: store.client.setOrderAscDesc,
-                  orderList: store.client.orderList,
-                  orderSelection: store.client.orderSelection,
-                  changeOrderList: store.changeOrderList,
-                  setOrderSelection: store.client.setOrderSelection);
+              return SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.4,
+                child: RadioOrderWidget(
+                    orderAscDesc: store.client.orderAscDesc,
+                    setOrderAscDesc: store.client.setOrderAscDesc,
+                    orderList: store.client.orderList,
+                    orderSelection: store.client.orderSelection,
+                    changeOrderList: store.changeOrderList,
+                    setOrderSelection: store.client.setOrderSelection),
+              );
             }),
           );
         },
@@ -98,12 +116,16 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
             title: const Text('Etiquetas'),
             content: Observer(
               builder: (_) {
-                return RadioEtiquetasFilterWidget(
-                  changeFilterEtiquetaList: store.changeFilterEtiquetaList,
-                  etiquetaList: store.client.etiquetaList,
-                  setColor: store.client.setColor,
-                  setIcon: store.client.setIcon,
-                  setEtiquetaSelection: store.client.setEtiquetaSelection,
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  child: RadioEtiquetasFilterWidget(
+                    changeFilterEtiquetaList: store.changeFilterEtiquetaList,
+                    etiquetaList: store.client.etiquetaList,
+                    setColor: store.client.setColor,
+                    setIcon: store.client.setIcon,
+                    setEtiquetaSelection: store.client.setEtiquetaSelection,
+                  ),
                 );
               },
             ),
@@ -121,11 +143,15 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
             title: const Text('Equipe'),
             content: Observer(
               builder: (_) {
-                return TeamsSelectionWidget(
-                  changeFilterUserList: store.changeFilterUserList,
-                  userLista: store.client.userList,
-                  setImageUser: store.client.setImgUrl,
-                  setUserSelection: store.client.setUserSelection,
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  child: TeamsSelectionWidget(
+                    changeFilterUserList: store.changeFilterUserList,
+                    userLista: store.client.userList,
+                    setImageUser: store.client.setImgUrl,
+                    setUserSelection: store.client.setUserSelection,
+                  ),
                 );
               },
             ),
@@ -135,7 +161,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     }
 
     return Scaffold(
-      appBar: !store.client.expand
+      appBar: appVisible
           ? AppBarWidget(
               icon: Icons.bookmark,
               home: true,
@@ -159,6 +185,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
         onPressed: () {
           store.client.setExpand(!store.client.expand);
           setState(() {
+            appVisible = !appVisible;
             store.client.expand
                 ? createController.forward()
                 : createController.reverse();
@@ -253,13 +280,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                               height: MediaQuery.of(context).size.height * 0.72,
                               child: store.client.loading
                                   ? const CircularProgressIndicator()
-                                  : Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 32, top: 24),
-                                      child: CardWidget(
-                                        opacidade: opacidade,
-                                        controller: createController,
-                                      ),
+                                  : CardWidget(
+                                      opacidade: opacidade,
+                                      controller: createController,
                                     ),
                             ),
                           ),

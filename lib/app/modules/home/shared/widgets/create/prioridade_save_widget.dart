@@ -25,12 +25,16 @@ class _PrioridadeSaveWidgetState extends State<PrioridadeSaveWidget> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Prioridade'),
-            content: PrioridadeSelectionWidget(
-              create: true,
-              prioridadeSelection: store.clientCreate.tarefaModelPrioritario,
-              prioridadeList: store.client.prioridadeList,
-              setPrioridadeSelection:
-                  store.clientCreate.setPrioridadeSaveSelection,
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.2,
+              child: PrioridadeSelectionWidget(
+                create: true,
+                prioridadeSelection: store.clientCreate.tarefaModelPrioritario,
+                prioridadeList: store.client.prioridadeList,
+                setPrioridadeSelection:
+                    store.clientCreate.setPrioridadeSaveSelection,
+              ),
             ),
           );
         },
