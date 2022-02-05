@@ -18,6 +18,13 @@ mixin _$HomeStore on HomeStoreBase, Store {
         .run(() => super.tratamentoBase(dashboardList));
   }
 
+  final _$badgetsAsyncAction = AsyncAction('HomeStoreBase.badgets');
+
+  @override
+  Future badgets() {
+    return _$badgetsAsyncAction.run(() => super.badgets());
+  }
+
   final _$perfilUserAsyncAction = AsyncAction('HomeStoreBase.perfilUser');
 
   @override
@@ -54,17 +61,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.setNavigateBarSelection');
     try {
       return super.setNavigateBarSelection(value);
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setSelection(dynamic value) {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.setSelection');
-    try {
-      return super.setSelection(value);
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -153,17 +149,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.getSubtarefaInsert');
     try {
       return super.getSubtarefaInsert();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic badgets() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.badgets');
-    try {
-      return super.badgets();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }

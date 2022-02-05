@@ -62,6 +62,9 @@ abstract class _ClientStoreBase with Store {
   changeTime(value) => perfil.nameTime = value;
 
   @action
+  setPerfilImage(value) => perfil.urlImage = value;
+
+  @action
   setIdStaff(value) {
     if (!userModel.map((e) => e.reference).contains(value)) {
       perfil.idStaff?.add(value);

@@ -62,9 +62,6 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  setSelection(value) => client.cardSelection = value;
-
-  @action
   void getEtiquetas() {
     client.etiquetaList = dashboardService.getEtiquetas().asObservable();
   }
@@ -158,8 +155,8 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  badgets() {
-    updateList();
+  badgets() async {
+    await updateList();
     client.changeTarefa(client.tarefasBase
         .where((element) => element.fase == client.navigateBarSelection)
         .toList());
@@ -206,18 +203,15 @@ abstract class HomeStoreBase with Store {
     if (client.perfilUserLogado.manager == false) {
       client.setImgUrl(client.perfilUserLogado.urlImage);
       client.setTarefasBase(
-        client.tarefasBase
-            .where((t) {
-              bool eSelecaodoUser = false;
-              t.users?.forEach((element) {
-                if (element.reference.id == auth.user!.uid) {
-                  eSelecaodoUser = true;
-                }
-              });
-              return eSelecaodoUser;
-            })
-            .where((b) => b.fase == client.navigateBarSelection)
-            .toList(),
+        client.tarefasBase.where((t) {
+          bool eSelecaodoUser = false;
+          t.users?.forEach((element) {
+            if (element.reference.id == auth.user!.uid) {
+              eSelecaodoUser = true;
+            }
+          });
+          return eSelecaodoUser;
+        }).toList(),
       );
     }
   }
@@ -235,6 +229,7 @@ abstract class HomeStoreBase with Store {
     dashboardService.save(clientCreate.tarefaModelSave);
     client.cleanTarefas();
     client.cleanTarefasBase();
+    client.setExpand(false);
   }
 
   @action

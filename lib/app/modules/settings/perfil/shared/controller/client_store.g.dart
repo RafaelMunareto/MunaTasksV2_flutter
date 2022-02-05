@@ -268,6 +268,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setPerfilImage(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setPerfilImage');
+    try {
+      return super.setPerfilImage(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setIdStaff(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setIdStaff');
