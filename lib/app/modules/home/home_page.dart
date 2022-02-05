@@ -29,7 +29,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
   late Animation<double> opacidade;
   final GlobalKey expansionTile = GlobalKey();
   late AnimationController createController;
-  bool appVisible = true;
+  bool appVisible = false;
 
   @override
   void initState() {
@@ -55,7 +55,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     autorun(
       (_) {
         setState(() {
-          appVisible = !store.client.expand;
+          if (store.client.expand != appVisible) ;
+          appVisible = store.client.expand;
         });
       },
     );
@@ -161,7 +162,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     }
 
     return Scaffold(
-      appBar: appVisible
+      appBar: !appVisible
           ? AppBarWidget(
               icon: Icons.bookmark,
               home: true,
@@ -179,13 +180,12 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
             )
           : PreferredSize(
               child: Container(),
-              preferredSize: const Size(0, 0),
+              preferredSize: const Size(0, 32),
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           store.client.setExpand(!store.client.expand);
           setState(() {
-            appVisible = !appVisible;
             store.client.expand
                 ? createController.forward()
                 : createController.reverse();
@@ -277,7 +277,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                           SingleChildScrollView(
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.72,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.565,
                               child: store.client.loading
                                   ? const CircularProgressIndicator()
                                   : CardWidget(

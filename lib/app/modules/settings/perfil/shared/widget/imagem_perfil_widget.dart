@@ -117,20 +117,16 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
               top: 0,
               left: 30,
               child: Center(
-                child: Observer(
-                  builder: (_) {
-                    return Container(
-                      width: 170.0,
-                      height: 170.0,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(widget.perfil.urlImage),
-                        ),
-                      ),
-                    );
-                  },
+                child: Container(
+                  width: 170.0,
+                  height: 170.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: NetworkImage(widget.perfil.urlImage),
+                    ),
+                  ),
                 ),
               ),
             )
