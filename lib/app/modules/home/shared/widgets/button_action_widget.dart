@@ -29,14 +29,14 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
             width: MediaQuery.of(context).size.width * 0.88,
           ),
         ),
+        const Divider(),
         SizedBox(
-            //decoration: const BoxDecoration(color: Colors.white),
-            height: MediaQuery.of(context).size.height * 0.05,
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: convertButton(widget.navigate),
-            )),
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+            child: convertButton(widget.navigate),
+          ),
+        ),
       ],
     );
   }
@@ -45,7 +45,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
     switch (navigate) {
       case 0:
         return Wrap(
-          alignment: WrapAlignment.spaceAround,
+          alignment: WrapAlignment.spaceBetween,
           children: [
             GestureDetector(
               onTap: () {
@@ -71,8 +71,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
         );
       case 1:
         return Wrap(
-          alignment: WrapAlignment.spaceAround,
-          crossAxisAlignment: WrapCrossAlignment.center,
+          alignment: WrapAlignment.spaceBetween,
           children: [
             GestureDetector(
               onTap: () {
@@ -98,8 +97,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
         );
       case 2:
         return Wrap(
-          alignment: WrapAlignment.spaceAround,
-          crossAxisAlignment: WrapCrossAlignment.center,
+          alignment: WrapAlignment.spaceBetween,
           children: [
             GestureDetector(
               onTap: () {

@@ -87,25 +87,32 @@ class _CreateWidgetState extends State<CreateWidget>
                               children: [
                                 SizedBox(
                                   width: double.infinity,
-                                  child: Wrap(
-                                    alignment: WrapAlignment.spaceBetween,
-                                    children: const [
-                                      EtiquetasSaveWidget(),
-                                      ActionFaseSaveWidget(),
-                                      UsersSaveWidget(),
-                                    ],
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 8.0, bottom: 8),
+                                    child: Wrap(
+                                      alignment: WrapAlignment.spaceBetween,
+                                      children: const [
+                                        EtiquetasSaveWidget(),
+                                        ActionFaseSaveWidget(),
+                                        UsersSaveWidget(),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 TextSaveWidget(controller: textController),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Wrap(
-                                    alignment: WrapAlignment.spaceAround,
-                                    children: [
-                                      DateSaveWidget(
-                                          dateController: dateController),
-                                      const PrioridadeSaveWidget(),
-                                    ],
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 24),
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: Wrap(
+                                      alignment: WrapAlignment.spaceAround,
+                                      children: [
+                                        DateSaveWidget(
+                                            dateController: dateController),
+                                        const PrioridadeSaveWidget(),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Padding(

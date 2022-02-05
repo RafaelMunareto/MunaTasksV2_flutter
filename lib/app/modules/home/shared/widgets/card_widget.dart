@@ -271,7 +271,7 @@ class _CardWidgetState extends State<CardWidget> {
     DateTime now = DateTime.now();
     if (date.isAfter(now)) {
       return [Colors.blue, Icons.timelapse_sharp];
-    } else if (date == now) {
+    } else if (date.day == now.day) {
       return [Colors.amber, Icons.alarm];
     } else {
       return [Colors.red, Icons.history];

@@ -135,21 +135,26 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     }
 
     return Scaffold(
-      appBar: AppBarWidget(
-        icon: Icons.bookmark,
-        home: true,
-        context: context,
-        zoomController: drawerController,
-        setOpen: store.client.setOpen,
-        settings: true,
-        back: false,
-        etiquetaList: store.client.tarefas,
-        tarefas: store.client.tarefas,
-        setValueSearch: store.client.setSearchValue,
-        etiquetaSelection: store.client.etiquetaSelection,
-        setEtiquetaSelection: store.client.setEtiquetaSelection,
-        changeFilterSearch: store.changeFilterSearchList,
-      ),
+      appBar: !store.client.expand
+          ? AppBarWidget(
+              icon: Icons.bookmark,
+              home: true,
+              context: context,
+              zoomController: drawerController,
+              setOpen: store.client.setOpen,
+              settings: true,
+              back: false,
+              etiquetaList: store.client.tarefas,
+              tarefas: store.client.tarefas,
+              setValueSearch: store.client.setSearchValue,
+              etiquetaSelection: store.client.etiquetaSelection,
+              setEtiquetaSelection: store.client.setEtiquetaSelection,
+              changeFilterSearch: store.changeFilterSearchList,
+            )
+          : PreferredSize(
+              child: Container(),
+              preferredSize: const Size(0, 0),
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           store.client.setExpand(!store.client.expand);
@@ -245,12 +250,16 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                           SingleChildScrollView(
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.62,
+                              height: MediaQuery.of(context).size.height * 0.72,
                               child: store.client.loading
                                   ? const CircularProgressIndicator()
-                                  : CardWidget(
-                                      opacidade: opacidade,
-                                      controller: createController,
+                                  : Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 32, top: 24),
+                                      child: CardWidget(
+                                        opacidade: opacidade,
+                                        controller: createController,
+                                      ),
                                     ),
                             ),
                           ),

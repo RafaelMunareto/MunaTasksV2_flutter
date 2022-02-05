@@ -34,7 +34,7 @@ class ButtonSaveWidget extends StatelessWidget {
         children: [
           Observer(builder: (_) {
             return Padding(
-              padding: const EdgeInsets.fromLTRB(0, 16, 2, 2),
+              padding: const EdgeInsets.fromLTRB(0, 24, 2, 2),
               child: store.clientCreate.loadingTarefa
                   ? const CircularProgressIndicator()
                   : ElevatedButton.icon(

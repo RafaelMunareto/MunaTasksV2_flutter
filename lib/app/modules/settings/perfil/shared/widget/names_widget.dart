@@ -16,18 +16,18 @@ class NamesWidget extends StatefulWidget {
   final Function changeManager;
   final bool enableSwitch;
 
-  const NamesWidget(
-      {Key? key,
-      required this.textFieldNameBool,
-      required this.perfil,
-      required this.changeName,
-      required this.save,
-      required this.showTextFieldName,
-      required this.changeTime,
-      required this.errorTime,
-      required this.changeManager,
-      required this.enableSwitch})
-      : super(key: key);
+  const NamesWidget({
+    Key? key,
+    required this.textFieldNameBool,
+    required this.perfil,
+    required this.changeName,
+    required this.save,
+    required this.showTextFieldName,
+    required this.changeTime,
+    required this.errorTime,
+    required this.changeManager,
+    required this.enableSwitch,
+  }) : super(key: key);
 
   @override
   State<NamesWidget> createState() => _NamesWidgetState();
@@ -113,6 +113,9 @@ class _NamesWidgetState extends State<NamesWidget>
                         onTap: () {
                           setState(() {
                             enabledField = !enabledField;
+                            if (!enabledField) {
+                              widget.save();
+                            }
                           });
                         },
                         child: Icon(

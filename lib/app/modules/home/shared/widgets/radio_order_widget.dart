@@ -30,7 +30,7 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.30,
+      height: MediaQuery.of(context).size.height * 0.40,
       child: Observer(
         builder: (_) {
           if (widget.orderList!.data == null) {
@@ -61,30 +61,36 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  child: ListView.builder(
-                    itemCount: list.length,
-                    itemBuilder: (_, index) {
-                      var model = list[index];
-                      return Center(
-                        child: ListTile(
-                          key: Key(model.grupo.toString()),
-                          title: Text(
-                            model.grupo,
-                          ),
-                          leading: Radio(
-                            value: model.grupo,
-                            groupValue: widget.orderSelection,
-                            onChanged: (value) {
-                              setState(() {
-                                widget.setOrderSelection(value);
-                                widget.changeOrderList();
-                              });
-                            },
-                          ),
-                        ),
-                      );
-                    },
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  child: SingleChildScrollView(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      child: ListView.builder(
+                        reverse: true,
+                        itemCount: list.length,
+                        itemBuilder: (_, index) {
+                          var model = list[index];
+                          return Center(
+                            child: ListTile(
+                              key: Key(model.grupo.toString()),
+                              title: Text(
+                                model.grupo,
+                              ),
+                              leading: Radio(
+                                value: model.grupo,
+                                groupValue: widget.orderSelection,
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.setOrderSelection(value);
+                                    widget.changeOrderList();
+                                  });
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 ),
               ],

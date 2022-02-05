@@ -165,11 +165,10 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       curve: Curves.easeInOut,
       builder: (context, child, value) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.05,
           width: value,
           decoration: BoxDecoration(
             color: Colors.black26,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(16),
           ),
           child: TextFormField(
             onChanged: (value) {
@@ -180,7 +179,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             },
             style: const TextStyle(color: Colors.white),
             decoration: const InputDecoration(
-              contentPadding: EdgeInsets.all(16),
+              contentPadding: EdgeInsets.only(left: 16, right: 16),
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),

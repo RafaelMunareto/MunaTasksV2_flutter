@@ -108,7 +108,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
           children: [
             GestureDetector(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(bottom: 16.0),
                 child: Chip(
                   backgroundColor:
                       store.client.theme ? Colors.black38 : Colors.grey[100],
@@ -127,7 +127,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
             ),
             GestureDetector(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(bottom: 16),
                 child: Chip(
                   backgroundColor:
                       ConvertIcon().colorStatus(store.clientCreate.fase),
@@ -155,7 +155,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                     builder: (_) {
                       return store.clientCreate.imageUser == ""
                           ? Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 18, 8, 0),
+                              padding: const EdgeInsets.fromLTRB(0, 12, 8, 16),
                               child: Icon(
                                 Icons.people,
                                 color: store.client.theme
@@ -188,7 +188,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                       controller: textSubtarefaController,
                       onChanged: (value) =>
                           store.clientCreate.setSubtarefaTextSave(value),
-                      minLines: 2,
+                      minLines: 3,
                       maxLines: 20,
                       decoration: InputDecoration(
                           suffixIcon: InkWell(
