@@ -70,7 +70,9 @@ class _AppWidgetState extends State<AppWidget> {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: const [Locale('pt', 'BR')],
+      supportedLocales: const [
+        Locale('pt', 'BR'),
+      ],
     ).modular();
   }
 
