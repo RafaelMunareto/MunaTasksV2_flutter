@@ -56,8 +56,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     autorun(
       (_) {
         setState(() {
-          if (store.client.expand != appVisible) ;
-          appVisible = store.client.expand;
+          if (store.client.expand != appVisible) {
+            appVisible = store.client.expand;
+          }
         });
       },
     );

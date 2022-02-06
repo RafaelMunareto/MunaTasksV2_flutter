@@ -18,11 +18,10 @@ class _SplashWidgetState extends State<SplashWidget> {
   final AuthRepository auth = AuthRepository();
   bool lightMode = true;
 
-
   void changeThemeStorage() async {
     await theme.get('theme').then((value) {
       setState(() {
-        value?[0] == 'dark' ? lightMode = false :  lightMode = true;
+        value?[0] == 'dark' ? lightMode = false : lightMode = true;
       });
     });
   }
@@ -32,31 +31,47 @@ class _SplashWidgetState extends State<SplashWidget> {
     super.initState();
     changeThemeStorage();
     Future.delayed(const Duration(seconds: 2), () {
-      if(auth.getUser() != null){
+      if (auth.getUser() != null) {
         Modular.to.navigate('/home');
-      }else{
+      } else {
         Modular.to.navigate('/auth');
       }
-
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width * 0.60;
     return Scaffold(
       backgroundColor:
           lightMode ? const Color(0xfff7f6f4) : const Color(0xff042a49),
-      body: Center(
-        child: Container(
-          child: lightMode
-              ? Center(child: Image(image: const AssetImage('assets/icon/icon.png'), width: width))
-              : Center(
-                child: Image(
-                    image: const AssetImage('assets/icon/icon.png'), width: width
-                  ),
-              ),
-        ),
+      body: LayoutBuilder(
+        builder: (context, constraint) {
+          double withDevice = constraint.maxWidth;
+
+          if (withDevice < 600) {
+            withDevice = withDevice * 0.56;
+          } else if (withDevice < 960) {
+            withDevice = withDevice * 0.3;
+          } else if (withDevice < 1025) {
+            withDevice = withDevice * 0.2;
+          } else {
+            withDevice = withDevice * 0.15;
+          }
+          return Center(
+            child: Container(
+              child: lightMode
+                  ? Center(
+                      child: Image(
+                          image: const AssetImage('assets/icon/icon.png'),
+                          width: withDevice))
+                  : Center(
+                      child: Image(
+                          image: const AssetImage('assets/icon/icon.png'),
+                          width: withDevice),
+                    ),
+            ),
+          );
+        },
       ),
     );
   }
