@@ -23,7 +23,7 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   AppBarWidget({
     Key? key,
     this.title = "",
-    this.size = 125,
+    this.size = 115,
     this.context,
     this.home = false,
     this.icon = Icons.person,
@@ -60,7 +60,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/img/fundo_app_bar.png'),
-              fit: BoxFit.cover,
+              fit: BoxFit.fitWidth,
             ),
           ),
         ),
@@ -177,9 +177,10 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               });
               widget.changeFilterSearch!();
             },
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white, fontSize: 12),
             decoration: const InputDecoration(
-              contentPadding: EdgeInsets.only(left: 16, right: 16),
+              contentPadding:
+                  EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),

@@ -205,71 +205,79 @@ class _CardWidgetState extends State<CardWidget> {
     return Observer(builder: (_) {
       return FadeTransition(
         opacity: widget.opacidade,
-        child: ReorderableListView(
-          onReorder: reorderData,
-          children: [
-            for (var linha in store.client.tarefas)
-              Dismissible(
-                background: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    color: Colors.green,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Row(
-                        children: const [
-                          Icon(
-                            Icons.edit,
-                            color: Colors.white,
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.6,
+          child: SingleChildScrollView(
+            child: Wrap(
+              children: [
+                for (var linha in store.client.tarefas)
+                  Dismissible(
+                    background: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        color: Colors.green,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                'Editar',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
-                          Text(
-                            'Editar',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                secondaryBackground: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    color: Colors.red,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          Icon(
-                            Icons.delete,
-                            color: Colors.white,
+                    secondaryBackground: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        color: Colors.red,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: const [
+                              Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                'Excluir',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
-                          Text(
-                            'Excluir',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
+                    key: UniqueKey(),
+                    onDismissed: (direction) {
+                      if (direction == DismissDirection.startToEnd) {
+                        setState(() {
+                          store.clientCreate.setTarefaUpdate(linha);
+                          store.client.setExpand(!store.client.expand);
+                          widget.controller.forward();
+                        });
+                      } else {
+                        setState(() {
+                          dialogDelete(linha.texto, linha, context);
+                        });
+                      }
+                    },
+                    child: card(linha),
                   ),
-                ),
-                key: UniqueKey(),
-                onDismissed: (direction) {
-                  if (direction == DismissDirection.startToEnd) {
-                    setState(() {
-                      store.clientCreate.setTarefaUpdate(linha);
-                      store.client.setExpand(!store.client.expand);
-                      widget.controller.forward();
-                    });
-                  } else {
-                    setState(() {
-                      dialogDelete(linha.texto, linha, context);
-                    });
-                  }
-                },
-                child: card(linha),
-              ),
-          ],
+                const SizedBox(
+                  width: double.infinity,
+                  height: 32,
+                )
+              ],
+            ),
+          ),
         ),
       );
     });

@@ -220,7 +220,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
@@ -274,19 +273,12 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                           CreateWidget(
                             controller: createController,
                           ),
-                          SingleChildScrollView(
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height:
-                                  MediaQuery.of(context).size.height * 0.565,
-                              child: store.client.loading
-                                  ? const CircularProgressIndicator()
-                                  : CardWidget(
-                                      opacidade: opacidade,
-                                      controller: createController,
-                                    ),
-                            ),
-                          ),
+                          store.client.loading
+                              ? const CircularProgressIndicator()
+                              : CardWidget(
+                                  opacidade: opacidade,
+                                  controller: createController,
+                                ),
                         ],
                       ),
                     ),

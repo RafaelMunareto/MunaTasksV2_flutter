@@ -131,7 +131,9 @@ abstract class HomeStoreBase with Store {
               event.where((w) => w.reference!.id == element.users![i].id))
           .first
           .then((value) async {
-        await client.setUsersBase(value.first);
+        if (value.isNotEmpty) {
+          await client.setUsersBase(value.first);
+        }
         if (element.users!.length == client.usersBase.length) {
           element.users = [];
           element.users = client.usersBase;
@@ -175,7 +177,9 @@ abstract class HomeStoreBase with Store {
             event.where((w) => w.reference!.id == element.etiqueta.id))
         .first
         .then((value) {
-      return value.first;
+      if (value.isNotEmpty) {
+        return value.first;
+      }
     });
   }
 
@@ -184,7 +188,9 @@ abstract class HomeStoreBase with Store {
         ?.map((event) => event.where((w) => w.reference!.id == element.user.id))
         .first
         .then((value) {
-      return value.first;
+      if (value.isNotEmpty) {
+        return value.first;
+      }
     });
   }
 
