@@ -14,6 +14,7 @@ import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -74,134 +75,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
         curve: const Interval(0.4, 0.9),
       ),
     );
-
-    order() {
-      showDialog(
-        context: context,
-        useSafeArea: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Ordenamento'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Modular.to.pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-            content: Observer(builder: (_) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.4,
-                child: RadioOrderWidget(
-                    orderAscDesc: store.client.orderAscDesc,
-                    setOrderAscDesc: store.client.setOrderAscDesc,
-                    orderList: store.client.orderList,
-                    orderSelection: store.client.orderSelection,
-                    changeOrderList: store.changeOrderList,
-                    setOrderSelection: store.client.setOrderSelection),
-              );
-            }),
-          );
-        },
-      );
-    }
-
-    etiquetas() {
-      showDialog(
-        context: context,
-        useSafeArea: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Etiquetas'),
-            content: Observer(
-              builder: (_) {
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  child: RadioEtiquetasFilterWidget(
-                    changeFilterEtiquetaList: store.changeFilterEtiquetaList,
-                    etiquetaList: store.client.etiquetaList,
-                    setColor: store.client.setColor,
-                    setIcon: store.client.setIcon,
-                    setEtiquetaSelection: store.client.setEtiquetaSelection,
-                  ),
-                );
-              },
-            ),
-          );
-        },
-      );
-    }
-
-    teams() {
-      showDialog(
-        context: context,
-        useSafeArea: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Equipe'),
-            content: Observer(
-              builder: (_) {
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  child: TeamsSelectionWidget(
-                    changeFilterUserList: store.changeFilterUserList,
-                    userLista: store.client.userList,
-                    setImageUser: store.client.setImgUrl,
-                    setUserSelection: store.client.setUserSelection,
-                  ),
-                );
-              },
-            ),
-          );
-        },
-      );
-    }
-
-    etiquetas2() {
-      showGeneralDialog(
-        barrierLabel: "Label",
-        barrierDismissible: true,
-        barrierColor: Colors.black.withOpacity(0.5),
-        transitionDuration: const Duration(milliseconds: 400),
-        context: context,
-        pageBuilder: (context, anim1, anim2) {
-          return Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 300,
-              child: SizedBox.expand(
-                child: Observer(
-                  builder: (_) {
-                    return TeamsSelectionWidget(
-                      changeFilterUserList: store.changeFilterUserList,
-                      userLista: store.client.userList,
-                      setImageUser: store.client.setImgUrl,
-                      setUserSelection: store.client.setUserSelection,
-                    );
-                  },
-                ),
-              ),
-              margin: const EdgeInsets.only(bottom: 50, left: 12, right: 12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(40),
-              ),
-            ),
-          );
-        },
-        transitionBuilder: (context, anim1, anim2, child) {
-          return SlideTransition(
-            position:
-                Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim1),
-            child: child,
-          );
-        },
-      );
-    }
 
     return Scaffold(
       appBar: !appVisible
@@ -276,7 +149,17 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                                     )
                                   : const Icon(Icons.bookmark),
                               onTap: () {
-                                etiquetas();
+                                DialogButtom().showDialog(
+                                    RadioEtiquetasFilterWidget(
+                                      changeFilterEtiquetaList:
+                                          store.changeFilterEtiquetaList,
+                                      etiquetaList: store.client.etiquetaList,
+                                      setColor: store.client.setColor,
+                                      setIcon: store.client.setIcon,
+                                      setEtiquetaSelection:
+                                          store.client.setEtiquetaSelection,
+                                    ),
+                                    context);
                               },
                             ),
                             title: Center(
@@ -298,7 +181,19 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                                     ],
                                   ),
                                 ),
-                                onTap: () => etiquetas2(),
+                                onTap: () => DialogButtom().showDialog(
+                                    Observer(builder: (_) {
+                                  return RadioOrderWidget(
+                                      orderAscDesc: store.client.orderAscDesc,
+                                      setOrderAscDesc:
+                                          store.client.setOrderAscDesc,
+                                      orderList: store.client.orderList,
+                                      orderSelection:
+                                          store.client.orderSelection,
+                                      changeOrderList: store.changeOrderList,
+                                      setOrderSelection:
+                                          store.client.setOrderSelection);
+                                }), context),
                               ),
                             ),
                             trailing: GestureDetector(
@@ -307,7 +202,16 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                               ),
                               onTap: () {
                                 if (store.client.perfilUserLogado.manager) {
-                                  teams();
+                                  DialogButtom().showDialog(
+                                      TeamsSelectionWidget(
+                                        changeFilterUserList:
+                                            store.changeFilterUserList,
+                                        userLista: store.client.userList,
+                                        setImageUser: store.client.setImgUrl,
+                                        setUserSelection:
+                                            store.client.setUserSelection,
+                                      ),
+                                      context);
                                 }
                               },
                             ),

@@ -60,47 +60,52 @@ class _RetardActionWidgetState extends State<RetardActionWidget>
   Widget _buildAnimation(BuildContext context, Widget? child) {
     return FadeTransition(
       opacity: _animacaoOpacity,
-      child: Observer(
-        builder: (_) {
-          if (widget.retard!.data == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            List<RetardModel> list = widget.retard!.data;
-            return SingleChildScrollView(
-              child: Wrap(
-                runAlignment: WrapAlignment.spaceAround,
-                spacing: 24,
-                children: [
-                  for (var index = 0; index < list.length; index++)
-                    InputChip(
-                      key: ObjectKey(list[index].reference),
-                      labelPadding: const EdgeInsets.all(2),
-                      elevation: 4.0,
-                      avatar: const Icon(Icons.more_time_rounded),
-                      label: SizedBox(
-                        width: 70,
-                        child: Text(
-                          list[index].tempoName,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 12),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: Observer(
+            builder: (_) {
+              if (widget.retard!.data == null) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                List<RetardModel> list = widget.retard!.data;
+                return SingleChildScrollView(
+                  child: Wrap(
+                    runAlignment: WrapAlignment.spaceAround,
+                    spacing: 24,
+                    children: [
+                      for (var index = 0; index < list.length; index++)
+                        InputChip(
+                          key: ObjectKey(list[index].reference),
+                          labelPadding: const EdgeInsets.all(2),
+                          elevation: 4.0,
+                          avatar: const Icon(Icons.more_time_rounded),
+                          label: SizedBox(
+                            width: 100,
+                            child: Text(
+                              list[index].tempoName,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              widget.setRetardSelection(list[index].tempoValue);
+                              Modular.to.pop();
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              widget.updateDate(widget.model);
+                            });
+                          },
                         ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          widget.setRetardSelection(list[index].tempoValue);
-                          Modular.to.pop();
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          widget.updateDate(widget.model);
-                        });
-                      },
-                    ),
-                ],
-              ),
-            );
-          }
-        },
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+        ),
       ),
     );
   }

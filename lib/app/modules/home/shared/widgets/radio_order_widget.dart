@@ -28,75 +28,80 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.40,
-      child: Observer(
-        builder: (_) {
-          if (widget.orderList!.data == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            List<OrderModel> list = widget.orderList!.data;
-            return Wrap(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  child: ListTile(
-                    leading: const Text(
-                      'ASC',
-                    ),
-                    title: Switch(
-                        value: widget.orderAscDesc,
-                        onChanged: (_) {
-                          setState(() {
-                            widget.setOrderAscDesc(!widget.orderAscDesc);
-                            widget.changeOrderList();
-                          });
-                        }),
-                    trailing: const Text('DESC'),
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.35,
-                  child: SingleChildScrollView(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      child: ListView.builder(
-                        reverse: true,
-                        itemCount: list.length,
-                        itemBuilder: (_, index) {
-                          var model = list[index];
-                          return Center(
-                            child: ListTile(
-                              key: Key(model.grupo.toString()),
-                              title: Text(
-                                model.grupo,
-                              ),
-                              leading: Radio(
-                                value: model.grupo,
-                                groupValue: widget.orderSelection,
-                                onChanged: (value) {
-                                  setState(() {
-                                    widget.setOrderSelection(value);
-                                    widget.changeOrderList();
-                                  });
-                                },
-                              ),
-                            ),
-                          );
-                        },
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.40,
+          child: Observer(
+            builder: (_) {
+              if (widget.orderList!.data == null) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                List<OrderModel> list = widget.orderList!.data;
+                return Wrap(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      child: ListTile(
+                        leading: const Text(
+                          'ASC',
+                        ),
+                        title: Switch(
+                            value: widget.orderAscDesc,
+                            onChanged: (_) {
+                              setState(() {
+                                widget.setOrderAscDesc(!widget.orderAscDesc);
+                                widget.changeOrderList();
+                              });
+                            }),
+                        trailing: const Text('DESC'),
                       ),
                     ),
-                  ),
-                ),
-              ],
-            );
-          }
-        },
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.35,
+                      child: SingleChildScrollView(
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          child: ListView.builder(
+                            reverse: true,
+                            itemCount: list.length,
+                            itemBuilder: (_, index) {
+                              var model = list[index];
+                              return Center(
+                                child: ListTile(
+                                  key: Key(model.grupo.toString()),
+                                  title: Text(
+                                    model.grupo,
+                                  ),
+                                  leading: Radio(
+                                    value: model.grupo,
+                                    groupValue: widget.orderSelection,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        widget.setOrderSelection(value);
+                                        widget.changeOrderList();
+                                      });
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
+            },
+          ),
+        ),
       ),
     );
   }

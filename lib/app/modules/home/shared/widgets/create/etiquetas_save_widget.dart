@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class EtiquetasSaveWidget extends StatefulWidget {
   const EtiquetasSaveWidget({
@@ -16,27 +17,6 @@ class EtiquetasSaveWidget extends StatefulWidget {
 
 class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
   final HomeStore store = Modular.get();
-
-  etiquetas() {
-    showDialog(
-      useSafeArea: false,
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Etiquetas'),
-          content: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.3,
-            child: RadioEtiquetasFilterWidget(
-              etiquetaList: store.client.etiquetaList,
-              create: true,
-              setEtiquetaSave: store.clientCreate.setSaveEtiqueta,
-            ),
-          ),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +45,13 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
       ),
       onTap: () {
         setState(() {
-          etiquetas();
+          DialogButtom().showDialog(
+              RadioEtiquetasFilterWidget(
+                etiquetaList: store.client.etiquetaList,
+                create: true,
+                setEtiquetaSave: store.clientCreate.setSaveEtiqueta,
+              ),
+              context);
         });
       },
     );

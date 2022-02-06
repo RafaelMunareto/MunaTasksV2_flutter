@@ -64,58 +64,69 @@ class _PrioridadeSelectionWidgetState extends State<PrioridadeSelectionWidget>
   Widget _buildAnimation(BuildContext context, Widget? child) {
     return FadeTransition(
       opacity: _animacaoOpacity,
-      child: Observer(
-        builder: (_) {
-          if (widget.prioridadeList!.data == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            List<PrioridadeModel> list = widget.prioridadeList!.data;
-            return SingleChildScrollView(
-              child: Wrap(
-                runAlignment: WrapAlignment.spaceAround,
-                spacing: 24,
-                children: [
-                  for (var index = 0; index < list.length; index++)
-                    InputChip(
-                      key: ObjectKey(list[index].reference),
-                      labelPadding: const EdgeInsets.all(2),
-                      elevation: 8.0,
-                      avatar: list[index].prioridade == 4
-                          ? const Icon(Icons.flag_outlined, color: Colors.grey)
-                          : Icon(
-                              Icons.flag,
-                              color: ConvertIcon()
-                                  .convertColorFlaf(list[index].prioridade),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: Observer(
+            builder: (_) {
+              if (widget.prioridadeList!.data == null) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                List<PrioridadeModel> list = widget.prioridadeList!.data;
+                return SingleChildScrollView(
+                  child: Wrap(
+                    runAlignment: WrapAlignment.spaceAround,
+                    spacing: 24,
+                    children: [
+                      for (var index = 0; index < list.length; index++)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InputChip(
+                            key: ObjectKey(list[index].reference),
+                            labelPadding: const EdgeInsets.all(2),
+                            elevation: 8.0,
+                            avatar: list[index].prioridade == 4
+                                ? const Icon(Icons.flag_outlined,
+                                    color: Colors.grey)
+                                : Icon(
+                                    Icons.flag,
+                                    color: ConvertIcon().convertColorFlaf(
+                                        list[index].prioridade),
+                                  ),
+                            label: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: Text(
+                                list[index].prioridade == 4
+                                    ? 'Normal'
+                                    : 'Prioridade ' +
+                                        list[index].prioridade.toString(),
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 12),
+                              ),
                             ),
-                      label: SizedBox(
-                        width: 70,
-                        child: Text(
-                          list[index].prioridade == 4
-                              ? 'Normal'
-                              : 'Prioridade ' +
-                                  list[index].prioridade.toString(),
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 12),
+                            onPressed: () {
+                              setState(() {
+                                widget.setPrioridadeSelection(
+                                    list[index].prioridade);
+                                if (!widget.create) {
+                                  widget.changePrioridadeList!(
+                                      widget.tarefaModel!);
+                                }
+                                FocusScope.of(context).unfocus();
+                                Modular.to.pop();
+                              });
+                            },
+                          ),
                         ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          widget.setPrioridadeSelection(list[index].prioridade);
-                          if (!widget.create) {
-                            widget.changePrioridadeList!(widget.tarefaModel!);
-                          }
-                          FocusScope.of(context).unfocus();
-                          Modular.to.pop();
-                        });
-                      },
-                    ),
-                ],
-              ),
-            );
-          }
-        },
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+        ),
       ),
     );
   }

@@ -26,21 +26,27 @@ class ErrorsWidget extends StatelessWidget {
             store.clientCreate.validaDataTarefa(),
           ];
 
-    return Wrap(
-      children: [
-        for (var erro in errors)
-          erro != null
-              ? Padding(
-                  padding: const EdgeInsets.only(bottom: 24.0),
-                  child: SizedBox(
-                    child: Text(
-                      erro.toString(),
-                      style: const TextStyle(color: Colors.red, fontSize: 12),
-                    ),
-                  ),
-                )
-              : Container(),
-      ],
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(
+        child: Wrap(
+          children: [
+            for (var erro in errors)
+              erro != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(bottom: 24.0),
+                      child: SizedBox(
+                        child: Text(
+                          erro.toString(),
+                          style:
+                              const TextStyle(color: Colors.red, fontSize: 12),
+                        ),
+                      ),
+                    )
+                  : Container(),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/actions_fase_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class ActionFaseSaveWidget extends StatefulWidget {
   final String title;
@@ -18,25 +19,6 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
   @override
   Widget build(BuildContext context) {
     final HomeStore store = Modular.get();
-    _actions() {
-      showDialog(
-        context: context,
-        useSafeArea: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Fase'),
-            content: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: ActionsFaseWidget(
-                faseList: store.clientCreate.faseList,
-                setActionsFase: store.clientCreate.setFaseTarefa,
-              ),
-            ),
-          );
-        },
-      );
-    }
 
     return Observer(builder: (_) {
       return GestureDetector(
@@ -59,7 +41,12 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
             ),
           ),
         ),
-        onTap: () => _actions(),
+        onTap: () => DialogButtom().showDialog(
+            ActionsFaseWidget(
+              faseList: store.clientCreate.faseList,
+              setActionsFase: store.clientCreate.setFaseTarefa,
+            ),
+            context),
       );
     });
   }

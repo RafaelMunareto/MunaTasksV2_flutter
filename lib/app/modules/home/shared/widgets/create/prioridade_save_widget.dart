@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class PrioridadeSaveWidget extends StatefulWidget {
   final String title;
@@ -18,31 +19,16 @@ class _PrioridadeSaveWidgetState extends State<PrioridadeSaveWidget> {
   final HomeStore store = Modular.get();
   @override
   Widget build(BuildContext context) {
-    prioridade() {
-      showDialog(
-        context: context,
-        useSafeArea: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Prioridade'),
-            content: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.2,
-              child: PrioridadeSelectionWidget(
-                create: true,
-                prioridadeSelection: store.clientCreate.tarefaModelPrioritario,
-                prioridadeList: store.client.prioridadeList,
-                setPrioridadeSelection:
-                    store.clientCreate.setPrioridadeSaveSelection,
-              ),
-            ),
-          );
-        },
-      );
-    }
-
     return GestureDetector(
-      onTap: () => prioridade(),
+      onTap: () => DialogButtom().showDialog(
+          PrioridadeSelectionWidget(
+            create: true,
+            prioridadeSelection: store.clientCreate.tarefaModelPrioritario,
+            prioridadeList: store.client.prioridadeList,
+            setPrioridadeSelection:
+                store.clientCreate.setPrioridadeSaveSelection,
+          ),
+          context),
       child: Observer(
         builder: (_) {
           return Padding(

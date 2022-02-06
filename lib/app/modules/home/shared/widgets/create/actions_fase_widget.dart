@@ -54,61 +54,66 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
   Widget _buildAnimation(BuildContext context, Widget? child) {
     return FadeTransition(
       opacity: _animacaoOpacity,
-      child: Observer(
-        builder: (_) {
-          if (widget.faseList!.data == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            List<FaseModel> list = widget.faseList!.data;
-            return SingleChildScrollView(
-              child: Wrap(
-                runAlignment: WrapAlignment.center,
-                spacing: 24,
-                children: [
-                  for (var index = 0; index < list.length; index++)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InputChip(
-                        key: ObjectKey(list[index].reference),
-                        labelPadding: const EdgeInsets.all(2),
-                        elevation: 8.0,
-                        backgroundColor:
-                            ConvertIcon().colorStatus(list[index].status),
-                        avatar: Icon(
-                          IconData(list[index].icon,
-                              fontFamily: 'MaterialIcons'),
-                          color:
-                              ConvertIcon().convertColorFase(list[index].color),
-                        ),
-                        label: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: Text(
-                            list[index].name.toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: Observer(
+            builder: (_) {
+              if (widget.faseList!.data == null) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                List<FaseModel> list = widget.faseList!.data;
+                return SingleChildScrollView(
+                  child: Wrap(
+                    runAlignment: WrapAlignment.center,
+                    spacing: 24,
+                    children: [
+                      for (var index = 0; index < list.length; index++)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InputChip(
+                            key: ObjectKey(list[index].reference),
+                            labelPadding: const EdgeInsets.all(2),
+                            elevation: 8.0,
+                            backgroundColor:
+                                ConvertIcon().colorStatus(list[index].status),
+                            avatar: Icon(
+                              IconData(list[index].icon,
+                                  fontFamily: 'MaterialIcons'),
                               color: ConvertIcon()
-                                  .colorStatusDark(list[index].status),
+                                  .convertColorFase(list[index].color),
                             ),
+                            label: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: Text(
+                                list[index].name.toString(),
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: ConvertIcon()
+                                      .colorStatusDark(list[index].status),
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                widget.setActionsFase(list[index].status);
+                                FocusScope.of(context).unfocus();
+                                Modular.to.pop();
+                              });
+                            },
                           ),
                         ),
-                        onPressed: () {
-                          setState(() {
-                            widget.setActionsFase(list[index].status);
-                            FocusScope.of(context).unfocus();
-                            Modular.to.pop();
-                          });
-                        },
-                      ),
-                    ),
-                ],
-              ),
-            );
-          }
-        },
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+        ),
       ),
     );
   }

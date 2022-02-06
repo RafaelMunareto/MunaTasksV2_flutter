@@ -22,35 +22,40 @@ class _SubitemActionsWidgetState extends State<SubitemActionsWidget> {
   final HomeStore store = Modular.get();
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      children: [
-        for (var linha in store.client.subtarefaActionList)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InputChip(
-              key: ObjectKey(linha.toString()),
-              labelPadding: const EdgeInsets.all(2),
-              elevation: 4.0,
-              avatar: Icon(ConvertIcon().iconStatus(linha),
-                  color: ConvertIcon().iconStatusColor(linha)),
-              label: SizedBox(
-                child: Text(
-                  ConvertIcon().labelStatus(linha),
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 12),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(
+        child: Wrap(
+          children: [
+            for (var linha in store.client.subtarefaActionList)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InputChip(
+                  key: ObjectKey(linha.toString()),
+                  labelPadding: const EdgeInsets.all(2),
+                  elevation: 4.0,
+                  avatar: Icon(ConvertIcon().iconStatus(linha),
+                      color: ConvertIcon().iconStatusColor(linha)),
+                  label: SizedBox(
+                    child: Text(
+                      ConvertIcon().labelStatus(linha),
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      store.client.setSubtarefaAction(linha);
+                      store.changeSubtarefaAction(
+                          widget.subtarefaModel, widget.tarefaModel);
+                      Modular.to.pop();
+                    });
+                  },
                 ),
               ),
-              onPressed: () {
-                setState(() {
-                  store.client.setSubtarefaAction(linha);
-                  store.changeSubtarefaAction(
-                      widget.subtarefaModel, widget.tarefaModel);
-                  Modular.to.pop();
-                });
-              },
-            ),
-          ),
-      ],
+          ],
+        ),
+      ),
     );
   }
 }

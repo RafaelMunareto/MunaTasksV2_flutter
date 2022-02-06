@@ -58,56 +58,62 @@ class _CreateSubtarefaInsertWidgetState
   Widget _buildAnimation(BuildContext context, Widget? child) {
     return FadeTransition(
       opacity: _animacaoOpacity,
-      child: Observer(
-        builder: (_) {
-          if (widget.subtarefaList!.data == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            List<SubtarefaInsertModel> list = widget.subtarefaList!.data;
-            var selecione = SubtarefaInsertModel(subtarefa: 'Subtarefa');
-            if (!list
-                .map((e) => e.subtarefa.contains('Subtarefa'))
-                .contains(true)) {
-              list.insert(0, selecione);
-            }
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: Observer(
+            builder: (_) {
+              if (widget.subtarefaList!.data == null) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                List<SubtarefaInsertModel> list = widget.subtarefaList!.data;
+                var selecione = SubtarefaInsertModel(subtarefa: 'Subtarefa');
+                if (!list
+                    .map((e) => e.subtarefa.contains('Subtarefa'))
+                    .contains(true)) {
+                  list.insert(0, selecione);
+                }
 
-            return SingleChildScrollView(
-              child: Wrap(
-                runAlignment: WrapAlignment.spaceAround,
-                spacing: 24,
-                children: [
-                  for (var index = 0; index < list.length; index++)
-                    InputChip(
-                      key: UniqueKey(),
-                      labelPadding: const EdgeInsets.all(2),
-                      elevation: 4.0,
-                      avatar: const Icon(
-                        Icons.work,
-                        color: Colors.grey,
-                      ),
-                      label: SizedBox(
-                        width: 70,
-                        child: Text(
-                          list[index].subtarefa,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 12),
+                return SingleChildScrollView(
+                  child: Wrap(
+                    runAlignment: WrapAlignment.spaceAround,
+                    spacing: 24,
+                    children: [
+                      for (var index = 0; index < list.length; index++)
+                        InputChip(
+                          key: UniqueKey(),
+                          labelPadding: const EdgeInsets.all(2),
+                          elevation: 4.0,
+                          avatar: const Icon(
+                            Icons.work,
+                            color: Colors.grey,
+                          ),
+                          label: SizedBox(
+                            width: 100,
+                            child: Text(
+                              list[index].subtarefa,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              widget
+                                  .setSubtarefaSelection(list[index].subtarefa);
+                              FocusScope.of(context).unfocus();
+                              Modular.to.pop();
+                            });
+                          },
                         ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          widget.setSubtarefaSelection(list[index].subtarefa);
-                          FocusScope.of(context).unfocus();
-                          Modular.to.pop();
-                        });
-                      },
-                    ),
-                ],
-              ),
-            );
-          }
-        },
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+        ),
       ),
     );
   }

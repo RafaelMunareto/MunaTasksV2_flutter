@@ -10,6 +10,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/header_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/retard_action_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class CardWidget extends StatefulWidget {
@@ -71,52 +72,6 @@ class _CardWidgetState extends State<CardWidget> {
       );
     }
 
-    _retard(TarefaModel model) {
-      showDialog(
-        context: context,
-        useSafeArea: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Adiamento'),
-            content: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.25,
-              child: RetardActionWidget(
-                retard: store.client.retardList,
-                retardSelection: store.client.retardSelection,
-                setRetardSelection: store.client.setRetardSelection,
-                updateDate: store.updateDate,
-                model: model,
-              ),
-            ),
-          );
-        },
-      );
-    }
-
-    prioridade(tarefaModel) {
-      showDialog(
-        context: context,
-        useSafeArea: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Prioridade'),
-            content: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.2,
-              child: PrioridadeSelectionWidget(
-                prioridadeSelection: store.client.prioridadeSelection,
-                prioridadeList: store.client.prioridadeList,
-                setPrioridadeSelection: store.client.setPrioridadeSelection,
-                tarefaModel: tarefaModel,
-                changePrioridadeList: store.changePrioridadeList,
-              ),
-            ),
-          );
-        },
-      );
-    }
-
     card(linha) {
       return PhysicalModel(
         key: UniqueKey(),
@@ -142,7 +97,16 @@ class _CardWidgetState extends State<CardWidget> {
                     alignment: WrapAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                        onTap: () => _retard(linha),
+                        onTap: () => DialogButtom().showDialog(
+                            RetardActionWidget(
+                              retard: store.client.retardList,
+                              retardSelection: store.client.retardSelection,
+                              setRetardSelection:
+                                  store.client.setRetardSelection,
+                              updateDate: store.updateDate,
+                              model: linha,
+                            ),
+                            context),
                         child: Wrap(
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
@@ -167,7 +131,17 @@ class _CardWidgetState extends State<CardWidget> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => prioridade(linha),
+                        onTap: () => DialogButtom().showDialog(
+                            PrioridadeSelectionWidget(
+                              prioridadeSelection:
+                                  store.client.prioridadeSelection,
+                              prioridadeList: store.client.prioridadeList,
+                              setPrioridadeSelection:
+                                  store.client.setPrioridadeSelection,
+                              tarefaModel: linha,
+                              changePrioridadeList: store.changePrioridadeList,
+                            ),
+                            context),
                         child: Icon(
                           Icons.flag,
                           color:

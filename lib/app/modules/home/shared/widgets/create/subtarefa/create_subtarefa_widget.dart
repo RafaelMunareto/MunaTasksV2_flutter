@@ -9,6 +9,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/crea
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/subtarefas_widget.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class CreateSubtarefaWidget extends StatefulWidget {
   const CreateSubtarefaWidget({
@@ -31,89 +32,6 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
 
   @override
   Widget build(BuildContext context) {
-    _subtarefa() {
-      showDialog(
-        context: context,
-        useSafeArea: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Subtarefa'),
-            content: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.2,
-              child: CreateSubtarefaInsertWidget(
-                  subtarefaInserSelection:
-                      store.clientCreate.subtarefaModelSaveTitle,
-                  setSubtarefaSelection:
-                      store.clientCreate.setSubtarefaInsertCreate,
-                  subtarefaList: store.clientCreate.subtarefaInsertList),
-            ),
-          );
-        },
-      );
-    }
-
-    _actions() {
-      showDialog(
-        context: context,
-        useSafeArea: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Fase'),
-            content: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: ActionsFaseWidget(
-                faseList: store.clientCreate.faseList,
-                setActionsFase: store.clientCreate.setFase,
-              ),
-            ),
-          );
-        },
-      );
-    }
-
-    users() {
-      showDialog(
-        context: context,
-        useSafeArea: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Responsável'),
-            content: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: CreateUserSubtarefaWidget(
-                userLista: store.client.userList,
-                setCreateImageUser: store.clientCreate.setCreateImageUser,
-                setUserCreateSelection:
-                    store.clientCreate.setUserCreateSelection,
-              ),
-            ),
-          );
-        },
-      );
-    }
-
-    errors() {
-      showDialog(
-        context: context,
-        useSafeArea: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Erros'),
-            content: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: const ErrorsWidget(
-                tarefa: false,
-              ),
-            ),
-          );
-        },
-      );
-    }
-
     return Observer(builder: (_) {
       return Container(
         width: MediaQuery.of(context).size.width,
@@ -140,7 +58,14 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                           : Colors.grey),
                 ),
               ),
-              onTap: () => _subtarefa(),
+              onTap: () => DialogButtom().showDialog(
+                  CreateSubtarefaInsertWidget(
+                      subtarefaInserSelection:
+                          store.clientCreate.subtarefaModelSaveTitle,
+                      setSubtarefaSelection:
+                          store.clientCreate.setSubtarefaInsertCreate,
+                      subtarefaList: store.clientCreate.subtarefaInsertList),
+                  context),
             ),
             GestureDetector(
               child: Padding(
@@ -162,12 +87,25 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                   ),
                 ),
               ),
-              onTap: () => _actions(),
+              onTap: () => DialogButtom().showDialog(
+                  ActionsFaseWidget(
+                    faseList: store.clientCreate.faseList,
+                    setActionsFase: store.clientCreate.setFase,
+                  ),
+                  context),
             ),
             Wrap(
               children: [
                 GestureDetector(
-                  onTap: () => users(),
+                  onTap: () => DialogButtom().showDialog(
+                      CreateUserSubtarefaWidget(
+                        userLista: store.client.userList,
+                        setCreateImageUser:
+                            store.clientCreate.setCreateImageUser,
+                        setUserCreateSelection:
+                            store.clientCreate.setUserCreateSelection,
+                      ),
+                      context),
                   child: Observer(
                     builder: (_) {
                       return store.clientCreate.imageUser == ""
@@ -242,7 +180,11 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                             onPressed: () {
                               store.clientCreate.isValidSubtarefa
                                   ? store.clientCreate.setSubtarefas()
-                                  : errors();
+                                  : DialogButtom().showDialog(
+                                      const ErrorsWidget(
+                                        tarefa: false,
+                                      ),
+                                      context);
                               FocusScope.of(context).unfocus();
                             },
                             icon: const Icon(Icons.add_circle, size: 18),
