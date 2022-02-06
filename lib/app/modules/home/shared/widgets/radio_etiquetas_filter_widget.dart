@@ -65,37 +65,36 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
   Widget _buildAnimation(BuildContext context, Widget? child) {
     return FadeTransition(
       opacity: _animacaoOpacity,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Observer(
-          builder: (_) {
-            if (widget.etiquetaList!.data == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              List<EtiquetaModel> list = widget.etiquetaList!.data;
-              if (widget.create == false) {
-                var todos = EtiquetaModel(
-                    color: 'black', icon: 57585, etiqueta: 'TODOS');
-                if (!list
-                    .map((e) => e.etiqueta.contains('TODOS'))
-                    .contains(true)) {
-                  list.insert(0, todos);
-                }
-              } else {
-                var selecione = EtiquetaModel(
-                    color: 'black', icon: 57585, etiqueta: 'Etiqueta');
-                if (!list
-                    .map((e) => e.etiqueta.contains('Etiqueta'))
-                    .contains(true)) {
-                  list.insert(0, selecione);
-                }
+      child: Observer(
+        builder: (_) {
+          if (widget.etiquetaList!.data == null) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            List<EtiquetaModel> list = widget.etiquetaList!.data;
+            if (widget.create == false) {
+              var todos =
+                  EtiquetaModel(color: 'black', icon: 57585, etiqueta: 'TODOS');
+              if (!list
+                  .map((e) => e.etiqueta.contains('TODOS'))
+                  .contains(true)) {
+                list.insert(0, todos);
               }
+            } else {
+              var selecione = EtiquetaModel(
+                  color: 'black', icon: 57585, etiqueta: 'Etiqueta');
+              if (!list
+                  .map((e) => e.etiqueta.contains('Etiqueta'))
+                  .contains(true)) {
+                list.insert(0, selecione);
+              }
+            }
 
-              return Wrap(
+            return SingleChildScrollView(
+              child: Wrap(
                 runAlignment: WrapAlignment.spaceAround,
-                spacing: 16,
+                spacing: 24,
                 children: [
                   for (var index = 0; index < list.length; index++)
                     InputChip(
@@ -108,6 +107,7 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
                         color: ConvertIcon().convertColor(list[index].color),
                       ),
                       label: SizedBox(
+                        width: 70,
                         child: Text(
                           list[index].etiqueta,
                           overflow: TextOverflow.ellipsis,
@@ -130,10 +130,10 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
                       },
                     ),
                 ],
-              );
-            }
-          },
-        ),
+              ),
+            );
+          }
+        },
       ),
     );
   }

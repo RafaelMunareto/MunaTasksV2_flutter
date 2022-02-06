@@ -161,6 +161,48 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
       );
     }
 
+    etiquetas2() {
+      showGeneralDialog(
+        barrierLabel: "Label",
+        barrierDismissible: true,
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionDuration: const Duration(milliseconds: 400),
+        context: context,
+        pageBuilder: (context, anim1, anim2) {
+          return Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 300,
+              child: SizedBox.expand(
+                child: Observer(
+                  builder: (_) {
+                    return TeamsSelectionWidget(
+                      changeFilterUserList: store.changeFilterUserList,
+                      userLista: store.client.userList,
+                      setImageUser: store.client.setImgUrl,
+                      setUserSelection: store.client.setUserSelection,
+                    );
+                  },
+                ),
+              ),
+              margin: const EdgeInsets.only(bottom: 50, left: 12, right: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(40),
+              ),
+            ),
+          );
+        },
+        transitionBuilder: (context, anim1, anim2, child) {
+          return SlideTransition(
+            position:
+                Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim1),
+            child: child,
+          );
+        },
+      );
+    }
+
     return Scaffold(
       appBar: !appVisible
           ? AppBarWidget(
@@ -256,7 +298,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                                     ],
                                   ),
                                 ),
-                                onTap: () => order(),
+                                onTap: () => etiquetas2(),
                               ),
                             ),
                             trailing: GestureDetector(

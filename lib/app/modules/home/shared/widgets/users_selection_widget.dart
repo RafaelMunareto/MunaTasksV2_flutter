@@ -50,67 +50,59 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
     final HomeStore store = Modular.get();
     return FadeTransition(
       opacity: _animacaoOpacity,
-      child: Wrap(
-        direction: Axis.vertical,
-        children: [
-          Observer(
-            builder: (_) {
-              if (store.client.userList!.data == null) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (store.client.userList!.hasError) {
-                return Center(
-                  child:
-                      Text('Error ' + store.client.userList!.error.toString()),
-                );
-              } else {
-                List<UserModel> list = store.client.userList!.data;
-                return list.isNotEmpty
-                    ? SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        child: Wrap(
-                          children: [
-                            for (var i = 0; i < list.length; i++)
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  child: InputChip(
-                                    key: ObjectKey(list[i].email),
-                                    labelPadding: const EdgeInsets.all(2),
-                                    selected: store.clientCreate.individualChip
-                                        .contains(list[i].email),
-                                    elevation: 4.0,
-                                    avatar: CircleAvatarWidget(
-                                      url: list[i].urlImage,
-                                    ),
-                                    label: SizedBox(
-                                      child: Text(
-                                        list[i].name,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    onSelected: (bool value) {
-                                      setState(() {
-                                        store.clientCreate
-                                            .setIdReferenceStaff(list[i].email);
-                                        store.clientCreate.setIdStaff(list[i]);
-                                        FocusScope.of(context).unfocus();
-                                        store.clientCreate
-                                            .setLoadingUser(false);
-                                      });
-                                    },
-                                  ),
+      child: Observer(
+        builder: (_) {
+          if (store.client.userList!.data == null) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (store.client.userList!.hasError) {
+            return Center(
+              child: Text('Error ' + store.client.userList!.error.toString()),
+            );
+          } else {
+            List<UserModel> list = store.client.userList!.data;
+            return list.isNotEmpty
+                ? SingleChildScrollView(
+                    child: Wrap(
+                      runAlignment: WrapAlignment.spaceAround,
+                      spacing: 24,
+                      children: [
+                        for (var i = 0; i < list.length; i++)
+                          SizedBox(
+                            child: InputChip(
+                              key: ObjectKey(list[i].email),
+                              labelPadding: const EdgeInsets.all(2),
+                              selected: store.clientCreate.individualChip
+                                  .contains(list[i].email),
+                              elevation: 4.0,
+                              avatar: CircleAvatarWidget(
+                                url: list[i].urlImage,
+                              ),
+                              label: SizedBox(
+                                width: 70,
+                                child: Text(
+                                  list[i].name,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              )
-                          ],
-                        ),
-                      )
-                    : Container();
-              }
-            },
-          )
-        ],
+                              ),
+                              onSelected: (bool value) {
+                                setState(() {
+                                  store.clientCreate
+                                      .setIdReferenceStaff(list[i].email);
+                                  store.clientCreate.setIdStaff(list[i]);
+                                  FocusScope.of(context).unfocus();
+                                  store.clientCreate.setLoadingUser(false);
+                                });
+                              },
+                            ),
+                          )
+                      ],
+                    ),
+                  )
+                : Container();
+          }
+        },
       ),
     );
   }

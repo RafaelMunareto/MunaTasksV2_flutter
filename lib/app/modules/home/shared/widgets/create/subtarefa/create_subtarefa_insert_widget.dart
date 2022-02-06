@@ -58,26 +58,25 @@ class _CreateSubtarefaInsertWidgetState
   Widget _buildAnimation(BuildContext context, Widget? child) {
     return FadeTransition(
       opacity: _animacaoOpacity,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Observer(
-          builder: (_) {
-            if (widget.subtarefaList!.data == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              List<SubtarefaInsertModel> list = widget.subtarefaList!.data;
-              var selecione = SubtarefaInsertModel(subtarefa: 'Subtarefa');
-              if (!list
-                  .map((e) => e.subtarefa.contains('Subtarefa'))
-                  .contains(true)) {
-                list.insert(0, selecione);
-              }
+      child: Observer(
+        builder: (_) {
+          if (widget.subtarefaList!.data == null) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            List<SubtarefaInsertModel> list = widget.subtarefaList!.data;
+            var selecione = SubtarefaInsertModel(subtarefa: 'Subtarefa');
+            if (!list
+                .map((e) => e.subtarefa.contains('Subtarefa'))
+                .contains(true)) {
+              list.insert(0, selecione);
+            }
 
-              return Wrap(
+            return SingleChildScrollView(
+              child: Wrap(
                 runAlignment: WrapAlignment.spaceAround,
-                spacing: 16,
+                spacing: 24,
                 children: [
                   for (var index = 0; index < list.length; index++)
                     InputChip(
@@ -89,6 +88,7 @@ class _CreateSubtarefaInsertWidgetState
                         color: Colors.grey,
                       ),
                       label: SizedBox(
+                        width: 70,
                         child: Text(
                           list[index].subtarefa,
                           overflow: TextOverflow.ellipsis,
@@ -104,10 +104,10 @@ class _CreateSubtarefaInsertWidgetState
                       },
                     ),
                 ],
-              );
-            }
-          },
-        ),
+              ),
+            );
+          }
+        },
       ),
     );
   }

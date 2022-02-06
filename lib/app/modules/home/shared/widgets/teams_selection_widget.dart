@@ -58,27 +58,26 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
   Widget _buildAnimation(BuildContext context, Widget? child) {
     return FadeTransition(
       opacity: _animacaoOpacity,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Observer(
-          builder: (_) {
-            if (widget.userLista!.data == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              List<UserModel> list = widget.userLista!.data;
-              var todos = UserModel(
-                  name: 'TODOS',
-                  email: 'todos@todos.com.br',
-                  urlImage:
-                      'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/allPeople.png?alt=media&token=19a38226-7467-4f83-a201-20214af45bc1');
-              if (!list.map((e) => e.name.contains('TODOS')).contains(true)) {
-                list.insert(0, todos);
-              }
-              return Wrap(
+      child: Observer(
+        builder: (_) {
+          if (widget.userLista!.data == null) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            List<UserModel> list = widget.userLista!.data;
+            var todos = UserModel(
+                name: 'TODOS',
+                email: 'todos@todos.com.br',
+                urlImage:
+                    'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/allPeople.png?alt=media&token=19a38226-7467-4f83-a201-20214af45bc1');
+            if (!list.map((e) => e.name.contains('TODOS')).contains(true)) {
+              list.insert(0, todos);
+            }
+            return SingleChildScrollView(
+              child: Wrap(
                 runAlignment: WrapAlignment.spaceAround,
-                spacing: 16,
+                spacing: 24,
                 children: [
                   for (var index = 0; index < list.length; index++)
                     InputChip(
@@ -89,6 +88,7 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
                         url: list[index].urlImage,
                       ),
                       label: SizedBox(
+                        width: 70,
                         child: Text(
                           list[index].name,
                           overflow: TextOverflow.ellipsis,
@@ -105,10 +105,10 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
                       },
                     ),
                 ],
-              );
-            }
-          },
-        ),
+              ),
+            );
+          }
+        },
       ),
     );
   }

@@ -61,20 +61,19 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
   Widget _buildAnimation(BuildContext context, Widget? child) {
     return FadeTransition(
       opacity: _animacaoOpacity,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Observer(
-          builder: (_) {
-            if (widget.userLista!.data == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              List<UserModel> list = widget.userLista!.data;
+      child: Observer(
+        builder: (_) {
+          if (widget.userLista!.data == null) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            List<UserModel> list = widget.userLista!.data;
 
-              return Wrap(
+            return SingleChildScrollView(
+              child: Wrap(
                 runAlignment: WrapAlignment.spaceAround,
-                spacing: 16,
+                spacing: 24,
                 children: [
                   for (var index = 0; index < list.length; index++)
                     InputChip(
@@ -85,6 +84,7 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
                         url: list[index].urlImage,
                       ),
                       label: SizedBox(
+                        width: 70,
                         child: Text(
                           list[index].name,
                           overflow: TextOverflow.ellipsis,
@@ -101,10 +101,10 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
                       },
                     ),
                 ],
-              );
-            }
-          },
-        ),
+              ),
+            );
+          }
+        },
       ),
     );
   }

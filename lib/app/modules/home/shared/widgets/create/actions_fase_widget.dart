@@ -54,19 +54,18 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
   Widget _buildAnimation(BuildContext context, Widget? child) {
     return FadeTransition(
       opacity: _animacaoOpacity,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Observer(
-          builder: (_) {
-            if (widget.faseList!.data == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              List<FaseModel> list = widget.faseList!.data;
-              return Wrap(
+      child: Observer(
+        builder: (_) {
+          if (widget.faseList!.data == null) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            List<FaseModel> list = widget.faseList!.data;
+            return SingleChildScrollView(
+              child: Wrap(
                 runAlignment: WrapAlignment.center,
-                spacing: 8,
+                spacing: 24,
                 children: [
                   for (var index = 0; index < list.length; index++)
                     Padding(
@@ -106,10 +105,10 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
                       ),
                     ),
                 ],
-              );
-            }
-          },
-        ),
+              ),
+            );
+          }
+        },
       ),
     );
   }
