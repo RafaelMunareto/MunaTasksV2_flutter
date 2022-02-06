@@ -20,29 +20,24 @@ class ButtonActionWidget extends StatefulWidget {
 class _ButtonActionWidgetState extends State<ButtonActionWidget> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.88,
-              ),
-            ),
-            const Divider(),
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
-                child: convertButton(widget.navigate),
-              ),
-            ),
-          ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Align(
+          alignment: Alignment.center,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.88,
+          ),
         ),
-      ),
+        const Divider(),
+        SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+            child: convertButton(widget.navigate),
+          ),
+        ),
+      ],
     );
   }
 

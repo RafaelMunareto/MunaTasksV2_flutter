@@ -49,7 +49,7 @@ class _SplashWidgetState extends State<SplashWidget> {
           double withDevice = constraint.maxWidth;
 
           if (withDevice < 600) {
-            withDevice = withDevice * 0.56;
+            withDevice = withDevice * 0.58;
           } else if (withDevice < 960) {
             withDevice = withDevice * 0.3;
           } else if (withDevice < 1025) {

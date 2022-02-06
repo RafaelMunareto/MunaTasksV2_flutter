@@ -246,7 +246,6 @@ class _CardWidgetState extends State<CardWidget> {
                     child: card(linha),
                   ),
                 const SizedBox(
-                  width: double.infinity,
                   height: 32,
                 )
               ],
