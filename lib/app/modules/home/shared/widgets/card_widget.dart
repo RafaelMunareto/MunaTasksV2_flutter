@@ -46,25 +46,54 @@ class _CardWidgetState extends State<CardWidget> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Tem certeza que deseja excluir?'),
-            content: Text(message),
+            title: const Text(
+              'Excluir Tarefa.',
+              style: TextStyle(fontSize: 20, color: Colors.deepPurple),
+            ),
+            content: const Text('Tem certeza que deseja excluír a tarefa ?'),
             actions: [
-              TextButton(
-                onPressed: () {
-                  Modular.to.pop();
-                  SnackbarCustom()
-                      .createSnackBar('Cancelado', Colors.grey, context);
-                },
-                child: const Text('CANCELAR'),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: const BorderSide(
+                        color: Colors.deepPurple,
+                        width: 2.0,
+                      ),
+                    ),
+                  ),
+                ),
+                onPressed: () => Navigator.pop(context),
+                child: const Text(
+                  'CANCELAR',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
-              TextButton(
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: const BorderSide(
+                        color: Colors.deepPurple,
+                        width: 2.0,
+                      ),
+                    ),
+                  ),
+                ),
                 onPressed: () {
                   Modular.to.pop();
                   store.deleteTasks(tarefa);
                   SnackbarCustom().createSnackBar(
                       'Deletado com sucesso!', Colors.green, context);
                 },
-                child: const Text('DELETAR'),
+                child: const Text(
+                  'EXCLUIR',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           );
@@ -82,10 +111,11 @@ class _CardWidgetState extends State<CardWidget> {
             color: Colors.transparent,
             elevation: 8,
             child: Card(
-              shape: Border(
-                right: BorderSide(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
                     color: ConvertIcon().convertColor(linha.etiqueta.color),
-                    width: 5),
+                    width: 2),
+                borderRadius: BorderRadius.circular(5.0),
               ),
               child: ExpansionTile(
                 key: UniqueKey(),
@@ -182,73 +212,73 @@ class _CardWidgetState extends State<CardWidget> {
         child: SizedBox(
           height: MediaQuery.of(context).size.height * 0.6,
           child: SingleChildScrollView(
-            child: Wrap(
-              children: [
-                for (var linha in store.client.tarefas)
-                  Dismissible(
-                    background: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        color: Colors.green,
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Row(
-                            children: const [
-                              Icon(
-                                Icons.edit,
-                                color: Colors.white,
-                              ),
-                              Text(
-                                'Editar',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 54),
+              child: Wrap(
+                children: [
+                  for (var linha in store.client.tarefas)
+                    Dismissible(
+                      background: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          color: Colors.green,
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  Icons.edit,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  'Editar',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    secondaryBackground: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        color: Colors.red,
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: const [
-                              Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                              Text(
-                                'Excluir',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
+                      secondaryBackground: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          color: Colors.red,
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: const [
+                                Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  'Excluir',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
+                      key: UniqueKey(),
+                      onDismissed: (direction) {
+                        if (direction == DismissDirection.startToEnd) {
+                          setState(() {
+                            store.clientCreate.setTarefaUpdate(linha);
+                            store.client.setExpand(!store.client.expand);
+                            widget.controller.forward();
+                          });
+                        } else {
+                          setState(() {
+                            dialogDelete(linha.texto, linha, context);
+                          });
+                        }
+                      },
+                      child: card(linha),
                     ),
-                    key: UniqueKey(),
-                    onDismissed: (direction) {
-                      if (direction == DismissDirection.startToEnd) {
-                        setState(() {
-                          store.clientCreate.setTarefaUpdate(linha);
-                          store.client.setExpand(!store.client.expand);
-                          widget.controller.forward();
-                        });
-                      } else {
-                        setState(() {
-                          dialogDelete(linha.texto, linha, context);
-                        });
-                      }
-                    },
-                    child: card(linha),
-                  ),
-                const SizedBox(
-                  height: 32,
-                )
-              ],
+                ],
+              ),
             ),
           ),
         ),

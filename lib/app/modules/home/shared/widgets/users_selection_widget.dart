@@ -69,7 +69,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                 return list.isNotEmpty
                     ? SingleChildScrollView(
                         child: Wrap(
-                          runAlignment: WrapAlignment.spaceAround,
+                          runAlignment: WrapAlignment.spaceBetween,
                           spacing: 24,
                           children: [
                             for (var i = 0; i < list.length; i++)
@@ -84,7 +84,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                     url: list[i].urlImage,
                                   ),
                                   label: SizedBox(
-                                    width: 70,
+                                    width: 100,
                                     child: Text(
                                       list[i].name,
                                       overflow: TextOverflow.ellipsis,
@@ -100,7 +100,20 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                     });
                                   },
                                 ),
-                              )
+                              ),
+                            Baseline(
+                              baseline: 100,
+                              baselineType: TextBaseline.alphabetic,
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: TextButton(
+                                  onPressed: () {
+                                    Modular.to.pop();
+                                  },
+                                  child: const Text('FECHAR'),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       )

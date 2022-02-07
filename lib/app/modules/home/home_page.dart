@@ -1,20 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/card_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/body_home_page_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/radio_order_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/teams_selection_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
-import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
+import 'package:munatasks2/app/shared/components/background_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
-import 'package:munatasks2/app/shared/utils/convert_icon.dart';
-import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -78,22 +73,27 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     );
 
     return Scaffold(
-      appBar: !appVisible
-          ? AppBarWidget(
-              icon: Icons.bookmark,
-              home: true,
-              context: context,
-              zoomController: drawerController,
-              setOpen: store.client.setOpen,
-              settings: true,
-              back: false,
-              etiquetaList: store.client.tarefas,
-              tarefas: store.client.tarefas,
-              setValueSearch: store.client.setSearchValue,
-              etiquetaSelection: store.client.etiquetaSelection,
-              setEtiquetaSelection: store.client.setEtiquetaSelection,
-              changeFilterSearch: store.changeFilterSearchList,
-            )
+      appBar: !kIsWeb
+          ? !appVisible
+              ? AppBarWidget(
+                  icon: Icons.bookmark,
+                  home: true,
+                  context: context,
+                  zoomController: drawerController,
+                  setOpen: store.client.setOpen,
+                  settings: true,
+                  back: false,
+                  etiquetaList: store.client.tarefas,
+                  tarefas: store.client.tarefas,
+                  setValueSearch: store.client.setSearchValue,
+                  etiquetaSelection: store.client.etiquetaSelection,
+                  setEtiquetaSelection: store.client.setEtiquetaSelection,
+                  changeFilterSearch: store.changeFilterSearchList,
+                )
+              : PreferredSize(
+                  child: Container(),
+                  preferredSize: const Size(0, 32),
+                )
           : PreferredSize(
               child: Container(),
               preferredSize: const Size(0, 32),
@@ -133,104 +133,16 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
         ),
         mainScreen: Observer(builder: (_) {
           return !store.client.loading
-              ? Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
-                  child: SizedBox(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          ListTile(
-                            leading: GestureDetector(
-                              child: store.client.icon != 0
-                                  ? Icon(
-                                      IconData(store.client.icon,
-                                          fontFamily: 'MaterialIcons'),
-                                      color: ConvertIcon()
-                                          .convertColor(store.client.color),
-                                    )
-                                  : const Icon(Icons.bookmark),
-                              onTap: () {
-                                DialogButtom().showDialog(
-                                    RadioEtiquetasFilterWidget(
-                                      changeFilterEtiquetaList:
-                                          store.changeFilterEtiquetaList,
-                                      etiquetaList: store.client.etiquetaList,
-                                      setColor: store.client.setColor,
-                                      setIcon: store.client.setIcon,
-                                      setEtiquetaSelection:
-                                          store.client.setEtiquetaSelection,
-                                    ),
-                                    context);
-                              },
-                            ),
-                            title: Center(
-                              child: GestureDetector(
-                                child: ListTile(
-                                  title: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.filter_alt,
-                                        color: Colors.grey,
-                                      ),
-                                      Text(
-                                        store.client.orderAscDesc
-                                            ? '${store.client.orderSelection} DESC'
-                                            : '${store.client.orderSelection} ASC',
-                                        style: const TextStyle(fontSize: 12),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                onTap: () => DialogButtom().showDialog(
-                                    Observer(builder: (_) {
-                                  return RadioOrderWidget(
-                                      orderAscDesc: store.client.orderAscDesc,
-                                      setOrderAscDesc:
-                                          store.client.setOrderAscDesc,
-                                      orderList: store.client.orderList,
-                                      orderSelection:
-                                          store.client.orderSelection,
-                                      changeOrderList: store.changeOrderList,
-                                      setOrderSelection:
-                                          store.client.setOrderSelection);
-                                }), context),
-                              ),
-                            ),
-                            trailing: GestureDetector(
-                              child: CircleAvatarWidget(
-                                url: store.client.imgUrl,
-                              ),
-                              onTap: () {
-                                if (store.client.perfilUserLogado.manager) {
-                                  DialogButtom().showDialog(
-                                      TeamsSelectionWidget(
-                                        changeFilterUserList:
-                                            store.changeFilterUserList,
-                                        userLista: store.client.userList,
-                                        setImageUser: store.client.setImgUrl,
-                                        setUserSelection:
-                                            store.client.setUserSelection,
-                                      ),
-                                      context);
-                                }
-                              },
-                            ),
-                          ),
-                          CreateWidget(
-                            controller: createController,
-                          ),
-                          store.client.loading
-                              ? const CircularProgressIndicator()
-                              : CardWidget(
-                                  opacidade: opacidade,
-                                  controller: createController,
-                                ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
+              ? kIsWeb
+                  ? BackgroundWidget(
+                      child: BodyHomePageWidget(
+                      createController: createController,
+                      opacidade: opacidade,
+                    ))
+                  : BodyHomePageWidget(
+                      createController: createController,
+                      opacidade: opacidade,
+                    )
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

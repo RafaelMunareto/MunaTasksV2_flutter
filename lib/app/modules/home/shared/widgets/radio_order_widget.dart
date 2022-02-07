@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
 
 class RadioOrderWidget extends StatefulWidget {
@@ -33,7 +34,7 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
       body: Center(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.40,
+          height: MediaQuery.of(context).size.height * 0.5,
           child: Observer(
             builder: (_) {
               if (widget.orderList!.data == null) {
@@ -46,25 +47,26 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.05,
+                      height: MediaQuery.of(context).size.height * 0.1,
                       child: ListTile(
                         leading: const Text(
                           'ASC',
                         ),
-                        title: Switch(
-                            value: widget.orderAscDesc,
-                            onChanged: (_) {
-                              setState(() {
+                        title: Transform.scale(
+                          scale: 1.5,
+                          child: Switch(
+                              value: widget.orderAscDesc,
+                              onChanged: (_) {
                                 widget.setOrderAscDesc(!widget.orderAscDesc);
                                 widget.changeOrderList();
-                              });
-                            }),
+                              }),
+                        ),
                         trailing: const Text('DESC'),
                       ),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.35,
+                      height: MediaQuery.of(context).size.height * 0.30,
                       child: SingleChildScrollView(
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height * 0.3,
@@ -93,6 +95,20 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
                               );
                             },
                           ),
+                        ),
+                      ),
+                    ),
+                    Baseline(
+                      baseline: 30,
+                      baselineType: TextBaseline.alphabetic,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        child: TextButton(
+                          onPressed: () {
+                            Modular.to.pop();
+                          },
+                          child: const Text('FECHAR'),
                         ),
                       ),
                     ),

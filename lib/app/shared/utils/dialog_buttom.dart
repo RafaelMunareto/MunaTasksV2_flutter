@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 
 class DialogButtom {
   showDialog(dynamic widgets, context, {double width = 300.00}) {
+    bool _darkModeEnabled = false;
+
+    final ThemeData theme = Theme.of(context);
+    theme.brightness == Brightness.dark
+        ? _darkModeEnabled = true
+        : _darkModeEnabled = false;
+
     showGeneralDialog(
       barrierLabel: "Label",
       barrierDismissible: true,
       barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: const Duration(milliseconds: 600),
+      transitionDuration: const Duration(milliseconds: 400),
       context: context,
       pageBuilder: (context, anim1, anim2) {
         return Align(
@@ -18,8 +25,8 @@ class DialogButtom {
             ),
             margin: const EdgeInsets.only(bottom: 50, left: 12, right: 12),
             decoration: BoxDecoration(
-              color: Colors.white,
               borderRadius: BorderRadius.circular(12),
+              color: !_darkModeEnabled ? Colors.white : Colors.black,
             ),
           ),
         );

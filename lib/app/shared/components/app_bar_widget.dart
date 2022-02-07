@@ -60,7 +60,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/img/fundo_app_bar.png'),
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.fill,
             ),
           ),
         ),
@@ -161,8 +161,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   _popSearch() {
     return PlayAnimation<double>(
       tween: Tween(begin: 0.1, end: MediaQuery.of(context).size.width),
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOut,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeIn,
       builder: (context, child, value) {
         return Container(
           width: value,

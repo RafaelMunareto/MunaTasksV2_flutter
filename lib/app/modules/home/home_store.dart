@@ -232,9 +232,7 @@ abstract class HomeStoreBase with Store {
 
   @action
   void saveNewTarefa() {
-    dashboardService.save(clientCreate.tarefaModelSave);
-    client.cleanTarefas();
-    client.cleanTarefasBase();
+    save(clientCreate.tarefaModelSave);
   }
 
   @action
