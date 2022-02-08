@@ -36,7 +36,7 @@ class _AppWidgetState extends State<AppWidget> {
         var actionCode = deepLink.queryParameters['oobCode'];
         var tipo = deepLink.queryParameters['mode'];
         if (tipo == 'verifyEmail') {
-          Modular.to.navigate('/auth/verify?oobCode=$actionCode&mode=$tipo');
+          Modular.to.navigate('/auth/verify/?oobCode=$actionCode&mode=$tipo');
         } else if (tipo == 'resetPassword') {
           Modular.to.navigate('/auth/change/$actionCode');
         }

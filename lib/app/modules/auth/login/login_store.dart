@@ -63,6 +63,11 @@ abstract class _LoginStoreBase with Store {
     auth.getEmailPasswordLogin(client.email, client.password).then((value) {
       if (value.user.emailVerified) {
         setStorageLogin();
+        storage.put('user', [
+          value.user.uid,
+          value.user.displayName.toString(),
+          value.user.photoURL.toString()
+        ]);
         setStorageLoginNormal();
         Modular.to.navigate('/home');
       }

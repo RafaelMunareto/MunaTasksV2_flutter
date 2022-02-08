@@ -34,8 +34,9 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
       return !store.client.loading
           ? Center(
               child: SizedBox(
+                height: MediaQuery.of(context).size.height,
                 width: kIsWeb
-                    ? MediaQuery.of(context).size.width * 0.4
+                    ? MediaQuery.of(context).size.width * 0.5
                     : MediaQuery.of(context).size.width,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),

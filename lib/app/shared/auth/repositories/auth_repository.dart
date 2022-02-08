@@ -4,8 +4,6 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
-import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
-import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 import 'package:munatasks2/app/shared/utils/error_pt_br.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'auth_repository_interface.dart';
@@ -15,7 +13,6 @@ class AuthRepository implements IAuthRepository {
   final FirebaseAuth auth = Modular.get();
   final FirebaseFirestore db = Modular.get();
   final FirebaseDynamicLinks fdl = Modular.get();
-  final ILocalStorage storage = LocalStorageShare();
 
   @override
   Future getEmailPasswordLogin(email, password) {
@@ -50,9 +47,7 @@ class AuthRepository implements IAuthRepository {
   @override
   getUser() {
     User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      storage.put('user', [user.uid]);
-    }
+
     return user;
   }
 

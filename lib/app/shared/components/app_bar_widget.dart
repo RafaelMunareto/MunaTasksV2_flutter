@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
@@ -70,9 +71,15 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               ? _popMenu()
               : GestureDetector(
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 12.0),
+                    padding: kIsWeb
+                        ? const EdgeInsets.only(right: 48.0)
+                        : const EdgeInsets.only(right: 12.0),
                     child: !search
-                        ? const Icon(Icons.search, color: Color(0xff6A41E3))
+                        ? const Icon(
+                            Icons.search,
+                            color: Color(0xff6A41E3),
+                            size: kIsWeb ? 48 : 24,
+                          )
                         : const Icon(Icons.close, color: Color(0xff6A41E3)),
                   ),
                   onTap: () {
@@ -118,10 +125,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                           ? true
                           : false);
                 },
-                child: const Icon(
-                  Icons.menu,
-                  color: Color(0xff6A41E3),
-                ),
+                child: kIsWeb
+                    ? Container()
+                    : const Icon(
+                        Icons.menu,
+                        color: Color(0xff6A41E3),
+                      ),
               ),
       ),
     );
@@ -129,9 +138,14 @@ class _AppBarWidgetState extends State<AppBarWidget> {
 
   _popMenu() {
     return PopupMenuButton(
-      icon: const Icon(
-        Icons.more_vert,
-        color: Color(0xff6A41E3),
+      icon: const Padding(
+        padding: kIsWeb
+            ? EdgeInsets.only(right: 48.0)
+            : EdgeInsets.only(right: 12.0),
+        child: Icon(
+          Icons.more_vert,
+          color: Color(0xff6A41E3),
+        ),
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(

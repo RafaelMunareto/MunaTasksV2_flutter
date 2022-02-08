@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -100,39 +101,44 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
                     spacing: 24,
                     children: [
                       for (var index = 0; index < list.length; index++)
-                        InputChip(
-                          key: UniqueKey(),
-                          labelPadding: const EdgeInsets.all(2),
-                          elevation: 4.0,
-                          avatar: Icon(
-                            IconData(list[index].icon ?? 0,
-                                fontFamily: 'MaterialIcons'),
-                            color:
-                                ConvertIcon().convertColor(list[index].color),
-                          ),
-                          label: SizedBox(
-                            width: 100,
-                            child: Text(
-                              list[index].etiqueta,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12),
+                        Padding(
+                          padding: kIsWeb
+                              ? const EdgeInsets.only(bottom: 16.0)
+                              : const EdgeInsets.only(bottom: 4.0),
+                          child: InputChip(
+                            key: UniqueKey(),
+                            labelPadding: const EdgeInsets.all(2),
+                            elevation: 4.0,
+                            avatar: Icon(
+                              IconData(list[index].icon ?? 0,
+                                  fontFamily: 'MaterialIcons'),
+                              color:
+                                  ConvertIcon().convertColor(list[index].color),
                             ),
+                            label: SizedBox(
+                              width: 100,
+                              child: Text(
+                                list[index].etiqueta,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                if (widget.create == false) {
+                                  widget.setEtiquetaSelection!(
+                                      list[index].etiqueta);
+                                  widget.changeFilterEtiquetaList!();
+                                  widget.setIcon!(list[index].icon);
+                                  widget.setColor!(list[index].color);
+                                } else {
+                                  widget.setEtiquetaSave!(list[index]);
+                                }
+                                FocusScope.of(context).unfocus();
+                                Modular.to.pop();
+                              });
+                            },
                           ),
-                          onPressed: () {
-                            setState(() {
-                              if (widget.create == false) {
-                                widget.setEtiquetaSelection!(
-                                    list[index].etiqueta);
-                                widget.changeFilterEtiquetaList!();
-                                widget.setIcon!(list[index].icon);
-                                widget.setColor!(list[index].color);
-                              } else {
-                                widget.setEtiquetaSave!(list[index]);
-                              }
-                              FocusScope.of(context).unfocus();
-                              Modular.to.pop();
-                            });
-                          },
                         ),
                     ],
                   ),

@@ -13,7 +13,6 @@ class AuthGuard extends RouteGuard {
     if (uid.isNotEmpty) {
       return true;
     } else {
-      Modular.to.navigate('/auth');
       return false;
     }
   }

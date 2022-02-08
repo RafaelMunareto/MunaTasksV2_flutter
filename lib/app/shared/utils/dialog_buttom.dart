@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class DialogButtom {
@@ -20,6 +21,9 @@ class DialogButtom {
           alignment: Alignment.bottomCenter,
           child: Container(
             height: width,
+            width: kIsWeb
+                ? MediaQuery.of(context).size.width * 0.5
+                : MediaQuery.of(context).size.width,
             child: SizedBox.expand(
               child: widgets,
             ),

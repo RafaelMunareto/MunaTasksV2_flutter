@@ -33,13 +33,13 @@ class LoginPageState extends State<LoginPage> {
         if (store.msg != '') {
           SnackbarCustom().createSnackBareErrOrGoal(_scaffoldKey,
               message: store.msg, errOrGoal: store.errOrGoal);
-          store.setMsg('');
           if (store.errOrGoal) {
             Timer(
               const Duration(seconds: 2),
               () => store.client.setCleanVariables(),
             );
           }
+          store.setMsg('');
         }
       },
     );
@@ -95,7 +95,7 @@ class LoginPageState extends State<LoginPage> {
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 32),
                   child: const LinkRoteWidget(
-                      labelBold: 'Esqueceu a senha ? ', rota: '/auth/forget'),
+                      labelBold: 'Esqueceu a senha ? ', rota: '/auth/forget/'),
                 ),
                 SizedBox(height: size.height * 0.05),
                 Observer(builder: (_) {
@@ -115,7 +115,7 @@ class LoginPageState extends State<LoginPage> {
                   margin: const EdgeInsets.symmetric(horizontal: 58),
                   child: const LinkRoteWidget(
                       labelBold: 'Não tem cadastro? Registre-se',
-                      rota: '/auth/signup'),
+                      rota: '/auth/signup/'),
                 ),
                 Observer(builder: (_) {
                   return Padding(

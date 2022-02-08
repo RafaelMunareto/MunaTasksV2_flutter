@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -73,32 +74,38 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                           spacing: 24,
                           children: [
                             for (var i = 0; i < list.length; i++)
-                              SizedBox(
-                                child: InputChip(
-                                  key: ObjectKey(list[i].email),
-                                  labelPadding: const EdgeInsets.all(2),
-                                  selected: store.clientCreate.individualChip
-                                      .contains(list[i].email),
-                                  elevation: 4.0,
-                                  avatar: CircleAvatarWidget(
-                                    url: list[i].urlImage,
-                                  ),
-                                  label: SizedBox(
-                                    width: 100,
-                                    child: Text(
-                                      list[i].name,
-                                      overflow: TextOverflow.ellipsis,
+                              Padding(
+                                padding: kIsWeb
+                                    ? const EdgeInsets.only(bottom: 16.0)
+                                    : const EdgeInsets.only(bottom: 4.0),
+                                child: SizedBox(
+                                  child: InputChip(
+                                    key: ObjectKey(list[i].email),
+                                    labelPadding: const EdgeInsets.all(2),
+                                    selected: store.clientCreate.individualChip
+                                        .contains(list[i].email),
+                                    elevation: 4.0,
+                                    avatar: CircleAvatarWidget(
+                                      url: list[i].urlImage,
                                     ),
+                                    label: SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        list[i].name,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    onSelected: (bool value) {
+                                      setState(() {
+                                        store.clientCreate
+                                            .setIdReferenceStaff(list[i].email);
+                                        store.clientCreate.setIdStaff(list[i]);
+                                        FocusScope.of(context).unfocus();
+                                        store.clientCreate
+                                            .setLoadingUser(false);
+                                      });
+                                    },
                                   ),
-                                  onSelected: (bool value) {
-                                    setState(() {
-                                      store.clientCreate
-                                          .setIdReferenceStaff(list[i].email);
-                                      store.clientCreate.setIdStaff(list[i]);
-                                      FocusScope.of(context).unfocus();
-                                      store.clientCreate.setLoadingUser(false);
-                                    });
-                                  },
                                 ),
                               ),
                             Baseline(

@@ -72,12 +72,12 @@ abstract class HomeStoreBase with Store {
   }
 
   @observable
-  String uid = '';
+  dynamic user = [];
 
   @action
   getUid() {
     storage.get('user').then((value) {
-      uid = value[0];
+      user = value;
     });
   }
 
@@ -207,7 +207,7 @@ abstract class HomeStoreBase with Store {
   @action
   perfilUser() async {
     await getUid();
-    firestore.collection('perfil').doc(uid).get().then((value) {
+    firestore.collection('perfil').doc(user[0]).get().then((value) {
       client.setPerfilUserlogado(PerfilModel.fromDocument(value));
     });
   }
@@ -221,7 +221,7 @@ abstract class HomeStoreBase with Store {
         client.tarefasBase.where((t) {
           bool eSelecaodoUser = false;
           t.users?.forEach((element) {
-            if (element.reference.id == uid) {
+            if (element.reference.id == user[0]) {
               eSelecaodoUser = true;
             }
           });

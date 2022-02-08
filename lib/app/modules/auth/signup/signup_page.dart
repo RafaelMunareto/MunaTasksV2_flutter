@@ -35,11 +35,11 @@ class SignupPageState extends State<SignupPage> {
               errOrGoal: store.msgErrOrGoal,
               message: store.msg,
               rota: '/auth/');
-          store.setMsg('');
           if (store.msgErrOrGoal) {
             Timer(const Duration(seconds: 2),
                 () => store.client.setCleanVariables());
           }
+          store.setMsg('');
         }
       },
     );

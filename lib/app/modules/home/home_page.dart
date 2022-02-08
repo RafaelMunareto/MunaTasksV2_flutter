@@ -30,6 +30,12 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
   void initState() {
     super.initState();
 
+    if (kIsWeb) {
+      setState(() {
+        store.client.setOpen(true);
+      });
+    }
+
     _controller = AnimationController(
         duration: const Duration(milliseconds: 400), vsync: this);
     createController = AnimationController(
@@ -120,6 +126,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
           builder: (_) {
             return MenuScreen(
               open: store.client.open,
+              user: store.user,
               setOpen: store.client.setOpen,
               controller: drawerController,
             );
