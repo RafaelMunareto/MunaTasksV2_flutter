@@ -32,11 +32,13 @@ class SignupPageState extends State<SignupPage> {
       (_) async {
         if (store.msg != '') {
           await SnackbarCustom().createSnackBareErrOrGoal(_scaffoldKey,
-              errOrGoal: store.msgErrOrGoal, message: store.msg, rota: '/auth');
+              errOrGoal: store.msgErrOrGoal,
+              message: store.msg,
+              rota: '/auth/');
           store.setMsg('');
-          if(store.msgErrOrGoal) {
+          if (store.msgErrOrGoal) {
             Timer(const Duration(seconds: 2),
-                    () => store.client.setCleanVariables());
+                () => store.client.setCleanVariables());
           }
         }
       },
@@ -119,7 +121,7 @@ class SignupPageState extends State<SignupPage> {
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 58),
                   child: const LinkRoteWidget(
-                      labelBold: 'Já possui cadastro? Login', rota: '/auth'),
+                      labelBold: 'Já possui cadastro? Login', rota: '/auth/'),
                 ),
               ],
             ),

@@ -41,11 +41,13 @@ class ChangePageState extends State<ChangePage> {
         if (store.msg != '') {
           FocusScope.of(context).requestFocus(FocusNode());
           SnackbarCustom().createSnackBareErrOrGoal(_scaffoldKey,
-              message: store.msg, errOrGoal: store.msgErrOrGoal, rota: '/auth');
+              message: store.msg,
+              errOrGoal: store.msgErrOrGoal,
+              rota: '/auth/');
           store.setMsg('');
-          if(store.msgErrOrGoal){
+          if (store.msgErrOrGoal) {
             Timer(const Duration(seconds: 2),
-                    () => store.client.setCleanVariables());
+                () => store.client.setCleanVariables());
           }
         }
       },
@@ -112,7 +114,7 @@ class ChangePageState extends State<ChangePage> {
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 58),
                   child:
-                      const LinkRoteWidget(labelBold: 'Login', rota: '/auth'),
+                      const LinkRoteWidget(labelBold: 'Login', rota: '/auth/'),
                 ),
               ],
             ),

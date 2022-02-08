@@ -82,7 +82,7 @@ abstract class _LoginStoreBase with Store {
     try {
       await setLoading(true);
       await auth.loginWithGoogle();
-      Modular.to.navigate('/home');
+      Modular.to.navigate('/home/');
     } catch (e) {
       setLoading(false);
       setErrOrGoal(false);
@@ -119,7 +119,7 @@ abstract class _LoginStoreBase with Store {
             .getEmailPasswordLogin(loginStorage![0], loginStorage![1])
             .then((value) {
           if (value.user.emailVerified) {
-            Modular.to.navigate('/home');
+            Modular.to.navigate('/home/');
           }
           setLoading(false);
           setErrOrGoal(false);
@@ -182,7 +182,7 @@ abstract class _LoginStoreBase with Store {
           setLoading(false);
           setErrOrGoal(false);
           setMsg('Você deve validar o email primeiro!');
-          Modular.to.navigate('/home');
+          Modular.to.navigate('/home/');
         }).catchError((e) {
           setLoading(false);
           setErrOrGoal(false);

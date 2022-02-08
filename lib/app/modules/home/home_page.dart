@@ -8,7 +8,6 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_home_page_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
-import 'package:munatasks2/app/shared/components/background_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -73,27 +72,22 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     );
 
     return Scaffold(
-      appBar: !kIsWeb
-          ? !appVisible
-              ? AppBarWidget(
-                  icon: Icons.bookmark,
-                  home: true,
-                  context: context,
-                  zoomController: drawerController,
-                  setOpen: store.client.setOpen,
-                  settings: true,
-                  back: false,
-                  etiquetaList: store.client.tarefas,
-                  tarefas: store.client.tarefas,
-                  setValueSearch: store.client.setSearchValue,
-                  etiquetaSelection: store.client.etiquetaSelection,
-                  setEtiquetaSelection: store.client.setEtiquetaSelection,
-                  changeFilterSearch: store.changeFilterSearchList,
-                )
-              : PreferredSize(
-                  child: Container(),
-                  preferredSize: const Size(0, 32),
-                )
+      appBar: !appVisible
+          ? AppBarWidget(
+              icon: Icons.bookmark,
+              home: true,
+              context: context,
+              zoomController: drawerController,
+              setOpen: store.client.setOpen,
+              settings: true,
+              back: false,
+              etiquetaList: store.client.tarefas,
+              tarefas: store.client.tarefas,
+              setValueSearch: store.client.setSearchValue,
+              etiquetaSelection: store.client.etiquetaSelection,
+              setEtiquetaSelection: store.client.setEtiquetaSelection,
+              changeFilterSearch: store.changeFilterSearchList,
+            )
           : PreferredSize(
               child: Container(),
               preferredSize: const Size(0, 32),
@@ -133,16 +127,10 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
         ),
         mainScreen: Observer(builder: (_) {
           return !store.client.loading
-              ? kIsWeb
-                  ? BackgroundWidget(
-                      child: BodyHomePageWidget(
-                      createController: createController,
-                      opacidade: opacidade,
-                    ))
-                  : BodyHomePageWidget(
-                      createController: createController,
-                      opacidade: opacidade,
-                    )
+              ? BodyHomePageWidget(
+                  createController: createController,
+                  opacidade: opacidade,
+                )
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

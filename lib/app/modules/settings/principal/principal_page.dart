@@ -26,7 +26,7 @@ class PrincipalPageState extends State<PrincipalPage> {
           icon: Icons.settings,
           context: context,
           settings: true,
-          rota: '/home'),
+          rota: '/home/'),
       body: Observer(
         builder: (_) {
           return store.finalize

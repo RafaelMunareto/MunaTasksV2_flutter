@@ -147,7 +147,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
         ),
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
-          onTap: () => Modular.to.navigate('/settings'),
+          onTap: () => Modular.to.navigate('/settings/'),
           child: const ListTile(
             leading: Icon(
               Icons.settings,

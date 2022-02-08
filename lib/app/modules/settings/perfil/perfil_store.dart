@@ -6,6 +6,7 @@ import 'package:munatasks2/app/modules/settings/perfil/services/interfaces/perfi
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/utils/image/image_repository.dart';
 
 part 'perfil_store.g.dart';
@@ -19,6 +20,7 @@ abstract class _PerfilStoreBase with Store {
   final FirebaseFirestore bd = Modular.get();
   final FirebaseAuth firebaseAuth = Modular.get();
   final ClientStore client = Modular.get();
+  final ILocalStorage storage = Modular.get();
 
   _PerfilStoreBase(
       {required this.perfilService, required this.imageRepository}) {
@@ -27,9 +29,20 @@ abstract class _PerfilStoreBase with Store {
     getUsers();
   }
 
+  @observable
+  String uid = '';
+
   @action
-  getById() {
-    perfilService.getByDocumentId(auth.user!.uid).then((value) {
+  getUid() {
+    storage.get('user').then((value) {
+      uid = value[0];
+    });
+  }
+
+  @action
+  getById() async {
+    await getUid();
+    perfilService.getByDocumentId(uid).then((value) {
       client.userModel = [];
       client.perfil = value;
     }).then((value) {

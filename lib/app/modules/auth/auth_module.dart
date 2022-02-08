@@ -24,19 +24,21 @@ class AuthModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('',
+    ChildRoute("/",
         child: (context, args) => const LoginPage(),
         transition: TransitionType.leftToRightWithFade),
-    ChildRoute('signup',
+    ChildRoute("/signup/",
         child: (context, args) => const SignupPage(),
         transition: TransitionType.leftToRightWithFade),
-    ChildRoute('verify',
-        child: (context, args) => VerifyPage(code: args.queryParams['oobCode'] ?? '', mode: args.queryParams['mode'] ?? ''),
+    ChildRoute("/verify/",
+        child: (context, args) => VerifyPage(
+            code: args.queryParams['oobCode'] ?? '',
+            mode: args.queryParams['mode'] ?? ''),
         transition: TransitionType.leftToRightWithFade),
-    ChildRoute('forget',
+    ChildRoute("/forget/",
         child: (context, args) => const ForgetPage(),
         transition: TransitionType.leftToRightWithFade),
-    ChildRoute('change/:code',
+    ChildRoute("/change/:code/",
         child: (context, args) => ChangePage(code: args.params['code']),
         transition: TransitionType.leftToRightWithFade),
   ];

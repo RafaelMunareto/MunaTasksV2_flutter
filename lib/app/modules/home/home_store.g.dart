@@ -9,6 +9,21 @@ part of 'home_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeStore on HomeStoreBase, Store {
+  final _$uidAtom = Atom(name: 'HomeStoreBase.uid');
+
+  @override
+  String get uid {
+    _$uidAtom.reportRead();
+    return super.uid;
+  }
+
+  @override
+  set uid(String value) {
+    _$uidAtom.reportWrite(value, super.uid, () {
+      super.uid = value;
+    });
+  }
+
   final _$tratamentoBaseAsyncAction =
       AsyncAction('HomeStoreBase.tratamentoBase');
 
@@ -30,6 +45,13 @@ mixin _$HomeStore on HomeStoreBase, Store {
   @override
   Future perfilUser() {
     return _$perfilUserAsyncAction.run(() => super.perfilUser());
+  }
+
+  final _$updateListAsyncAction = AsyncAction('HomeStoreBase.updateList');
+
+  @override
+  Future updateList() {
+    return _$updateListAsyncAction.run(() => super.updateList());
   }
 
   final _$changeFilterUserListAsyncAction =
@@ -83,6 +105,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.getOrder');
     try {
       return super.getOrder();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic getUid() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.getUid');
+    try {
+      return super.getUid();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -149,17 +182,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.getSubtarefaInsert');
     try {
       return super.getSubtarefaInsert();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic updateList() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.updateList');
-    try {
-      return super.updateList();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -268,7 +290,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
   @override
   String toString() {
     return '''
-
+uid: ${uid}
     ''';
   }
 }

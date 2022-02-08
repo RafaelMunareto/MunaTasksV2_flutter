@@ -49,6 +49,6 @@ abstract class _PrincipalStoreBase with Store {
   logoff() async {
     await storage.put('login-normal', []);
     await Modular.get<AuthController>().logout();
-    Modular.to.navigate('/auth');
+    Modular.to.navigate('/auth/');
   }
 }

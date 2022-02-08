@@ -27,7 +27,7 @@ class PerfilPageState extends State<PerfilPage> {
           context: context,
           icon: Icons.account_circle,
           settings: true,
-          rota: '/home',
+          rota: '/home/',
           back: true),
       body: SingleChildScrollView(
         child: Observer(

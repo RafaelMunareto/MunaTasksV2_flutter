@@ -86,7 +86,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
           icon: Icons.bookmark,
           context: context,
           settings: true,
-          rota: '/home'),
+          rota: '/home/'),
       body: SingleChildScrollView(
         child: GestureDetector(
           onTap: () {

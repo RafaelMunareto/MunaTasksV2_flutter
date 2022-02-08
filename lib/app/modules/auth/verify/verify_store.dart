@@ -39,16 +39,17 @@ abstract class _VerifyStoreBase with Store {
   @action
   emailVerify() {
     if (mode == 'resetPassword') {
-      Timer(const Duration(seconds: 1), () => Modular.to.navigate('/auth/change/$code'));
+      Timer(const Duration(seconds: 1),
+          () => Modular.to.navigate('/auth/change/$code'));
     } else {
       auth.authRepository.emailVerify(code).then((value) {
         setMsgErrOrGoal(true);
         setMsg('Código validado!');
-        Timer(const Duration(seconds: 2), () => Modular.to.navigate('/auth'));
+        Timer(const Duration(seconds: 2), () => Modular.to.navigate('/auth/'));
       }).catchError((e) {
         setMsgErrOrGoal(false);
         setMsg(ErrorPtBr().verificaCodeErro('auth/' + e.code));
-        Timer(const Duration(seconds: 3), () => Modular.to.navigate('/auth'));
+        Timer(const Duration(seconds: 3), () => Modular.to.navigate('/auth/'));
       });
     }
   }

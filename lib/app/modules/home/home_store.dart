@@ -71,6 +71,16 @@ abstract class HomeStoreBase with Store {
     client.orderList = dashboardService.getOrder().asObservable();
   }
 
+  @observable
+  String uid = '';
+
+  @action
+  getUid() {
+    storage.get('user').then((value) {
+      uid = value[0];
+    });
+  }
+
   @action
   void getList() {
     client.dashboardList = dashboardService.get().asObservable();
@@ -196,23 +206,22 @@ abstract class HomeStoreBase with Store {
 
   @action
   perfilUser() async {
-    firestore
-        .collection('perfil')
-        .doc(auth.user!.uid)
-        .get()
-        .then((value) => PerfilModel.fromDocument(value))
-        .then((value) => client.setPerfilUserlogado(value));
+    await getUid();
+    firestore.collection('perfil').doc(uid).get().then((value) {
+      client.setPerfilUserlogado(PerfilModel.fromDocument(value));
+    });
   }
 
   @action
-  updateList() {
+  updateList() async {
+    await getUid();
     if (client.perfilUserLogado.manager == false) {
       client.setImgUrl(client.perfilUserLogado.urlImage);
       client.setTarefasBase(
         client.tarefasBase.where((t) {
           bool eSelecaodoUser = false;
           t.users?.forEach((element) {
-            if (element.reference.id == auth.user!.uid) {
+            if (element.reference.id == uid) {
               eSelecaodoUser = true;
             }
           });
