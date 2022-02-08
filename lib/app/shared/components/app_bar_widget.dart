@@ -72,8 +72,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                   child: Padding(
                     padding: const EdgeInsets.only(right: 12.0),
                     child: !search
-                        ? const Icon(Icons.search, color: Colors.white)
-                        : const Icon(Icons.close, color: Colors.white),
+                        ? const Icon(Icons.search, color: Color(0xff6A41E3))
+                        : const Icon(Icons.close, color: Color(0xff6A41E3)),
                   ),
                   onTap: () {
                     setState(() {
@@ -96,7 +96,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                     ),
                     TextSpan(
                       text: ' ' + widget.title.toUpperCase(),
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                      style: const TextStyle(
+                          fontSize: 20, color: Color(0xff6A41E3)),
                     ),
                   ],
                 ),
@@ -106,7 +107,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 : Container(),
         leading: widget.back
             ? IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                icon: const Icon(Icons.arrow_back, color: Color(0xff6A41E3)),
                 onPressed: () => Modular.to.navigate(widget.rota))
             : InkWell(
                 onTap: () {
@@ -119,7 +120,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 },
                 child: const Icon(
                   Icons.menu,
-                  color: Colors.white,
+                  color: Color(0xff6A41E3),
                 ),
               ),
       ),
@@ -130,7 +131,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
     return PopupMenuButton(
       icon: const Icon(
         Icons.more_vert,
-        color: Colors.white,
+        color: Color(0xff6A41E3),
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
@@ -150,7 +151,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           child: const ListTile(
             leading: Icon(
               Icons.settings,
-              color: Colors.white,
+              color: Color(0xff6A41E3),
             ),
             title: Text('Configurações'),
           ),
@@ -159,7 +160,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           mouseCursor: SystemMouseCursors.click,
           onTap: () => Modular.to.navigate('/settings/perfil'),
           child: const ListTile(
-            leading: Icon(Icons.account_circle, color: Colors.white),
+            leading: Icon(Icons.account_circle, color: Color(0xff6A41E3)),
             title: Text('Perfil e Equipes'),
           ),
         ),
@@ -186,7 +187,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               });
               widget.changeFilterSearch!();
             },
-            style: const TextStyle(color: Colors.white, fontSize: 12),
+            style: const TextStyle(color: Color(0xff6A41E3), fontSize: 12),
             decoration: const InputDecoration(
               contentPadding:
                   EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
