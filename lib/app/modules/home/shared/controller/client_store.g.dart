@@ -497,6 +497,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$expandTarefaAtom = Atom(name: '_ClientStoreBase.expandTarefa');
+
+  @override
+  bool get expandTarefa {
+    _$expandTarefaAtom.reportRead();
+    return super.expandTarefa;
+  }
+
+  @override
+  set expandTarefa(bool value) {
+    _$expandTarefaAtom.reportWrite(value, super.expandTarefa, () {
+      super.expandTarefa = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -787,6 +802,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setExpandTarefa(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setExpandTarefa');
+    try {
+      return super.setExpandTarefa(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setExpand(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setExpand');
@@ -831,7 +857,8 @@ userSubtarefa: ${userSubtarefa},
 imgUrl: ${imgUrl},
 searchValue: ${searchValue},
 perfilUserLogado: ${perfilUserLogado},
-expand: ${expand}
+expand: ${expand},
+expandTarefa: ${expandTarefa}
     ''';
   }
 }

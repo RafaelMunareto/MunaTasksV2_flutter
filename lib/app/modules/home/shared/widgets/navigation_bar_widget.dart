@@ -29,7 +29,8 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
       },
       borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       elevation: 10,
-      backgroundColor: widget.theme ? Colors.black : Colors.white,
+      backgroundColor:
+          widget.theme ? const Color.fromARGB(255, 53, 53, 53) : Colors.white,
       fabLocation: BubbleBottomBarFabLocation.end, //new
       hasNotch: true, //new
       hasInk: true, //new, gives a cute ink effect

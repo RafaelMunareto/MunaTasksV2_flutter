@@ -50,7 +50,7 @@ class HeaderWidget extends StatelessWidget {
             tarefa.texto,
             textAlign: TextAlign.justify,
             overflow: TextOverflow.ellipsis,
-            maxLines: 25,
+            maxLines: 1,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 12,

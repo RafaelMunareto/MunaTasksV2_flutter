@@ -46,6 +46,7 @@ dependencies:
   intl: ^0.17.0
   date_format: ^2.0.5
   cloud_functions: ^3.2.6
+  flutter_folding_card: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:

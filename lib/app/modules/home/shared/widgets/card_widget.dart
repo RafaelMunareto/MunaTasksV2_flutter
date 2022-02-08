@@ -29,15 +29,6 @@ class CardWidget extends StatefulWidget {
 
 class _CardWidgetState extends State<CardWidget> {
   final HomeStore store = Modular.get();
-  void reorderData(int oldindex, int newindex) {
-    setState(() {
-      if (newindex > oldindex) {
-        newindex -= 1;
-      }
-      final items = store.client.tarefas.removeAt(oldindex);
-      store.client.tarefas.insert(newindex, items);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,18 +39,20 @@ class _CardWidgetState extends State<CardWidget> {
           return AlertDialog(
             title: const Text(
               'Excluir Tarefa.',
-              style: TextStyle(fontSize: 20, color: Colors.deepPurple),
+              style: TextStyle(
+                  fontSize: 20, color: Color.fromARGB(255, 140, 82, 241)),
             ),
             content: const Text('Tem certeza que deseja excluír a tarefa ?'),
             actions: [
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromARGB(255, 140, 82, 241)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                       side: const BorderSide(
-                        color: Colors.deepPurple,
+                        color: Color.fromARGB(255, 140, 82, 241),
                         width: 2.0,
                       ),
                     ),
@@ -73,12 +66,13 @@ class _CardWidgetState extends State<CardWidget> {
               ),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromARGB(255, 140, 82, 241)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                       side: const BorderSide(
-                        color: Colors.deepPurple,
+                        color: Color.fromARGB(255, 140, 82, 241),
                         width: 2.0,
                       ),
                     ),
@@ -120,7 +114,10 @@ class _CardWidgetState extends State<CardWidget> {
               child: ExpansionTile(
                 key: UniqueKey(),
                 textColor: Colors.black,
-                title: HeaderWidget(tarefa: linha, theme: store.client.theme),
+                title: HeaderWidget(
+                  tarefa: linha,
+                  theme: store.client.theme,
+                ),
                 subtitle: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Wrap(

@@ -43,29 +43,36 @@ class ImageRepository {
     File file = File(image.path);
     UploadTask task = arquivo.putFile(file);
 
-    task.snapshotEvents.listen((TaskSnapshot snapshot) {
+    task.snapshotEvents.listen((TaskSnapshot snapshot) async {
       if (snapshot.state == TaskState.running) {
         loading(true);
       } else if (snapshot.state == TaskState.success) {
-        loading(false);
-        recuperarUrlImagem(snapshot);
+        await recuperarUrlImagem(snapshot, loading);
       }
     });
   }
 
-  recuperarUrlImagem(TaskSnapshot snapshot) async {
+  recuperarUrlImagem(TaskSnapshot snapshot, Function loading) async {
     url = await snapshot.ref.getDownloadURL();
+    Timer(const Duration(seconds: 3), () => loading(false));
   }
 
-  atualizarUrlImagemPerfilProfile(String origemImagem, Function loading,
-      List<UserModel> userModel, Function getById) {
-    recuperarImagem(origemImagem, loading);
-    if (url != null) {
+  atualizarUrlImagemPerfilProfile(
+      String origemImagem,
+      Function loading,
+      List<UserModel> userModel,
+      Function getById,
+      Function setPerfilImage) async {
+    await recuperarImagem(origemImagem, loading);
+    if (!client.loadingImagem) {
       FirebaseFirestore db = FirebaseFirestore.instance;
       Map<String, dynamic> atualizarImage = {"urlImage": url};
-      client.setPerfilImage(url);
-      db.collection("usuarios").doc(auth.user!.uid).update(atualizarImage);
-      db.collection("perfil").doc(auth.user!.uid).update(atualizarImage);
+      await db
+          .collection("usuarios")
+          .doc(auth.user!.uid)
+          .update(atualizarImage);
+      await db.collection("perfil").doc(auth.user!.uid).update(atualizarImage);
+
       firebaseAuth.currentUser?.updatePhotoURL(url).then((value) {
         userModel = [];
       }).then((value) {

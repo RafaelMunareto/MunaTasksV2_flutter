@@ -131,19 +131,21 @@ class _EtiquetasWidgetState extends State<EtiquetasWidget>
           return AlertDialog(
             title: const Text(
               'Excluir etiqueta.',
-              style: TextStyle(fontSize: 20, color: Colors.deepPurple),
+              style: TextStyle(
+                  fontSize: 20, color: Color.fromARGB(255, 140, 82, 241)),
             ),
             content: Text(
                 'Tem certeza que deseja excluír a etiqueta ${model!.etiqueta} ?'),
             actions: [
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromARGB(255, 140, 82, 241)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                       side: const BorderSide(
-                        color: Colors.deepPurple,
+                        color: Color.fromARGB(255, 140, 82, 241),
                         width: 2.0,
                       ),
                     ),
@@ -157,12 +159,13 @@ class _EtiquetasWidgetState extends State<EtiquetasWidget>
               ),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromARGB(255, 140, 82, 241)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                       side: const BorderSide(
-                        color: Colors.deepPurple,
+                        color: Color.fromARGB(255, 140, 82, 241),
                         width: 2.0,
                       ),
                     ),

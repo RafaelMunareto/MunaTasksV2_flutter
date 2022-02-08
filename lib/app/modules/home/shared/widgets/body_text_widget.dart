@@ -21,6 +21,17 @@ class BodyTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            tarefa.texto,
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                color: theme ? Colors.white : Colors.black),
+          ),
+        ),
         for (var i = 0; i < tarefa.subTarefa!.length; i++)
           SubItemWidget(
             subTarefa: tarefa.subTarefa![i],

@@ -188,6 +188,12 @@ abstract class _ClientStoreBase with Store {
   @observable
   bool expand = false;
 
+  @observable
+  bool expandTarefa = false;
+
+  @action
+  setExpandTarefa(value) => expandTarefa = value;
+
   @action
   setExpand(value) => expand = value;
 

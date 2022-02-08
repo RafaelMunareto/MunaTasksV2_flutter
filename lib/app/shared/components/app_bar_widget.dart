@@ -23,7 +23,7 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   AppBarWidget({
     Key? key,
     this.title = "",
-    this.size = 115,
+    this.size = 75,
     this.context,
     this.home = false,
     this.icon = Icons.person,
@@ -117,7 +117,10 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                           ? true
                           : false);
                 },
-                child: const Icon(Icons.menu),
+                child: const Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                ),
               ),
       ),
     );
@@ -125,7 +128,10 @@ class _AppBarWidgetState extends State<AppBarWidget> {
 
   _popMenu() {
     return PopupMenuButton(
-      icon: const Icon(Icons.more_vert),
+      icon: const Icon(
+        Icons.more_vert,
+        color: Colors.white,
+      ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
           child: auth.user!.photoURL != ''
@@ -142,7 +148,10 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           mouseCursor: SystemMouseCursors.click,
           onTap: () => Modular.to.navigate('/settings'),
           child: const ListTile(
-            leading: Icon(Icons.settings),
+            leading: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
             title: Text('Configurações'),
           ),
         ),
@@ -150,7 +159,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           mouseCursor: SystemMouseCursors.click,
           onTap: () => Modular.to.navigate('/settings/perfil'),
           child: const ListTile(
-            leading: Icon(Icons.account_circle),
+            leading: Icon(Icons.account_circle, color: Colors.white),
             title: Text('Perfil e Equipes'),
           ),
         ),

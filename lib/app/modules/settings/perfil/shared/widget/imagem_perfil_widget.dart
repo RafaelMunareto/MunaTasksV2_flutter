@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
@@ -42,6 +45,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
   late AnimationController _controller2;
   late Animation<double> _animacaoSize;
   late Animation<double> _animacaoSize2;
+  final ClientStore client = Modular.get();
 
   popMenu() {
     return PopupMenuButton(
@@ -53,8 +57,12 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () {
-            widget.atualizarUrlImagemPerfilProfile("camera",
-                widget.setLoadingImagem, widget.userModel, widget.getById);
+            widget.atualizarUrlImagemPerfilProfile(
+                "camera",
+                widget.setLoadingImagem,
+                widget.userModel,
+                widget.getById,
+                client.setPerfilImage);
           },
           child: const ListTile(
             leading: Icon(Icons.camera_alt),
@@ -65,8 +73,12 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () => {
-            widget.atualizarUrlImagemPerfilProfile("galeria",
-                widget.setLoadingImagem, widget.userModel, widget.getById)
+            widget.atualizarUrlImagemPerfilProfile(
+                "galeria",
+                widget.setLoadingImagem,
+                widget.userModel,
+                widget.getById,
+                client.setPerfilImage)
           },
           child: const ListTile(
             leading: Icon(Icons.image),
