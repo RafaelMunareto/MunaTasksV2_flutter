@@ -48,9 +48,9 @@ class ConvertIcon {
   iconStatusColor(String icon) {
     switch (icon) {
       case 'play':
-        return Colors.amber;
+        return Colors.green;
       case 'pause':
-        return Colors.grey;
+        return Colors.amber;
       case 'check':
         return Colors.blue;
     }

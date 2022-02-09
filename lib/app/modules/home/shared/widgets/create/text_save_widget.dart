@@ -30,6 +30,7 @@ class _TextSaveWidgetState extends State<TextSaveWidget> {
       child: SizedBox(
         width: double.infinity,
         child: TextFormField(
+          key: UniqueKey(),
           autocorrect: true,
           autofocus: false,
           controller: widget.controller,

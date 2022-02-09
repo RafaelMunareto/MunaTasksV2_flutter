@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -82,30 +83,35 @@ class _CreateSubtarefaInsertWidgetState
                     spacing: 24,
                     children: [
                       for (var index = 0; index < list.length; index++)
-                        InputChip(
-                          key: UniqueKey(),
-                          labelPadding: const EdgeInsets.all(2),
-                          elevation: 4.0,
-                          avatar: const Icon(
-                            Icons.work,
-                            color: Colors.grey,
-                          ),
-                          label: SizedBox(
-                            width: 100,
-                            child: Text(
-                              list[index].subtarefa,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12),
+                        Padding(
+                          padding: kIsWeb
+                              ? const EdgeInsets.only(bottom: 16.0)
+                              : const EdgeInsets.only(bottom: 4.0),
+                          child: InputChip(
+                            key: UniqueKey(),
+                            labelPadding: const EdgeInsets.all(2),
+                            elevation: 4.0,
+                            avatar: const Icon(
+                              Icons.work,
+                              color: Colors.grey,
                             ),
+                            label: SizedBox(
+                              width: 100,
+                              child: Text(
+                                list[index].subtarefa,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                widget.setSubtarefaSelection(
+                                    list[index].subtarefa);
+                                FocusScope.of(context).unfocus();
+                                Modular.to.pop();
+                              });
+                            },
                           ),
-                          onPressed: () {
-                            setState(() {
-                              widget
-                                  .setSubtarefaSelection(list[index].subtarefa);
-                              FocusScope.of(context).unfocus();
-                              Modular.to.pop();
-                            });
-                          },
                         ),
                     ],
                   ),

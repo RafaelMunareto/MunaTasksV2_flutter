@@ -53,7 +53,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.save(widget.tarefa);
               },
               child: const Icon(
-                Icons.play_circle,
+                Icons.pause_circle,
                 color: Colors.amber,
               ),
             ),
@@ -63,8 +63,8 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.save(widget.tarefa);
               },
               child: const Icon(
-                Icons.check_circle,
-                color: kPrimaryColor,
+                Icons.play_circle,
+                color: Colors.green,
               ),
             ),
           ],
@@ -80,7 +80,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
               },
               child: const Icon(
                 Icons.pause_circle,
-                color: Colors.grey,
+                color: Colors.amber,
               ),
             ),
             GestureDetector(
@@ -106,7 +106,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
               },
               child: const Icon(
                 Icons.pause_circle,
-                color: Colors.grey,
+                color: Colors.amber,
               ),
             ),
             GestureDetector(
@@ -116,7 +116,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
               },
               child: const Icon(
                 Icons.play_circle,
-                color: Colors.amber,
+                color: Colors.green,
               ),
             ),
           ],

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
@@ -32,8 +33,10 @@ class _MenuScreenState extends State<MenuScreen> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () {
-            widget.controller.toggle!();
-            widget.setOpen(false);
+            if (!kIsWeb) {
+              widget.controller.toggle!();
+              widget.setOpen(false);
+            }
           },
           child: Container(
               decoration: const BoxDecoration(
@@ -43,92 +46,99 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
               ),
               child: widget.open
-                  ? ListView(
-                      padding: EdgeInsets.zero,
-                      children: <Widget>[
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height,
-                          child: DrawerHeader(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                widget.user[2] == null
-                                    ? const CircularProgressIndicator()
-                                    : Container(
-                                        width: 70.0,
-                                        height: 70.0,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: NetworkImage(widget.user[2]),
+                  ? SizedBox(
+                      width: kIsWeb
+                          ? MediaQuery.of(context).size.width * 0.2
+                          : MediaQuery.of(context).size.width * 0.3,
+                      child: ListView(
+                        padding: EdgeInsets.zero,
+                        children: <Widget>[
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height,
+                            child: DrawerHeader(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  widget.user[2] == null
+                                      ? const CircularProgressIndicator()
+                                      : Container(
+                                          width: 70.0,
+                                          height: 70.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image:
+                                                  NetworkImage(widget.user[2]),
+                                            ),
                                           ),
                                         ),
+                                  const Text(
+                                    "Olá",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  Text(
+                                    widget.user[1] ?? '',
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Modular.to.navigate('/settings/perfil');
+                                    },
+                                    child: const Padding(
+                                      padding: EdgeInsets.only(bottom: 16.0),
+                                      child: Text(
+                                        "Edite Perfil",
+                                        style: TextStyle(
+                                            fontSize: 14, color: Colors.red),
                                       ),
-                                const Text(
-                                  "Olá",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                Text(
-                                  widget.user[1] ?? '',
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w800),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Modular.to.navigate('/settings/perfil');
-                                  },
-                                  child: const Padding(
-                                    padding: EdgeInsets.only(bottom: 16.0),
-                                    child: Text(
-                                      "Edite Perfil",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.red),
                                     ),
                                   ),
-                                ),
-                                ListTile(
-                                  title: Row(
-                                    children: const [
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 8.0),
-                                        child: Icon(
-                                          Icons.settings,
+                                  ListTile(
+                                    title: Row(
+                                      children: const [
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 8.0),
+                                          child: Icon(
+                                            Icons.settings,
+                                          ),
                                         ),
-                                      ),
-                                      Text("Configurações"),
-                                    ],
+                                        Text("Configurações"),
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      Modular.to.navigate('/settings');
+                                    },
                                   ),
-                                  onTap: () {
-                                    Modular.to.navigate('/settings');
-                                  },
-                                ),
-                                ListTile(
-                                  title: Row(
-                                    children: const [
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 8.0),
-                                        child: Icon(
-                                          Icons.bookmark,
+                                  ListTile(
+                                    title: Row(
+                                      children: const [
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 8.0),
+                                          child: Icon(
+                                            Icons.bookmark,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        "Etiquetas",
-                                      ),
-                                    ],
+                                        Text(
+                                          "Etiquetas",
+                                        ),
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      Modular.to
+                                          .navigate('/settings/etiquetas');
+                                    },
                                   ),
-                                  onTap: () {
-                                    Modular.to.navigate('/settings/etiquetas');
-                                  },
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     )
                   : Container()),
         ),

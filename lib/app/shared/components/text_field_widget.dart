@@ -63,6 +63,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget>
         child: Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: TextField(
+            key: Key(widget.labelText),
             onChanged: widget.onChanged,
             obscureText: widget.obscure,
             decoration: InputDecoration(

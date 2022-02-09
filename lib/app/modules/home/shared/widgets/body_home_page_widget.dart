@@ -56,16 +56,17 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                   : const Icon(Icons.bookmark),
                               onTap: () {
                                 DialogButtom().showDialog(
-                                    RadioEtiquetasFilterWidget(
-                                      changeFilterEtiquetaList:
-                                          store.changeFilterEtiquetaList,
-                                      etiquetaList: store.client.etiquetaList,
-                                      setColor: store.client.setColor,
-                                      setIcon: store.client.setIcon,
-                                      setEtiquetaSelection:
-                                          store.client.setEtiquetaSelection,
-                                    ),
-                                    context);
+                                  RadioEtiquetasFilterWidget(
+                                    changeFilterEtiquetaList:
+                                        store.changeFilterEtiquetaList,
+                                    etiquetaList: store.client.etiquetaList,
+                                    setColor: store.client.setColor,
+                                    setIcon: store.client.setIcon,
+                                    setEtiquetaSelection:
+                                        store.client.setEtiquetaSelection,
+                                  ),
+                                  context,
+                                );
                               },
                             ),
                             title: Center(
@@ -99,7 +100,9 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                     setOrderSelection:
                                         store.client.setOrderSelection,
                                   );
-                                }), context),
+                                }), context,
+                                    width: MediaQuery.of(context).size.height *
+                                        0.4),
                               ),
                             ),
                             trailing: GestureDetector(

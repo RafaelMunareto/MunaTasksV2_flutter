@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -82,7 +83,9 @@ class _PrioridadeSelectionWidgetState extends State<PrioridadeSelectionWidget>
                     children: [
                       for (var index = 0; index < list.length; index++)
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: kIsWeb
+                              ? const EdgeInsets.only(bottom: 16.0)
+                              : const EdgeInsets.only(bottom: 8.0),
                           child: InputChip(
                             key: ObjectKey(list[index].reference),
                             labelPadding: const EdgeInsets.all(2),
@@ -96,7 +99,9 @@ class _PrioridadeSelectionWidgetState extends State<PrioridadeSelectionWidget>
                                         list[index].prioridade),
                                   ),
                             label: SizedBox(
-                              width: MediaQuery.of(context).size.width,
+                              width: kIsWeb
+                                  ? 100
+                                  : MediaQuery.of(context).size.width,
                               child: Text(
                                 list[index].prioridade == 4
                                     ? 'Normal'

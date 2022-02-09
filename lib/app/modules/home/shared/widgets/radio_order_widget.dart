@@ -31,63 +31,65 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: SizedBox.expand(
-        child: Observer(
-          builder: (_) {
-            if (widget.orderList!.data == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              List<OrderModel> list = widget.orderList!.data;
-              return Column(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    width: MediaQuery.of(context).size.width,
-                    child: ListTile(
-                      leading: const Text(
-                        'ASC',
-                      ),
-                      title: Transform.scale(
-                        scale: 1.5,
-                        child: Switch(
-                            value: widget.orderAscDesc,
-                            onChanged: (_) {
-                              widget.setOrderAscDesc(!widget.orderAscDesc);
-                              widget.changeOrderList();
-                            }),
-                      ),
-                      trailing: const Text('DESC'),
+      body: Observer(
+        builder: (_) {
+          if (widget.orderList!.data == null) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            List<OrderModel> list = widget.orderList!.data;
+            return Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListTile(
+                    leading: const Text(
+                      'ASC',
                     ),
+                    title: Transform.scale(
+                      scale: 1.5,
+                      child: Switch(
+                          value: widget.orderAscDesc,
+                          onChanged: (_) {
+                            widget.setOrderAscDesc(!widget.orderAscDesc);
+                            widget.changeOrderList();
+                          }),
+                    ),
+                    trailing: const Text('DESC'),
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.20,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          for (var linha in list)
-                            ListTile(
-                              key: Key(linha.grupo.toString()),
-                              title: Text(
-                                linha.grupo,
-                              ),
-                              leading: Radio(
-                                value: linha.grupo,
-                                groupValue: widget.orderSelection,
-                                onChanged: (value) {
-                                  setState(() {
-                                    widget.setOrderSelection(value);
-                                    widget.changeOrderList();
-                                  });
-                                },
-                              ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for (var linha in list)
+                          ListTile(
+                            key: Key(linha.grupo.toString()),
+                            title: Text(
+                              linha.grupo,
                             ),
-                        ],
-                      ),
+                            leading: Radio(
+                              value: linha.grupo,
+                              groupValue: widget.orderSelection,
+                              onChanged: (value) {
+                                setState(() {
+                                  widget.setOrderSelection(value);
+                                  widget.changeOrderList();
+                                });
+                              },
+                            ),
+                          ),
+                      ],
                     ),
                   ),
-                  SizedBox(
+                ),
+                Baseline(
+                  baseline: MediaQuery.of(context).size.height * 0.08,
+                  baselineType: TextBaseline.ideographic,
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: TextButton(
                       onPressed: () {
@@ -96,11 +98,11 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
                       child: const Text('FECHAR'),
                     ),
                   ),
-                ],
-              );
-            }
-          },
-        ),
+                ),
+              ],
+            );
+          }
+        },
       ),
     );
   }

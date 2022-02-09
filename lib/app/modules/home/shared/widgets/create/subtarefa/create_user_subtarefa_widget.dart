@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -79,29 +80,34 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
                     spacing: 24,
                     children: [
                       for (var index = 0; index < list.length; index++)
-                        InputChip(
-                          key: ObjectKey(list[index].reference),
-                          labelPadding: const EdgeInsets.all(2),
-                          elevation: 4.0,
-                          avatar: CircleAvatarWidget(
-                            url: list[index].urlImage,
-                          ),
-                          label: SizedBox(
-                            width: 70,
-                            child: Text(
-                              list[index].name,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12),
+                        Padding(
+                          padding: kIsWeb
+                              ? const EdgeInsets.only(bottom: 16.0)
+                              : const EdgeInsets.only(bottom: 4.0),
+                          child: InputChip(
+                            key: ObjectKey(list[index].reference),
+                            labelPadding: const EdgeInsets.all(2),
+                            elevation: 4.0,
+                            avatar: CircleAvatarWidget(
+                              url: list[index].urlImage,
                             ),
+                            label: SizedBox(
+                              width: 70,
+                              child: Text(
+                                list[index].name,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                widget.setUserCreateSelection(list[index]);
+                                widget.setCreateImageUser(list[index].urlImage);
+                                FocusScope.of(context).unfocus();
+                                Modular.to.pop();
+                              });
+                            },
                           ),
-                          onPressed: () {
-                            setState(() {
-                              widget.setUserCreateSelection(list[index]);
-                              widget.setCreateImageUser(list[index].urlImage);
-                              FocusScope.of(context).unfocus();
-                              Modular.to.pop();
-                            });
-                          },
                         ),
                     ],
                   ),

@@ -108,7 +108,11 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
             store.clientCreate.cleanSave();
           });
         },
-        child: const Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          size: kIsWeb ? 48 : 24,
+          color: Colors.grey[300],
+        ),
         backgroundColor: Colors.red,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

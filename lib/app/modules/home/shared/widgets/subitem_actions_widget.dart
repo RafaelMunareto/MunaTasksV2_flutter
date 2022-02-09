@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
@@ -29,7 +30,9 @@ class _SubitemActionsWidgetState extends State<SubitemActionsWidget> {
           children: [
             for (var linha in store.client.subtarefaActionList)
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: kIsWeb
+                    ? const EdgeInsets.all(8)
+                    : const EdgeInsets.only(bottom: 4.0),
                 child: InputChip(
                   key: ObjectKey(linha.toString()),
                   labelPadding: const EdgeInsets.all(2),
