@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
@@ -50,7 +51,9 @@ class _DateSaveWidgetState extends State<DateSaveWidget> {
     }
 
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.5,
+      width: kIsWeb
+          ? MediaQuery.of(context).size.width * 0.2
+          : MediaQuery.of(context).size.width * 0.5,
       child: TextField(
         autofocus: false,
         controller: widget.dateController,

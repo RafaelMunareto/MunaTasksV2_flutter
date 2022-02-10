@@ -70,14 +70,12 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                 return list.isNotEmpty
                     ? SingleChildScrollView(
                         child: Wrap(
-                          runAlignment: WrapAlignment.spaceBetween,
+                          runAlignment: WrapAlignment.spaceAround,
                           spacing: 24,
                           children: [
                             for (var i = 0; i < list.length; i++)
                               Padding(
-                                padding: kIsWeb
-                                    ? const EdgeInsets.only(bottom: 16.0)
-                                    : const EdgeInsets.only(bottom: 4.0),
+                                padding: const EdgeInsets.only(bottom: 4.0),
                                 child: SizedBox(
                                   child: InputChip(
                                     key: ObjectKey(list[i].email),
@@ -109,7 +107,8 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                 ),
                               ),
                             Baseline(
-                              baseline: 100,
+                              baseline:
+                                  MediaQuery.of(context).size.height * 0.2,
                               baselineType: TextBaseline.alphabetic,
                               child: SizedBox(
                                 width: MediaQuery.of(context).size.width,

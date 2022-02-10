@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -73,23 +74,25 @@ class _CreateWidgetState extends State<CreateWidget>
                         child: SizedBox(
                           width: double.infinity,
                           child: Card(
-                            elevation: 4,
-                            shape: Border(
-                              top: BorderSide(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
                                   color: ConvertIcon().convertColor(store
-                                          .clientCreate
-                                          .tarefaModelSaveEtiqueta
-                                          .color) ??
-                                      Colors.grey,
-                                  width: 5),
+                                      .clientCreate
+                                      .tarefaModelSaveEtiqueta
+                                      .color),
+                                  width: 2),
+                              borderRadius: BorderRadius.circular(5.0),
                             ),
+                            elevation: 16,
                             child: Column(
                               children: [
                                 SizedBox(
                                   width: double.infinity,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 8.0, bottom: 8),
+                                    padding: kIsWeb
+                                        ? const EdgeInsets.all(8)
+                                        : const EdgeInsets.only(
+                                            top: 8.0, bottom: 8),
                                     child: Wrap(
                                       alignment: WrapAlignment.spaceBetween,
                                       children: const [

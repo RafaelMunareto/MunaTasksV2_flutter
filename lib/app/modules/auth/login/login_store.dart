@@ -60,20 +60,24 @@ abstract class _LoginStoreBase with Store {
   @action
   submit() async {
     setLoading(true);
-    auth.getEmailPasswordLogin(client.email, client.password).then((value) {
-      if (value.user.emailVerified) {
-        storage.put('user', [
-          value.user.uid,
-          value.user.displayName.toString(),
-          value.user.photoURL.toString()
-        ]);
-        setStorageLogin();
-        setStorageLoginNormal();
-        Modular.to.navigate('/home');
+    await auth
+        .getEmailPasswordLogin(client.email, client.password)
+        .then((value) {
+      if (value != null) {
+        if (value.user.emailVerified) {
+          storage.put('user', [
+            value.user.uid,
+            value.user.displayName.toString(),
+            value.user.photoURL.toString()
+          ]);
+          setStorageLogin();
+          setStorageLoginNormal();
+          Modular.to.navigate('/home');
+        }
+        setLoading(false);
+        setErrOrGoal(false);
+        setMsg('Você deve validar o email primeiro!');
       }
-      setLoading(false);
-      setErrOrGoal(false);
-      setMsg('Você deve validar o email primeiro!');
     }).catchError((e) {
       setLoading(false);
       setErrOrGoal(false);
