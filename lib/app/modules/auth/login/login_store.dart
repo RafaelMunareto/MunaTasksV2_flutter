@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/auth/shared/models/client_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
+import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/utils/error_pt_br.dart';
 import 'package:local_auth/local_auth.dart';
@@ -57,27 +58,34 @@ abstract class _LoginStoreBase with Store {
   @observable
   bool isAuthenticating = false;
 
+  @observable
+  dynamic user;
+
+  @action
+  setUser(value) => user = value;
+
   @action
   submit() async {
     setLoading(true);
     await auth
         .getEmailPasswordLogin(client.email, client.password)
         .then((value) {
-      if (value != null) {
-        if (value.user.emailVerified) {
-          storage.put('user', [
-            value.user.uid,
-            value.user.displayName.toString(),
-            value.user.photoURL.toString()
-          ]);
-          setStorageLogin();
-          setStorageLoginNormal();
-          Modular.to.navigate('/home');
-        }
-        setLoading(false);
-        setErrOrGoal(false);
+      setUser(value);
+    }).whenComplete(() {
+      if (user.user.emailVerified) {
+        storage.put('user', [
+          user.user.uid,
+          user.user.displayName.toString(),
+          user.user.photoURL.toString()
+        ]);
+        setStorageLogin();
+        setStorageLoginNormal();
+        Modular.to.navigate('/home');
+      } else {
         setMsg('Você deve validar o email primeiro!');
       }
+      setLoading(false);
+      setErrOrGoal(false);
     }).catchError((e) {
       setLoading(false);
       setErrOrGoal(false);

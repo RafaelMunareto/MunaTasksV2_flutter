@@ -92,128 +92,154 @@ class EtiquetasPageState extends State<EtiquetasPage>
           onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
           },
-          child: Wrap(
-            direction: Axis.vertical,
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
-                child: Observer(builder: (_) {
-                  return store.etiquetaStore.updateLoading
-                      ? FadeTransition(
-                          opacity: opacidade,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 12),
-                            child: ElevatedButton.icon(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Colors.deepPurple),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(radius.value),
-                                      side: const BorderSide(
-                                        color: Colors.deepPurple,
-                                        width: 2.0,
-                                      ),
-                                    ),
+          child: LayoutBuilder(
+            builder: (context, constraint) {
+              double withDevice = constraint.maxWidth;
+
+              if (withDevice < 600) {
+                withDevice = withDevice * 1;
+              } else if (withDevice < 960) {
+                withDevice = withDevice * 0.7;
+              } else if (withDevice < 1025) {
+                withDevice = withDevice * 0.5;
+              } else {
+                withDevice = withDevice * 0.4;
+              }
+              return Center(
+                child: SizedBox(
+                  width: withDevice,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        child: Observer(builder: (_) {
+                          return store.etiquetaStore.updateLoading
+                              ? FadeTransition(
+                                  opacity: opacidade,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 12),
+                                    child: ElevatedButton.icon(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.deepPurple),
+                                          shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      radius.value),
+                                              side: const BorderSide(
+                                                color: Colors.deepPurple,
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          store.etiquetaStore
+                                              .setCleanVariables();
+                                          store.etiquetaStore
+                                              .setUpdateLoading(false);
+                                        },
+                                        icon: const Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                        ),
+                                        label: const Text(
+                                          'Novo',
+                                          style: TextStyle(color: Colors.white),
+                                        )),
                                   ),
-                                ),
-                                onPressed: () {
-                                  store.etiquetaStore.setCleanVariables();
-                                  store.etiquetaStore.setUpdateLoading(false);
-                                },
-                                icon: const Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                ),
-                                label: const Text(
-                                  'Novo',
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                          ),
-                        )
-                      : Container();
-                }),
-              ),
-              Observer(builder: (_) {
-                return TextFieldWidget(
-                  etiqueta: store.etiquetaStore.etiqueta,
-                  loading: store.etiquetaStore.loading,
-                  reference: store.etiquetaStore.reference,
-                  setEtiqueta: store.etiquetaStore.setEtiqueta,
-                );
-              }),
-              Observer(builder: (_) {
-                return IconWidget(
-                  setIcon: store.etiquetaStore.setIcon,
-                  icon: store.etiquetaStore.icon,
-                  color: store.etiquetaStore.color,
-                );
-              }),
-              Observer(builder: (_) {
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: ExpansionTile(
-                    onExpansionChanged: (value) =>
-                        FocusScope.of(context).requestFocus(FocusNode()),
-                    leading: Icon(
-                      Icons.color_lens,
-                      color:
-                          ConvertIcon().convertColor(store.etiquetaStore.color),
-                    ),
-                    title: Text(
-                      'Escolha uma cor',
-                      style: TextStyle(
-                        color: ConvertIcon()
-                            .convertColor(store.etiquetaStore.color),
+                                )
+                              : Container();
+                        }),
                       ),
-                    ),
-                    children: <Widget>[
+                      Observer(builder: (_) {
+                        return TextFieldWidget(
+                          etiqueta: store.etiquetaStore.etiqueta,
+                          loading: store.etiquetaStore.loading,
+                          reference: store.etiquetaStore.reference,
+                          setEtiqueta: store.etiquetaStore.setEtiqueta,
+                        );
+                      }),
+                      Observer(builder: (_) {
+                        return IconWidget(
+                          setIcon: store.etiquetaStore.setIcon,
+                          icon: store.etiquetaStore.icon,
+                          color: store.etiquetaStore.color,
+                        );
+                      }),
+                      Observer(builder: (_) {
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: ExpansionTile(
+                            onExpansionChanged: (value) =>
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode()),
+                            leading: Icon(
+                              Icons.color_lens,
+                              color: ConvertIcon()
+                                  .convertColor(store.etiquetaStore.color),
+                            ),
+                            title: Text(
+                              'Escolha uma cor',
+                              style: TextStyle(
+                                color: ConvertIcon()
+                                    .convertColor(store.etiquetaStore.color),
+                              ),
+                            ),
+                            children: <Widget>[
+                              Observer(
+                                builder: (_) {
+                                  return ColorsWidget(
+                                    colorsList: store.etiquetaStore.colorsList,
+                                    getColors: store.getColors,
+                                    color: store.etiquetaStore.color,
+                                    setColor: store.etiquetaStore.setColor,
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                      Observer(builder: (_) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ButtonWidget(
+                              label: store.etiquetaStore.updateLoading
+                                  ? 'ATUALIZAR'
+                                  : 'SALVAR',
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              loading: store.etiquetaStore.loading,
+                              function: store.submit),
+                        );
+                      }),
                       Observer(
                         builder: (_) {
-                          return ColorsWidget(
-                            colorsList: store.etiquetaStore.colorsList,
-                            getColors: store.getColors,
-                            color: store.etiquetaStore.color,
-                            setColor: store.etiquetaStore.setColor,
-                          );
+                          return store.etiquetaStore.showValidation
+                              ? ValidateWidget(
+                                  validateEtiqueta:
+                                      store.etiquetaStore.validateEtiqueta,
+                                  validateColor:
+                                      store.etiquetaStore.validateColor,
+                                  validateIcon:
+                                      store.etiquetaStore.validateIcon)
+                              : Container();
                         },
+                      ),
+                      EtiquetasWidget(
+                        etiquetasList: store.etiquetaStore.etiquetaList,
+                        getList: store.getList,
+                        delete: store.delete,
+                        loadingUpdate: store.loadingUpdate,
                       ),
                     ],
                   ),
-                );
-              }),
-              Observer(builder: (_) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ButtonWidget(
-                      label: store.etiquetaStore.updateLoading
-                          ? 'ATUALIZAR'
-                          : 'SALVAR',
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      loading: store.etiquetaStore.loading,
-                      function: store.submit),
-                );
-              }),
-              Observer(
-                builder: (_) {
-                  return store.etiquetaStore.showValidation
-                      ? ValidateWidget(
-                          validateEtiqueta:
-                              store.etiquetaStore.validateEtiqueta,
-                          validateColor: store.etiquetaStore.validateColor,
-                          validateIcon: store.etiquetaStore.validateIcon)
-                      : Container();
-                },
-              ),
-              EtiquetasWidget(
-                etiquetasList: store.etiquetaStore.etiquetaList,
-                getList: store.getList,
-                delete: store.delete,
-                loadingUpdate: store.loadingUpdate,
-              ),
-            ],
+                ),
+              );
+            },
           ),
         ),
       ),

@@ -168,6 +168,21 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
+  final _$userAtom = Atom(name: '_LoginStoreBase.user');
+
+  @override
+  dynamic get user {
+    _$userAtom.reportRead();
+    return super.user;
+  }
+
+  @override
+  set user(dynamic value) {
+    _$userAtom.reportWrite(value, super.user, () {
+      super.user = value;
+    });
+  }
+
   final _$submitAsyncAction = AsyncAction('_LoginStoreBase.submit');
 
   @override
@@ -255,6 +270,17 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   }
 
   @override
+  dynamic setUser(dynamic value) {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
+        name: '_LoginStoreBase.setUser');
+    try {
+      return super.setUser(value);
+    } finally {
+      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic checkBiometrics() {
     final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
         name: '_LoginStoreBase.checkBiometrics');
@@ -322,6 +348,7 @@ canCheckBiometrics: ${canCheckBiometrics},
 availableBiometrics: ${availableBiometrics},
 authorized: ${authorized},
 isAuthenticating: ${isAuthenticating},
+user: ${user},
 login: ${login}
     ''';
   }

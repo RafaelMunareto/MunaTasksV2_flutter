@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
@@ -39,82 +40,92 @@ class PerfilPageState extends State<PerfilPage> {
                 onTap: () {
                   FocusScope.of(context).requestFocus(FocusNode());
                 },
-                child: Column(
-                  children: [
-                    ImagemPerfilWidget(
-                        loadingImagem: store.client.loadingImagem,
-                        setLoadingImagem: store.client.setLoadingImagem,
-                        perfil: store.client.perfil,
-                        userModel: store.client.userModel,
-                        getById: store.getById,
-                        atualizarUrlImagemPerfilProfile: store
-                            .imageRepository.atualizarUrlImagemPerfilProfile,
+                child: Padding(
+                  padding: kIsWeb
+                      ? const EdgeInsets.all(84.0)
+                      : const EdgeInsets.all(0),
+                  child: Column(
+                    children: [
+                      ImagemPerfilWidget(
+                          loadingImagem: store.client.loadingImagem,
+                          setLoadingImagem: store.client.setLoadingImagem,
+                          perfil: store.client.perfil,
+                          userModel: store.client.userModel,
+                          getById: store.getById,
+                          atualizarUrlImagemPerfilProfile: store
+                              .imageRepository.atualizarUrlImagemPerfilProfile,
+                          textFieldNameBool: store.client.textFieldNameBool,
+                          changeName: store.client.changeName,
+                          save: store.save,
+                          showTextFieldName: store.client.showTextFieldName,
+                          errorName: store.client.validateName),
+                      RollingSwitch.icon(
+                        initialState: enableSwitch,
+                        width: 200,
+                        animationDuration: const Duration(milliseconds: 600),
+                        onChanged: (bool state) {
+                          setState(() {
+                            store.client.changeManager(state);
+                          });
+                          store.save();
+                        },
+                        rollingInfoRight: RollingIconInfo(
+                          backgroundColor: lightThemeData(context).primaryColor,
+                          icon: Icons.work,
+                          text: const Text(
+                            'Gerente',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        rollingInfoLeft: const RollingIconInfo(
+                          backgroundColor: Colors.grey,
+                          icon: Icons.engineering,
+                          text: Text(
+                            'Técnico',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      NamesWidget(
                         textFieldNameBool: store.client.textFieldNameBool,
+                        perfil: store.client.perfil,
                         changeName: store.client.changeName,
                         save: store.save,
                         showTextFieldName: store.client.showTextFieldName,
-                        errorName: store.client.validateName),
-                    RollingSwitch.icon(
-                      initialState: enableSwitch,
-                      width: 200,
-                      animationDuration: const Duration(milliseconds: 600),
-                      onChanged: (bool state) {
-                        setState(() {
-                          store.client.changeManager(state);
-                        });
-                        store.save();
-                      },
-                      rollingInfoRight: RollingIconInfo(
-                        backgroundColor: lightThemeData(context).primaryColor,
-                        icon: Icons.work,
-                        text: const Text(
-                          'Gerente',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
+                        changeTime: store.client.changeTime,
+                        errorTime: store.client.validateTime,
+                        changeManager: store.client.changeManager,
+                        enableSwitch: enableSwitch,
                       ),
-                      rollingInfoLeft: const RollingIconInfo(
-                        backgroundColor: Colors.grey,
-                        icon: Icons.engineering,
-                        text: Text(
-                          'Técnico',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    NamesWidget(
-                      textFieldNameBool: store.client.textFieldNameBool,
-                      perfil: store.client.perfil,
-                      changeName: store.client.changeName,
-                      save: store.save,
-                      showTextFieldName: store.client.showTextFieldName,
-                      changeTime: store.client.changeTime,
-                      errorTime: store.client.validateTime,
-                      changeManager: store.client.changeManager,
-                      enableSwitch: enableSwitch,
-                    ),
-                    EquipesWidget(
-                      showTeams: store.client.showTeams,
-                      setShowTeams: store.client.setShowTeams,
-                      usuarios: store.client.usuarios,
-                      getUsers: store.getUsers,
-                      individualChip: store.client.individualChip,
-                      setIdStaff: store.client.setIdStaff,
-                      perfil: store.client.perfil,
-                      getById: store.getById,
-                      users: store.client.userModel,
-                      inputChipChecked: store.client.inputChipChecked,
-                      save: store.save,
-                      enableSwitch: enableSwitch,
-                    )
-                  ],
+                      EquipesWidget(
+                        showTeams: store.client.showTeams,
+                        setShowTeams: store.client.setShowTeams,
+                        usuarios: store.client.usuarios,
+                        getUsers: store.getUsers,
+                        individualChip: store.client.individualChip,
+                        setIdStaff: store.client.setIdStaff,
+                        perfil: store.client.perfil,
+                        getById: store.getById,
+                        users: store.client.userModel,
+                        inputChipChecked: store.client.inputChipChecked,
+                        save: store.save,
+                        enableSwitch: enableSwitch,
+                      )
+                    ],
+                  ),
                 ),
               );
             } else {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(32.0),
-                  child: CircularProgressIndicator(),
+              return SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(32.0),
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
               );
             }
