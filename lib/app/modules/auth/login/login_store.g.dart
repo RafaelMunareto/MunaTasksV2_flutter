@@ -183,13 +183,6 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$submitAsyncAction = AsyncAction('_LoginStoreBase.submit');
-
-  @override
-  Future submit() {
-    return _$submitAsyncAction.run(() => super.submit());
-  }
-
   final _$loginWithGoogleAsyncAction =
       AsyncAction('_LoginStoreBase.loginWithGoogle');
 
@@ -275,6 +268,17 @@ mixin _$LoginStore on _LoginStoreBase, Store {
         name: '_LoginStoreBase.setUser');
     try {
       return super.setUser(value);
+    } finally {
+      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic submit() {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
+        name: '_LoginStoreBase.submit');
+    try {
+      return super.submit();
     } finally {
       _$_LoginStoreBaseActionController.endAction(_$actionInfo);
     }

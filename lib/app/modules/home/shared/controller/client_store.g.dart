@@ -160,6 +160,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$tarefasTotaisAtom = Atom(name: '_ClientStoreBase.tarefasTotais');
+
+  @override
+  List<TarefaTotaisModel> get tarefasTotais {
+    _$tarefasTotaisAtom.reportRead();
+    return super.tarefasTotais;
+  }
+
+  @override
+  set tarefasTotais(List<TarefaTotaisModel> value) {
+    _$tarefasTotaisAtom.reportWrite(value, super.tarefasTotais, () {
+      super.tarefasTotais = value;
+    });
+  }
+
   final _$openAtom = Atom(name: '_ClientStoreBase.open');
 
   @override
@@ -824,6 +839,28 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic cleanTarefasTotais() {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.cleanTarefasTotais');
+    try {
+      return super.cleanTarefasTotais();
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setTarefasTotais(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setTarefasTotais');
+    try {
+      return super.setTarefasTotais(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -836,6 +873,7 @@ orderList: ${orderList},
 retardList: ${retardList},
 prioridadeList: ${prioridadeList},
 subtarefaActionList: ${subtarefaActionList},
+tarefasTotais: ${tarefasTotais},
 open: ${open},
 etiquetaSelection: ${etiquetaSelection},
 userSelection: ${userSelection},

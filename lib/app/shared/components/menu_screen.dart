@@ -49,7 +49,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   ? SizedBox(
                       width: kIsWeb
                           ? MediaQuery.of(context).size.width * 0.2
-                          : MediaQuery.of(context).size.width * 0.3,
+                          : MediaQuery.of(context).size.width,
                       child: ListView(
                         padding: EdgeInsets.zero,
                         children: <Widget>[

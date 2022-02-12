@@ -6,6 +6,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_home_page_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/landscape_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
@@ -77,86 +78,95 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
       ),
     );
 
-    return Scaffold(
-      appBar: !appVisible
-          ? AppBarWidget(
-              icon: Icons.bookmark,
-              home: true,
-              context: context,
-              zoomController: drawerController,
-              setOpen: store.client.setOpen,
-              settings: true,
-              back: false,
-              etiquetaList: store.client.tarefas,
-              tarefas: store.client.tarefas,
-              setValueSearch: store.client.setSearchValue,
-              etiquetaSelection: store.client.etiquetaSelection,
-              setEtiquetaSelection: store.client.setEtiquetaSelection,
-              changeFilterSearch: store.changeFilterSearchList,
-            )
-          : PreferredSize(
-              child: Container(),
-              preferredSize: const Size(0, 32),
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        if (orientation == Orientation.portrait) {
+          return Scaffold(
+            appBar: !appVisible
+                ? AppBarWidget(
+                    icon: Icons.bookmark,
+                    home: true,
+                    context: context,
+                    zoomController: drawerController,
+                    setOpen: store.client.setOpen,
+                    settings: true,
+                    back: false,
+                    etiquetaList: store.client.tarefas,
+                    tarefas: store.client.tarefas,
+                    setValueSearch: store.client.setSearchValue,
+                    etiquetaSelection: store.client.etiquetaSelection,
+                    setEtiquetaSelection: store.client.setEtiquetaSelection,
+                    changeFilterSearch: store.changeFilterSearchList,
+                  )
+                : PreferredSize(
+                    child: Container(),
+                    preferredSize: const Size(0, 32),
+                  ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                store.client.setExpand(!store.client.expand);
+                setState(() {
+                  store.client.expand
+                      ? createController.forward()
+                      : createController.reverse();
+                  store.clientCreate.cleanSave();
+                });
+              },
+              child: Icon(
+                Icons.add,
+                size: kIsWeb ? 48 : 24,
+                color: Colors.grey[300],
+              ),
+              backgroundColor: Colors.red,
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          store.client.setExpand(!store.client.expand);
-          setState(() {
-            store.client.expand
-                ? createController.forward()
-                : createController.reverse();
-            store.clientCreate.cleanSave();
-          });
-        },
-        child: Icon(
-          Icons.add,
-          size: kIsWeb ? 48 : 24,
-          color: Colors.grey[300],
-        ),
-        backgroundColor: Colors.red,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: Observer(builder: (_) {
-        return NavigationBarWidget(
-            theme: store.client.theme,
-            navigateBarSelection: store.client.navigateBarSelection,
-            setNavigateBarSelection: store.setNavigateBarSelection,
-            badgets: store.client.badgetNavigate);
-      }),
-      body: ZoomDrawer(
-        controller: drawerController,
-        style: DrawerStyle.Style1,
-        menuScreen: Observer(
-          builder: (_) {
-            return MenuScreen(
-              open: store.client.open,
-              user: store.user,
-              setOpen: store.client.setOpen,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.endDocked,
+            bottomNavigationBar: Observer(builder: (_) {
+              return NavigationBarWidget(
+                  theme: store.client.theme,
+                  navigateBarSelection: store.client.navigateBarSelection,
+                  setNavigateBarSelection: store.setNavigateBarSelection,
+                  badgets: store.client.badgetNavigate);
+            }),
+            body: ZoomDrawer(
               controller: drawerController,
-            );
-          },
-        ),
-        mainScreen: Observer(builder: (_) {
-          return !store.client.loading
-              ? BodyHomePageWidget(
-                  createController: createController,
-                  opacidade: opacidade,
-                )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    Center(child: CircularProgressIndicator()),
-                  ],
-                );
-        }),
-        borderRadius: 24.0,
-        showShadow: false,
-        backgroundColor: Colors.transparent,
-        slideWidth: MediaQuery.of(context).size.width * .65,
-        openCurve: Curves.fastOutSlowIn,
-        closeCurve: Curves.easeInOut,
-      ),
+              style: DrawerStyle.Style1,
+              menuScreen: Observer(
+                builder: (_) {
+                  return MenuScreen(
+                    open: store.client.open,
+                    user: store.user,
+                    setOpen: store.client.setOpen,
+                    controller: drawerController,
+                  );
+                },
+              ),
+              mainScreen: Observer(builder: (_) {
+                return !store.client.loading
+                    ? BodyHomePageWidget(
+                        createController: createController,
+                        opacidade: opacidade,
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          Center(child: CircularProgressIndicator()),
+                        ],
+                      );
+              }),
+              borderRadius: 24.0,
+              showShadow: false,
+              backgroundColor: Colors.transparent,
+              slideWidth: MediaQuery.of(context).size.width * .65,
+              openCurve: Curves.fastOutSlowIn,
+              closeCurve: Curves.easeInOut,
+            ),
+          );
+        } else {
+          return const LandscapeWidget();
+        }
+      },
     );
   }
 }

@@ -63,6 +63,15 @@ mixin _$HomeStore on HomeStoreBase, Store {
         .run(() => super.changeFilterUserList());
   }
 
+  final _$usersTarefasTotaisAsyncAction =
+      AsyncAction('HomeStoreBase.usersTarefasTotais');
+
+  @override
+  Future usersTarefasTotais() {
+    return _$usersTarefasTotaisAsyncAction
+        .run(() => super.usersTarefasTotais());
+  }
+
   final _$HomeStoreBaseActionController =
       ActionController(name: 'HomeStoreBase');
 

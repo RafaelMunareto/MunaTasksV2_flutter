@@ -4,6 +4,8 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 import 'package:munatasks2/app/shared/utils/error_pt_br.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'auth_repository_interface.dart';
@@ -13,6 +15,7 @@ class AuthRepository implements IAuthRepository {
   final FirebaseAuth auth = Modular.get();
   final FirebaseFirestore db = Modular.get();
   final FirebaseDynamicLinks fdl = Modular.get();
+  final ILocalStorage storage = LocalStorageShare();
 
   @override
   Future getEmailPasswordLogin(email, password) {
@@ -41,6 +44,9 @@ class AuthRepository implements IAuthRepository {
     );
 
     final User? user = (await auth.signInWithCredential(credential)).user;
+    storage.put('user', []);
+    storage.put('user',
+        [user!.uid, user.displayName.toString(), user.photoURL.toString()]);
     return user;
   }
 
@@ -57,10 +63,10 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  Future createUserSendEmailLink(name, email, password) async {
+  Future createUserSendEmailLink(name, email, password) {
     return auth
         .createUserWithEmailAndPassword(email: email, password: password)
-        .then((firebaseUser) async {
+        .then((firebaseUser) {
       User? user = FirebaseAuth.instance.currentUser;
       var actionCodeSettings = ActionCodeSettings(
         url: 'https://munatasksv2.firebaseapp.com/auth/verify',
@@ -68,10 +74,10 @@ class AuthRepository implements IAuthRepository {
         handleCodeInApp: true,
       );
       if (kIsWeb) {
-        await user!.sendEmailVerification();
+        user!.sendEmailVerification();
       } else {
         if (user != null && !getUser().emailVerified) {
-          await user.sendEmailVerification(actionCodeSettings);
+          user.sendEmailVerification(actionCodeSettings);
         }
       }
       firebaseUser.user!.updatePhotoURL(

@@ -70,7 +70,6 @@ abstract class _SignupStoreBase with Store {
       auth
           .createUserLinkEmail(client.name, client.email, client.password)
           .then((value) {
-
         setCheckGrupoEmail(false);
         setMsgErrOrGoal(true);
         setMsg('E-mail enviado com sucesso!');
@@ -79,7 +78,7 @@ abstract class _SignupStoreBase with Store {
         setCheckGrupoEmail(true);
         setMsgErrOrGoal(false);
         setLoading(false);
-        setMsg(ErrorPtBr().verificaCodeErro('auth/' + e.code));
+        setMsg(ErrorPtBr().verificaCodeErro(e.code));
       });
     }
   }
@@ -94,5 +93,4 @@ abstract class _SignupStoreBase with Store {
     }
     return null;
   }
-
 }

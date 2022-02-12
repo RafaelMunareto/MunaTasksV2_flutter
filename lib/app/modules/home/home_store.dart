@@ -7,6 +7,7 @@ import 'package:munatasks2/app/modules/home/shared/controller/client_create_stor
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/tarefa_totais_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:mobx/mobx.dart';
@@ -179,6 +180,7 @@ abstract class HomeStoreBase with Store {
     ];
     client.setBadgetNavigate(badgets);
     client.setLoading(false);
+    usersTarefasTotais();
   }
 
   relacionamentoEtiqueta(TarefaModel element) async {
@@ -351,5 +353,51 @@ abstract class HomeStoreBase with Store {
       default:
         return client.tarefas;
     }
+  }
+
+  @action
+  usersTarefasTotais() async {
+    var users = [];
+    var etiquetas = [];
+    client.cleanTarefasTotais();
+    TarefaTotaisModel tarefaTotaisModel = TarefaTotaisModel();
+    client.tarefas.forEach((element) {
+      element.users!.forEach((e) {
+        if (!users.map((u) => u.reference).contains(e.reference)) {
+          tarefaTotaisModel.users = e;
+          users.add(e);
+          client.setTarefasTotais(tarefaTotaisModel);
+        }
+      });
+    });
+
+    client.tarefasTotais.forEach((e) {
+      e.etiqueta = client.tarefas.where((t) {
+        return t.users!
+            .where((u) => u.reference == e.users!.reference)
+            .isNotEmpty;
+      }).map((e) {
+        e.etiqueta.etiqueta = e.texto;
+        return e.etiqueta;
+      }).toList();
+
+      if (e.etiqueta!.isNotEmpty) {
+        e.total = e.etiqueta!.length;
+        users.forEach((u) {
+          client.userList!.forEach((element) {
+            element.forEach((b) {
+              if (b.reference != u.reference) {
+                tarefaTotaisModel = TarefaTotaisModel();
+                tarefaTotaisModel.users = b;
+                tarefaTotaisModel.total = 0;
+                client.setTarefasTotais(tarefaTotaisModel);
+              }
+            });
+          });
+        });
+      }
+    });
+
+    print(client.tarefasTotais);
   }
 }
