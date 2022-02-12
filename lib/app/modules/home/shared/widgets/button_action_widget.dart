@@ -53,18 +53,18 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.save(widget.tarefa);
               },
               child: const Icon(
-                Icons.pause_circle,
-                color: Colors.amber,
+                Icons.play_circle,
+                color: Colors.green,
               ),
             ),
             GestureDetector(
               onTap: () {
-                widget.tarefa.fase = 1;
+                widget.tarefa.fase = 2;
                 widget.save(widget.tarefa);
               },
               child: const Icon(
-                Icons.play_circle,
-                color: Colors.green,
+                Icons.check_circle,
+                color: Colors.blue,
               ),
             ),
           ],

@@ -33,9 +33,8 @@ class PerfilPageState extends State<PerfilPage> {
       body: SingleChildScrollView(
         child: Observer(
           builder: (_) {
-            bool enableSwitch = store.client.perfil.manager;
-
-            if (store.client.loading) {
+            if (!store.client.loading) {
+              bool? enableSwitch = store.client.perfil.manager;
               return GestureDetector(
                 onTap: () {
                   FocusScope.of(context).requestFocus(FocusNode());
@@ -59,35 +58,39 @@ class PerfilPageState extends State<PerfilPage> {
                           save: store.save,
                           showTextFieldName: store.client.showTextFieldName,
                           errorName: store.client.validateName),
-                      RollingSwitch.icon(
-                        initialState: enableSwitch,
-                        width: 200,
-                        animationDuration: const Duration(milliseconds: 600),
-                        onChanged: (bool state) {
-                          setState(() {
-                            store.client.changeManager(state);
-                          });
-                          store.save();
-                        },
-                        rollingInfoRight: RollingIconInfo(
-                          backgroundColor: lightThemeData(context).primaryColor,
-                          icon: Icons.work,
-                          text: const Text(
-                            'Gerente',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        rollingInfoLeft: const RollingIconInfo(
-                          backgroundColor: Colors.grey,
-                          icon: Icons.engineering,
-                          text: Text(
-                            'Técnico',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                      store.client.perfil.reference != null
+                          ? RollingSwitch.icon(
+                              initialState: store.client.perfil.manager,
+                              width: 200,
+                              animationDuration:
+                                  const Duration(milliseconds: 600),
+                              onChanged: (bool state) {
+                                setState(() {
+                                  store.client.changeManager(state);
+                                });
+                                store.save();
+                              },
+                              rollingInfoRight: RollingIconInfo(
+                                backgroundColor:
+                                    lightThemeData(context).primaryColor,
+                                icon: Icons.work,
+                                text: const Text(
+                                  'Gerente',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              rollingInfoLeft: const RollingIconInfo(
+                                backgroundColor: Colors.grey,
+                                icon: Icons.engineering,
+                                text: Text(
+                                  'Técnico',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            )
+                          : Container(),
                       NamesWidget(
                         textFieldNameBool: store.client.textFieldNameBool,
                         perfil: store.client.perfil,

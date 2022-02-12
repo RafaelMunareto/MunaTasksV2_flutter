@@ -100,6 +100,8 @@ class ConvertIcon {
         return Colors.black;
       case 'yellow':
         return Colors.yellow;
+      case 'amber':
+        return Colors.amber;
       case 'orange':
         return Colors.orange;
       default:

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
@@ -161,20 +162,21 @@ class _AppBarWidgetState extends State<AppBarWidget> {
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () => Modular.to.navigate('/settings/'),
-          child: const ListTile(
+          child: ListTile(
             leading: Icon(
               Icons.settings,
-              color: Colors.white,
+              color: lightThemeData(context).primaryColor,
             ),
-            title: Text('Configurações'),
+            title: const Text('Configurações'),
           ),
         ),
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () => Modular.to.navigate('/settings/perfil'),
-          child: const ListTile(
-            leading: Icon(Icons.account_circle, color: Colors.white),
-            title: Text('Perfil e Equipes'),
+          child: ListTile(
+            leading: Icon(Icons.account_circle,
+                color: lightThemeData(context).primaryColor),
+            title: const Text('Perfil e Equipes'),
           ),
         ),
       ],

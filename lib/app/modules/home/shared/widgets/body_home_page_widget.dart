@@ -107,7 +107,7 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                             ),
                             trailing: GestureDetector(
                               child: CircleAvatarWidget(
-                                url: store.client.imgUrl,
+                                url: store.user[2],
                               ),
                               onTap: () {
                                 if (store.client.perfilUserLogado.manager) {

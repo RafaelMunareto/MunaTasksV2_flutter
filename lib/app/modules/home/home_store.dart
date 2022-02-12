@@ -258,13 +258,19 @@ abstract class HomeStoreBase with Store {
   changeFilterEtiquetaList() {
     client.changeTarefa(client.tarefasBase);
 
-    if (client.etiquetaSelection != 'TODOS') {
+    if (client.etiquetaSelection == 'TODOS') {
       client.changeTarefa(client.tarefas
-          .where((e) => e.etiqueta.etiqueta == client.etiquetaSelection)
           .where((b) => b.fase == client.navigateBarSelection)
           .toList());
+    } else if (client.etiquetaSelection == 'Entregas') {
+      client.changeTarefa(client.tarefas
+          // .where((e) => e.etiqueta.etiqueta == client.etiquetaSelection)
+          .where((b) => b.fase == 2)
+          .toList());
+      setNavigateBarSelection(2);
     } else {
       client.changeTarefa(client.tarefas
+          .where((e) => e.etiqueta.etiqueta == client.etiquetaSelection)
           .where((b) => b.fase == client.navigateBarSelection)
           .toList());
     }
@@ -397,7 +403,5 @@ abstract class HomeStoreBase with Store {
         });
       }
     });
-
-    print(client.tarefasTotais);
   }
 }

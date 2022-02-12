@@ -46,7 +46,7 @@ abstract class _PerfilStoreBase with Store {
       client.userModel = [];
       client.perfil = value;
     }).then((value) {
-      if (client.perfil.idStaff!.isNotEmpty) {
+      if (client.perfil.idStaff != null || client.perfil.idStaff!.isNotEmpty) {
         for (var element in client.perfil.idStaff!) {
           bd.collection('usuarios').doc(element.id).get().then(
             (doc) {
@@ -68,12 +68,12 @@ abstract class _PerfilStoreBase with Store {
                   }
                 }
               }
-              client.setLoading(true);
+              client.setLoading(false);
             }
           });
         }
       } else {
-        client.setLoading(true);
+        client.setLoading(false);
       }
     });
   }

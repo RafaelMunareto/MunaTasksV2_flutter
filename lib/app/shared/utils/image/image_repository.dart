@@ -8,12 +8,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 
 class ImageRepository {
   final ImagePicker picker = ImagePicker();
   final AuthController auth = Modular.get();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final ClientStore client = ClientStore();
+  final ILocalStorage storage = LocalStorageShare();
   String? url;
 
   void dispose() {}
@@ -64,7 +67,7 @@ class ImageRepository {
       Function getById,
       Function setPerfilImage) async {
     await recuperarImagem(origemImagem, loading);
-    if (!client.loadingImagem) {
+    if (url != null) {
       FirebaseFirestore db = FirebaseFirestore.instance;
       Map<String, dynamic> atualizarImage = {"urlImage": url};
       await db
@@ -72,6 +75,9 @@ class ImageRepository {
           .doc(auth.user!.uid)
           .update(atualizarImage);
       await db.collection("perfil").doc(auth.user!.uid).update(atualizarImage);
+      var user = await storage.get('user');
+      await storage.put('user', []);
+      await storage.put('user', [user[0], user[1], url.toString()]);
 
       firebaseAuth.currentUser?.updatePhotoURL(url).then((value) {
         userModel = [];

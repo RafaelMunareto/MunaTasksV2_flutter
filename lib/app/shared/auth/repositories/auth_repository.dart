@@ -44,9 +44,22 @@ class AuthRepository implements IAuthRepository {
     );
 
     final User? user = (await auth.signInWithCredential(credential)).user;
-    storage.put('user', []);
-    storage.put('user',
+    await storage.put('user', []);
+    await storage.put('user',
         [user!.uid, user.displayName.toString(), user.photoURL.toString()]);
+    await db.collection('usuarios').doc(getUser().uid).set({
+      "name": user.displayName,
+      "email": user.email,
+      "urlImage": user.photoURL.toString(),
+      "verificado": true
+    });
+    await db.collection('perfil').doc(getUser().uid).set({
+      "name": user.displayName,
+      "urlImage": user.photoURL.toString(),
+      "manager": false,
+      "nameTime": "Nome do time",
+      "idStaff": null
+    });
     return user;
   }
 
@@ -81,13 +94,13 @@ class AuthRepository implements IAuthRepository {
         }
       }
       firebaseUser.user!.updatePhotoURL(
-          'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935');
+          'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/person_people_avatar_man_boy_glasses_icon_131369.png?alt=media&token=19343af9-36fa-422d-88c3-716b1ffdbb88');
       firebaseUser.user!.updateDisplayName(name).then((value) {
         db.collection('usuarios').doc(auth.currentUser!.uid).set({
           "name": name,
           "email": email,
           "urlImage":
-              'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
+              'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/person_people_avatar_man_boy_glasses_icon_131369.png?alt=media&token=19343af9-36fa-422d-88c3-716b1ffdbb88',
           "verificado": false
         });
       });
@@ -112,7 +125,7 @@ class AuthRepository implements IAuthRepository {
     await db.collection('perfil').doc(getUser().uid).set({
       "name": getUser().displayName,
       "urlImage":
-          'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
+          'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/person_people_avatar_man_boy_glasses_icon_131369.png?alt=media&token=19343af9-36fa-422d-88c3-716b1ffdbb88',
       "manager": false,
       "nameTime": "Nome do time",
       "idStaff": []
@@ -127,7 +140,7 @@ class AuthRepository implements IAuthRepository {
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((firebaseUser) async {
       firebaseUser.user!.updatePhotoURL(
-          'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935');
+          'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/person_people_avatar_man_boy_glasses_icon_131369.png?alt=media&token=19343af9-36fa-422d-88c3-716b1ffdbb88');
       firebaseUser.user!.updateDisplayName(name).then((value) {
         changeUserVerificacao();
       });
@@ -165,7 +178,7 @@ class AuthRepository implements IAuthRepository {
       "name": getUser().displayName,
       "email": getUser().email,
       "urlImage":
-          'https://firebasestorage.googleapis.com/v0/b/flutterpadrao.appspot.com/o/perfil%2Fbancario1.png?alt=media&token=ff79a9b9-7f1e-4e53-98c7-824324f74935',
+          'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/person_people_avatar_man_boy_glasses_icon_131369.png?alt=media&token=19343af9-36fa-422d-88c3-716b1ffdbb88',
       "verificado": true
     });
   }
