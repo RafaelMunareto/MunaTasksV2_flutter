@@ -17,7 +17,7 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   final bool home;
   final dynamic zoomController;
   final Function? setOpen;
-  final String etiquetaSelection;
+  final int etiquetaSelection;
   final Function? setEtiquetaSelection;
   final dynamic etiquetaList;
   final Function? setValueSearch;
@@ -33,7 +33,7 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
     this.back = true,
     this.setOpen,
     this.zoomController,
-    this.etiquetaSelection = '',
+    this.etiquetaSelection = 57585,
     this.setEtiquetaSelection,
     this.etiquetaList,
     this.tarefas,

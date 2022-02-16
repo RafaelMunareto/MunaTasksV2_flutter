@@ -123,10 +123,11 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                 FloatingActionButtonLocation.endDocked,
             bottomNavigationBar: Observer(builder: (_) {
               return NavigationBarWidget(
-                  theme: store.client.theme,
-                  navigateBarSelection: store.client.navigateBarSelection,
-                  setNavigateBarSelection: store.setNavigateBarSelection,
-                  badgets: store.client.badgetNavigate);
+                theme: store.client.theme,
+                navigateBarSelection: store.client.navigateBarSelection,
+                setNavigateBarSelection: store.setNavigateBarSelection,
+                badgets: store.client.badgetNavigate,
+              );
             }),
             body: ZoomDrawer(
               controller: drawerController,
@@ -141,20 +142,18 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                   );
                 },
               ),
-              mainScreen: Observer(builder: (_) {
-                return !store.client.loading
-                    ? BodyHomePageWidget(
-                        createController: createController,
-                        opacidade: opacidade,
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
-                          Center(child: CircularProgressIndicator()),
-                        ],
-                      );
-              }),
+              mainScreen: BodyHomePageWidget(
+                createController: createController,
+                opacidade: opacidade,
+              ),
+              // : Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children: const [
+              //       Center(child: CircularProgressIndicator()),
+              //     ],
+              //   );
+
               borderRadius: 24.0,
               showShadow: false,
               backgroundColor: Colors.transparent,

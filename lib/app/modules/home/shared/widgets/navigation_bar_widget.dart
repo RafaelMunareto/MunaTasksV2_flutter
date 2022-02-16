@@ -7,13 +7,13 @@ class NavigationBarWidget extends StatefulWidget {
   final Function setNavigateBarSelection;
   final List<int> badgets;
   final bool theme;
-  const NavigationBarWidget(
-      {Key? key,
-      this.navigateBarSelection = 0,
-      required this.setNavigateBarSelection,
-      required this.badgets,
-      required this.theme})
-      : super(key: key);
+  const NavigationBarWidget({
+    Key? key,
+    this.navigateBarSelection = 0,
+    required this.setNavigateBarSelection,
+    required this.badgets,
+    required this.theme,
+  }) : super(key: key);
 
   @override
   State<NavigationBarWidget> createState() => _NavigationBarWidgetState();

@@ -194,13 +194,13 @@ mixin _$ClientStore on _ClientStoreBase, Store {
       Atom(name: '_ClientStoreBase.etiquetaSelection');
 
   @override
-  String get etiquetaSelection {
+  int get etiquetaSelection {
     _$etiquetaSelectionAtom.reportRead();
     return super.etiquetaSelection;
   }
 
   @override
-  set etiquetaSelection(String value) {
+  set etiquetaSelection(int value) {
     _$etiquetaSelectionAtom.reportWrite(value, super.etiquetaSelection, () {
       super.etiquetaSelection = value;
     });
@@ -657,6 +657,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
         name: '_ClientStoreBase.setTarefasBase');
     try {
       return super.setTarefasBase(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic deleteTarefasBase(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.deleteTarefasBase');
+    try {
+      return super.deleteTarefasBase(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }

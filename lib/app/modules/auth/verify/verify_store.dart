@@ -43,12 +43,15 @@ abstract class _VerifyStoreBase with Store {
           () => Modular.to.navigate('/auth/change/$code'));
     } else {
       auth.authRepository.emailVerify(code).then((value) {
-        setMsgErrOrGoal(true);
-        setMsg('Código validado!');
-        Timer(const Duration(seconds: 2), () => Modular.to.navigate('/auth/'));
+        if (value != null) {
+          setMsgErrOrGoal(true);
+          setMsg('Código validado!');
+          Timer(
+              const Duration(seconds: 2), () => Modular.to.navigate('/auth/'));
+        }
       }).catchError((e) {
         setMsgErrOrGoal(false);
-        setMsg(ErrorPtBr().verificaCodeErro('auth/' + e.code));
+        setMsg(ErrorPtBr().verificaCodeErro(e.code));
         Timer(const Duration(seconds: 3), () => Modular.to.navigate('/auth/'));
       });
     }

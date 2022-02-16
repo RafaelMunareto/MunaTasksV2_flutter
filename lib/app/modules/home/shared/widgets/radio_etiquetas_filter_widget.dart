@@ -92,6 +92,7 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
                       .map((e) => e.etiqueta.contains('Etiqueta'))
                       .contains(true)) {
                     list.insert(0, selecione);
+                    list.removeWhere((element) => element.icon == 58873);
                   }
                 }
 
@@ -126,8 +127,8 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
                             onPressed: () {
                               setState(() {
                                 if (widget.create == false) {
-                                  widget.setEtiquetaSelection!(
-                                      list[index].etiqueta);
+                                  widget
+                                      .setEtiquetaSelection!(list[index].icon);
                                   widget.changeFilterEtiquetaList!();
                                   widget.setIcon!(list[index].icon);
                                   widget.setColor!(list[index].color);

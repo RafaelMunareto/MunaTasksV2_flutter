@@ -22,7 +22,7 @@ class HeaderWidget extends StatelessWidget {
               Chip(
                 label: Text(
                   tarefa.etiqueta.etiqueta,
-                  style: const TextStyle(fontSize: 12),
+                  style: const TextStyle(fontSize: 10),
                 ),
                 avatar: Icon(
                   IconData(tarefa.etiqueta.icon ?? 0,
@@ -52,9 +52,10 @@ class HeaderWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
-                color: theme ? Colors.white : Colors.black),
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+              color: theme ? Colors.white : Colors.black,
+            ),
           ),
         ),
       ],

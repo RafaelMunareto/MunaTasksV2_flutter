@@ -92,7 +92,11 @@ class _CreateWidgetState extends State<CreateWidget>
                                     padding: kIsWeb
                                         ? const EdgeInsets.all(8)
                                         : const EdgeInsets.only(
-                                            top: 8.0, bottom: 8),
+                                            top: 8.0,
+                                            bottom: 8,
+                                            right: 4,
+                                            left: 4,
+                                          ),
                                     child: Wrap(
                                       alignment: WrapAlignment.spaceBetween,
                                       children: const [

@@ -40,13 +40,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
     return _$badgetsAsyncAction.run(() => super.badgets());
   }
 
-  final _$perfilUserAsyncAction = AsyncAction('HomeStoreBase.perfilUser');
-
-  @override
-  Future perfilUser() {
-    return _$perfilUserAsyncAction.run(() => super.perfilUser());
-  }
-
   final _$updateListAsyncAction = AsyncAction('HomeStoreBase.updateList');
 
   @override
@@ -61,15 +54,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
   Future changeFilterUserList() {
     return _$changeFilterUserListAsyncAction
         .run(() => super.changeFilterUserList());
-  }
-
-  final _$usersTarefasTotaisAsyncAction =
-      AsyncAction('HomeStoreBase.usersTarefasTotais');
-
-  @override
-  Future usersTarefasTotais() {
-    return _$usersTarefasTotaisAsyncAction
-        .run(() => super.usersTarefasTotais());
   }
 
   final _$HomeStoreBaseActionController =
@@ -291,6 +275,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.changeOrderList');
     try {
       return super.changeOrderList();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic usersTarefasTotais() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.usersTarefasTotais');
+    try {
+      return super.usersTarefasTotais();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }

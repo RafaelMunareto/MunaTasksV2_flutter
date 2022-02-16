@@ -57,7 +57,7 @@ abstract class _ClientStoreBase with Store {
   setOpen(value) => open = value;
 
   @observable
-  String etiquetaSelection = 'TODOS';
+  int etiquetaSelection = 57585;
 
   @observable
   UserModel? userSelection;
@@ -115,6 +115,10 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setTarefasBase(value) => tarefasBase = value;
+
+  @action
+  deleteTarefasBase(value) => tarefasBase
+      .removeWhere((element) => element.reference!.id == value.reference!.id);
 
   @action
   cleanTarefasBase() => tarefasBase = [];

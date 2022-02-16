@@ -27,7 +27,10 @@ abstract class HomeStoreBase with Store {
   final FirebaseFunctions functions = Modular.get();
 
   HomeStoreBase({required this.dashboardService}) {
-    perfilUser();
+    getAction();
+  }
+
+  getAction() {
     getUsers();
     getList();
     buscaTheme();
@@ -53,7 +56,7 @@ abstract class HomeStoreBase with Store {
   @action
   setNavigateBarSelection(value) {
     client.navigateBarSelection = value;
-    client.setEtiquetaSelection('TODOS');
+    client.setEtiquetaSelection(57585);
     client.setOrderAscDesc(true);
     client.setOrderSelection('DATA');
     client.setColor('blue');
@@ -117,6 +120,8 @@ abstract class HomeStoreBase with Store {
   @action
   tratamentoBase(ObservableStream<List<TarefaModel>>? dashboardList) async {
     client.cleanUsersBase();
+    client.cleanTarefas();
+    client.cleanTarefasBase();
     client.cleanSubtarefaModel();
     client.setLoading(true);
     await dashboardList!.forEach((e) async {
@@ -133,8 +138,10 @@ abstract class HomeStoreBase with Store {
   }
 
   relacionamentos(element) async {
-    element.data =
-        DateTime.fromMillisecondsSinceEpoch(element.data.seconds * 1000);
+    if (element.data.runtimeType != DateTime) {
+      element.data =
+          DateTime.fromMillisecondsSinceEpoch(element.data.seconds * 1000);
+    }
 
     for (var i = 0; i < element.users!.length; i++) {
       await client.userList
@@ -179,8 +186,8 @@ abstract class HomeStoreBase with Store {
       client.tarefasBase.where((element) => element.fase == 2).toList().length
     ];
     client.setBadgetNavigate(badgets);
-    client.setLoading(false);
     usersTarefasTotais();
+    client.setLoading(false);
   }
 
   relacionamentoEtiqueta(TarefaModel element) async {
@@ -207,38 +214,43 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  perfilUser() async {
+  updateList() async {
     await getUid();
-    firestore.collection('perfil').doc(user[0]).get().then((value) {
+    await firestore.collection('perfil').doc(user[0]).get().then((value) {
       client.setPerfilUserlogado(PerfilModel.fromDocument(value));
+    }).then((value) {
+      if (client.perfilUserLogado.manager == false) {
+        client.setImgUrl(user[2]);
+        client.setTarefasBase(
+          client.tarefasBase.where((t) {
+            bool eSelecaodoUser = false;
+            t.users?.forEach((element) {
+              if (element.reference.id == user[0]) {
+                eSelecaodoUser = true;
+              }
+            });
+            return eSelecaodoUser;
+          }).toList(),
+        );
+      }
     });
   }
 
   @action
-  updateList() async {
-    await getUid();
-    if (client.perfilUserLogado.manager == false) {
-      client.setImgUrl(client.perfilUserLogado.urlImage);
-      client.setTarefasBase(
-        client.tarefasBase.where((t) {
-          bool eSelecaodoUser = false;
-          t.users?.forEach((element) {
-            if (element.reference.id == user[0]) {
-              eSelecaodoUser = true;
-            }
-          });
-          return eSelecaodoUser;
-        }).toList(),
-      );
-    }
-  }
-
-  @action
   void save(TarefaModel model) {
-    client.setLoading(true);
     dashboardService.save(model);
-    client.cleanTarefas();
-    client.cleanTarefasBase();
+    if (model.reference == null) {
+      client.setTarefa(model);
+      badgets();
+    } else {
+      client.cleanTarefasBase();
+      for (var i = 0; i < client.tarefasBase.length; i++) {
+        if (client.tarefasBase[i].reference!.id == model.reference!.id) {
+          client.tarefasBase[i] = model;
+          badgets();
+        }
+      }
+    }
   }
 
   @action
@@ -248,31 +260,46 @@ abstract class HomeStoreBase with Store {
 
   @action
   void deleteTasks(TarefaModel model) {
-    client.setLoading(true);
     dashboardService.delete(model);
-    client.cleanTarefas();
-    client.cleanTarefasBase();
+    client.deleteTarefasBase(model);
+    badgets();
   }
 
   @action
   changeFilterEtiquetaList() {
     client.changeTarefa(client.tarefasBase);
-
-    if (client.etiquetaSelection == 'TODOS') {
+    if (client.etiquetaSelection == 57585) {
       client.changeTarefa(client.tarefas
           .where((b) => b.fase == client.navigateBarSelection)
           .toList());
-    } else if (client.etiquetaSelection == 'Entregas') {
-      client.changeTarefa(client.tarefas
-          // .where((e) => e.etiqueta.etiqueta == client.etiquetaSelection)
-          .where((b) => b.fase == 2)
-          .toList());
+    } else if (client.etiquetaSelection == 58873) {
       setNavigateBarSelection(2);
+      client.changeTarefa(
+        client.tarefas
+            .where((b) => b.fase == 2)
+            .where((c) => c.data.isAfter(dataSemana(c.data)))
+            .toList(),
+      );
     } else {
       client.changeTarefa(client.tarefas
-          .where((e) => e.etiqueta.etiqueta == client.etiquetaSelection)
+          .where((e) => e.etiqueta.icon == client.etiquetaSelection)
           .where((b) => b.fase == client.navigateBarSelection)
           .toList());
+    }
+  }
+
+  dataSemana(DateTime data) {
+    DateTime now = DateTime.now();
+    var diff = now.difference(data).inDays.toInt();
+
+    if (diff < now.weekday.toInt()) {
+      if (diff <= 0) {
+        data = now;
+      }
+      return data.subtract(const Duration(days: 1));
+    } else {
+      data = data.add(const Duration(days: 1));
+      return data;
     }
   }
 
@@ -325,14 +352,12 @@ abstract class HomeStoreBase with Store {
   @action
   changeSubtarefaAction(
       SubtarefaModel subtarefaModel, TarefaModel tarefaModel) {
-    client.setLoading(true);
     subtarefaModel.status = client.subtarefaAction;
     save(tarefaModel);
   }
 
   @action
   updateDate(TarefaModel model) {
-    client.setLoading(true);
     model.data = model.data.add(Duration(hours: client.retardSelection));
     save(model);
   }
@@ -362,12 +387,12 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  usersTarefasTotais() async {
+  usersTarefasTotais() {
     var users = [];
     var etiquetas = [];
     client.cleanTarefasTotais();
     TarefaTotaisModel tarefaTotaisModel = TarefaTotaisModel();
-    client.tarefas.forEach((element) {
+    client.tarefasBase.forEach((element) {
       element.users!.forEach((e) {
         if (!users.map((u) => u.reference).contains(e.reference)) {
           tarefaTotaisModel.users = e;
@@ -378,30 +403,30 @@ abstract class HomeStoreBase with Store {
     });
 
     client.tarefasTotais.forEach((e) {
-      e.etiqueta = client.tarefas.where((t) {
-        return t.users!
-            .where((u) => u.reference == e.users!.reference)
-            .isNotEmpty;
-      }).map((e) {
-        e.etiqueta.etiqueta = e.texto;
-        return e.etiqueta;
-      }).toList();
+      e.etiqueta = client.tarefasBase
+          .where((t) {
+            return t.users!
+                .where((u) => u.reference.id == e.users!.reference!.id)
+                .isNotEmpty;
+          })
+          .map((e) => e.etiqueta)
+          .toList();
 
-      if (e.etiqueta!.isNotEmpty) {
-        e.total = e.etiqueta!.length;
-        users.forEach((u) {
-          client.userList!.forEach((element) {
-            element.forEach((b) {
-              if (b.reference != u.reference) {
-                tarefaTotaisModel = TarefaTotaisModel();
-                tarefaTotaisModel.users = b;
-                tarefaTotaisModel.total = 0;
-                client.setTarefasTotais(tarefaTotaisModel);
-              }
-            });
-          });
-        });
-      }
+      // if (e.etiqueta!.isNotEmpty) {
+      //   e.total = e.etiqueta!.length;
+      //   users.forEach((u) {
+      //     client.userList!.forEach((element) {
+      //       element.forEach((b) {
+      //         if (b.reference != u.reference) {
+      //           tarefaTotaisModel = TarefaTotaisModel();
+      //           tarefaTotaisModel.users = b;
+      //           tarefaTotaisModel.total = 0;
+      //           client.setTarefasTotais(tarefaTotaisModel);
+      //         }
+      //       });
+      //     });
+      //   });
+      // }
     });
   }
 }
