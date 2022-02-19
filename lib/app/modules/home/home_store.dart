@@ -8,6 +8,7 @@ import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart'
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_totais_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/user_menu_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:mobx/mobx.dart';
@@ -76,12 +77,14 @@ abstract class HomeStoreBase with Store {
   }
 
   @observable
-  dynamic user = [];
+  UserMenuModel user = UserMenuModel();
 
   @action
   getUid() {
     storage.get('user').then((value) {
-      user = value;
+      user.uid = value[0];
+      user.name = value[1];
+      user.imgUrl = value[2];
     });
   }
 
@@ -176,6 +179,7 @@ abstract class HomeStoreBase with Store {
 
   @action
   badgets() async {
+    await usersTarefasTotais();
     await updateList();
     client.changeTarefa(client.tarefasBase
         .where((element) => element.fase == client.navigateBarSelection)
@@ -186,7 +190,6 @@ abstract class HomeStoreBase with Store {
       client.tarefasBase.where((element) => element.fase == 2).toList().length
     ];
     client.setBadgetNavigate(badgets);
-    usersTarefasTotais();
     client.setLoading(false);
   }
 
@@ -216,16 +219,16 @@ abstract class HomeStoreBase with Store {
   @action
   updateList() async {
     await getUid();
-    await firestore.collection('perfil').doc(user[0]).get().then((value) {
+    await firestore.collection('perfil').doc(user.uid).get().then((value) {
       client.setPerfilUserlogado(PerfilModel.fromDocument(value));
     }).then((value) {
       if (client.perfilUserLogado.manager == false) {
-        client.setImgUrl(user[2]);
+        client.setImgUrl(user.imgUrl);
         client.setTarefasBase(
           client.tarefasBase.where((t) {
             bool eSelecaodoUser = false;
             t.users?.forEach((element) {
-              if (element.reference.id == user[0]) {
+              if (element.reference.id == user.uid) {
                 eSelecaodoUser = true;
               }
             });
@@ -243,7 +246,6 @@ abstract class HomeStoreBase with Store {
       client.setTarefa(model);
       badgets();
     } else {
-      client.cleanTarefasBase();
       for (var i = 0; i < client.tarefasBase.length; i++) {
         if (client.tarefasBase[i].reference!.id == model.reference!.id) {
           client.tarefasBase[i] = model;
@@ -390,15 +392,28 @@ abstract class HomeStoreBase with Store {
   usersTarefasTotais() {
     var users = [];
     var etiquetas = [];
+    var finaliza = 0;
     client.cleanTarefasTotais();
     TarefaTotaisModel tarefaTotaisModel = TarefaTotaisModel();
+
     client.tarefasBase.forEach((element) {
+      finaliza++;
       element.users!.forEach((e) {
-        if (!users.map((u) => u.reference).contains(e.reference)) {
+        if (users.where((b) => b.reference!.id == e.reference!.id).isEmpty) {
           tarefaTotaisModel.users = e;
-          users.add(e);
           client.setTarefasTotais(tarefaTotaisModel);
+          tarefaTotaisModel = TarefaTotaisModel();
+        } else {
+          if (client.tarefasTotais
+              .where((c) => c.users!.reference!.id == e!.reference!.id)
+              .isEmpty) {
+            tarefaTotaisModel.users = e;
+            tarefaTotaisModel.total = 0;
+            client.setTarefasTotais(tarefaTotaisModel);
+            tarefaTotaisModel = TarefaTotaisModel();
+          }
         }
+        users.add(e);
       });
     });
 
@@ -409,24 +424,24 @@ abstract class HomeStoreBase with Store {
                 .where((u) => u.reference.id == e.users!.reference!.id)
                 .isNotEmpty;
           })
-          .map((e) => e.etiqueta)
+          .map((element) => element.etiqueta)
           .toList();
 
-      // if (e.etiqueta!.isNotEmpty) {
-      //   e.total = e.etiqueta!.length;
-      //   users.forEach((u) {
-      //     client.userList!.forEach((element) {
-      //       element.forEach((b) {
-      //         if (b.reference != u.reference) {
-      //           tarefaTotaisModel = TarefaTotaisModel();
-      //           tarefaTotaisModel.users = b;
-      //           tarefaTotaisModel.total = 0;
-      //           client.setTarefasTotais(tarefaTotaisModel);
-      //         }
-      //       });
-      //     });
-      //   });
-      // }
+      if (e.etiqueta!.isNotEmpty) {
+        e.total = e.etiqueta!.length;
+      }
     });
+    // client.userList!.forEach((element) {
+    //   element.forEach((b) {
+    //     if (client.tarefasTotais
+    //         .where((c) => b.reference!.id == c.users!.reference!.id)
+    //         .isEmpty) {
+    //       tarefaTotaisModel.users = element.first;
+    //       tarefaTotaisModel.total = 0;
+    //       client.setTarefasTotais(tarefaTotaisModel);
+    //       tarefaTotaisModel = TarefaTotaisModel();
+    //     }
+    //   });
+    // });
   }
 }

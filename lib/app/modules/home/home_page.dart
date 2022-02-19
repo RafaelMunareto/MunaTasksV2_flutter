@@ -80,7 +80,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
 
     return OrientationBuilder(
       builder: (context, orientation) {
-        if (orientation == Orientation.portrait) {
+        if (orientation == Orientation.portrait || kIsWeb) {
           return Scaffold(
             appBar: !appVisible
                 ? AppBarWidget(
@@ -129,38 +129,65 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                 badgets: store.client.badgetNavigate,
               );
             }),
-            body: ZoomDrawer(
-              controller: drawerController,
-              style: DrawerStyle.Style1,
-              menuScreen: Observer(
-                builder: (_) {
-                  return MenuScreen(
-                    open: store.client.open,
-                    user: store.user,
-                    setOpen: store.client.setOpen,
+            body: kIsWeb
+                ? Observer(
+                    builder: (_) {
+                      return store.client.loading
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : Wrap(
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.2,
+                                  height: MediaQuery.of(context).size.height,
+                                  child: MenuScreen(
+                                    open: store.client.open,
+                                    user: store.user,
+                                    setOpen: store.client.setOpen,
+                                    controller: drawerController,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  height: MediaQuery.of(context).size.height,
+                                  child: BodyHomePageWidget(
+                                    createController: createController,
+                                    opacidade: opacidade,
+                                  ),
+                                )
+                              ],
+                            );
+                    },
+                  )
+                : ZoomDrawer(
                     controller: drawerController,
-                  );
-                },
-              ),
-              mainScreen: BodyHomePageWidget(
-                createController: createController,
-                opacidade: opacidade,
-              ),
-              // : Column(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     crossAxisAlignment: CrossAxisAlignment.center,
-              //     children: const [
-              //       Center(child: CircularProgressIndicator()),
-              //     ],
-              //   );
-
-              borderRadius: 24.0,
-              showShadow: false,
-              backgroundColor: Colors.transparent,
-              slideWidth: MediaQuery.of(context).size.width * .65,
-              openCurve: Curves.fastOutSlowIn,
-              closeCurve: Curves.easeInOut,
-            ),
+                    style: DrawerStyle.Style1,
+                    menuScreen: Observer(
+                      builder: (_) {
+                        return store.client.loading
+                            ? const Center(child: CircularProgressIndicator())
+                            : MenuScreen(
+                                open: store.client.open,
+                                user: store.user,
+                                setOpen: store.client.setOpen,
+                                controller: drawerController,
+                              );
+                      },
+                    ),
+                    mainScreen: BodyHomePageWidget(
+                      createController: createController,
+                      opacidade: opacidade,
+                    ),
+                    borderRadius: 24.0,
+                    showShadow: false,
+                    backgroundColor: Colors.transparent,
+                    slideWidth: MediaQuery.of(context).size.width * .65,
+                    openCurve: Curves.fastOutSlowIn,
+                    closeCurve: Curves.easeInOut,
+                  ),
           );
         } else {
           return const LandscapeWidget();

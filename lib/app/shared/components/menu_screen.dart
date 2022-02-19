@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:munatasks2/app/modules/home/shared/model/user_menu_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
@@ -9,7 +10,7 @@ import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_sh
 class MenuScreen extends StatefulWidget {
   final ZoomDrawerController controller;
   final bool open;
-  final dynamic user;
+  final UserMenuModel user;
   final Function setOpen;
   const MenuScreen(
       {Key? key,
@@ -25,8 +26,7 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   final AuthController auth = Modular.get();
   final ILocalStorage storage = LocalStorageShare();
-  String urlPhoto = '';
-  String displayName = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +59,7 @@ class _MenuScreenState extends State<MenuScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  widget.user[2] == null
+                                  widget.user.imgUrl == null
                                       ? const CircularProgressIndicator()
                                       : Container(
                                           width: 70.0,
@@ -68,8 +68,8 @@ class _MenuScreenState extends State<MenuScreen> {
                                             shape: BoxShape.circle,
                                             image: DecorationImage(
                                               fit: BoxFit.fill,
-                                              image:
-                                                  NetworkImage(widget.user[2]),
+                                              image: NetworkImage(
+                                                  widget.user.imgUrl),
                                             ),
                                           ),
                                         ),
@@ -80,7 +80,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                         fontWeight: FontWeight.w400),
                                   ),
                                   Text(
-                                    widget.user[1] ?? '',
+                                    widget.user.name,
                                     style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w800),

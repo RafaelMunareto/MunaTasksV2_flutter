@@ -12,13 +12,13 @@ mixin _$HomeStore on HomeStoreBase, Store {
   final _$userAtom = Atom(name: 'HomeStoreBase.user');
 
   @override
-  dynamic get user {
+  UserMenuModel get user {
     _$userAtom.reportRead();
     return super.user;
   }
 
   @override
-  set user(dynamic value) {
+  set user(UserMenuModel value) {
     _$userAtom.reportWrite(value, super.user, () {
       super.user = value;
     });

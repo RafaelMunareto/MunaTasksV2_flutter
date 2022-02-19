@@ -80,8 +80,9 @@ abstract class _LoginStoreBase with Store {
         setStorageLoginNormal();
         setLoading(false);
         setErrOrGoal(false);
-        Modular.to.navigate('/home');
+        Modular.to.navigate('/home/');
       } else {
+        setLoading(false);
         setMsg('Você deve validar o email primeiro!');
       }
     }).catchError((e) {
