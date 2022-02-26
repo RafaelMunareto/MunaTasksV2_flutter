@@ -56,14 +56,18 @@ abstract class HomeStoreBase with Store {
 
   @action
   setNavigateBarSelection(value) {
-    client.navigateBarSelection = value;
+    client.setNavigateBarSelection(value);
     client.setEtiquetaSelection(57585);
     client.setOrderAscDesc(true);
     client.setOrderSelection('DATA');
     client.setColor('blue');
     client.setIcon(0);
+
     client.changeTarefa(
-        client.tarefasBase.where((element) => element.fase == value).toList());
+      client.tarefasBase
+          .where((element) => element.fase == client.navigateBarSelection)
+          .toList(),
+    );
   }
 
   @action
@@ -181,15 +185,17 @@ abstract class HomeStoreBase with Store {
   badgets() async {
     await usersTarefasTotais();
     await updateList();
-    client.changeTarefa(client.tarefasBase
-        .where((element) => element.fase == client.navigateBarSelection)
-        .toList());
+    await client.changeTarefa(
+      client.tarefasBase
+          .where((element) => element.fase == client.navigateBarSelection)
+          .toList(),
+    );
     List<int> badgets = [
       client.tarefasBase.where((element) => element.fase == 0).toList().length,
       client.tarefasBase.where((element) => element.fase == 1).toList().length,
       client.tarefasBase.where((element) => element.fase == 2).toList().length
     ];
-    client.setBadgetNavigate(badgets);
+    await client.setBadgetNavigate(badgets);
     client.setLoading(false);
   }
 
@@ -240,18 +246,12 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  void save(TarefaModel model) {
-    dashboardService.save(model);
+  save(TarefaModel model) async {
     if (model.reference == null) {
-      client.setTarefa(model);
+      await client.setTarefa(model);
       badgets();
     } else {
-      for (var i = 0; i < client.tarefasBase.length; i++) {
-        if (client.tarefasBase[i].reference!.id == model.reference!.id) {
-          client.tarefasBase[i] = model;
-          badgets();
-        }
-      }
+      badgets();
     }
   }
 

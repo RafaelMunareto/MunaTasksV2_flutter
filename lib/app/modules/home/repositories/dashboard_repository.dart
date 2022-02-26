@@ -19,8 +19,13 @@ class DashboardRepository implements IDashboardRepository {
   @override
   Stream<List<TarefaModel>> get() {
     return firestore.collection('tasks').orderBy('data').snapshots().map(
-        (query) =>
-            query.docs.map((doc) => TarefaModel.fromDocument(doc)).toList());
+          (query) => query.docs
+              .map(
+                (doc) => TarefaModel.fromDocument(doc),
+              )
+              .toSet()
+              .toList(),
+        );
   }
 
   @override

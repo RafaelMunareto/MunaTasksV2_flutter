@@ -3,6 +3,7 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta
 
 abstract class IEtiquetaRepository {
   Stream<List<EtiquetaModel>> get();
+  getDio();
   Stream<List<ColorsModel>> getColor();
   Future save(EtiquetaModel model);
   Future delete(EtiquetaModel model);

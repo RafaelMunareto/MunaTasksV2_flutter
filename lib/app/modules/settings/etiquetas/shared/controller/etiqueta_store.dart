@@ -14,6 +14,9 @@ abstract class _EtiquetaStoreBase with Store {
   @observable
   ObservableStream<List<EtiquetaModel>>? etiquetaList;
 
+  @observable
+  dynamic etiquetaDio;
+
   @action
   setEtiqueta(value) => etiqueta = value;
 

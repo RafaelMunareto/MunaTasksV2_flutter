@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/colors_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/repositories/interfaces/etiqueta_interfaces.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
+import 'package:munatasks2/app/shared/utils/environment.dart';
 
 class EtiquetaRepository implements IEtiquetaRepository {
   final FirebaseFirestore firestore;
+  var dio = Dio();
 
   EtiquetaRepository({required this.firestore});
 
@@ -52,5 +55,10 @@ class EtiquetaRepository implements IEtiquetaRepository {
         'icon': model.icon,
       });
     }
+  }
+
+  @override
+  getDio() async {
+    return dio.get('https://munatasks.herokuapp.com/etiquetas');
   }
 }

@@ -36,4 +36,9 @@ class EtiquetaService extends Disposable implements IEtiquetaService {
   Future<EtiquetaModel> getByDocumentId(String documentId) {
     return etiquetaRepository.getByDocumentId(documentId);
   }
+
+  @override
+  getDio() {
+    etiquetaRepository.getDio();
+  }
 }

@@ -42,6 +42,17 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
   }
 
   @override
+  void getDio() {
+    final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
+        name: '_EtiquetasStoreBase.getDio');
+    try {
+      return super.getDio();
+    } finally {
+      _$_EtiquetasStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic delete(EtiquetaModel model) {
     final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
         name: '_EtiquetasStoreBase.delete');

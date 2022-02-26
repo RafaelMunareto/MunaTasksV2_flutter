@@ -47,6 +47,13 @@ mixin _$HomeStore on HomeStoreBase, Store {
     return _$updateListAsyncAction.run(() => super.updateList());
   }
 
+  final _$saveAsyncAction = AsyncAction('HomeStoreBase.save');
+
+  @override
+  Future save(TarefaModel model) {
+    return _$saveAsyncAction.run(() => super.save(model));
+  }
+
   final _$changeFilterUserListAsyncAction =
       AsyncAction('HomeStoreBase.changeFilterUserList');
 
@@ -175,17 +182,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.getSubtarefaInsert');
     try {
       return super.getSubtarefaInsert();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void save(TarefaModel model) {
-    final _$actionInfo =
-        _$HomeStoreBaseActionController.startAction(name: 'HomeStoreBase.save');
-    try {
-      return super.save(model);
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }

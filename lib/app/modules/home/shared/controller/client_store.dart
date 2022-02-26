@@ -133,6 +133,9 @@ abstract class _ClientStoreBase with Store {
   int navigateBarSelection = 0;
 
   @action
+  setNavigateBarSelection(value) => navigateBarSelection = value;
+
+  @action
   setColor(value) => color = value;
 
   @action

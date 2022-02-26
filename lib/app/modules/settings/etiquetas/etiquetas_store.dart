@@ -15,6 +15,7 @@ abstract class _EtiquetasStoreBase with Store {
   _EtiquetasStoreBase({required this.etiquetaService}) {
     getColors();
     getList();
+    getDio();
   }
 
   @action
@@ -25,6 +26,13 @@ abstract class _EtiquetasStoreBase with Store {
   @action
   void getList() {
     etiquetaStore.etiquetaList = etiquetaService.get().asObservable();
+  }
+
+  @action
+  void getDio() {
+    etiquetaService.getDio().then((e) {
+      print(e);
+    });
   }
 
   @action

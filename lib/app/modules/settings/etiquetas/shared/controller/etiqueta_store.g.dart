@@ -47,6 +47,21 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
+  final _$etiquetaDioAtom = Atom(name: '_EtiquetaStoreBase.etiquetaDio');
+
+  @override
+  dynamic get etiquetaDio {
+    _$etiquetaDioAtom.reportRead();
+    return super.etiquetaDio;
+  }
+
+  @override
+  set etiquetaDio(dynamic value) {
+    _$etiquetaDioAtom.reportWrite(value, super.etiquetaDio, () {
+      super.etiquetaDio = value;
+    });
+  }
+
   final _$etiquetaAtom = Atom(name: '_EtiquetaStoreBase.etiqueta');
 
   @override
@@ -326,6 +341,7 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     return '''
 colorsList: ${colorsList},
 etiquetaList: ${etiquetaList},
+etiquetaDio: ${etiquetaDio},
 etiqueta: ${etiqueta},
 showValidation: ${showValidation},
 icon: ${icon},
