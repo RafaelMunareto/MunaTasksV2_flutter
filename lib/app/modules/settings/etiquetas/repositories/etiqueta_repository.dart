@@ -3,11 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/colors_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/repositories/interfaces/etiqueta_interfaces.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
-import 'package:munatasks2/app/shared/utils/environment.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 class EtiquetaRepository implements IEtiquetaRepository {
   final FirebaseFirestore firestore;
-  var dio = Dio();
 
   EtiquetaRepository({required this.firestore});
 
@@ -59,6 +58,12 @@ class EtiquetaRepository implements IEtiquetaRepository {
 
   @override
   getDio() async {
-    return dio.get('https://munatasks.herokuapp.com/etiquetas');
+    Response response;
+    response = await DioStruture().dioAction().get('etiquetas');
+    DioStruture().statusRequest(response);
+    List<EtiquetaModel> list = (response.data as List).map((e) {
+      return EtiquetaModel.fromJson(e);
+    }).toList();
+    return list;
   }
 }

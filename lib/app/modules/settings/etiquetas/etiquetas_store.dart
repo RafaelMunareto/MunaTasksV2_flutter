@@ -30,9 +30,7 @@ abstract class _EtiquetasStoreBase with Store {
 
   @action
   void getDio() {
-    etiquetaService.getDio().then((e) {
-      print(e);
-    });
+    etiquetaStore.etiquetaDio = etiquetaService.getDio();
   }
 
   @action

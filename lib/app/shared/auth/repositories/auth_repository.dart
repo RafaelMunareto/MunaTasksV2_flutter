@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/error_pt_br.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'auth_repository_interface.dart';
@@ -187,5 +193,30 @@ class AuthRepository implements IAuthRepository {
   Stream<List<UserModel>> getUsers() {
     return db.collection('usuarios').snapshots().map((query) =>
         query.docs.map((doc) => UserModel.fromDocument(doc)).toList());
+  }
+
+  @override
+  loginDio(email, password) async {
+    Response response;
+    var dio = Dio(
+      BaseOptions(
+        baseUrl: DioStruture().baseUrlMunatasks,
+      ),
+    );
+
+    try {
+      response = await dio.post('sessions',
+          data: jsonEncode({"email": email, "password": password}));
+      DioStruture().statusRequest(response);
+      UserDioClientModel userClient = UserDioClientModel.fromJson(
+          jsonDecode(jsonEncode(response.data))['user']);
+      UserDioModel user = UserDioModel();
+      user.user = userClient;
+      user.token = jsonDecode(jsonEncode(response.data))['token'];
+      String userJson = jsonEncode(user);
+      storage.put('userDio', [userJson]);
+    } catch (e) {
+      print(e);
+    }
   }
 }

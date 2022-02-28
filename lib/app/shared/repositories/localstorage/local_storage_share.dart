@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class LocalStorageShare implements ILocalStorage {
   final Completer<SharedPreferences> _instance = Completer<SharedPreferences>();
@@ -31,5 +31,11 @@ class LocalStorageShare implements ILocalStorage {
   Future put(String key, List<String> value) async {
     var shared = await _instance.future;
     shared.setStringList(key, value);
+  }
+
+  @override
+  Future putObject(String key, String value) async {
+    var shared = await _instance.future;
+    shared.setString(key, value);
   }
 }

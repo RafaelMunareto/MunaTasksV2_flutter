@@ -75,6 +75,8 @@ abstract class _LoginStoreBase with Store {
         value.user.displayName.toString(),
         value.user.photoURL.toString()
       ]);
+      await auth.getLoginDio(client.email, client.password);
+
       if (value.user.emailVerified) {
         setStorageLogin();
         setStorageLoginNormal();

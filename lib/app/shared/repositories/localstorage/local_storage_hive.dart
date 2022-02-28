@@ -34,7 +34,13 @@ class LocalStorageHive implements ILocalStorage {
   }
 
   @override
-  Future put(String key, List<String> value) async {
+  Future put(String key, value) async {
+    var box = await _instance.future;
+    box.put(key, value);
+  }
+
+  @override
+  Future putObject(String key, value) async {
     var box = await _instance.future;
     box.put(key, value);
   }

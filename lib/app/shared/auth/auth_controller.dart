@@ -109,6 +109,11 @@ abstract class _AuthControllerBase with Store {
   cancelAuthentication() {
     return biometricRepository.cancelAuthentication();
   }
+
+  @action
+  getLoginDio(email, password) {
+    return authRepository.loginDio(email, password);
+  }
 }
 
 enum AuthStatus { loading, login, logoff }
