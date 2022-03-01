@@ -38,6 +38,17 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
   }
 
   @override
+  void getSettings() {
+    final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
+        name: '_EtiquetasStoreBase.getSettings');
+    try {
+      return super.getSettings();
+    } finally {
+      _$_EtiquetasStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void getList() {
     final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
         name: '_EtiquetasStoreBase.getList');

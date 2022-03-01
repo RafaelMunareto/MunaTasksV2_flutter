@@ -4,6 +4,7 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/controller/etiq
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 
 part 'etiquetas_store.g.dart';
 
@@ -14,14 +15,20 @@ abstract class _EtiquetasStoreBase with Store {
   final EtiquetaStore etiquetaStore = Modular.get();
 
   _EtiquetasStoreBase({required this.etiquetaService}) {
-    getColors();
-    getList();
     getDio();
+    getSettings();
   }
 
   @action
   void getColors() {
     etiquetaStore.colorsList = etiquetaService.getColor().asObservable();
+  }
+
+  @action
+  void getSettings() {
+    etiquetaService.getSettings().then((value) {
+      etiquetaStore.setColorsDio(value.color);
+    });
   }
 
   @action
@@ -84,6 +91,8 @@ abstract class _EtiquetasStoreBase with Store {
         etiquetaStore.setLoading(false);
         etiquetaStore.setCleanVariables();
         etiquetaStore.setUpdateLoading(false);
+        etiquetaStore.setExpansionTitle(false);
+        getDio();
       }, onError: (erro) {
         etiquetaStore.setMsg(erro);
         etiquetaStore.setErrOrGoal(true);
@@ -101,7 +110,15 @@ abstract class _EtiquetasStoreBase with Store {
 
   @action
   deleteDio(EtiquetaDioModel model) {
-    etiquetaService.deleteDio(model);
+    etiquetaService.deleteDio(model).then((value) {
+      if (value.statusCode == 200) {
+        etiquetaStore.setMsg('${model.etiqueta} deletado com sucesso');
+        etiquetaStore.setErrOrGoal(false);
+        getDio();
+        // etiquetaStore.etiquetaDio
+        //     .removeWhere((element) => element.id == model.id);
+      }
+    });
   }
 
   @action

@@ -32,6 +32,21 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
+  final _$colorsDioAtom = Atom(name: '_EtiquetaStoreBase.colorsDio');
+
+  @override
+  List<dynamic> get colorsDio {
+    _$colorsDioAtom.reportRead();
+    return super.colorsDio;
+  }
+
+  @override
+  set colorsDio(List<dynamic> value) {
+    _$colorsDioAtom.reportWrite(value, super.colorsDio, () {
+      super.colorsDio = value;
+    });
+  }
+
   final _$etiquetaListAtom = Atom(name: '_EtiquetaStoreBase.etiquetaList');
 
   @override
@@ -59,6 +74,21 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
   set etiquetaDio(List<EtiquetaDioModel> value) {
     _$etiquetaDioAtom.reportWrite(value, super.etiquetaDio, () {
       super.etiquetaDio = value;
+    });
+  }
+
+  final _$expansionTitleAtom = Atom(name: '_EtiquetaStoreBase.expansionTitle');
+
+  @override
+  bool get expansionTitle {
+    _$expansionTitleAtom.reportRead();
+    return super.expansionTitle;
+  }
+
+  @override
+  set expansionTitle(bool value) {
+    _$expansionTitleAtom.reportWrite(value, super.expansionTitle, () {
+      super.expansionTitle = value;
     });
   }
 
@@ -231,6 +261,28 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
       ActionController(name: '_EtiquetaStoreBase');
 
   @override
+  dynamic setColorsDio(dynamic value) {
+    final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
+        name: '_EtiquetaStoreBase.setColorsDio');
+    try {
+      return super.setColorsDio(value);
+    } finally {
+      _$_EtiquetaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setExpansionTitle(dynamic value) {
+    final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
+        name: '_EtiquetaStoreBase.setExpansionTitle');
+    try {
+      return super.setExpansionTitle(value);
+    } finally {
+      _$_EtiquetaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setEtiquetaDio(dynamic value) {
     final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
         name: '_EtiquetaStoreBase.setEtiquetaDio');
@@ -377,8 +429,10 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
   String toString() {
     return '''
 colorsList: ${colorsList},
+colorsDio: ${colorsDio},
 etiquetaList: ${etiquetaList},
 etiquetaDio: ${etiquetaDio},
+expansionTitle: ${expansionTitle},
 etiqueta: ${etiqueta},
 showValidation: ${showValidation},
 icon: ${icon},

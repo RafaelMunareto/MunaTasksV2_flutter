@@ -86,6 +86,29 @@ class ConvertIcon {
     }
   }
 
+  convertColorName(String colors) {
+    switch (colors) {
+      case 'blue':
+        return 'Azul';
+      case 'red':
+        return 'Vermelho';
+      case 'green':
+        return 'Verde';
+      case 'grey':
+        return 'Cinza';
+      case 'dark':
+        return 'Preto';
+      case 'yellow':
+        return 'Amarelo';
+      case 'orange':
+        return 'Laranja';
+      case 'amber':
+        return 'Âmbar';
+      case 'brown':
+        return 'Marrom';
+    }
+  }
+
   convertColor(String colors) {
     switch (colors) {
       case 'blue':
@@ -104,6 +127,8 @@ class ConvertIcon {
         return Colors.amber;
       case 'orange':
         return Colors.orange;
+      case 'brown':
+        return Colors.brown;
       default:
         return Colors.grey;
     }

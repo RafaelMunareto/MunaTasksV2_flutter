@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/etiquetas_store.dart';
 import 'package:flutter/material.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/colors_widget.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/etiquetas_widget.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/icon_widget.dart';
@@ -53,11 +54,12 @@ class EtiquetasPageState extends State<EtiquetasPage>
         if (store.etiquetaStore.msg != '') {
           SnackbarCustom()
               .createSnackBar(store.etiquetaStore.msg, Colors.green, context);
-          store.etiquetaStore.setMsg('');
+
           if (store.etiquetaStore.errOrGoal) {
             SnackbarCustom()
                 .createSnackBar(store.etiquetaStore.msg, Colors.red, context);
           }
+          store.etiquetaStore.setMsg('');
         }
         store.etiquetaStore.updateLoading
             ? _controller.forward()
@@ -179,9 +181,6 @@ class EtiquetasPageState extends State<EtiquetasPage>
                         return SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: ExpansionTile(
-                            onExpansionChanged: (value) =>
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode()),
                             leading: Icon(
                               Icons.color_lens,
                               color: ConvertIcon()
@@ -194,17 +193,8 @@ class EtiquetasPageState extends State<EtiquetasPage>
                                     .convertColor(store.etiquetaStore.color),
                               ),
                             ),
-                            children: <Widget>[
-                              Observer(
-                                builder: (_) {
-                                  return ColorsWidget(
-                                    colorsList: store.etiquetaStore.colorsList,
-                                    getColors: store.getColors,
-                                    color: store.etiquetaStore.color,
-                                    setColor: store.etiquetaStore.setColor,
-                                  );
-                                },
-                              ),
+                            children: const [
+                              ColorsWidget(),
                             ],
                           ),
                         );
@@ -244,12 +234,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
                                 child: const Center(
                                     child: CircularProgressIndicator()),
                               )
-                            : EtiquetasWidget(
-                                etiquetasList: store.etiquetaStore.etiquetaDio,
-                                getList: store.getList,
-                                delete: store.deleteDio,
-                                loadingUpdate: store.loadingUpdate,
-                              );
+                            : const EtiquetasWidget();
                       })
                     ],
                   ),

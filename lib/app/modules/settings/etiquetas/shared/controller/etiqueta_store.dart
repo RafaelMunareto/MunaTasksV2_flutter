@@ -13,10 +13,22 @@ abstract class _EtiquetaStoreBase with Store {
   ObservableStream<List<ColorsModel>>? colorsList;
 
   @observable
+  List colorsDio = [];
+
+  @action
+  setColorsDio(value) => colorsDio = value;
+
+  @observable
   ObservableStream<List<EtiquetaModel>>? etiquetaList;
 
   @observable
   List<EtiquetaDioModel> etiquetaDio = [];
+
+  @observable
+  bool expansionTitle = false;
+
+  @action
+  setExpansionTitle(value) => expansionTitle = value;
 
   @action
   setEtiquetaDio(value) => etiquetaDio = value;

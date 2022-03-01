@@ -4,6 +4,7 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/colors_m
 import 'package:munatasks2/app/modules/settings/etiquetas/repositories/interfaces/etiqueta_interfaces.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 class EtiquetaRepository implements IEtiquetaRepository {
@@ -65,6 +66,15 @@ class EtiquetaRepository implements IEtiquetaRepository {
     return (response.data as List).map((e) {
       return EtiquetaDioModel.fromJson(e);
     }).toList();
+  }
+
+  @override
+  Future<SettingsModel> getSettings() async {
+    Response response;
+    response = await DioStruture().dioAction().get('settings');
+    DioStruture().statusRequest(response);
+    var resposta = SettingsModel.fromJson(response.data[0]);
+    return resposta;
   }
 
   @override
