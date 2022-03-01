@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class EtiquetasWidget extends StatefulWidget {
-  final dynamic etiquetasList;
+  final List<EtiquetaDioModel> etiquetasList;
   final Function getList;
   final Function delete;
   final Function loadingUpdate;
@@ -60,71 +59,52 @@ class _EtiquetasWidgetState extends State<EtiquetasWidget>
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 0.4,
-        child: Observer(
-          builder: (_) {
-            if (widget.etiquetasList.data == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (widget.etiquetasList.hasError) {
-              return Center(
-                child: ElevatedButton(
-                  onPressed: widget.getList(),
-                  child: const Text('Error'),
-                ),
-              );
-            } else {
-              List<EtiquetaModel> list = widget.etiquetasList.data;
-              return ListView.builder(
-                itemCount: list.length,
-                itemBuilder: (_, index) {
-                  var model = list[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            widget.loadingUpdate(model);
-                          },
-                          child: ListTile(
-                            leading: Icon(
-                              IconData(model.icon ?? 0,
-                                  fontFamily: 'MaterialIcons'),
-                              color: ConvertIcon().convertColor(model.color),
-                            ),
-                            title: Text(
-                              model.etiqueta,
-                              style: TextStyle(
-                                color: ConvertIcon().convertColor(model.color),
-                              ),
-                            ),
-                            trailing: GestureDetector(
-                              child: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              ),
-                              onTap: () {
-                                _showDialog(model: model);
-                              },
-                            ),
-                          ),
+        child: ListView.builder(
+          itemCount: widget.etiquetasList.length,
+          itemBuilder: (_, index) {
+            var model = widget.etiquetasList[index];
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      widget.loadingUpdate(model);
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        IconData(model.icon ?? 0, fontFamily: 'MaterialIcons'),
+                        color: ConvertIcon().convertColor(model.color),
+                      ),
+                      title: Text(
+                        model.etiqueta,
+                        style: TextStyle(
+                          color: ConvertIcon().convertColor(model.color),
                         ),
-                        const Divider(),
-                      ],
+                      ),
+                      trailing: GestureDetector(
+                        child: const Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                        onTap: () {
+                          _showDialog(model: model);
+                        },
+                      ),
                     ),
-                  );
-                },
-              );
-            }
+                  ),
+                  const Divider(),
+                ],
+              ),
+            );
           },
         ),
       ),
     );
   }
 
-  _showDialog({EtiquetaModel? model}) {
-    model ??= EtiquetaModel();
+  _showDialog({EtiquetaDioModel? model}) {
+    model ??= EtiquetaDioModel();
     showDialog(
         context: context,
         builder: (_) {

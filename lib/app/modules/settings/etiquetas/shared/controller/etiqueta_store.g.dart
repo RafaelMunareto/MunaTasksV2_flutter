@@ -50,13 +50,13 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
   final _$etiquetaDioAtom = Atom(name: '_EtiquetaStoreBase.etiquetaDio');
 
   @override
-  dynamic get etiquetaDio {
+  List<EtiquetaDioModel> get etiquetaDio {
     _$etiquetaDioAtom.reportRead();
     return super.etiquetaDio;
   }
 
   @override
-  set etiquetaDio(dynamic value) {
+  set etiquetaDio(List<EtiquetaDioModel> value) {
     _$etiquetaDioAtom.reportWrite(value, super.etiquetaDio, () {
       super.etiquetaDio = value;
     });
@@ -197,6 +197,21 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
+  final _$idAtom = Atom(name: '_EtiquetaStoreBase.id');
+
+  @override
+  String? get id {
+    _$idAtom.reportRead();
+    return super.id;
+  }
+
+  @override
+  set id(String? value) {
+    _$idAtom.reportWrite(value, super.id, () {
+      super.id = value;
+    });
+  }
+
   final _$colorAtom = Atom(name: '_EtiquetaStoreBase.color');
 
   @override
@@ -214,6 +229,17 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
 
   final _$_EtiquetaStoreBaseActionController =
       ActionController(name: '_EtiquetaStoreBase');
+
+  @override
+  dynamic setEtiquetaDio(dynamic value) {
+    final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
+        name: '_EtiquetaStoreBase.setEtiquetaDio');
+    try {
+      return super.setEtiquetaDio(value);
+    } finally {
+      _$_EtiquetaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic setEtiqueta(dynamic value) {
@@ -315,6 +341,17 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
   }
 
   @override
+  dynamic setId(dynamic value) {
+    final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
+        name: '_EtiquetaStoreBase.setId');
+    try {
+      return super.setId(value);
+    } finally {
+      _$_EtiquetaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setColor(dynamic value) {
     final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
         name: '_EtiquetaStoreBase.setColor');
@@ -351,6 +388,7 @@ errOrGoal: ${errOrGoal},
 msg: ${msg},
 updateLoading: ${updateLoading},
 reference: ${reference},
+id: ${id},
 color: ${color},
 isValidateEtiqueta: ${isValidateEtiqueta}
     ''';

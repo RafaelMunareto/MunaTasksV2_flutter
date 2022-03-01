@@ -16,6 +16,13 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
     return _$submitAsyncAction.run(() => super.submit());
   }
 
+  final _$submitDioAsyncAction = AsyncAction('_EtiquetasStoreBase.submitDio');
+
+  @override
+  Future submitDio() {
+    return _$submitDioAsyncAction.run(() => super.submitDio());
+  }
+
   final _$_EtiquetasStoreBaseActionController =
       ActionController(name: '_EtiquetasStoreBase');
 
@@ -58,6 +65,17 @@ mixin _$EtiquetasStore on _EtiquetasStoreBase, Store {
         name: '_EtiquetasStoreBase.delete');
     try {
       return super.delete(model);
+    } finally {
+      _$_EtiquetasStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic deleteDio(EtiquetaDioModel model) {
+    final _$actionInfo = _$_EtiquetasStoreBaseActionController.startAction(
+        name: '_EtiquetasStoreBase.deleteDio');
+    try {
+      return super.deleteDio(model);
     } finally {
       _$_EtiquetasStoreBaseActionController.endAction(_$actionInfo);
     }

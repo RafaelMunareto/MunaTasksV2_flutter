@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatefulWidget {
   final String etiqueta;
   final bool loading;
   final Function setEtiqueta;
-  final DocumentReference? reference;
+  final String? reference;
   const TextFieldWidget(
       {Key? key,
       this.etiqueta = "",

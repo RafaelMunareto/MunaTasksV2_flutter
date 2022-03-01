@@ -2,6 +2,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/controller/etiqueta_store.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 
 part 'etiquetas_store.g.dart';
@@ -30,7 +31,9 @@ abstract class _EtiquetasStoreBase with Store {
 
   @action
   void getDio() {
-    etiquetaStore.etiquetaDio = etiquetaService.getDio();
+    etiquetaService.getDio().then((value) {
+      etiquetaStore.setEtiquetaDio(value);
+    });
   }
 
   @action
@@ -61,8 +64,44 @@ abstract class _EtiquetasStoreBase with Store {
   }
 
   @action
+  submitDio() async {
+    if (etiquetaStore.isValidateEtiqueta) {
+      etiquetaStore.setShowValidation(false);
+      await etiquetaStore.setLoading(true);
+      EtiquetaDioModel etiquetaModel = EtiquetaDioModel(
+        color: etiquetaStore.color,
+        icon: etiquetaStore.icon,
+        etiqueta: etiquetaStore.etiqueta,
+        id: etiquetaStore.id,
+      );
+      etiquetaService.saveDio(etiquetaModel).then((value) {
+        if (etiquetaModel.id != null) {
+          etiquetaStore.setMsg('${etiquetaModel.etiqueta} editado com sucesso');
+        } else {
+          etiquetaStore.setMsg('${etiquetaModel.etiqueta} salvo com sucesso');
+        }
+        etiquetaStore.setErrOrGoal(false);
+        etiquetaStore.setLoading(false);
+        etiquetaStore.setCleanVariables();
+        etiquetaStore.setUpdateLoading(false);
+      }, onError: (erro) {
+        etiquetaStore.setMsg(erro);
+        etiquetaStore.setErrOrGoal(true);
+        etiquetaStore.setLoading(false);
+      });
+    } else {
+      etiquetaStore.setShowValidation(true);
+    }
+  }
+
+  @action
   delete(EtiquetaModel model) {
     etiquetaService.delete(model);
+  }
+
+  @action
+  deleteDio(EtiquetaDioModel model) {
+    etiquetaService.deleteDio(model);
   }
 
   @action
@@ -71,7 +110,7 @@ abstract class _EtiquetasStoreBase with Store {
     etiquetaStore.setEtiqueta(model.etiqueta);
     etiquetaStore.setColor(model.color);
     etiquetaStore.setIcon(model.icon);
-    etiquetaStore.setReference(model.reference);
+    etiquetaStore.setId(model.id);
     etiquetaStore.setEtiqueta(model.etiqueta);
   }
 }

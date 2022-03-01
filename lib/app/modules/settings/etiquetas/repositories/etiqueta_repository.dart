@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/colors_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/repositories/interfaces/etiqueta_interfaces.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
@@ -57,13 +58,44 @@ class EtiquetaRepository implements IEtiquetaRepository {
   }
 
   @override
-  getDio() async {
+  Future<List<EtiquetaDioModel>> getDio() async {
     Response response;
     response = await DioStruture().dioAction().get('etiquetas');
     DioStruture().statusRequest(response);
-    List<EtiquetaModel> list = (response.data as List).map((e) {
-      return EtiquetaModel.fromJson(e);
+    return (response.data as List).map((e) {
+      return EtiquetaDioModel.fromJson(e);
     }).toList();
-    return list;
+  }
+
+  @override
+  Future deleteDio(EtiquetaDioModel model) async {
+    Response response;
+    response = await DioStruture().dioAction().delete('etiquetas/${model.id}');
+    DioStruture().statusRequest(response);
+    return response;
+  }
+
+  @override
+  Future<EtiquetaDioModel> getByDocumentIdDio(String documentId) async {
+    Response response;
+    response = await DioStruture().dioAction().get('etiquetas/${documentId}');
+    DioStruture().statusRequest(response);
+    return EtiquetaDioModel.fromJson(response.data);
+  }
+
+  @override
+  Future saveDio(EtiquetaDioModel model) async {
+    Response response;
+    if (model.id != null) {
+      response = await DioStruture()
+          .dioAction()
+          .put('etiquetas/${model.id.toString()}', data: model);
+      DioStruture().statusRequest(response);
+      return response;
+    } else {
+      response = await DioStruture().dioAction().post('etiquetas', data: model);
+      DioStruture().statusRequest(response);
+      return response;
+    }
   }
 }

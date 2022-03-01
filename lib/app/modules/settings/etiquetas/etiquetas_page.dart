@@ -1,4 +1,5 @@
 // ignore_for_file: unnecessary_null_comparison
+import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -111,13 +112,17 @@ class EtiquetasPageState extends State<EtiquetasPage>
                   child: Column(
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.05,
+                        height: kIsWeb
+                            ? MediaQuery.of(context).size.height * 0.07
+                            : MediaQuery.of(context).size.height * 0.05,
                         child: Observer(builder: (_) {
                           return store.etiquetaStore.updateLoading
                               ? FadeTransition(
                                   opacity: opacidade,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(left: 12),
+                                    padding: kIsWeb
+                                        ? const EdgeInsets.all(8)
+                                        : const EdgeInsets.only(left: 12),
                                     child: ElevatedButton.icon(
                                         style: ButtonStyle(
                                           backgroundColor:
@@ -159,7 +164,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
                         return TextFieldWidget(
                           etiqueta: store.etiquetaStore.etiqueta,
                           loading: store.etiquetaStore.loading,
-                          reference: store.etiquetaStore.reference,
+                          reference: store.etiquetaStore.id,
                           setEtiqueta: store.etiquetaStore.setEtiqueta,
                         );
                       }),
@@ -208,12 +213,13 @@ class EtiquetasPageState extends State<EtiquetasPage>
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ButtonWidget(
-                              label: store.etiquetaStore.updateLoading
-                                  ? 'ATUALIZAR'
-                                  : 'SALVAR',
-                              width: MediaQuery.of(context).size.width * 0.5,
-                              loading: store.etiquetaStore.loading,
-                              function: store.submit),
+                            label: store.etiquetaStore.updateLoading
+                                ? 'ATUALIZAR'
+                                : 'SALVAR',
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            loading: store.etiquetaStore.loading,
+                            function: store.submitDio,
+                          ),
                         );
                       }),
                       Observer(
@@ -229,12 +235,22 @@ class EtiquetasPageState extends State<EtiquetasPage>
                               : Container();
                         },
                       ),
-                      EtiquetasWidget(
-                        etiquetasList: store.etiquetaStore.etiquetaList,
-                        getList: store.getList,
-                        delete: store.delete,
-                        loadingUpdate: store.loadingUpdate,
-                      ),
+                      Observer(builder: (_) {
+                        return store.etiquetaStore.etiquetaDio.isEmpty
+                            ? SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.4,
+                                width: MediaQuery.of(context).size.width,
+                                child: const Center(
+                                    child: CircularProgressIndicator()),
+                              )
+                            : EtiquetasWidget(
+                                etiquetasList: store.etiquetaStore.etiquetaDio,
+                                getList: store.getList,
+                                delete: store.deleteDio,
+                                loadingUpdate: store.loadingUpdate,
+                              );
+                      })
                     ],
                   ),
                 ),

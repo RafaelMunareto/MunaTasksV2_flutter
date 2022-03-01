@@ -47,6 +47,7 @@ dependencies:
   cloud_functions: ^3.2.6
   flutter_folding_card: ^1.0.0+1
   dio: ^4.0.4
+  objectid: 2.0.0
 
 dev_dependencies:
   flutter_test:
