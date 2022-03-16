@@ -4,7 +4,6 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/controller/etiq
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 
 part 'etiquetas_store.g.dart';
 

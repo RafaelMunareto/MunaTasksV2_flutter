@@ -2,6 +2,7 @@ import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/shared/model/fase_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_insert_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
@@ -246,7 +247,7 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   @action
-  setTarefaUpdate(TarefaModel tarefa) {
+  setTarefaUpdate(TarefaDioModel tarefa) {
     setSaveEtiqueta(tarefa.etiqueta);
     setTarefaTextSave(tarefa.texto);
     setFaseTarefa(changeFaseTarefaReverse(tarefa.fase));
@@ -254,7 +255,7 @@ abstract class _ClientCreateStoreBase with Store {
     setTarefaDateSave(tarefa.data);
     setUsersUpdate(tarefa.users);
     setPrioridadeSaveSelection(tarefa.prioridade);
-    setReference(tarefa.reference);
+    setReference(tarefa.id);
   }
 
   changeFaseTarefa(faseTarefa) {

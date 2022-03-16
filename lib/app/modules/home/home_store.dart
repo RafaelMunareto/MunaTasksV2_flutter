@@ -5,7 +5,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_create_store.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_totais_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/user_menu_model.dart';
@@ -28,10 +30,6 @@ abstract class HomeStoreBase with Store {
   final FirebaseFunctions functions = Modular.get();
 
   HomeStoreBase({required this.dashboardService}) {
-    getAction();
-  }
-
-  getAction() {
     getUsers();
     getList();
     buscaTheme();
@@ -41,6 +39,8 @@ abstract class HomeStoreBase with Store {
     getPrioridade();
     getSubtarefaInsert();
     getFase();
+    getDio();
+
   }
 
   @action
@@ -78,6 +78,13 @@ abstract class HomeStoreBase with Store {
   @action
   void getOrder() {
     client.orderList = dashboardService.getOrder().asObservable();
+  }
+
+  @action
+  void getDio() {
+    dashboardService.getDio().then((value) {
+      client.setTaskDio(value);
+    });
   }
 
   @observable
@@ -268,6 +275,13 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
+  void deleteDioTasks(TarefaDioModel model) {
+    // dashboardService.delete(model);
+    // client.deleteTarefasBase(model);
+    badgets();
+  }
+
+  @action
   changeFilterEtiquetaList() {
     client.changeTarefa(client.tarefasBase);
     if (client.etiquetaSelection == 57585) {
@@ -356,6 +370,13 @@ abstract class HomeStoreBase with Store {
       SubtarefaModel subtarefaModel, TarefaModel tarefaModel) {
     subtarefaModel.status = client.subtarefaAction;
     save(tarefaModel);
+  }
+
+  @action
+  changeSubtarefaDioAction(
+      SubtareDiofaModel subtarefaModel, TarefaDioModel tarefaModel) {
+    subtarefaModel.status = client.subtarefaAction;
+    // save(tarefaModel);
   }
 
   @action

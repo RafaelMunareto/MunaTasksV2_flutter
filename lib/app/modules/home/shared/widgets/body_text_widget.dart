@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/sub_item_widget.dart';
 
 class BodyTextWidget extends StatelessWidget {
-  final TarefaModel tarefa;
+  final TarefaDioModel tarefa;
   final bool theme;
   final Function changeSubtarefaModelAction;
   final Function setSubtarefaModel;

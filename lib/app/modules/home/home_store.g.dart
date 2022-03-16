@@ -111,6 +111,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
+  void getDio() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.getDio');
+    try {
+      return super.getDio();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic getUid() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.getUid');
@@ -210,6 +221,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
+  void deleteDioTasks(TarefaDioModel model) {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.deleteDioTasks');
+    try {
+      return super.deleteDioTasks(model);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic changeFilterEtiquetaList() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.changeFilterEtiquetaList');
@@ -249,6 +271,18 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.changeSubtarefaAction');
     try {
       return super.changeSubtarefaAction(subtarefaModel, tarefaModel);
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeSubtarefaDioAction(
+      SubtareDiofaModel subtarefaModel, TarefaDioModel tarefaModel) {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.changeSubtarefaDioAction');
+    try {
+      return super.changeSubtarefaDioAction(subtarefaModel, tarefaModel);
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }

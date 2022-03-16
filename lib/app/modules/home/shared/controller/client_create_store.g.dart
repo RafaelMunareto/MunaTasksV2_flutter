@@ -788,7 +788,7 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
-  dynamic setTarefaUpdate(TarefaModel tarefa) {
+  dynamic setTarefaUpdate(TarefaDioModel tarefa) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setTarefaUpdate');
     try {

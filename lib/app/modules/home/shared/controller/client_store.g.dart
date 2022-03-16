@@ -407,13 +407,13 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   final _$subtarefaModelAtom = Atom(name: '_ClientStoreBase.subtarefaModel');
 
   @override
-  List<SubtarefaModel> get subtarefaModel {
+  List<SubtareDiofaModel> get subtarefaModel {
     _$subtarefaModelAtom.reportRead();
     return super.subtarefaModel;
   }
 
   @override
-  set subtarefaModel(List<SubtarefaModel> value) {
+  set subtarefaModel(List<SubtareDiofaModel> value) {
     _$subtarefaModelAtom.reportWrite(value, super.subtarefaModel, () {
       super.subtarefaModel = value;
     });
@@ -524,6 +524,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set expandTarefa(bool value) {
     _$expandTarefaAtom.reportWrite(value, super.expandTarefa, () {
       super.expandTarefa = value;
+    });
+  }
+
+  final _$taskDioAtom = Atom(name: '_ClientStoreBase.taskDio');
+
+  @override
+  List<TarefaDioModel> get taskDio {
+    _$taskDioAtom.reportRead();
+    return super.taskDio;
+  }
+
+  @override
+  set taskDio(List<TarefaDioModel> value) {
+    _$taskDioAtom.reportWrite(value, super.taskDio, () {
+      super.taskDio = value;
     });
   }
 
@@ -883,6 +898,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setTaskDio(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setTaskDio');
+    try {
+      return super.setTaskDio(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -918,7 +944,8 @@ imgUrl: ${imgUrl},
 searchValue: ${searchValue},
 perfilUserLogado: ${perfilUserLogado},
 expand: ${expand},
-expandTarefa: ${expandTarefa}
+expandTarefa: ${expandTarefa},
+taskDio: ${taskDio}
     ''';
   }
 }

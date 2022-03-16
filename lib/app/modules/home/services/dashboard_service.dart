@@ -67,4 +67,9 @@ class DashboardService extends Disposable implements IDashboardService {
   save(TarefaModel model) {
     return dashboardRepository.save(model);
   }
+
+  @override
+  getDio(){
+    return dashboardRepository.getDio();
+  }
 }

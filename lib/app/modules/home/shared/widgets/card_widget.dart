@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
-import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_text_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/button_action_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/header_widget.dart';
@@ -33,7 +33,7 @@ class _CardWidgetState extends State<CardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    dialogDelete(String message, TarefaModel tarefa, context) {
+    dialogDelete(String message, TarefaDioModel tarefa, context) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -81,7 +81,7 @@ class _CardWidgetState extends State<CardWidget> {
                 ),
                 onPressed: () {
                   Modular.to.pop();
-                  store.deleteTasks(tarefa);
+                  store.deleteDioTasks(tarefa);
                   SnackbarCustom().createSnackBar(
                       'Deletado com sucesso!', Colors.green, context);
                 },
@@ -218,9 +218,9 @@ class _CardWidgetState extends State<CardWidget> {
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         padding: const EdgeInsets.all(4),
-                        itemCount: store.client.tarefas.length,
+                        itemCount: store.client.taskDio.length,
                         itemBuilder: (BuildContext context, int index) {
-                          var linha = store.client.tarefas[index];
+                          var linha = store.client.taskDio[index];
                           return SingleChildScrollView(
                             child: Wrap(
                               children: [

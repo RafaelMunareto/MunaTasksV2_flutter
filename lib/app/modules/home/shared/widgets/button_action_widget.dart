@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 
 class ButtonActionWidget extends StatefulWidget {
-  final TarefaModel tarefa;
+  final TarefaDioModel tarefa;
   final int navigate;
   final Function save;
   const ButtonActionWidget(
