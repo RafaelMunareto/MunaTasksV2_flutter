@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 
 class SubtareDiofaModel {
   String title;
@@ -28,7 +28,7 @@ class SubtareDiofaModel {
         title: json['title'],
         status: json['status'],
         texto: json['texto'],
-        user: UserDioClientModel.fromJson(json['user']));
+        user: PerfilDioModel.fromJson(json['user']));
   }
 
   Map<String, dynamic> toMap() {

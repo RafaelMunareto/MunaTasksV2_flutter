@@ -9,7 +9,7 @@ class TarefaDioModel {
   String texto;
   int fase;
   int prioridade;
-  dynamic? data;
+  dynamic data;
   List<dynamic>? users;
   List<dynamic>? subTarefa;
 
