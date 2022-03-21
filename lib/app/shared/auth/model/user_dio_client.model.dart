@@ -32,7 +32,10 @@ class UserDioClientModel {
 
   factory UserDioClientModel.fromJson(Map<String, dynamic> json) {
     return UserDioClientModel(
-        id: json['id'], name: json['name'], email: json['email']);
+      id: json['id'],
+      name: json['name'],
+      email: json['email'],
+    );
   }
 
   Map<String, dynamic> toJson() => {

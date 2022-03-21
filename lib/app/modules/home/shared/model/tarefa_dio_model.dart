@@ -38,13 +38,14 @@ class TarefaDioModel {
 
   factory TarefaDioModel.fromJson(Map<String, dynamic> json) {
     return TarefaDioModel(
-        etiqueta: EtiquetaDioModel.fromJson(json['etiqueta']),
-        texto: json['texto'],
-        prioridade: json['prioridade'],
-        fase: json['fase'],
-        data: json['data'],
-        subTarefa: json['subtarefa'],
-        users: json['users']);
+      etiqueta: EtiquetaDioModel.fromJson(json['etiqueta']),
+      texto: json['texto'],
+      prioridade: json['prioridade'],
+      fase: json['fase'],
+      data: json['data'],
+      subTarefa: json['subtarefa'],
+      users: json['users'],
+    );
   }
 
   @override

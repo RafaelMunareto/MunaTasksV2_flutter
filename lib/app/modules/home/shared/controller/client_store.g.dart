@@ -542,6 +542,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$userDioAtom = Atom(name: '_ClientStoreBase.userDio');
+
+  @override
+  UserDioModel get userDio {
+    _$userDioAtom.reportRead();
+    return super.userDio;
+  }
+
+  @override
+  set userDio(UserDioModel value) {
+    _$userDioAtom.reportWrite(value, super.userDio, () {
+      super.userDio = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -909,6 +924,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setUserDio(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setUserDio');
+    try {
+      return super.setUserDio(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -945,7 +971,8 @@ searchValue: ${searchValue},
 perfilUserLogado: ${perfilUserLogado},
 expand: ${expand},
 expandTarefa: ${expandTarefa},
-taskDio: ${taskDio}
+taskDio: ${taskDio},
+userDio: ${userDio}
     ''';
   }
 }

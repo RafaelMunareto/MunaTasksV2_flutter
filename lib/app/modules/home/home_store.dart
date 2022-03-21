@@ -14,6 +14,7 @@ import 'package:munatasks2/app/modules/home/shared/model/user_menu_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:mobx/mobx.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 
 part 'home_store.g.dart';
@@ -31,7 +32,7 @@ abstract class HomeStoreBase with Store {
 
   HomeStoreBase({required this.dashboardService}) {
     getUsers();
-    getList();
+    // getList();
     buscaTheme();
     getEtiquetas();
     getOrder();
@@ -40,7 +41,6 @@ abstract class HomeStoreBase with Store {
     getSubtarefaInsert();
     getFase();
     getDio();
-
   }
 
   @action
@@ -63,11 +63,8 @@ abstract class HomeStoreBase with Store {
     client.setColor('blue');
     client.setIcon(0);
 
-    client.changeTarefa(
-      client.tarefasBase
-          .where((element) => element.fase == client.navigateBarSelection)
-          .toList(),
-    );
+    dashboardService.getDio(
+        client.userDio.user!.id, client.navigateBarSelection);
   }
 
   @action
@@ -82,8 +79,23 @@ abstract class HomeStoreBase with Store {
 
   @action
   void getDio() {
-    dashboardService.getDio().then((value) {
+    client.setLoading(true);
+    getUid();
+    dashboardService
+        .getDio(client.userDio.user!.id, client.navigateBarSelection)
+        .then((value) {
       client.setTaskDio(value);
+      client.taskDio
+          .where((element) => element.fase == client.navigateBarSelection)
+          .toList();
+
+      List<int> badgets = [
+        client.taskDio.where((element) => element.fase == 0).toList().length,
+        client.taskDio.where((element) => element.fase == 1).toList().length,
+        client.taskDio.where((element) => element.fase == 2).toList().length
+      ];
+      client.setBadgetNavigate(badgets);
+      client.setLoading(false);
     });
   }
 
@@ -97,12 +109,9 @@ abstract class HomeStoreBase with Store {
       user.name = value[1];
       user.imgUrl = value[2];
     });
-  }
-
-  @action
-  void getList() {
-    client.dashboardList = dashboardService.get().asObservable();
-    tratamentoBase(client.dashboardList);
+    storage.get('userDio').then((value) {
+      client.setUserDio(UserDioModel.fromJson(value[0]));
+    });
   }
 
   @action
@@ -132,134 +141,8 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  tratamentoBase(ObservableStream<List<TarefaModel>>? dashboardList) async {
-    client.cleanUsersBase();
-    client.cleanTarefas();
-    client.cleanTarefasBase();
-    client.cleanSubtarefaModel();
-    client.setLoading(true);
-    await dashboardList!.forEach((e) async {
-      if (e.isEmpty) {
-        client.setLoading(false);
-      }
-      for (var element in e) {
-        await relacionamentos(element);
-        if (client.tarefasBase.length == e.length) {
-          badgets();
-        }
-      }
-    });
-  }
-
-  relacionamentos(element) async {
-    if (element.data.runtimeType != DateTime) {
-      element.data =
-          DateTime.fromMillisecondsSinceEpoch(element.data.seconds * 1000);
-    }
-
-    for (var i = 0; i < element.users!.length; i++) {
-      await client.userList
-          ?.map((event) =>
-              event.where((w) => w.reference!.id == element.users![i].id))
-          .first
-          .then((value) async {
-        if (value.isNotEmpty) {
-          await client.setUsersBase(value.first);
-        }
-        if (element.users!.length == client.usersBase.length) {
-          element.users = [];
-          element.users = client.usersBase;
-          client.cleanUsersBase();
-          element.etiqueta = await relacionamentoEtiqueta(element);
-
-          for (var subtarefa in element.subTarefa!) {
-            subtarefa = SubtarefaModel.fromJson(subtarefa);
-            subtarefa.user = await relacionamentoUserSubtarefa(subtarefa);
-            client.setSubtarefaModel(subtarefa);
-          }
-          if (client.subtarefaModel.length == element.subTarefa.length) {
-            element.subTarefa = [];
-            element.subTarefa = client.subtarefaModel;
-            client.cleanSubtarefaModel();
-          }
-          await client.setTarefa(element);
-        }
-      });
-    }
-  }
-
-  @action
-  badgets() async {
-    await usersTarefasTotais();
-    await updateList();
-    await client.changeTarefa(
-      client.tarefasBase
-          .where((element) => element.fase == client.navigateBarSelection)
-          .toList(),
-    );
-    List<int> badgets = [
-      client.tarefasBase.where((element) => element.fase == 0).toList().length,
-      client.tarefasBase.where((element) => element.fase == 1).toList().length,
-      client.tarefasBase.where((element) => element.fase == 2).toList().length
-    ];
-    await client.setBadgetNavigate(badgets);
-    client.setLoading(false);
-  }
-
-  relacionamentoEtiqueta(TarefaModel element) async {
-    return client.etiquetaList
-        ?.map((event) =>
-            event.where((w) => w.reference!.id == element.etiqueta.id))
-        .first
-        .then((value) {
-      if (value.isNotEmpty) {
-        return value.first;
-      }
-    });
-  }
-
-  relacionamentoUserSubtarefa(element) {
-    return client.userList
-        ?.map((event) => event.where((w) => w.reference!.id == element.user.id))
-        .first
-        .then((value) {
-      if (value.isNotEmpty) {
-        return value.first;
-      }
-    });
-  }
-
-  @action
-  updateList() async {
-    await getUid();
-    await firestore.collection('perfil').doc(user.uid).get().then((value) {
-      client.setPerfilUserlogado(PerfilModel.fromDocument(value));
-    }).then((value) {
-      if (client.perfilUserLogado.manager == false) {
-        client.setImgUrl(user.imgUrl);
-        client.setTarefasBase(
-          client.tarefasBase.where((t) {
-            bool eSelecaodoUser = false;
-            t.users?.forEach((element) {
-              if (element.reference.id == user.uid) {
-                eSelecaodoUser = true;
-              }
-            });
-            return eSelecaodoUser;
-          }).toList(),
-        );
-      }
-    });
-  }
-
-  @action
   save(TarefaModel model) async {
-    if (model.reference == null) {
-      await client.setTarefa(model);
-      badgets();
-    } else {
-      badgets();
-    }
+    if (model.reference == null) client.setTarefa(model);
   }
 
   @action
@@ -271,14 +154,12 @@ abstract class HomeStoreBase with Store {
   void deleteTasks(TarefaModel model) {
     dashboardService.delete(model);
     client.deleteTarefasBase(model);
-    badgets();
   }
 
   @action
   void deleteDioTasks(TarefaDioModel model) {
     // dashboardService.delete(model);
     // client.deleteTarefasBase(model);
-    badgets();
   }
 
   @action

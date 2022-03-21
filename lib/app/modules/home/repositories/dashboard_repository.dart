@@ -11,10 +11,8 @@ import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dar
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_insert_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
-import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
@@ -118,23 +116,22 @@ class DashboardRepository implements IDashboardRepository {
   }
 
   @override
-  Future<List<TarefaDioModel>> getDio() async {
+  Future<List<TarefaDioModel>> getDio(String id, int fase) async {
     Response response;
-    response = await DioStruture().dioAction().get('tasks');
+
+    response = await DioStruture().dioAction().get('tasks/fase/${id}/${fase}');
     DioStruture().statusRequest(response);
     return (response.data as List).map((e) {
-       e = TarefaDioModel.fromJson(e);
-       e.users = e.users!.map((u) {
-         return PerfilDioModel.fromJson(u);
-       }).toList();
+      e = TarefaDioModel.fromJson(e);
+      e.users = e.users!.map((u) {
+        return PerfilDioModel.fromJson(u);
+      }).toList();
       e.subTarefa = e.subTarefa!.map((f) {
         return SubtareDiofaModel.fromJson(f);
       }).toList();
       e.data = DateTime.parse(e.data);
-      
-      return e as TarefaDioModel;
 
+      return e as TarefaDioModel;
     }).toList();
   }
-
 }

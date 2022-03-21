@@ -1,8 +1,8 @@
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 
 class UserDioModel {
-  UserDioClientModel? user;
-  String token;
+  dynamic user;
+  dynamic token;
 
   UserDioModel({
     this.user,
@@ -24,7 +24,10 @@ class UserDioModel {
   }
 
   factory UserDioModel.fromJson(Map<String, dynamic> json) {
-    return UserDioModel(user: json['user'], token: json['token']);
+    return UserDioModel(
+      user: UserDioClientModel.fromJson(json['user']),
+      token: json['token'],
+    );
   }
 
   Map<String, dynamic> toJson() => {'user': user, 'token': token};

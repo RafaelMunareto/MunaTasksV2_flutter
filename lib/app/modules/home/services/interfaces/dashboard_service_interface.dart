@@ -11,7 +11,7 @@ import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 abstract class IDashboardService {
   Stream<List<TarefaModel>> get();
   Stream<List<EtiquetaModel>> getEtiquetas();
-  Future<List<TarefaDioModel>> getDio();
+  Future<List<TarefaDioModel>> getDio(String id, int fase);
   Stream<List<OrderModel>> getOrder();
   Stream<List<UserModel>> getUsers();
   Stream<List<RetardModel>> getRetard();

@@ -24,29 +24,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
-  final _$tratamentoBaseAsyncAction =
-      AsyncAction('HomeStoreBase.tratamentoBase');
-
-  @override
-  Future tratamentoBase(ObservableStream<List<TarefaModel>>? dashboardList) {
-    return _$tratamentoBaseAsyncAction
-        .run(() => super.tratamentoBase(dashboardList));
-  }
-
-  final _$badgetsAsyncAction = AsyncAction('HomeStoreBase.badgets');
-
-  @override
-  Future badgets() {
-    return _$badgetsAsyncAction.run(() => super.badgets());
-  }
-
-  final _$updateListAsyncAction = AsyncAction('HomeStoreBase.updateList');
-
-  @override
-  Future updateList() {
-    return _$updateListAsyncAction.run(() => super.updateList());
-  }
-
   final _$saveAsyncAction = AsyncAction('HomeStoreBase.save');
 
   @override
@@ -127,17 +104,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.getUid');
     try {
       return super.getUid();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void getList() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.getList');
-    try {
-      return super.getList();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
