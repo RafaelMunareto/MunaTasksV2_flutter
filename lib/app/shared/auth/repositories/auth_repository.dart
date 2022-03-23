@@ -208,13 +208,8 @@ class AuthRepository implements IAuthRepository {
       response = await dio.post('sessions',
           data: jsonEncode({"email": email, "password": password}));
       DioStruture().statusRequest(response);
-      UserDioClientModel userClient = UserDioClientModel.fromJson(
-          jsonDecode(jsonEncode(response.data))['user']);
-      UserDioModel user = UserDioModel();
-      user.user = userClient;
-      user.token = jsonDecode(jsonEncode(response.data))['token'];
-      String userJson = jsonEncode(user);
-      storage.put('userDio', [userJson]);
+      storage
+          .put('userDio', [jsonEncode(UserDioModel.fromJson(response.data))]);
     } catch (e) {
       print(e);
     }

@@ -5,7 +5,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/etiquetas_store.dart';
 import 'package:flutter/material.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/colors_widget.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/etiquetas_widget.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/icon_widget.dart';

@@ -69,7 +69,6 @@ abstract class _LoginStoreBase with Store {
     auth
         .getEmailPasswordLogin(client.email, client.password)
         .then((value) async {
-      await storage.put('user', []);
       await storage.put('user', [
         value.user.uid,
         value.user.displayName.toString(),

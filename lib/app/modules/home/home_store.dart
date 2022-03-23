@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -9,12 +10,10 @@ import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dar
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/tarefa_totais_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/user_menu_model.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:mobx/mobx.dart';
-import 'package:munatasks2/app/shared/auth/model/user_dio_model.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 
 part 'home_store.g.dart';
@@ -31,8 +30,8 @@ abstract class HomeStoreBase with Store {
   final FirebaseFunctions functions = Modular.get();
 
   HomeStoreBase({required this.dashboardService}) {
+    getList();
     getUsers();
-    // getList();
     buscaTheme();
     getEtiquetas();
     getOrder();
@@ -40,7 +39,6 @@ abstract class HomeStoreBase with Store {
     getPrioridade();
     getSubtarefaInsert();
     getFase();
-    getDio();
   }
 
   @action
@@ -62,9 +60,7 @@ abstract class HomeStoreBase with Store {
     client.setOrderSelection('DATA');
     client.setColor('blue');
     client.setIcon(0);
-
-    dashboardService.getDio(
-        client.userDio.user!.id, client.navigateBarSelection);
+    getDio();
   }
 
   @action
@@ -77,40 +73,47 @@ abstract class HomeStoreBase with Store {
     client.orderList = dashboardService.getOrder().asObservable();
   }
 
-  @action
+  void getList() async {
+    await getUid();
+    badgets();
+    getDio();
+    getDioTotal();
+  }
+
   void getDio() {
     client.setLoading(true);
-    getUid();
     dashboardService
-        .getDio(client.userDio.user!.id, client.navigateBarSelection)
+        .getDio(client.userDio.id, client.navigateBarSelection)
         .then((value) {
       client.setTaskDio(value);
-      client.taskDio
-          .where((element) => element.fase == client.navigateBarSelection)
-          .toList();
+      client.setLoading(false);
+    });
+  }
 
+  badgets() {
+    dashboardService.getDioIndividual(client.userDio.id).then((value) {
       List<int> badgets = [
-        client.taskDio.where((element) => element.fase == 0).toList().length,
-        client.taskDio.where((element) => element.fase == 1).toList().length,
-        client.taskDio.where((element) => element.fase == 2).toList().length
+        value.where((element) => element.fase == 0).toList().length,
+        value.where((element) => element.fase == 1).toList().length,
+        value.where((element) => element.fase == 2).toList().length
       ];
       client.setBadgetNavigate(badgets);
-      client.setLoading(false);
+    });
+  }
+
+  void getDioTotal() {
+    dashboardService.getDioTotal().then((value) {
+      client.setTarefasDioTotais(value);
     });
   }
 
   @observable
   UserMenuModel user = UserMenuModel();
 
-  @action
   getUid() {
-    storage.get('user').then((value) {
-      user.uid = value[0];
-      user.name = value[1];
-      user.imgUrl = value[2];
-    });
     storage.get('userDio').then((value) {
-      client.setUserDio(UserDioModel.fromJson(value[0]));
+      client.setUserDio(
+          UserDioClientModel.fromJson(jsonDecode(value[0])['user']));
     });
   }
 
@@ -288,62 +291,5 @@ abstract class HomeStoreBase with Store {
       default:
         return client.tarefas;
     }
-  }
-
-  @action
-  usersTarefasTotais() {
-    var users = [];
-    var etiquetas = [];
-    var finaliza = 0;
-    client.cleanTarefasTotais();
-    TarefaTotaisModel tarefaTotaisModel = TarefaTotaisModel();
-
-    client.tarefasBase.forEach((element) {
-      finaliza++;
-      element.users!.forEach((e) {
-        if (users.where((b) => b.reference!.id == e.reference!.id).isEmpty) {
-          tarefaTotaisModel.users = e;
-          client.setTarefasTotais(tarefaTotaisModel);
-          tarefaTotaisModel = TarefaTotaisModel();
-        } else {
-          if (client.tarefasTotais
-              .where((c) => c.users!.reference!.id == e!.reference!.id)
-              .isEmpty) {
-            tarefaTotaisModel.users = e;
-            tarefaTotaisModel.total = 0;
-            client.setTarefasTotais(tarefaTotaisModel);
-            tarefaTotaisModel = TarefaTotaisModel();
-          }
-        }
-        users.add(e);
-      });
-    });
-
-    client.tarefasTotais.forEach((e) {
-      e.etiqueta = client.tarefasBase
-          .where((t) {
-            return t.users!
-                .where((u) => u.reference.id == e.users!.reference!.id)
-                .isNotEmpty;
-          })
-          .map((element) => element.etiqueta)
-          .toList();
-
-      if (e.etiqueta!.isNotEmpty) {
-        e.total = e.etiqueta!.length;
-      }
-    });
-    // client.userList!.forEach((element) {
-    //   element.forEach((b) {
-    //     if (client.tarefasTotais
-    //         .where((c) => b.reference!.id == c.users!.reference!.id)
-    //         .isEmpty) {
-    //       tarefaTotaisModel.users = element.first;
-    //       tarefaTotaisModel.total = 0;
-    //       client.setTarefasTotais(tarefaTotaisModel);
-    //       tarefaTotaisModel = TarefaTotaisModel();
-    //     }
-    //   });
-    // });
   }
 }

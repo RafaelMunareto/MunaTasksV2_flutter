@@ -30,10 +30,10 @@ abstract class _EtiquetasStoreBase with Store {
     });
   }
 
-  @action
-  void getList() {
-    etiquetaStore.etiquetaList = etiquetaService.get().asObservable();
-  }
+  // @action
+  // void getList() {
+  //   etiquetaStore.etiquetaList = etiquetaService.get().asObservable();
+  // }
 
   @action
   void getDio() {
@@ -42,32 +42,32 @@ abstract class _EtiquetasStoreBase with Store {
     });
   }
 
-  @action
-  submit() async {
-    if (etiquetaStore.isValidateEtiqueta) {
-      etiquetaStore.setShowValidation(false);
-      await etiquetaStore.setLoading(true);
-      EtiquetaModel etiquetaModel = EtiquetaModel(
-          color: etiquetaStore.color,
-          icon: etiquetaStore.icon,
-          etiqueta: etiquetaStore.etiqueta,
-          reference: etiquetaStore.reference);
-      etiquetaService.save(etiquetaModel).then((value) {
-        etiquetaStore.setEtiqueta('teste');
-        etiquetaStore.setMsg('Salvo com sucesso');
-        etiquetaStore.setErrOrGoal(false);
-        etiquetaStore.setLoading(false);
-        etiquetaStore.setCleanVariables();
-        etiquetaStore.setUpdateLoading(false);
-      }, onError: (erro) {
-        etiquetaStore.setMsg(erro);
-        etiquetaStore.setErrOrGoal(true);
-        etiquetaStore.setLoading(false);
-      });
-    } else {
-      etiquetaStore.setShowValidation(true);
-    }
-  }
+  // @action
+  // submit() async {
+  //   if (etiquetaStore.isValidateEtiqueta) {
+  //     etiquetaStore.setShowValidation(false);
+  //     await etiquetaStore.setLoading(true);
+  //     EtiquetaModel etiquetaModel = EtiquetaModel(
+  //         color: etiquetaStore.color,
+  //         icon: etiquetaStore.icon,
+  //         etiqueta: etiquetaStore.etiqueta,
+  //         reference: etiquetaStore.reference);
+  //     etiquetaService.save(etiquetaModel).then((value) {
+  //       etiquetaStore.setEtiqueta('teste');
+  //       etiquetaStore.setMsg('Salvo com sucesso');
+  //       etiquetaStore.setErrOrGoal(false);
+  //       etiquetaStore.setLoading(false);
+  //       etiquetaStore.setCleanVariables();
+  //       etiquetaStore.setUpdateLoading(false);
+  //     }, onError: (erro) {
+  //       etiquetaStore.setMsg(erro);
+  //       etiquetaStore.setErrOrGoal(true);
+  //       etiquetaStore.setLoading(false);
+  //     });
+  //   } else {
+  //     etiquetaStore.setShowValidation(true);
+  //   }
+  // }
 
   @action
   submitDio() async {
@@ -102,10 +102,10 @@ abstract class _EtiquetasStoreBase with Store {
     }
   }
 
-  @action
-  delete(EtiquetaModel model) {
-    etiquetaService.delete(model);
-  }
+  // @action
+  // delete(EtiquetaModel model) {
+  //   etiquetaService.delete(model);
+  // }
 
   @action
   deleteDio(EtiquetaDioModel model) {

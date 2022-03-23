@@ -88,28 +88,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  void getDio() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.getDio');
-    try {
-      return super.getDio();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic getUid() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.getUid');
-    try {
-      return super.getUid();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void getUsers() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.getUsers');
@@ -271,17 +249,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.changeOrderList');
     try {
       return super.changeOrderList();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic usersTarefasTotais() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.usersTarefasTotais');
-    try {
-      return super.usersTarefasTotais();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }

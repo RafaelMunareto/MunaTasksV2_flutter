@@ -545,15 +545,31 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   final _$userDioAtom = Atom(name: '_ClientStoreBase.userDio');
 
   @override
-  UserDioModel get userDio {
+  UserDioClientModel get userDio {
     _$userDioAtom.reportRead();
     return super.userDio;
   }
 
   @override
-  set userDio(UserDioModel value) {
+  set userDio(UserDioClientModel value) {
     _$userDioAtom.reportWrite(value, super.userDio, () {
       super.userDio = value;
+    });
+  }
+
+  final _$tarefasDioTotaisAtom =
+      Atom(name: '_ClientStoreBase.tarefasDioTotais');
+
+  @override
+  TarefaDioTotalModel get tarefasDioTotais {
+    _$tarefasDioTotaisAtom.reportRead();
+    return super.tarefasDioTotais;
+  }
+
+  @override
+  set tarefasDioTotais(TarefaDioTotalModel value) {
+    _$tarefasDioTotaisAtom.reportWrite(value, super.tarefasDioTotais, () {
+      super.tarefasDioTotais = value;
     });
   }
 
@@ -935,6 +951,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setTarefasDioTotais(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setTarefasDioTotais');
+    try {
+      return super.setTarefasDioTotais(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -972,7 +999,8 @@ perfilUserLogado: ${perfilUserLogado},
 expand: ${expand},
 expandTarefa: ${expandTarefa},
 taskDio: ${taskDio},
-userDio: ${userDio}
+userDio: ${userDio},
+tarefasDioTotais: ${tarefasDioTotais}
     ''';
   }
 }

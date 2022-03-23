@@ -6,7 +6,7 @@ class UserDioModel {
 
   UserDioModel({
     this.user,
-    this.token = '',
+    this.token,
   });
 
   factory UserDioModel.fromDocument(doc) {
@@ -14,13 +14,6 @@ class UserDioModel {
       user: doc['user'],
       token: doc['token'],
     );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'user': user,
-      'token': token,
-    };
   }
 
   factory UserDioModel.fromJson(Map<String, dynamic> json) {

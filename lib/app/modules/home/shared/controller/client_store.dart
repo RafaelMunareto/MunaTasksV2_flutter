@@ -4,12 +4,14 @@ import 'package:munatasks2/app/modules/home/shared/model/prioridade_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_total_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_totais_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
-import 'package:munatasks2/app/shared/auth/model/user_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
+
+import '../../../../shared/auth/model/user_dio_client.model.dart';
 
 part 'client_store.g.dart';
 
@@ -234,8 +236,14 @@ abstract class _ClientStoreBase with Store {
   setTaskDio(value) => taskDio = value;
 
   @observable
-  UserDioModel userDio = UserDioModel();
+  UserDioClientModel userDio = UserDioClientModel();
 
   @action
-  setUserDio(value) => value = userDio;
+  setUserDio(value) => userDio = value;
+
+  @observable
+  TarefaDioTotalModel tarefasDioTotais = TarefaDioTotalModel();
+
+  @action
+  setTarefasDioTotais(value) => tarefasDioTotais = value;
 }
