@@ -7,9 +7,7 @@ import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class LandscapeWidget extends StatefulWidget {
-  final String title;
-  const LandscapeWidget({Key? key, this.title = "LandscapeWidget"})
-      : super(key: key);
+  const LandscapeWidget({Key? key}) : super(key: key);
 
   @override
   State<LandscapeWidget> createState() => _LandscapeWidgetState();
@@ -63,7 +61,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                           label: SizedBox(
                                             width: 100,
                                             child: Text(
-                                              totais.name!.name,
+                                              totais.name!.name.name,
                                               textAlign: TextAlign.justify,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
@@ -74,7 +72,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                           onPressed: () {},
                                         ),
                                       ),
-                                      totais.total > 0
+                                      totais.qtd > 0
                                           ? Text(
                                               totais.qtd.toString() +
                                                   ' Tarefas',
@@ -92,7 +90,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                   content: Wrap(
                                     children: [
                                       for (var task in totais.tarefa ?? [])
-                                        totais.tarefa.isNotEmpty
+                                        totais.tarefa.isEmpty
                                             ? Container()
                                             : Padding(
                                                 padding:
@@ -110,7 +108,8 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                                       const EdgeInsets.all(2),
                                                   elevation: 1.0,
                                                   avatar: Icon(
-                                                    IconData(task.icon ?? 0,
+                                                    IconData(
+                                                        task.etiqueta.icon ?? 0,
                                                         fontFamily:
                                                             'MaterialIcons'),
                                                     color: ConvertIcon()
@@ -123,7 +122,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                                             .size
                                                             .width,
                                                     child: Text(
-                                                      task.etiqueta.etiqueta,
+                                                      task.texto,
                                                       textAlign:
                                                           TextAlign.justify,
                                                       maxLines: 1,
@@ -172,11 +171,12 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                               0.2,
                                           child: InputChip(
                                             shape: const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                    topRight:
-                                                        Radius.circular(20),
-                                                    bottomRight:
-                                                        Radius.circular(20))),
+                                              borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(20),
+                                                bottomRight:
+                                                    Radius.circular(20),
+                                              ),
+                                            ),
                                             backgroundColor: Colors.white,
                                             key: UniqueKey(),
                                             labelPadding:
@@ -190,7 +190,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                                   .size
                                                   .width,
                                               child: Text(
-                                                totais.name!.name,
+                                                totais.name!.name.name,
                                                 textAlign: TextAlign.justify,
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
