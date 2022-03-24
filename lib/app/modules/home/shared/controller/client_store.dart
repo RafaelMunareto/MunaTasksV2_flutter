@@ -4,9 +4,7 @@ import 'package:munatasks2/app/modules/home/shared/model/prioridade_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_total_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/tarefa_totais_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
@@ -52,7 +50,7 @@ abstract class _ClientStoreBase with Store {
   List<String> subtarefaActionList = ['pause', 'play', 'check'];
 
   @observable
-  List<TarefaTotaisModel> tarefasTotais = [];
+  List<dynamic> tarefasTotais = [];
 
   @observable
   bool open = false;
@@ -227,7 +225,7 @@ abstract class _ClientStoreBase with Store {
   cleanTarefasTotais() => tarefasTotais = [];
 
   @action
-  setTarefasTotais(value) => tarefasTotais.add(value);
+  setTarefasTotais(value) => tarefasTotais = value;
 
   @observable
   List<TarefaDioModel> taskDio = [];
@@ -240,10 +238,4 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setUserDio(value) => userDio = value;
-
-  @observable
-  TarefaDioTotalModel tarefasDioTotais = TarefaDioTotalModel();
-
-  @action
-  setTarefasDioTotais(value) => tarefasDioTotais = value;
 }

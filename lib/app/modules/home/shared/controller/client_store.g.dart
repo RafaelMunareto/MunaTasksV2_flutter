@@ -163,13 +163,13 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   final _$tarefasTotaisAtom = Atom(name: '_ClientStoreBase.tarefasTotais');
 
   @override
-  List<TarefaTotaisModel> get tarefasTotais {
+  List<dynamic> get tarefasTotais {
     _$tarefasTotaisAtom.reportRead();
     return super.tarefasTotais;
   }
 
   @override
-  set tarefasTotais(List<TarefaTotaisModel> value) {
+  set tarefasTotais(List<dynamic> value) {
     _$tarefasTotaisAtom.reportWrite(value, super.tarefasTotais, () {
       super.tarefasTotais = value;
     });
@@ -557,22 +557,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$tarefasDioTotaisAtom =
-      Atom(name: '_ClientStoreBase.tarefasDioTotais');
-
-  @override
-  TarefaDioTotalModel get tarefasDioTotais {
-    _$tarefasDioTotaisAtom.reportRead();
-    return super.tarefasDioTotais;
-  }
-
-  @override
-  set tarefasDioTotais(TarefaDioTotalModel value) {
-    _$tarefasDioTotaisAtom.reportWrite(value, super.tarefasDioTotais, () {
-      super.tarefasDioTotais = value;
-    });
-  }
-
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -951,17 +935,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
-  dynamic setTarefasDioTotais(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setTarefasDioTotais');
-    try {
-      return super.setTarefasDioTotais(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -999,8 +972,7 @@ perfilUserLogado: ${perfilUserLogado},
 expand: ${expand},
 expandTarefa: ${expandTarefa},
 taskDio: ${taskDio},
-userDio: ${userDio},
-tarefasDioTotais: ${tarefasDioTotais}
+userDio: ${userDio}
     ''';
   }
 }

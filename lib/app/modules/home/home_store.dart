@@ -103,7 +103,7 @@ abstract class HomeStoreBase with Store {
 
   void getDioTotal() {
     dashboardService.getDioTotal().then((value) {
-      client.setTarefasDioTotais(value);
+      client.setTarefasTotais(value);
     });
   }
 
