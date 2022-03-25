@@ -144,7 +144,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                                   height: MediaQuery.of(context).size.height,
                                   child: MenuScreen(
                                     open: store.client.open,
-                                    user: store.user,
                                     setOpen: store.client.setOpen,
                                     controller: drawerController,
                                   ),
@@ -171,7 +170,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                             ? const Center(child: CircularProgressIndicator())
                             : MenuScreen(
                                 open: store.client.open,
-                                user: store.user,
                                 setOpen: store.client.setOpen,
                                 controller: drawerController,
                               );

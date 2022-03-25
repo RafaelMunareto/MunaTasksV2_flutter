@@ -63,8 +63,6 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                           child: RadioEtiquetasFilterWidget(
                                             changeFilterEtiquetaList:
                                                 store.changeFilterEtiquetaList,
-                                            etiquetaList:
-                                                store.client.etiquetaList,
                                             setColor: store.client.setColor,
                                             setIcon: store.client.setIcon,
                                             setEtiquetaSelection: store
@@ -171,91 +169,93 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            ListTile(
-                              leading: GestureDetector(
-                                child: store.client.icon != 0
-                                    ? Icon(
-                                        IconData(store.client.icon,
-                                            fontFamily: 'MaterialIcons'),
-                                        color: ConvertIcon()
-                                            .convertColor(store.client.color),
-                                      )
-                                    : const Icon(Icons.bookmark),
-                                onTap: () {
-                                  DialogButtom().showDialog(
-                                    MouseRegion(
-                                      cursor: SystemMouseCursors.click,
-                                      child: RadioEtiquetasFilterWidget(
-                                        changeFilterEtiquetaList:
-                                            store.changeFilterEtiquetaList,
-                                        etiquetaList: store.client.etiquetaList,
-                                        setColor: store.client.setColor,
-                                        setIcon: store.client.setIcon,
-                                        setEtiquetaSelection:
-                                            store.client.setEtiquetaSelection,
+                            if (!store.client.loading)
+                              ListTile(
+                                leading: GestureDetector(
+                                  child: store.client.icon != 0
+                                      ? Icon(
+                                          IconData(store.client.icon,
+                                              fontFamily: 'MaterialIcons'),
+                                          color: ConvertIcon()
+                                              .convertColor(store.client.color),
+                                        )
+                                      : const Icon(Icons.bookmark),
+                                  onTap: () {
+                                    DialogButtom().showDialog(
+                                      MouseRegion(
+                                        cursor: SystemMouseCursors.click,
+                                        child: RadioEtiquetasFilterWidget(
+                                          changeFilterEtiquetaList:
+                                              store.changeFilterEtiquetaList,
+                                          setColor: store.client.setColor,
+                                          setIcon: store.client.setIcon,
+                                          setEtiquetaSelection:
+                                              store.client.setEtiquetaSelection,
+                                        ),
+                                      ),
+                                      context,
+                                    );
+                                  },
+                                ),
+                                title: Center(
+                                  child: GestureDetector(
+                                    child: ListTile(
+                                      title: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Icon(
+                                            Icons.filter_alt,
+                                            color: Colors.grey,
+                                          ),
+                                          Text(
+                                            store.client.orderAscDesc
+                                                ? '${store.client.orderSelection} DESC'
+                                                : '${store.client.orderSelection} ASC',
+                                            style:
+                                                const TextStyle(fontSize: 12),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    context,
-                                  );
-                                },
-                              ),
-                              title: Center(
-                                child: GestureDetector(
-                                  child: ListTile(
-                                    title: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.filter_alt,
-                                          color: Colors.grey,
-                                        ),
-                                        Text(
-                                          store.client.orderAscDesc
-                                              ? '${store.client.orderSelection} DESC'
-                                              : '${store.client.orderSelection} ASC',
-                                          style: const TextStyle(fontSize: 12),
-                                        ),
-                                      ],
-                                    ),
+                                    onTap: () => DialogButtom().showDialog(
+                                        Observer(builder: (_) {
+                                      return RadioOrderWidget(
+                                        orderAscDesc: store.client.orderAscDesc,
+                                        setOrderAscDesc:
+                                            store.client.setOrderAscDesc,
+                                        orderSelection:
+                                            store.client.orderSelection,
+                                        changeOrderList: store.changeOrderList,
+                                        setOrderSelection:
+                                            store.client.setOrderSelection,
+                                      );
+                                    }), context,
+                                        width:
+                                            MediaQuery.of(context).size.height *
+                                                0.4),
                                   ),
-                                  onTap: () => DialogButtom().showDialog(
-                                      Observer(builder: (_) {
-                                    return RadioOrderWidget(
-                                      orderAscDesc: store.client.orderAscDesc,
-                                      setOrderAscDesc:
-                                          store.client.setOrderAscDesc,
-                                      orderSelection:
-                                          store.client.orderSelection,
-                                      changeOrderList: store.changeOrderList,
-                                      setOrderSelection:
-                                          store.client.setOrderSelection,
-                                    );
-                                  }), context,
-                                      width:
-                                          MediaQuery.of(context).size.height *
-                                              0.4),
+                                ),
+                                trailing: GestureDetector(
+                                  child: CircleAvatarWidget(
+                                    url: store.client.imgUrl,
+                                  ),
+                                  onTap: () {
+                                    if (store.client.perfilUserLogado.manager) {
+                                      DialogButtom().showDialog(
+                                          TeamsSelectionWidget(
+                                            changeFilterUserList:
+                                                store.changeFilterUserList,
+                                            setImageUser:
+                                                store.client.setImgUrl,
+                                            setUserSelection:
+                                                store.client.setUserSelection,
+                                          ),
+                                          context);
+                                    }
+                                  },
                                 ),
                               ),
-                              trailing: GestureDetector(
-                                child: CircleAvatarWidget(
-                                  url: store.client.imgUrl,
-                                ),
-                                onTap: () {
-                                  if (store.client.perfilUserLogado.manager) {
-                                    DialogButtom().showDialog(
-                                        TeamsSelectionWidget(
-                                          changeFilterUserList:
-                                              store.changeFilterUserList,
-                                          setImageUser: store.client.setImgUrl,
-                                          setUserSelection:
-                                              store.client.setUserSelection,
-                                        ),
-                                        context);
-                                  }
-                                },
-                              ),
-                            ),
                             CreateWidget(
                               controller: widget.createController,
                             ),

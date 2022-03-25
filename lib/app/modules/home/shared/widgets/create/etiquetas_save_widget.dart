@@ -44,15 +44,15 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
         }),
       ),
       onTap: () {
-        setState(() {
-          DialogButtom().showDialog(
-              RadioEtiquetasFilterWidget(
-                etiquetaList: store.client.etiquetaList,
-                create: true,
-                setEtiquetaSave: store.clientCreate.setSaveEtiqueta,
-              ),
-              context);
-        });
+        // setState(() {
+        //   DialogButtom().showDialog(
+        //       RadioEtiquetasFilterWidget(
+        //         etiquetaList: [],
+        //         create: true,
+        //         setEtiquetaSave: store.clientCreate.setSaveEtiqueta,
+        //       ),
+        //       context);
+        // });
       },
     );
   }

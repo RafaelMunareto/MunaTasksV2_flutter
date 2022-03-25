@@ -1,13 +1,12 @@
 import 'package:mobx/mobx.dart';
-import 'package:munatasks2/app/modules/home/shared/model/prioridade_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
 import '../../../../shared/auth/model/user_dio_client.model.dart';
@@ -36,18 +35,6 @@ abstract class _ClientStoreBase with Store {
   setSettings(value) => settings = value;
 
   @observable
-  ObservableStream<List<TarefaModel>>? dashboardList;
-
-  @observable
-  ObservableStream<List<EtiquetaModel>>? etiquetaList;
-
-  @observable
-  ObservableStream<List<RetardModel>>? retardList;
-
-  @observable
-  ObservableStream<List<PrioridadeModel>>? prioridadeList;
-
-  @observable
   List<String> subtarefaActionList = ['pause', 'play', 'check'];
 
   @observable
@@ -63,7 +50,7 @@ abstract class _ClientStoreBase with Store {
   int etiquetaSelection = 57585;
 
   @observable
-  UserModel? userSelection;
+  PerfilDioModel? userSelection;
 
   @observable
   String orderSelection = 'DATA';
@@ -194,7 +181,7 @@ abstract class _ClientStoreBase with Store {
   setSearchValue(value) => searchValue = value;
 
   @observable
-  PerfilModel perfilUserLogado = PerfilModel();
+  PerfilDioModel perfilUserLogado = PerfilDioModel();
 
   @action
   setPerfilUserlogado(value) => perfilUserLogado = value;
@@ -245,4 +232,16 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setPerfis(value) => perfis = value;
+
+  @observable
+  List<EtiquetaDioModel> etiquetas = [];
+
+  @action
+  setEtiquetas(value) => etiquetas = value;
+
+  @observable
+  List<RetardModel> retard = [];
+
+  @action
+  setRetard(value) => retard = value;
 }

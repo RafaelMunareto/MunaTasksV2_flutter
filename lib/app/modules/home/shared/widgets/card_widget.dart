@@ -29,7 +29,6 @@ class CardWidget extends StatefulWidget {
 
 class _CardWidgetState extends State<CardWidget> {
   final HomeStore store = Modular.get();
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +125,6 @@ class _CardWidgetState extends State<CardWidget> {
                       GestureDetector(
                         onTap: () => DialogButtom().showDialog(
                             RetardActionWidget(
-                              retard: store.client.retardList,
                               retardSelection: store.client.retardSelection,
                               setRetardSelection:
                                   store.client.setRetardSelection,
@@ -162,7 +160,6 @@ class _CardWidgetState extends State<CardWidget> {
                             PrioridadeSelectionWidget(
                               prioridadeSelection:
                                   store.client.prioridadeSelection,
-                              prioridadeList: store.client.prioridadeList,
                               setPrioridadeSelection:
                                   store.client.setPrioridadeSelection,
                               tarefaModel: linha,

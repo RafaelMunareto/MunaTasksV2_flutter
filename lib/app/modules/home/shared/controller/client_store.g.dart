@@ -69,66 +69,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$dashboardListAtom = Atom(name: '_ClientStoreBase.dashboardList');
-
-  @override
-  ObservableStream<List<TarefaModel>>? get dashboardList {
-    _$dashboardListAtom.reportRead();
-    return super.dashboardList;
-  }
-
-  @override
-  set dashboardList(ObservableStream<List<TarefaModel>>? value) {
-    _$dashboardListAtom.reportWrite(value, super.dashboardList, () {
-      super.dashboardList = value;
-    });
-  }
-
-  final _$etiquetaListAtom = Atom(name: '_ClientStoreBase.etiquetaList');
-
-  @override
-  ObservableStream<List<EtiquetaModel>>? get etiquetaList {
-    _$etiquetaListAtom.reportRead();
-    return super.etiquetaList;
-  }
-
-  @override
-  set etiquetaList(ObservableStream<List<EtiquetaModel>>? value) {
-    _$etiquetaListAtom.reportWrite(value, super.etiquetaList, () {
-      super.etiquetaList = value;
-    });
-  }
-
-  final _$retardListAtom = Atom(name: '_ClientStoreBase.retardList');
-
-  @override
-  ObservableStream<List<RetardModel>>? get retardList {
-    _$retardListAtom.reportRead();
-    return super.retardList;
-  }
-
-  @override
-  set retardList(ObservableStream<List<RetardModel>>? value) {
-    _$retardListAtom.reportWrite(value, super.retardList, () {
-      super.retardList = value;
-    });
-  }
-
-  final _$prioridadeListAtom = Atom(name: '_ClientStoreBase.prioridadeList');
-
-  @override
-  ObservableStream<List<PrioridadeModel>>? get prioridadeList {
-    _$prioridadeListAtom.reportRead();
-    return super.prioridadeList;
-  }
-
-  @override
-  set prioridadeList(ObservableStream<List<PrioridadeModel>>? value) {
-    _$prioridadeListAtom.reportWrite(value, super.prioridadeList, () {
-      super.prioridadeList = value;
-    });
-  }
-
   final _$subtarefaActionListAtom =
       Atom(name: '_ClientStoreBase.subtarefaActionList');
 
@@ -194,13 +134,13 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   final _$userSelectionAtom = Atom(name: '_ClientStoreBase.userSelection');
 
   @override
-  UserModel? get userSelection {
+  PerfilDioModel? get userSelection {
     _$userSelectionAtom.reportRead();
     return super.userSelection;
   }
 
   @override
-  set userSelection(UserModel? value) {
+  set userSelection(PerfilDioModel? value) {
     _$userSelectionAtom.reportWrite(value, super.userSelection, () {
       super.userSelection = value;
     });
@@ -470,13 +410,13 @@ mixin _$ClientStore on _ClientStoreBase, Store {
       Atom(name: '_ClientStoreBase.perfilUserLogado');
 
   @override
-  PerfilModel get perfilUserLogado {
+  PerfilDioModel get perfilUserLogado {
     _$perfilUserLogadoAtom.reportRead();
     return super.perfilUserLogado;
   }
 
   @override
-  set perfilUserLogado(PerfilModel value) {
+  set perfilUserLogado(PerfilDioModel value) {
     _$perfilUserLogadoAtom.reportWrite(value, super.perfilUserLogado, () {
       super.perfilUserLogado = value;
     });
@@ -554,6 +494,36 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set perfis(List<PerfilDioModel> value) {
     _$perfisAtom.reportWrite(value, super.perfis, () {
       super.perfis = value;
+    });
+  }
+
+  final _$etiquetasAtom = Atom(name: '_ClientStoreBase.etiquetas');
+
+  @override
+  List<EtiquetaDioModel> get etiquetas {
+    _$etiquetasAtom.reportRead();
+    return super.etiquetas;
+  }
+
+  @override
+  set etiquetas(List<EtiquetaDioModel> value) {
+    _$etiquetasAtom.reportWrite(value, super.etiquetas, () {
+      super.etiquetas = value;
+    });
+  }
+
+  final _$retardAtom = Atom(name: '_ClientStoreBase.retard');
+
+  @override
+  List<RetardModel> get retard {
+    _$retardAtom.reportRead();
+    return super.retard;
+  }
+
+  @override
+  set retard(List<RetardModel> value) {
+    _$retardAtom.reportWrite(value, super.retard, () {
+      super.retard = value;
     });
   }
 
@@ -957,16 +927,34 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setEtiquetas(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setEtiquetas');
+    try {
+      return super.setEtiquetas(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setRetard(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setRetard');
+    try {
+      return super.setRetard(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
 cardSelection: ${cardSelection},
 tarefas: ${tarefas},
 settings: ${settings},
-dashboardList: ${dashboardList},
-etiquetaList: ${etiquetaList},
-retardList: ${retardList},
-prioridadeList: ${prioridadeList},
 subtarefaActionList: ${subtarefaActionList},
 tarefasTotais: ${tarefasTotais},
 open: ${open},
@@ -994,7 +982,9 @@ expand: ${expand},
 expandTarefa: ${expandTarefa},
 taskDio: ${taskDio},
 userDio: ${userDio},
-perfis: ${perfis}
+perfis: ${perfis},
+etiquetas: ${etiquetas},
+retard: ${retard}
     ''';
   }
 }

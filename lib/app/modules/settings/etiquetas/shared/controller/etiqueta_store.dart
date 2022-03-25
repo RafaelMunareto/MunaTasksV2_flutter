@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/colors_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 
 part 'etiqueta_store.g.dart';
 
@@ -17,9 +16,6 @@ abstract class _EtiquetaStoreBase with Store {
 
   @action
   setColorsDio(value) => colorsDio = value;
-
-  @observable
-  ObservableStream<List<EtiquetaModel>>? etiquetaList;
 
   @observable
   List<EtiquetaDioModel> etiquetaDio = [];

@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/subitem_actions_widget.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';

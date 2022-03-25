@@ -2,11 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/home/home_store.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class RadioEtiquetasFilterWidget extends StatefulWidget {
-  final dynamic etiquetaList;
   final Function? setEtiquetaSave;
   final Function? changeFilterEtiquetaList;
   final Function? setEtiquetaSelection;
@@ -15,7 +16,6 @@ class RadioEtiquetasFilterWidget extends StatefulWidget {
   final bool create;
   const RadioEtiquetasFilterWidget(
       {Key? key,
-      required this.etiquetaList,
       this.changeFilterEtiquetaList,
       this.setColor,
       this.setIcon,
@@ -33,6 +33,7 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animacaoOpacity;
+  final HomeStore store = Modular.get();
 
   @override
   void initState() {
@@ -71,14 +72,14 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
         body: Center(
           child: Observer(
             builder: (_) {
-              if (widget.etiquetaList!.data == null) {
+              if (store.client.etiquetas.isEmpty) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else {
-                List<EtiquetaModel> list = widget.etiquetaList!.data;
+                List<EtiquetaDioModel> list = store.client.etiquetas;
                 if (widget.create == false) {
-                  var todos = EtiquetaModel(
+                  var todos = EtiquetaDioModel(
                       color: 'black', icon: 57585, etiqueta: 'TODOS');
                   if (!list
                       .map((e) => e.etiqueta.contains('TODOS'))
@@ -86,7 +87,7 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
                     list.insert(0, todos);
                   }
                 } else {
-                  var selecione = EtiquetaModel(
+                  var selecione = EtiquetaDioModel(
                       color: 'black', icon: 57585, etiqueta: 'Etiqueta');
                   if (!list
                       .map((e) => e.etiqueta.contains('Etiqueta'))

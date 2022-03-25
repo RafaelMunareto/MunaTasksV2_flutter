@@ -7,11 +7,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_create_store.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
+import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/user_menu_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
@@ -36,11 +37,18 @@ abstract class HomeStoreBase with Store {
   HomeStoreBase({required this.dashboardService}) {
     getList();
     buscaTheme();
-    getEtiquetas();
-    getRetard();
-    getPrioridade();
     getSubtarefaInsert();
-    getFase();
+  }
+
+  void getList() async {
+    await getUid();
+    await settings();
+    await badgets();
+    getEtiquetas();
+    getPerfil();
+    getUser();
+    getDioTotal();
+    getDio();
   }
 
   @action
@@ -65,18 +73,13 @@ abstract class HomeStoreBase with Store {
     getDio();
   }
 
-  @action
-  void getEtiquetas() {
-    client.etiquetaList = dashboardService.getEtiquetas().asObservable();
-  }
-
-  void getList() async {
-    await getUid();
-    await settings();
-    await badgets();
-    getUser();
-    getDioTotal();
-    getDio();
+  void getEtiquetas() async {
+    Response response;
+    response = await DioStruture().dioAction().get('etiquetas');
+    DioStruture().statusRequest(response);
+    client.setEtiquetas((response.data as List).map((e) {
+      return EtiquetaDioModel.fromJson(e);
+    }).toList());
   }
 
   @action
@@ -114,11 +117,11 @@ abstract class HomeStoreBase with Store {
     response = await DioStruture().dioAction().get('settings');
     DioStruture().statusRequest(response);
     var resposta = SettingsModel.fromJson(response.data[0]);
+    client.setRetard((resposta.retard as List).map((e) {
+      return RetardModel.fromJson(e);
+    }).toList());
     client.setSettings(resposta);
   }
-
-  @observable
-  UserMenuModel user = UserMenuModel();
 
   getUid() {
     storage.get('userDio').then((value) {
@@ -131,23 +134,18 @@ abstract class HomeStoreBase with Store {
     Response response;
     response = await DioStruture().dioAction().get('perfil');
     DioStruture().statusRequest(response);
-    var resposta = PerfilDioModel.fromJson(response.data);
-    client.setSettings(resposta);
+    client.setPerfis((response.data as List).map((e) {
+      return PerfilDioModel.fromJson(e);
+    }).toList());
   }
 
-  @action
-  void getRetard() {
-    client.retardList = dashboardService.getRetard().asObservable();
-  }
-
-  @action
-  void getPrioridade() {
-    client.prioridadeList = dashboardService.getPrioridade().asObservable();
-  }
-
-  @action
-  void getFase() {
-    clientCreate.faseList = dashboardService.getFase().asObservable();
+  void getPerfil() async {
+    Response response;
+    response =
+        await DioStruture().dioAction().get('perfil/user/${client.userDio.id}');
+    DioStruture().statusRequest(response);
+    var resposta = PerfilDioModel.fromJson(response.data[0]);
+    client.setPerfilUserlogado(resposta);
   }
 
   @action
@@ -236,24 +234,24 @@ abstract class HomeStoreBase with Store {
 
   @action
   changeFilterUserList() async {
-    await client.changeTarefa(client.tarefasBase
-        .where((b) => b.fase == client.navigateBarSelection)
-        .toList());
+    // await client.changeTarefa(client.tarefasBase
+    //     .where((b) => b.fase == client.navigateBarSelection)
+    //     .toList());
 
-    if (client.userSelection?.name != 'TODOS') {
-      client.changeTarefa(client.tarefas
-          .where((t) {
-            bool eSelecaodoUser = false;
-            t.users?.forEach((element) {
-              if (element.reference.id == client.userSelection?.reference?.id) {
-                eSelecaodoUser = true;
-              }
-            });
-            return eSelecaodoUser;
-          })
-          .where((b) => b.fase == client.navigateBarSelection)
-          .toList());
-    }
+    // if (client.userSelection?.name != 'TODOS') {
+    //   client.changeTarefa(client.tarefas
+    //       .where((t) {
+    //         bool eSelecaodoUser = false;
+    //         t.users?.forEach((element) {
+    //           if (element.reference.id == client.userSelection?.reference?.id) {
+    //             eSelecaodoUser = true;
+    //           }
+    //         });
+    //         return eSelecaodoUser;
+    //       })
+    //       .where((b) => b.fase == client.navigateBarSelection)
+    //       .toList());
+    // }
   }
 
   @action

@@ -47,21 +47,6 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$etiquetaListAtom = Atom(name: '_EtiquetaStoreBase.etiquetaList');
-
-  @override
-  ObservableStream<List<EtiquetaModel>>? get etiquetaList {
-    _$etiquetaListAtom.reportRead();
-    return super.etiquetaList;
-  }
-
-  @override
-  set etiquetaList(ObservableStream<List<EtiquetaModel>>? value) {
-    _$etiquetaListAtom.reportWrite(value, super.etiquetaList, () {
-      super.etiquetaList = value;
-    });
-  }
-
   final _$etiquetaDioAtom = Atom(name: '_EtiquetaStoreBase.etiquetaDio');
 
   @override
@@ -430,7 +415,6 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     return '''
 colorsList: ${colorsList},
 colorsDio: ${colorsDio},
-etiquetaList: ${etiquetaList},
 etiquetaDio: ${etiquetaDio},
 expansionTitle: ${expansionTitle},
 etiqueta: ${etiqueta},

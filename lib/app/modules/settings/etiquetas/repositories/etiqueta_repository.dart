@@ -88,7 +88,7 @@ class EtiquetaRepository implements IEtiquetaRepository {
   @override
   Future<EtiquetaDioModel> getByDocumentIdDio(String documentId) async {
     Response response;
-    response = await DioStruture().dioAction().get('etiquetas/${documentId}');
+    response = await DioStruture().dioAction().get('etiquetas/$documentId');
     DioStruture().statusRequest(response);
     return EtiquetaDioModel.fromJson(response.data);
   }

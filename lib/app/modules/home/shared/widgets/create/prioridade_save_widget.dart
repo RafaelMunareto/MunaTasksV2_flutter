@@ -24,7 +24,6 @@ class _PrioridadeSaveWidgetState extends State<PrioridadeSaveWidget> {
           PrioridadeSelectionWidget(
             create: true,
             prioridadeSelection: store.clientCreate.tarefaModelPrioritario,
-            prioridadeList: store.client.prioridadeList,
             setPrioridadeSelection:
                 store.clientCreate.setPrioridadeSaveSelection,
           ),

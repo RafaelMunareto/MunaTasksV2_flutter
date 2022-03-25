@@ -3,14 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class RetardModel {
   String tempoName;
   int tempoValue;
-  DocumentReference? reference;
-  RetardModel({this.tempoName = '', this.tempoValue = 0, this.reference});
+  String? id;
+  RetardModel({this.tempoName = '', this.tempoValue = 0, this.id});
 
   factory RetardModel.fromDocument(DocumentSnapshot doc) {
     return RetardModel(
-        tempoName: doc['tempoName'],
-        tempoValue: doc['tempoValue'],
-        reference: doc.reference);
+      tempoName: doc['tempoName'],
+      tempoValue: doc['tempoValue'],
+      id: doc['id'],
+    );
   }
 
   factory RetardModel.fromJson(Map<String, dynamic> json) {

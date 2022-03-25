@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:munatasks2/app/modules/home/repositories/interfaces/dashboard_interfaces.dart';
 import 'package:munatasks2/app/modules/home/shared/model/fase_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/prioridade_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_insert_model.dart';
@@ -75,17 +74,6 @@ class DashboardRepository implements IDashboardRepository {
   }
 
   @override
-  Stream<List<PrioridadeModel>> getPrioridade() {
-    return firestore
-        .collection('prioridades')
-        .orderBy('prioridade')
-        .snapshots()
-        .map((query) => query.docs
-            .map((doc) => PrioridadeModel.fromDocument(doc))
-            .toList());
-  }
-
-  @override
   Future<Stream<TarefaModel>> getByDocumentId(String documentId) async {
     return firestore
         .collection('tasks')
@@ -112,7 +100,7 @@ class DashboardRepository implements IDashboardRepository {
   @override
   Future<List<TarefaDioModel>> getDio(String id, int fase) async {
     Response response;
-    response = await DioStruture().dioAction().get('tasks/fase/${id}/${fase}');
+    response = await DioStruture().dioAction().get('tasks/fase/$id/$fase');
     DioStruture().statusRequest(response);
     return (response.data as List).map((e) {
       e = TarefaDioModel.fromJson(e);
@@ -131,7 +119,7 @@ class DashboardRepository implements IDashboardRepository {
   @override
   Future<List<TarefaDioModel>> getDioIndividual(String id) async {
     Response response;
-    response = await DioStruture().dioAction().get('tasks/individual/${id}');
+    response = await DioStruture().dioAction().get('tasks/individual/$id');
     DioStruture().statusRequest(response);
     return (response.data as List).map((e) {
       e = TarefaDioModel.fromJson(e);

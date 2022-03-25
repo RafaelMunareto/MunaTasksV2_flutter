@@ -9,21 +9,6 @@ part of 'home_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeStore on HomeStoreBase, Store {
-  final _$userAtom = Atom(name: 'HomeStoreBase.user');
-
-  @override
-  UserMenuModel get user {
-    _$userAtom.reportRead();
-    return super.user;
-  }
-
-  @override
-  set user(UserMenuModel value) {
-    _$userAtom.reportWrite(value, super.user, () {
-      super.user = value;
-    });
-  }
-
   final _$saveAsyncAction = AsyncAction('HomeStoreBase.save');
 
   @override
@@ -66,17 +51,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  void getEtiquetas() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.getEtiquetas');
-    try {
-      return super.getEtiquetas();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void getDio() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.getDio');
@@ -104,39 +78,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
         name: 'HomeStoreBase.getDioTotal');
     try {
       return super.getDioTotal();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void getRetard() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.getRetard');
-    try {
-      return super.getRetard();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void getPrioridade() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.getPrioridade');
-    try {
-      return super.getPrioridade();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void getFase() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.getFase');
-    try {
-      return super.getFase();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -268,7 +209,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
   @override
   String toString() {
     return '''
-user: ${user}
+
     ''';
   }
 }
