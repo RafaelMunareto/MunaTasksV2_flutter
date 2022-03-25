@@ -54,6 +54,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$settingsAtom = Atom(name: '_ClientStoreBase.settings');
+
+  @override
+  SettingsModel get settings {
+    _$settingsAtom.reportRead();
+    return super.settings;
+  }
+
+  @override
+  set settings(SettingsModel value) {
+    _$settingsAtom.reportWrite(value, super.settings, () {
+      super.settings = value;
+    });
+  }
+
   final _$dashboardListAtom = Atom(name: '_ClientStoreBase.dashboardList');
 
   @override
@@ -81,36 +96,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set etiquetaList(ObservableStream<List<EtiquetaModel>>? value) {
     _$etiquetaListAtom.reportWrite(value, super.etiquetaList, () {
       super.etiquetaList = value;
-    });
-  }
-
-  final _$userListAtom = Atom(name: '_ClientStoreBase.userList');
-
-  @override
-  ObservableStream<List<UserModel>>? get userList {
-    _$userListAtom.reportRead();
-    return super.userList;
-  }
-
-  @override
-  set userList(ObservableStream<List<UserModel>>? value) {
-    _$userListAtom.reportWrite(value, super.userList, () {
-      super.userList = value;
-    });
-  }
-
-  final _$orderListAtom = Atom(name: '_ClientStoreBase.orderList');
-
-  @override
-  ObservableStream<List<OrderModel>>? get orderList {
-    _$orderListAtom.reportRead();
-    return super.orderList;
-  }
-
-  @override
-  set orderList(ObservableStream<List<OrderModel>>? value) {
-    _$orderListAtom.reportWrite(value, super.orderList, () {
-      super.orderList = value;
     });
   }
 
@@ -557,6 +542,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$perfisAtom = Atom(name: '_ClientStoreBase.perfis');
+
+  @override
+  List<PerfilDioModel> get perfis {
+    _$perfisAtom.reportRead();
+    return super.perfis;
+  }
+
+  @override
+  set perfis(List<PerfilDioModel> value) {
+    _$perfisAtom.reportWrite(value, super.perfis, () {
+      super.perfis = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -566,6 +566,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
         name: '_ClientStoreBase.setBadgetNavigate');
     try {
       return super.setBadgetNavigate(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setSettings(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setSettings');
+    try {
+      return super.setSettings(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -935,15 +946,25 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setPerfis(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setPerfis');
+    try {
+      return super.setPerfis(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
 cardSelection: ${cardSelection},
 tarefas: ${tarefas},
+settings: ${settings},
 dashboardList: ${dashboardList},
 etiquetaList: ${etiquetaList},
-userList: ${userList},
-orderList: ${orderList},
 retardList: ${retardList},
 prioridadeList: ${prioridadeList},
 subtarefaActionList: ${subtarefaActionList},
@@ -972,7 +993,8 @@ perfilUserLogado: ${perfilUserLogado},
 expand: ${expand},
 expandTarefa: ${expandTarefa},
 taskDio: ${taskDio},
-userDio: ${userDio}
+userDio: ${userDio},
+perfis: ${perfis}
     ''';
   }
 }

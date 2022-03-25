@@ -1,5 +1,4 @@
 import 'package:munatasks2/app/modules/home/shared/model/fase_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/prioridade_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_insert_model.dart';
@@ -15,7 +14,6 @@ abstract class IDashboardRepository {
   Future<List<TarefaDioModel>> getDio(String id, int fase);
   Future<List<TarefaDioModel>> getDioIndividual(String id);
   Future<List<TarefaDioTotalModel>> getDioTotal();
-  Stream<List<OrderModel>> getOrder();
   Stream<List<UserModel>> getUsers();
   Stream<List<RetardModel>> getRetard();
   Stream<List<PrioridadeModel>> getPrioridade();

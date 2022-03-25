@@ -3,7 +3,6 @@ import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/controller/etiqueta_store.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 
 part 'etiquetas_store.g.dart';
 
@@ -30,44 +29,12 @@ abstract class _EtiquetasStoreBase with Store {
     });
   }
 
-  // @action
-  // void getList() {
-  //   etiquetaStore.etiquetaList = etiquetaService.get().asObservable();
-  // }
-
   @action
   void getDio() {
     etiquetaService.getDio().then((value) {
       etiquetaStore.setEtiquetaDio(value);
     });
   }
-
-  // @action
-  // submit() async {
-  //   if (etiquetaStore.isValidateEtiqueta) {
-  //     etiquetaStore.setShowValidation(false);
-  //     await etiquetaStore.setLoading(true);
-  //     EtiquetaModel etiquetaModel = EtiquetaModel(
-  //         color: etiquetaStore.color,
-  //         icon: etiquetaStore.icon,
-  //         etiqueta: etiquetaStore.etiqueta,
-  //         reference: etiquetaStore.reference);
-  //     etiquetaService.save(etiquetaModel).then((value) {
-  //       etiquetaStore.setEtiqueta('teste');
-  //       etiquetaStore.setMsg('Salvo com sucesso');
-  //       etiquetaStore.setErrOrGoal(false);
-  //       etiquetaStore.setLoading(false);
-  //       etiquetaStore.setCleanVariables();
-  //       etiquetaStore.setUpdateLoading(false);
-  //     }, onError: (erro) {
-  //       etiquetaStore.setMsg(erro);
-  //       etiquetaStore.setErrOrGoal(true);
-  //       etiquetaStore.setLoading(false);
-  //     });
-  //   } else {
-  //     etiquetaStore.setShowValidation(true);
-  //   }
-  // }
 
   @action
   submitDio() async {
@@ -102,11 +69,6 @@ abstract class _EtiquetasStoreBase with Store {
     }
   }
 
-  // @action
-  // delete(EtiquetaModel model) {
-  //   etiquetaService.delete(model);
-  // }
-
   @action
   deleteDio(EtiquetaDioModel model) {
     etiquetaService.deleteDio(model).then((value) {
@@ -114,8 +76,6 @@ abstract class _EtiquetasStoreBase with Store {
         etiquetaStore.setMsg('${model.etiqueta} deletado com sucesso');
         etiquetaStore.setErrOrGoal(false);
         getDio();
-        // etiquetaStore.etiquetaDio
-        //     .removeWhere((element) => element.id == model.id);
       }
     });
   }

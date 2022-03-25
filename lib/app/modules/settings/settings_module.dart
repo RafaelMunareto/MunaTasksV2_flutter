@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/etiquetas_page.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/etiquetas_store.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/repositories/etiqueta_repository.dart';

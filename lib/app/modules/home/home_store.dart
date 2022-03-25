@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_create_store.dart';
@@ -11,10 +12,13 @@ import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/user_menu_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 part 'home_store.g.dart';
 
@@ -31,10 +35,8 @@ abstract class HomeStoreBase with Store {
 
   HomeStoreBase({required this.dashboardService}) {
     getList();
-    getUsers();
     buscaTheme();
     getEtiquetas();
-    getOrder();
     getRetard();
     getPrioridade();
     getSubtarefaInsert();
@@ -68,18 +70,16 @@ abstract class HomeStoreBase with Store {
     client.etiquetaList = dashboardService.getEtiquetas().asObservable();
   }
 
-  @action
-  void getOrder() {
-    client.orderList = dashboardService.getOrder().asObservable();
-  }
-
   void getList() async {
     await getUid();
-    badgets();
-    getDio();
+    await settings();
+    await badgets();
+    getUser();
     getDioTotal();
+    getDio();
   }
 
+  @action
   void getDio() {
     client.setLoading(true);
     dashboardService
@@ -90,6 +90,7 @@ abstract class HomeStoreBase with Store {
     });
   }
 
+  @action
   badgets() {
     dashboardService.getDioIndividual(client.userDio.id).then((value) {
       List<int> badgets = [
@@ -101,10 +102,19 @@ abstract class HomeStoreBase with Store {
     });
   }
 
+  @action
   void getDioTotal() {
     dashboardService.getDioTotal().then((value) {
       client.setTarefasTotais(value);
     });
+  }
+
+  settings() async {
+    Response response;
+    response = await DioStruture().dioAction().get('settings');
+    DioStruture().statusRequest(response);
+    var resposta = SettingsModel.fromJson(response.data[0]);
+    client.setSettings(resposta);
   }
 
   @observable
@@ -117,9 +127,12 @@ abstract class HomeStoreBase with Store {
     });
   }
 
-  @action
-  void getUsers() {
-    client.userList = dashboardService.getUsers().asObservable();
+  void getUser() async {
+    Response response;
+    response = await DioStruture().dioAction().get('perfil');
+    DioStruture().statusRequest(response);
+    var resposta = PerfilDioModel.fromJson(response.data);
+    client.setSettings(resposta);
   }
 
   @action

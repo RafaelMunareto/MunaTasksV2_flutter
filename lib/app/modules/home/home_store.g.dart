@@ -77,22 +77,33 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  void getOrder() {
+  void getDio() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.getOrder');
+        name: 'HomeStoreBase.getDio');
     try {
-      return super.getOrder();
+      return super.getDio();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void getUsers() {
+  dynamic badgets() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.getUsers');
+        name: 'HomeStoreBase.badgets');
     try {
-      return super.getUsers();
+      return super.badgets();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void getDioTotal() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.getDioTotal');
+    try {
+      return super.getDioTotal();
     } finally {
       _$HomeStoreBaseActionController.endAction(_$actionInfo);
     }

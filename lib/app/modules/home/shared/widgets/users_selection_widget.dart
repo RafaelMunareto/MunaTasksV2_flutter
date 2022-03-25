@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
-import 'package:munatasks2/app/shared/auth/model/user_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 
 class UsersSelectionWidget extends StatefulWidget {
@@ -16,6 +16,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animacaoOpacity;
+  final HomeStore store = Modular.get();
 
   @override
   void initState() {
@@ -55,17 +56,12 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
         body: Center(
           child: Observer(
             builder: (_) {
-              if (store.client.userList!.data == null) {
+              if (store.client.perfis.isEmpty) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (store.client.userList!.hasError) {
-                return Center(
-                  child:
-                      Text('Error ' + store.client.userList!.error.toString()),
-                );
               } else {
-                List<UserModel> list = store.client.userList!.data;
+                List<PerfilDioModel> list = store.client.perfis;
                 return list.isNotEmpty
                     ? SingleChildScrollView(
                         child: Wrap(
@@ -77,10 +73,10 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                 padding: const EdgeInsets.only(bottom: 4.0),
                                 child: SizedBox(
                                   child: InputChip(
-                                    key: ObjectKey(list[i].email),
+                                    key: ObjectKey(list[i].name.email),
                                     labelPadding: const EdgeInsets.all(2),
                                     selected: store.clientCreate.individualChip
-                                        .contains(list[i].email),
+                                        .contains(list[i].name.email),
                                     elevation: 4.0,
                                     avatar: CircleAvatarWidget(
                                       url: list[i].urlImage,
@@ -94,8 +90,8 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                     ),
                                     onSelected: (bool value) {
                                       setState(() {
-                                        store.clientCreate
-                                            .setIdReferenceStaff(list[i].email);
+                                        store.clientCreate.setIdReferenceStaff(
+                                            list[i].name.email);
                                         store.clientCreate.setIdStaff(list[i]);
                                         FocusScope.of(context).unfocus();
                                         store.clientCreate

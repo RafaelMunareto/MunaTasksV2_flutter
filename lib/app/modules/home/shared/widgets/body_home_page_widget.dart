@@ -58,15 +58,18 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                         : const Icon(Icons.bookmark),
                                     onTap: () {
                                       DialogButtom().showDialog(
-                                        RadioEtiquetasFilterWidget(
-                                          changeFilterEtiquetaList:
-                                              store.changeFilterEtiquetaList,
-                                          etiquetaList:
-                                              store.client.etiquetaList,
-                                          setColor: store.client.setColor,
-                                          setIcon: store.client.setIcon,
-                                          setEtiquetaSelection:
-                                              store.client.setEtiquetaSelection,
+                                        MouseRegion(
+                                          cursor: SystemMouseCursors.click,
+                                          child: RadioEtiquetasFilterWidget(
+                                            changeFilterEtiquetaList:
+                                                store.changeFilterEtiquetaList,
+                                            etiquetaList:
+                                                store.client.etiquetaList,
+                                            setColor: store.client.setColor,
+                                            setIcon: store.client.setIcon,
+                                            setEtiquetaSelection: store
+                                                .client.setEtiquetaSelection,
+                                          ),
                                         ),
                                         context,
                                       );
@@ -100,7 +103,6 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                               store.client.orderAscDesc,
                                           setOrderAscDesc:
                                               store.client.setOrderAscDesc,
-                                          orderList: store.client.orderList,
                                           orderSelection:
                                               store.client.orderSelection,
                                           changeOrderList:
@@ -126,7 +128,6 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                             TeamsSelectionWidget(
                                               changeFilterUserList:
                                                   store.changeFilterUserList,
-                                              userLista: store.client.userList,
                                               setImageUser:
                                                   store.client.setImgUrl,
                                               setUserSelection:
@@ -182,14 +183,17 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                     : const Icon(Icons.bookmark),
                                 onTap: () {
                                   DialogButtom().showDialog(
-                                    RadioEtiquetasFilterWidget(
-                                      changeFilterEtiquetaList:
-                                          store.changeFilterEtiquetaList,
-                                      etiquetaList: store.client.etiquetaList,
-                                      setColor: store.client.setColor,
-                                      setIcon: store.client.setIcon,
-                                      setEtiquetaSelection:
-                                          store.client.setEtiquetaSelection,
+                                    MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      child: RadioEtiquetasFilterWidget(
+                                        changeFilterEtiquetaList:
+                                            store.changeFilterEtiquetaList,
+                                        etiquetaList: store.client.etiquetaList,
+                                        setColor: store.client.setColor,
+                                        setIcon: store.client.setIcon,
+                                        setEtiquetaSelection:
+                                            store.client.setEtiquetaSelection,
+                                      ),
                                     ),
                                     context,
                                   );
@@ -221,7 +225,6 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                       orderAscDesc: store.client.orderAscDesc,
                                       setOrderAscDesc:
                                           store.client.setOrderAscDesc,
-                                      orderList: store.client.orderList,
                                       orderSelection:
                                           store.client.orderSelection,
                                       changeOrderList: store.changeOrderList,
@@ -244,7 +247,6 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                         TeamsSelectionWidget(
                                           changeFilterUserList:
                                               store.changeFilterUserList,
-                                          userLista: store.client.userList,
                                           setImageUser: store.client.setImgUrl,
                                           setUserSelection:
                                               store.client.setUserSelection,

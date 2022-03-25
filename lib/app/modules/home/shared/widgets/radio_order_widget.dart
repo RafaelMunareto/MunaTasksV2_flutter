@@ -1,10 +1,11 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
+import 'package:munatasks2/app/modules/home/home_store.dart';
 
 class RadioOrderWidget extends StatefulWidget {
-  final dynamic orderList;
   final dynamic orderSelection;
   final Function changeOrderList;
   final Function setOrderSelection;
@@ -12,7 +13,6 @@ class RadioOrderWidget extends StatefulWidget {
   final Function setOrderAscDesc;
   const RadioOrderWidget(
       {Key? key,
-      required this.orderList,
       required this.orderSelection,
       required this.changeOrderList,
       this.orderAscDesc = false,
@@ -26,6 +26,7 @@ class RadioOrderWidget extends StatefulWidget {
 
 class _RadioOrderWidgetState extends State<RadioOrderWidget> {
   String switchOrder = '';
+  final HomeStore store = Modular.get();
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +34,12 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
       backgroundColor: Colors.transparent,
       body: Observer(
         builder: (_) {
-          if (widget.orderList!.data == null) {
+          if (store.client.settings == null) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
-            List<OrderModel> list = widget.orderList!.data;
+            List<dynamic>? list = store.client.settings.order;
             return Column(
               children: [
                 SizedBox(
@@ -65,14 +66,14 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        for (var linha in list)
+                        for (var linha in list ?? [])
                           ListTile(
-                            key: Key(linha.grupo.toString()),
+                            key: Key(linha.toString()),
                             title: Text(
-                              linha.grupo,
+                              linha,
                             ),
                             leading: Radio(
-                              value: linha.grupo,
+                              value: linha.toString(),
                               groupValue: widget.orderSelection,
                               onChanged: (value) {
                                 setState(() {

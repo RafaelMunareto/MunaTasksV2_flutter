@@ -1,11 +1,12 @@
 import 'package:mobx/mobx.dart';
-import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/prioridade_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
@@ -29,16 +30,16 @@ abstract class _ClientStoreBase with Store {
   List<TarefaModel> tarefas = [];
 
   @observable
+  SettingsModel settings = SettingsModel();
+
+  @action
+  setSettings(value) => settings = value;
+
+  @observable
   ObservableStream<List<TarefaModel>>? dashboardList;
 
   @observable
   ObservableStream<List<EtiquetaModel>>? etiquetaList;
-
-  @observable
-  ObservableStream<List<UserModel>>? userList;
-
-  @observable
-  ObservableStream<List<OrderModel>>? orderList;
 
   @observable
   ObservableStream<List<RetardModel>>? retardList;
@@ -238,4 +239,10 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setUserDio(value) => userDio = value;
+
+  @observable
+  List<PerfilDioModel> perfis = [];
+
+  @action
+  setPerfis(value) => perfis = value;
 }

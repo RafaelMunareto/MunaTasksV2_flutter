@@ -2,7 +2,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/repositories/interfaces/dashboard_interfaces.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/shared/model/fase_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/order_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/prioridade_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_insert_model.dart';
@@ -26,11 +25,6 @@ class DashboardService extends Disposable implements IDashboardService {
   @override
   Stream<List<EtiquetaModel>> getEtiquetas() {
     return dashboardRepository.getEtiquetas();
-  }
-
-  @override
-  Stream<List<OrderModel>> getOrder() {
-    return dashboardRepository.getOrder();
   }
 
   @override

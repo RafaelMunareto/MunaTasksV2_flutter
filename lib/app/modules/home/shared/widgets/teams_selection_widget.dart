@@ -2,17 +2,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/home/home_store.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 
 class TeamsSelectionWidget extends StatefulWidget {
-  final dynamic userLista;
   final Function changeFilterUserList;
   final Function? setUserSelection;
   final Function setImageUser;
   const TeamsSelectionWidget({
     Key? key,
-    required this.userLista,
     required this.changeFilterUserList,
     required this.setUserSelection,
     required this.setImageUser,
@@ -26,6 +26,7 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animacaoOpacity;
+  final HomeStore store = Modular.get();
 
   @override
   void initState() {
@@ -64,15 +65,21 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
         body: Center(
           child: Observer(
             builder: (_) {
-              if (widget.userLista!.data == null) {
+              if (store.client.perfis.isEmpty) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else {
-                List<UserModel> list = widget.userLista!.data;
-                var todos = UserModel(
-                    name: 'TODOS',
-                    email: 'todos@todos.com.br',
+                List<PerfilDioModel> list = store.client.perfis;
+                var todos = PerfilDioModel(
+                    name: {
+                      "name": "TODOS",
+                      "email": 'todos@todos.com.br',
+                      "password": ""
+                    },
+                    nameTime: "",
+                    idStaff: [],
+                    manager: true,
                     urlImage:
                         'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/allPeople.png?alt=media&token=19a38226-7467-4f83-a201-20214af45bc1');
                 if (!list.map((e) => e.name.contains('TODOS')).contains(true)) {
@@ -90,7 +97,7 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
                               ? const EdgeInsets.only(bottom: 16.0)
                               : const EdgeInsets.only(bottom: 4.0),
                           child: InputChip(
-                            key: ObjectKey(list[index].reference),
+                            key: ObjectKey(list[index].id),
                             labelPadding: const EdgeInsets.all(2),
                             elevation: 4.0,
                             avatar: CircleAvatarWidget(
