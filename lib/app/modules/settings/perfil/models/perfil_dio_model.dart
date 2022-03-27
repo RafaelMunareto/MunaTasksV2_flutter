@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 class PerfilDioModel {
   List<dynamic>? idStaff;
   dynamic manager;
-  String? id;
+  String id;
   dynamic name;
   String urlImage;
   String nameTime;
@@ -12,7 +13,7 @@ class PerfilDioModel {
   PerfilDioModel({
     this.idStaff,
     this.manager = false,
-    this.id,
+    this.id = '',
     this.name = '',
     this.urlImage = '',
     this.nameTime = '',
@@ -24,7 +25,7 @@ class PerfilDioModel {
       manager: doc['manager'],
       id: doc['_id'],
       name: UserDioClientModel.fromJson(doc['name']),
-      urlImage: 'https://munatasks.herokuapp.com/files/' + doc['urlImage'],
+      urlImage: DioStruture().baseUrlMunatasks + 'files/' + doc['urlImage'],
       nameTime: doc['nameTime'],
     );
   }
@@ -35,7 +36,7 @@ class PerfilDioModel {
       idStaff: json['idStaff'],
       manager: json['manager'],
       name: UserDioClientModel.fromJson(json['name']),
-      urlImage: 'https://munatasks.herokuapp.com/files/' + json['urlImage'],
+      urlImage: DioStruture().baseUrlMunatasks + 'files/' + json['urlImage'],
       nameTime: json['nameTime'],
     );
   }

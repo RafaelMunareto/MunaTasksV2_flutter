@@ -106,7 +106,14 @@ class _MenuScreenState extends State<MenuScreen> {
                                             Icons.settings,
                                           ),
                                         ),
-                                        Text("Configurações"),
+                                        Flexible(
+                                          child: SizedBox(
+                                            child: Text(
+                                              "Configurações",
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                     onTap: () {
@@ -122,8 +129,13 @@ class _MenuScreenState extends State<MenuScreen> {
                                             Icons.bookmark,
                                           ),
                                         ),
-                                        Text(
-                                          "Etiquetas",
+                                        Flexible(
+                                          child: SizedBox(
+                                            child: Text(
+                                              "Etiquetas",
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),

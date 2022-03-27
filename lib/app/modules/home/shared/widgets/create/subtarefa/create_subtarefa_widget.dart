@@ -103,7 +103,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                   GestureDetector(
                     onTap: () => DialogButtom().showDialog(
                         CreateUserSubtarefaWidget(
-                          userLista: [],
+                          userLista: const [],
                           setCreateImageUser:
                               store.clientCreate.setCreateImageUser,
                           setUserCreateSelection:

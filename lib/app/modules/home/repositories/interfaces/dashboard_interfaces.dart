@@ -18,6 +18,9 @@ abstract class IDashboardRepository {
   Stream<List<SubtarefaInsertModel>> getSubtarefaInsert();
   Stream<List<FaseModel>> getFase();
   save(TarefaModel model);
+  saveDio(TarefaDioModel model);
+  updateDio(TarefaDioModel model);
+  deleteDio(TarefaDioModel model);
   delete(TarefaModel model);
   Future<Stream<TarefaModel>> getByDocumentId(String documentId);
 }

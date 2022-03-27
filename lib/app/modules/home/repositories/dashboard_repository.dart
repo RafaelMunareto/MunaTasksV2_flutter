@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:munatasks2/app/modules/home/repositories/interfaces/dashboard_interfaces.dart';
@@ -147,5 +149,31 @@ class DashboardRepository implements IDashboardRepository {
       }).toList();
       return e as TarefaDioTotalModel;
     }).toList();
+  }
+
+  @override
+  saveDio(TarefaDioModel model) async {
+    Response response;
+    response = await DioStruture().dioAction().post('tasks', data: model);
+    DioStruture().statusRequest(response);
+    return response;
+  }
+
+  @override
+  updateDio(TarefaDioModel model) async {
+    Response response;
+    response = await DioStruture()
+        .dioAction()
+        .put('tasks/${model.id.toString()}', data: model);
+    DioStruture().statusRequest(response);
+    return response;
+  }
+
+  @override
+  deleteDio(TarefaDioModel model) async {
+    Response response;
+    response = await DioStruture().dioAction().delete('tasks/${model.id}');
+    DioStruture().statusRequest(response);
+    return response;
   }
 }

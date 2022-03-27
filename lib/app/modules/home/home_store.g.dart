@@ -9,10 +9,24 @@ part of 'home_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeStore on HomeStoreBase, Store {
+  final _$getDioTotalAsyncAction = AsyncAction('HomeStoreBase.getDioTotal');
+
+  @override
+  Future getDioTotal() {
+    return _$getDioTotalAsyncAction.run(() => super.getDioTotal());
+  }
+
+  final _$getPerfilAsyncAction = AsyncAction('HomeStoreBase.getPerfil');
+
+  @override
+  Future getPerfil() {
+    return _$getPerfilAsyncAction.run(() => super.getPerfil());
+  }
+
   final _$saveAsyncAction = AsyncAction('HomeStoreBase.save');
 
   @override
-  Future save(TarefaModel model) {
+  Future save(TarefaDioModel model) {
     return _$saveAsyncAction.run(() => super.save(model));
   }
 
@@ -51,6 +65,17 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
+  void getDioFase() {
+    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
+        name: 'HomeStoreBase.getDioFase');
+    try {
+      return super.getDioFase();
+    } finally {
+      _$HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void getDio() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.getDio');
@@ -73,17 +98,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  void getDioTotal() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.getDioTotal');
-    try {
-      return super.getDioTotal();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void getSubtarefaInsert() {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.getSubtarefaInsert');
@@ -95,18 +109,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  void saveNewTarefa() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.saveNewTarefa');
-    try {
-      return super.saveNewTarefa();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void deleteTasks(TarefaModel model) {
+  void deleteTasks(TarefaDioModel model) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.deleteTasks');
     try {
@@ -150,7 +153,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  dynamic changePrioridadeList(TarefaModel model) {
+  dynamic changePrioridadeList(TarefaDioModel model) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.changePrioridadeList');
     try {
@@ -162,7 +165,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
 
   @override
   dynamic changeSubtarefaAction(
-      SubtarefaModel subtarefaModel, TarefaModel tarefaModel) {
+      SubtarefaModel subtarefaModel, TarefaDioModel tarefaModel) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.changeSubtarefaAction');
     try {
@@ -185,7 +188,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  dynamic updateDate(TarefaModel model) {
+  dynamic updateDate(TarefaDioModel model) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.updateDate');
     try {

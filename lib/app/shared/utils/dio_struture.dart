@@ -7,7 +7,7 @@ import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_sh
 class DioStruture {
   final ILocalStorage storage = LocalStorageShare();
   String token = '';
-  final baseUrlMunatasks = 'https://munatasks.herokuapp.com/';
+  final baseUrlMunatasks = 'http://localhost:3333/';
   dioAction() {
     tokenDio();
     return Dio(

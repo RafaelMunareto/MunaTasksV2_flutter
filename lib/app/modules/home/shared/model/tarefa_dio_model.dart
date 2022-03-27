@@ -42,42 +42,10 @@ class TarefaDioModel {
       texto: json['texto'],
       prioridade: json['prioridade'],
       fase: json['fase'],
+      id: json['_id'],
       data: json['data'],
       subTarefa: json['subtarefa'],
       users: json['users'],
     );
   }
-
-  @override
-  String toString() {
-    return '{ ${etiqueta}, ${texto}, ${data}, ${subTarefa}, ${users}}';
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'etiqueta': etiqueta,
-      'texto': texto,
-      'id': id,
-      'fase': fase,
-      'prioridade': prioridade,
-      'data': data,
-      'subTarefa': subTarefa?.map((e) => e.toMap()).toList(),
-      'users': users,
-    };
-  }
-
-  Map<String, dynamic> toReverseMap() {
-    return {
-      'etiqueta': etiqueta.reference,
-      'texto': texto,
-      'prioridade': prioridade,
-      'fase': fase,
-      'id': id,
-      'data': data,
-      'subTarefa': subTarefa?.map((e) => e.toReverseMap()).toList(),
-      'users': users?.map((e) => e.reference).toList(),
-    };
-  }
-
-  Map<String, dynamic> toJson() => {};
 }

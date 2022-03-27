@@ -11,7 +11,6 @@ import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
@@ -42,13 +41,13 @@ abstract class HomeStoreBase with Store {
 
   void getList() async {
     await getUid();
+    await getPerfil();
     await settings();
     await badgets();
+    await getDioTotal();
     getEtiquetas();
-    getPerfil();
     getUser();
-    getDioTotal();
-    getDio();
+    getDioFase();
   }
 
   @action
@@ -83,13 +82,21 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  void getDio() {
+  void getDioFase() {
     client.setLoading(true);
     dashboardService
-        .getDio(client.userDio.id, client.navigateBarSelection)
+        .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
         .then((value) {
       client.setTaskDio(value);
-      client.setLoading(false);
+    }).whenComplete(() => client.setLoading(false));
+  }
+
+  @action
+  void getDio() {
+    dashboardService
+        .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
+        .then((value) {
+      client.setTaskDio(value);
     });
   }
 
@@ -106,8 +113,8 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  void getDioTotal() {
-    dashboardService.getDioTotal().then((value) {
+  getDioTotal() async {
+    await dashboardService.getDioTotal().then((value) {
       client.setTarefasTotais(value);
     });
   }
@@ -130,7 +137,7 @@ abstract class HomeStoreBase with Store {
     });
   }
 
-  void getUser() async {
+  getUser() async {
     Response response;
     response = await DioStruture().dioAction().get('perfil');
     DioStruture().statusRequest(response);
@@ -139,7 +146,8 @@ abstract class HomeStoreBase with Store {
     }).toList());
   }
 
-  void getPerfil() async {
+  @action
+  getPerfil() async {
     Response response;
     response =
         await DioStruture().dioAction().get('perfil/user/${client.userDio.id}');
@@ -155,19 +163,17 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  save(TarefaModel model) async {
-    if (model.reference == null) client.setTarefa(model);
+  save(TarefaDioModel model) async {
+    model.id == null
+        ? dashboardService.saveDio(model)
+        : dashboardService.updateDio(model);
+    getDio();
   }
 
   @action
-  void saveNewTarefa() {
-    save(clientCreate.tarefaModelSave);
-  }
-
-  @action
-  void deleteTasks(TarefaModel model) {
-    dashboardService.delete(model);
-    client.deleteTarefasBase(model);
+  void deleteTasks(TarefaDioModel model) {
+    dashboardService.deleteDio(model);
+    getDio();
   }
 
   @action
@@ -178,24 +184,24 @@ abstract class HomeStoreBase with Store {
 
   @action
   changeFilterEtiquetaList() {
-    client.changeTarefa(client.tarefasBase);
     if (client.etiquetaSelection == 57585) {
-      client.changeTarefa(client.tarefas
-          .where((b) => b.fase == client.navigateBarSelection)
-          .toList());
+      getDio();
     } else if (client.etiquetaSelection == 58873) {
       setNavigateBarSelection(2);
-      client.changeTarefa(
-        client.tarefas
+      client.setTaskDio(
+        client.taskDio
             .where((b) => b.fase == 2)
             .where((c) => c.data.isAfter(dataSemana(c.data)))
             .toList(),
       );
     } else {
-      client.changeTarefa(client.tarefas
-          .where((e) => e.etiqueta.icon == client.etiquetaSelection)
-          .where((b) => b.fase == client.navigateBarSelection)
-          .toList());
+      dashboardService
+          .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
+          .then((value) {
+        client.setTaskDio(value
+            .where((e) => e.etiqueta.icon == client.etiquetaSelection)
+            .toList());
+      });
     }
   }
 
@@ -218,7 +224,7 @@ abstract class HomeStoreBase with Store {
   changeFilterSearchList() {
     if (client.searchValue != '') {
       Timer(const Duration(milliseconds: 600), () {
-        client.changeTarefa(client.tarefas
+        client.setTaskDio(client.taskDio
             .where((t) => t.texto
                 .toLowerCase()
                 .contains(client.searchValue.toLowerCase()))
@@ -226,43 +232,30 @@ abstract class HomeStoreBase with Store {
             .toList());
       });
     } else {
-      client.changeTarefa(client.tarefasBase
-          .where((b) => b.fase == client.navigateBarSelection)
-          .toList());
+      getDio();
     }
   }
 
   @action
   changeFilterUserList() async {
-    // await client.changeTarefa(client.tarefasBase
-    //     .where((b) => b.fase == client.navigateBarSelection)
-    //     .toList());
-
-    // if (client.userSelection?.name != 'TODOS') {
-    //   client.changeTarefa(client.tarefas
-    //       .where((t) {
-    //         bool eSelecaodoUser = false;
-    //         t.users?.forEach((element) {
-    //           if (element.reference.id == client.userSelection?.reference?.id) {
-    //             eSelecaodoUser = true;
-    //           }
-    //         });
-    //         return eSelecaodoUser;
-    //       })
-    //       .where((b) => b.fase == client.navigateBarSelection)
-    //       .toList());
-    // }
+    if (client.userSelection?.name.name != 'TODOS') {
+      dashboardService
+          .getDio(client.userSelection!.id, client.navigateBarSelection)
+          .then((value) => client.setTaskDio(value));
+    } else {
+      getDio();
+    }
   }
 
   @action
-  changePrioridadeList(TarefaModel model) {
+  changePrioridadeList(TarefaDioModel model) {
     model.prioridade = client.prioridadeSelection;
     save(model);
   }
 
   @action
   changeSubtarefaAction(
-      SubtarefaModel subtarefaModel, TarefaModel tarefaModel) {
+      SubtarefaModel subtarefaModel, TarefaDioModel tarefaModel) {
     subtarefaModel.status = client.subtarefaAction;
     save(tarefaModel);
   }
@@ -275,7 +268,7 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  updateDate(TarefaModel model) {
+  updateDate(TarefaDioModel model) {
     model.data = model.data.add(Duration(hours: client.retardSelection));
     save(model);
   }
