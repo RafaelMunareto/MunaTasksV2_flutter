@@ -139,10 +139,12 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                 CreateWidget(
                                   controller: widget.createController,
                                 ),
-                                CardWidget(
-                                  opacidade: widget.opacidade,
-                                  controller: widget.createController,
-                                ),
+                                store.client.loadingTasks
+                                    ? const CircularProgressIndicator()
+                                    : CardWidget(
+                                        opacidade: widget.opacidade,
+                                        controller: widget.createController,
+                                      ),
                               ],
                             ),
                           ),

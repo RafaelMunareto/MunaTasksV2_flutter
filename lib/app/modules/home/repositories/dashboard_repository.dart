@@ -154,7 +154,8 @@ class DashboardRepository implements IDashboardRepository {
   @override
   saveDio(TarefaDioModel model) async {
     Response response;
-    response = await DioStruture().dioAction().post('tasks', data: model);
+    var modelJson = model.toJson(model);
+    response = await DioStruture().dioAction().post('tasks', data: modelJson);
     DioStruture().statusRequest(response);
     return response;
   }
@@ -162,9 +163,10 @@ class DashboardRepository implements IDashboardRepository {
   @override
   updateDio(TarefaDioModel model) async {
     Response response;
+    var modelJson = model.toJson(model);
     response = await DioStruture()
         .dioAction()
-        .put('tasks/${model.id.toString()}', data: model);
+        .put('tasks/${model.id.toString()}', data: modelJson);
     DioStruture().statusRequest(response);
     return response;
   }

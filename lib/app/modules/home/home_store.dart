@@ -48,6 +48,7 @@ abstract class HomeStoreBase with Store {
     getEtiquetas();
     getUser();
     getDioFase();
+    client.setLoading(false);
   }
 
   @action
@@ -69,7 +70,7 @@ abstract class HomeStoreBase with Store {
     client.setOrderSelection('DATA');
     client.setColor('blue');
     client.setIcon(0);
-    getDio();
+    getDioFase();
   }
 
   void getEtiquetas() async {
@@ -83,12 +84,12 @@ abstract class HomeStoreBase with Store {
 
   @action
   void getDioFase() {
-    client.setLoading(true);
+    client.setLoadingTasks(true);
     dashboardService
         .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
         .then((value) {
       client.setTaskDio(value);
-    }).whenComplete(() => client.setLoading(false));
+    }).whenComplete(() => client.setLoadingTasks(false));
   }
 
   @action

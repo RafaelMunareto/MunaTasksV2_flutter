@@ -95,6 +95,12 @@ abstract class _ClientStoreBase with Store {
   bool loading = true;
 
   @observable
+  bool loadingTasks = true;
+
+  @action
+  setLoadingTasks(value) => loadingTasks = value;
+
+  @observable
   bool theme = false;
 
   @action

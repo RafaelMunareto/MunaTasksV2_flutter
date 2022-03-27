@@ -209,90 +209,81 @@ class _CardWidgetState extends State<CardWidget> {
             height: MediaQuery.of(context).size.height * 0.64,
             child: Observer(
               builder: (_) {
-                return store.client.loading
-                    ? Container()
-                    : ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(4),
-                        itemCount: store.client.taskDio.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          var linha = store.client.taskDio[index];
-                          return SingleChildScrollView(
-                            child: Wrap(
-                              children: [
-                                Dismissible(
-                                  background: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      color: Colors.green,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15),
-                                        child: Row(
-                                          children: const [
-                                            Icon(
-                                              Icons.edit,
-                                              color: Colors.white,
-                                            ),
-                                            Text(
-                                              'Editar',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
+                return ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(4),
+                  itemCount: store.client.taskDio.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    var linha = store.client.taskDio[index];
+                    return SingleChildScrollView(
+                      child: Wrap(
+                        children: [
+                          Dismissible(
+                            background: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                color: Colors.green,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.edit,
+                                        color: Colors.white,
                                       ),
-                                    ),
-                                  ),
-                                  secondaryBackground: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      color: Colors.red,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: const [
-                                            Icon(
-                                              Icons.delete,
-                                              color: Colors.white,
-                                            ),
-                                            Text(
-                                              'Excluir',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
+                                      Text(
+                                        'Editar',
+                                        style: TextStyle(color: Colors.white),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                  key: UniqueKey(),
-                                  onDismissed: (direction) {
-                                    if (direction ==
-                                        DismissDirection.startToEnd) {
-                                      setState(() {
-                                        store.clientCreate
-                                            .setTarefaUpdate(linha);
-                                        store.client
-                                            .setExpand(!store.client.expand);
-                                        widget.controller.forward();
-                                      });
-                                    } else {
-                                      setState(() {
-                                        dialogDelete(
-                                            linha.texto, linha, context);
-                                      });
-                                    }
-                                  },
-                                  child: card(linha),
                                 ),
-                              ],
+                              ),
                             ),
-                          );
-                        },
-                      );
+                            secondaryBackground: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                color: Colors.red,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: const [
+                                      Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
+                                      ),
+                                      Text(
+                                        'Excluir',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            key: UniqueKey(),
+                            onDismissed: (direction) {
+                              if (direction == DismissDirection.startToEnd) {
+                                setState(() {
+                                  store.clientCreate.setTarefaUpdate(linha);
+                                  store.client.setExpand(!store.client.expand);
+                                  widget.controller.forward();
+                                });
+                              } else {
+                                setState(() {
+                                  dialogDelete(linha.texto, linha, context);
+                                });
+                              }
+                            },
+                            child: card(linha),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
               },
             ),
           ),

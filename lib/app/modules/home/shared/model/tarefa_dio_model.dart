@@ -48,4 +48,16 @@ class TarefaDioModel {
       users: json['users'],
     );
   }
+  toJson(TarefaDioModel doc) {
+    return {
+      "etiqueta": doc.etiqueta.id,
+      "texto": doc.texto,
+      "prioridade": doc.prioridade,
+      "fase": doc.fase,
+      "id": doc.id,
+      "data": doc.data,
+      "subTarefa": doc.subTarefa,
+      "users": doc.users!.map((e) => e.id).toList(),
+    };
+  }
 }
