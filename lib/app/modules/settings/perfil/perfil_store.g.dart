@@ -46,6 +46,28 @@ mixin _$PerfilStore on _PerfilStoreBase, Store {
   }
 
   @override
+  dynamic getBydDioId() {
+    final _$actionInfo = _$_PerfilStoreBaseActionController.startAction(
+        name: '_PerfilStoreBase.getBydDioId');
+    try {
+      return super.getBydDioId();
+    } finally {
+      _$_PerfilStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic getDioUsers() {
+    final _$actionInfo = _$_PerfilStoreBaseActionController.startAction(
+        name: '_PerfilStoreBase.getDioUsers');
+    try {
+      return super.getDioUsers();
+    } finally {
+      _$_PerfilStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic getUsers() {
     final _$actionInfo = _$_PerfilStoreBaseActionController.startAction(
         name: '_PerfilStoreBase.getUsers');

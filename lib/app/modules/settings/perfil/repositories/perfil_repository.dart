@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/repositories/interfaces/perfil_interfaces.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 class PerfilRepository implements IPerfilRepository {
   final FirebaseFirestore firestore;
@@ -46,5 +49,34 @@ class PerfilRepository implements IPerfilRepository {
         'nameTime': model.nameTime,
       });
     }
+  }
+
+  @override
+  Future<PerfilDioModel> getDio(String id) async {
+    Response response;
+    response = await DioStruture().dioAction().get('perfil/user/$id');
+    DioStruture().statusRequest(response);
+    var perfil = PerfilDioModel.fromJson(response.data[0]);
+    perfil.idStaff!.map((e) => PerfilDioModel.fromJson(e)).toList();
+    return perfil;
+  }
+
+  @override
+  Future<List<PerfilDioModel>> getDioList() async {
+    Response response;
+    response = await DioStruture().dioAction().get('perfil');
+    DioStruture().statusRequest(response);
+    return (response.data as List).map((e) {
+      var perfil = PerfilDioModel.fromJson(e);
+      perfil.idStaff = perfil.idStaff!.map((e) {
+        return {
+          "manager": e.manager,
+          "name": e.name,
+          "nameTime": e.nameTime,
+          "urlImage": e.urlImage,
+        };
+      }).toList();
+      return perfil;
+    }).toList();
   }
 }

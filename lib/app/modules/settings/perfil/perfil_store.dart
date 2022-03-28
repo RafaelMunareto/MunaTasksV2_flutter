@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -5,6 +7,7 @@ import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/perfil/services/interfaces/perfil_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/utils/image/image_repository.dart';
@@ -27,15 +30,23 @@ abstract class _PerfilStoreBase with Store {
     getById();
     client.showTextFieldName(true);
     getUsers();
+    getList();
   }
 
   @observable
   String uid = '';
 
+  getList() async {
+    await getUid();
+    getBydDioId();
+    getDioUsers();
+  }
+
   @action
   getUid() {
-    storage.get('user').then((value) {
-      uid = value[0];
+    storage.get('userDio').then((value) {
+      client.setUserSelection(
+          UserDioClientModel.fromJson(jsonDecode(value[0])['user']));
     });
   }
 
@@ -76,6 +87,18 @@ abstract class _PerfilStoreBase with Store {
         client.setLoading(false);
       }
     });
+  }
+
+  @action
+  getBydDioId() {
+    perfilService.getDio(client.userSelection.id).then((value) {
+      client.setPerfildio(value);
+    });
+  }
+
+  @action
+  getDioUsers() {
+    perfilService.getDioList().then((value) => client.setUsersDio(value));
   }
 
   @action

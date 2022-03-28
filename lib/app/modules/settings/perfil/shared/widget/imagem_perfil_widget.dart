@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class ImagemPerfilWidget extends StatefulWidget {
-  final bool loadingImagem;
   final Function setLoadingImagem;
-  final PerfilModel perfil;
   final Function atualizarUrlImagemPerfilProfile;
   final List<UserModel> userModel;
   final Function getById;
@@ -21,9 +18,7 @@ class ImagemPerfilWidget extends StatefulWidget {
   final dynamic errorName;
   const ImagemPerfilWidget(
       {Key? key,
-      required this.loadingImagem,
       required this.setLoadingImagem,
-      required this.perfil,
       required this.atualizarUrlImagemPerfilProfile,
       required this.userModel,
       required this.getById,
@@ -123,7 +118,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
       height: 210,
       child: Stack(
         children: [
-          if (!widget.loadingImagem)
+          if (!client.loadingImagem)
             Positioned(
               top: 0,
               left: 30,
@@ -135,7 +130,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       fit: BoxFit.fill,
-                      image: NetworkImage(widget.perfil.urlImage),
+                      image: NetworkImage(client.perfilDio.urlImage),
                     ),
                   ),
                 ),
@@ -159,7 +154,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                       label: SizedBox(
                           width: 180,
                           child: Text(
-                            widget.perfil.name,
+                            client.perfilDio.name,
                             style: const TextStyle(fontSize: 18.00),
                           )),
                     ),
@@ -181,7 +176,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                               color: Colors.white,
                             ),
                           ], height: 1.0, fontWeight: FontWeight.bold),
-                          initialValue: widget.perfil.name,
+                          initialValue: client.perfilDio.name,
                           onChanged: (value) {
                             widget.changeName(value);
                           },
@@ -205,11 +200,11 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                 onTap: () {
                   setState(() {
                     widget.showTextFieldName(!widget.textFieldNameBool &&
-                        widget.perfil.name.isNotEmpty &&
-                        widget.perfil.name.length >= 3);
+                        client.perfilDio.name.isNotEmpty &&
+                        client.perfilDio.name.length >= 3);
                     if (!widget.textFieldNameBool &&
-                        widget.perfil.name.isNotEmpty &&
-                        widget.perfil.name.length >= 3) {
+                        client.perfilDio.name.isNotEmpty &&
+                        client.perfilDio.name.length >= 3) {
                       _controller.forward();
                       _controller2.reverse();
                       widget.save();
@@ -222,8 +217,8 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                 child: Icon(
                   widget.textFieldNameBool
                       ? Icons.drive_file_rename_outline
-                      : widget.perfil.name.isNotEmpty &&
-                              widget.perfil.name.length >= 3
+                      : client.perfilDio.name.isNotEmpty &&
+                              client.perfilDio.name.length >= 3
                           ? Icons.task_alt
                           : Icons.task_alt,
                   color: lightThemeData(context).primaryColor,

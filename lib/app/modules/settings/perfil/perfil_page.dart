@@ -46,9 +46,7 @@ class PerfilPageState extends State<PerfilPage> {
                   child: Column(
                     children: [
                       ImagemPerfilWidget(
-                          loadingImagem: store.client.loadingImagem,
                           setLoadingImagem: store.client.setLoadingImagem,
-                          perfil: store.client.perfil,
                           userModel: store.client.userModel,
                           getById: store.getById,
                           atualizarUrlImagemPerfilProfile: store

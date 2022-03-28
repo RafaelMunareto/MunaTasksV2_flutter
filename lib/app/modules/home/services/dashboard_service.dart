@@ -5,7 +5,6 @@ import 'package:munatasks2/app/modules/home/shared/model/fase_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_insert_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
@@ -16,11 +15,6 @@ class DashboardService extends Disposable implements IDashboardService {
 
   @override
   void dispose() {}
-
-  @override
-  Stream<List<TarefaModel>> get() {
-    return dashboardRepository.get();
-  }
 
   @override
   Stream<List<EtiquetaModel>> getEtiquetas() {
@@ -45,16 +39,6 @@ class DashboardService extends Disposable implements IDashboardService {
   @override
   Stream<List<FaseModel>> getFase() {
     return dashboardRepository.getFase();
-  }
-
-  @override
-  delete(TarefaModel model) {
-    return dashboardRepository.delete(model);
-  }
-
-  @override
-  save(TarefaModel model) {
-    return dashboardRepository.save(model);
   }
 
   @override

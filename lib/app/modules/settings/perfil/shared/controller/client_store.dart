@@ -1,5 +1,7 @@
 import 'package:mobx/mobx.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
 part 'client_store.g.dart';
@@ -112,4 +114,22 @@ abstract class _ClientStoreBase with Store {
     }
     return null;
   }
+
+  @observable
+  UserDioClientModel userSelection = UserDioClientModel();
+
+  @action
+  setUserSelection(value) => userSelection = value;
+
+  @observable
+  PerfilDioModel perfilDio = PerfilDioModel();
+
+  @observable
+  List<PerfilDioModel> users = [];
+
+  @action
+  setPerfildio(value) => perfilDio = value;
+
+  @action
+  setUsersDio(value) => users = value;
 }

@@ -176,6 +176,51 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$userSelectionAtom = Atom(name: '_ClientStoreBase.userSelection');
+
+  @override
+  UserDioClientModel get userSelection {
+    _$userSelectionAtom.reportRead();
+    return super.userSelection;
+  }
+
+  @override
+  set userSelection(UserDioClientModel value) {
+    _$userSelectionAtom.reportWrite(value, super.userSelection, () {
+      super.userSelection = value;
+    });
+  }
+
+  final _$perfilDioAtom = Atom(name: '_ClientStoreBase.perfilDio');
+
+  @override
+  PerfilDioModel get perfilDio {
+    _$perfilDioAtom.reportRead();
+    return super.perfilDio;
+  }
+
+  @override
+  set perfilDio(PerfilDioModel value) {
+    _$perfilDioAtom.reportWrite(value, super.perfilDio, () {
+      super.perfilDio = value;
+    });
+  }
+
+  final _$usersAtom = Atom(name: '_ClientStoreBase.users');
+
+  @override
+  List<PerfilDioModel> get users {
+    _$usersAtom.reportRead();
+    return super.users;
+  }
+
+  @override
+  set users(List<PerfilDioModel> value) {
+    _$usersAtom.reportWrite(value, super.users, () {
+      super.users = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -301,6 +346,39 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setUserSelection(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setUserSelection');
+    try {
+      return super.setUserSelection(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setPerfildio(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setPerfildio');
+    try {
+      return super.setPerfildio(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setUsersDio(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setUsersDio');
+    try {
+      return super.setUsersDio(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 urlImagemRecuperada: ${urlImagemRecuperada},
@@ -313,6 +391,9 @@ userModel: ${userModel},
 inputChip: ${inputChip},
 individualChip: ${individualChip},
 textFieldNameBool: ${textFieldNameBool},
+userSelection: ${userSelection},
+perfilDio: ${perfilDio},
+users: ${users},
 isValideName: ${isValideName},
 isValideNameTime: ${isValideNameTime}
     ''';

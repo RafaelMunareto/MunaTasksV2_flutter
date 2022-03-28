@@ -34,6 +34,14 @@ class PerfilDioModel {
     return PerfilDioModel(
       id: json['_id'],
       idStaff: json['idStaff'],
+      //   return {
+      //     "manager": e.manager.toString(),
+      //     "name": e.name.toString(),
+      //     "nameTime": e.nameTime.toString(),
+      //     "urlImage":
+      //         DioStruture().baseUrlMunatasks + 'files/' + e.urlImage.toString()
+      //   };
+      // }).toList(),
       manager: json['manager'],
       name: UserDioClientModel.fromJson(json['name']),
       urlImage: DioStruture().baseUrlMunatasks + 'files/' + json['urlImage'],
