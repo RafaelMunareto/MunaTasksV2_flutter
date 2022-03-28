@@ -126,7 +126,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                 theme: store.client.theme,
                 navigateBarSelection: store.client.navigateBarSelection,
                 setNavigateBarSelection: store.setNavigateBarSelection,
-                badgets: store.client.badgetNavigate,
               );
             }),
             body: kIsWeb

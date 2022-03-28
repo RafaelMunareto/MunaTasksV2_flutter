@@ -29,7 +29,7 @@ class TarefaDioModel {
       texto: doc['texto'],
       fase: doc['fase'],
       prioridade: doc['prioridade'],
-      id: doc['_id'],
+      id: doc['id'],
       data: doc['data'],
       subTarefa: doc['subtarefa'],
       users: doc['users'],
@@ -42,7 +42,7 @@ class TarefaDioModel {
       texto: json['texto'],
       prioridade: json['prioridade'],
       fase: json['fase'],
-      id: json['_id'],
+      id: json['id'],
       data: json['data'],
       subTarefa: json['subtarefa'],
       users: json['users'],
@@ -54,9 +54,15 @@ class TarefaDioModel {
       "texto": doc.texto,
       "prioridade": doc.prioridade,
       "fase": doc.fase,
-      "id": doc.id,
-      "data": doc.data,
-      "subTarefa": doc.subTarefa,
+      "data": doc.data.toString(),
+      "subTarefa": doc.subTarefa!.map((element) {
+        return {
+          "title": element.title,
+          "status": element.status,
+          "texto": element.texto,
+          "user": element.user.id
+        };
+      }).toList(),
       "users": doc.users!.map((e) => e.id).toList(),
     };
   }

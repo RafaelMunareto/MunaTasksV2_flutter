@@ -63,13 +63,13 @@ abstract class HomeStoreBase with Store {
   }
 
   @action
-  setNavigateBarSelection(value) {
-    client.setNavigateBarSelection(value);
-    client.setEtiquetaSelection(57585);
-    client.setOrderAscDesc(true);
-    client.setOrderSelection('DATA');
-    client.setColor('blue');
-    client.setIcon(0);
+  setNavigateBarSelection(value) async {
+    await client.setNavigateBarSelection(value);
+    await client.setEtiquetaSelection(57585);
+    await client.setOrderAscDesc(true);
+    await client.setOrderSelection('DATA');
+    await client.setColor('blue');
+    await client.setIcon(0);
     getDioFase();
   }
 
@@ -109,6 +109,7 @@ abstract class HomeStoreBase with Store {
         value.where((element) => element.fase == 1).toList().length,
         value.where((element) => element.fase == 2).toList().length
       ];
+
       client.setBadgetNavigate(badgets);
     });
   }
@@ -166,8 +167,10 @@ abstract class HomeStoreBase with Store {
   @action
   save(TarefaDioModel model) async {
     model.id == null
-        ? dashboardService.saveDio(model)
-        : dashboardService.updateDio(model);
+        ? await dashboardService.saveDio(model)
+        : await dashboardService.updateDio(model);
+    await badgets();
+    await getDioTotal();
     getDio();
   }
 
@@ -177,10 +180,11 @@ abstract class HomeStoreBase with Store {
     getDio();
   }
 
-  @action
-  void deleteDioTasks(TarefaDioModel model) {
-    // dashboardService.delete(model);
-    // client.deleteTarefasBase(model);
+  void deleteDioTasks(TarefaDioModel model) async {
+    await dashboardService.deleteDio(model);
+    await badgets();
+    await getDioTotal();
+    getDio();
   }
 
   @action

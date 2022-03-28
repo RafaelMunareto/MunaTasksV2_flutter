@@ -163,7 +163,7 @@ class DashboardRepository implements IDashboardRepository {
   @override
   updateDio(TarefaDioModel model) async {
     Response response;
-    var modelJson = model.toJson(model);
+    var modelJson = jsonEncode(model.toJson(model));
     response = await DioStruture()
         .dioAction()
         .put('tasks/${model.id.toString()}', data: modelJson);
