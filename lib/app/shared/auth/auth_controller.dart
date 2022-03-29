@@ -111,7 +111,7 @@ abstract class _AuthControllerBase with Store {
   }
 
   @action
-  getLoginDio(email, password) {
+  Future getLoginDio(email, password) {
     return authRepository.loginDio(email, password);
   }
 }

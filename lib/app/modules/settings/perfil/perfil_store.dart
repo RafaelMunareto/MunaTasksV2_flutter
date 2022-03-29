@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/services/interfaces/perfil_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
@@ -52,7 +53,9 @@ abstract class _PerfilStoreBase with Store {
   getBydDioId() {
     perfilService.getDio(client.userSelection.id).then((value) {
       client.setPerfildio(value);
-      client.setUsersDio(value.idStaff);
+      client.setUsersDio(client.perfilDio.idStaff!.map((e) {
+        return PerfilDioModel.fromJson(e);
+      }).toList());
     });
   }
 

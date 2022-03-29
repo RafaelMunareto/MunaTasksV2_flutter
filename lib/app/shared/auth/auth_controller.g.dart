@@ -218,7 +218,7 @@ mixin _$AuthController on _AuthControllerBase, Store {
   }
 
   @override
-  dynamic getLoginDio(dynamic email, dynamic password) {
+  Future<dynamic> getLoginDio(dynamic email, dynamic password) {
     final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
         name: '_AuthControllerBase.getLoginDio');
     try {

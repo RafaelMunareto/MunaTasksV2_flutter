@@ -195,7 +195,7 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  loginDio(email, password) async {
+  Future loginDio(email, password) async {
     Response response;
     var dio = Dio(
       BaseOptions(
@@ -209,8 +209,9 @@ class AuthRepository implements IAuthRepository {
       DioStruture().statusRequest(response);
       storage
           .put('userDio', [jsonEncode(UserDioModel.fromJson(response.data))]);
+      return response;
     } catch (e) {
-      print(e);
+      return e;
     }
   }
 }

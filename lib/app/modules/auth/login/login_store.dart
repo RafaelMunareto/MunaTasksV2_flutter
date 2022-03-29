@@ -64,19 +64,18 @@ abstract class _LoginStoreBase with Store {
   setUser(value) => user = value;
 
   submit() async {
-    try {
-      await setLoading(true);
-      await auth.getLoginDio(client.email, client.password);
+    await setLoading(true);
+    await auth.getLoginDio(client.email, client.password).then((value) {
       setStorageLogin();
       setStorageLoginNormal();
       setLoading(false);
       setErrOrGoal(false);
       Modular.to.navigate('/home/');
-    } catch (e) {
+    }).catchError((e) {
       setLoading(false);
       setErrOrGoal(false);
-      setMsg(ErrorPtBr().verificaCodeErro(e));
-    }
+      setMsg(e);
+    });
 
     // auth
     //     .getEmailPasswordLogin(client.email, client.password)
