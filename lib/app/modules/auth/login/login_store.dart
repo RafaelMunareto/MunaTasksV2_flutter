@@ -71,10 +71,12 @@ abstract class _LoginStoreBase with Store {
       setLoading(false);
       setErrOrGoal(false);
       Modular.to.navigate('/home/');
-    }).catchError((e) {
-      setLoading(false);
-      setErrOrGoal(false);
-      setMsg(e);
+    }).catchError((erro) {
+      if (erro.response.statusCode != 200) {
+        setLoading(false);
+        setErrOrGoal(false);
+        setMsg(erro.response.statusMessage);
+      }
     });
 
     // auth

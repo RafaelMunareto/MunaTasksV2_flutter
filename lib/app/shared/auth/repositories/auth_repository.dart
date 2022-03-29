@@ -203,15 +203,10 @@ class AuthRepository implements IAuthRepository {
       ),
     );
 
-    try {
-      response = await dio.post('sessions',
-          data: jsonEncode({"email": email, "password": password}));
-      DioStruture().statusRequest(response);
-      storage
-          .put('userDio', [jsonEncode(UserDioModel.fromJson(response.data))]);
-      return response;
-    } catch (e) {
-      return e;
-    }
+    response = await dio.post('sessions',
+        data: jsonEncode({"email": email, "password": password}));
+    DioStruture().statusRequest(response);
+    storage.put('userDio', [jsonEncode(UserDioModel.fromJson(response.data))]);
+    return response;
   }
 }
