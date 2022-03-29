@@ -1,33 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
-import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class ImagemPerfilWidget extends StatefulWidget {
-  final Function setLoadingImagem;
-  final Function atualizarUrlImagemPerfilProfile;
-  final List<UserModel> userModel;
-  final Function getById;
-  final bool textFieldNameBool;
-  final Function changeName;
-  final Function save;
-  final Function showTextFieldName;
   final dynamic errorName;
-  const ImagemPerfilWidget(
-      {Key? key,
-      required this.setLoadingImagem,
-      required this.atualizarUrlImagemPerfilProfile,
-      required this.userModel,
-      required this.getById,
-      required this.textFieldNameBool,
-      required this.changeName,
-      required this.save,
-      required this.errorName,
-      required this.showTextFieldName})
-      : super(key: key);
+  const ImagemPerfilWidget({
+    Key? key,
+    required this.errorName,
+  }) : super(key: key);
 
   @override
   State<ImagemPerfilWidget> createState() => _ImagemPerfilWidgetState();
@@ -40,6 +24,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
   late Animation<double> _animacaoSize;
   late Animation<double> _animacaoSize2;
   final ClientStore client = Modular.get();
+  final PerfilStore store = Modular.get();
 
   popMenu() {
     return PopupMenuButton(
@@ -51,11 +36,11 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () {
-            widget.atualizarUrlImagemPerfilProfile(
+            store.imageRepository.atualizarUrlImagemPerfilProfile(
                 "camera",
-                widget.setLoadingImagem,
-                widget.userModel,
-                widget.getById,
+                client.setLoadingImagem,
+                client.userModel,
+                store.getBydDioId(),
                 client.setPerfilImage);
           },
           child: const ListTile(
@@ -67,11 +52,11 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () => {
-            widget.atualizarUrlImagemPerfilProfile(
+            store.imageRepository.atualizarUrlImagemPerfilProfile(
                 "galeria",
-                widget.setLoadingImagem,
-                widget.userModel,
-                widget.getById,
+                client.setLoadingImagem,
+                client.userModel,
+                store.getBydDioId(),
                 client.setPerfilImage)
           },
           child: const ListTile(
@@ -147,14 +132,14 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
           Positioned(
             top: 125,
             left: 90,
-            child: widget.textFieldNameBool
+            child: client.textFieldNameBool
                 ? SizedBox(
                     width: _animacaoSize.value,
                     child: Chip(
                       label: SizedBox(
                           width: 180,
                           child: Text(
-                            client.perfilDio.name,
+                            client.perfilDio.name.name,
                             style: const TextStyle(fontSize: 18.00),
                           )),
                     ),
@@ -178,7 +163,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                           ], height: 1.0, fontWeight: FontWeight.bold),
                           initialValue: client.perfilDio.name,
                           onChanged: (value) {
-                            widget.changeName(value);
+                            client.changeName(value);
                           },
                           decoration: InputDecoration(
                             filled: true,
@@ -199,15 +184,15 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
               child: GestureDetector(
                 onTap: () {
                   setState(() {
-                    widget.showTextFieldName(!widget.textFieldNameBool &&
-                        client.perfilDio.name.isNotEmpty &&
-                        client.perfilDio.name.length >= 3);
-                    if (!widget.textFieldNameBool &&
-                        client.perfilDio.name.isNotEmpty &&
-                        client.perfilDio.name.length >= 3) {
+                    client.showTextFieldName(!client.textFieldNameBool &&
+                        client.perfilDio.name.name.isNotEmpty &&
+                        client.perfilDio.name.name.length >= 3);
+                    if (!client.textFieldNameBool &&
+                        client.perfilDio.name.name.isNotEmpty &&
+                        client.perfilDio.name.name.length >= 3) {
                       _controller.forward();
                       _controller2.reverse();
-                      widget.save();
+                      store.saveDio();
                     } else {
                       _controller2.forward();
                       _controller.reverse();
@@ -215,10 +200,10 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                   });
                 },
                 child: Icon(
-                  widget.textFieldNameBool
+                  client.textFieldNameBool
                       ? Icons.drive_file_rename_outline
-                      : client.perfilDio.name.isNotEmpty &&
-                              client.perfilDio.name.length >= 3
+                      : client.perfilDio.name.name.isNotEmpty &&
+                              client.perfilDio.name.namelength >= 3
                           ? Icons.task_alt
                           : Icons.task_alt,
                   color: lightThemeData(context).primaryColor,

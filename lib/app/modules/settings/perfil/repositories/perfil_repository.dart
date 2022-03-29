@@ -56,9 +56,7 @@ class PerfilRepository implements IPerfilRepository {
     Response response;
     response = await DioStruture().dioAction().get('perfil/user/$id');
     DioStruture().statusRequest(response);
-    var perfil = PerfilDioModel.fromJson(response.data[0]);
-    perfil.idStaff!.map((e) => PerfilDioModel.fromJson(e)).toList();
-    return perfil;
+    return PerfilDioModel.fromJson(response.data[0]);
   }
 
   @override
@@ -67,16 +65,32 @@ class PerfilRepository implements IPerfilRepository {
     response = await DioStruture().dioAction().get('perfil');
     DioStruture().statusRequest(response);
     return (response.data as List).map((e) {
-      var perfil = PerfilDioModel.fromJson(e);
-      perfil.idStaff = perfil.idStaff!.map((e) {
-        return {
-          "manager": e.manager,
-          "name": e.name,
-          "nameTime": e.nameTime,
-          "urlImage": e.urlImage,
-        };
-      }).toList();
-      return perfil;
+      return PerfilDioModel.fromJson(e);
     }).toList();
+  }
+
+  @override
+  saveDio(PerfilDioModel model) async {
+    Response response;
+    response = await DioStruture().dioAction().post('perfil', data: model);
+    DioStruture().statusRequest(response);
+    return response;
+  }
+
+  @override
+  updateDio(PerfilDioModel model) async {
+    Response response;
+    response =
+        await DioStruture().dioAction().put('perfil/${model.id}', data: model);
+    DioStruture().statusRequest(response);
+    return response;
+  }
+
+  @override
+  deleteDio(String id) async {
+    Response response;
+    response = await DioStruture().dioAction().delete('perfil/$id');
+    DioStruture().statusRequest(response);
+    return response;
   }
 }

@@ -7,5 +7,7 @@ abstract class IPerfilService {
   Future<List<PerfilDioModel>> getDioList();
   Future<PerfilModel> getByDocumentId(String documentId);
   Future save(PerfilModel model);
+  Future saveDio(PerfilDioModel model);
+  Future deleteDio(String id);
   Future delete(PerfilModel model);
 }

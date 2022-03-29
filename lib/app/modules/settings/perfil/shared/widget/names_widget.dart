@@ -1,31 +1,19 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
+import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class NamesWidget extends StatefulWidget {
-  final bool textFieldNameBool;
-  final PerfilModel perfil;
-  final Function changeName;
-  final Function save;
-  final Function showTextFieldName;
-  final Function changeTime;
   final Function errorTime;
-  final Function changeManager;
   final bool enableSwitch;
 
   const NamesWidget({
     Key? key,
-    required this.textFieldNameBool,
-    required this.perfil,
-    required this.changeName,
-    required this.save,
-    required this.showTextFieldName,
-    required this.changeTime,
     required this.errorTime,
-    required this.changeManager,
     required this.enableSwitch,
   }) : super(key: key);
 
@@ -38,6 +26,8 @@ class _NamesWidgetState extends State<NamesWidget>
   bool enabledField = false;
   late AnimationController _controller;
   late Animation<double> _animacaoOpacity;
+  final ClientStore client = Modular.get();
+  final PerfilStore store = Modular.get();
 
   @override
   void initState() {
@@ -96,9 +86,9 @@ class _NamesWidgetState extends State<NamesWidget>
                       title: SizedBox(
                         child: TextFormField(
                           enabled: enabledField,
-                          initialValue: widget.perfil.nameTime,
+                          initialValue: client.perfil.nameTime,
                           onChanged: (value) {
-                            widget.changeTime(value);
+                            client.changeTime(value);
                           },
                           decoration: InputDecoration(
                             filled: enabledField,
@@ -114,7 +104,7 @@ class _NamesWidgetState extends State<NamesWidget>
                           setState(() {
                             enabledField = !enabledField;
                             if (!enabledField) {
-                              widget.save();
+                              store.saveDio();
                             }
                           });
                         },

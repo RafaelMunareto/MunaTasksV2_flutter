@@ -1,8 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
-import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
 part 'client_store.g.dart';
 
@@ -13,13 +11,10 @@ abstract class _ClientStoreBase with Store {
   String urlImagemRecuperada = '';
 
   @observable
-  ObservableStream<List<UserModel>>? usuarios;
-
-  @observable
   bool showTeams = false;
 
   @observable
-  PerfilModel perfil = PerfilModel();
+  PerfilDioModel perfil = PerfilDioModel();
 
   @observable
   bool loading = false;
@@ -28,7 +23,13 @@ abstract class _ClientStoreBase with Store {
   bool loadingImagem = false;
 
   @observable
-  List<UserModel> userModel = [];
+  List<PerfilDioModel> userModel = [];
+
+  @observable
+  List<PerfilDioModel> perfis = [];
+
+  @action
+  setPerfis(value) => perfis = value;
 
   @observable
   bool inputChip = false;
@@ -55,7 +56,7 @@ abstract class _ClientStoreBase with Store {
   setLoading(value) => loading = true;
 
   @action
-  changeName(value) => perfil.name = value;
+  changeName(value) => perfil.name.name = value;
 
   @action
   changeManager(value) => perfil.manager = value;
@@ -68,7 +69,7 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setIdStaff(value) {
-    if (!userModel.map((e) => e.reference).contains(value)) {
+    if (!userModel.map((e) => e.id).contains(value)) {
       perfil.idStaff?.add(value);
     } else {
       perfil.idStaff?.remove(value);
@@ -80,7 +81,7 @@ abstract class _ClientStoreBase with Store {
 
   @action
   inputChipChecked(value) {
-    if (userModel.map((e) => e.reference).contains(value)) {
+    if (userModel.map((e) => e.id).contains(value)) {
       return true;
     } else {
       return false;

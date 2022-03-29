@@ -34,7 +34,7 @@ class PerfilPageState extends State<PerfilPage> {
         child: Observer(
           builder: (_) {
             if (!store.client.loading) {
-              bool? enableSwitch = store.client.perfil.manager;
+              bool enableSwitch = store.client.perfil.manager;
               return GestureDetector(
                 onTap: () {
                   FocusScope.of(context).requestFocus(FocusNode());
@@ -45,18 +45,8 @@ class PerfilPageState extends State<PerfilPage> {
                       : const EdgeInsets.all(0),
                   child: Column(
                     children: [
-                      ImagemPerfilWidget(
-                          setLoadingImagem: store.client.setLoadingImagem,
-                          userModel: store.client.userModel,
-                          getById: store.getById,
-                          atualizarUrlImagemPerfilProfile: store
-                              .imageRepository.atualizarUrlImagemPerfilProfile,
-                          textFieldNameBool: store.client.textFieldNameBool,
-                          changeName: store.client.changeName,
-                          save: store.save,
-                          showTextFieldName: store.client.showTextFieldName,
-                          errorName: store.client.validateName),
-                      store.client.perfil.reference != null
+                      ImagemPerfilWidget(errorName: store.client.validateName),
+                      store.client.perfil.id.isEmpty
                           ? RollingSwitch.icon(
                               initialState: store.client.perfil.manager,
                               width: 200,
@@ -66,7 +56,7 @@ class PerfilPageState extends State<PerfilPage> {
                                 setState(() {
                                   store.client.changeManager(state);
                                 });
-                                store.save();
+                                store.saveDio();
                               },
                               rollingInfoRight: RollingIconInfo(
                                 backgroundColor:
@@ -90,28 +80,10 @@ class PerfilPageState extends State<PerfilPage> {
                             )
                           : Container(),
                       NamesWidget(
-                        textFieldNameBool: store.client.textFieldNameBool,
-                        perfil: store.client.perfil,
-                        changeName: store.client.changeName,
-                        save: store.save,
-                        showTextFieldName: store.client.showTextFieldName,
-                        changeTime: store.client.changeTime,
-                        errorTime: store.client.validateTime,
-                        changeManager: store.client.changeManager,
                         enableSwitch: enableSwitch,
+                        errorTime: store.client.validateTime,
                       ),
                       EquipesWidget(
-                        showTeams: store.client.showTeams,
-                        setShowTeams: store.client.setShowTeams,
-                        usuarios: store.client.usuarios,
-                        getUsers: store.getUsers,
-                        individualChip: store.client.individualChip,
-                        setIdStaff: store.client.setIdStaff,
-                        perfil: store.client.perfil,
-                        getById: store.getById,
-                        users: store.client.userModel,
-                        inputChipChecked: store.client.inputChipChecked,
-                        save: store.save,
                         enableSwitch: enableSwitch,
                       )
                     ],

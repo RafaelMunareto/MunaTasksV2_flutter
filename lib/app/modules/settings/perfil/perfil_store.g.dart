@@ -24,13 +24,6 @@ mixin _$PerfilStore on _PerfilStoreBase, Store {
     });
   }
 
-  final _$getByIdAsyncAction = AsyncAction('_PerfilStoreBase.getById');
-
-  @override
-  Future getById() {
-    return _$getByIdAsyncAction.run(() => super.getById());
-  }
-
   final _$_PerfilStoreBaseActionController =
       ActionController(name: '_PerfilStoreBase');
 
@@ -68,22 +61,11 @@ mixin _$PerfilStore on _PerfilStoreBase, Store {
   }
 
   @override
-  dynamic getUsers() {
+  dynamic saveDio() {
     final _$actionInfo = _$_PerfilStoreBaseActionController.startAction(
-        name: '_PerfilStoreBase.getUsers');
+        name: '_PerfilStoreBase.saveDio');
     try {
-      return super.getUsers();
-    } finally {
-      _$_PerfilStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic save() {
-    final _$actionInfo = _$_PerfilStoreBaseActionController.startAction(
-        name: '_PerfilStoreBase.save');
-    try {
-      return super.save();
+      return super.saveDio();
     } finally {
       _$_PerfilStoreBaseActionController.endAction(_$actionInfo);
     }

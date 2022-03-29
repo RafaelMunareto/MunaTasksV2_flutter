@@ -40,21 +40,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$usuariosAtom = Atom(name: '_ClientStoreBase.usuarios');
-
-  @override
-  ObservableStream<List<UserModel>>? get usuarios {
-    _$usuariosAtom.reportRead();
-    return super.usuarios;
-  }
-
-  @override
-  set usuarios(ObservableStream<List<UserModel>>? value) {
-    _$usuariosAtom.reportWrite(value, super.usuarios, () {
-      super.usuarios = value;
-    });
-  }
-
   final _$showTeamsAtom = Atom(name: '_ClientStoreBase.showTeams');
 
   @override
@@ -73,13 +58,13 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   final _$perfilAtom = Atom(name: '_ClientStoreBase.perfil');
 
   @override
-  PerfilModel get perfil {
+  PerfilDioModel get perfil {
     _$perfilAtom.reportRead();
     return super.perfil;
   }
 
   @override
-  set perfil(PerfilModel value) {
+  set perfil(PerfilDioModel value) {
     _$perfilAtom.reportWrite(value, super.perfil, () {
       super.perfil = value;
     });
@@ -118,15 +103,30 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   final _$userModelAtom = Atom(name: '_ClientStoreBase.userModel');
 
   @override
-  List<UserModel> get userModel {
+  List<PerfilDioModel> get userModel {
     _$userModelAtom.reportRead();
     return super.userModel;
   }
 
   @override
-  set userModel(List<UserModel> value) {
+  set userModel(List<PerfilDioModel> value) {
     _$userModelAtom.reportWrite(value, super.userModel, () {
       super.userModel = value;
+    });
+  }
+
+  final _$perfisAtom = Atom(name: '_ClientStoreBase.perfis');
+
+  @override
+  List<PerfilDioModel> get perfis {
+    _$perfisAtom.reportRead();
+    return super.perfis;
+  }
+
+  @override
+  set perfis(List<PerfilDioModel> value) {
+    _$perfisAtom.reportWrite(value, super.perfis, () {
+      super.perfis = value;
     });
   }
 
@@ -223,6 +223,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
 
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
+
+  @override
+  dynamic setPerfis(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setPerfis');
+    try {
+      return super.setPerfis(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic showTextFieldName(dynamic value) {
@@ -382,12 +393,12 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   String toString() {
     return '''
 urlImagemRecuperada: ${urlImagemRecuperada},
-usuarios: ${usuarios},
 showTeams: ${showTeams},
 perfil: ${perfil},
 loading: ${loading},
 loadingImagem: ${loadingImagem},
 userModel: ${userModel},
+perfis: ${perfis},
 inputChip: ${inputChip},
 individualChip: ${individualChip},
 textFieldNameBool: ${textFieldNameBool},

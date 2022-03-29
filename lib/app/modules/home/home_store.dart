@@ -103,7 +103,7 @@ abstract class HomeStoreBase with Store {
 
   @action
   badgets() {
-    dashboardService.getDioIndividual(client.userDio.id).then((value) {
+    dashboardService.getDioIndividual(client.perfilUserLogado.id).then((value) {
       List<int> badgets = [
         value.where((element) => element.fase == 0).toList().length,
         value.where((element) => element.fase == 1).toList().length,

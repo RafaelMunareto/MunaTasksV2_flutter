@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
@@ -63,7 +64,7 @@ class ImageRepository {
   atualizarUrlImagemPerfilProfile(
       String origemImagem,
       Function loading,
-      List<UserModel> userModel,
+      List<PerfilDioModel> userModel,
       Function getById,
       Function setPerfilImage) async {
     await recuperarImagem(origemImagem, loading);

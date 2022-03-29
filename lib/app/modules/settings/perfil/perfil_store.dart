@@ -27,9 +27,7 @@ abstract class _PerfilStoreBase with Store {
 
   _PerfilStoreBase(
       {required this.perfilService, required this.imageRepository}) {
-    getById();
     client.showTextFieldName(true);
-    getUsers();
     getList();
   }
 
@@ -51,63 +49,22 @@ abstract class _PerfilStoreBase with Store {
   }
 
   @action
-  getById() async {
-    await getUid();
-    perfilService.getByDocumentId(uid).then((value) {
-      client.userModel = [];
-      client.perfil = value;
-    }).then((value) {
-      if (client.perfil.idStaff != null || client.perfil.idStaff!.isNotEmpty) {
-        for (var element in client.perfil.idStaff!) {
-          bd.collection('usuarios').doc(element.id).get().then(
-            (doc) {
-              dynamic user = UserModel(
-                  name: doc['name'],
-                  email: doc['email'],
-                  reference: doc.reference,
-                  urlImage: doc['urlImage']);
-              client.userModel.add(user);
-            },
-          ).whenComplete(() {
-            if (client.perfil.idStaff!.length == client.userModel.length) {
-              if (client.userModel.isNotEmpty) {
-                List<UserModel> list = client.userModel;
-                client.individualChip!.clear();
-                for (var i = 0; i < list.length; i++) {
-                  if (client.inputChipChecked(list[i].reference)) {
-                    client.individualChip!.add(list[i].reference);
-                  }
-                }
-              }
-              client.setLoading(false);
-            }
-          });
-        }
-      } else {
-        client.setLoading(false);
-      }
-    });
-  }
-
-  @action
   getBydDioId() {
     perfilService.getDio(client.userSelection.id).then((value) {
       client.setPerfildio(value);
+      client.setUsersDio(value.idStaff);
     });
   }
 
   @action
   getDioUsers() {
-    perfilService.getDioList().then((value) => client.setUsersDio(value));
+    perfilService.getDioList().then((value) {
+      client.setPerfis(value);
+    });
   }
 
   @action
-  getUsers() {
-    client.usuarios = auth.getUsers().asObservable();
-  }
-
-  @action
-  save() {
-    perfilService.save(client.perfil);
+  saveDio() {
+    perfilService.saveDio(client.perfil);
   }
 }

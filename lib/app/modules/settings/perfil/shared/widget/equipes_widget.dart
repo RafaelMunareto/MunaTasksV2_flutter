@@ -1,40 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
+import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class EquipesWidget extends StatefulWidget {
-  final bool showTeams;
-  final Function getUsers;
-  final ObservableStream<List<UserModel>>? usuarios;
-  final List<dynamic>? individualChip;
-  final Function setIdStaff;
-  final Function save;
-  final PerfilModel perfil;
-  final List<dynamic>? users;
-  final Function getById;
-  final Function inputChipChecked;
-  final Function setShowTeams;
   final bool enableSwitch;
-  const EquipesWidget(
-      {Key? key,
-      this.showTeams = false,
-      required this.usuarios,
-      required this.getUsers,
-      required this.individualChip,
-      required this.setIdStaff,
-      required this.perfil,
-      required this.users,
-      required this.getById,
-      required this.inputChipChecked,
-      required this.setShowTeams,
-      required this.enableSwitch,
-      required this.save})
-      : super(key: key);
+  const EquipesWidget({
+    Key? key,
+    required this.enableSwitch,
+  }) : super(key: key);
 
   @override
   State<EquipesWidget> createState() => _EquipesWidgetState();
@@ -44,6 +24,8 @@ class _EquipesWidgetState extends State<EquipesWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animacaoOpacity;
+  final ClientStore client = Modular.get();
+  final PerfilStore store = Modular.get();
 
   @override
   void initState() {
@@ -99,31 +81,19 @@ class _EquipesWidgetState extends State<EquipesWidget>
               ),
               onTap: () {
                 setState(() {
-                  widget.setShowTeams(!widget.showTeams);
+                  client.setShowTeams(!client.showTeams);
                 });
               },
             ),
           ),
-          widget.showTeams
+          client.showTeams
               ? Observer(builder: (_) {
-                  if (widget.usuarios!.data == null) {
+                  if (client.perfis.isEmpty) {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (widget.usuarios!.hasError) {
-                    return Center(
-                      child: Wrap(
-                        children: [
-                          ElevatedButton(
-                            onPressed: widget.getUsers(),
-                            child: Text(
-                                'Error ' + widget.usuarios!.error.toString()),
-                          ),
-                        ],
-                      ),
-                    );
                   } else {
-                    List<UserModel> list = widget.usuarios!.data;
+                    List<PerfilDioModel> list = client.perfis;
                     return list.isNotEmpty
                         ? Wrap(
                             alignment: WrapAlignment.start,
@@ -134,10 +104,10 @@ class _EquipesWidgetState extends State<EquipesWidget>
                                   padding: const EdgeInsets.all(8.0),
                                   child: SizedBox(
                                     child: InputChip(
-                                      key: ObjectKey(list[i].reference),
+                                      key: ObjectKey(list[i].id),
                                       labelPadding: const EdgeInsets.all(2),
-                                      selected: widget.individualChip!
-                                          .contains(list[i].reference),
+                                      selected: client.individualChip!
+                                          .contains(list[i].id),
                                       elevation: 4.0,
                                       avatar: CircleAvatarWidget(
                                         url: list[i].urlImage,
@@ -151,13 +121,13 @@ class _EquipesWidgetState extends State<EquipesWidget>
                                       ),
                                       onSelected: (bool value) {
                                         setState(() {
-                                          widget.individualChip!.contains(i)
-                                              ? widget.individualChip!.remove(i)
-                                              : widget.individualChip!.add(i);
+                                          client.individualChip!.contains(i)
+                                              ? client.individualChip!.remove(i)
+                                              : client.individualChip!.add(i);
 
-                                          widget.setIdStaff(list[i].reference);
-                                          widget.save();
-                                          widget.getById();
+                                          client.setIdStaff(list[i].id);
+                                          store.saveDio();
+                                          store.getBydDioId();
                                         });
                                       },
                                     ),
@@ -168,13 +138,13 @@ class _EquipesWidgetState extends State<EquipesWidget>
                         : Container();
                   }
                 })
-              : widget.perfil.manager
-                  ? widget.users!.isNotEmpty
+              : client.perfil.manager
+                  ? client.users.isNotEmpty
                       ? Wrap(
                           alignment: WrapAlignment.start,
                           runAlignment: WrapAlignment.start,
                           children: [
-                            for (var userModel in widget.users!)
+                            for (var userModel in client.users)
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: InputChip(
