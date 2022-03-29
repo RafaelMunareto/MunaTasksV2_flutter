@@ -274,17 +274,6 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   }
 
   @override
-  dynamic submit() {
-    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
-        name: '_LoginStoreBase.submit');
-    try {
-      return super.submit();
-    } finally {
-      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic checkBiometrics() {
     final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
         name: '_LoginStoreBase.checkBiometrics');

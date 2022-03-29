@@ -69,7 +69,7 @@ class _CreateSubtarefaInsertWidgetState
                   child: CircularProgressIndicator(),
                 );
               } else {
-                List<SubtarefaInsertModel> list = widget.subtarefaList!.data;
+                List<dynamic> list = [];
                 var selecione = SubtarefaInsertModel(subtarefa: 'Subtarefa');
                 if (!list
                     .map((e) => e.subtarefa.contains('Subtarefa'))

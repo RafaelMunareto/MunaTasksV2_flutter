@@ -36,7 +36,6 @@ abstract class HomeStoreBase with Store {
   HomeStoreBase({required this.dashboardService}) {
     getList();
     buscaTheme();
-    getSubtarefaInsert();
   }
 
   void getList() async {
@@ -134,8 +133,10 @@ abstract class HomeStoreBase with Store {
 
   getUid() {
     storage.get('userDio').then((value) {
-      client.setUserDio(
-          UserDioClientModel.fromJson(jsonDecode(value[0])['user']));
+      if (value.isNotEmpty) {
+        client.setUserDio(
+            UserDioClientModel.fromJson(jsonDecode(value[0])['user']));
+      }
     });
   }
 
@@ -156,12 +157,6 @@ abstract class HomeStoreBase with Store {
     DioStruture().statusRequest(response);
     var resposta = PerfilDioModel.fromJson(response.data[0]);
     client.setPerfilUserlogado(resposta);
-  }
-
-  @action
-  void getSubtarefaInsert() {
-    clientCreate.subtarefaInsertList =
-        dashboardService.getSubtarefaInsert().asObservable();
   }
 
   @action

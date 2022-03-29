@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 
@@ -8,16 +11,15 @@ class AuthGuard extends RouteGuard {
   final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Future<bool> canActivate(String path, ModularRoute router) async {
-    var uid = '';
+    UserDioClientModel user = UserDioClientModel();
 
-    await storage.get('user').then((value) {
+    storage.get('userDio').then((value) {
       if (value != null) {
-        uid = value[0];
-      } else {
-        uid = auth.currentUser!.uid;
+        user = UserDioClientModel.fromJson(jsonDecode(value[0])['user']);
       }
     });
-    if (uid != "") {
+
+    if (user.id != "" || user.id != null) {
       return true;
     } else {
       Modular.to.navigate('/auth/');

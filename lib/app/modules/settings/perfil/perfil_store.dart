@@ -8,7 +8,6 @@ import 'package:munatasks2/app/modules/settings/perfil/services/interfaces/perfi
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
-import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/utils/image/image_repository.dart';
 
@@ -35,6 +34,7 @@ abstract class _PerfilStoreBase with Store {
   String uid = '';
 
   getList() async {
+    await client.setLoading(true);
     await getUid();
     getBydDioId();
     getDioUsers();
@@ -60,7 +60,7 @@ abstract class _PerfilStoreBase with Store {
   getDioUsers() {
     perfilService.getDioList().then((value) {
       client.setPerfis(value);
-    });
+    }).whenComplete(() => client.setLoading(false));
   }
 
   @action

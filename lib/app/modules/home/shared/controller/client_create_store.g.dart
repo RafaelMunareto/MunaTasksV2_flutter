@@ -24,22 +24,6 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
           name: '_ClientCreateStoreBase.isValidSubtarefa'))
       .value;
 
-  final _$subtarefaInsertListAtom =
-      Atom(name: '_ClientCreateStoreBase.subtarefaInsertList');
-
-  @override
-  ObservableStream<List<SubtarefaInsertModel>>? get subtarefaInsertList {
-    _$subtarefaInsertListAtom.reportRead();
-    return super.subtarefaInsertList;
-  }
-
-  @override
-  set subtarefaInsertList(ObservableStream<List<SubtarefaInsertModel>>? value) {
-    _$subtarefaInsertListAtom.reportWrite(value, super.subtarefaInsertList, () {
-      super.subtarefaInsertList = value;
-    });
-  }
-
   final _$faseListAtom = Atom(name: '_ClientCreateStoreBase.faseList');
 
   @override
@@ -823,7 +807,6 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   @override
   String toString() {
     return '''
-subtarefaInsertList: ${subtarefaInsertList},
 faseList: ${faseList},
 tarefaModelSave: ${tarefaModelSave},
 subtarefaModel: ${subtarefaModel},

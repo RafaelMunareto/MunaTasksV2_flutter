@@ -70,9 +70,9 @@ class AuthRepository implements IAuthRepository {
 
   @override
   getUser() {
-    User? user = FirebaseAuth.instance.currentUser;
+    //User? user = FirebaseAuth.instance.currentUser;
 
-    return user;
+    // return user;
   }
 
   @override

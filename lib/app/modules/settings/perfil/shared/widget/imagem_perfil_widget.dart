@@ -139,7 +139,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                       label: SizedBox(
                           width: 180,
                           child: Text(
-                            client.perfilDio.name.name,
+                            client.perfilDio.name?.name,
                             style: const TextStyle(fontSize: 18.00),
                           )),
                     ),

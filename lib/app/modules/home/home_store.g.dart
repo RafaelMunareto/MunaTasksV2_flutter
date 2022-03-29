@@ -96,17 +96,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
   }
 
   @override
-  void getSubtarefaInsert() {
-    final _$actionInfo = _$HomeStoreBaseActionController.startAction(
-        name: 'HomeStoreBase.getSubtarefaInsert');
-    try {
-      return super.getSubtarefaInsert();
-    } finally {
-      _$HomeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void deleteTasks(TarefaDioModel model) {
     final _$actionInfo = _$HomeStoreBaseActionController.startAction(
         name: 'HomeStoreBase.deleteTasks');

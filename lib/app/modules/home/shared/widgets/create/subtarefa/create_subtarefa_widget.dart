@@ -68,7 +68,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                             store.clientCreate.subtarefaModelSaveTitle,
                         setSubtarefaSelection:
                             store.clientCreate.setSubtarefaInsertCreate,
-                        subtarefaList: store.clientCreate.subtarefaInsertList),
+                        subtarefaList: const []),
                     context),
               ),
               GestureDetector(

@@ -1,6 +1,5 @@
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/shared/model/fase_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/subtarefa_insert_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
@@ -12,9 +11,6 @@ part 'client_create_store.g.dart';
 class ClientCreateStore = _ClientCreateStoreBase with _$ClientCreateStore;
 
 abstract class _ClientCreateStoreBase with Store {
-  @observable
-  ObservableStream<List<SubtarefaInsertModel>>? subtarefaInsertList;
-
   @observable
   ObservableStream<List<FaseModel>>? faseList;
 

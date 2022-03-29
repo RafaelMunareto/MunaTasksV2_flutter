@@ -63,34 +63,46 @@ abstract class _LoginStoreBase with Store {
   @action
   setUser(value) => user = value;
 
-  @action
-  submit() {
-    setLoading(true);
-    auth
-        .getEmailPasswordLogin(client.email, client.password)
-        .then((value) async {
-      await storage.put('user', [
-        value.user.uid,
-        value.user.displayName.toString(),
-        value.user.photoURL.toString()
-      ]);
+  submit() async {
+    try {
+      await setLoading(true);
       await auth.getLoginDio(client.email, client.password);
-
-      if (value.user.emailVerified) {
-        setStorageLogin();
-        setStorageLoginNormal();
-        setLoading(false);
-        setErrOrGoal(false);
-        Modular.to.navigate('/home/');
-      } else {
-        setLoading(false);
-        setMsg('Você deve validar o email primeiro!');
-      }
-    }).catchError((e) {
+      setStorageLogin();
+      setStorageLoginNormal();
       setLoading(false);
       setErrOrGoal(false);
-      setMsg(ErrorPtBr().verificaCodeErro(e.code));
-    });
+      Modular.to.navigate('/home/');
+    } catch (e) {
+      setLoading(false);
+      setErrOrGoal(false);
+      setMsg(ErrorPtBr().verificaCodeErro(e));
+    }
+
+    // auth
+    //     .getEmailPasswordLogin(client.email, client.password)
+    //     .then((value) async {
+    //   await storage.put('user', [
+    //     value.user.uid,
+    //     value.user.displayName.toString(),
+    //     value.user.photoURL.toString()
+    //   ]);
+    //   await auth.getLoginDio(client.email, client.password);
+
+    //   if (value.user.emailVerified) {
+    //     setStorageLogin();
+    //     setStorageLoginNormal();
+    //     setLoading(false);
+    //     setErrOrGoal(false);
+    //     Modular.to.navigate('/home/');
+    //   } else {
+    //     setLoading(false);
+    //     setMsg('Você deve validar o email primeiro!');
+    //   }
+    // }).catchError((e) {
+    //   setLoading(false);
+    //   setErrOrGoal(false);
+    //   setMsg(ErrorPtBr().verificaCodeErro(e.code));
+    // });
   }
 
   //gooole
