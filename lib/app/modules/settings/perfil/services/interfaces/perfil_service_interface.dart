@@ -8,7 +8,6 @@ abstract class IPerfilService {
   Future<PerfilModel> getByDocumentId(String documentId);
   Future save(PerfilModel model);
   Future saveDio(PerfilDioModel model);
-  Future updateDio(PerfilDioModel model);
   Future deleteDio(String id);
   Future delete(PerfilModel model);
 }

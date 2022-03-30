@@ -48,11 +48,6 @@ class PerfilService extends Disposable implements IPerfilService {
   }
 
   @override
-  Future updateDio(PerfilDioModel model) {
-    return perfilRepository.updateDio(model);
-  }
-
-  @override
   Future deleteDio(String id) {
     return perfilRepository.deleteDio(id);
   }

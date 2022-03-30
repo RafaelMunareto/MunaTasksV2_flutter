@@ -75,35 +75,9 @@ abstract class _LoginStoreBase with Store {
       if (erro.response.statusCode != 200) {
         setLoading(false);
         setErrOrGoal(false);
-        setMsg(erro.response.statusMessage);
+        setMsg(erro.response.data['error']);
       }
     });
-
-    // auth
-    //     .getEmailPasswordLogin(client.email, client.password)
-    //     .then((value) async {
-    //   await storage.put('user', [
-    //     value.user.uid,
-    //     value.user.displayName.toString(),
-    //     value.user.photoURL.toString()
-    //   ]);
-    //   await auth.getLoginDio(client.email, client.password);
-
-    //   if (value.user.emailVerified) {
-    //     setStorageLogin();
-    //     setStorageLoginNormal();
-    //     setLoading(false);
-    //     setErrOrGoal(false);
-    //     Modular.to.navigate('/home/');
-    //   } else {
-    //     setLoading(false);
-    //     setMsg('Você deve validar o email primeiro!');
-    //   }
-    // }).catchError((e) {
-    //   setLoading(false);
-    //   setErrOrGoal(false);
-    //   setMsg(ErrorPtBr().verificaCodeErro(e.code));
-    // });
   }
 
   //gooole

@@ -35,9 +35,8 @@ abstract class _PerfilStoreBase with Store {
   String uid = '';
 
   getList() async {
-    await client.setLoading(true);
     await getUid();
-    getBydDioId();
+    await getBydDioId();
     getDioUsers();
   }
 
@@ -56,7 +55,7 @@ abstract class _PerfilStoreBase with Store {
       client.setUsersDio(client.perfilDio.idStaff!.map((e) {
         return PerfilDioModel.fromJson(e);
       }).toList());
-    });
+    }).whenComplete(() => client.setLoadingImagem(false));
   }
 
   @action
@@ -68,6 +67,6 @@ abstract class _PerfilStoreBase with Store {
 
   @action
   saveDio() {
-    perfilService.saveDio(client.perfil);
+    perfilService.saveDio(client.perfilDio);
   }
 }

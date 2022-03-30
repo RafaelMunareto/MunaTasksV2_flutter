@@ -72,16 +72,9 @@ class PerfilRepository implements IPerfilRepository {
   @override
   saveDio(PerfilDioModel model) async {
     Response response;
-    response = await DioStruture().dioAction().post('perfil', data: model);
-    DioStruture().statusRequest(response);
-    return response;
-  }
-
-  @override
-  updateDio(PerfilDioModel model) async {
-    Response response;
-    response =
-        await DioStruture().dioAction().put('perfil/${model.id}', data: model);
+    response = await DioStruture()
+        .dioAction()
+        .put('perfil/${model.id}', data: model.toJson(model));
     DioStruture().statusRequest(response);
     return response;
   }

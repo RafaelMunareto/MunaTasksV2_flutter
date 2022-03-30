@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class IconRedondedWidget extends StatelessWidget {
@@ -13,7 +14,7 @@ class IconRedondedWidget extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
-            border: Border.all(width: 2, color: color)),
+            border: kIsWeb ? null : Border.all(width: 2, color: color)),
         child: Icon(
           icon,
           color: color,

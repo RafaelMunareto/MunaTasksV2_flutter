@@ -14,13 +14,10 @@ abstract class _ClientStoreBase with Store {
   bool showTeams = false;
 
   @observable
-  PerfilDioModel perfil = PerfilDioModel();
+  bool loading = true;
 
   @observable
-  bool loading = false;
-
-  @observable
-  bool loadingImagem = false;
+  bool loadingImagem = true;
 
   @observable
   List<PerfilDioModel> userModel = [];
@@ -53,27 +50,27 @@ abstract class _ClientStoreBase with Store {
   setLoadingImagem(value) => loadingImagem = value;
 
   @action
-  setLoading(value) => loading = true;
+  setLoading(value) => loading = value;
 
   @action
-  changeName(value) => perfil.name.name = value;
+  changeName(value) => perfilDio.name.name = value;
 
   @action
-  changeManager(value) => perfil.manager = value;
+  changeManager(value) => perfilDio.manager = value;
 
   @action
-  changeTime(value) => perfil.nameTime = value;
+  changeTime(value) => perfilDio.nameTime = value;
 
   @action
-  setPerfilImage(value) => perfil.urlImage = value;
+  setPerfilImage(value) => perfilDio.urlImage = value;
 
   @action
   setIdStaff(value) {
     if (!userModel.map((e) => e.id).contains(value)) {
-      perfil.idStaff?.add(value);
+      perfilDio.idStaff?.add(value);
     } else {
-      perfil.idStaff?.remove(value);
-      if (perfil.idStaff!.isEmpty) {
+      perfilDio.idStaff?.remove(value);
+      if (perfilDio.idStaff!.isEmpty) {
         individualChip = [];
       }
     }
@@ -94,9 +91,9 @@ abstract class _ClientStoreBase with Store {
   }
 
   String? validateName() {
-    if (perfil.name.isEmpty) {
+    if (perfilDio.name.isEmpty) {
       return 'Campo obrigatório';
-    } else if (perfil.name.length < 3) {
+    } else if (perfilDio.name.length < 3) {
       return 'Min de 3 caracteres';
     }
     return null;
@@ -108,9 +105,9 @@ abstract class _ClientStoreBase with Store {
   }
 
   String? validateTime() {
-    if (perfil.nameTime.isEmpty) {
+    if (perfilDio.nameTime.isEmpty) {
       return 'Campo obrigatório';
-    } else if (perfil.nameTime.length < 3) {
+    } else if (perfilDio.nameTime.length < 3) {
       return 'Min de 3 caracteres';
     }
     return null;

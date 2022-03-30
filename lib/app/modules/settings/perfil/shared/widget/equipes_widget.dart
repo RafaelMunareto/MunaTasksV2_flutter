@@ -56,6 +56,7 @@ class _EquipesWidgetState extends State<EquipesWidget>
 
   Widget _buildAnimation(BuildContext context, Widget? child) {
     widget.enableSwitch ? _controller.forward() : _controller.reverse();
+    List<PerfilDioModel> list = client.perfis;
     return FadeTransition(
       opacity: _animacaoOpacity,
       child: Column(
@@ -86,58 +87,46 @@ class _EquipesWidgetState extends State<EquipesWidget>
             ),
           ),
           client.showTeams
-              ? Observer(builder: (_) {
-                  if (client.perfis.isEmpty) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    List<PerfilDioModel> list = client.perfis;
-                    return list.isNotEmpty
-                        ? Wrap(
-                            alignment: WrapAlignment.start,
-                            runAlignment: WrapAlignment.start,
-                            children: [
-                              for (var i = 0; i < list.length; i++)
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    child: InputChip(
-                                      key: ObjectKey(list[i].id),
-                                      labelPadding: const EdgeInsets.all(2),
-                                      selected: client.individualChip!
-                                          .contains(list[i].id),
-                                      elevation: 4.0,
-                                      avatar: CircleAvatarWidget(
-                                        url: list[i].urlImage,
-                                      ),
-                                      label: SizedBox(
-                                        width: 100,
-                                        child: Text(
-                                          list[i].name,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      onSelected: (bool value) {
-                                        setState(() {
-                                          client.individualChip!.contains(i)
-                                              ? client.individualChip!.remove(i)
-                                              : client.individualChip!.add(i);
+              ? Wrap(
+                  alignment: WrapAlignment.start,
+                  runAlignment: WrapAlignment.start,
+                  children: [
+                    for (var linha in list)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          child: InputChip(
+                            key: ObjectKey(linha.id),
+                            labelPadding: const EdgeInsets.all(2),
+                            selected: client.individualChip!.contains(linha.id),
+                            elevation: 4.0,
+                            avatar: CircleAvatarWidget(
+                              url: linha.urlImage,
+                            ),
+                            label: SizedBox(
+                              width: 100,
+                              child: Text(
+                                linha.name.name,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            onSelected: (bool value) {
+                              setState(() {
+                                client.individualChip!.contains(linha.id)
+                                    ? client.individualChip!.remove(linha.id)
+                                    : client.individualChip!.add(linha.id);
 
-                                          client.setIdStaff(list[i].id);
-                                          store.saveDio();
-                                          store.getBydDioId();
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                )
-                            ],
-                          )
-                        : Container();
-                  }
-                })
-              : client.perfil.manager
+                                client.setIdStaff(linha.id);
+                                store.saveDio();
+                                store.getBydDioId();
+                              });
+                            },
+                          ),
+                        ),
+                      )
+                  ],
+                )
+              : client.perfilDio.manager
                   ? client.users.isNotEmpty
                       ? Wrap(
                           alignment: WrapAlignment.start,
@@ -156,7 +145,7 @@ class _EquipesWidgetState extends State<EquipesWidget>
                                   label: SizedBox(
                                     width: 100,
                                     child: Text(
-                                      userModel.name,
+                                      userModel.name.name,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),

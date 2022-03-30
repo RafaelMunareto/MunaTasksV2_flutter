@@ -41,5 +41,13 @@ class PerfilDioModel {
     );
   }
 
-  Map<String, dynamic> toJson() => {};
+  toJson(PerfilDioModel doc) {
+    return {
+      "idStaff": doc.idStaff!.map((e) => e.id).toList(),
+      "manager": doc.manager,
+      "name": doc.name.id,
+      "urlImage": doc.urlImage,
+      "nameTime": doc.nameTime,
+    };
+  }
 }

@@ -34,7 +34,7 @@ class PerfilPageState extends State<PerfilPage> {
         child: Observer(
           builder: (_) {
             if (!store.client.loading) {
-              bool enableSwitch = store.client.perfil.manager;
+              bool enableSwitch = store.client.perfilDio.manager;
               return GestureDetector(
                 onTap: () {
                   FocusScope.of(context).requestFocus(FocusNode());
@@ -46,9 +46,9 @@ class PerfilPageState extends State<PerfilPage> {
                   child: Column(
                     children: [
                       ImagemPerfilWidget(errorName: store.client.validateName),
-                      store.client.perfil.id.isEmpty
+                      store.client.perfilDio.id != ""
                           ? RollingSwitch.icon(
-                              initialState: store.client.perfil.manager,
+                              initialState: store.client.perfilDio.manager,
                               width: 200,
                               animationDuration:
                                   const Duration(milliseconds: 600),

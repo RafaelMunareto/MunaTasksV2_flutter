@@ -24,7 +24,9 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future getEmailPasswordLogin(email, password) {
-    return auth.signInWithEmailAndPassword(email: email, password: password);
+    return auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((value) {});
   }
 
   @override
@@ -77,7 +79,7 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future getLogout() {
-    return auth.signOut();
+    return storage.put('userDio', []);
   }
 
   @override

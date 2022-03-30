@@ -68,22 +68,9 @@ class ImageRepository {
       Function setPerfilImage) async {
     await recuperarImagem(origemImagem, loading);
     if (url != null) {
-      FirebaseFirestore db = FirebaseFirestore.instance;
       Map<String, dynamic> atualizarImage = {"urlImage": url};
-      await db
-          .collection("usuarios")
-          .doc(auth.user!.uid)
-          .update(atualizarImage);
-      await db.collection("perfil").doc(auth.user!.uid).update(atualizarImage);
-      var user = await storage.get('user');
-      await storage.put('user', []);
-      await storage.put('user', [user[0], user[1], url.toString()]);
-
-      firebaseAuth.currentUser?.updatePhotoURL(url).then((value) {
-        userModel = [];
-      }).then((value) {
-        getById();
-      });
+      client.setPerfilImage(atualizarImage);
+      getById();
     }
   }
 }

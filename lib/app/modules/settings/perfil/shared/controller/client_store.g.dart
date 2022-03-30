@@ -55,21 +55,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$perfilAtom = Atom(name: '_ClientStoreBase.perfil');
-
-  @override
-  PerfilDioModel get perfil {
-    _$perfilAtom.reportRead();
-    return super.perfil;
-  }
-
-  @override
-  set perfil(PerfilDioModel value) {
-    _$perfilAtom.reportWrite(value, super.perfil, () {
-      super.perfil = value;
-    });
-  }
-
   final _$loadingAtom = Atom(name: '_ClientStoreBase.loading');
 
   @override
@@ -394,7 +379,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     return '''
 urlImagemRecuperada: ${urlImagemRecuperada},
 showTeams: ${showTeams},
-perfil: ${perfil},
 loading: ${loading},
 loadingImagem: ${loadingImagem},
 userModel: ${userModel},
