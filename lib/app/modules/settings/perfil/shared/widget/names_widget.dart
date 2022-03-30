@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
@@ -84,26 +83,24 @@ class _NamesWidgetState extends State<NamesWidget>
                         color: lightThemeData(context).primaryColor,
                         size: 48,
                       ),
-                      title: SizedBox(
-                        child: Observer(
-                          builder: (_) {
-                            return TextFormField(
-                              enabled: enabledField,
-                              initialValue: client.perfilDio.nameTime,
-                              onChanged: (value) {
-                                client.changeTime(value);
-                              },
-                              decoration: InputDecoration(
-                                filled: enabledField,
-                                label: const Text('Time'),
-                                errorText: widget.errorTime == null
-                                    ? null
-                                    : widget.errorTime(),
+                      title: client.perfilDio.nameTime == ""
+                          ? Container()
+                          : SizedBox(
+                              child: TextFormField(
+                                enabled: enabledField,
+                                initialValue: client.perfilDio.nameTime,
+                                onChanged: (value) {
+                                  client.changeTime(value);
+                                },
+                                decoration: InputDecoration(
+                                  filled: enabledField,
+                                  label: const Text('Time'),
+                                  errorText: widget.errorTime == null
+                                      ? null
+                                      : widget.errorTime(),
+                                ),
                               ),
-                            );
-                          },
-                        ),
-                      ),
+                            ),
                       trailing: GestureDetector(
                         onTap: () {
                           setState(() {

@@ -37,11 +37,10 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
           mouseCursor: SystemMouseCursors.click,
           onTap: () {
             store.imageRepository.atualizarUrlImagemPerfilProfile(
-                "camera",
-                client.setLoadingImagem,
-                client.userModel,
-                store.getBydDioId(),
-                client.setPerfilImage);
+              "camera",
+              client.perfilDio.id,
+              client.setLoadingImagem,
+            );
           },
           child: const ListTile(
             leading: Icon(Icons.camera_alt),
@@ -53,11 +52,10 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
           mouseCursor: SystemMouseCursors.click,
           onTap: () => {
             store.imageRepository.atualizarUrlImagemPerfilProfile(
-                "galeria",
-                client.setLoadingImagem,
-                client.userModel,
-                store.getBydDioId(),
-                client.setPerfilImage)
+              "galeria",
+              client.perfilDio.id,
+              client.setLoadingImagem,
+            )
           },
           child: const ListTile(
             leading: Icon(Icons.image),
@@ -164,7 +162,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                                 color: Colors.white,
                               ),
                             ], height: 1.0, fontWeight: FontWeight.bold),
-                            initialValue: client.perfilDio.name,
+                            initialValue: client.perfilDio.name.name,
                             onChanged: (value) {
                               client.changeName(value);
                             },
@@ -188,10 +186,8 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                   onTap: () {
                     setState(() {
                       client.showTextFieldName(!client.textFieldNameBool &&
-                          client.perfilDio.name.name.isNotEmpty &&
                           client.perfilDio.name.name.length >= 3);
-                      if (!client.textFieldNameBool &&
-                          client.perfilDio.name.name.isNotEmpty &&
+                      if (client.textFieldNameBool &&
                           client.perfilDio.name.name.length >= 3) {
                         _controller.forward();
                         _controller2.reverse();
@@ -206,7 +202,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                     client.textFieldNameBool
                         ? Icons.drive_file_rename_outline
                         : client.perfilDio.name.name.isNotEmpty &&
-                                client.perfilDio.name.namelength >= 3
+                                client.perfilDio.name.name.length >= 3
                             ? Icons.task_alt
                             : Icons.task_alt,
                     color: lightThemeData(context).primaryColor,

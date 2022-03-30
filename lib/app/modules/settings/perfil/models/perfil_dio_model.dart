@@ -43,10 +43,9 @@ class PerfilDioModel {
 
   toJson(PerfilDioModel doc) {
     return {
-      "idStaff": doc.idStaff!.map((e) => e.id).toList(),
+      "idStaff": doc.idStaff!.map((e) => e['_id']).toList(),
       "manager": doc.manager,
       "name": doc.name.id,
-      "urlImage": doc.urlImage,
       "nameTime": doc.nameTime,
     };
   }

@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/repositories/interfaces/perfil_interfaces.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 class PerfilRepository implements IPerfilRepository {
@@ -72,11 +75,16 @@ class PerfilRepository implements IPerfilRepository {
   @override
   saveDio(PerfilDioModel model) async {
     Response response;
+    Response response2;
     response = await DioStruture()
         .dioAction()
-        .put('perfil/${model.id}', data: model.toJson(model));
+        .put('usuarios/user/${model.name.id}', data: {"name": model.name.name});
     DioStruture().statusRequest(response);
-    return response;
+    response2 = await DioStruture()
+        .dioAction()
+        .put('perfil/${model.id}', data: model.toJson(model));
+    DioStruture().statusRequest(response2);
+    return response2;
   }
 
   @override

@@ -91,9 +91,9 @@ abstract class _ClientStoreBase with Store {
   }
 
   String? validateName() {
-    if (perfilDio.name.isEmpty) {
+    if (perfilDio.name.name.isEmpty) {
       return 'Campo obrigatório';
-    } else if (perfilDio.name.length < 3) {
+    } else if (perfilDio.name.name.length < 3) {
       return 'Min de 3 caracteres';
     }
     return null;

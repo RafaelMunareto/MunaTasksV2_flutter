@@ -9,19 +9,11 @@ part of 'perfil_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PerfilStore on _PerfilStoreBase, Store {
-  final _$uidAtom = Atom(name: '_PerfilStoreBase.uid');
+  final _$saveDioAsyncAction = AsyncAction('_PerfilStoreBase.saveDio');
 
   @override
-  String get uid {
-    _$uidAtom.reportRead();
-    return super.uid;
-  }
-
-  @override
-  set uid(String value) {
-    _$uidAtom.reportWrite(value, super.uid, () {
-      super.uid = value;
-    });
+  Future saveDio() {
+    return _$saveDioAsyncAction.run(() => super.saveDio());
   }
 
   final _$_PerfilStoreBaseActionController =
@@ -61,20 +53,9 @@ mixin _$PerfilStore on _PerfilStoreBase, Store {
   }
 
   @override
-  dynamic saveDio() {
-    final _$actionInfo = _$_PerfilStoreBaseActionController.startAction(
-        name: '_PerfilStoreBase.saveDio');
-    try {
-      return super.saveDio();
-    } finally {
-      _$_PerfilStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
-uid: ${uid}
+
     ''';
   }
 }

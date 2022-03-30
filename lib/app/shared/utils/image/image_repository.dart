@@ -1,15 +1,12 @@
-import 'dart:async';
-import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 class ImageRepository {
   final ImagePicker picker = ImagePicker();
@@ -21,7 +18,11 @@ class ImageRepository {
 
   void dispose() {}
 
-  Future recuperarImagem(String origemImagem, Function loading) async {
+  atualizarUrlImagemPerfilProfile(
+    String origemImagem,
+    String id,
+    Function setLoading,
+  ) async {
     XFile? image;
     switch (origemImagem) {
       case "camera":
@@ -32,45 +33,16 @@ class ImageRepository {
         break;
     }
     if (image != null) {
-      loading(true);
-      return uploadImagem(image, loading);
+      setLoading(true);
     }
-  }
 
-  uploadImagem(XFile image, Function loading) async {
-    FirebaseStorage storage = FirebaseStorage.instance;
-    Reference pastaRaiz = storage.ref();
-    Reference arquivo =
-        pastaRaiz.child("perfil").child(auth.user!.uid + ".jpg");
-
-    File file = File(image.path);
-    UploadTask task = arquivo.putFile(file);
-
-    task.snapshotEvents.listen((TaskSnapshot snapshot) async {
-      if (snapshot.state == TaskState.running) {
-        loading(true);
-      } else if (snapshot.state == TaskState.success) {
-        await recuperarUrlImagem(snapshot, loading);
-      }
+    Response response;
+    var formData = FormData.fromMap({
+      'urlImage': await MultipartFile.fromFile(image!.path, filename: id),
     });
-  }
+    response =
+        await DioStruture().dioAction().put('perfil/$id', data: formData);
 
-  recuperarUrlImagem(TaskSnapshot snapshot, Function loading) async {
-    url = await snapshot.ref.getDownloadURL();
-    Timer(const Duration(seconds: 3), () => loading(false));
-  }
-
-  atualizarUrlImagemPerfilProfile(
-      String origemImagem,
-      Function loading,
-      List<PerfilDioModel> userModel,
-      Function getById,
-      Function setPerfilImage) async {
-    await recuperarImagem(origemImagem, loading);
-    if (url != null) {
-      Map<String, dynamic> atualizarImage = {"urlImage": url};
-      client.setPerfilImage(atualizarImage);
-      getById();
-    }
+    setLoading(false);
   }
 }

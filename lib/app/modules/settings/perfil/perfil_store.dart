@@ -31,9 +31,6 @@ abstract class _PerfilStoreBase with Store {
     getList();
   }
 
-  @observable
-  String uid = '';
-
   getList() async {
     await getUid();
     await getBydDioId();
@@ -66,7 +63,9 @@ abstract class _PerfilStoreBase with Store {
   }
 
   @action
-  saveDio() {
-    perfilService.saveDio(client.perfilDio);
+  saveDio() async {
+    await perfilService.saveDio(client.perfilDio);
+    getBydDioId();
+    getDioUsers();
   }
 }
