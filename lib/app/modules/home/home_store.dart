@@ -50,7 +50,6 @@ abstract class HomeStoreBase with Store {
     client.setLoading(false);
   }
 
-  @action
   buscaTheme() {
     storage.get('theme').then((value) {
       if (value?[0] == 'dark') {
@@ -61,7 +60,6 @@ abstract class HomeStoreBase with Store {
     });
   }
 
-  @action
   setNavigateBarSelection(value) async {
     await client.setNavigateBarSelection(value);
     await client.setEtiquetaSelection(57585);
@@ -81,7 +79,6 @@ abstract class HomeStoreBase with Store {
     }).toList());
   }
 
-  @action
   void getDioFase() {
     client.setLoadingTasks(true);
     dashboardService
@@ -91,7 +88,6 @@ abstract class HomeStoreBase with Store {
     }).whenComplete(() => client.setLoadingTasks(false));
   }
 
-  @action
   void getDio() {
     dashboardService
         .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
@@ -100,7 +96,6 @@ abstract class HomeStoreBase with Store {
     });
   }
 
-  @action
   badgets() {
     dashboardService.getDioIndividual(client.perfilUserLogado.id).then((value) {
       List<int> badgets = [
@@ -113,7 +108,6 @@ abstract class HomeStoreBase with Store {
     });
   }
 
-  @action
   getDioTotal() async {
     await dashboardService.getDioTotal().then((value) {
       client.setTarefasTotais(value);
@@ -149,7 +143,6 @@ abstract class HomeStoreBase with Store {
     }).toList());
   }
 
-  @action
   getPerfil() async {
     Response response;
     response =
@@ -159,7 +152,6 @@ abstract class HomeStoreBase with Store {
     client.setPerfilUserlogado(resposta);
   }
 
-  @action
   save(TarefaDioModel model) async {
     model.id == null
         ? await dashboardService.saveDio(model)
@@ -169,7 +161,6 @@ abstract class HomeStoreBase with Store {
     getDio();
   }
 
-  @action
   void deleteTasks(TarefaDioModel model) {
     dashboardService.deleteDio(model);
     getDio();
@@ -182,7 +173,6 @@ abstract class HomeStoreBase with Store {
     getDio();
   }
 
-  @action
   changeFilterEtiquetaList() {
     if (client.etiquetaSelection == 57585) {
       getDio();
@@ -220,7 +210,6 @@ abstract class HomeStoreBase with Store {
     }
   }
 
-  @action
   changeFilterSearchList() {
     if (client.searchValue != '') {
       Timer(const Duration(milliseconds: 600), () {
@@ -236,7 +225,6 @@ abstract class HomeStoreBase with Store {
     }
   }
 
-  @action
   changeFilterUserList() async {
     if (client.userSelection?.name.name != 'TODOS') {
       dashboardService
@@ -247,33 +235,28 @@ abstract class HomeStoreBase with Store {
     }
   }
 
-  @action
   changePrioridadeList(TarefaDioModel model) {
     model.prioridade = client.prioridadeSelection;
     save(model);
   }
 
-  @action
   changeSubtarefaAction(
       SubtarefaModel subtarefaModel, TarefaDioModel tarefaModel) {
     subtarefaModel.status = client.subtarefaAction;
     save(tarefaModel);
   }
 
-  @action
   changeSubtarefaDioAction(
       SubtareDiofaModel subtarefaModel, TarefaDioModel tarefaModel) {
     subtarefaModel.status = client.subtarefaAction;
     // save(tarefaModel);
   }
 
-  @action
   updateDate(TarefaDioModel model) {
     model.data = model.data.add(Duration(hours: client.retardSelection));
     save(model);
   }
 
-  @action
   changeOrderList() {
     switch (client.orderSelection) {
       case 'ETIQUETA':

@@ -17,26 +17,18 @@ abstract class _EtiquetasStoreBase with Store {
     getSettings();
   }
 
-  @action
-  void getColors() {
-    etiquetaStore.colorsList = etiquetaService.getColor().asObservable();
-  }
-
-  @action
   void getSettings() {
     etiquetaService.getSettings().then((value) {
       etiquetaStore.setColorsDio(value.color);
     });
   }
 
-  @action
   void getDio() {
     etiquetaService.getDio().then((value) {
       etiquetaStore.setEtiquetaDio(value);
     });
   }
 
-  @action
   submitDio() async {
     if (etiquetaStore.isValidateEtiqueta) {
       etiquetaStore.setShowValidation(false);
@@ -69,7 +61,6 @@ abstract class _EtiquetasStoreBase with Store {
     }
   }
 
-  @action
   deleteDio(EtiquetaDioModel model) {
     etiquetaService.deleteDio(model).then((value) {
       if (value.statusCode == 200) {
@@ -80,7 +71,6 @@ abstract class _EtiquetasStoreBase with Store {
     });
   }
 
-  @action
   loadingUpdate(model) {
     etiquetaStore.setUpdateLoading(true);
     etiquetaStore.setEtiqueta(model.etiqueta);

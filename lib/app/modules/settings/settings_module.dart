@@ -6,7 +6,6 @@ import 'package:munatasks2/app/modules/settings/etiquetas/services/etiqueta_serv
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/controller/etiqueta_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_page.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/repositories/interfaces/perfil_interfaces.dart';
@@ -26,12 +25,10 @@ class SettingsModule extends Module {
     Bind.lazySingleton((i) => EtiquetaStore()),
     Bind.lazySingleton<IPerfilService>(
         (i) => PerfilService(perfilRepository: i.get())),
-    Bind.lazySingleton<IPerfilRepository>(
-        (i) => PerfilRepository(firestore: FirebaseFirestore.instance)),
+    Bind.lazySingleton<IPerfilRepository>((i) => PerfilRepository()),
     Bind.lazySingleton<IEtiquetaService>(
         (i) => EtiquetaService(etiquetaRepository: i.get())),
-    Bind.lazySingleton<IEtiquetaRepository>(
-        (i) => EtiquetaRepository(firestore: FirebaseFirestore.instance)),
+    Bind.lazySingleton<IEtiquetaRepository>((i) => EtiquetaRepository()),
     Bind.lazySingleton((i) => PrincipalStore()),
     Bind.lazySingleton((i) => EtiquetasStore(etiquetaService: i.get())),
     Bind.lazySingleton<ImageRepository>((i) => ImageRepository()),

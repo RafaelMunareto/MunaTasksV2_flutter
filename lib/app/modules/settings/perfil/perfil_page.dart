@@ -55,8 +55,8 @@ class PerfilPageState extends State<PerfilPage> {
                               onChanged: (bool state) {
                                 setState(() {
                                   store.client.changeManager(state);
+                                  store.saveDio();
                                 });
-                                store.saveDio();
                               },
                               rollingInfoRight: RollingIconInfo(
                                 backgroundColor:

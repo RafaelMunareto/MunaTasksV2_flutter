@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mobx/mobx.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/colors_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 
 part 'etiqueta_store.g.dart';
@@ -8,9 +7,6 @@ part 'etiqueta_store.g.dart';
 class EtiquetaStore = _EtiquetaStoreBase with _$EtiquetaStore;
 
 abstract class _EtiquetaStoreBase with Store {
-  @observable
-  ObservableStream<List<ColorsModel>>? colorsList;
-
   @observable
   List colorsDio = [];
 
