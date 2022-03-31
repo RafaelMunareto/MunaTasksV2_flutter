@@ -66,10 +66,12 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setIdStaff(value) {
-    if (!userModel.map((e) => e.id).contains(value)) {
+    perfilDio.idStaff =
+        perfilDio.idStaff!.map((e) => PerfilDioModel.fromJson(e)).toList();
+    if (perfilDio.idStaff!.where((e) => e.id == value.id).isEmpty) {
       perfilDio.idStaff?.add(value);
     } else {
-      perfilDio.idStaff?.remove(value);
+      perfilDio.idStaff?.removeWhere((element) => element.id == value.id);
       if (perfilDio.idStaff!.isEmpty) {
         individualChip = [];
       }

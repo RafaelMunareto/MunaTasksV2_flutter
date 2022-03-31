@@ -50,7 +50,11 @@ abstract class _PerfilStoreBase with Store {
     perfilService.getDio(client.userSelection.id).then((value) {
       client.setPerfildio(value);
       client.setUsersDio(client.perfilDio.idStaff!.map((e) {
-        return PerfilDioModel.fromJson(e);
+        var perfil = PerfilDioModel.fromJson(e);
+        if (client.individualChip!.contains(perfil.id)) {
+          client.individualChip!.add(perfil.id);
+        }
+        return perfil;
       }).toList());
     }).whenComplete(() => client.setLoadingImagem(false));
   }

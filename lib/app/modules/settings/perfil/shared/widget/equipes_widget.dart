@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
@@ -110,15 +112,14 @@ class _EquipesWidgetState extends State<EquipesWidget>
                               ),
                             ),
                             onSelected: (bool value) {
-                              setState(() {
-                                client.individualChip!.contains(linha.id)
-                                    ? client.individualChip!.remove(linha.id)
-                                    : client.individualChip!.add(linha.id);
-
-                                client.setIdStaff(linha.id);
-                                store.saveDio();
-                                store.getBydDioId();
-                              });
+                              if (client.individualChip!.contains(linha.id)) {
+                                client.individualChip!.removeWhere(
+                                    (element) => element == linha.id);
+                              } else {
+                                client.individualChip!.add(linha.id);
+                              }
+                              client.setIdStaff(linha);
+                              store.saveDio();
                             },
                           ),
                         ),
