@@ -191,7 +191,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                           client.perfilDio.name.name.length >= 3) {
                         _controller.forward();
                         _controller2.reverse();
-                        store.saveDio();
+                        store.saveName();
                       } else {
                         _controller2.forward();
                         _controller.reverse();

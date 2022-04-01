@@ -49,4 +49,13 @@ class PerfilDioModel {
       "nameTime": doc.nameTime,
     };
   }
+
+  toJsonTime(PerfilDioModel doc) {
+    return {
+      "idStaff": doc.idStaff!.map((e) => e.id).toList(),
+      "manager": doc.manager,
+      "name": doc.name.id,
+      "nameTime": doc.nameTime,
+    };
+  }
 }

@@ -29,16 +29,32 @@ class PerfilRepository implements IPerfilRepository {
   @override
   saveDio(PerfilDioModel model) async {
     Response response;
-    Response response2;
+    response = await DioStruture()
+        .dioAction()
+        .put('perfil/${model.id}', data: model.toJson(model));
+    DioStruture().statusRequest(response);
+    return response;
+  }
+
+  @override
+  Future saveName(PerfilDioModel model) async {
+    Response response;
     response = await DioStruture()
         .dioAction()
         .put('usuarios/user/${model.name.id}', data: {"name": model.name.name});
     DioStruture().statusRequest(response);
-    response2 = await DioStruture()
+
+    return response;
+  }
+
+  @override
+  Future saveTime(PerfilDioModel model) async {
+    Response response;
+    response = await DioStruture()
         .dioAction()
-        .put('perfil/${model.id}', data: model.toJson(model));
-    DioStruture().statusRequest(response2);
-    return response2;
+        .put('perfil/${model.id}', data: model.toJsonTime(model));
+    DioStruture().statusRequest(response);
+    return response;
   }
 
   @override

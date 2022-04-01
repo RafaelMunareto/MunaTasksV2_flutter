@@ -27,6 +27,16 @@ class PerfilService extends Disposable implements IPerfilService {
   }
 
   @override
+  Future saveName(PerfilDioModel model) {
+    return perfilRepository.saveName(model);
+  }
+
+  @override
+  Future saveTime(PerfilDioModel model) {
+    return perfilRepository.saveTime(model);
+  }
+
+  @override
   Future deleteDio(String id) {
     return perfilRepository.deleteDio(id);
   }

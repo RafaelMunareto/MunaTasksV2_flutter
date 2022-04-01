@@ -64,4 +64,16 @@ abstract class _PerfilStoreBase with Store {
     await perfilService.saveDio(client.perfilDio);
     getList();
   }
+
+  @action
+  saveName() async {
+    await perfilService.saveName(client.perfilDio);
+    getDioUsers();
+  }
+
+  @action
+  saveTime() async {
+    await perfilService.saveTime(client.perfilDio);
+    getList();
+  }
 }
