@@ -8,16 +8,14 @@ class DioStruture {
   final ILocalStorage storage = LocalStorageShare();
   String token = '';
   final baseUrlMunatasks = 'http://localhost:3333/';
+  final headers = {
+    "Authorization": 'Bearer ' +
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTZjN2MwMzRhYzViNTJjZmQ4N2Y4MSIsImlhdCI6MTY0NjA4NTc5Mn0.n6m3BNKCJRiZ3LESK-FXpgaixiV8LT9FVNVTywsaHQY'
+  };
   dioAction() {
     tokenDio();
     return Dio(
-      BaseOptions(
-        baseUrl: baseUrlMunatasks,
-        headers: {
-          "Authorization": 'Bearer ' +
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTZjN2MwMzRhYzViNTJjZmQ4N2Y4MSIsImlhdCI6MTY0NjA4NTc5Mn0.n6m3BNKCJRiZ3LESK-FXpgaixiV8LT9FVNVTywsaHQY'
-        },
-      ),
+      BaseOptions(baseUrl: baseUrlMunatasks, headers: headers),
     );
   }
 

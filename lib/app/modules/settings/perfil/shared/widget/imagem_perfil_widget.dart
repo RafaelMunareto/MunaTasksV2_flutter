@@ -36,11 +36,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () {
-            store.imageRepository.atualizarUrlImagemPerfilProfile(
-              "camera",
-              client.perfilDio.id,
-              client.setLoadingImagem,
-            );
+            store.atualizaImagem("camera");
           },
           child: const ListTile(
             leading: Icon(Icons.camera_alt),
@@ -50,13 +46,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
         const PopupMenuDivider(),
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
-          onTap: () => {
-            store.imageRepository.atualizarUrlImagemPerfilProfile(
-              "galeria",
-              client.perfilDio.id,
-              client.setLoadingImagem,
-            )
-          },
+          onTap: () => {store.atualizaImagem("galeria")},
           child: const ListTile(
             leading: Icon(Icons.image),
             title: Text('Galeria'),

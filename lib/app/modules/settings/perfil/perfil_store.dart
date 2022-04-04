@@ -1,12 +1,16 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/services/interfaces/perfil_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/image/image_repository.dart';
 
 part 'perfil_store.g.dart';
@@ -18,6 +22,7 @@ abstract class _PerfilStoreBase with Store {
   final ImageRepository imageRepository;
   final ClientStore client = Modular.get();
   final ILocalStorage storage = Modular.get();
+  final ImagePicker picker = ImagePicker();
 
   _PerfilStoreBase(
       {required this.perfilService, required this.imageRepository}) {
@@ -75,5 +80,37 @@ abstract class _PerfilStoreBase with Store {
   saveTime() async {
     await perfilService.saveTime(client.perfilDio);
     getList();
+  }
+
+  Future atualizaImagem(String origemImagem) async {
+    XFile? image;
+    switch (origemImagem) {
+      case "camera":
+        image = await picker.pickImage(source: ImageSource.camera);
+        break;
+      case "galeria":
+        image = await picker.pickImage(source: ImageSource.gallery);
+        break;
+    }
+    if (image != null) {
+      client.setLoadingImagem(true);
+    }
+    var imagebytes = await image?.readAsBytes();
+    List<int> listData = imagebytes!.cast();
+    FormData formData = FormData.fromMap(
+      {
+        "urlImage": MultipartFile.fromBytes(listData,
+            filename: image!.path.split('/').last + '.png'),
+      },
+    );
+
+    Response response;
+    response = await DioStruture()
+        .dioAction()
+        .put('perfil/${client.perfilDio.id}', data: formData);
+    DioStruture().statusRequest(response);
+    getBydDioId();
+
+    client.setLoadingImagem(false);
   }
 }
