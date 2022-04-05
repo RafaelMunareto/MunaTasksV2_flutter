@@ -93,7 +93,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                 ),
                 onTap: () => DialogButtom().showDialog(
                     ActionsFaseWidget(
-                      faseList: store.client.settings.fase,
+                      faseList: store.client.fase,
                       setActionsFase: store.clientCreate.setFase,
                     ),
                     context),
@@ -103,7 +103,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                   GestureDetector(
                     onTap: () => DialogButtom().showDialog(
                         CreateUserSubtarefaWidget(
-                          userLista: const [],
+                          userLista: store.client.perfis,
                           setCreateImageUser:
                               store.clientCreate.setCreateImageUser,
                           setUserCreateSelection:
@@ -127,7 +127,8 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                             : Padding(
                                 padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
                                 child: CircleAvatarWidget(
-                                    url: store.clientCreate.imageUser),
+                                  url: store.clientCreate.imageUser,
+                                ),
                               );
                       },
                     ),

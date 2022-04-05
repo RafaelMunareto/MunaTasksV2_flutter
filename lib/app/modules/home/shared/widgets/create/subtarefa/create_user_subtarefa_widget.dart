@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/home/home_store.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 
@@ -25,6 +28,7 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animacaoOpacity;
+  final HomeStore store = Modular.get();
 
   @override
   void initState() {
@@ -67,42 +71,42 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
         body: Center(
           child: Observer(
             builder: (_) {
-              if (widget.userLista!.data == null) {
+              if (store.client.perfis.isNotEmpty) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else {
-                List<UserModel> list = widget.userLista!.data;
+                List<PerfilDioModel> list = store.client.perfis;
 
                 return SingleChildScrollView(
                   child: Wrap(
                     runAlignment: WrapAlignment.spaceAround,
                     spacing: 24,
                     children: [
-                      for (var index = 0; index < list.length; index++)
+                      for (var linha in list)
                         Padding(
                           padding: kIsWeb
                               ? const EdgeInsets.only(bottom: 16.0)
                               : const EdgeInsets.only(bottom: 4.0),
                           child: InputChip(
-                            key: ObjectKey(list[index].reference),
+                            key: ObjectKey(linha.id),
                             labelPadding: const EdgeInsets.all(2),
                             elevation: 4.0,
                             avatar: CircleAvatarWidget(
-                              url: list[index].urlImage,
+                              url: linha.urlImage,
                             ),
                             label: SizedBox(
                               width: 70,
                               child: Text(
-                                list[index].name,
+                                linha.name.name,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(fontSize: 12),
                               ),
                             ),
                             onPressed: () {
                               setState(() {
-                                widget.setUserCreateSelection(list[index]);
-                                widget.setCreateImageUser(list[index].urlImage);
+                                widget.setUserCreateSelection(linha);
+                                widget.setCreateImageUser(linha.urlImage);
                                 FocusScope.of(context).unfocus();
                                 Modular.to.pop();
                               });

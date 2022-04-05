@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
-import 'package:munatasks2/app/modules/home/shared/model/fase_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/fase_dio_model.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class ActionsFaseWidget extends StatefulWidget {
@@ -62,12 +62,12 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
         body: Center(
           child: Observer(
             builder: (_) {
-              if (store.client.settings.fase!.isEmpty) {
+              if (store.client.fase.isEmpty) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else {
-                List<dynamic>? list = store.client.settings.fase ?? [];
+                List<FaseDioModel>? list = store.client.fase;
                 return SingleChildScrollView(
                   child: Wrap(
                     runAlignment: WrapAlignment.center,
@@ -79,7 +79,7 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
                               ? const EdgeInsets.only(bottom: 16.0)
                               : const EdgeInsets.only(bottom: 4.0),
                           child: InputChip(
-                            key: ObjectKey(linha.id),
+                            key: UniqueKey(),
                             labelPadding: const EdgeInsets.all(2),
                             elevation: 8.0,
                             backgroundColor:

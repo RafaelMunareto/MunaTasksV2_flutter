@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/modules/home/shared/model/subtarefa_insert_model.dart';
+import 'package:munatasks2/app/modules/home/home_store.dart';
 
 class CreateSubtarefaInsertWidget extends StatefulWidget {
   final dynamic subtarefaList;
@@ -25,6 +25,7 @@ class _CreateSubtarefaInsertWidgetState
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animacaoOpacity;
+  final HomeStore store = Modular.get();
 
   @override
   void initState() {
@@ -64,13 +65,13 @@ class _CreateSubtarefaInsertWidgetState
         body: Center(
           child: Observer(
             builder: (_) {
-              if (widget.subtarefaList!.data == null) {
+              if (store.client.settings.subtarefaInsert!.isEmpty) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else {
                 List<dynamic> list = [];
-                var selecione = SubtarefaInsertModel(subtarefa: 'Subtarefa');
+                var selecione = 'Subtarefa';
                 if (!list
                     .map((e) => e.subtarefa.contains('Subtarefa'))
                     .contains(true)) {
@@ -82,7 +83,7 @@ class _CreateSubtarefaInsertWidgetState
                     runAlignment: WrapAlignment.spaceAround,
                     spacing: 24,
                     children: [
-                      for (var index = 0; index < list.length; index++)
+                      for (var linha in store.client.settings.subtarefaInsert!)
                         Padding(
                           padding: kIsWeb
                               ? const EdgeInsets.only(bottom: 16.0)
@@ -98,15 +99,14 @@ class _CreateSubtarefaInsertWidgetState
                             label: SizedBox(
                               width: 100,
                               child: Text(
-                                list[index].subtarefa,
+                                linha,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(fontSize: 12),
                               ),
                             ),
                             onPressed: () {
                               setState(() {
-                                widget.setSubtarefaSelection(
-                                    list[index].subtarefa);
+                                widget.setSubtarefaSelection(linha);
                                 FocusScope.of(context).unfocus();
                                 Modular.to.pop();
                               });

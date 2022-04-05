@@ -1,10 +1,9 @@
 import 'package:mobx/mobx.dart';
-import 'package:munatasks2/app/modules/home/shared/model/fase_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
+
+import '../../../settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 
 part 'client_create_store.g.dart';
 
@@ -12,16 +11,13 @@ class ClientCreateStore = _ClientCreateStoreBase with _$ClientCreateStore;
 
 abstract class _ClientCreateStoreBase with Store {
   @observable
-  TarefaModel tarefaModelSave = TarefaModel();
-
-  @observable
-  SubtarefaModel subtarefaModel = SubtarefaModel();
+  TarefaDioModel tarefaModelSave = TarefaDioModel();
 
   @observable
   List<UserModel> users = [];
 
   @observable
-  EtiquetaModel tarefaModelSaveEtiqueta = EtiquetaModel();
+  EtiquetaDioModel tarefaModelSaveEtiqueta = EtiquetaDioModel();
 
   @observable
   String tarefaModelSaveTexto = '';
@@ -54,7 +50,7 @@ abstract class _ClientCreateStoreBase with Store {
   String subtarefaTextSave = '';
 
   @observable
-  List<SubtarefaModel> subtarefas = [];
+  List<SubtareDiofaModel> subtarefas = [];
 
   @action
   setSubtarefasUpdate(value) => subtarefas = value;
@@ -129,7 +125,7 @@ abstract class _ClientCreateStoreBase with Store {
   cleanPrioridadeSaveSelection() => tarefaModelPrioritario = 0;
 
   @action
-  cleanTarefaModelSave() => tarefaModelSave = TarefaModel();
+  cleanTarefaModelSave() => tarefaModelSave = TarefaDioModel();
 
   @action
   cleanUsersSave() => users = [];
@@ -138,7 +134,7 @@ abstract class _ClientCreateStoreBase with Store {
   cleanSubtarefas() => subtarefas = [];
 
   @action
-  cleanSaveEtiqueta() => tarefaModelSave.etiqueta = EtiquetaModel();
+  cleanSaveEtiqueta() => tarefaModelSave.etiqueta = EtiquetaDioModel();
 
   @action
   cleanIndividualChip() => individualChip = [];
@@ -159,7 +155,8 @@ abstract class _ClientCreateStoreBase with Store {
   cleanReference() => reference = null;
 
   @action
-  cleanTarefaModelSaveEtiqueta() => tarefaModelSaveEtiqueta = EtiquetaModel();
+  cleanTarefaModelSaveEtiqueta() =>
+      tarefaModelSaveEtiqueta = EtiquetaDioModel();
 
   @action
   cleanSave() {
@@ -230,7 +227,7 @@ abstract class _ClientCreateStoreBase with Store {
   @action
   setTarefa() {
     tarefaModelSave.etiqueta = tarefaModelSaveEtiqueta;
-    tarefaModelSave.reference = reference;
+    tarefaModelSave.id = reference;
     tarefaModelSave.texto = tarefaModelSaveTexto;
     tarefaModelSave.fase = changeFaseTarefa(faseTarefa);
     tarefaModelSave.data = tarefaModelData;
@@ -294,6 +291,9 @@ abstract class _ClientCreateStoreBase with Store {
     setLoadingUser(false);
   }
 
+  @observable
+  SubtareDiofaModel subtarefaModel = SubtareDiofaModel();
+
   @action
   setSubtarefas() {
     setLoadingSubtarefa(true);
@@ -314,7 +314,7 @@ abstract class _ClientCreateStoreBase with Store {
       }
     }
     subtarefas.add(subtarefaModel);
-    subtarefaModel = SubtarefaModel();
+    subtarefaModel = SubtareDiofaModel();
     setLoadingSubtarefa(false);
     setLoadingUser(false);
     cleanSubtarefa();

@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
-import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
 
 class RetardActionWidget extends StatefulWidget {
   final Function updateDate;
@@ -58,7 +58,7 @@ class _RetardActionWidgetState extends State<RetardActionWidget>
   }
 
   Widget _buildAnimation(BuildContext context, Widget? child) {
-    List<RetardModel> list = store.client.retard;
+    List<RetardDioModel>? list = store.client.retard;
     return FadeTransition(
       opacity: _animacaoOpacity,
       child: Scaffold(
@@ -82,7 +82,7 @@ class _RetardActionWidgetState extends State<RetardActionWidget>
                       label: SizedBox(
                         width: 100,
                         child: Text(
-                          linha.tempoName,
+                          linha.tempoName ?? '',
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(fontSize: 12),
                         ),

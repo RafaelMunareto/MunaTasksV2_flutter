@@ -4,14 +4,14 @@ class FaseDioModel {
   String? id;
   String color;
   String name;
-  int? icon;
+  int icon;
   String status;
 
   FaseDioModel(
       {this.id = '',
       this.color = '',
       this.name = '',
-      this.icon,
+      this.icon = 0,
       this.status = ''});
 
   factory FaseDioModel.fromDocument(DocumentSnapshot doc) {

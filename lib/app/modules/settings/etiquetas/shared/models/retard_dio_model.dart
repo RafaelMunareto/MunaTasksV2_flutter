@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RetardDioModel {
   String? id;
-  String tempoName;
+  String? tempoName;
   int? tempoValue;
 
   RetardDioModel({

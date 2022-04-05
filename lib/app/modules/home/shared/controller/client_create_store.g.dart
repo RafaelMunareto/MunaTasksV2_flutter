@@ -28,31 +28,15 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
       Atom(name: '_ClientCreateStoreBase.tarefaModelSave');
 
   @override
-  TarefaModel get tarefaModelSave {
+  TarefaDioModel get tarefaModelSave {
     _$tarefaModelSaveAtom.reportRead();
     return super.tarefaModelSave;
   }
 
   @override
-  set tarefaModelSave(TarefaModel value) {
+  set tarefaModelSave(TarefaDioModel value) {
     _$tarefaModelSaveAtom.reportWrite(value, super.tarefaModelSave, () {
       super.tarefaModelSave = value;
-    });
-  }
-
-  final _$subtarefaModelAtom =
-      Atom(name: '_ClientCreateStoreBase.subtarefaModel');
-
-  @override
-  SubtarefaModel get subtarefaModel {
-    _$subtarefaModelAtom.reportRead();
-    return super.subtarefaModel;
-  }
-
-  @override
-  set subtarefaModel(SubtarefaModel value) {
-    _$subtarefaModelAtom.reportWrite(value, super.subtarefaModel, () {
-      super.subtarefaModel = value;
     });
   }
 
@@ -75,13 +59,13 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
       Atom(name: '_ClientCreateStoreBase.tarefaModelSaveEtiqueta');
 
   @override
-  EtiquetaModel get tarefaModelSaveEtiqueta {
+  EtiquetaDioModel get tarefaModelSaveEtiqueta {
     _$tarefaModelSaveEtiquetaAtom.reportRead();
     return super.tarefaModelSaveEtiqueta;
   }
 
   @override
-  set tarefaModelSaveEtiqueta(EtiquetaModel value) {
+  set tarefaModelSaveEtiqueta(EtiquetaDioModel value) {
     _$tarefaModelSaveEtiquetaAtom
         .reportWrite(value, super.tarefaModelSaveEtiqueta, () {
       super.tarefaModelSaveEtiqueta = value;
@@ -250,13 +234,13 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   final _$subtarefasAtom = Atom(name: '_ClientCreateStoreBase.subtarefas');
 
   @override
-  List<SubtarefaModel> get subtarefas {
+  List<SubtareDiofaModel> get subtarefas {
     _$subtarefasAtom.reportRead();
     return super.subtarefas;
   }
 
   @override
-  set subtarefas(List<SubtarefaModel> value) {
+  set subtarefas(List<SubtareDiofaModel> value) {
     _$subtarefasAtom.reportWrite(value, super.subtarefas, () {
       super.subtarefas = value;
     });
@@ -321,6 +305,22 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   set reference(dynamic value) {
     _$referenceAtom.reportWrite(value, super.reference, () {
       super.reference = value;
+    });
+  }
+
+  final _$subtarefaModelAtom =
+      Atom(name: '_ClientCreateStoreBase.subtarefaModel');
+
+  @override
+  SubtareDiofaModel get subtarefaModel {
+    _$subtarefaModelAtom.reportRead();
+    return super.subtarefaModel;
+  }
+
+  @override
+  set subtarefaModel(SubtareDiofaModel value) {
+    _$subtarefaModelAtom.reportWrite(value, super.subtarefaModel, () {
+      super.subtarefaModel = value;
     });
   }
 
@@ -793,7 +793,6 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   String toString() {
     return '''
 tarefaModelSave: ${tarefaModelSave},
-subtarefaModel: ${subtarefaModel},
 users: ${users},
 tarefaModelSaveEtiqueta: ${tarefaModelSaveEtiqueta},
 tarefaModelSaveTexto: ${tarefaModelSaveTexto},
@@ -811,6 +810,7 @@ loadingSubtarefa: ${loadingSubtarefa},
 loadingUser: ${loadingUser},
 loadingTarefa: ${loadingTarefa},
 reference: ${reference},
+subtarefaModel: ${subtarefaModel},
 isValidTarefa: ${isValidTarefa},
 isValidSubtarefa: ${isValidSubtarefa}
     ''';

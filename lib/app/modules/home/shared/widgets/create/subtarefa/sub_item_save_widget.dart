@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class SubItemSaveWidget extends StatefulWidget {
   final bool theme;
-  final SubtarefaModel subtarefa;
+  final SubtareDiofaModel subtarefa;
   const SubItemSaveWidget(
       {Key? key, required this.theme, required this.subtarefa})
       : super(key: key);

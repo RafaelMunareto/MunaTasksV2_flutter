@@ -1,10 +1,9 @@
 import 'package:mobx/mobx.dart';
-import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/tarefa_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/fase_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
@@ -24,9 +23,6 @@ abstract class _ClientStoreBase with Store {
 
   @observable
   String cardSelection = '';
-
-  @observable
-  List<TarefaModel> tarefas = [];
 
   @observable
   SettingsModel settings = SettingsModel();
@@ -89,9 +85,6 @@ abstract class _ClientStoreBase with Store {
   setOrderAscDesc(value) => orderAscDesc = value;
 
   @observable
-  List<TarefaModel> tarefasBase = [];
-
-  @observable
   bool loading = true;
 
   @observable
@@ -105,25 +98,6 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setLoading(value) => loading = value;
-
-  @action
-  setTarefa(value) => tarefasBase.add(value);
-
-  @action
-  setTarefasBase(value) => tarefasBase = value;
-
-  @action
-  deleteTarefasBase(value) => tarefasBase
-      .removeWhere((element) => element.reference!.id == value.reference!.id);
-
-  @action
-  cleanTarefasBase() => tarefasBase = [];
-
-  @action
-  changeTarefa(value) => tarefas = value;
-
-  @action
-  cleanTarefas() => tarefas = [];
 
   @observable
   int navigateBarSelection = 0;
@@ -160,12 +134,6 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setSubtarefaModel(value) => subtarefaModel.add(value);
-
-  @observable
-  EtiquetaModel? etiquetasRelacionadas;
-
-  @action
-  setEtiquetasRelacionadas(value) => etiquetasRelacionadas = value;
 
   @observable
   UserModel? userSubtarefa;
@@ -246,8 +214,14 @@ abstract class _ClientStoreBase with Store {
   setEtiquetas(value) => etiquetas = value;
 
   @observable
-  List<RetardModel> retard = [];
+  List<RetardDioModel> retard = [];
 
   @action
   setRetard(value) => retard = value;
+
+  @observable
+  List<FaseDioModel> fase = [];
+
+  @action
+  setFase(value) => fase = value;
 }

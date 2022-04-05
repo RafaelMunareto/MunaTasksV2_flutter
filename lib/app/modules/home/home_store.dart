@@ -7,11 +7,11 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_create_store.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
-import 'package:munatasks2/app/modules/home/shared/model/retard_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
-import 'package:munatasks2/app/modules/home/shared/model/subtarefa_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/fase_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
@@ -119,8 +119,11 @@ abstract class HomeStoreBase with Store {
     response = await DioStruture().dioAction().get('settings');
     DioStruture().statusRequest(response);
     var resposta = SettingsModel.fromJson(response.data[0]);
+    client.setFase((resposta.fase as List).map((e) {
+      return FaseDioModel.fromJson(e);
+    }).toList());
     client.setRetard((resposta.retard as List).map((e) {
-      return RetardModel.fromJson(e);
+      return RetardDioModel.fromJson(e);
     }).toList());
     client.setSettings(resposta);
   }
@@ -241,7 +244,7 @@ abstract class HomeStoreBase with Store {
   }
 
   changeSubtarefaAction(
-      SubtarefaModel subtarefaModel, TarefaDioModel tarefaModel) {
+      SubtareDiofaModel subtarefaModel, TarefaDioModel tarefaModel) {
     subtarefaModel.status = client.subtarefaAction;
     save(tarefaModel);
   }
@@ -260,23 +263,23 @@ abstract class HomeStoreBase with Store {
   changeOrderList() {
     switch (client.orderSelection) {
       case 'ETIQUETA':
-        return client.tarefas.sort((a, b) => client.orderAscDesc
+        return client.taskDio.sort((a, b) => client.orderAscDesc
             ? a.etiqueta.etiqueta.compareTo(b.etiqueta.etiqueta)
             : b.etiqueta.etiqueta.compareTo(a.etiqueta.etiqueta));
       case 'ASSUNTO':
-        return client.tarefas.sort((a, b) => client.orderAscDesc
+        return client.taskDio.sort((a, b) => client.orderAscDesc
             ? a.texto.compareTo(b.texto)
             : b.texto.compareTo(a.texto));
       case 'DATA':
-        return client.tarefas.sort((a, b) => client.orderAscDesc
+        return client.taskDio.sort((a, b) => client.orderAscDesc
             ? a.data.compareTo(b.data)
             : b.data.compareTo(a.data));
       case 'PRIORIDADE':
-        return client.tarefas.sort((a, b) => client.orderAscDesc
+        return client.taskDio.sort((a, b) => client.orderAscDesc
             ? a.prioridade.compareTo(b.prioridade)
             : b.prioridade.compareTo(a.prioridade));
       default:
-        return client.tarefas;
+        return client.taskDio;
     }
   }
 }

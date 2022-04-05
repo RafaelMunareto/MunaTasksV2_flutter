@@ -39,21 +39,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$tarefasAtom = Atom(name: '_ClientStoreBase.tarefas');
-
-  @override
-  List<TarefaModel> get tarefas {
-    _$tarefasAtom.reportRead();
-    return super.tarefas;
-  }
-
-  @override
-  set tarefas(List<TarefaModel> value) {
-    _$tarefasAtom.reportWrite(value, super.tarefas, () {
-      super.tarefas = value;
-    });
-  }
-
   final _$settingsAtom = Atom(name: '_ClientStoreBase.settings');
 
   @override
@@ -222,21 +207,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$tarefasBaseAtom = Atom(name: '_ClientStoreBase.tarefasBase');
-
-  @override
-  List<TarefaModel> get tarefasBase {
-    _$tarefasBaseAtom.reportRead();
-    return super.tarefasBase;
-  }
-
-  @override
-  set tarefasBase(List<TarefaModel> value) {
-    _$tarefasBaseAtom.reportWrite(value, super.tarefasBase, () {
-      super.tarefasBase = value;
-    });
-  }
-
   final _$loadingAtom = Atom(name: '_ClientStoreBase.loading');
 
   @override
@@ -356,23 +326,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set subtarefaModel(List<SubtareDiofaModel> value) {
     _$subtarefaModelAtom.reportWrite(value, super.subtarefaModel, () {
       super.subtarefaModel = value;
-    });
-  }
-
-  final _$etiquetasRelacionadasAtom =
-      Atom(name: '_ClientStoreBase.etiquetasRelacionadas');
-
-  @override
-  EtiquetaModel? get etiquetasRelacionadas {
-    _$etiquetasRelacionadasAtom.reportRead();
-    return super.etiquetasRelacionadas;
-  }
-
-  @override
-  set etiquetasRelacionadas(EtiquetaModel? value) {
-    _$etiquetasRelacionadasAtom.reportWrite(value, super.etiquetasRelacionadas,
-        () {
-      super.etiquetasRelacionadas = value;
     });
   }
 
@@ -530,15 +483,30 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   final _$retardAtom = Atom(name: '_ClientStoreBase.retard');
 
   @override
-  List<RetardModel> get retard {
+  List<RetardDioModel> get retard {
     _$retardAtom.reportRead();
     return super.retard;
   }
 
   @override
-  set retard(List<RetardModel> value) {
+  set retard(List<RetardDioModel> value) {
     _$retardAtom.reportWrite(value, super.retard, () {
       super.retard = value;
+    });
+  }
+
+  final _$faseAtom = Atom(name: '_ClientStoreBase.fase');
+
+  @override
+  List<FaseDioModel> get fase {
+    _$faseAtom.reportRead();
+    return super.fase;
+  }
+
+  @override
+  set fase(List<FaseDioModel> value) {
+    _$faseAtom.reportWrite(value, super.fase, () {
+      super.fase = value;
     });
   }
 
@@ -678,72 +646,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
-  dynamic setTarefa(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setTarefa');
-    try {
-      return super.setTarefa(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setTarefasBase(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setTarefasBase');
-    try {
-      return super.setTarefasBase(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic deleteTarefasBase(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.deleteTarefasBase');
-    try {
-      return super.deleteTarefasBase(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic cleanTarefasBase() {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.cleanTarefasBase');
-    try {
-      return super.cleanTarefasBase();
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic changeTarefa(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.changeTarefa');
-    try {
-      return super.changeTarefa(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic cleanTarefas() {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.cleanTarefas');
-    try {
-      return super.cleanTarefas();
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic setNavigateBarSelection(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setNavigateBarSelection');
@@ -815,17 +717,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
         name: '_ClientStoreBase.setSubtarefaModel');
     try {
       return super.setSubtarefaModel(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setEtiquetasRelacionadas(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setEtiquetasRelacionadas');
-    try {
-      return super.setEtiquetasRelacionadas(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -975,11 +866,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setFase(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setFase');
+    try {
+      return super.setFase(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
 cardSelection: ${cardSelection},
-tarefas: ${tarefas},
 settings: ${settings},
 subtarefaActionList: ${subtarefaActionList},
 tarefasTotais: ${tarefasTotais},
@@ -991,7 +892,6 @@ prioridadeSelection: ${prioridadeSelection},
 subtarefaAction: ${subtarefaAction},
 retardSelection: ${retardSelection},
 orderAscDesc: ${orderAscDesc},
-tarefasBase: ${tarefasBase},
 loading: ${loading},
 loadingTasks: ${loadingTasks},
 theme: ${theme},
@@ -1000,7 +900,6 @@ color: ${color},
 icon: ${icon},
 usersBase: ${usersBase},
 subtarefaModel: ${subtarefaModel},
-etiquetasRelacionadas: ${etiquetasRelacionadas},
 userSubtarefa: ${userSubtarefa},
 imgUrl: ${imgUrl},
 searchValue: ${searchValue},
@@ -1011,7 +910,8 @@ taskDio: ${taskDio},
 userDio: ${userDio},
 perfis: ${perfis},
 etiquetas: ${etiquetas},
-retard: ${retard}
+retard: ${retard},
+fase: ${fase}
     ''';
   }
 }
