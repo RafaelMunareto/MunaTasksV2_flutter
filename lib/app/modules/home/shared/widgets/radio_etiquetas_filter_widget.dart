@@ -103,7 +103,9 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
                     children: [
                       for (var index = 0; index < list.length; index++)
                         Padding(
-                          padding: kIsWeb
+                          padding: kIsWeb &&
+                                  defaultTargetPlatform ==
+                                      TargetPlatform.windows
                               ? const EdgeInsets.only(bottom: 16.0)
                               : const EdgeInsets.only(bottom: 4.0),
                           child: InputChip(

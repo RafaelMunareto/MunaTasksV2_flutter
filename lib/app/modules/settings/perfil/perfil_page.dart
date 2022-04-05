@@ -40,9 +40,10 @@ class PerfilPageState extends State<PerfilPage> {
                   FocusScope.of(context).requestFocus(FocusNode());
                 },
                 child: Padding(
-                  padding: kIsWeb
-                      ? const EdgeInsets.all(84.0)
-                      : const EdgeInsets.all(0),
+                  padding:
+                      kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+                          ? const EdgeInsets.all(84.0)
+                          : const EdgeInsets.all(0),
                   child: Column(
                     children: [
                       ImagemPerfilWidget(errorName: store.client.validateName),

@@ -83,7 +83,9 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
                     children: [
                       for (var linha in list)
                         Padding(
-                          padding: kIsWeb
+                          padding: kIsWeb &&
+                                  defaultTargetPlatform ==
+                                      TargetPlatform.windows
                               ? const EdgeInsets.only(bottom: 16.0)
                               : const EdgeInsets.only(bottom: 4.0),
                           child: InputChip(

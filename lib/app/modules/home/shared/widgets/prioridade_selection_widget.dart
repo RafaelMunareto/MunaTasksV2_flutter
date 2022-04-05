@@ -75,7 +75,8 @@ class _PrioridadeSelectionWidgetState extends State<PrioridadeSelectionWidget>
               children: [
                 for (var linha in list)
                   Padding(
-                    padding: kIsWeb
+                    padding: kIsWeb &&
+                            defaultTargetPlatform == TargetPlatform.windows
                         ? const EdgeInsets.only(bottom: 16.0)
                         : const EdgeInsets.only(bottom: 8.0),
                     child: InputChip(
@@ -89,7 +90,10 @@ class _PrioridadeSelectionWidgetState extends State<PrioridadeSelectionWidget>
                               color: ConvertIcon().convertColorFlaf(linha),
                             ),
                       label: SizedBox(
-                        width: kIsWeb ? 100 : MediaQuery.of(context).size.width,
+                        width: kIsWeb &&
+                                defaultTargetPlatform == TargetPlatform.windows
+                            ? 100
+                            : MediaQuery.of(context).size.width,
                         child: Text(
                           linha == 4
                               ? 'Normal'

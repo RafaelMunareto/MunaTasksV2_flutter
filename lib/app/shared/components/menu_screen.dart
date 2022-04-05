@@ -46,7 +46,7 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
               child: widget.open
                   ? SizedBox(
-                      width: kIsWeb
+                      width: defaultTargetPlatform == TargetPlatform.windows
                           ? MediaQuery.of(context).size.width * 0.2
                           : MediaQuery.of(context).size.width,
                       child: ListView(

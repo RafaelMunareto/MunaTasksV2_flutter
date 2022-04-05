@@ -19,7 +19,7 @@ class _ColorsWidgetState extends State<ColorsWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: kIsWeb
+      height: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
           ? MediaQuery.of(context).size.height * 0.4
           : MediaQuery.of(context).size.height * 0.5,
       child: Observer(

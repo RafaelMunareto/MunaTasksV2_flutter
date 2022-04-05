@@ -14,7 +14,9 @@ class IconRedondedWidget extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
-            border: kIsWeb ? null : Border.all(width: 2, color: color)),
+            border: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+                ? null
+                : Border.all(width: 2, color: color)),
         child: Icon(
           icon,
           color: color,

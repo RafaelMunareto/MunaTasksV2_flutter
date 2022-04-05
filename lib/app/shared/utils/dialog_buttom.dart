@@ -21,7 +21,7 @@ class DialogButtom {
           alignment: Alignment.bottomCenter,
           child: Container(
             height: width,
-            width: kIsWeb
+            width: defaultTargetPlatform == TargetPlatform.windows
                 ? MediaQuery.of(context).size.width * 0.5
                 : MediaQuery.of(context).size.width,
             child: SizedBox.expand(

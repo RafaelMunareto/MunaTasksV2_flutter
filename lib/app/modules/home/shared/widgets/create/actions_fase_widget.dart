@@ -75,7 +75,9 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
                     children: [
                       for (var linha in list)
                         Padding(
-                          padding: kIsWeb
+                          padding: kIsWeb &&
+                                  defaultTargetPlatform ==
+                                      TargetPlatform.windows
                               ? const EdgeInsets.only(bottom: 16.0)
                               : const EdgeInsets.only(bottom: 4.0),
                           child: InputChip(
@@ -90,7 +92,9 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
                                   ConvertIcon().convertColorFase(linha.color),
                             ),
                             label: SizedBox(
-                              width: kIsWeb
+                              width: kIsWeb &&
+                                      defaultTargetPlatform ==
+                                          TargetPlatform.windows
                                   ? 100
                                   : MediaQuery.of(context).size.width,
                               child: Text(

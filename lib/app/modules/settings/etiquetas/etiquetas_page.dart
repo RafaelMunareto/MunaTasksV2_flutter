@@ -113,7 +113,8 @@ class EtiquetasPageState extends State<EtiquetasPage>
                   child: Column(
                     children: [
                       SizedBox(
-                        height: kIsWeb
+                        height: kIsWeb &&
+                                defaultTargetPlatform == TargetPlatform.windows
                             ? MediaQuery.of(context).size.height * 0.07
                             : MediaQuery.of(context).size.height * 0.05,
                         child: Observer(builder: (_) {
@@ -121,7 +122,9 @@ class EtiquetasPageState extends State<EtiquetasPage>
                               ? FadeTransition(
                                   opacity: opacidade,
                                   child: Padding(
-                                    padding: kIsWeb
+                                    padding: kIsWeb &&
+                                            defaultTargetPlatform ==
+                                                TargetPlatform.windows
                                         ? const EdgeInsets.all(8)
                                         : const EdgeInsets.only(left: 12),
                                     child: ElevatedButton.icon(

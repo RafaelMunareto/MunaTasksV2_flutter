@@ -20,7 +20,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
   Widget build(BuildContext context) {
     return store.client.loading
         ? Container()
-        : kIsWeb
+        : kIsWeb && defaultTargetPlatform == TargetPlatform.windows
             ? Padding(
                 padding: const EdgeInsets.fromLTRB(8, 40, 8, 8),
                 child: SizedBox(

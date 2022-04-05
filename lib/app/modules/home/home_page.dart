@@ -31,10 +31,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
   void initState() {
     super.initState();
 
-    if (kIsWeb) {
-      setState(() {
-        store.client.setOpen(true);
-      });
+    if (kIsWeb && defaultTargetPlatform == TargetPlatform.windows) {
+      store.client.setOpen(true);
     }
 
     _controller = AnimationController(
@@ -80,7 +78,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
 
     return OrientationBuilder(
       builder: (context, orientation) {
-        if (orientation == Orientation.portrait || kIsWeb) {
+        if (orientation == Orientation.portrait ||
+            (defaultTargetPlatform == TargetPlatform.android)) {
           return Scaffold(
             appBar: !appVisible
                 ? AppBarWidget(
@@ -114,7 +113,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
               },
               child: Icon(
                 Icons.add,
-                size: kIsWeb ? 48 : 24,
+                size: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+                    ? 48
+                    : 24,
                 color: Colors.grey[300],
               ),
               backgroundColor: Colors.red,
@@ -128,7 +129,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                 setNavigateBarSelection: store.setNavigateBarSelection,
               );
             }),
-            body: kIsWeb
+            body: defaultTargetPlatform == TargetPlatform.android
                 ? Observer(
                     builder: (_) {
                       return store.client.loading

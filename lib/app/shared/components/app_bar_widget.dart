@@ -84,14 +84,19 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               ? _popMenu()
               : GestureDetector(
                   child: Padding(
-                    padding: kIsWeb
+                    padding: kIsWeb &&
+                            defaultTargetPlatform == TargetPlatform.windows
                         ? const EdgeInsets.only(right: 48.0)
                         : const EdgeInsets.only(right: 12.0),
                     child: !search
-                        ? const Icon(
+                        ? Icon(
                             Icons.search,
                             color: Colors.white,
-                            size: kIsWeb ? 48 : 24,
+                            size: kIsWeb &&
+                                    defaultTargetPlatform ==
+                                        TargetPlatform.windows
+                                ? 48
+                                : 24,
                           )
                         : const Icon(Icons.close, color: Colors.white),
                   ),
@@ -137,7 +142,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                           ? true
                           : false);
                 },
-                child: kIsWeb
+                child: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
                     ? Container()
                     : const Icon(
                         Icons.menu,
@@ -150,11 +155,11 @@ class _AppBarWidgetState extends State<AppBarWidget> {
 
   _popMenu() {
     return PopupMenuButton(
-      icon: const Padding(
-        padding: kIsWeb
-            ? EdgeInsets.only(right: 48.0)
-            : EdgeInsets.only(right: 12.0),
-        child: Icon(
+      icon: Padding(
+        padding: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+            ? const EdgeInsets.only(right: 48.0)
+            : const EdgeInsets.only(right: 12.0),
+        child: const Icon(
           Icons.more_vert,
           color: Colors.white,
         ),

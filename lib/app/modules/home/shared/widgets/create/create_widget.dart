@@ -89,7 +89,9 @@ class _CreateWidgetState extends State<CreateWidget>
                                 SizedBox(
                                   width: double.infinity,
                                   child: Padding(
-                                    padding: kIsWeb
+                                    padding: kIsWeb &&
+                                            defaultTargetPlatform ==
+                                                TargetPlatform.windows
                                         ? const EdgeInsets.all(8)
                                         : const EdgeInsets.only(
                                             top: 8.0,

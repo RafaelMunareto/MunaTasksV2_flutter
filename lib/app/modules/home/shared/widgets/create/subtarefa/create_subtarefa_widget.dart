@@ -40,7 +40,9 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
             color: store.client.theme ? Colors.black38 : Colors.black12,
             borderRadius: BorderRadius.circular(4)),
         child: Padding(
-          padding: kIsWeb ? const EdgeInsets.all(8.0) : const EdgeInsets.all(0),
+          padding: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+              ? const EdgeInsets.all(8.0)
+              : const EdgeInsets.all(0),
           child: Wrap(
             alignment: WrapAlignment.spaceAround,
             children: [
@@ -114,7 +116,9 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                       builder: (_) {
                         return store.clientCreate.imageUser == ""
                             ? Padding(
-                                padding: kIsWeb
+                                padding: kIsWeb &&
+                                        defaultTargetPlatform ==
+                                            TargetPlatform.windows
                                     ? const EdgeInsets.fromLTRB(0, 4, 4, 16)
                                     : const EdgeInsets.fromLTRB(0, 12, 8, 16),
                                 child: Icon(
@@ -175,7 +179,8 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                   alignment: WrapAlignment.end,
                   children: [
                     Padding(
-                      padding: kIsWeb
+                      padding: kIsWeb &&
+                              defaultTargetPlatform == TargetPlatform.windows
                           ? const EdgeInsets.fromLTRB(4, 8, 4, 8)
                           : const EdgeInsets.fromLTRB(4, 0, 4, 4),
                       child: store.clientCreate.loadingSubtarefa

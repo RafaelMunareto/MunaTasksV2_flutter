@@ -33,7 +33,7 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
-        return kIsWeb
+        return kIsWeb && defaultTargetPlatform == TargetPlatform.windows
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -21,7 +21,7 @@ class ButtonSaveWidget extends StatelessWidget {
           return AlertDialog(
             title: const Text('Erros'),
             content: SizedBox(
-              width: kIsWeb
+              width: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
                   ? MediaQuery.of(context).size.width * 0.5
                   : MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.3,

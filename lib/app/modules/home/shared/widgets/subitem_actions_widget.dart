@@ -30,9 +30,10 @@ class _SubitemActionsWidgetState extends State<SubitemActionsWidget> {
           children: [
             for (var linha in store.client.subtarefaActionList)
               Padding(
-                padding: kIsWeb
-                    ? const EdgeInsets.all(8)
-                    : const EdgeInsets.only(bottom: 4.0),
+                padding:
+                    kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+                        ? const EdgeInsets.all(8)
+                        : const EdgeInsets.only(bottom: 4.0),
                 child: InputChip(
                   key: ObjectKey(linha.toString()),
                   labelPadding: const EdgeInsets.all(2),

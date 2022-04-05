@@ -51,7 +51,7 @@ class _DateSaveWidgetState extends State<DateSaveWidget> {
     }
 
     return SizedBox(
-      width: kIsWeb
+      width: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
           ? MediaQuery.of(context).size.width * 0.2
           : MediaQuery.of(context).size.width * 0.5,
       child: TextField(
