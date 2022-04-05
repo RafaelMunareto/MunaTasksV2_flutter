@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 
@@ -74,12 +73,6 @@ abstract class _EtiquetaStoreBase with Store {
   setUpdateLoading(value) => updateLoading = value;
 
   @observable
-  DocumentReference? reference;
-
-  @action
-  setReference(value) => reference = value;
-
-  @observable
   String? id;
 
   @action
@@ -124,7 +117,6 @@ abstract class _EtiquetaStoreBase with Store {
   @action
   setCleanVariables() {
     setEtiqueta('');
-    setReference(null);
     setIcon(null);
     setColor('');
   }

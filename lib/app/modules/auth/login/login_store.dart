@@ -3,7 +3,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/auth/shared/models/client_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
-import 'package:munatasks2/app/shared/utils/error_pt_br.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
 
@@ -118,21 +117,21 @@ abstract class _LoginStoreBase with Store {
   authenticateBiometric() {
     auth.authenticateWithBiometrics(faceOrFinger).then((value) {
       if (value == 'Authorized') {
-        setLoading(true);
-        auth
-            .getEmailPasswordLogin(loginStorage![0], loginStorage![1])
-            .then((value) {
-          if (value.user.emailVerified) {
-            Modular.to.navigate('/home/');
-          }
-          setLoading(false);
-          setErrOrGoal(false);
-          setMsg('Você deve validar o email primeiro!');
-        }).catchError((e) {
-          setLoading(false);
-          setErrOrGoal(false);
-          setMsg(ErrorPtBr().verificaCodeErro('auth/' + e.code));
-        });
+        // setLoading(true);
+        // auth
+        //     .getEmailPasswordLogin(loginStorage![0], loginStorage![1])
+        //     .then((value) {
+        //   if (value.user.emailVerified) {
+        //     Modular.to.navigate('/home/');
+        //   }
+        //   setLoading(false);
+        //   setErrOrGoal(false);
+        //   setMsg('Você deve validar o email primeiro!');
+        // }).catchError((e) {
+        //   setLoading(false);
+        //   setErrOrGoal(false);
+        //   setMsg(ErrorPtBr().verificaCodeErro('auth/' + e.code));
+        // });
       }
     });
   }
@@ -168,7 +167,7 @@ abstract class _LoginStoreBase with Store {
   @action
   checkSupportDevice() async {
     await getStorageLogin();
-    if (!kIsWeb) {
+    if (!kIsWeb && defaultTargetPlatform != TargetPlatform.windows) {
       await bio.isDeviceSupported().then((isSupported) => supportState =
           isSupported && loginStorage != null
               ? SupportState.supported
@@ -182,16 +181,16 @@ abstract class _LoginStoreBase with Store {
   submitStorage() {
     storage.get('login-normal').then((value) {
       if (value == []) {
-        auth.getEmailPasswordLogin(value[0], value[1]).then((value) {
-          setLoading(false);
-          setErrOrGoal(false);
-          setMsg('Você deve validar o email primeiro!');
-          Modular.to.navigate('/home/');
-        }).catchError((e) {
-          setLoading(false);
-          setErrOrGoal(false);
-          setMsg(ErrorPtBr().verificaCodeErro('auth/' + e.code));
-        });
+        // auth.getEmailPasswordLogin(value[0], value[1]).then((value) {
+        //   setLoading(false);
+        //   setErrOrGoal(false);
+        //   setMsg('Você deve validar o email primeiro!');
+        //   Modular.to.navigate('/home/');
+        // }).catchError((e) {
+        //   setLoading(false);
+        //   setErrOrGoal(false);
+        //   setMsg(ErrorPtBr().verificaCodeErro('auth/' + e.code));
+        // });
       }
     });
   }

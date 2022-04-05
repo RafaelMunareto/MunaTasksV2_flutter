@@ -206,6 +206,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$urlImageAtom = Atom(name: '_ClientStoreBase.urlImage');
+
+  @override
+  String get urlImage {
+    _$urlImageAtom.reportRead();
+    return super.urlImage;
+  }
+
+  @override
+  set urlImage(String value) {
+    _$urlImageAtom.reportWrite(value, super.urlImage, () {
+      super.urlImage = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -375,6 +390,28 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setUrlImage(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setUrlImage');
+    try {
+      return super.setUrlImage(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic cleanUrlImage() {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.cleanUrlImage');
+    try {
+      return super.cleanUrlImage();
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 urlImagemRecuperada: ${urlImagemRecuperada},
@@ -389,6 +426,7 @@ textFieldNameBool: ${textFieldNameBool},
 userSelection: ${userSelection},
 perfilDio: ${perfilDio},
 users: ${users},
+urlImage: ${urlImage},
 isValideName: ${isValideName},
 isValideNameTime: ${isValideNameTime}
     ''';

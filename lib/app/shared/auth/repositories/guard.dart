@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
@@ -8,7 +7,6 @@ import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_sh
 
 class AuthGuard extends RouteGuard {
   final ILocalStorage storage = LocalStorageShare();
-  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Future<bool> canActivate(String path, ModularRoute router) async {
     UserDioClientModel user = UserDioClientModel();

@@ -1,7 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/shared/auth/auth_controller.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
+import 'package:munatasks2/app/shared/auth/repositories/auth_repository.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:simple_animations/simple_animations.dart';
 
@@ -50,8 +54,16 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
 }
 
 class _AppBarWidgetState extends State<AppBarWidget> {
-  final AuthController auth = Modular.get();
   bool search = false;
+  PerfilDioModel perfil = PerfilDioModel();
+  AuthRepository auth = AuthRepository();
+  getPerfil() async {
+    UserDioClientModel user = await auth.getUser();
+    Response response;
+    response = await DioStruture().dioAction().get('perfil/user/${user.id}');
+    DioStruture().statusRequest(response);
+    perfil = PerfilDioModel.fromJson(response.data[0]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,13 +161,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
-          child: auth.user!.photoURL != ''
+          child: perfil.urlImage != ''
               ? InputChip(
                   avatar: CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(auth.user!.photoURL.toString()),
+                    backgroundImage: NetworkImage(perfil.urlImage),
                   ),
-                  label: Text(auth.user!.displayName.toString()),
+                  label: Text(perfil.name.name),
                 )
               : Container(),
         ),

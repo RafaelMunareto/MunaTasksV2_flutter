@@ -182,21 +182,6 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$referenceAtom = Atom(name: '_EtiquetaStoreBase.reference');
-
-  @override
-  DocumentReference<Object?>? get reference {
-    _$referenceAtom.reportRead();
-    return super.reference;
-  }
-
-  @override
-  set reference(DocumentReference<Object?>? value) {
-    _$referenceAtom.reportWrite(value, super.reference, () {
-      super.reference = value;
-    });
-  }
-
   final _$idAtom = Atom(name: '_EtiquetaStoreBase.id');
 
   @override
@@ -352,17 +337,6 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
   }
 
   @override
-  dynamic setReference(dynamic value) {
-    final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
-        name: '_EtiquetaStoreBase.setReference');
-    try {
-      return super.setReference(value);
-    } finally {
-      _$_EtiquetaStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic setId(dynamic value) {
     final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
         name: '_EtiquetaStoreBase.setId');
@@ -409,7 +383,6 @@ loading: ${loading},
 errOrGoal: ${errOrGoal},
 msg: ${msg},
 updateLoading: ${updateLoading},
-reference: ${reference},
 id: ${id},
 color: ${color},
 isValidateEtiqueta: ${isValidateEtiqueta}

@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class SettingsModel {
   String? id;
   List? color;
@@ -21,7 +19,7 @@ class SettingsModel {
     this.version,
   });
 
-  factory SettingsModel.fromDocument(DocumentSnapshot doc) {
+  factory SettingsModel.fromDocument(doc) {
     return SettingsModel(
       id: doc['_id'],
       color: doc['color'],

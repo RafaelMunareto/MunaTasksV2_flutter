@@ -1,18 +1,7 @@
-import 'package:munatasks2/app/shared/auth/model/user_model.dart';
-
 abstract class IAuthRepository {
-  getUser();
   Future loginDio(email, password);
   getGoogleLogin();
-  Stream<List<UserModel>> getUsers();
+  getUser();
   Future getFacebookLogin();
-  Future getEmailPasswordLogin(email, password);
-  Future sendChangePasswordEmail(email);
-  Future changeResetPassword(password, code);
-  Future<String> getToken();
   Future getLogout();
-  Future createUserSendEmailLink(name, email, password);
-  Future createUserEmailPassword(name, email, password);
-  Future getGrupoEmail();
-  Future emailVerify(code);
 }

@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class FaseDioModel {
   String? id;
   String color;
@@ -14,7 +12,7 @@ class FaseDioModel {
       this.icon = 0,
       this.status = ''});
 
-  factory FaseDioModel.fromDocument(DocumentSnapshot doc) {
+  factory FaseDioModel.fromDocument(doc) {
     return FaseDioModel(
       id: doc['_id'],
       color: doc['color'],

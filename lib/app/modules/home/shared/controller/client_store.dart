@@ -6,7 +6,6 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/fase_dio
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
-import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
 import '../../../../shared/auth/model/user_dio_client.model.dart';
 
@@ -118,15 +117,6 @@ abstract class _ClientStoreBase with Store {
   int icon = 0;
 
   @observable
-  List<UserModel> usersBase = [];
-
-  @action
-  cleanUsersBase() => usersBase = [];
-
-  @action
-  setUsersBase(value) => usersBase.add(value);
-
-  @observable
   List<SubtareDiofaModel> subtarefaModel = [];
 
   @action
@@ -134,12 +124,6 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setSubtarefaModel(value) => subtarefaModel.add(value);
-
-  @observable
-  UserModel? userSubtarefa;
-
-  @action
-  setUserSubtarefa(value) => userSubtarefa = value;
 
   @observable
   String imgUrl =

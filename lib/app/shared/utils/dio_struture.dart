@@ -31,7 +31,9 @@ class DioStruture {
 
   tokenDio() async {
     await storage.get('userDio').then((value) {
-      token = jsonDecode(value[0])['token'];
+      if (value != null) {
+        token = jsonDecode(value[0])['token'];
+      }
     });
   }
 }

@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/auth/shared/models/client_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
-import 'package:munatasks2/app/shared/utils/error_pt_br.dart';
 import 'package:mobx/mobx.dart';
 
 part 'signup_store.g.dart';
@@ -11,7 +9,6 @@ class SignupStore = _SignupStoreBase with _$SignupStore;
 
 abstract class _SignupStoreBase with Store {
   ClientStore client = Modular.get();
-  FirebaseFirestore db = Modular.get();
   AuthController auth = Modular.get();
 
   @observable
@@ -46,11 +43,11 @@ abstract class _SignupStoreBase with Store {
 
   @action
   setGrupoEmail() {
-    auth.authRepository.getGrupoEmail().then((querySnapshot) async {
-      for (var doc in querySnapshot.docs) {
-        grupoEmail.add(doc["grupo"]);
-      }
-    });
+    // auth.authRepository.getGrupoEmail().then((querySnapshot) async {
+    //   for (var doc in querySnapshot.docs) {
+    //     grupoEmail.add(doc["grupo"]);
+    //   }
+    // });
   }
 
   @computed
@@ -67,19 +64,19 @@ abstract class _SignupStoreBase with Store {
       setCheckGrupoEmail(true);
     } else {
       setLoading(true);
-      auth
-          .createUserLinkEmail(client.name, client.email, client.password)
-          .then((value) {
-        setCheckGrupoEmail(false);
-        setMsgErrOrGoal(true);
-        setMsg('E-mail enviado com sucesso!');
-        setLoading(false);
-      }).catchError((e) {
-        setCheckGrupoEmail(true);
-        setMsgErrOrGoal(false);
-        setLoading(false);
-        setMsg(ErrorPtBr().verificaCodeErro(e.code));
-      });
+      // auth
+      //     .createUserLinkEmail(client.name, client.email, client.password)
+      //     .then((value) {
+      //   setCheckGrupoEmail(false);
+      //   setMsgErrOrGoal(true);
+      //   setMsg('E-mail enviado com sucesso!');
+      //   setLoading(false);
+      //}).catchError((e) {
+      //   setCheckGrupoEmail(true);
+      //   setMsgErrOrGoal(false);
+      //   setLoading(false);
+      //   setMsg(ErrorPtBr().verificaCodeErro(e.code));
+      // });
     }
   }
 

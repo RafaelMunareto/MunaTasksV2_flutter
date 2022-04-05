@@ -30,12 +30,14 @@ class _SplashWidgetState extends State<SplashWidget> {
   void initState() {
     super.initState();
     changeThemeStorage();
-    Future.delayed(const Duration(seconds: 2), () {
-      if (auth.getUser() != null) {
-        Modular.to.navigate('/home/');
-      } else {
-        Modular.to.navigate('/auth/');
-      }
+    Future.delayed(const Duration(seconds: 1), () {
+      theme.get('userDio').then((value) {
+        if (value != null) {
+          Modular.to.navigate('/home/');
+        } else {
+          Modular.to.navigate('/auth/');
+        }
+      });
     });
   }
 

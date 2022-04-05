@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class RetardDioModel {
   String? id;
   String? tempoName;
@@ -11,7 +9,7 @@ class RetardDioModel {
     this.tempoValue,
   });
 
-  factory RetardDioModel.fromDocument(DocumentSnapshot doc) {
+  factory RetardDioModel.fromDocument(doc) {
     return RetardDioModel(
       id: doc['_id'],
       tempoName: doc['tempoName'],

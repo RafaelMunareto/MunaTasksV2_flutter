@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
@@ -28,10 +26,8 @@ abstract class HomeStoreBase with Store {
   final IDashboardService dashboardService;
   final ILocalStorage storage = Modular.get();
   final AuthController auth = Modular.get();
-  final FirebaseFirestore firestore = Modular.get();
   final ClientStore client = Modular.get();
   final ClientCreateStore clientCreate = Modular.get();
-  final FirebaseFunctions functions = Modular.get();
 
   HomeStoreBase({required this.dashboardService}) {
     getList();
@@ -130,7 +126,7 @@ abstract class HomeStoreBase with Store {
 
   getUid() {
     storage.get('userDio').then((value) {
-      if (value.isNotEmpty) {
+      if (value != null) {
         client.setUserDio(
             UserDioClientModel.fromJson(jsonDecode(value[0])['user']));
       }
@@ -148,11 +144,14 @@ abstract class HomeStoreBase with Store {
 
   getPerfil() async {
     Response response;
-    response =
-        await DioStruture().dioAction().get('perfil/user/${client.userDio.id}');
-    DioStruture().statusRequest(response);
-    var resposta = PerfilDioModel.fromJson(response.data[0]);
-    client.setPerfilUserlogado(resposta);
+    if (client.userDio.id != null) {
+      response = await DioStruture()
+          .dioAction()
+          .get('perfil/user/${client.userDio.id}');
+      DioStruture().statusRequest(response);
+      var resposta = PerfilDioModel.fromJson(response.data[0]);
+      client.setPerfilUserlogado(resposta);
+    }
   }
 
   save(TarefaDioModel model) async {

@@ -27,13 +27,13 @@ mixin _$AuthController on _AuthControllerBase, Store {
   final _$userAtom = Atom(name: '_AuthControllerBase.user');
 
   @override
-  User? get user {
+  UserDioClientModel? get user {
     _$userAtom.reportRead();
     return super.user;
   }
 
   @override
-  set user(User? value) {
+  set user(UserDioClientModel? value) {
     _$userAtom.reportWrite(value, super.user, () {
       super.user = value;
     });
@@ -51,79 +51,11 @@ mixin _$AuthController on _AuthControllerBase, Store {
       ActionController(name: '_AuthControllerBase');
 
   @override
-  dynamic setUser(User? value) {
+  dynamic setUser(UserDioClientModel value) {
     final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
         name: '_AuthControllerBase.setUser');
     try {
       return super.setUser(value);
-    } finally {
-      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  Future<dynamic> createUserLinkEmail(
-      dynamic name, dynamic email, dynamic password) {
-    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
-        name: '_AuthControllerBase.createUserLinkEmail');
-    try {
-      return super.createUserLinkEmail(name, email, password);
-    } finally {
-      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  Future<dynamic> createUserEmailPassword(
-      dynamic name, dynamic email, dynamic password) {
-    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
-        name: '_AuthControllerBase.createUserEmailPassword');
-    try {
-      return super.createUserEmailPassword(name, email, password);
-    } finally {
-      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  Future<dynamic> getGrupoEmail() {
-    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
-        name: '_AuthControllerBase.getGrupoEmail');
-    try {
-      return super.getGrupoEmail();
-    } finally {
-      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  Future<dynamic> getEmailPasswordLogin(dynamic email, dynamic password) {
-    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
-        name: '_AuthControllerBase.getEmailPasswordLogin');
-    try {
-      return super.getEmailPasswordLogin(email, password);
-    } finally {
-      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  Future<dynamic> sendChangePasswordEmail(dynamic email) {
-    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
-        name: '_AuthControllerBase.sendChangePasswordEmail');
-    try {
-      return super.sendChangePasswordEmail(email);
-    } finally {
-      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  Future<dynamic> changeResetPassword(dynamic password, dynamic code) {
-    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
-        name: '_AuthControllerBase.changeResetPassword');
-    try {
-      return super.changeResetPassword(password, code);
     } finally {
       _$_AuthControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -135,39 +67,6 @@ mixin _$AuthController on _AuthControllerBase, Store {
         name: '_AuthControllerBase.logout');
     try {
       return super.logout();
-    } finally {
-      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  Future<dynamic> emailVerify(dynamic code) {
-    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
-        name: '_AuthControllerBase.emailVerify');
-    try {
-      return super.emailVerify(code);
-    } finally {
-      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  Stream<List<UserModel>> getUsers() {
-    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
-        name: '_AuthControllerBase.getUsers');
-    try {
-      return super.getUsers();
-    } finally {
-      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic usuarioNaoLogado() {
-    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
-        name: '_AuthControllerBase.usuarioNaoLogado');
-    try {
-      return super.usuarioNaoLogado();
     } finally {
       _$_AuthControllerBaseActionController.endAction(_$actionInfo);
     }

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 
 class SubtareDiofaModel {
@@ -14,7 +13,7 @@ class SubtareDiofaModel {
     this.texto = '',
   });
 
-  factory SubtareDiofaModel.fromDocument(DocumentSnapshot doc) {
+  factory SubtareDiofaModel.fromDocument(doc) {
     return SubtareDiofaModel(
       title: doc['title'],
       status: doc['status'],

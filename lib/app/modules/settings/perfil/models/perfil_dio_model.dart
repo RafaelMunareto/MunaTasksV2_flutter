@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
@@ -19,7 +18,7 @@ class PerfilDioModel {
     this.nameTime = '',
   });
 
-  factory PerfilDioModel.fromDocument(DocumentSnapshot doc) {
+  factory PerfilDioModel.fromDocument(doc) {
     return PerfilDioModel(
       idStaff: doc['idStaff'],
       manager: doc['manager'],

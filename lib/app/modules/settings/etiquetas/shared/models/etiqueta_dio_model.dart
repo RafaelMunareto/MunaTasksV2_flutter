@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class EtiquetaDioModel {
   String etiqueta;
   String? id;
@@ -8,7 +6,7 @@ class EtiquetaDioModel {
 
   EtiquetaDioModel({this.color = '', this.id, this.icon, this.etiqueta = ''});
 
-  factory EtiquetaDioModel.fromDocument(DocumentSnapshot doc) {
+  factory EtiquetaDioModel.fromDocument(doc) {
     return EtiquetaDioModel(
         etiqueta: doc['etiqueta'],
         color: doc['color'],

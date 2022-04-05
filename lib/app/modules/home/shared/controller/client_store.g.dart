@@ -299,21 +299,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$usersBaseAtom = Atom(name: '_ClientStoreBase.usersBase');
-
-  @override
-  List<UserModel> get usersBase {
-    _$usersBaseAtom.reportRead();
-    return super.usersBase;
-  }
-
-  @override
-  set usersBase(List<UserModel> value) {
-    _$usersBaseAtom.reportWrite(value, super.usersBase, () {
-      super.usersBase = value;
-    });
-  }
-
   final _$subtarefaModelAtom = Atom(name: '_ClientStoreBase.subtarefaModel');
 
   @override
@@ -326,21 +311,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set subtarefaModel(List<SubtareDiofaModel> value) {
     _$subtarefaModelAtom.reportWrite(value, super.subtarefaModel, () {
       super.subtarefaModel = value;
-    });
-  }
-
-  final _$userSubtarefaAtom = Atom(name: '_ClientStoreBase.userSubtarefa');
-
-  @override
-  UserModel? get userSubtarefa {
-    _$userSubtarefaAtom.reportRead();
-    return super.userSubtarefa;
-  }
-
-  @override
-  set userSubtarefa(UserModel? value) {
-    _$userSubtarefaAtom.reportWrite(value, super.userSubtarefa, () {
-      super.userSubtarefa = value;
     });
   }
 
@@ -679,28 +649,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
-  dynamic cleanUsersBase() {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.cleanUsersBase');
-    try {
-      return super.cleanUsersBase();
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setUsersBase(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setUsersBase');
-    try {
-      return super.setUsersBase(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic cleanSubtarefaModel() {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.cleanSubtarefaModel');
@@ -717,17 +665,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
         name: '_ClientStoreBase.setSubtarefaModel');
     try {
       return super.setSubtarefaModel(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setUserSubtarefa(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setUserSubtarefa');
-    try {
-      return super.setUserSubtarefa(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -898,9 +835,7 @@ theme: ${theme},
 navigateBarSelection: ${navigateBarSelection},
 color: ${color},
 icon: ${icon},
-usersBase: ${usersBase},
 subtarefaModel: ${subtarefaModel},
-userSubtarefa: ${userSubtarefa},
 imgUrl: ${imgUrl},
 searchValue: ${searchValue},
 perfilUserLogado: ${perfilUserLogado},

@@ -1,9 +1,7 @@
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
-import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -25,26 +23,7 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   initState() {
     changeThemeStorage();
-    initDynamicLinks();
     super.initState();
-  }
-
-  void initDynamicLinks() async {
-    FirebaseDynamicLinks.instance.onLink(onSuccess: (dynamicLink) async {
-      final Uri? deepLink = dynamicLink?.link;
-      if (deepLink != null) {
-        var actionCode = deepLink.queryParameters['oobCode'];
-        var tipo = deepLink.queryParameters['mode'];
-        if (tipo == 'verifyEmail') {
-          Modular.to.navigate('/auth/verify/?oobCode=$actionCode&mode=$tipo');
-        } else if (tipo == 'resetPassword') {
-          Modular.to.navigate('/auth/change/$actionCode');
-        }
-      }
-    }, onError: (OnLinkErrorException e) async {
-      SnackbarCustom()
-          .createSnackBarErrorFirebase(e.message, Colors.red, context);
-    });
   }
 
   void changeThemeStorage() async {

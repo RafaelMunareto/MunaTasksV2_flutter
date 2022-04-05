@@ -1,32 +1,37 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/shared/auth/model/user_model.dart';
+import 'dart:convert';
+
+import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/auth/repositories/auth_repository_interface.dart';
 import 'package:munatasks2/app/shared/auth/repositories/biometric_repository_interface.dart';
 import 'package:mobx/mobx.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 part 'auth_controller.g.dart';
 
 class AuthController = _AuthControllerBase with _$AuthController;
 
 abstract class _AuthControllerBase with Store {
   final IAuthRepository authRepository;
+  final ILocalStorage storage = LocalStorageShare();
   final IBiometricRepository biometricRepository;
 
   @observable
   AuthStatus status = AuthStatus.loading;
 
   @observable
-  User? user;
+  UserDioClientModel? user;
 
   _AuthControllerBase(
-      {required this.authRepository, required this.biometricRepository}) {
-    setUser(authRepository.getUser());
-  }
+      {required this.authRepository, required this.biometricRepository});
 
   @action
-  setUser(User? value) {
-    user = value;
-    status = user == null ? AuthStatus.logoff : AuthStatus.login;
+  setUser(UserDioClientModel value) {
+    storage.get('userDio').then((value) {
+      if (value != null) {
+        user = UserDioClientModel.fromJson(jsonDecode(value[0])['user']);
+      }
+    });
+    status = user!.id == null ? AuthStatus.logoff : AuthStatus.login;
   }
 
   @action
@@ -35,58 +40,8 @@ abstract class _AuthControllerBase with Store {
   }
 
   @action
-  Future createUserLinkEmail(name, email, password) {
-    return authRepository.createUserSendEmailLink(name, email, password);
-  }
-
-  @action
-  Future createUserEmailPassword(name, email, password) {
-    return authRepository.createUserEmailPassword(name, email, password);
-  }
-
-  @action
-  Future getGrupoEmail() {
-    return authRepository.getGrupoEmail();
-  }
-
-  @action
-  Future getEmailPasswordLogin(email, password) {
-    return authRepository.getEmailPasswordLogin(email, password);
-  }
-
-  @action
-  Future sendChangePasswordEmail(email) {
-    return authRepository.sendChangePasswordEmail(email);
-  }
-
-  @action
-  Future changeResetPassword(password, code) {
-    return authRepository.changeResetPassword(password, code);
-  }
-
-  @action
   Future logout() {
     return authRepository.getLogout();
-  }
-
-  @action
-  Future emailVerify(code) {
-    return authRepository.emailVerify(code);
-  }
-
-  @action
-  Stream<List<UserModel>> getUsers() {
-    return authRepository.getUsers();
-  }
-
-  //controle de acesso
-  @action
-  usuarioNaoLogado() {
-    setUser(authRepository.getUser());
-    if (user == null) {
-      return Modular.to.navigate('/auth/');
-    }
-    return false;
   }
 
   //biometric

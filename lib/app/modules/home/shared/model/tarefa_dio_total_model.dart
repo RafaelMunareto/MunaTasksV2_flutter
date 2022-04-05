@@ -1,7 +1,3 @@
-// ignore_for_file: unnecessary_brace_in_string_interps
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class TarefaDioTotalModel {
   String? id;
   dynamic name;
@@ -15,7 +11,7 @@ class TarefaDioTotalModel {
     this.tarefa,
   });
 
-  factory TarefaDioTotalModel.fromDocument(DocumentSnapshot doc) {
+  factory TarefaDioTotalModel.fromDocument(doc) {
     return TarefaDioTotalModel(
         id: doc['id'],
         name: doc['name'],

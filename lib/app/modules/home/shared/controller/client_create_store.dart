@@ -2,7 +2,6 @@ import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
-import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
 import '../../../settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 

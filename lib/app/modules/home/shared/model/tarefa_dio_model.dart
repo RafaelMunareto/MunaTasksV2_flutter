@@ -1,6 +1,3 @@
-// ignore_for_file: unnecessary_brace_in_string_interps
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 
 class TarefaDioModel {
@@ -23,7 +20,7 @@ class TarefaDioModel {
       this.subTarefa,
       this.users});
 
-  factory TarefaDioModel.fromDocument(DocumentSnapshot doc) {
+  factory TarefaDioModel.fromDocument(doc) {
     return TarefaDioModel(
       etiqueta: doc['etiqueta'],
       texto: doc['texto'],

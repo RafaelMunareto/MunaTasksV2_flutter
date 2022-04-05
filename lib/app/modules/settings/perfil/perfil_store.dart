@@ -50,6 +50,7 @@ abstract class _PerfilStoreBase with Store {
         if (!client.individualChip!.contains(perfil.id)) {
           client.individualChip!.add(perfil.id);
         }
+        client.setUrlImage(perfil.urlImage);
         return perfil;
       }).toList());
     });
@@ -83,6 +84,7 @@ abstract class _PerfilStoreBase with Store {
 
   Future atualizaImagem(String origemImagem) async {
     XFile? image;
+    await client.cleanUrlImage();
     switch (origemImagem) {
       case "camera":
         image = await picker.pickImage(source: ImageSource.camera);
@@ -99,7 +101,7 @@ abstract class _PerfilStoreBase with Store {
     FormData formData = FormData.fromMap(
       {
         "urlImage": MultipartFile.fromBytes(listData,
-            filename: image!.path.split('/').last + '.png'),
+            filename: client.perfilDio.id + '.png'),
       },
     );
 
@@ -109,7 +111,6 @@ abstract class _PerfilStoreBase with Store {
         .put('perfil/${client.perfilDio.id}', data: formData);
     DioStruture().statusRequest(response);
     getBydDioId();
-
     client.setLoadingImagem(false);
   }
 }

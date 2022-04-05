@@ -92,22 +92,24 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
         height: 210,
         child: Stack(
           children: [
-            if (client.perfilDio.urlImage != "")
+            if (client.urlImage != "")
               Positioned(
                 top: 0,
                 left: 30,
                 child: Center(
-                  child: Container(
-                    width: 170.0,
-                    height: 170.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(client.perfilDio.urlImage),
+                  child: Observer(builder: (_) {
+                    return Container(
+                      width: 170.0,
+                      height: 170.0,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(client.urlImage),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  }),
                 ),
               )
             else
