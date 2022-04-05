@@ -43,14 +43,13 @@ abstract class _PerfilStoreBase with Store {
   }
 
   getBydDioId() {
-    perfilService.getDio(client.userSelection.id).then((value) {
+    perfilService.getDio(client.userSelection.id).then((value) async {
       client.setPerfildio(value);
       client.setUsersDio(client.perfilDio.idStaff!.map((e) {
         var perfil = PerfilDioModel.fromJson(e);
         if (!client.individualChip!.contains(perfil.id)) {
           client.individualChip!.add(perfil.id);
         }
-        client.setUrlImage(perfil.urlImage);
         return perfil;
       }).toList());
     });
@@ -84,7 +83,6 @@ abstract class _PerfilStoreBase with Store {
 
   Future atualizaImagem(String origemImagem) async {
     XFile? image;
-    await client.cleanUrlImage();
     switch (origemImagem) {
       case "camera":
         image = await picker.pickImage(source: ImageSource.camera);
@@ -101,7 +99,9 @@ abstract class _PerfilStoreBase with Store {
     FormData formData = FormData.fromMap(
       {
         "urlImage": MultipartFile.fromBytes(listData,
-            filename: client.perfilDio.id + '.png'),
+            filename: client.perfilDio.urlImage == ''
+                ? client.perfilDio.id
+                : client.perfilDio.urlImage + '.png'),
       },
     );
 

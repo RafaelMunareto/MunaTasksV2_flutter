@@ -236,7 +236,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                                           'MaterialIcons'),
                                                   color: ConvertIcon()
                                                       .convertColor(
-                                                          task.etiquetas.color),
+                                                          task.etiqueta.color),
                                                 ),
                                                 label: SizedBox(
                                                   width: MediaQuery.of(context)

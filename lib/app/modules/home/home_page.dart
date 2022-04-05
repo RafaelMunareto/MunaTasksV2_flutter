@@ -79,7 +79,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     return OrientationBuilder(
       builder: (context, orientation) {
         if (orientation == Orientation.portrait ||
-            (defaultTargetPlatform == TargetPlatform.android)) {
+            (kIsWeb && defaultTargetPlatform == TargetPlatform.windows)) {
           return Scaffold(
             appBar: !appVisible
                 ? AppBarWidget(
@@ -129,7 +129,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                 setNavigateBarSelection: store.setNavigateBarSelection,
               );
             }),
-            body: defaultTargetPlatform == TargetPlatform.android
+            body: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
                 ? Observer(
                     builder: (_) {
                       return store.client.loading

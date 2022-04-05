@@ -135,10 +135,4 @@ abstract class _ClientStoreBase with Store {
 
   @observable
   String urlImage = '';
-
-  @action
-  setUrlImage(value) => urlImage = value;
-
-  @action
-  cleanUrlImage() => perfilDio.urlImage = '';
 }
