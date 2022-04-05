@@ -71,7 +71,7 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
         body: Center(
           child: Observer(
             builder: (_) {
-              if (store.client.perfis.isNotEmpty) {
+              if (store.client.perfis.isEmpty) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );

@@ -43,13 +43,13 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   final _$usersAtom = Atom(name: '_ClientCreateStoreBase.users');
 
   @override
-  List<UserModel> get users {
+  List<PerfilDioModel> get users {
     _$usersAtom.reportRead();
     return super.users;
   }
 
   @override
-  set users(List<UserModel> value) {
+  set users(List<PerfilDioModel> value) {
     _$usersAtom.reportWrite(value, super.users, () {
       super.users = value;
     });
@@ -203,13 +203,13 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   final _$createUserAtom = Atom(name: '_ClientCreateStoreBase.createUser');
 
   @override
-  UserModel get createUser {
+  PerfilDioModel get createUser {
     _$createUserAtom.reportRead();
     return super.createUser;
   }
 
   @override
-  set createUser(UserModel value) {
+  set createUser(PerfilDioModel value) {
     _$createUserAtom.reportWrite(value, super.createUser, () {
       super.createUser = value;
     });

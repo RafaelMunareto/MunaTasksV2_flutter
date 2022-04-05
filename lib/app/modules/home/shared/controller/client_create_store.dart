@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_model.dart';
 
 import '../../../settings/etiquetas/shared/models/etiqueta_dio_model.dart';
@@ -14,7 +15,7 @@ abstract class _ClientCreateStoreBase with Store {
   TarefaDioModel tarefaModelSave = TarefaDioModel();
 
   @observable
-  List<UserModel> users = [];
+  List<PerfilDioModel> users = [];
 
   @observable
   EtiquetaDioModel tarefaModelSaveEtiqueta = EtiquetaDioModel();
@@ -44,7 +45,7 @@ abstract class _ClientCreateStoreBase with Store {
   String imageUser = '';
 
   @observable
-  UserModel createUser = UserModel();
+  PerfilDioModel createUser = PerfilDioModel();
 
   @observable
   String subtarefaTextSave = '';
@@ -140,7 +141,7 @@ abstract class _ClientCreateStoreBase with Store {
   cleanIndividualChip() => individualChip = [];
 
   @action
-  cleanCreateUser() => createUser = UserModel();
+  cleanCreateUser() => createUser = PerfilDioModel();
 
   @action
   cleanFase() => fase = 'pause';
@@ -185,10 +186,10 @@ abstract class _ClientCreateStoreBase with Store {
 
   @action
   setIdStaff(value) {
-    if (!users.map((e) => e.email).contains(value.email)) {
+    if (!users.map((e) => e.name.email).contains(value.name.email)) {
       users.add(value);
     } else {
-      users.removeWhere((e) => e.email == value.email);
+      users.removeWhere((e) => e.name.email == value.name.email);
       if (users.isEmpty) {
         users = [];
       }
@@ -212,8 +213,8 @@ abstract class _ClientCreateStoreBase with Store {
 
   @action
   setCreateImageUser(value) {
-    if (users.map((e) => e.reference).contains(createUser.reference)) {
-      users.removeWhere((e) => e.reference == createUser.reference);
+    if (users.map((e) => e.id).contains(createUser.id)) {
+      users.removeWhere((e) => e.id == createUser.id);
     }
 
     imageUser = value;
@@ -275,10 +276,10 @@ abstract class _ClientCreateStoreBase with Store {
     setLoadingSubtarefa(true);
     setLoadingUser(true);
     if (subtarefas.map((e) => e.user.email == model.user.email).length > 2) {
-      users.removeWhere((e) => e.email == model.user.email);
+      users.removeWhere((e) => e.name.mail == model.user.email);
     } else if (subtarefas.map((e) => e.user.email == model.user.email).length ==
         1) {
-      users.removeWhere((e) => e.email == model.user.email);
+      users.removeWhere((e) => e.name.email == model.user.email);
     }
 
     subtarefas.removeWhere(
@@ -301,14 +302,17 @@ abstract class _ClientCreateStoreBase with Store {
     subtarefaModel.status = fase;
     subtarefaModel.user = createUser;
     subtarefaModel.texto = subtarefaTextSave;
-    users.where((e) => e.email == createUser.email).length;
+    users.where((e) => e.name.email == createUser.name.email).length;
     // ignore: prefer_is_empty
-    if (users.where((e) => e.email == createUser.email).length < 1) {
+    if (users.where((e) => e.name.email == createUser.name.email).length < 1) {
       setLoadingUser(true);
       users.add(createUser);
-      setIdReferenceStaff(createUser.email);
-    } else if (users.where((e) => e.email == createUser.email).length > 1) {
-      users.removeWhere((e) => e.email == createUser.email);
+      setIdReferenceStaff(createUser.name.email);
+    } else if (users
+            .where((e) => e.name.email == createUser.name.email)
+            .length >
+        1) {
+      users.removeWhere((e) => e.name.email == createUser.name.email);
       if (users.isEmpty) {
         users = [];
       }
@@ -380,7 +384,7 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   String? validaUserSubtarefa() {
-    if (createUser.email == '') {
+    if (createUser.name.email == '') {
       return 'Responsável obrigatório.';
     }
     return null;
