@@ -40,6 +40,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     createController = AnimationController(
         duration: const Duration(milliseconds: 600), vsync: this);
     _controller.forward();
+    createController.forward();
   }
 
   @override
