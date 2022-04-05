@@ -20,8 +20,8 @@ class RetardDioModel {
   factory RetardDioModel.fromJson(Map<String, dynamic> json) {
     return RetardDioModel(
       id: json['_id'],
-      tempoName: json['color'],
-      tempoValue: json['name'],
+      tempoName: json['tempoName'],
+      tempoValue: json['tempoValue'],
     );
   }
 

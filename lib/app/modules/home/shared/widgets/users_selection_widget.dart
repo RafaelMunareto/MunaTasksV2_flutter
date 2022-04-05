@@ -62,63 +62,59 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                 );
               } else {
                 List<PerfilDioModel> list = store.client.perfis;
-                return list.isNotEmpty
-                    ? SingleChildScrollView(
-                        child: Wrap(
-                          runAlignment: WrapAlignment.spaceAround,
-                          spacing: 24,
-                          children: [
-                            for (var i = 0; i < list.length; i++)
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 4.0),
-                                child: SizedBox(
-                                  child: InputChip(
-                                    key: ObjectKey(list[i].name.email),
-                                    labelPadding: const EdgeInsets.all(2),
-                                    selected: store.clientCreate.individualChip
-                                        .contains(list[i].name.email),
-                                    elevation: 4.0,
-                                    avatar: CircleAvatarWidget(
-                                      url: list[i].urlImage,
-                                    ),
-                                    label: SizedBox(
-                                      width: 100,
-                                      child: Text(
-                                        list[i].name,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    onSelected: (bool value) {
-                                      setState(() {
-                                        store.clientCreate.setIdReferenceStaff(
-                                            list[i].name.email);
-                                        store.clientCreate.setIdStaff(list[i]);
-                                        FocusScope.of(context).unfocus();
-                                        store.clientCreate
-                                            .setLoadingUser(false);
-                                      });
-                                    },
-                                  ),
+                return SingleChildScrollView(
+                  child: Wrap(
+                    runAlignment: WrapAlignment.spaceAround,
+                    spacing: 24,
+                    children: [
+                      for (var linha in list)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4.0),
+                          child: SizedBox(
+                            child: InputChip(
+                              key: ObjectKey(linha.name.email),
+                              labelPadding: const EdgeInsets.all(2),
+                              selected: store.clientCreate.individualChip
+                                  .contains(linha.name.email),
+                              elevation: 4.0,
+                              avatar: CircleAvatarWidget(
+                                url: linha.urlImage,
+                              ),
+                              label: SizedBox(
+                                width: 100,
+                                child: Text(
+                                  linha.name.name,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                            Baseline(
-                              baseline:
-                                  MediaQuery.of(context).size.height * 0.2,
-                              baselineType: TextBaseline.alphabetic,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                child: TextButton(
-                                  onPressed: () {
-                                    Modular.to.pop();
-                                  },
-                                  child: const Text('FECHAR'),
-                                ),
-                              ),
+                              onSelected: (bool value) {
+                                setState(() {
+                                  store.clientCreate
+                                      .setIdReferenceStaff(linha.name.email);
+                                  store.clientCreate.setIdStaff(linha);
+                                  FocusScope.of(context).unfocus();
+                                  store.clientCreate.setLoadingUser(false);
+                                });
+                              },
                             ),
-                          ],
+                          ),
                         ),
-                      )
-                    : Container();
+                      Baseline(
+                        baseline: MediaQuery.of(context).size.height * 0.2,
+                        baselineType: TextBaseline.alphabetic,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: TextButton(
+                            onPressed: () {
+                              Modular.to.pop();
+                            },
+                            child: const Text('FECHAR'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               }
             },
           ),

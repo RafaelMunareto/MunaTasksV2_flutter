@@ -44,14 +44,12 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
         }),
       ),
       onTap: () {
-        setState(() {
-          DialogButtom().showDialog(
-              RadioEtiquetasFilterWidget(
-                create: true,
-                setEtiquetaSave: store.clientCreate.setSaveEtiqueta,
-              ),
-              context);
-        });
+        DialogButtom().showDialog(
+            RadioEtiquetasFilterWidget(
+              create: true,
+              setEtiquetaSave: store.clientCreate.setSaveEtiqueta,
+            ),
+            context);
       },
     );
   }
