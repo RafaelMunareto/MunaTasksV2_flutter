@@ -62,7 +62,7 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
         body: Center(
           child: Observer(
             builder: (_) {
-              if (widget.faseList!.data == null) {
+              if (store.client.settings.fase!.isEmpty) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
