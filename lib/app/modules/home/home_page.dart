@@ -135,27 +135,23 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                           ? const Center(
                               child: CircularProgressIndicator(),
                             )
-                          : Wrap(
+                          : Row(
                               children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.2,
-                                  height: MediaQuery.of(context).size.height,
+                                Expanded(
+                                  flex: 2,
                                   child: MenuScreen(
                                     open: store.client.open,
                                     setOpen: store.client.setOpen,
                                     controller: drawerController,
                                   ),
                                 ),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  height: MediaQuery.of(context).size.height,
+                                Expanded(
+                                  flex: 8,
                                   child: BodyHomePageWidget(
                                     createController: createController,
                                     opacidade: opacidade,
                                   ),
-                                )
+                                ),
                               ],
                             );
                     },
