@@ -23,8 +23,7 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
         return Wrap(
           crossAxisAlignment: WrapCrossAlignment.end,
           children: [
-            if (store.clientCreate.users.isEmpty &
-                !store.clientCreate.loadingUser)
+            if (store.client.perfis.isEmpty & !store.clientCreate.loadingUser)
               GestureDetector(
                 onTap: () => DialogButtom()
                     .showDialog(const UsersSelectionWidget(), context),
@@ -39,9 +38,9 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                   ),
                 ),
               ),
-            if (store.clientCreate.users.isNotEmpty &&
+            if (store.client.perfis.isNotEmpty &&
                 !store.clientCreate.loadingUser)
-              for (var i = 0; i < store.clientCreate.users.length; i++)
+              for (var linha in store.client.perfis)
                 Baseline(
                   baseline: 38,
                   baselineType: TextBaseline.alphabetic,
@@ -54,10 +53,8 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                         onTap: () => DialogButtom()
                             .showDialog(const UsersSelectionWidget(), context),
                         child: CircleAvatarWidget(
-                            key: Key(store.clientCreate.users[i].reference
-                                .toString()),
-                            url: store.clientCreate.users[i].urlImage
-                                .toString()),
+                            key: Key(linha.id.toString()),
+                            url: linha.urlImage.toString()),
                       ),
                     ),
                   ),

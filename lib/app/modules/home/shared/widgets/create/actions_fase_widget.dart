@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/model/fase_model.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
@@ -22,6 +23,7 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animacaoOpacity;
+  final HomeStore store = Modular.get();
 
   @override
   void initState() {
@@ -65,47 +67,46 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
                   child: CircularProgressIndicator(),
                 );
               } else {
-                List<FaseModel> list = widget.faseList!.data;
+                List<dynamic>? list = store.client.settings.fase ?? [];
                 return SingleChildScrollView(
                   child: Wrap(
                     runAlignment: WrapAlignment.center,
                     spacing: 24,
                     children: [
-                      for (var index = 0; index < list.length; index++)
+                      for (var linha in list)
                         Padding(
                           padding: kIsWeb
                               ? const EdgeInsets.only(bottom: 16.0)
                               : const EdgeInsets.only(bottom: 4.0),
                           child: InputChip(
-                            key: ObjectKey(list[index].reference),
+                            key: ObjectKey(linha.id),
                             labelPadding: const EdgeInsets.all(2),
                             elevation: 8.0,
                             backgroundColor:
-                                ConvertIcon().colorStatus(list[index].status),
+                                ConvertIcon().colorStatus(linha.status),
                             avatar: Icon(
-                              IconData(list[index].icon,
-                                  fontFamily: 'MaterialIcons'),
-                              color: ConvertIcon()
-                                  .convertColorFase(list[index].color),
+                              IconData(linha.icon, fontFamily: 'MaterialIcons'),
+                              color:
+                                  ConvertIcon().convertColorFase(linha.color),
                             ),
                             label: SizedBox(
                               width: kIsWeb
                                   ? 100
                                   : MediaQuery.of(context).size.width,
                               child: Text(
-                                list[index].name.toString(),
+                                linha.name.toString(),
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: ConvertIcon()
-                                      .colorStatusDark(list[index].status),
+                                      .colorStatusDark(linha.status),
                                 ),
                               ),
                             ),
                             onPressed: () {
                               setState(() {
-                                widget.setActionsFase(list[index].status);
+                                widget.setActionsFase(linha.status);
                                 FocusScope.of(context).unfocus();
                                 Modular.to.pop();
                               });

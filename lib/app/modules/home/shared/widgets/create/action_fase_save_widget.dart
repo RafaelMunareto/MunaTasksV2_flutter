@@ -43,7 +43,7 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
         ),
         onTap: () => DialogButtom().showDialog(
             ActionsFaseWidget(
-              faseList: store.clientCreate.faseList,
+              faseList: store.client.settings.fase,
               setActionsFase: store.clientCreate.setFaseTarefa,
             ),
             context),

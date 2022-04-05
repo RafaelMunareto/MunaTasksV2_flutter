@@ -12,9 +12,6 @@ class ClientCreateStore = _ClientCreateStoreBase with _$ClientCreateStore;
 
 abstract class _ClientCreateStoreBase with Store {
   @observable
-  ObservableStream<List<FaseModel>>? faseList;
-
-  @observable
   TarefaModel tarefaModelSave = TarefaModel();
 
   @observable

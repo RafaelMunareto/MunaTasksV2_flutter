@@ -93,7 +93,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                 ),
                 onTap: () => DialogButtom().showDialog(
                     ActionsFaseWidget(
-                      faseList: store.clientCreate.faseList,
+                      faseList: store.client.settings.fase,
                       setActionsFase: store.clientCreate.setFase,
                     ),
                     context),
