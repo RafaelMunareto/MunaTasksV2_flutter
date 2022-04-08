@@ -19,12 +19,8 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends ModularState<HomePage, HomeStore>
-    with TickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> opacidade;
+class _HomePageState extends ModularState<HomePage, HomeStore> {
   final GlobalKey expansionTile = GlobalKey();
-  late AnimationController createController;
   bool appVisible = false;
 
   @override
@@ -34,20 +30,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
     if (kIsWeb && defaultTargetPlatform == TargetPlatform.windows) {
       store.client.setOpen(true);
     }
-
-    _controller = AnimationController(
-        duration: const Duration(milliseconds: 400), vsync: this);
-    createController = AnimationController(
-        duration: const Duration(milliseconds: 600), vsync: this);
-    _controller.forward();
-    createController.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    createController.dispose();
-    super.dispose();
   }
 
   @override
@@ -70,13 +52,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
 
   @override
   Widget build(BuildContext context) {
-    opacidade = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.4, 0.9),
-      ),
-    );
-
     return OrientationBuilder(
       builder: (context, orientation) {
         if (orientation == Orientation.portrait ||
@@ -106,9 +81,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
               onPressed: () {
                 store.client.setExpand(!store.client.expand);
                 setState(() {
-                  store.client.expand
-                      ? createController.forward()
-                      : createController.reverse();
                   store.clientCreate.cleanSave();
                 });
               },
@@ -147,12 +119,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                                     controller: drawerController,
                                   ),
                                 ),
-                                Expanded(
+                                const Expanded(
                                   flex: 8,
-                                  child: BodyHomePageWidget(
-                                    createController: createController,
-                                    opacidade: opacidade,
-                                  ),
+                                  child: BodyHomePageWidget(),
                                 ),
                               ],
                             );
@@ -172,10 +141,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore>
                               );
                       },
                     ),
-                    mainScreen: BodyHomePageWidget(
-                      createController: createController,
-                      opacidade: opacidade,
-                    ),
+                    mainScreen: const BodyHomePageWidget(),
                     borderRadius: 24.0,
                     showShadow: false,
                     backgroundColor: Colors.transparent,

@@ -20,12 +20,12 @@ class _DateSaveWidgetState extends State<DateSaveWidget> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      try {
+      if (store.clientCreate.tarefaModelData != '') {
         widget.dateController.text =
             DateFormat('dd/MM/yyyy').format(store.clientCreate.tarefaModelData);
         store.clientCreate
             .setTarefaDateSave(store.clientCreate.tarefaModelData);
-      } catch (e) {
+      } else {
         widget.dateController.text =
             DateFormat('dd/MM/yyyy').format(DateTime.now());
         store.clientCreate.setTarefaDateSave(DateTime.now());

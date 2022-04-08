@@ -14,13 +14,8 @@ import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class CardWidget extends StatefulWidget {
-  final Animation<double> opacidade;
-  final AnimationController controller;
-
   const CardWidget({
     Key? key,
-    required this.opacidade,
-    required this.controller,
   }) : super(key: key);
 
   @override
@@ -202,22 +197,21 @@ class _CardWidgetState extends State<CardWidget> {
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 8, 54),
-      child: Wrap(
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.64,
-            child: Observer(
-              builder: (_) {
-                return ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(4),
-                  itemCount: store.client.taskDio.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var linha = store.client.taskDio[index];
-                    return SingleChildScrollView(
-                      child: Wrap(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.63,
+        child: SingleChildScrollView(
+          child: Wrap(
+            children: [
+              Observer(
+                builder: (_) {
+                  return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(4),
+                    itemCount: store.client.taskDio.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var linha = store.client.taskDio[index];
+                      return Wrap(
                         children: [
                           Dismissible(
                             background: Padding(
@@ -269,7 +263,6 @@ class _CardWidgetState extends State<CardWidget> {
                                 setState(() {
                                   store.clientCreate.setTarefaUpdate(linha);
                                   store.client.setExpand(!store.client.expand);
-                                  widget.controller.forward();
                                 });
                               } else {
                                 setState(() {
@@ -280,14 +273,14 @@ class _CardWidgetState extends State<CardWidget> {
                             child: card(linha),
                           ),
                         ],
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

@@ -14,21 +14,15 @@ import 'package:munatasks2/app/modules/home/shared/widgets/create/users_save_wid
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class CreateWidget extends StatefulWidget {
-  final AnimationController controller;
-
   const CreateWidget({
     Key? key,
-    required this.controller,
   }) : super(key: key);
 
   @override
   State<CreateWidget> createState() => _CreateWidgetState();
 }
 
-class _CreateWidgetState extends State<CreateWidget>
-    with SingleTickerProviderStateMixin {
-  late Animation altura;
-  late Animation<double> opacidade;
+class _CreateWidgetState extends State<CreateWidget> {
   TextEditingController textController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   final HomeStore store = Modular.get();
@@ -40,110 +34,76 @@ class _CreateWidgetState extends State<CreateWidget>
 
   @override
   Widget build(BuildContext context) {
-    altura = Tween<double>(begin: 0, end: MediaQuery.of(context).size.height)
-        .animate(
-      CurvedAnimation(
-        parent: widget.controller,
-        curve: const Interval(0.1, 0.7),
-      ),
-    );
-
-    opacidade = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: widget.controller,
-        curve: const Interval(0.1, 0.7),
-      ),
-    );
-    return AnimatedBuilder(
-      animation: widget.controller,
-      builder: (ctx, ch) {
-        if (widget.controller.status == AnimationStatus.dismissed) {
-          textController.text = '';
-        }
-        return opacidade.value == 0
-            ? Container()
-            : Observer(
-                builder: (_) {
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(2, 0, 2, 8),
-                    child: FadeTransition(
-                      opacity: opacidade,
-                      child: GestureDetector(
-                        onTap: () =>
-                            FocusScope.of(context).requestFocus(FocusNode()),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                  color: ConvertIcon().convertColor(store
-                                      .clientCreate
-                                      .tarefaModelSaveEtiqueta
-                                      .color),
-                                  width: 2),
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                            elevation: 16,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Padding(
-                                    padding: kIsWeb &&
-                                            defaultTargetPlatform ==
-                                                TargetPlatform.windows
-                                        ? const EdgeInsets.all(8)
-                                        : const EdgeInsets.only(
-                                            top: 8.0,
-                                            bottom: 8,
-                                            right: 4,
-                                            left: 4,
-                                          ),
-                                    child: Wrap(
-                                      alignment: WrapAlignment.spaceBetween,
-                                      children: const [
-                                        EtiquetasSaveWidget(),
-                                        ActionFaseSaveWidget(),
-                                        UsersSaveWidget(),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                TextSaveWidget(controller: textController),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 24),
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    child: Wrap(
-                                      alignment: WrapAlignment.spaceAround,
-                                      children: [
-                                        DateSaveWidget(
-                                            dateController: dateController),
-                                        const PrioridadeSaveWidget(),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Wrap(
-                                    children: [
-                                      const CreateSubtarefaWidget(),
-                                      ButtonSaveWidget(
-                                        controller: widget.controller,
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+    return Observer(
+      builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(2, 0, 2, 8),
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+            child: SizedBox(
+              width: double.infinity,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                      color: ConvertIcon().convertColor(
+                          store.clientCreate.tarefaModelSaveEtiqueta.color),
+                      width: 2),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                elevation: 16,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: kIsWeb &&
+                                defaultTargetPlatform == TargetPlatform.windows
+                            ? const EdgeInsets.all(8)
+                            : const EdgeInsets.only(
+                                top: 8.0,
+                                bottom: 8,
+                                right: 4,
+                                left: 4,
+                              ),
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceBetween,
+                          children: const [
+                            EtiquetasSaveWidget(),
+                            ActionFaseSaveWidget(),
+                            UsersSaveWidget(),
+                          ],
                         ),
                       ),
                     ),
-                  );
-                },
-              );
+                    TextSaveWidget(controller: textController),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 24),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceAround,
+                          children: [
+                            DateSaveWidget(dateController: dateController),
+                            const PrioridadeSaveWidget(),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Wrap(
+                        children: const [
+                          CreateSubtarefaWidget(),
+                          ButtonSaveWidget()
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
       },
     );
   }

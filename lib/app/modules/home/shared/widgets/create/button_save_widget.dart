@@ -7,8 +7,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/create/errors_widget.
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class ButtonSaveWidget extends StatelessWidget {
-  final AnimationController? controller;
-  const ButtonSaveWidget({Key? key, this.controller}) : super(key: key);
+  const ButtonSaveWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +46,6 @@ class ButtonSaveWidget extends StatelessWidget {
                   : ElevatedButton.icon(
                       onPressed: () {
                         if (store.clientCreate.isValidTarefa) {
-                          controller!.reverse();
                           store.client.setExpand(false);
                           store.clientCreate.setTarefa();
                           //store.saveNewTarefa();
