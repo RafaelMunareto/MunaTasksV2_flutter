@@ -242,16 +242,14 @@ abstract class HomeStoreBase with Store {
     save(model);
   }
 
-  changeSubtarefaAction(
-      SubtareDiofaModel subtarefaModel, TarefaDioModel tarefaModel) {
-    subtarefaModel.status = client.subtarefaAction;
-    save(tarefaModel);
-  }
-
   changeSubtarefaDioAction(
       SubtareDiofaModel subtarefaModel, TarefaDioModel tarefaModel) {
-    subtarefaModel.status = client.subtarefaAction;
-    // save(tarefaModel);
+    tarefaModel.subTarefa!.forEach((a) {
+      if (a.title == subtarefaModel.title && a.texto == subtarefaModel.texto) {
+        a.status = client.subtarefaAction;
+      }
+    });
+    save(tarefaModel);
   }
 
   updateDate(TarefaDioModel model) {

@@ -9,7 +9,6 @@ import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 class SubItemWidget extends StatelessWidget {
   final SubtareDiofaModel subTarefa;
   final TarefaDioModel tarefaModel;
-  final Function changeSubtarefaModelAction;
   final Function setSubtarefaModel;
   final List<String> subtarefaActionList;
   final bool theme;
@@ -19,7 +18,6 @@ class SubItemWidget extends StatelessWidget {
     required this.subTarefa,
     required this.theme,
     required this.tarefaModel,
-    required this.changeSubtarefaModelAction,
     required this.setSubtarefaModel,
     required this.subtarefaActionList,
   }) : super(key: key);

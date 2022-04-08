@@ -48,12 +48,12 @@ class _SubitemActionsWidgetState extends State<SubitemActionsWidget> {
                     ),
                   ),
                   onPressed: () {
-                    setState(() {
-                      store.client.setSubtarefaAction(linha);
-                      store.changeSubtarefaDioAction(
-                          widget.subtarefaModel, widget.tarefaModel);
-                      Modular.to.pop();
-                    });
+                    store.client.setSubtarefaAction(linha);
+                    store.changeSubtarefaDioAction(
+                      widget.subtarefaModel,
+                      widget.tarefaModel,
+                    );
+                    Modular.to.pop();
                   },
                 ),
               ),

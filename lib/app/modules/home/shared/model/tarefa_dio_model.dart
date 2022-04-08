@@ -52,7 +52,7 @@ class TarefaDioModel {
       "prioridade": doc.prioridade,
       "fase": doc.fase,
       "data": doc.data.toString(),
-      "subTarefa": doc.subTarefa!.map((element) {
+      "subtarefa": doc.subTarefa!.map((element) {
         return {
           "title": element.title,
           "status": element.status,

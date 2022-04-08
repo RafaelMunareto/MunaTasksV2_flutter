@@ -176,7 +176,6 @@ class _CardWidgetState extends State<CardWidget> {
                       BodyTextWidget(
                         tarefa: linha,
                         theme: store.client.theme,
-                        changeSubtarefaModelAction: store.changeSubtarefaAction,
                         setSubtarefaModel: store.client.setSubtarefaModel,
                         subtarefaActionList: store.client.subtarefaActionList,
                       ),
