@@ -2,10 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_sliding_up_panel/flutter_sliding_up_panel.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_home_page_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/landscape_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
@@ -22,28 +24,28 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends ModularState<HomePage, HomeStore> {
   final GlobalKey expansionTile = GlobalKey();
   bool appVisible = false;
+  SlidingUpPanelController panelController = SlidingUpPanelController();
+  late ScrollController scrollController;
 
   @override
   void initState() {
-    super.initState();
+    scrollController = ScrollController();
 
     if (kIsWeb && defaultTargetPlatform == TargetPlatform.windows) {
       store.client.setOpen(true);
     }
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    autorun(
-      (_) {
-        setState(() {
-          if (store.client.expand != appVisible) {
-            appVisible = store.client.expand;
-          }
-        });
-      },
-    );
+    scrollController.addListener(() {
+      if (scrollController.offset >=
+              scrollController.position.maxScrollExtent &&
+          !scrollController.position.outOfRange) {
+        panelController.expand();
+      } else if (scrollController.offset <=
+              scrollController.position.minScrollExtent &&
+          !scrollController.position.outOfRange) {
+        panelController.anchor();
+      } else {}
+    });
+    super.initState();
   }
 
   @override
@@ -79,8 +81,12 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                   ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                store.client.setExpand(!store.client.expand);
                 setState(() {
+                  if (SlidingUpPanelStatus.expanded == panelController.status) {
+                    panelController.collapse();
+                  } else {
+                    panelController.expand();
+                  }
                   store.clientCreate.cleanSave();
                 });
               },
@@ -119,9 +125,11 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                                     controller: drawerController,
                                   ),
                                 ),
-                                const Expanded(
+                                Expanded(
                                   flex: 8,
-                                  child: BodyHomePageWidget(),
+                                  child: BodyHomePageWidget(
+                                    panelController: panelController,
+                                  ),
                                 ),
                               ],
                             );
@@ -141,7 +149,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                               );
                       },
                     ),
-                    mainScreen: const BodyHomePageWidget(),
+                    mainScreen: BodyHomePageWidget(
+                      panelController: panelController,
+                    ),
                     borderRadius: 24.0,
                     showShadow: false,
                     backgroundColor: Colors.transparent,

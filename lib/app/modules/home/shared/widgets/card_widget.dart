@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_sliding_up_panel/flutter_sliding_up_panel.dart';
 import 'package:intl/intl.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_text_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/button_action_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/header_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/retard_action_widget.dart';
@@ -14,8 +16,10 @@ import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class CardWidget extends StatefulWidget {
+  final dynamic panelController;
   const CardWidget({
     Key? key,
+    required this.panelController,
   }) : super(key: key);
 
   @override
@@ -24,7 +28,6 @@ class CardWidget extends StatefulWidget {
 
 class _CardWidgetState extends State<CardWidget> {
   final HomeStore store = Modular.get();
-
   @override
   Widget build(BuildContext context) {
     dialogDelete(String message, TarefaDioModel tarefa, context) {
@@ -196,90 +199,116 @@ class _CardWidgetState extends State<CardWidget> {
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 8, 54),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.63,
-        child: SingleChildScrollView(
-          child: Wrap(
-            children: [
-              Observer(
-                builder: (_) {
-                  return ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(4),
-                    itemCount: store.client.taskDio.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      var linha = store.client.taskDio[index];
-                      return Wrap(
-                        children: [
-                          Dismissible(
-                            background: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                color: Colors.green,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(15),
-                                  child: Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.edit,
-                                        color: Colors.white,
+      child: Wrap(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.7,
+            child: SingleChildScrollView(
+              controller: ScrollController(),
+              child: Wrap(
+                children: [
+                  Wrap(
+                    children: [
+                      Observer(
+                        builder: (_) {
+                          return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            controller: ScrollController(),
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(4),
+                            itemCount: store.client.taskDio.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              var linha = store.client.taskDio[index];
+                              return Wrap(
+                                children: [
+                                  Dismissible(
+                                    background: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        color: Colors.green,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15),
+                                          child: Row(
+                                            children: const [
+                                              Icon(
+                                                Icons.edit,
+                                                color: Colors.white,
+                                              ),
+                                              Text(
+                                                'Editar',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                      Text(
-                                        'Editar',
-                                        style: TextStyle(color: Colors.white),
+                                    ),
+                                    secondaryBackground: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        color: Colors.red,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: const [
+                                              Icon(
+                                                Icons.delete,
+                                                color: Colors.white,
+                                              ),
+                                              Text(
+                                                'Excluir',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                    ],
+                                    ),
+                                    key: UniqueKey(),
+                                    onDismissed: (direction) {
+                                      if (direction ==
+                                          DismissDirection.startToEnd) {
+                                        setState(() {
+                                          store.clientCreate
+                                              .setTarefaUpdate(linha);
+                                          store.client
+                                              .setExpand(!store.client.expand);
+                                        });
+                                      } else {
+                                        setState(() {
+                                          dialogDelete(
+                                              linha.texto, linha, context);
+                                        });
+                                      }
+                                    },
+                                    child: card(linha),
                                   ),
-                                ),
-                              ),
-                            ),
-                            secondaryBackground: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                color: Colors.red,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(15),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
-                                      Icon(
-                                        Icons.delete,
-                                        color: Colors.white,
-                                      ),
-                                      Text(
-                                        'Excluir',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            key: UniqueKey(),
-                            onDismissed: (direction) {
-                              if (direction == DismissDirection.startToEnd) {
-                                setState(() {
-                                  store.clientCreate.setTarefaUpdate(linha);
-                                  store.client.setExpand(!store.client.expand);
-                                });
-                              } else {
-                                setState(() {
-                                  dialogDelete(linha.texto, linha, context);
-                                });
-                              }
+                                ],
+                              );
                             },
-                            child: card(linha),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    child: SlidingUpPanelWidget(
+                      child: const CreateWidget(),
+                      controlHeight: 20.0,
+                      anchor: 20,
+                      panelController: widget.panelController,
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

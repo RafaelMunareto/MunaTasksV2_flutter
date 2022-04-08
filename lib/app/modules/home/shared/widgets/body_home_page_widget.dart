@@ -14,8 +14,10 @@ import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class BodyHomePageWidget extends StatefulWidget {
+  final dynamic panelController;
   const BodyHomePageWidget({
     Key? key,
+    required this.panelController,
   }) : super(key: key);
 
   @override
@@ -117,10 +119,11 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                             },
                           ),
                         ),
-                        //const CreateWidget(),
                         store.client.loadingTasks
                             ? const CircularProgressIndicator()
-                            : const CardWidget(),
+                            : CardWidget(
+                                panelController: widget.panelController,
+                              ),
                       ],
                     ),
                   ),
@@ -226,8 +229,9 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                 },
                               ),
                             ),
-                          const CreateWidget(),
-                          const CardWidget(),
+                          CardWidget(
+                            panelController: widget.panelController,
+                          ),
                         ],
                       ),
                     ),

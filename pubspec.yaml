@@ -44,6 +44,7 @@ dependencies:
   dio: ^4.0.6
   objectid: 2.0.0
   http_parser:
+  flutter_sliding_up_panel: ^2.0.1
 
 dev_dependencies:
   flutter_test:
