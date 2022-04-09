@@ -360,21 +360,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$expandAtom = Atom(name: '_ClientStoreBase.expand');
-
-  @override
-  bool get expand {
-    _$expandAtom.reportRead();
-    return super.expand;
-  }
-
-  @override
-  set expand(bool value) {
-    _$expandAtom.reportWrite(value, super.expand, () {
-      super.expand = value;
-    });
-  }
-
   final _$expandTarefaAtom = Atom(name: '_ClientStoreBase.expandTarefa');
 
   @override
@@ -715,17 +700,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
-  dynamic setExpand(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setExpand');
-    try {
-      return super.setExpand(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic cleanTarefasTotais() {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.cleanTarefasTotais');
@@ -839,7 +813,6 @@ subtarefaModel: ${subtarefaModel},
 imgUrl: ${imgUrl},
 searchValue: ${searchValue},
 perfilUserLogado: ${perfilUserLogado},
-expand: ${expand},
 expandTarefa: ${expandTarefa},
 taskDio: ${taskDio},
 userDio: ${userDio},

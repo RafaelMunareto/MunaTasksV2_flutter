@@ -30,6 +30,7 @@ class ErrorsWidget extends StatelessWidget {
       backgroundColor: Colors.transparent,
       body: Center(
         child: Wrap(
+          direction: Axis.vertical,
           children: [
             for (var erro in errors)
               erro != null

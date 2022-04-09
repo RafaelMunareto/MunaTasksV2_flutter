@@ -23,7 +23,8 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
         return Wrap(
           crossAxisAlignment: WrapCrossAlignment.end,
           children: [
-            if (store.clientCreate.users.isEmpty)
+            if (store.clientCreate.users.isEmpty &
+                !store.clientCreate.loadingUser)
               GestureDetector(
                 onTap: () => DialogButtom()
                     .showDialog(const UsersSelectionWidget(), context),
@@ -38,26 +39,28 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                   ),
                 ),
               ),
-            for (var linha in store.clientCreate.users)
-              Baseline(
-                baseline: 38,
-                baselineType: TextBaseline.alphabetic,
-                child: GestureDetector(
-                  onTap: () => DialogButtom()
-                      .showDialog(const UsersSelectionWidget(), context),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                    child: GestureDetector(
-                      onTap: () => DialogButtom()
-                          .showDialog(const UsersSelectionWidget(), context),
-                      child: CircleAvatarWidget(
-                        key: Key(linha.id),
-                        url: linha.urlImage,
+            if (store.clientCreate.users.isNotEmpty &&
+                !store.clientCreate.loadingUser)
+              for (var linha in store.clientCreate.users)
+                Baseline(
+                  baseline: 38,
+                  baselineType: TextBaseline.alphabetic,
+                  child: GestureDetector(
+                    onTap: () => DialogButtom()
+                        .showDialog(const UsersSelectionWidget(), context),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                      child: GestureDetector(
+                        onTap: () => DialogButtom()
+                            .showDialog(const UsersSelectionWidget(), context),
+                        child: CircleAvatarWidget(
+                          key: Key(linha.id),
+                          url: linha.urlImage,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
           ],
         );
       },

@@ -145,16 +145,10 @@ abstract class _ClientStoreBase with Store {
   setPerfilUserlogado(value) => perfilUserLogado = value;
 
   @observable
-  bool expand = false;
-
-  @observable
   bool expandTarefa = false;
 
   @action
   setExpandTarefa(value) => expandTarefa = value;
-
-  @action
-  setExpand(value) => expand = value;
 
   changeFaseTarefa(faseTarefa) {
     switch (faseTarefa) {

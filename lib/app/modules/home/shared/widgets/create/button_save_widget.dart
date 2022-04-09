@@ -40,15 +40,15 @@ class ButtonSaveWidget extends StatelessWidget {
         children: [
           Observer(builder: (_) {
             return Padding(
-              padding: const EdgeInsets.fromLTRB(0, 24, 2, 2),
+              padding: const EdgeInsets.fromLTRB(0, 2, 2, 2),
               child: store.clientCreate.loadingTarefa
                   ? const CircularProgressIndicator()
                   : ElevatedButton.icon(
                       onPressed: () {
                         if (store.clientCreate.isValidTarefa) {
-                          store.client.setExpand(false);
                           store.clientCreate.setTarefa();
-                          //store.saveNewTarefa();
+                          store.saveNewTarefa();
+                          FocusScope.of(context).unfocus();
                           SnackbarCustom().createSnackBar(
                               'Salvo com sucesso!', Colors.green, context);
                         } else {
@@ -57,13 +57,12 @@ class ButtonSaveWidget extends StatelessWidget {
                         FocusScope.of(context).unfocus();
                       },
                       icon: Icon(
-                          store.clientCreate.reference != null
+                          store.clientCreate.id != ''
                               ? Icons.update
                               : Icons.add_circle,
                           size: 18),
-                      label: Text(store.clientCreate.reference != null
-                          ? "EDITAR"
-                          : 'SALVAR'),
+                      label: Text(
+                          store.clientCreate.id != '' ? "EDITAR" : 'SALVAR'),
                     ),
             );
           })

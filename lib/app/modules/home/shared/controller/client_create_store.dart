@@ -65,10 +65,10 @@ abstract class _ClientCreateStoreBase with Store {
   bool loadingTarefa = false;
 
   @observable
-  dynamic reference;
+  String id = '';
 
   @action
-  setReference(value) => reference = value;
+  setReference(value) => id = value;
 
   @action
   cleanImageUser() => imageUser = "";
@@ -152,7 +152,7 @@ abstract class _ClientCreateStoreBase with Store {
   cleanFaseTarefa() => faseTarefa = 'pause';
 
   @action
-  cleanReference() => reference = null;
+  cleanReference() => id = '';
 
   @action
   cleanTarefaModelSaveEtiqueta() =>
@@ -227,7 +227,7 @@ abstract class _ClientCreateStoreBase with Store {
   @action
   setTarefa() {
     tarefaModelSave.etiqueta = tarefaModelSaveEtiqueta;
-    tarefaModelSave.id = reference;
+    tarefaModelSave.id = id;
     tarefaModelSave.texto = tarefaModelSaveTexto;
     tarefaModelSave.fase = changeFaseTarefa(faseTarefa);
     tarefaModelSave.data = tarefaModelData;
@@ -274,11 +274,14 @@ abstract class _ClientCreateStoreBase with Store {
   removeDismissSubtarefa(model) {
     setLoadingSubtarefa(true);
     setLoadingUser(true);
-    if (subtarefas.map((e) => e.user.email == model.user.email).length > 2) {
-      users.removeWhere((e) => e.name.mail == model.user.email);
-    } else if (subtarefas.map((e) => e.user.email == model.user.email).length ==
+    if (subtarefas.map((e) => e.user.email == model.user.name.email).length >
+        2) {
+      users.removeWhere((e) => e.name.mail == model.user.name.email);
+    } else if (subtarefas
+            .map((e) => e.user.email == model.user.name.email)
+            .length ==
         1) {
-      users.removeWhere((e) => e.name.email == model.user.email);
+      users.removeWhere((e) => e.name.email == model.user.name.email);
     }
 
     subtarefas.removeWhere(
@@ -383,7 +386,7 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   String? validaUserSubtarefa() {
-    if (createUser.name.email == '') {
+    if (createUser.id == '') {
       return 'Responsável obrigatório.';
     }
     return null;

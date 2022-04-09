@@ -293,18 +293,18 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$referenceAtom = Atom(name: '_ClientCreateStoreBase.reference');
+  final _$idAtom = Atom(name: '_ClientCreateStoreBase.id');
 
   @override
-  dynamic get reference {
-    _$referenceAtom.reportRead();
-    return super.reference;
+  String get id {
+    _$idAtom.reportRead();
+    return super.id;
   }
 
   @override
-  set reference(dynamic value) {
-    _$referenceAtom.reportWrite(value, super.reference, () {
-      super.reference = value;
+  set id(String value) {
+    _$idAtom.reportWrite(value, super.id, () {
+      super.id = value;
     });
   }
 
@@ -809,7 +809,7 @@ subtarefas: ${subtarefas},
 loadingSubtarefa: ${loadingSubtarefa},
 loadingUser: ${loadingUser},
 loadingTarefa: ${loadingTarefa},
-reference: ${reference},
+id: ${id},
 subtarefaModel: ${subtarefaModel},
 isValidTarefa: ${isValidTarefa},
 isValidSubtarefa: ${isValidSubtarefa}

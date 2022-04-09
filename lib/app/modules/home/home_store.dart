@@ -163,6 +163,13 @@ abstract class HomeStoreBase with Store {
     getDio();
   }
 
+  saveNewTarefa() async {
+    await dashboardService.saveDio(clientCreate.tarefaModelSave);
+    badgets();
+    getDioTotal();
+    getDio();
+  }
+
   void deleteTasks(TarefaDioModel model) {
     dashboardService.deleteDio(model);
     getDio();
