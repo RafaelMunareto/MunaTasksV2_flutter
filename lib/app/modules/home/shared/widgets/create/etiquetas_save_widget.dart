@@ -38,7 +38,8 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
                       fontFamily: 'MaterialIcons')
                   : Icons.bookmark,
               color: ConvertIcon().convertColor(
-                  store.clientCreate.tarefaModelSaveEtiqueta.color),
+                store.clientCreate.tarefaModelSaveEtiqueta.color,
+              ),
             ),
           );
         }),

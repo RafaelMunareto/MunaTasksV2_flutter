@@ -16,10 +16,8 @@ import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class CardWidget extends StatefulWidget {
-  final dynamic panelController;
   const CardWidget({
     Key? key,
-    required this.panelController,
   }) : super(key: key);
 
   @override
@@ -294,15 +292,6 @@ class _CardWidgetState extends State<CardWidget> {
                         },
                       ),
                     ],
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.6,
-                    child: SlidingUpPanelWidget(
-                      child: const CreateWidget(),
-                      controlHeight: 20.0,
-                      anchor: 20,
-                      panelController: widget.panelController,
-                    ),
                   ),
                 ],
               ),

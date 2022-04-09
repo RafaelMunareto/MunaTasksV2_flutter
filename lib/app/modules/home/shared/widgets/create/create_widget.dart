@@ -31,64 +31,70 @@ class _CreateWidgetState extends State<CreateWidget> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
-        return Padding(
-          padding: const EdgeInsets.fromLTRB(2, 0, 2, 8),
-          child: GestureDetector(
-            onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                    color: ConvertIcon().convertColor(
-                        store.clientCreate.tarefaModelSaveEtiqueta.color),
-                    width: 2),
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              elevation: 16,
-              child: Wrap(
-                children: [
-                  Padding(
-                    padding: kIsWeb &&
-                            defaultTargetPlatform == TargetPlatform.windows
-                        ? const EdgeInsets.all(8)
-                        : const EdgeInsets.only(
-                            top: 8.0,
-                            bottom: 8,
-                            right: 4,
-                            left: 4,
-                          ),
-                    child: Wrap(
-                      alignment: WrapAlignment.spaceBetween,
-                      children: const [
-                        EtiquetasSaveWidget(),
-                        ActionFaseSaveWidget(),
-                        UsersSaveWidget(),
-                      ],
-                    ),
-                  ),
-                  TextSaveWidget(controller: textController),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 24),
-                    child: SizedBox(
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(2, 0, 2, 8),
+            child: GestureDetector(
+              onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                      color: ConvertIcon().convertColor(
+                        store.clientCreate.tarefaModelSaveEtiqueta.color,
+                      ),
+                      width: 2),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                elevation: 16,
+                child: Wrap(
+                  children: [
+                    SizedBox(
                       width: double.infinity,
-                      child: Wrap(
-                        alignment: WrapAlignment.spaceAround,
-                        children: [
-                          DateSaveWidget(dateController: dateController),
-                          const PrioridadeSaveWidget(),
-                        ],
+                      child: Padding(
+                        padding: kIsWeb &&
+                                defaultTargetPlatform == TargetPlatform.windows
+                            ? const EdgeInsets.all(8)
+                            : const EdgeInsets.only(
+                                top: 8.0,
+                                bottom: 8,
+                                right: 4,
+                                left: 4,
+                              ),
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceBetween,
+                          children: const [
+                            EtiquetasSaveWidget(),
+                            ActionFaseSaveWidget(),
+                            UsersSaveWidget(),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Wrap(
-                      children: const [
-                        CreateSubtarefaWidget(),
-                        ButtonSaveWidget()
-                      ],
+                    TextSaveWidget(controller: textController),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 24),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceAround,
+                          children: [
+                            DateSaveWidget(dateController: dateController),
+                            const PrioridadeSaveWidget(),
+                          ],
+                        ),
+                      ),
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Wrap(
+                        children: const [
+                          CreateSubtarefaWidget(),
+                          ButtonSaveWidget()
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

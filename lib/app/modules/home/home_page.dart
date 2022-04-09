@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_sliding_up_panel/flutter_sliding_up_panel.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_home_page_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
@@ -12,6 +11,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/landscape_widget.dart
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
+import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -24,27 +24,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends ModularState<HomePage, HomeStore> {
   final GlobalKey expansionTile = GlobalKey();
   bool appVisible = false;
-  SlidingUpPanelController panelController = SlidingUpPanelController();
-  late ScrollController scrollController;
 
   @override
   void initState() {
-    scrollController = ScrollController();
-
     if (kIsWeb && defaultTargetPlatform == TargetPlatform.windows) {
       store.client.setOpen(true);
     }
-    scrollController.addListener(() {
-      if (scrollController.offset >=
-              scrollController.position.maxScrollExtent &&
-          !scrollController.position.outOfRange) {
-        panelController.expand();
-      } else if (scrollController.offset <=
-              scrollController.position.minScrollExtent &&
-          !scrollController.position.outOfRange) {
-        panelController.anchor();
-      } else {}
-    });
     super.initState();
   }
 
@@ -81,14 +66,11 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                   ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                setState(() {
-                  if (SlidingUpPanelStatus.expanded == panelController.status) {
-                    panelController.collapse();
-                  } else {
-                    panelController.expand();
-                  }
-                  store.clientCreate.cleanSave();
-                });
+                store.clientCreate.cleanSave();
+                DialogButtom().showDialogCreate(
+                  const CreateWidget(),
+                  context,
+                );
               },
               child: Icon(
                 Icons.add,
@@ -125,11 +107,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                                     controller: drawerController,
                                   ),
                                 ),
-                                Expanded(
+                                const Expanded(
                                   flex: 8,
-                                  child: BodyHomePageWidget(
-                                    panelController: panelController,
-                                  ),
+                                  child: BodyHomePageWidget(),
                                 ),
                               ],
                             );
@@ -149,9 +129,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                               );
                       },
                     ),
-                    mainScreen: BodyHomePageWidget(
-                      panelController: panelController,
-                    ),
+                    mainScreen: const BodyHomePageWidget(),
                     borderRadius: 24.0,
                     showShadow: false,
                     backgroundColor: Colors.transparent,

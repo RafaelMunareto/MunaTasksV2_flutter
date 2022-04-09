@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/landscape_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_order_widget.dart';
@@ -14,10 +13,8 @@ import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class BodyHomePageWidget extends StatefulWidget {
-  final dynamic panelController;
   const BodyHomePageWidget({
     Key? key,
-    required this.panelController,
   }) : super(key: key);
 
   @override
@@ -121,9 +118,7 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                         ),
                         store.client.loadingTasks
                             ? const CircularProgressIndicator()
-                            : CardWidget(
-                                panelController: widget.panelController,
-                              ),
+                            : const CardWidget(),
                       ],
                     ),
                   ),
@@ -229,9 +224,7 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                 },
                               ),
                             ),
-                          CardWidget(
-                            panelController: widget.panelController,
-                          ),
+                          const CardWidget(),
                         ],
                       ),
                     ),
