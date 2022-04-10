@@ -258,11 +258,11 @@ abstract class HomeStoreBase with Store {
 
   changeSubtarefaDioAction(
       SubtareDiofaModel subtarefaModel, TarefaDioModel tarefaModel) {
-    tarefaModel.subTarefa!.forEach((a) {
+    for (var a in tarefaModel.subTarefa!) {
       if (a.title == subtarefaModel.title && a.texto == subtarefaModel.texto) {
         a.status = client.subtarefaAction;
       }
-    });
+    }
     save(tarefaModel);
   }
 

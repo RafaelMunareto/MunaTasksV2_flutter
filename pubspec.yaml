@@ -77,9 +77,6 @@ scripts:
   mobx: flutter pub run build_runner watch --delete-conflicting-outputs
   chrome: flutter run -d chrome --web-renderer html --web-port 52230
   build_bundle: flutter build appbundle --build-name=1.1.6+4 --build-number=13 --no-tree-shake-icons
-  build_web: flutter build web --web-renderer html --release && firebase deploy
   build_apk: flutter build apk
   launch_icon: flutter pub run flutter_launcher_icons:main
   launch_splash: flutter pub run flutter_native_splash:create
-  functions: firebase deploy --only functions
-  simulador_functions: firebase emulators:start --only functions

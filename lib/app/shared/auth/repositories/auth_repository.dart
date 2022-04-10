@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
@@ -47,7 +49,9 @@ class AuthRepository implements IAuthRepository {
     response = await dio.post('sessions',
         data: jsonEncode({"email": email, "password": password}));
     DioStruture().statusRequest(response);
-    storage.put('userDio', [jsonEncode(UserDioModel.fromJson(response.data))]);
+    UserDioModel user = UserDioModel.fromJson(response.data);
+    storage.put('userDio', [jsonEncode(user)]);
+    storage.put('token', [user.token]);
     return response;
   }
 
