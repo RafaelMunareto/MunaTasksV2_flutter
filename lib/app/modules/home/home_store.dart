@@ -184,8 +184,8 @@ abstract class HomeStoreBase with Store {
 
   void deleteDioTasks(TarefaDioModel model) async {
     await dashboardService.deleteDio(model);
-    await badgets();
-    await getDioTotal();
+    badgets();
+    getDioTotal();
     getDio();
   }
 
