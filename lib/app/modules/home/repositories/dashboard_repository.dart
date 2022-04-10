@@ -67,7 +67,7 @@ class DashboardRepository implements IDashboardRepository {
   }
 
   @override
-  saveDio(TarefaDioModel model) async {
+  Future<dynamic> saveDio(TarefaDioModel model) async {
     Response response;
 
     response = await DioStruture()

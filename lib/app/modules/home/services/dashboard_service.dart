@@ -32,7 +32,7 @@ class DashboardService extends Disposable implements IDashboardService {
   }
 
   @override
-  saveDio(TarefaDioModel model) {
+  Future<dynamic> saveDio(TarefaDioModel model) {
     return dashboardRepository.saveDio(model);
   }
 

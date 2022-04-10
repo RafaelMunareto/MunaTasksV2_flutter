@@ -5,7 +5,7 @@ abstract class IDashboardRepository {
   Future<List<TarefaDioModel>> getDio(String id, int fase);
   Future<List<TarefaDioModel>> getDioIndividual(String id);
   Future<List<TarefaDioTotalModel>> getDioTotal();
-  saveDio(TarefaDioModel model);
+  Future<dynamic> saveDio(TarefaDioModel model);
   updateDio(TarefaDioModel model);
   deleteDio(TarefaDioModel model);
 }

@@ -47,10 +47,19 @@ class ButtonSaveWidget extends StatelessWidget {
                       onPressed: () {
                         if (store.clientCreate.isValidTarefa) {
                           store.clientCreate.setTarefa();
-                          store.saveNewTarefa();
-                          FocusScope.of(context).unfocus();
-                          SnackbarCustom().createSnackBar(
-                              'Salvo com sucesso!', Colors.green, context);
+                          store.saveNewTarefa().then((e) {
+                            SnackbarCustom().createSnackBar(
+                              "Tarefa salva com sucesso!",
+                              Colors.red,
+                              context,
+                            );
+                          }, onError: (error) {
+                            SnackbarCustom().createSnackBar(
+                                error.response?.data['error'].toString(),
+                                Colors.red,
+                                context);
+                            Modular.to.pop();
+                          });
                         } else {
                           errors();
                         }

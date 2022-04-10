@@ -6,6 +6,7 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_text_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/button_action_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/header_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/retard_action_widget.dart';
@@ -268,14 +269,19 @@ class _CardWidgetState extends State<CardWidget> {
                                     onDismissed: (direction) {
                                       if (direction ==
                                           DismissDirection.startToEnd) {
-                                        setState(() {
-                                          store.clientCreate
-                                              .setTarefaUpdate(linha);
-                                        });
+                                        store.clientCreate
+                                            .setTarefaUpdate(linha);
+                                        DialogButtom().showDialogCreate(
+                                          const CreateWidget(),
+                                          context,
+                                        );
                                       } else {
                                         setState(() {
                                           dialogDelete(
-                                              linha.texto, linha, context);
+                                            linha.texto,
+                                            linha,
+                                            context,
+                                          );
                                         });
                                       }
                                     },
