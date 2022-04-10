@@ -60,7 +60,9 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                             '${model.title} excluída', Colors.green, context);
                       },
                       child: SubItemSaveWidget(
-                          theme: store.client.theme, subtarefa: model),
+                        theme: store.client.theme,
+                        subtarefa: model,
+                      ),
                     );
                   },
                 );

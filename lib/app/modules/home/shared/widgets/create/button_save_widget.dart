@@ -47,19 +47,35 @@ class ButtonSaveWidget extends StatelessWidget {
                       onPressed: () {
                         if (store.clientCreate.isValidTarefa) {
                           store.clientCreate.setTarefa();
-                          store.saveNewTarefa().then((e) {
-                            SnackbarCustom().createSnackBar(
-                              "Tarefa salva com sucesso!",
-                              Colors.red,
-                              context,
-                            );
-                          }, onError: (error) {
-                            SnackbarCustom().createSnackBar(
-                                error.response?.data['error'].toString(),
-                                Colors.red,
-                                context);
+                          if (store.clientCreate.id != "") {
+                            store.updateNewTarefa().then((e) {
+                              SnackbarCustom().createSnackBar(
+                                "Tarefa editada com sucesso!",
+                                Colors.green,
+                                context,
+                              );
+                            }, onError: (error) {
+                              SnackbarCustom().createSnackBar(
+                                  error.response?.data['error'].toString(),
+                                  Colors.red,
+                                  context);
+                            });
                             Modular.to.pop();
-                          });
+                          } else {
+                            store.saveNewTarefa().then((e) {
+                              SnackbarCustom().createSnackBar(
+                                "Tarefa salva com sucesso!",
+                                Colors.green,
+                                context,
+                              );
+                            }, onError: (error) {
+                              SnackbarCustom().createSnackBar(
+                                  error.response?.data['error'].toString(),
+                                  Colors.red,
+                                  context);
+                            });
+                            Modular.to.pop();
+                          }
                         } else {
                           errors();
                         }
@@ -71,7 +87,8 @@ class ButtonSaveWidget extends StatelessWidget {
                               : Icons.add_circle,
                           size: 18),
                       label: Text(
-                          store.clientCreate.id != '' ? "EDITAR" : 'SALVAR'),
+                        store.clientCreate.id != '' ? "EDITAR" : 'SALVAR',
+                      ),
                     ),
             );
           })

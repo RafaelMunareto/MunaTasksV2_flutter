@@ -22,7 +22,7 @@ class TarefaDioModel {
 
   factory TarefaDioModel.fromDocument(doc) {
     return TarefaDioModel(
-      etiqueta: doc['etiqueta'],
+      etiqueta: EtiquetaDioModel.fromJson(doc['etiqueta']),
       texto: doc['texto'],
       fase: doc['fase'],
       prioridade: doc['prioridade'],

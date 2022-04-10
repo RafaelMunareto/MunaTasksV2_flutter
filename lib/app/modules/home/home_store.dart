@@ -158,13 +158,20 @@ abstract class HomeStoreBase with Store {
     model.id == null
         ? await dashboardService.saveDio(model)
         : await dashboardService.updateDio(model);
-    await badgets();
-    await getDioTotal();
+    badgets();
+    getDioTotal();
     getDio();
   }
 
   Future saveNewTarefa() async {
     await dashboardService.saveDio(clientCreate.tarefaModelSave);
+    badgets();
+    getDioTotal();
+    getDio();
+  }
+
+  Future updateNewTarefa() async {
+    await dashboardService.updateDio(clientCreate.tarefaModelSave);
     badgets();
     getDioTotal();
     getDio();

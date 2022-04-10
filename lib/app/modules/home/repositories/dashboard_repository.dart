@@ -69,7 +69,6 @@ class DashboardRepository implements IDashboardRepository {
   @override
   Future<dynamic> saveDio(TarefaDioModel model) async {
     Response response;
-
     response = await DioStruture()
         .dioAction()
         .post('tasks', data: model.toJson(model));

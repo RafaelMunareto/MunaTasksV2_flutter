@@ -215,7 +215,8 @@ class _CardWidgetState extends State<CardWidget> {
                             padding: const EdgeInsets.all(4),
                             itemCount: store.client.taskDio.length,
                             itemBuilder: (BuildContext context, int index) {
-                              var linha = store.client.taskDio[index];
+                              TarefaDioModel linha =
+                                  store.client.taskDio[index];
                               return Wrap(
                                 children: [
                                   Dismissible(
@@ -269,8 +270,9 @@ class _CardWidgetState extends State<CardWidget> {
                                     onDismissed: (direction) {
                                       if (direction ==
                                           DismissDirection.startToEnd) {
-                                        store.clientCreate
-                                            .setTarefaUpdate(linha);
+                                        store.clientCreate.setTarefaUpdate(
+                                          linha,
+                                        );
                                         DialogButtom().showDialogCreate(
                                           const CreateWidget(),
                                           context,

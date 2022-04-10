@@ -28,13 +28,13 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
       Atom(name: '_ClientCreateStoreBase.tarefaModelSave');
 
   @override
-  TarefaDioModel get tarefaModelSave {
+  dynamic get tarefaModelSave {
     _$tarefaModelSaveAtom.reportRead();
     return super.tarefaModelSave;
   }
 
   @override
-  set tarefaModelSave(TarefaDioModel value) {
+  set tarefaModelSave(dynamic value) {
     _$tarefaModelSaveAtom.reportWrite(value, super.tarefaModelSave, () {
       super.tarefaModelSave = value;
     });
@@ -43,13 +43,13 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   final _$usersAtom = Atom(name: '_ClientCreateStoreBase.users');
 
   @override
-  List<PerfilDioModel> get users {
+  List<dynamic> get users {
     _$usersAtom.reportRead();
     return super.users;
   }
 
   @override
-  set users(List<PerfilDioModel> value) {
+  set users(List<dynamic> value) {
     _$usersAtom.reportWrite(value, super.users, () {
       super.users = value;
     });
@@ -203,13 +203,13 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   final _$createUserAtom = Atom(name: '_ClientCreateStoreBase.createUser');
 
   @override
-  PerfilDioModel get createUser {
+  dynamic get createUser {
     _$createUserAtom.reportRead();
     return super.createUser;
   }
 
   @override
-  set createUser(PerfilDioModel value) {
+  set createUser(dynamic value) {
     _$createUserAtom.reportWrite(value, super.createUser, () {
       super.createUser = value;
     });
@@ -234,13 +234,13 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   final _$subtarefasAtom = Atom(name: '_ClientCreateStoreBase.subtarefas');
 
   @override
-  List<SubtareDiofaModel> get subtarefas {
+  List<dynamic> get subtarefas {
     _$subtarefasAtom.reportRead();
     return super.subtarefas;
   }
 
   @override
-  set subtarefas(List<SubtareDiofaModel> value) {
+  set subtarefas(List<dynamic> value) {
     _$subtarefasAtom.reportWrite(value, super.subtarefas, () {
       super.subtarefas = value;
     });
@@ -757,7 +757,7 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
-  dynamic setTarefaUpdate(TarefaDioModel tarefa) {
+  dynamic setTarefaUpdate(dynamic tarefa) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setTarefaUpdate');
     try {

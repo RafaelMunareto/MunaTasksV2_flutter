@@ -11,10 +11,10 @@ class ClientCreateStore = _ClientCreateStoreBase with _$ClientCreateStore;
 
 abstract class _ClientCreateStoreBase with Store {
   @observable
-  TarefaDioModel tarefaModelSave = TarefaDioModel();
+  dynamic tarefaModelSave = TarefaDioModel();
 
   @observable
-  List<PerfilDioModel> users = [];
+  List<dynamic> users = [];
 
   @observable
   EtiquetaDioModel tarefaModelSaveEtiqueta = EtiquetaDioModel();
@@ -44,13 +44,13 @@ abstract class _ClientCreateStoreBase with Store {
   String imageUser = '';
 
   @observable
-  PerfilDioModel createUser = PerfilDioModel();
+  dynamic createUser = PerfilDioModel();
 
   @observable
   String subtarefaTextSave = '';
 
   @observable
-  List<SubtareDiofaModel> subtarefas = [];
+  List<dynamic> subtarefas = [];
 
   @action
   setSubtarefasUpdate(value) => subtarefas = value;
@@ -237,7 +237,7 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   @action
-  setTarefaUpdate(TarefaDioModel tarefa) {
+  setTarefaUpdate(dynamic tarefa) {
     setSaveEtiqueta(tarefa.etiqueta);
     setTarefaTextSave(tarefa.texto);
     setFaseTarefa(changeFaseTarefaReverse(tarefa.fase));
