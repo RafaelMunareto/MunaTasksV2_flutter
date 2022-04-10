@@ -164,7 +164,8 @@ abstract class HomeStoreBase with Store {
   }
 
   saveNewTarefa() async {
-    await dashboardService.saveDio(clientCreate.tarefaModelSave);
+    print(clientCreate.tarefaModelSave.toJson(clientCreate.tarefaModelSave));
+    //await dashboardService.saveDio(clientCreate.tarefaModelSave);
     badgets();
     getDioTotal();
     getDio();
