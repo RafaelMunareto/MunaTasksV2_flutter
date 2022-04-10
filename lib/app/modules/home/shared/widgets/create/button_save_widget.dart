@@ -54,13 +54,13 @@ class ButtonSaveWidget extends StatelessWidget {
                                 Colors.green,
                                 context,
                               );
+                              Modular.to.pop();
                             }, onError: (error) {
                               SnackbarCustom().createSnackBar(
                                   error.response?.data['error'].toString(),
                                   Colors.red,
                                   context);
                             });
-                            Modular.to.pop();
                           } else {
                             store.saveNewTarefa().then((e) {
                               SnackbarCustom().createSnackBar(
@@ -68,13 +68,13 @@ class ButtonSaveWidget extends StatelessWidget {
                                 Colors.green,
                                 context,
                               );
+                              Modular.to.pop();
                             }, onError: (error) {
                               SnackbarCustom().createSnackBar(
                                   error.response?.data['error'].toString(),
                                   Colors.red,
                                   context);
                             });
-                            Modular.to.pop();
                           }
                         } else {
                           errors();
