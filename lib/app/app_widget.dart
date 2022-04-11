@@ -53,6 +53,7 @@ class _AppWidgetState extends State<AppWidget> {
       supportedLocales: const [
         Locale('pt', 'BR'),
       ],
+      // ignore: deprecated_member_use
     ).modular();
   }
 
