@@ -69,6 +69,16 @@ abstract class _AuthControllerBase with Store {
   Future getLoginDio(email, password) {
     return authRepository.loginDio(email, password);
   }
+
+  @action
+  saveUser(UserDioClientModel model) {
+    return authRepository.saveUser(model);
+  }
+
+  @action
+  Future perfilUser(String user) {
+    return authRepository.perfilUser(user);
+  }
 }
 
 enum AuthStatus { loading, login, logoff }

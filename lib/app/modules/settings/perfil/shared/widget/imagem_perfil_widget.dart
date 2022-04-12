@@ -92,7 +92,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
         height: 210,
         child: Stack(
           children: [
-            if (client.perfilDio.urlImage != "")
+            if (client.perfilDio.urlImage != null)
               Positioned(
                 top: 0,
                 left: 30,
@@ -105,7 +105,9 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.fill,
-                          image: NetworkImage(client.perfilDio.urlImage),
+                          image: NetworkImage(client.perfilDio.urlImage != ''
+                              ? 'https://cdn.icon-icons.com/icons2/1603/PNG/512/computer-laptop-user-developer-programer_108610.png'
+                              : client.perfilDio.urlImage),
                         ),
                       ),
                     );

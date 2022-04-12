@@ -1,7 +1,4 @@
-// ignore_for_file: unused_local_variable
-
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_model.dart';
@@ -63,5 +60,38 @@ class AuthRepository implements IAuthRepository {
       }
     });
     return '';
+  }
+
+  @override
+  saveUser(UserDioClientModel model) async {
+    Response response;
+    var dio = Dio(
+      BaseOptions(
+        baseUrl: DioStruture().baseUrlMunatasks,
+      ),
+    );
+
+    response = await dio.post('usuarios', data: model);
+    DioStruture().statusRequest(response);
+    return response;
+  }
+
+  @override
+  Future perfilUser(String user) async {
+    Response response;
+    var dio = Dio(
+      BaseOptions(
+        baseUrl: DioStruture().baseUrlMunatasks,
+      ),
+    );
+
+    response = await dio.post('perfil', data: {
+      "name": user,
+      "idStaff": null,
+      "manager": false,
+      "nameTime": ""
+    });
+    DioStruture().statusRequest(response);
+    return response;
   }
 }

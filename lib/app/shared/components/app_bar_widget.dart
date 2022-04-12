@@ -170,7 +170,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           child: perfil.urlImage != ''
               ? InputChip(
                   avatar: CircleAvatar(
-                    backgroundImage: NetworkImage(perfil.urlImage),
+                    backgroundImage: NetworkImage(perfil.urlImage ?? ''),
                   ),
                   label: Text(perfil.name.name),
                 )

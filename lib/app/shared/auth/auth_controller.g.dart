@@ -128,6 +128,28 @@ mixin _$AuthController on _AuthControllerBase, Store {
   }
 
   @override
+  dynamic saveUser(UserDioClientModel model) {
+    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
+        name: '_AuthControllerBase.saveUser');
+    try {
+      return super.saveUser(model);
+    } finally {
+      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Future<dynamic> perfilUser(String user) {
+    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
+        name: '_AuthControllerBase.perfilUser');
+    try {
+      return super.perfilUser(user);
+    } finally {
+      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 status: ${status},

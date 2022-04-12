@@ -46,12 +46,6 @@ class SignupPageState extends State<SignupPage> {
   }
 
   @override
-  void initState() {
-    store.setGrupoEmail();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
@@ -88,7 +82,7 @@ class SignupPageState extends State<SignupPage> {
                     child: TextFieldWidget(
                         labelText: 'E-mail',
                         onChanged: store.client.changeEmail,
-                        errorText: store.validateEmailGrupo)),
+                        errorText: store.client.validateEmail)),
                 SizedBox(
                   child: TextFieldWidget(
                       labelText: 'Senha',

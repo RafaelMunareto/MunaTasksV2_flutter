@@ -117,21 +117,20 @@ abstract class _LoginStoreBase with Store {
   authenticateBiometric() {
     auth.authenticateWithBiometrics(faceOrFinger).then((value) {
       if (value == 'Authorized') {
-        // setLoading(true);
-        // auth
-        //     .getEmailPasswordLogin(loginStorage![0], loginStorage![1])
-        //     .then((value) {
-        //   if (value.user.emailVerified) {
-        //     Modular.to.navigate('/home/');
-        //   }
-        //   setLoading(false);
-        //   setErrOrGoal(false);
-        //   setMsg('Você deve validar o email primeiro!');
-        // }).catchError((e) {
-        //   setLoading(false);
-        //   setErrOrGoal(false);
-        //   setMsg(ErrorPtBr().verificaCodeErro('auth/' + e.code));
-        // });
+        setLoading(true);
+        auth.getLoginDio(client.email, client.password).then((value) {
+          setStorageLogin();
+          setStorageLoginNormal();
+          setLoading(false);
+          setErrOrGoal(false);
+          Modular.to.navigate('/home/');
+        }).catchError((erro) {
+          if (erro.response.statusCode != 200) {
+            setLoading(false);
+            setErrOrGoal(false);
+            setMsg(erro.response.data['error']);
+          }
+        });
       }
     });
   }
@@ -181,16 +180,19 @@ abstract class _LoginStoreBase with Store {
   submitStorage() {
     storage.get('login-normal').then((value) {
       if (value == []) {
-        // auth.getEmailPasswordLogin(value[0], value[1]).then((value) {
-        //   setLoading(false);
-        //   setErrOrGoal(false);
-        //   setMsg('Você deve validar o email primeiro!');
-        //   Modular.to.navigate('/home/');
-        // }).catchError((e) {
-        //   setLoading(false);
-        //   setErrOrGoal(false);
-        //   setMsg(ErrorPtBr().verificaCodeErro('auth/' + e.code));
-        // });
+        auth.getLoginDio(client.email, client.password).then((value) {
+          setStorageLogin();
+          setStorageLoginNormal();
+          setLoading(false);
+          setErrOrGoal(false);
+          Modular.to.navigate('/home/');
+        }).catchError((erro) {
+          if (erro.response.statusCode != 200) {
+            setLoading(false);
+            setErrOrGoal(false);
+            setMsg(erro.response.data['error']);
+          }
+        });
       }
     });
   }

@@ -101,7 +101,7 @@ abstract class _PerfilStoreBase with Store {
         "urlImage": MultipartFile.fromBytes(listData,
             filename: client.perfilDio.urlImage == ''
                 ? client.perfilDio.id
-                : client.perfilDio.urlImage + '.png'),
+                : client.perfilDio.urlImage! + '.png'),
       },
     );
 

@@ -58,20 +58,24 @@ class _MenuScreenState extends State<MenuScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  store.client.perfilUserLogado.urlImage.isEmpty
-                                      ? const CircularProgressIndicator()
-                                      : Container(
-                                          width: 70.0,
-                                          height: 70.0,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              fit: BoxFit.fill,
-                                              image: NetworkImage(store.client
-                                                  .perfilUserLogado.urlImage),
-                                            ),
-                                          ),
+                                  Container(
+                                    width: 70.0,
+                                    height: 70.0,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(
+                                          store.client.perfilUserLogado
+                                                      .urlImage ==
+                                                  ''
+                                              ? 'https://cdn.icon-icons.com/icons2/1603/PNG/512/computer-laptop-user-developer-programer_108610.png'
+                                              : store.client.perfilUserLogado
+                                                  .urlImage,
                                         ),
+                                      ),
+                                    ),
+                                  ),
                                   const Text(
                                     "Olá",
                                     style: TextStyle(

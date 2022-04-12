@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
@@ -106,8 +105,8 @@ abstract class HomeStoreBase with Store {
     });
   }
 
-  getDioTotal() async {
-    await dashboardService.getDioTotal().then((value) {
+  getDioTotal() {
+    dashboardService.getDioTotal().then((value) {
       client.setTarefasTotais(value);
     });
   }
@@ -148,7 +147,6 @@ abstract class HomeStoreBase with Store {
 
   getPerfil() async {
     Response response;
-
     if (client.userDio.id != null) {
       var dio = await DioStruture().dioAction();
       response = await dio.get('perfil/user/${client.userDio.id}');

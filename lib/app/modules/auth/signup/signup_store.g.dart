@@ -17,21 +17,6 @@ mixin _$SignupStore on _SignupStoreBase, Store {
               name: '_SignupStoreBase.isValidRegisterEmailGrupo'))
       .value;
 
-  final _$grupoEmailAtom = Atom(name: '_SignupStoreBase.grupoEmail');
-
-  @override
-  List<dynamic> get grupoEmail {
-    _$grupoEmailAtom.reportRead();
-    return super.grupoEmail;
-  }
-
-  @override
-  set grupoEmail(List<dynamic> value) {
-    _$grupoEmailAtom.reportWrite(value, super.grupoEmail, () {
-      super.grupoEmail = value;
-    });
-  }
-
   final _$loadingAtom = Atom(name: '_SignupStoreBase.loading');
 
   @override
@@ -44,21 +29,6 @@ mixin _$SignupStore on _SignupStoreBase, Store {
   set loading(bool value) {
     _$loadingAtom.reportWrite(value, super.loading, () {
       super.loading = value;
-    });
-  }
-
-  final _$checkGrupoEmailAtom = Atom(name: '_SignupStoreBase.checkGrupoEmail');
-
-  @override
-  bool? get checkGrupoEmail {
-    _$checkGrupoEmailAtom.reportRead();
-    return super.checkGrupoEmail;
-  }
-
-  @override
-  set checkGrupoEmail(bool? value) {
-    _$checkGrupoEmailAtom.reportWrite(value, super.checkGrupoEmail, () {
-      super.checkGrupoEmail = value;
     });
   }
 
@@ -129,39 +99,6 @@ mixin _$SignupStore on _SignupStoreBase, Store {
   }
 
   @override
-  dynamic setCheckGrupoEmail(dynamic value) {
-    final _$actionInfo = _$_SignupStoreBaseActionController.startAction(
-        name: '_SignupStoreBase.setCheckGrupoEmail');
-    try {
-      return super.setCheckGrupoEmail(value);
-    } finally {
-      _$_SignupStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic changeEmailGrupo(String value) {
-    final _$actionInfo = _$_SignupStoreBaseActionController.startAction(
-        name: '_SignupStoreBase.changeEmailGrupo');
-    try {
-      return super.changeEmailGrupo(value);
-    } finally {
-      _$_SignupStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setGrupoEmail() {
-    final _$actionInfo = _$_SignupStoreBaseActionController.startAction(
-        name: '_SignupStoreBase.setGrupoEmail');
-    try {
-      return super.setGrupoEmail();
-    } finally {
-      _$_SignupStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void submit() {
     final _$actionInfo = _$_SignupStoreBaseActionController.startAction(
         name: '_SignupStoreBase.submit');
@@ -175,9 +112,7 @@ mixin _$SignupStore on _SignupStoreBase, Store {
   @override
   String toString() {
     return '''
-grupoEmail: ${grupoEmail},
 loading: ${loading},
-checkGrupoEmail: ${checkGrupoEmail},
 msg: ${msg},
 msgErrOrGoal: ${msgErrOrGoal},
 isValidRegisterEmailGrupo: ${isValidRegisterEmailGrupo}

@@ -53,13 +53,6 @@ class _TextFieldWidgetState extends State<TextFieldWidget>
         width: _animacaoSize.value,
         alignment: Alignment.center,
         margin: const EdgeInsets.symmetric(horizontal: 40),
-        // decoration: BoxDecoration(
-        //     color: Colors.white,
-        //     borderRadius: BorderRadius.circular(20),
-        //     boxShadow: [
-        //       BoxShadow(
-        //           color: Colors.grey.shade200, blurRadius: 15, spreadRadius: 4)
-        //     ]),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: TextField(

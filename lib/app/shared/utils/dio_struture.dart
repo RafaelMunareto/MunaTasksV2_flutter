@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 
@@ -12,9 +11,7 @@ class DioStruture {
   dioAction() async {
     localStorage = await storage.get('token');
     token = localStorage.isNotEmpty ? localStorage[0] : '';
-    if (token == '') {
-      Modular.to.navigate(('/auth'));
-    }
+
     return Dio(BaseOptions(
         baseUrl: baseUrlMunatasks,
         headers: {"Authorization": 'Bearer $token'}));

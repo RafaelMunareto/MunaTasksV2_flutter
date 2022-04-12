@@ -107,9 +107,9 @@ abstract class _ClientStoreBase with Store {
   }
 
   String? validateTime() {
-    if (perfilDio.nameTime.isEmpty) {
+    if (perfilDio.nameTime != null) {
       return 'Campo obrigatório';
-    } else if (perfilDio.nameTime.length < 3) {
+    } else if (perfilDio.nameTime!.length < 3) {
       return 'Min de 3 caracteres';
     }
     return null;
