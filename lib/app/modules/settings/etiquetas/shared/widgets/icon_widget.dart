@@ -6,7 +6,12 @@ class IconWidget extends StatefulWidget {
   final Function setIcon;
   final dynamic icon;
   final String color;
-  const IconWidget({Key? key, required this.setIcon, required this.icon, required this.color}) : super(key: key);
+  const IconWidget(
+      {Key? key,
+      required this.setIcon,
+      required this.icon,
+      required this.color})
+      : super(key: key);
 
   @override
   State<IconWidget> createState() => _IconWidgetState();
@@ -21,16 +26,16 @@ class _IconWidgetState extends State<IconWidget> {
       context,
       title: const Text('Escolha um ícone'),
       searchHintText: 'Pesquisar',
-      closeChild: const Text('Fechar',textScaleFactor: 1.25,)
+      closeChild: const Text('Fechar', textScaleFactor: 1.25),
       iconPackModes: [IconPack.material],
     );
     setState(() {
-      if(icon != null){
+      if (icon != null) {
         widget.setIcon(icon.codePoint);
       }
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -49,15 +54,13 @@ class _IconWidgetState extends State<IconWidget> {
               onTap: _pickIcon,
             ),
             const SizedBox(height: 10),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 600),
-                child: Icon(
-                    IconData(widget.icon ?? 0,
-                        fontFamily: 'MaterialIcons'),
-                    size: 48,
-                    color: ConvertIcon()
-                        .convertColor(widget.color)),
-              ),
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 600),
+              child: Icon(
+                  IconData(widget.icon ?? 0, fontFamily: 'MaterialIcons'),
+                  size: 48,
+                  color: ConvertIcon().convertColor(widget.color)),
+            ),
           ],
         ),
       ),

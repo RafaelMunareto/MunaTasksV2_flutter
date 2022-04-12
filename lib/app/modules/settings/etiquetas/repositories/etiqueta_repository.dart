@@ -12,7 +12,8 @@ class EtiquetaRepository implements IEtiquetaRepository {
   @override
   Future<List<EtiquetaDioModel>> getDio() async {
     Response response;
-    response = await DioStruture().dioAction().get('etiquetas');
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('etiquetas');
     DioStruture().statusRequest(response);
     return (response.data as List).map((e) {
       return EtiquetaDioModel.fromJson(e);
@@ -22,7 +23,8 @@ class EtiquetaRepository implements IEtiquetaRepository {
   @override
   Future<SettingsModel> getSettings() async {
     Response response;
-    response = await DioStruture().dioAction().get('settings');
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('settings');
     DioStruture().statusRequest(response);
     var resposta = SettingsModel.fromJson(response.data[0]);
     return resposta;
@@ -31,7 +33,8 @@ class EtiquetaRepository implements IEtiquetaRepository {
   @override
   Future deleteDio(EtiquetaDioModel model) async {
     Response response;
-    response = await DioStruture().dioAction().delete('etiquetas/${model.id}');
+    var dio = await DioStruture().dioAction();
+    response = await dio.delete('etiquetas/${model.id}');
     DioStruture().statusRequest(response);
     return response;
   }
@@ -39,7 +42,8 @@ class EtiquetaRepository implements IEtiquetaRepository {
   @override
   Future<EtiquetaDioModel> getByDocumentIdDio(String documentId) async {
     Response response;
-    response = await DioStruture().dioAction().get('etiquetas/$documentId');
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('etiquetas/$documentId');
     DioStruture().statusRequest(response);
     return EtiquetaDioModel.fromJson(response.data);
   }
@@ -48,13 +52,13 @@ class EtiquetaRepository implements IEtiquetaRepository {
   Future saveDio(EtiquetaDioModel model) async {
     Response response;
     if (model.id != null) {
-      response = await DioStruture()
-          .dioAction()
-          .put('etiquetas/${model.id.toString()}', data: model);
+      var dio = await DioStruture().dioAction();
+      response = await dio.put('etiquetas/${model.id.toString()}', data: model);
       DioStruture().statusRequest(response);
       return response;
     } else {
-      response = await DioStruture().dioAction().post('etiquetas', data: model);
+      var dio = await DioStruture().dioAction();
+      response = await dio.post('etiquetas', data: model);
       DioStruture().statusRequest(response);
       return response;
     }

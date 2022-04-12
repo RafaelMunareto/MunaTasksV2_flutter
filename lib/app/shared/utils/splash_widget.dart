@@ -30,7 +30,7 @@ class _SplashWidgetState extends State<SplashWidget> {
   void initState() {
     super.initState();
     changeThemeStorage();
-    theme.get('userDio').then((value) {
+    theme.get('token').then((value) {
       if (value != null) {
         Modular.to.navigate('/home/');
       } else {

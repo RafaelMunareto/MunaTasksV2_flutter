@@ -17,7 +17,8 @@ class DashboardRepository implements IDashboardRepository {
   @override
   Future<List<TarefaDioModel>> getDio(String id, int fase) async {
     Response response;
-    response = await DioStruture().dioAction().get('tasks/fase/$id/$fase');
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('tasks/fase/$id/$fase');
     DioStruture().statusRequest(response);
     return (response.data as List).map((e) {
       e = TarefaDioModel.fromJson(e);
@@ -36,7 +37,8 @@ class DashboardRepository implements IDashboardRepository {
   @override
   Future<List<TarefaDioModel>> getDioIndividual(String id) async {
     Response response;
-    response = await DioStruture().dioAction().get('tasks/individual/$id');
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('tasks/individual/$id');
     DioStruture().statusRequest(response);
     return (response.data as List).map((e) {
       e = TarefaDioModel.fromJson(e);
@@ -54,7 +56,8 @@ class DashboardRepository implements IDashboardRepository {
   @override
   Future<List<TarefaDioTotalModel>> getDioTotal() async {
     Response response;
-    response = await DioStruture().dioAction().get('tasks/total');
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('tasks/total');
     DioStruture().statusRequest(response);
     return (response.data as List).map((e) {
       e = TarefaDioTotalModel.fromJson(e);
@@ -69,9 +72,8 @@ class DashboardRepository implements IDashboardRepository {
   @override
   Future<dynamic> saveDio(TarefaDioModel model) async {
     Response response;
-    response = await DioStruture()
-        .dioAction()
-        .post('tasks', data: model.toJson(model));
+    var dio = await DioStruture().dioAction();
+    response = await dio.post('tasks', data: model.toJson(model));
     DioStruture().statusRequest(response);
     return response;
   }
@@ -79,9 +81,9 @@ class DashboardRepository implements IDashboardRepository {
   @override
   updateDio(TarefaDioModel model) async {
     Response response;
-    response = await DioStruture()
-        .dioAction()
-        .put('tasks/${model.id.toString()}', data: model.toJson(model));
+    var dio = await DioStruture().dioAction();
+    response = await dio.put('tasks/${model.id.toString()}',
+        data: model.toJson(model));
     DioStruture().statusRequest(response);
     return response;
   }
@@ -89,7 +91,8 @@ class DashboardRepository implements IDashboardRepository {
   @override
   deleteDio(TarefaDioModel model) async {
     Response response;
-    response = await DioStruture().dioAction().delete('tasks/${model.id}');
+    var dio = await DioStruture().dioAction();
+    response = await dio.delete('tasks/${model.id}');
     DioStruture().statusRequest(response);
     return response;
   }

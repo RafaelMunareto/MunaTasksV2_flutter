@@ -39,8 +39,8 @@ class ImageRepository {
     );
 
     Response response;
-    response =
-        await DioStruture().dioAction().put('perfil/$id', data: formData);
+    var dio = await DioStruture().dioAction();
+    response = await dio.put('perfil/$id', data: formData);
     DioStruture().statusRequest(response);
   }
 

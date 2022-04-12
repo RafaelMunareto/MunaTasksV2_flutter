@@ -8,11 +8,11 @@ import 'package:munatasks2/app/shared/auth/model/user_dio_model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 import 'auth_repository_interface.dart';
 
 class AuthRepository implements IAuthRepository {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  // final GoogleSignIn _googleSignIn = GoogleSignIn();
   final ILocalStorage storage = LocalStorageShare();
 
   @override
@@ -22,9 +22,9 @@ class AuthRepository implements IAuthRepository {
 
   @override
   getGoogleLogin() async {
-    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
+    // final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    // final GoogleSignInAuthentication googleAuth =
+    //     await googleUser!.authentication;
 
     // final AuthCredential credential = GoogleAuthProvider.credential(
     //   accessToken: googleAuth.accessToken,

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
@@ -68,7 +69,8 @@ abstract class HomeStoreBase with Store {
 
   void getEtiquetas() async {
     Response response;
-    response = await DioStruture().dioAction().get('etiquetas');
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('etiquetas');
     DioStruture().statusRequest(response);
     client.setEtiquetas((response.data as List).map((e) {
       return EtiquetaDioModel.fromJson(e);
@@ -112,7 +114,8 @@ abstract class HomeStoreBase with Store {
 
   settings() async {
     Response response;
-    response = await DioStruture().dioAction().get('settings');
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('settings');
     DioStruture().statusRequest(response);
     var resposta = SettingsModel.fromJson(response.data[0]);
     client.setFase((resposta.fase as List).map((e) {
@@ -135,7 +138,8 @@ abstract class HomeStoreBase with Store {
 
   getUser() async {
     Response response;
-    response = await DioStruture().dioAction().get('perfil');
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('perfil');
     DioStruture().statusRequest(response);
     client.setPerfis((response.data as List).map((e) {
       return PerfilDioModel.fromJson(e);
@@ -144,10 +148,10 @@ abstract class HomeStoreBase with Store {
 
   getPerfil() async {
     Response response;
+
     if (client.userDio.id != null) {
-      response = await DioStruture()
-          .dioAction()
-          .get('perfil/user/${client.userDio.id}');
+      var dio = await DioStruture().dioAction();
+      response = await dio.get('perfil/user/${client.userDio.id}');
       DioStruture().statusRequest(response);
       var resposta = PerfilDioModel.fromJson(response.data[0]);
       client.setPerfilUserlogado(resposta);

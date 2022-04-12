@@ -60,7 +60,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   getPerfil() async {
     UserDioClientModel user = await auth.getUser();
     Response response;
-    response = await DioStruture().dioAction().get('perfil/user/${user.id}');
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('perfil/user/${user.id}');
     DioStruture().statusRequest(response);
     perfil = PerfilDioModel.fromJson(response.data[0]);
   }
