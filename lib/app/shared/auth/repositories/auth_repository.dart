@@ -70,12 +70,11 @@ class AuthRepository implements IAuthRepository {
 
   @override
   getUser() async {
-    await storage.get('userDio').then((value) {
+    return await storage.get('userDio').then((value) {
       if (value != null) {
         return UserDioClientModel.fromJson(jsonDecode(value[0])['user']);
       }
     });
-    return '';
   }
 
   @override

@@ -57,13 +57,26 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   bool search = false;
   PerfilDioModel perfil = PerfilDioModel();
   AuthRepository auth = AuthRepository();
+  UserDioClientModel user = UserDioClientModel();
+
   getPerfil() async {
-    UserDioClientModel user = await auth.getUser();
+    await auth.getUser().then((e) {
+      user = e;
+    });
+
     Response response;
     var dio = await DioStruture().dioAction();
     response = await dio.get('perfil/user/${user.id}');
     DioStruture().statusRequest(response);
-    perfil = PerfilDioModel.fromJson(response.data[0]);
+    setState(() {
+      perfil = PerfilDioModel.fromJson(response.data[0]);
+    });
+  }
+
+  @override
+  void initState() {
+    getPerfil();
+    super.initState();
   }
 
   @override

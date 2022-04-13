@@ -68,4 +68,8 @@ abstract class _PrincipalStoreBase with Store {
       setSettings(value);
     });
   }
+
+  deleteColor(String color) {}
+
+  novaCor() {}
 }
