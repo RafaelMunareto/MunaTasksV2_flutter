@@ -52,8 +52,7 @@ class PerfilRepository implements IPerfilRepository {
   Future saveTime(PerfilDioModel model) async {
     Response response;
     var dio = await DioStruture().dioAction();
-    response =
-        await dio.put('perfil/${model.id}', data: model.toJsonTime(model));
+    response = await dio.put('perfil/${model.id}', data: model.toJson(model));
     DioStruture().statusRequest(response);
     return response;
   }

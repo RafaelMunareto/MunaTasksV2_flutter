@@ -13,7 +13,7 @@ class AuthGuard extends RouteGuard {
   Future<bool> canActivate(String path, ModularRoute router) async {
     UserDioClientModel user = UserDioClientModel();
 
-    storage.get('userDio').then((value) {
+    await storage.get('userDio').then((value) {
       if (value != null) {
         user = UserDioClientModel.fromJson(jsonDecode(value[0])['user']);
       }

@@ -69,7 +69,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                           store.client.perfilUserLogado
                                                       .urlImage ==
                                                   ''
-                                              ? 'https://cdn.icon-icons.com/icons2/1603/PNG/512/computer-laptop-user-developer-programer_108610.png'
+                                              ? 'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/person_people_avatar_man_boy_glasses_icon_131369.png?alt=media&token=19343af9-36fa-422d-88c3-716b1ffdbb88'
                                               : store.client.perfilUserLogado
                                                   .urlImage,
                                         ),

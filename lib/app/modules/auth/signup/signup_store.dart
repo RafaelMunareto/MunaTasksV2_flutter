@@ -42,16 +42,16 @@ abstract class _SignupStoreBase with Store {
     UserDioClientModel model = UserDioClientModel(
         email: client.email, name: client.name, password: client.password);
     setLoading(true);
-    auth.saveUser(model).then((value) async {
-      setMsgErrOrGoal(true);
-      setMsg('Usuário criado com sucesso');
-      setLoading(false);
-      await auth.getLoginDio(client.email, client.password).then((value) {
-        auth.perfilUser(value.data['user']['id']).then((a) {
-          Modular.to.navigate('/home/');
-        }).catchError((e) {
+    auth.saveUser(model).then((value) {
+      auth.getLoginDio(client.email, client.password).then((value) {
+        auth.perfilUser(value.data['user']['id']).then((a) {}).catchError((e) {
           setMsg(e.response?.data['error'].toString());
         });
+      }).then((value) {
+        setMsgErrOrGoal(true);
+        setMsg('Usuário criado com sucesso');
+        setLoading(false);
+        Modular.to.navigate('/auth/');
       });
     }).catchError((error) {
       setMsgErrOrGoal(false);

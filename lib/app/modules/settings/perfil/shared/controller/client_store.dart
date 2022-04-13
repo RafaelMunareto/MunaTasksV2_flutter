@@ -61,6 +61,12 @@ abstract class _ClientStoreBase with Store {
   @action
   changeTime(value) => perfilDio.nameTime = value;
 
+  @observable
+  String nameTime = '';
+
+  @action
+  setNameTime(value) => nameTime = value;
+
   @action
   setPerfilImage(value) => perfilDio.urlImage = value;
 
