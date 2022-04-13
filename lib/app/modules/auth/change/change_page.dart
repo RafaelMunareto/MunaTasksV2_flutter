@@ -14,7 +14,7 @@ import 'package:mobx/mobx.dart';
 
 class ChangePage extends StatefulWidget {
   final String title;
-  final String code;
+  final dynamic code;
 
   const ChangePage({Key? key, this.title = 'Trocar senha', this.code = ''})
       : super(key: key);
@@ -103,12 +103,13 @@ class ChangePageState extends State<ChangePage> {
                     margin: const EdgeInsets.symmetric(
                         horizontal: 40, vertical: 10),
                     child: ButtonWidget(
-                        label: 'ALTERAR',
-                        width: size.width * 0.5,
-                        loading: store.loading,
-                        function: store.client.isValidChangePassword
-                            ? store.submit
-                            : null),
+                      label: 'ALTERAR',
+                      width: size.width * 0.5,
+                      loading: store.loading,
+                      function: store.client.isValidChangePassword
+                          ? store.submit
+                          : null,
+                    ),
                   );
                 }),
                 Container(

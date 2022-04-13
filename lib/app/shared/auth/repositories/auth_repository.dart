@@ -53,6 +53,22 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
+  Future sendEmailChangePassword(email) async {
+    Response response;
+    var dio = Dio(
+      BaseOptions(
+        baseUrl: DioStruture().baseUrlMunatasks,
+      ),
+    );
+
+    response = await dio.get(
+      '/usuarios/mail/change_password/$email',
+    );
+    DioStruture().statusRequest(response);
+    return response;
+  }
+
+  @override
   getUser() async {
     await storage.get('userDio').then((value) {
       if (value != null) {
@@ -91,6 +107,21 @@ class AuthRepository implements IAuthRepository {
       "manager": false,
       "nameTime": "Time"
     });
+    DioStruture().statusRequest(response);
+    return response;
+  }
+
+  @override
+  Future changeUserPassword(String id, String password) async {
+    Response response;
+    var dio = Dio(
+      BaseOptions(
+        baseUrl: DioStruture().baseUrlMunatasks,
+      ),
+    );
+
+    response = await dio
+        .put('/usuarios/change_password/$id', data: {"password": password});
     DioStruture().statusRequest(response);
     return response;
   }

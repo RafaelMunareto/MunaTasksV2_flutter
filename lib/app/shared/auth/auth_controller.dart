@@ -79,6 +79,16 @@ abstract class _AuthControllerBase with Store {
   Future perfilUser(String user) {
     return authRepository.perfilUser(user);
   }
+
+  @action
+  Future sendEmailChangePassword(String email) {
+    return authRepository.sendEmailChangePassword(email);
+  }
+
+  @action
+  Future changeUserPassword(String id, String password) {
+    return authRepository.changeUserPassword(id, password);
+  }
 }
 
 enum AuthStatus { loading, login, logoff }

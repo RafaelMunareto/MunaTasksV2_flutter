@@ -38,8 +38,8 @@ class AuthModule extends Module {
     ChildRoute("/forget/",
         child: (context, args) => const ForgetPage(),
         transition: TransitionType.leftToRightWithFade),
-    ChildRoute("/change/:code/",
-        child: (context, args) => ChangePage(code: args.params['code']),
+    ChildRoute("/change/",
+        child: (context, args) => ChangePage(code: args.queryParams['code']),
         transition: TransitionType.leftToRightWithFade),
   ];
 }

@@ -36,15 +36,15 @@ abstract class _ForgetStoreBase with Store {
 
   @action
   submit() {
-    // setLoading(true);
-    // auth.sendChangePasswordEmail(client.email).then((value) async {
-    //    setLoading(false);
-    //    setMsgErrOrGoal(true);
-    //    setMsg('Senha enviada com sucesso!');
-    // }).catchError((e) {
-    //   setLoading(false);
-    //   setMsgErrOrGoal(false);
-    //   setMsg(ErrorPtBr().verificaCodeErro('auth/' + e.code));
-    // });
+    setLoading(true);
+    auth.sendEmailChangePassword(client.email).then((value) async {
+      setLoading(false);
+      setMsgErrOrGoal(true);
+      setMsg('Senha enviada com sucesso!');
+    }).catchError((erro) {
+      setLoading(false);
+      setMsgErrOrGoal(false);
+      setMsg(erro.response.data['error']);
+    });
   }
 }

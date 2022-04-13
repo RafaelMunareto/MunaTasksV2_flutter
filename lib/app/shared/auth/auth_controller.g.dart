@@ -150,6 +150,28 @@ mixin _$AuthController on _AuthControllerBase, Store {
   }
 
   @override
+  Future<dynamic> sendEmailChangePassword(String email) {
+    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
+        name: '_AuthControllerBase.sendEmailChangePassword');
+    try {
+      return super.sendEmailChangePassword(email);
+    } finally {
+      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Future<dynamic> changeUserPassword(String id, String password) {
+    final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
+        name: '_AuthControllerBase.changeUserPassword');
+    try {
+      return super.changeUserPassword(id, password);
+    } finally {
+      _$_AuthControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 status: ${status},

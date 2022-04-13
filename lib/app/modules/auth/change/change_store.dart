@@ -15,7 +15,7 @@ abstract class _ChangeStoreBase with Store {
   bool loading = false;
 
   @observable
-  String? code;
+  String code = '';
 
   @action
   setCode(value) => code = value;
@@ -35,21 +35,21 @@ abstract class _ChangeStoreBase with Store {
   @action
   setMsgErrOrGoal(value) => msgErrOrGoal = value;
 
-  @action
   submit() {
-    // if(code != null) {
-    //   setLoading(true);
-    //   auth.changeResetPassword(client.password, code).then((value) {
-    //     setLoading(false);
-
-    //     if(value != null){
-    //       setMsgErrOrGoal(false);
-    //       setMsg(value);
-    //     }else{
-    //       setMsgErrOrGoal(true);
-    //       setMsg('Senha alterada com sucesso!');
-    //     }
-    //   });
-    // }
+    if (code != '') {
+      setLoading(true);
+      auth.changeUserPassword(code, client.confirmPassword).then((value) {
+        setLoading(false);
+        setMsgErrOrGoal(true);
+        setMsg('Senha alterada com sucesso!');
+      }).catchError((erro) {
+        setLoading(false);
+        setMsgErrOrGoal(false);
+        setMsg('Erro na alteração de senha!');
+      });
+    } else {
+      setMsgErrOrGoal(false);
+      setMsg('Usuário não encontrado na base');
+    }
   }
 }

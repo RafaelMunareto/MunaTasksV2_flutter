@@ -27,13 +27,13 @@ mixin _$ChangeStore on _ChangeStoreBase, Store {
   final _$codeAtom = Atom(name: '_ChangeStoreBase.code');
 
   @override
-  String? get code {
+  String get code {
     _$codeAtom.reportRead();
     return super.code;
   }
 
   @override
-  set code(String? value) {
+  set code(String value) {
     _$codeAtom.reportWrite(value, super.code, () {
       super.code = value;
     });
@@ -111,17 +111,6 @@ mixin _$ChangeStore on _ChangeStoreBase, Store {
         name: '_ChangeStoreBase.setMsgErrOrGoal');
     try {
       return super.setMsgErrOrGoal(value);
-    } finally {
-      _$_ChangeStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic submit() {
-    final _$actionInfo = _$_ChangeStoreBaseActionController.startAction(
-        name: '_ChangeStoreBase.submit');
-    try {
-      return super.submit();
     } finally {
       _$_ChangeStoreBaseActionController.endAction(_$actionInfo);
     }
