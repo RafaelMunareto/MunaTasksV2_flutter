@@ -32,8 +32,14 @@ class PerfilRepository implements IPerfilRepository {
   @override
   saveDio(PerfilDioModel model) async {
     Response response;
-    model.idStaff =
-        model.idStaff.map((e) => PerfilDioModel.fromJson(e)).toList();
+    if (model.idStaff != null || model.idStaff.isNotEmpty) {
+      try {
+        model.idStaff[0].id;
+      } catch (e) {
+        model.idStaff =
+            model.idStaff.map((e) => PerfilDioModel.fromJson(e)).toList();
+      }
+    }
     var dio = await DioStruture().dioAction();
     response = await dio.put('perfil/${model.id}', data: model.toJson(model));
     DioStruture().statusRequest(response);

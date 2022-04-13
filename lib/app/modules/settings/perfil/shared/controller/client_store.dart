@@ -72,6 +72,7 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setIdStaff(value) async {
+    perfilDio.idStaff ??= [];
     if (perfilDio.idStaff.isNotEmpty) {
       perfilDio.idStaff = await perfilDio.idStaff
           .map((e) => PerfilDioModel.fromJson(e))

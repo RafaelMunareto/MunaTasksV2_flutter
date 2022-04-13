@@ -1,5 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 
@@ -9,9 +11,11 @@ class PrincipalStore = _PrincipalStoreBase with _$PrincipalStore;
 
 abstract class _PrincipalStoreBase with Store {
   final ILocalStorage storage = Modular.get();
+  final IEtiquetaService etiquetaService;
 
-  _PrincipalStoreBase() {
+  _PrincipalStoreBase({required this.etiquetaService}) {
     buscaTheme();
+    settingsAction();
   }
 
   @observable
@@ -38,6 +42,12 @@ abstract class _PrincipalStoreBase with Store {
     setfinalize(true);
   }
 
+  @observable
+  SettingsModel settings = SettingsModel();
+
+  @action
+  setSettings(value) => settings = value;
+
   @action
   changeSwitch(value) {
     List<String> data = [];
@@ -51,5 +61,11 @@ abstract class _PrincipalStoreBase with Store {
     await storage.put('user', []);
     await Modular.get<AuthController>().logout();
     Modular.to.navigate('/auth/');
+  }
+
+  settingsAction() {
+    etiquetaService.getSettings().then((value) {
+      setSettings(value);
+    });
   }
 }

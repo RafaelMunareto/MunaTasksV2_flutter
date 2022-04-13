@@ -5,7 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 class PrincipalModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.lazySingleton((i) => PrincipalStore()),
+    Bind.lazySingleton((i) => PrincipalStore(etiquetaService: i.get())),
   ];
 
   @override

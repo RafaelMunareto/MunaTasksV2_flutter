@@ -117,8 +117,9 @@ class _EquipesWidgetState extends State<EquipesWidget>
                               } else {
                                 client.individualChip.add(linha.id);
                               }
-                              client.setIdStaff(linha);
-                              store.saveDio();
+                              client
+                                  .setIdStaff(linha)
+                                  .then((value) => store.saveDio());
                             },
                           );
                         })),

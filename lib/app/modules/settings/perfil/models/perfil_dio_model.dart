@@ -46,7 +46,7 @@ class PerfilDioModel {
 
   toJson(PerfilDioModel doc) {
     return {
-      "idStaff": doc.idStaff.length > 0
+      "idStaff": doc.idStaff.isNotEmpty
           ? doc.idStaff!.map((e) => e.id).toList()
           : doc.idStaff,
       "manager": doc.manager,

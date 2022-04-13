@@ -39,6 +39,21 @@ mixin _$PrincipalStore on _PrincipalStoreBase, Store {
     });
   }
 
+  final _$settingsAtom = Atom(name: '_PrincipalStoreBase.settings');
+
+  @override
+  SettingsModel get settings {
+    _$settingsAtom.reportRead();
+    return super.settings;
+  }
+
+  @override
+  set settings(SettingsModel value) {
+    _$settingsAtom.reportWrite(value, super.settings, () {
+      super.settings = value;
+    });
+  }
+
   final _$buscaThemeAsyncAction = AsyncAction('_PrincipalStoreBase.buscaTheme');
 
   @override
@@ -72,6 +87,17 @@ mixin _$PrincipalStore on _PrincipalStoreBase, Store {
   }
 
   @override
+  dynamic setSettings(dynamic value) {
+    final _$actionInfo = _$_PrincipalStoreBaseActionController.startAction(
+        name: '_PrincipalStoreBase.setSettings');
+    try {
+      return super.setSettings(value);
+    } finally {
+      _$_PrincipalStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic changeSwitch(dynamic value) {
     final _$actionInfo = _$_PrincipalStoreBaseActionController.startAction(
         name: '_PrincipalStoreBase.changeSwitch');
@@ -86,7 +112,8 @@ mixin _$PrincipalStore on _PrincipalStoreBase, Store {
   String toString() {
     return '''
 finalize: ${finalize},
-isSwitched: ${isSwitched}
+isSwitched: ${isSwitched},
+settings: ${settings}
     ''';
   }
 }

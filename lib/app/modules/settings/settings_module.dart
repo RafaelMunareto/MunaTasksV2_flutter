@@ -29,7 +29,7 @@ class SettingsModule extends Module {
     Bind.lazySingleton<IEtiquetaService>(
         (i) => EtiquetaService(etiquetaRepository: i.get())),
     Bind.lazySingleton<IEtiquetaRepository>((i) => EtiquetaRepository()),
-    Bind.lazySingleton((i) => PrincipalStore()),
+    Bind.lazySingleton((i) => PrincipalStore(etiquetaService: i.get())),
     Bind.lazySingleton((i) => EtiquetasStore(etiquetaService: i.get())),
     Bind.lazySingleton<ImageRepository>((i) => ImageRepository()),
     Bind.lazySingleton(
