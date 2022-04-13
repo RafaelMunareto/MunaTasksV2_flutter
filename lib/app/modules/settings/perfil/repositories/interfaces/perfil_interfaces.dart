@@ -4,7 +4,6 @@ abstract class IPerfilRepository {
   Future<PerfilDioModel> getDio(String id);
   Future<List<PerfilDioModel>> getDioList();
   Future saveDio(PerfilDioModel model);
-  Future deleteDio(String id);
   Future saveName(PerfilDioModel model);
-  Future saveTime(PerfilDioModel model);
+  Future deleteDio(String id);
 }

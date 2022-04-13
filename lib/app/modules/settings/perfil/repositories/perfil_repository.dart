@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/repositories/interfaces/perfil_interfaces.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 class PerfilRepository implements IPerfilRepository {
@@ -31,6 +32,8 @@ class PerfilRepository implements IPerfilRepository {
   @override
   saveDio(PerfilDioModel model) async {
     Response response;
+    model.idStaff =
+        model.idStaff.map((e) => PerfilDioModel.fromJson(e)).toList();
     var dio = await DioStruture().dioAction();
     response = await dio.put('perfil/${model.id}', data: model.toJson(model));
     DioStruture().statusRequest(response);
@@ -38,21 +41,12 @@ class PerfilRepository implements IPerfilRepository {
   }
 
   @override
-  Future saveName(PerfilDioModel model) async {
+  saveName(PerfilDioModel model) async {
     Response response;
     var dio = await DioStruture().dioAction();
+    UserDioClientModel user = model.name;
     response = await dio
-        .put('usuarios/user/${model.name.id}', data: {"name": model.name.name});
-    DioStruture().statusRequest(response);
-
-    return response;
-  }
-
-  @override
-  Future saveTime(PerfilDioModel model) async {
-    Response response;
-    var dio = await DioStruture().dioAction();
-    response = await dio.put('perfil/${model.id}', data: model.toJson(model));
+        .put('usuarios/user/${model.name.id}', data: {"name": user.name});
     DioStruture().statusRequest(response);
     return response;
   }

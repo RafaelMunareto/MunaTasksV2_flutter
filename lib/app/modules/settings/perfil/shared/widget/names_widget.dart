@@ -86,11 +86,11 @@ class _NamesWidgetState extends State<NamesWidget>
                       ),
                       title: Observer(builder: (_) {
                         return SizedBox(
-                          child: client.nameTime == ""
+                          child: client.nameTime == ''
                               ? Container()
                               : TextFormField(
                                   enabled: enabledField,
-                                  initialValue: client.nameTime,
+                                  initialValue: client.perfilDio.nameTime,
                                   onChanged: (value) {
                                     client.changeTime(value);
                                   },
@@ -109,7 +109,7 @@ class _NamesWidgetState extends State<NamesWidget>
                           setState(() {
                             enabledField = !enabledField;
                             if (!enabledField) {
-                              store.saveTime();
+                              store.saveDio();
                             }
                           });
                         },

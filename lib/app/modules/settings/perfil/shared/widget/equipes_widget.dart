@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
@@ -93,11 +94,11 @@ class _EquipesWidgetState extends State<EquipesWidget>
                     for (var linha in list)
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          child: InputChip(
+                        child: SizedBox(child: Observer(builder: (_) {
+                          return InputChip(
                             key: ObjectKey(linha.id),
                             labelPadding: const EdgeInsets.all(2),
-                            selected: client.individualChip!.contains(linha.id),
+                            selected: client.individualChip.contains(linha.id),
                             elevation: 4.0,
                             avatar: CircleAvatarWidget(
                               url: linha.urlImage,
@@ -110,17 +111,17 @@ class _EquipesWidgetState extends State<EquipesWidget>
                               ),
                             ),
                             onSelected: (bool value) {
-                              if (client.individualChip!.contains(linha.id)) {
-                                client.individualChip!.removeWhere(
+                              if (client.individualChip.contains(linha.id)) {
+                                client.individualChip.removeWhere(
                                     (element) => element == linha.id);
                               } else {
-                                client.individualChip!.add(linha.id);
+                                client.individualChip.add(linha.id);
                               }
                               client.setIdStaff(linha);
-                              store.saveTime();
+                              store.saveDio();
                             },
-                          ),
-                        ),
+                          );
+                        })),
                       )
                   ],
                 )
@@ -138,7 +139,7 @@ class _EquipesWidgetState extends State<EquipesWidget>
                                   labelPadding: const EdgeInsets.all(2),
                                   elevation: 4.0,
                                   avatar: CircleAvatarWidget(
-                                    url: userModel.urlImage,
+                                    url: userModel!.urlImage,
                                   ),
                                   label: SizedBox(
                                     width: 100,

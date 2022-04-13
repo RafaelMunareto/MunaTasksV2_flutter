@@ -32,7 +32,7 @@ abstract class _ClientStoreBase with Store {
   bool inputChip = false;
 
   @observable
-  List<dynamic>? individualChip = [];
+  List<dynamic> individualChip = [];
 
   @observable
   bool textFieldNameBool = false;
@@ -71,16 +71,21 @@ abstract class _ClientStoreBase with Store {
   setPerfilImage(value) => perfilDio.urlImage = value;
 
   @action
-  setIdStaff(value) {
-    perfilDio.idStaff =
-        perfilDio.idStaff!.map((e) => PerfilDioModel.fromJson(e)).toList();
-    if (perfilDio.idStaff!.where((e) => e.id == value.id).isEmpty) {
-      perfilDio.idStaff?.add(value);
-    } else {
-      perfilDio.idStaff?.removeWhere((element) => element.id == value.id);
-      if (perfilDio.idStaff!.isEmpty) {
-        individualChip = [];
+  setIdStaff(value) async {
+    if (perfilDio.idStaff.isNotEmpty) {
+      perfilDio.idStaff = await perfilDio.idStaff
+          .map((e) => PerfilDioModel.fromJson(e))
+          .toList();
+      if (perfilDio.idStaff!.where((e) => e.id == value.id).isEmpty) {
+        perfilDio.idStaff?.add(value);
+      } else {
+        perfilDio.idStaff.removeWhere((element) => element.id == value.id);
+        if (perfilDio.idStaff!.isEmpty) {
+          individualChip = [];
+        }
       }
+    } else {
+      perfilDio.idStaff.add(value);
     }
   }
 
@@ -131,7 +136,7 @@ abstract class _ClientStoreBase with Store {
   PerfilDioModel perfilDio = PerfilDioModel();
 
   @observable
-  List<PerfilDioModel> users = [];
+  List<dynamic> users = [];
 
   @action
   setPerfildio(value) => perfilDio = value;

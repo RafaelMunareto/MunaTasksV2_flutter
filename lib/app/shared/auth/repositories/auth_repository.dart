@@ -89,7 +89,7 @@ class AuthRepository implements IAuthRepository {
       "name": user,
       "idStaff": null,
       "manager": false,
-      "nameTime": ""
+      "nameTime": "Time"
     });
     DioStruture().statusRequest(response);
     return response;

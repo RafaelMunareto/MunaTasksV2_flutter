@@ -133,13 +133,13 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   final _$individualChipAtom = Atom(name: '_ClientStoreBase.individualChip');
 
   @override
-  List<dynamic>? get individualChip {
+  List<dynamic> get individualChip {
     _$individualChipAtom.reportRead();
     return super.individualChip;
   }
 
   @override
-  set individualChip(List<dynamic>? value) {
+  set individualChip(List<dynamic> value) {
     _$individualChipAtom.reportWrite(value, super.individualChip, () {
       super.individualChip = value;
     });
@@ -158,6 +158,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set textFieldNameBool(bool value) {
     _$textFieldNameBoolAtom.reportWrite(value, super.textFieldNameBool, () {
       super.textFieldNameBool = value;
+    });
+  }
+
+  final _$nameTimeAtom = Atom(name: '_ClientStoreBase.nameTime');
+
+  @override
+  String get nameTime {
+    _$nameTimeAtom.reportRead();
+    return super.nameTime;
+  }
+
+  @override
+  set nameTime(String value) {
+    _$nameTimeAtom.reportWrite(value, super.nameTime, () {
+      super.nameTime = value;
     });
   }
 
@@ -194,13 +209,13 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   final _$usersAtom = Atom(name: '_ClientStoreBase.users');
 
   @override
-  List<PerfilDioModel> get users {
+  List<dynamic> get users {
     _$usersAtom.reportRead();
     return super.users;
   }
 
   @override
-  set users(List<PerfilDioModel> value) {
+  set users(List<dynamic> value) {
     _$usersAtom.reportWrite(value, super.users, () {
       super.users = value;
     });
@@ -219,6 +234,13 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     _$urlImageAtom.reportWrite(value, super.urlImage, () {
       super.urlImage = value;
     });
+  }
+
+  final _$setIdStaffAsyncAction = AsyncAction('_ClientStoreBase.setIdStaff');
+
+  @override
+  Future setIdStaff(dynamic value) {
+    return _$setIdStaffAsyncAction.run(() => super.setIdStaff(value));
   }
 
   final _$_ClientStoreBaseActionController =
@@ -324,22 +346,22 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
-  dynamic setPerfilImage(dynamic value) {
+  dynamic setNameTime(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setPerfilImage');
+        name: '_ClientStoreBase.setNameTime');
     try {
-      return super.setPerfilImage(value);
+      return super.setNameTime(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic setIdStaff(dynamic value) {
+  dynamic setPerfilImage(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setIdStaff');
+        name: '_ClientStoreBase.setPerfilImage');
     try {
-      return super.setIdStaff(value);
+      return super.setPerfilImage(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -401,6 +423,7 @@ perfis: ${perfis},
 inputChip: ${inputChip},
 individualChip: ${individualChip},
 textFieldNameBool: ${textFieldNameBool},
+nameTime: ${nameTime},
 userSelection: ${userSelection},
 perfilDio: ${perfilDio},
 users: ${users},

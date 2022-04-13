@@ -44,15 +44,16 @@ abstract class _PerfilStoreBase with Store {
 
   getBydDioId() {
     perfilService.getDio(client.userSelection.id).then((value) async {
-      client.setPerfildio(value);
-      client.setNameTime(value.nameTime);
-      client.setUsersDio(client.perfilDio.idStaff!.map((e) {
+      await client.setPerfildio(value);
+      await client.setNameTime(value.nameTime);
+      var users = await client.perfilDio.idStaff!.map((e) {
         var perfil = PerfilDioModel.fromJson(e);
-        if (!client.individualChip!.contains(perfil.id)) {
-          client.individualChip!.add(perfil.id);
+        if (!client.individualChip.contains(perfil.id)) {
+          client.individualChip.add(perfil.id);
         }
         return perfil;
-      }).toList());
+      }).toList();
+      client.setUsersDio(users);
     });
   }
 
@@ -73,12 +74,6 @@ abstract class _PerfilStoreBase with Store {
   @action
   saveName() async {
     await perfilService.saveName(client.perfilDio);
-    getDioUsers();
-  }
-
-  @action
-  saveTime() async {
-    await perfilService.saveTime(client.perfilDio);
     getList();
   }
 
@@ -107,9 +102,8 @@ abstract class _PerfilStoreBase with Store {
     );
 
     Response response;
-    response = await DioStruture()
-        .dioAction()
-        .put('perfil/${client.perfilDio.id}', data: formData);
+    var dio = await DioStruture().dioAction();
+    response = await dio.put('perfil/${client.perfilDio.id}', data: formData);
     DioStruture().statusRequest(response);
     getBydDioId();
     client.setLoadingImagem(false);

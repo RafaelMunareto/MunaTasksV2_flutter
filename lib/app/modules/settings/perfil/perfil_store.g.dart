@@ -16,13 +16,6 @@ mixin _$PerfilStore on _PerfilStoreBase, Store {
     return _$saveNameAsyncAction.run(() => super.saveName());
   }
 
-  final _$saveTimeAsyncAction = AsyncAction('_PerfilStoreBase.saveTime');
-
-  @override
-  Future saveTime() {
-    return _$saveTimeAsyncAction.run(() => super.saveTime());
-  }
-
   @override
   String toString() {
     return '''

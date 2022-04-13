@@ -34,7 +34,7 @@ class PerfilDioModel {
   factory PerfilDioModel.fromJson(json) {
     return PerfilDioModel(
       id: json['_id'],
-      idStaff: json['idStaff'] ?? [],
+      idStaff: json['idStaff'],
       manager: json['manager'],
       name: UserDioClientModel.fromJson(json['name']),
       urlImage: json['urlImage'] == null
@@ -46,19 +46,9 @@ class PerfilDioModel {
 
   toJson(PerfilDioModel doc) {
     return {
-      "idStaff": doc.idStaff.isNotEmpty
-          ? doc.idStaff!.map((e) => e['_id']).toList()
-          : [],
-      "manager": doc.manager,
-      "name": doc.name.id,
-      "nameTime": doc.nameTime,
-    };
-  }
-
-  toJsonTime(PerfilDioModel doc) {
-    return {
-      "idStaff":
-          doc.idStaff.isNotEmpty ? doc.idStaff!.map((e) => e.id).toList() : [],
+      "idStaff": doc.idStaff.length > 0
+          ? doc.idStaff!.map((e) => e.id).toList()
+          : doc.idStaff,
       "manager": doc.manager,
       "name": doc.name.id,
       "nameTime": doc.nameTime,
