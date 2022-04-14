@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
@@ -19,7 +22,7 @@ abstract class _PrincipalStoreBase with Store {
   }
 
   @observable
-  bool finalize = false;
+  bool finalize = true;
 
   @action
   setfinalize(value) => finalize = value;
@@ -41,7 +44,7 @@ abstract class _PrincipalStoreBase with Store {
     escolha = value;
     if (escolha.isNotEmpty) {
       if (label == 'Tempo') {
-        escolha.sort((a, b) => a['tempoValue'].compareTo(b['tempoValue']));
+        escolha.sort((a, b) => a.tempoValue.compareTo(b.tempoValue));
       } else {
         escolha.sort((a, b) => a.compareTo(b));
       }
@@ -86,12 +89,94 @@ abstract class _PrincipalStoreBase with Store {
 
   settingsAction() {
     etiquetaService.getSettings().then((value) {
+      value.retard = value.retard!.map((e) {
+        return RetardDioModel.fromJson(e);
+      }).toList();
       setEscolha(value.order);
       setSettings(value);
-    });
+    }).then((value) => setfinalize(false));
   }
 
-  deleteColor(String color) {}
+  delete(value) {
+    if (label == 'Tempo') {
+      escolha.removeWhere((element) => element.tempoName == value.tempoName);
+    } else {
+      escolha.removeWhere((element) => element.toString() == value.toString());
+    }
+    changeSettings();
+  }
 
-  novaCor() {}
+  edit(value, valueOld) {
+    if (label == 'Order') {
+      settings.order = escolha.map((e) {
+        return e == valueOld ? value : e;
+      }).toList();
+      setEscolha(settings.order);
+    } else if (label == 'Color') {
+      settings.color = escolha.map((e) {
+        return e == valueOld ? value : e;
+      }).toList();
+      setEscolha(settings.color);
+    } else if (label == 'Subtarefa') {
+      settings.subtarefaInsert = escolha.map((e) {
+        return e == valueOld ? value : e;
+      }).toList();
+      setEscolha(settings.subtarefaInsert);
+    } else if (label == 'Prioridade') {
+      settings.prioridade = escolha.map((e) {
+        return e == valueOld ? value : e;
+      }).toList();
+      setEscolha(settings.prioridade);
+    } else if (label == 'Tempo') {
+      settings.retard = escolha.map((e) {
+        if (e.id == valueOld.id) {
+          return RetardDioModel(
+              id: e.id,
+              tempoName: value,
+              tempoValue: int.parse(value.split(' ')[0]) * 24);
+        }
+        return e;
+      }).toList();
+      setEscolha(settings.retard);
+    }
+    etiquetaService.updateSettings(settings);
+  }
+
+  novo(valueOld, value) {
+    if (label == 'Prioridade') {
+      value = int.parse(value);
+    }
+    if (label == 'Tempo') {
+      var tempoValue = int.parse(value.split(' ')[0]) * 24;
+      RetardDioModel data = RetardDioModel(
+        id: DateTime.now().microsecondsSinceEpoch.toString(),
+        tempoName: value,
+        tempoValue: tempoValue,
+      );
+      escolha.add(data);
+    } else {
+      escolha.add(value);
+    }
+    changeSettings();
+  }
+
+  changeSettings() {
+    if (label == 'Order') {
+      settings.order = escolha;
+      setEscolha(settings.order);
+    } else if (label == 'Color') {
+      settings.color = escolha;
+      setEscolha(settings.color);
+    } else if (label == 'Subtarefa') {
+      settings.subtarefaInsert = escolha;
+      setEscolha(settings.subtarefaInsert);
+    } else if (label == 'Prioridade') {
+      settings.prioridade = escolha;
+      setEscolha(settings.prioridade);
+    } else if (label == 'Tempo') {
+      settings.retard = escolha;
+      setEscolha(settings.retard);
+    }
+    etiquetaService.updateSettings(settings);
+  }
 }

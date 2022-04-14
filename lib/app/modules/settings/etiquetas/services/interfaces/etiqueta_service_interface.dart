@@ -5,5 +5,6 @@ abstract class IEtiquetaService {
   Future<List<EtiquetaDioModel>> getDio();
   Future<SettingsModel> getSettings();
   Future deleteDio(EtiquetaDioModel model);
+  Future updateSettings(SettingsModel model);
   Future saveDio(EtiquetaDioModel model);
 }

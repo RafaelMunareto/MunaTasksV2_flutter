@@ -45,5 +45,14 @@ class SettingsModel {
     );
   }
 
-  Map<String, dynamic> toJson() => {};
+  toJson(SettingsModel doc) => {
+        'id': doc.id,
+        'color': doc.color,
+        'fase': doc.fase,
+        'order': doc.order,
+        'prioridade': doc.prioridade,
+        'retard': doc.retard,
+        'subtarefaInsert': doc.subtarefaInsert,
+        'version': doc.version,
+      };
 }

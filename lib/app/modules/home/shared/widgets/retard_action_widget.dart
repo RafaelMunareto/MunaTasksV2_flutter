@@ -83,7 +83,7 @@ class _RetardActionWidgetState extends State<RetardActionWidget>
                       label: SizedBox(
                         width: 100,
                         child: Text(
-                          linha.tempoName ?? '',
+                          linha.tempoName,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(fontSize: 12),
                         ),

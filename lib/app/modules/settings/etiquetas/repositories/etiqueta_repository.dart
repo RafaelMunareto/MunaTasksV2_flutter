@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/repositories/interfaces/etiqueta_interfaces.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
@@ -62,5 +63,17 @@ class EtiquetaRepository implements IEtiquetaRepository {
       DioStruture().statusRequest(response);
       return response;
     }
+  }
+
+  @override
+  Future updateSettings(SettingsModel model) async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    model.retard = model.retard!.map((e) {
+      return e.toJson(e);
+    }).toList();
+    response = await dio.put('settings/${model.id}', data: model.toJson(model));
+    DioStruture().statusRequest(response);
+    return response;
   }
 }

@@ -31,4 +31,9 @@ class EtiquetaService extends Disposable implements IEtiquetaService {
   Future<SettingsModel> getSettings() {
     return etiquetaRepository.getSettings();
   }
+
+  @override
+  Future updateSettings(SettingsModel model) {
+    return etiquetaRepository.updateSettings(model);
+  }
 }

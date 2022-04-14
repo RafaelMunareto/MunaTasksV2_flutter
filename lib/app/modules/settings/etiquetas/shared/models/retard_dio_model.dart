@@ -1,12 +1,12 @@
 class RetardDioModel {
-  String? id;
-  String? tempoName;
-  int? tempoValue;
+  String id;
+  String tempoName;
+  int tempoValue;
 
   RetardDioModel({
     this.id = '',
     this.tempoName = '',
-    this.tempoValue,
+    this.tempoValue = 1,
   });
 
   factory RetardDioModel.fromDocument(doc) {
@@ -25,5 +25,9 @@ class RetardDioModel {
     );
   }
 
-  Map<String, dynamic> toJson() => {};
+  toJson(RetardDioModel doc) => {
+        "id": doc.id,
+        "tempoName": doc.tempoName,
+        "tempoValue": doc.tempoValue,
+      };
 }
