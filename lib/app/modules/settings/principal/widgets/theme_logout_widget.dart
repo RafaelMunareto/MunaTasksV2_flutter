@@ -70,7 +70,9 @@ class _ThemeLogoutWidgetState extends State<ThemeLogoutWidget> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  store.logoff();
+                },
                 icon: const Icon(
                   Icons.logout,
                   color: Colors.white,
@@ -83,9 +85,6 @@ class _ThemeLogoutWidgetState extends State<ThemeLogoutWidget> {
                   ),
                 ),
               ),
-              onTap: () {
-                store.logoff();
-              },
             ),
           )
         ],
