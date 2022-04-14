@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
-import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 
 import '../../../app_widget.dart';
@@ -18,11 +16,116 @@ class PrincipalPage extends StatefulWidget {
   PrincipalPageState createState() => PrincipalPageState();
 }
 
-class PrincipalPageState extends State<PrincipalPage> {
+class PrincipalPageState extends State<PrincipalPage>
+    with SingleTickerProviderStateMixin {
   final PrincipalStore store = Modular.get();
+  late Animation<double> opacidade;
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 200), vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    _popMenu() {
+      return PopupMenuButton(
+        icon: Observer(
+          builder: (_) {
+            return ListTile(
+              leading: Text(
+                store.label,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              trailing: GestureDetector(
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                  size: 48,
+                ),
+                onTap: () {
+                  store.novaCor();
+                },
+              ),
+            );
+          },
+        ),
+        itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+          PopupMenuItem(
+            child: ListTile(
+              onTap: () {
+                store.setLabel('Order');
+                store.setEscolha(store.settings.order);
+                Navigator.pop(context);
+              },
+              leading: const Text(
+                "Order",
+              ),
+              trailing: const Icon(Icons.sort),
+            ),
+          ),
+          PopupMenuItem(
+            child: ListTile(
+              onTap: () {
+                store.setLabel('Color');
+                store.setEscolha(store.settings.color);
+                Navigator.pop(context);
+              },
+              leading: const Text("Color"),
+              trailing: const Icon(Icons.color_lens_outlined),
+            ),
+          ),
+          PopupMenuItem(
+            child: ListTile(
+              onTap: () {
+                store.setLabel('Subtarefa');
+                store.setEscolha(store.settings.subtarefaInsert);
+                Navigator.pop(context);
+              },
+              leading: const Text("Subtarefa"),
+              trailing: const Icon(Icons.task),
+            ),
+          ),
+          PopupMenuItem(
+            child: ListTile(
+              onTap: () {
+                store.setLabel('Prioridade');
+                store.setEscolha(store.settings.prioridade);
+                Navigator.pop(context);
+              },
+              leading: const Text("Prioridade"),
+              trailing: const Icon(Icons.numbers),
+            ),
+          ),
+          PopupMenuItem(
+            child: ListTile(
+              onTap: () {
+                store.setLabel('Tempo');
+                store.setEscolha(store.settings.retard);
+                Navigator.pop(context);
+              },
+              leading: const Text("Tempo"),
+              trailing: const Icon(Icons.timelapse_rounded),
+            ),
+          ),
+        ],
+      );
+    }
+
     return Scaffold(
       appBar: AppBarWidget(
           title: widget.title,
@@ -60,6 +163,7 @@ class PrincipalPageState extends State<PrincipalPage> {
                               Expanded(
                                 flex: 2,
                                 child: ListView(
+                                  shrinkWrap: true,
                                   children: [
                                     ListTile(
                                       title: const Text('Tema'),
@@ -143,79 +247,68 @@ class PrincipalPageState extends State<PrincipalPage> {
                                 ),
                               ),
                               Expanded(
-                                flex: 8,
+                                flex: 1,
+                                child: Card(
+                                  color: Colors.deepPurple,
+                                  elevation: 4,
+                                  child: SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.1,
+                                      child: _popMenu(),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 7,
                                 child: Column(
                                   children: [
-                                    Card(
-                                      color: Colors.grey,
-                                      elevation: 4,
-                                      child: ListTile(
-                                        title: const Text(
-                                          'CORES',
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        trailing: GestureDetector(
-                                          child: const Icon(
-                                            Icons.add,
-                                            color: Colors.white,
-                                            size: 48,
-                                          ),
-                                          onTap: () {
-                                            store.novaCor();
-                                          },
-                                        ),
-                                      ),
-                                    ),
                                     Observer(builder: (_) {
-                                      return store.settings.color == null
-                                          ? const Center(
-                                              child: SizedBox(
-                                                  child:
-                                                      CircularProgressIndicator()))
-                                          : ListView.builder(
-                                              scrollDirection: Axis.vertical,
-                                              controller: ScrollController(),
-                                              shrinkWrap: true,
-                                              padding: const EdgeInsets.all(4),
-                                              itemCount:
-                                                  store.settings.color!.length,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                var linha = store
-                                                    .settings.color![index];
-                                                return Wrap(
-                                                  children: [
-                                                    ListTile(
-                                                      title: Text(
-                                                        ConvertIcon()
-                                                            .convertColorName(
-                                                                linha),
-                                                        style: TextStyle(
-                                                          color: ConvertIcon()
-                                                              .convertColor(
-                                                                  linha),
-                                                        ),
-                                                      ),
-                                                      trailing: GestureDetector(
-                                                        child: const Icon(
-                                                          Icons.delete,
-                                                          color: Colors.red,
-                                                        ),
-                                                        onTap: () {
-                                                          store.deleteColor(
-                                                              linha);
-                                                        },
-                                                      ),
+                                      return SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: ListView.builder(
+                                            scrollDirection: Axis.vertical,
+                                            controller: ScrollController(),
+                                            shrinkWrap: true,
+                                            padding: const EdgeInsets.all(4),
+                                            itemCount: store.escolha.length,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              var linha = store.escolha[index];
+                                              return Wrap(
+                                                children: [
+                                                  ListTile(
+                                                    title: Text(
+                                                      store.label == 'Tempo'
+                                                          ? linha['tempoName']
+                                                              .toString()
+                                                              .toUpperCase()
+                                                          : linha
+                                                              .toString()
+                                                              .toUpperCase(),
                                                     ),
-                                                    const Divider(),
-                                                  ],
-                                                );
-                                              });
+                                                    trailing: GestureDetector(
+                                                      child: const Icon(
+                                                        Icons.delete,
+                                                        color: Colors.red,
+                                                      ),
+                                                      onTap: () {
+                                                        store.deleteColor(
+                                                          linha,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                  const Divider(),
+                                                ],
+                                              );
+                                            }),
+                                      );
                                     }),
                                   ],
                                 ),
