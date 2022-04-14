@@ -27,6 +27,27 @@ abstract class _PrincipalStoreBase with Store {
   @observable
   bool isSwitched = false;
 
+  @observable
+  List<dynamic> escolha = [];
+
+  @observable
+  String label = 'Order';
+
+  @action
+  setLabel(value) => label = value;
+
+  @action
+  setEscolha(value) {
+    escolha = value;
+    if (escolha.isNotEmpty) {
+      if (label == 'Tempo') {
+        escolha.sort((a, b) => a['tempoValue'].compareTo(b['tempoValue']));
+      } else {
+        escolha.sort((a, b) => a.compareTo(b));
+      }
+    }
+  }
+
   @action
   setIsSwitched(value) => isSwitched = value;
 
@@ -65,6 +86,7 @@ abstract class _PrincipalStoreBase with Store {
 
   settingsAction() {
     etiquetaService.getSettings().then((value) {
+      setEscolha(value.order);
       setSettings(value);
     });
   }

@@ -39,6 +39,36 @@ mixin _$PrincipalStore on _PrincipalStoreBase, Store {
     });
   }
 
+  final _$escolhaAtom = Atom(name: '_PrincipalStoreBase.escolha');
+
+  @override
+  List<dynamic> get escolha {
+    _$escolhaAtom.reportRead();
+    return super.escolha;
+  }
+
+  @override
+  set escolha(List<dynamic> value) {
+    _$escolhaAtom.reportWrite(value, super.escolha, () {
+      super.escolha = value;
+    });
+  }
+
+  final _$labelAtom = Atom(name: '_PrincipalStoreBase.label');
+
+  @override
+  String get label {
+    _$labelAtom.reportRead();
+    return super.label;
+  }
+
+  @override
+  set label(String value) {
+    _$labelAtom.reportWrite(value, super.label, () {
+      super.label = value;
+    });
+  }
+
   final _$settingsAtom = Atom(name: '_PrincipalStoreBase.settings');
 
   @override
@@ -70,6 +100,28 @@ mixin _$PrincipalStore on _PrincipalStoreBase, Store {
         name: '_PrincipalStoreBase.setfinalize');
     try {
       return super.setfinalize(value);
+    } finally {
+      _$_PrincipalStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setLabel(dynamic value) {
+    final _$actionInfo = _$_PrincipalStoreBaseActionController.startAction(
+        name: '_PrincipalStoreBase.setLabel');
+    try {
+      return super.setLabel(value);
+    } finally {
+      _$_PrincipalStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setEscolha(dynamic value) {
+    final _$actionInfo = _$_PrincipalStoreBaseActionController.startAction(
+        name: '_PrincipalStoreBase.setEscolha');
+    try {
+      return super.setEscolha(value);
     } finally {
       _$_PrincipalStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -113,6 +165,8 @@ mixin _$PrincipalStore on _PrincipalStoreBase, Store {
     return '''
 finalize: ${finalize},
 isSwitched: ${isSwitched},
+escolha: ${escolha},
+label: ${label},
 settings: ${settings}
     ''';
   }
