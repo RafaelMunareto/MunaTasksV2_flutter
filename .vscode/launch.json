@@ -9,7 +9,8 @@
             "name": "Flutter",
             "request": "launch",
             "type": "dart",
-            //"args": ["--verbose"]
+            "args": ["-d", "chrome", "--web-renderer", "html", "web-server","--web-port", "52230"],
+            //"verbose"
         },
     
     ]

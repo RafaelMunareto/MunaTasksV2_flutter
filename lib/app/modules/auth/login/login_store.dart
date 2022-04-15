@@ -85,7 +85,7 @@ abstract class _LoginStoreBase with Store {
     try {
       await setLoading(true);
       await auth.loginWithGoogle();
-      Modular.to.navigate('/home/');
+      // Modular.to.navigate('/home/');
     } catch (e) {
       setLoading(false);
       setErrOrGoal(false);

@@ -1,15 +1,18 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
 import 'auth_repository_interface.dart';
 
 class AuthRepository implements IAuthRepository {
-  // final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   final ILocalStorage storage = LocalStorageShare();
 
   @override
@@ -19,14 +22,39 @@ class AuthRepository implements IAuthRepository {
 
   @override
   getGoogleLogin() async {
-    // final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-    // final GoogleSignInAuthentication googleAuth =
-    //     await googleUser!.authentication;
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
+    UserDioClientModel user = UserDioClientModel(
+        id: googleUser.id,
+        name: googleUser.displayName,
+        email: googleUser.email);
+    PerfilDioModel perfil = PerfilDioModel(
+      idStaff: null,
+      manager: false,
+      name: user.id,
+      urlImage: googleUser.photoUrl,
+      nameTime: '',
+    );
 
-    // final AuthCredential credential = GoogleAuthProvider.credential(
-    //   accessToken: googleAuth.accessToken,
-    //   idToken: googleAuth.idToken,
-    // );
+    Response response;
+    var dio = Dio(
+      BaseOptions(
+        baseUrl: DioStruture().baseUrlMunatasks,
+      ),
+    );
+
+    response = await dio.get('usuarios/${googleUser.id}').catchError((e) {
+      print(e.toString());
+    });
+    DioStruture().statusRequest(response);
+    if (response.statusCode != 200) {
+      saveUser(user);
+      perfilUser(user.id);
+    } else {
+      UserDioClientModel user = UserDioClientModel.fromJson(response.data[0]);
+      loginDio(user.email, user.password);
+    }
   }
 
   @override
