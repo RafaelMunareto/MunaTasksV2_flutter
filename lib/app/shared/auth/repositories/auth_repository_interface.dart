@@ -5,8 +5,8 @@ abstract class IAuthRepository {
   Future sendEmailChangePassword(String email);
   Future changeUserPassword(String id, String password);
   Future saveUser(UserDioClientModel model);
-  Future perfilUser(String user);
-  getGoogleLogin();
+  Future perfilUser(UserDioClientModel user);
+  Future getGoogleLogin();
   getUser();
   Future getFacebookLogin();
   Future getLogout();

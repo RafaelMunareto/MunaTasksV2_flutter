@@ -183,14 +183,6 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$loginWithGoogleAsyncAction =
-      AsyncAction('_LoginStoreBase.loginWithGoogle');
-
-  @override
-  Future loginWithGoogle() {
-    return _$loginWithGoogleAsyncAction.run(() => super.loginWithGoogle());
-  }
-
   final _$getAvailableBiometricsAsyncAction =
       AsyncAction('_LoginStoreBase.getAvailableBiometrics');
 

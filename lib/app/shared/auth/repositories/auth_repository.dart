@@ -1,7 +1,9 @@
 // ignore_for_file: unused_local_variable
 
+import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
@@ -26,15 +28,9 @@ class AuthRepository implements IAuthRepository {
     final GoogleSignInAuthentication googleAuth =
         await googleUser!.authentication;
     UserDioClientModel user = UserDioClientModel(
-        id: googleUser.id,
-        name: googleUser.displayName,
-        email: googleUser.email);
-    PerfilDioModel perfil = PerfilDioModel(
-      idStaff: null,
-      manager: false,
-      name: user.id,
-      urlImage: googleUser.photoUrl,
-      nameTime: '',
+      name: googleUser.displayName,
+      email: googleUser.email,
+      password: '',
     );
 
     Response response;
@@ -44,21 +40,28 @@ class AuthRepository implements IAuthRepository {
       ),
     );
 
-    response = await dio.get('usuarios/${googleUser.id}').catchError((e) {
-      print(e.toString());
-    });
+    response = await dio.get('usuarios/email/${googleUser.email}');
     DioStruture().statusRequest(response);
-    if (response.statusCode != 200) {
-      saveUser(user);
-      perfilUser(user.id);
+    if (response.data != null) {
+      UserDioClientModel userGet = UserDioClientModel.fromJson(response.data);
+      loginDio(user.email, user.password)
+          .then((value) => Modular.to.navigate('/home/'));
     } else {
-      UserDioClientModel user = UserDioClientModel.fromJson(response.data[0]);
-      loginDio(user.email, user.password);
+      saveUser(user).then((e) {
+        if (e.data != null) {
+          UserDioClientModel userGet = UserDioClientModel.fromJson(e.data);
+          perfilUser(userGet);
+          loginDio(userGet.email, userGet.password).then((value) => Timer(
+              const Duration(milliseconds: 300),
+              () => Modular.to.navigate('/home/')));
+        }
+      });
     }
   }
 
   @override
-  Future getLogout() {
+  Future getLogout() async {
+    await storage.put('token', []);
     return storage.put('userDio', []);
   }
 
@@ -75,8 +78,8 @@ class AuthRepository implements IAuthRepository {
         data: jsonEncode({"email": email, "password": password}));
     DioStruture().statusRequest(response);
     UserDioModel user = UserDioModel.fromJson(response.data);
-    storage.put('userDio', [jsonEncode(user)]);
-    storage.put('token', [user.token]);
+    await storage.put('userDio', [jsonEncode(user)]);
+    await storage.put('token', [user.token]);
     return response;
   }
 
@@ -114,13 +117,13 @@ class AuthRepository implements IAuthRepository {
       ),
     );
 
-    response = await dio.post('usuarios', data: model);
+    response = await dio.post('usuarios', data: model.toJson());
     DioStruture().statusRequest(response);
     return response;
   }
 
   @override
-  Future perfilUser(String user) async {
+  Future perfilUser(UserDioClientModel user) async {
     Response response;
     var dio = Dio(
       BaseOptions(
@@ -128,12 +131,13 @@ class AuthRepository implements IAuthRepository {
       ),
     );
 
-    response = await dio.post('perfil', data: {
-      "name": user,
-      "idStaff": null,
-      "manager": false,
-      "nameTime": "Time"
-    });
+    PerfilDioModel perfil = PerfilDioModel(
+        idStaff: null,
+        manager: false,
+        name: user,
+        nameTime: 'Time',
+        urlImage: null);
+    response = await dio.post('perfil', data: perfil.toJson(perfil));
     DioStruture().statusRequest(response);
     return response;
   }

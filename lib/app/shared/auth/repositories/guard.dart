@@ -1,9 +1,6 @@
 // ignore_for_file: avoid_renaming_method_parameters
 
-import 'dart:convert';
-
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 
@@ -11,15 +8,15 @@ class AuthGuard extends RouteGuard {
   final ILocalStorage storage = LocalStorageShare();
   @override
   Future<bool> canActivate(String path, ModularRoute router) async {
-    UserDioClientModel user = UserDioClientModel();
+    String token = '';
 
-    await storage.get('userDio').then((value) {
+    await storage.get('token').then((value) {
       if (value != null) {
-        user = UserDioClientModel.fromJson(jsonDecode(value[0])['user']);
+        token = value[0];
       }
     });
 
-    if (user.id != "" || user.id != null) {
+    if (token != "") {
       return true;
     } else {
       Modular.to.navigate('/auth/');

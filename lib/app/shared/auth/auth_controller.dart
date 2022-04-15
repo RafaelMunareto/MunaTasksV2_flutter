@@ -76,7 +76,7 @@ abstract class _AuthControllerBase with Store {
   }
 
   @action
-  Future perfilUser(String user) {
+  Future perfilUser(UserDioClientModel user) {
     return authRepository.perfilUser(user);
   }
 

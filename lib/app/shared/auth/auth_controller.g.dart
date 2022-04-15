@@ -139,7 +139,7 @@ mixin _$AuthController on _AuthControllerBase, Store {
   }
 
   @override
-  Future<dynamic> perfilUser(String user) {
+  Future<dynamic> perfilUser(UserDioClientModel user) {
     final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
         name: '_AuthControllerBase.perfilUser');
     try {

@@ -44,7 +44,9 @@ abstract class _SignupStoreBase with Store {
     setLoading(true);
     auth.saveUser(model).then((value) {
       auth.getLoginDio(client.email, client.password).then((value) {
-        auth.perfilUser(value.data['user']['id']).then((a) {}).catchError((e) {
+        UserDioClientModel user =
+            UserDioClientModel.fromJson(value.data['user']);
+        auth.perfilUser(user).then((a) {}).catchError((e) {
           setMsg(e.response?.data['error'].toString());
         });
       }).then((value) {

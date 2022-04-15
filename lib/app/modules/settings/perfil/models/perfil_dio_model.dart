@@ -25,7 +25,7 @@ class PerfilDioModel {
       id: doc['_id'],
       name: UserDioClientModel.fromJson(doc['name']),
       urlImage: doc['urlImage'] == null
-          ? ''
+          ? doc['urlImage']
           : DioStruture().baseUrlMunatasks + 'files/' + doc['urlImage'],
       nameTime: doc['nameTime'],
     );
@@ -46,12 +46,15 @@ class PerfilDioModel {
 
   toJson(PerfilDioModel doc) {
     return {
-      "idStaff": doc.idStaff.isNotEmpty
-          ? doc.idStaff!.map((e) => e.id).toList()
+      "idStaff": doc.idStaff != null
+          ? doc.idStaff.isNotEmpty
+              ? doc.idStaff!.map((e) => e.id).toList()
+              : doc.idStaff
           : doc.idStaff,
       "manager": doc.manager,
       "name": doc.name.id,
       "nameTime": doc.nameTime,
+      "urlImage": doc.urlImage,
     };
   }
 }
