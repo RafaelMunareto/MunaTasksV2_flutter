@@ -1,4 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -113,8 +115,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
                   child: Column(
                     children: [
                       SizedBox(
-                        height: kIsWeb &&
-                                defaultTargetPlatform == TargetPlatform.windows
+                        height: kIsWeb || Platform.isWindows
                             ? MediaQuery.of(context).size.height * 0.07
                             : MediaQuery.of(context).size.height * 0.05,
                         child: Observer(builder: (_) {

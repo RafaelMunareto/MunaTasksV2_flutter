@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -26,7 +28,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
 
   @override
   void initState() {
-    if (kIsWeb && defaultTargetPlatform == TargetPlatform.windows) {
+    if (kIsWeb || Platform.isWindows) {
       store.client.setOpen(true);
     }
     super.initState();
@@ -41,7 +43,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
     return OrientationBuilder(
       builder: (context, orientation) {
         if (orientation == Orientation.portrait ||
-            (kIsWeb && defaultTargetPlatform == TargetPlatform.windows)) {
+            (kIsWeb || Platform.isWindows)) {
           return Scaffold(
             appBar: !appVisible
                 ? AppBarWidget(
@@ -73,9 +75,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
               },
               child: Icon(
                 Icons.add,
-                size: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
-                    ? 48
-                    : 24,
+                size: kIsWeb || Platform.isWindows ? 48 : 24,
                 color: Colors.grey[300],
               ),
               backgroundColor: Colors.red,
@@ -89,7 +89,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                 setNavigateBarSelection: store.setNavigateBarSelection,
               );
             }),
-            body: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+            body: kIsWeb || Platform.isWindows
                 ? Observer(
                     builder: (_) {
                       return store.client.loading

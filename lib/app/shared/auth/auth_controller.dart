@@ -40,7 +40,7 @@ abstract class _AuthControllerBase with Store {
   }
 
   @action
-  Future logout() {
+  logout() {
     return authRepository.getLogout();
   }
 

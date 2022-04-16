@@ -31,60 +31,65 @@ class _CardWidgetState extends State<CardWidget> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text(
-              'Excluir Tarefa.',
-              style: TextStyle(
-                  fontSize: 20, color: Color.fromARGB(255, 140, 82, 241)),
+          return SizedBox(
+            width: 200,
+            height: 200,
+            child: AlertDialog(
+              key: Key(tarefa.id!),
+              title: const Text(
+                'Excluir Tarefa.',
+                style: TextStyle(
+                    fontSize: 20, color: Color.fromARGB(255, 140, 82, 241)),
+              ),
+              content: const Text('Tem certeza que deseja excluír a tarefa ?'),
+              actions: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromARGB(255, 140, 82, 241)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: const BorderSide(
+                          color: Color.fromARGB(255, 140, 82, 241),
+                          width: 2.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text(
+                    'CANCELAR',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromARGB(255, 140, 82, 241)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: const BorderSide(
+                          color: Color.fromARGB(255, 140, 82, 241),
+                          width: 2.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Modular.to.pop();
+                    store.deleteDioTasks(tarefa);
+                    SnackbarCustom().createSnackBar(
+                        'Deletado com sucesso!', Colors.green, context);
+                  },
+                  child: const Text(
+                    'EXCLUIR',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
             ),
-            content: const Text('Tem certeza que deseja excluír a tarefa ?'),
-            actions: [
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      const Color.fromARGB(255, 140, 82, 241)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: const BorderSide(
-                        color: Color.fromARGB(255, 140, 82, 241),
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                ),
-                onPressed: () => Navigator.pop(context),
-                child: const Text(
-                  'CANCELAR',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      const Color.fromARGB(255, 140, 82, 241)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: const BorderSide(
-                        color: Color.fromARGB(255, 140, 82, 241),
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  Modular.to.pop();
-                  store.deleteDioTasks(tarefa);
-                  SnackbarCustom().createSnackBar(
-                      'Deletado com sucesso!', Colors.green, context);
-                },
-                child: const Text(
-                  'EXCLUIR',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
           );
         },
       );
@@ -194,12 +199,14 @@ class _CardWidgetState extends State<CardWidget> {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 8, 54),
-      child: Wrap(
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.6,
+      width: MediaQuery.of(context).size.width,
+      child: Column(
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.7,
+          Expanded(
+            key: UniqueKey(),
+            flex: 1,
             child: SingleChildScrollView(
               controller: ScrollController(),
               child: Wrap(
@@ -218,6 +225,7 @@ class _CardWidgetState extends State<CardWidget> {
                               TarefaDioModel linha =
                                   store.client.taskDio[index];
                               return Wrap(
+                                key: UniqueKey(),
                                 children: [
                                   Dismissible(
                                     background: Padding(

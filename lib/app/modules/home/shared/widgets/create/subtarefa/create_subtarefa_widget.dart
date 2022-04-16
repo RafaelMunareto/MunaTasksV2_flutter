@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -40,7 +42,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
             color: store.client.theme ? Colors.black38 : Colors.black12,
             borderRadius: BorderRadius.circular(4)),
         child: Padding(
-          padding: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+          padding: kIsWeb || Platform.isWindows
               ? const EdgeInsets.all(8.0)
               : const EdgeInsets.all(0),
           child: Wrap(
@@ -179,8 +181,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                   alignment: WrapAlignment.end,
                   children: [
                     Padding(
-                      padding: kIsWeb &&
-                              defaultTargetPlatform == TargetPlatform.windows
+                      padding: kIsWeb || Platform.isWindows
                           ? const EdgeInsets.fromLTRB(4, 8, 4, 8)
                           : const EdgeInsets.fromLTRB(4, 0, 4, 4),
                       child: store.clientCreate.loadingSubtarefa

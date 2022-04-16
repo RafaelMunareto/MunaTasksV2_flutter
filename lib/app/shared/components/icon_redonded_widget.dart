@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +16,7 @@ class IconRedondedWidget extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
-            border: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+            border: kIsWeb || Platform.isWindows
                 ? null
                 : Border.all(width: 2, color: color)),
         child: Icon(

@@ -62,7 +62,7 @@ mixin _$AuthController on _AuthControllerBase, Store {
   }
 
   @override
-  Future<dynamic> logout() {
+  dynamic logout() {
     final _$actionInfo = _$_AuthControllerBaseActionController.startAction(
         name: '_AuthControllerBase.logout');
     try {

@@ -60,9 +60,10 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  Future getLogout() async {
+  getLogout() async {
     await storage.put('token', []);
-    return storage.put('userDio', []);
+    await storage.put('userDio', []);
+    Modular.to.navigate('/auth/');
   }
 
   @override

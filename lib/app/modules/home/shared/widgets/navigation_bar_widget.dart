@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +30,9 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
     return Observer(builder: (_) {
       return BubbleBottomBar(
         opacity: .2,
-        tilesPadding:
-            (kIsWeb && defaultTargetPlatform == TargetPlatform.windows)
-                ? const EdgeInsets.all(18)
-                : const EdgeInsets.all(0),
+        tilesPadding: (kIsWeb || Platform.isWindows)
+            ? const EdgeInsets.all(18)
+            : const EdgeInsets.all(0),
         currentIndex: widget.navigateBarSelection,
         onTap: (value) {
           widget.setNavigateBarSelection(value);
@@ -43,19 +44,15 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
         fabLocation: BubbleBottomBarFabLocation.end, //new
         hasNotch: true, //new
         hasInk: true, //new, gives a cute ink effect
-        iconSize:
-            kIsWeb && defaultTargetPlatform == TargetPlatform.windows ? 48 : 20,
+        iconSize: kIsWeb || Platform.isWindows ? 48 : 20,
         inkColor: Colors.black12, //optional, uses theme color if not specified
         items: <BubbleBottomBarItem>[
           BubbleBottomBarItem(
             showBadge: true,
             badge: Text(
               store.client.badgetNavigate[0].toString(),
-              style: TextStyle(
-                  fontSize:
-                      kIsWeb && defaultTargetPlatform == TargetPlatform.windows
-                          ? 20
-                          : 12),
+              style:
+                  TextStyle(fontSize: kIsWeb || Platform.isWindows ? 20 : 12),
             ),
             backgroundColor: Colors.amber,
             badgeColor: ThemeData().primaryColor,
@@ -74,10 +71,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             showBadge: true,
             badge: Text(store.client.badgetNavigate[1].toString(),
                 style: TextStyle(
-                    fontSize: kIsWeb &&
-                            defaultTargetPlatform == TargetPlatform.windows
-                        ? 20
-                        : 12)),
+                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12)),
             badgeColor: ThemeData().primaryColor,
             backgroundColor: Colors.green,
             icon: Icon(
@@ -90,19 +84,13 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             ),
             title: Text("Fazendo",
                 style: TextStyle(
-                    fontSize: kIsWeb &&
-                            defaultTargetPlatform == TargetPlatform.windows
-                        ? 20
-                        : 12)),
+                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12)),
           ),
           BubbleBottomBarItem(
             showBadge: true,
             badge: Text(store.client.badgetNavigate[2].toString(),
                 style: TextStyle(
-                    fontSize: kIsWeb &&
-                            defaultTargetPlatform == TargetPlatform.windows
-                        ? 20
-                        : 12)),
+                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12)),
             backgroundColor: Colors.blue,
             badgeColor: ThemeData().primaryColor,
             icon: Icon(
@@ -115,10 +103,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             ),
             title: Text("Feito",
                 style: TextStyle(
-                    fontSize: kIsWeb &&
-                            defaultTargetPlatform == TargetPlatform.windows
-                        ? 20
-                        : 12)),
+                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12)),
           ),
         ],
       );

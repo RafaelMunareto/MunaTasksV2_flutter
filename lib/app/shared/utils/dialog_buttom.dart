@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 class DialogButtom {
@@ -21,7 +21,7 @@ class DialogButtom {
           alignment: Alignment.bottomCenter,
           child: Container(
             height: width,
-            width: defaultTargetPlatform == TargetPlatform.windows
+            width: Platform.isWindows
                 ? MediaQuery.of(context).size.width * 0.5
                 : MediaQuery.of(context).size.width,
             child: SizedBox.expand(
@@ -64,7 +64,7 @@ class DialogButtom {
           alignment: Alignment.bottomCenter,
           child: Container(
             height: width,
-            width: defaultTargetPlatform == TargetPlatform.windows
+            width: Platform.isWindows
                 ? MediaQuery.of(context).size.width * 0.7
                 : MediaQuery.of(context).size.width,
             child: SizedBox.expand(

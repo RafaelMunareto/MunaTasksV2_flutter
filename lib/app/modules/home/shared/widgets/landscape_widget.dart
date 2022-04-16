@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:accordion/accordion.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +24,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
     return Observer(builder: (_) {
       return store.client.loading
           ? Container()
-          : kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+          : kIsWeb || Platform.isWindows
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(8, 40, 8, 8),
                   child: SizedBox(

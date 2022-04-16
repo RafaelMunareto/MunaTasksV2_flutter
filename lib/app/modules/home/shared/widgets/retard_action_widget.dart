@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -71,8 +73,7 @@ class _RetardActionWidgetState extends State<RetardActionWidget>
               children: [
                 for (var linha in list)
                   Padding(
-                    padding: kIsWeb &&
-                            defaultTargetPlatform == TargetPlatform.windows
+                    padding: kIsWeb || Platform.isWindows
                         ? const EdgeInsets.only(bottom: 16.0)
                         : const EdgeInsets.only(bottom: 4.0),
                     child: InputChip(

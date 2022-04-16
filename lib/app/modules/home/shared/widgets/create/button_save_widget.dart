@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -20,7 +22,7 @@ class ButtonSaveWidget extends StatelessWidget {
           return AlertDialog(
             title: const Text('Erros'),
             content: SizedBox(
-              width: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+              width: kIsWeb || Platform.isWindows
                   ? MediaQuery.of(context).size.width * 0.5
                   : MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.3,

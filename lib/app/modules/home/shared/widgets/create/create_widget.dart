@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -51,8 +53,7 @@ class _CreateWidgetState extends State<CreateWidget> {
                     SizedBox(
                       width: double.infinity,
                       child: Padding(
-                        padding: kIsWeb &&
-                                defaultTargetPlatform == TargetPlatform.windows
+                        padding: kIsWeb || Platform.isWindows
                             ? const EdgeInsets.all(8)
                             : const EdgeInsets.only(
                                 top: 8.0,

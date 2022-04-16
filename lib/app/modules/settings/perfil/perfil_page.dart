@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -40,10 +42,9 @@ class PerfilPageState extends State<PerfilPage> {
                   FocusScope.of(context).requestFocus(FocusNode());
                 },
                 child: Padding(
-                  padding:
-                      kIsWeb && defaultTargetPlatform == TargetPlatform.windows
-                          ? const EdgeInsets.all(84.0)
-                          : const EdgeInsets.all(0),
+                  padding: kIsWeb || Platform.isWindows
+                      ? const EdgeInsets.all(84.0)
+                      : const EdgeInsets.all(0),
                   child: Column(
                     children: [
                       ImagemPerfilWidget(errorName: store.client.validateName),

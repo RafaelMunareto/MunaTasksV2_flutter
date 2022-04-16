@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -98,8 +100,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               ? _popMenu()
               : GestureDetector(
                   child: Padding(
-                    padding: kIsWeb &&
-                            defaultTargetPlatform == TargetPlatform.windows
+                    padding: kIsWeb || Platform.isWindows
                         ? const EdgeInsets.only(right: 48.0)
                         : const EdgeInsets.only(right: 12.0),
                     child: !search
@@ -156,7 +157,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                           ? true
                           : false);
                 },
-                child: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+                child: kIsWeb || Platform.isWindows
                     ? Container()
                     : const Icon(
                         Icons.menu,
@@ -170,7 +171,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   _popMenu() {
     return PopupMenuButton(
       icon: Padding(
-        padding: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+        padding: kIsWeb || Platform.isWindows
             ? const EdgeInsets.only(right: 48.0)
             : const EdgeInsets.only(right: 12.0),
         child: const Icon(

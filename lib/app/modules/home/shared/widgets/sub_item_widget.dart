@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
@@ -32,7 +34,7 @@ class SubItemWidget extends StatelessWidget {
           return AlertDialog(
             title: const Text('Status'),
             content: SizedBox(
-              width: kIsWeb && defaultTargetPlatform == TargetPlatform.windows
+              width: kIsWeb || Platform.isWindows
                   ? MediaQuery.of(context).size.width * 0.5
                   : MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.15,

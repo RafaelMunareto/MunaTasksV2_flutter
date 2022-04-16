@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -46,7 +48,7 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
               child: widget.open
                   ? SizedBox(
-                      width: defaultTargetPlatform == TargetPlatform.windows
+                      width: Platform.isWindows
                           ? MediaQuery.of(context).size.width * 0.2
                           : MediaQuery.of(context).size.width,
                       child: ListView(

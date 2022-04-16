@@ -9,5 +9,5 @@ abstract class IAuthRepository {
   Future getGoogleLogin();
   getUser();
   Future getFacebookLogin();
-  Future getLogout();
+  getLogout();
 }
