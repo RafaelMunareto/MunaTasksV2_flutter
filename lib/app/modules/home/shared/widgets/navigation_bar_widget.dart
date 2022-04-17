@@ -64,8 +64,9 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
               Icons.pause_circle,
               color: Colors.amber,
             ),
-            title: const Text("Backlog",
-                style: TextStyle(fontSize: kIsWeb ? 20 : 12)),
+            title: Text("Backlog",
+                style: TextStyle(
+                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12)),
           ),
           BubbleBottomBarItem(
             showBadge: true,

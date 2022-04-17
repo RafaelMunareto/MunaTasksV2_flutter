@@ -23,7 +23,7 @@ dependencies:
   hive: ^2.0.5
   shared_preferences:
   google_fonts: ^2.1.1
-  image_picker: ^0.8.4+4
+  image_picker: ^0.8.5
   freezed_annotation: ^1.1.0
   layout: ^1.0.2
   http: ^0.13.4

@@ -126,10 +126,12 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                         ],
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                       flex: 3,
                       child: Center(
-                        child: LandscapeWidget(),
+                        child: store.client.loadingTasksTotal
+                            ? const CircularProgressIndicator()
+                            : const LandscapeWidget(),
                       ),
                     )
                   ],

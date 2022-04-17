@@ -107,11 +107,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                         ? Icon(
                             Icons.search,
                             color: Colors.white,
-                            size: kIsWeb &&
-                                    defaultTargetPlatform ==
-                                        TargetPlatform.windows
-                                ? 48
-                                : 24,
+                            size: kIsWeb || Platform.isWindows ? 48 : 24,
                           )
                         : const Icon(Icons.close, color: Colors.white),
                   ),

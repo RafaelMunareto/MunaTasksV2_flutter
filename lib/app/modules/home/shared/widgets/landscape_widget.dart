@@ -22,7 +22,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      return store.client.loading
+      return store.client.loadingTasksTotal
           ? Container()
           : kIsWeb || Platform.isWindows
               ? Padding(

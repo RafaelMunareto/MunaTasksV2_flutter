@@ -123,9 +123,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
                               ? FadeTransition(
                                   opacity: opacidade,
                                   child: Padding(
-                                    padding: kIsWeb &&
-                                            defaultTargetPlatform ==
-                                                TargetPlatform.windows
+                                    padding: kIsWeb || Platform.isWindows
                                         ? const EdgeInsets.all(8)
                                         : const EdgeInsets.only(left: 12),
                                     child: ElevatedButton.icon(

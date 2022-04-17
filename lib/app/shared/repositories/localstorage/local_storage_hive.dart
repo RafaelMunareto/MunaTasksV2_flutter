@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
@@ -9,7 +10,7 @@ class LocalStorageHive implements ILocalStorage {
   final Completer<Box> _instance = Completer<Box>();
 
   _init() async {
-    if (!kIsWeb) {
+    if (!kIsWeb || Platform.isWindows) {
       var dir = await getApplicationDocumentsDirectory();
       Hive.init(dir.path);
       var box = await Hive.openBox('db');

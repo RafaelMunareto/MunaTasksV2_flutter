@@ -118,9 +118,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                       builder: (_) {
                         return store.clientCreate.imageUser == ""
                             ? Padding(
-                                padding: kIsWeb &&
-                                        defaultTargetPlatform ==
-                                            TargetPlatform.windows
+                                padding: kIsWeb || Platform.isWindows
                                     ? const EdgeInsets.fromLTRB(0, 4, 4, 16)
                                     : const EdgeInsets.fromLTRB(0, 12, 8, 16),
                                 child: Icon(

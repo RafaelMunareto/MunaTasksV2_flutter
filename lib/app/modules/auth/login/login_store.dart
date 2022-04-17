@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/auth/shared/models/client_store.dart';
@@ -165,7 +167,7 @@ abstract class _LoginStoreBase with Store {
   @action
   checkSupportDevice() async {
     await getStorageLogin();
-    if (!kIsWeb && defaultTargetPlatform != TargetPlatform.windows) {
+    if (!kIsWeb || !Platform.isWindows) {
       await bio.isDeviceSupported().then((isSupported) => supportState =
           isSupported && loginStorage != null
               ? SupportState.supported

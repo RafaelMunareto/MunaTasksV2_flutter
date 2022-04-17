@@ -237,6 +237,22 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$loadingTasksTotalAtom =
+      Atom(name: '_ClientStoreBase.loadingTasksTotal');
+
+  @override
+  bool get loadingTasksTotal {
+    _$loadingTasksTotalAtom.reportRead();
+    return super.loadingTasksTotal;
+  }
+
+  @override
+  set loadingTasksTotal(bool value) {
+    _$loadingTasksTotalAtom.reportWrite(value, super.loadingTasksTotal, () {
+      super.loadingTasksTotal = value;
+    });
+  }
+
   final _$themeAtom = Atom(name: '_ClientStoreBase.theme');
 
   @override
@@ -590,6 +606,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setLoadingTasksTotal(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setLoadingTasksTotal');
+    try {
+      return super.setLoadingTasksTotal(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setLoading(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setLoading');
@@ -805,6 +832,7 @@ retardSelection: ${retardSelection},
 orderAscDesc: ${orderAscDesc},
 loading: ${loading},
 loadingTasks: ${loadingTasks},
+loadingTasksTotal: ${loadingTasksTotal},
 theme: ${theme},
 navigateBarSelection: ${navigateBarSelection},
 color: ${color},

@@ -34,7 +34,7 @@ class _MenuScreenState extends State<MenuScreen> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () {
-            if (!kIsWeb) {
+            if (!kIsWeb || !!Platform.isWindows) {
               widget.controller.toggle!();
               widget.setOpen(false);
             }
@@ -48,10 +48,11 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
               child: widget.open
                   ? SizedBox(
-                      width: Platform.isWindows
+                      width: !kIsWeb
                           ? MediaQuery.of(context).size.width * 0.2
                           : MediaQuery.of(context).size.width,
                       child: ListView(
+                        controller: ScrollController(),
                         padding: EdgeInsets.zero,
                         children: <Widget>[
                           SizedBox(

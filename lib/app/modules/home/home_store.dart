@@ -77,7 +77,6 @@ abstract class HomeStoreBase with Store {
   }
 
   void getDioFase() {
-    client.setLoadingTasks(true);
     dashboardService
         .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
         .then((value) {
@@ -86,6 +85,7 @@ abstract class HomeStoreBase with Store {
   }
 
   void getDio() {
+    client.setLoadingTasks(true);
     dashboardService
         .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
         .then((value) {
@@ -106,7 +106,9 @@ abstract class HomeStoreBase with Store {
   }
 
   getDioTotal() {
+    client.setLoadingTasksTotal(true);
     dashboardService.getDioTotal().then((value) {
+      client.setLoadingTasksTotal(false);
       client.setTarefasTotais(value);
     });
   }

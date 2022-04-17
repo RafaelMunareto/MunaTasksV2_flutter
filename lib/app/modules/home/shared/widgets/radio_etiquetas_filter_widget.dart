@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -103,9 +105,7 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
                     children: [
                       for (var index = 0; index < list.length; index++)
                         Padding(
-                          padding: kIsWeb &&
-                                  defaultTargetPlatform ==
-                                      TargetPlatform.windows
+                          padding: kIsWeb || Platform.isWindows
                               ? const EdgeInsets.only(bottom: 16.0)
                               : const EdgeInsets.only(bottom: 4.0),
                           child: InputChip(
