@@ -11,6 +11,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/crea
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_user_subtarefa_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/subtarefas_widget.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
@@ -183,7 +184,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                           ? const EdgeInsets.fromLTRB(4, 8, 4, 8)
                           : const EdgeInsets.fromLTRB(4, 0, 4, 4),
                       child: store.clientCreate.loadingSubtarefa
-                          ? const CircularProgressIndicator()
+                          ? const CircularProgressWidget()
                           : OutlinedButton.icon(
                               style: TextButton.styleFrom(
                                 backgroundColor: store.client.theme

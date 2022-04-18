@@ -14,8 +14,10 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/text_fi
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/validate_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/button_widget.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class EtiquetasPage extends StatefulWidget {
   final String title;
@@ -130,15 +132,17 @@ class EtiquetasPageState extends State<EtiquetasPage>
                                         style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all(
-                                                  Colors.deepPurple),
+                                                  lightThemeData(context)
+                                                      .primaryColor),
                                           shape: MaterialStateProperty.all<
                                               RoundedRectangleBorder>(
                                             RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(
                                                       radius.value),
-                                              side: const BorderSide(
-                                                color: Colors.deepPurple,
+                                              side: BorderSide(
+                                                color: lightThemeData(context)
+                                                    .primaryColor,
                                                 width: 2.0,
                                               ),
                                             ),
@@ -233,7 +237,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
                                     MediaQuery.of(context).size.height * 0.4,
                                 width: MediaQuery.of(context).size.width,
                                 child: const Center(
-                                    child: CircularProgressIndicator()),
+                                    child: CircularProgressWidget()),
                               )
                             : const EtiquetasWidget();
                       })

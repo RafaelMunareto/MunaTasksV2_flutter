@@ -6,6 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/errors_widget.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class ButtonSaveWidget extends StatelessWidget {
@@ -44,7 +45,7 @@ class ButtonSaveWidget extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.fromLTRB(0, 2, 2, 2),
               child: store.clientCreate.loadingTarefa
-                  ? const CircularProgressIndicator()
+                  ? const CircularProgressWidget()
                   : ElevatedButton.icon(
                       onPressed: () {
                         if (store.clientCreate.isValidTarefa) {

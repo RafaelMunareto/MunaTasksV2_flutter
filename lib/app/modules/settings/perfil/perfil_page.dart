@@ -9,6 +9,7 @@ import 'package:munatasks2/app/modules/settings/perfil/shared/widget/equipes_wid
 import 'package:munatasks2/app/modules/settings/perfil/shared/widget/imagem_perfil_widget.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/widget/names_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 
@@ -99,7 +100,7 @@ class PerfilPageState extends State<PerfilPage> {
                 child: const Center(
                   child: Padding(
                     padding: EdgeInsets.all(32.0),
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressWidget(),
                   ),
                 ),
               );

@@ -6,6 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/fase_dio_model.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class ActionsFaseWidget extends StatefulWidget {
@@ -66,7 +67,7 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
             builder: (_) {
               if (store.client.fase.isEmpty) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressWidget(),
                 );
               } else {
                 List<FaseDioModel>? list = store.client.fase;

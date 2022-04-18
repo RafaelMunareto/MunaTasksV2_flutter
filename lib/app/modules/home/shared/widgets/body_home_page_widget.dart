@@ -11,8 +11,10 @@ import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filte
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_order_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/teams_selection_widget.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class BodyHomePageWidget extends StatefulWidget {
   const BodyHomePageWidget({
@@ -48,7 +50,11 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                       color: ConvertIcon()
                                           .convertColor(store.client.color),
                                     )
-                                  : const Icon(Icons.bookmark),
+                                  : Icon(
+                                      Icons.bookmark,
+                                      color:
+                                          lightThemeData(context).primaryColor,
+                                    ),
                               onTap: () {
                                 DialogButtom().showDialog(
                                   MouseRegion(
@@ -72,15 +78,20 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                   title: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Icon(
+                                      Icon(
                                         Icons.filter_alt,
-                                        color: Colors.grey,
+                                        color: lightThemeData(context)
+                                            .primaryColor,
                                       ),
                                       Text(
                                         store.client.orderAscDesc
                                             ? '${store.client.orderSelection} DESC'
                                             : '${store.client.orderSelection} ASC',
-                                        style: const TextStyle(fontSize: 12),
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: lightThemeData(context)
+                                              .primaryColor,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -121,7 +132,7 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                             ),
                           ),
                           store.client.loadingTasks
-                              ? const CircularProgressIndicator()
+                              ? const CircularProgressWidget()
                               : const CardWidget(),
                         ],
                       ),
@@ -130,7 +141,7 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                       flex: 3,
                       child: Center(
                         child: store.client.loadingTasksTotal
-                            ? const CircularProgressIndicator()
+                            ? const CircularProgressWidget()
                             : const LandscapeWidget(),
                       ),
                     )
@@ -156,7 +167,11 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                         color: ConvertIcon()
                                             .convertColor(store.client.color),
                                       )
-                                    : const Icon(Icons.bookmark),
+                                    : Icon(
+                                        Icons.bookmark,
+                                        color: lightThemeData(context)
+                                            .primaryColor,
+                                      ),
                                 onTap: () {
                                   DialogButtom().showDialog(
                                     MouseRegion(
@@ -181,9 +196,10 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
+                                        Icon(
                                           Icons.filter_alt,
-                                          color: Colors.grey,
+                                          color: lightThemeData(context)
+                                              .primaryColor,
                                         ),
                                         Text(
                                           store.client.orderAscDesc

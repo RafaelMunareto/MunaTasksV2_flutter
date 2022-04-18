@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/auth/verify/verify_store.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/shared/components/background_widget.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 
 class VerifyPage extends StatefulWidget {
   final String title;
@@ -97,7 +98,7 @@ class VerifyPageState extends State<VerifyPage> {
                           Container(
                               child: store.msg != ''
                                   ? _card()
-                                  : const CircularProgressIndicator()),
+                                  : const CircularProgressWidget()),
                         ]),
                   );
                 })

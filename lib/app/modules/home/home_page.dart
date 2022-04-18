@@ -12,6 +12,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/landscape_widget.dart
 import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class HomePage extends StatefulWidget {
@@ -78,7 +79,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                 size: kIsWeb || Platform.isWindows ? 48 : 24,
                 color: Colors.grey[300],
               ),
-              backgroundColor: Colors.red,
+              backgroundColor: Colors.deepPurpleAccent,
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.endDocked,
@@ -94,7 +95,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                     builder: (_) {
                       return store.client.loading
                           ? const Center(
-                              child: CircularProgressIndicator(),
+                              child: CircularProgressWidget(),
                             )
                           : Row(
                               children: [
@@ -120,7 +121,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                     menuScreen: Observer(
                       builder: (_) {
                         return store.client.loading
-                            ? const Center(child: CircularProgressIndicator())
+                            ? const Center(child: CircularProgressWidget())
                             : MenuScreen(
                                 open: store.client.open,
                                 setOpen: store.client.setOpen,

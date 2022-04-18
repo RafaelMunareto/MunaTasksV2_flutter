@@ -8,6 +8,7 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class MenuScreen extends StatefulWidget {
   final ZoomDrawerController controller;
@@ -87,9 +88,10 @@ class _MenuScreenState extends State<MenuScreen> {
                                   ),
                                   Text(
                                     store.client.perfilUserLogado.name.name,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.w800),
+                                        fontWeight: FontWeight.w800,
+                                        color: Colors.deepPurple.shade900),
                                   ),
                                   InkWell(
                                     onTap: () {
@@ -100,24 +102,33 @@ class _MenuScreenState extends State<MenuScreen> {
                                       child: Text(
                                         "Edite Perfil",
                                         style: TextStyle(
-                                            fontSize: 14, color: Colors.red),
+                                          fontSize: 14,
+                                          color: Colors.deepPurpleAccent,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),
                                   ListTile(
                                     title: Row(
-                                      children: const [
+                                      children: [
                                         Padding(
-                                          padding: EdgeInsets.only(right: 8.0),
+                                          padding:
+                                              const EdgeInsets.only(right: 8.0),
                                           child: Icon(
                                             Icons.settings,
+                                            color: lightThemeData(context)
+                                                .primaryColor,
                                           ),
                                         ),
-                                        Flexible(
+                                        const Flexible(
                                           child: SizedBox(
                                             child: Text(
                                               "Configurações",
                                               overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -129,18 +140,24 @@ class _MenuScreenState extends State<MenuScreen> {
                                   ),
                                   ListTile(
                                     title: Row(
-                                      children: const [
+                                      children: [
                                         Padding(
-                                          padding: EdgeInsets.only(right: 8.0),
+                                          padding:
+                                              const EdgeInsets.only(right: 8.0),
                                           child: Icon(
                                             Icons.bookmark,
+                                            color: lightThemeData(context)
+                                                .primaryColor,
                                           ),
                                         ),
-                                        Flexible(
+                                        const Flexible(
                                           child: SizedBox(
                                             child: Text(
                                               "Etiquetas",
                                               overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ),
                                         ),

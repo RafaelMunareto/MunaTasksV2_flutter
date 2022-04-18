@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/app_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 
 class ThemeLogoutWidget extends StatefulWidget {
@@ -33,10 +34,10 @@ class _ThemeLogoutWidgetState extends State<ThemeLogoutWidget> {
                   store.changeSwitch(state);
                 });
               },
-              rollingInfoRight: const RollingIconInfo(
-                backgroundColor: Colors.deepPurple,
+              rollingInfoRight: RollingIconInfo(
+                backgroundColor: lightThemeData(context).primaryColor,
                 icon: Icons.nights_stay,
-                text: Text(
+                text: const Text(
                   'Dark',
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
@@ -61,8 +62,8 @@ class _ThemeLogoutWidgetState extends State<ThemeLogoutWidget> {
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80),
-                    side: const BorderSide(
-                      color: Colors.deepPurple,
+                    side: BorderSide(
+                      color: lightThemeData(context).primaryColor,
                       width: 2.0,
                     ),
                   ),

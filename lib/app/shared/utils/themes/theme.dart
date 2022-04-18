@@ -1,12 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 ThemeData lightThemeData(BuildContext context) {
   return ThemeData.light().copyWith(
     primaryColor: kPrimaryColor,
+    primaryColorLight: kPrimaryColorLight,
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: appBarTheme,
     iconTheme: const IconThemeData(color: kContentColorLightTheme),

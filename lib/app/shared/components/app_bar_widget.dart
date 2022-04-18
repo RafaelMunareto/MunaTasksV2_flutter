@@ -31,7 +31,7 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   AppBarWidget({
     Key? key,
     this.title = "",
-    this.size = 75,
+    this.size = 55,
     this.context,
     this.home = false,
     this.icon = Icons.person,

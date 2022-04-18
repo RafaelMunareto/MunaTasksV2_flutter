@@ -52,11 +52,12 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             showBadge: true,
             badge: Text(
               store.client.badgetNavigate[0].toString(),
-              style:
-                  TextStyle(fontSize: kIsWeb || Platform.isWindows ? 20 : 12),
+              style: TextStyle(
+                  fontSize: kIsWeb || Platform.isWindows ? 20 : 12,
+                  color: Colors.white),
             ),
             backgroundColor: Colors.amber,
-            badgeColor: ThemeData().primaryColor,
+            badgeColor: Colors.deepPurple.shade700,
             icon: Icon(
               Icons.pause_circle,
               color: widget.theme ? Colors.white : Colors.deepPurple[400],
@@ -73,8 +74,9 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             showBadge: true,
             badge: Text(store.client.badgetNavigate[1].toString(),
                 style: TextStyle(
-                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12)),
-            badgeColor: ThemeData().primaryColor,
+                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12,
+                    color: Colors.white)),
+            badgeColor: Colors.deepPurple.shade700,
             backgroundColor: Colors.green,
             icon: Icon(
               Icons.play_circle,
@@ -92,9 +94,10 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             showBadge: true,
             badge: Text(store.client.badgetNavigate[2].toString(),
                 style: TextStyle(
-                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12)),
+                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12,
+                    color: Colors.white)),
             backgroundColor: Colors.blue,
-            badgeColor: ThemeData().primaryColor,
+            badgeColor: Colors.deepPurple.shade700,
             icon: Icon(
               Icons.check_circle,
               color: widget.theme ? Colors.white : Colors.deepPurple[400],

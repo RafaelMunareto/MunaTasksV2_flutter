@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/sub_item_save_widget.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class SubtarefasWidget extends StatefulWidget {
@@ -21,7 +22,7 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
       child: Observer(
         builder: (_) {
           return store.clientCreate.loadingSubtarefa
-              ? const CircularProgressIndicator()
+              ? const CircularProgressWidget()
               : ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,

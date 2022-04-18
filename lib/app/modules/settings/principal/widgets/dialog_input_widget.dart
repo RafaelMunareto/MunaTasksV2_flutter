@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class DialogInputWidget extends StatefulWidget {
   final dynamic value;
@@ -60,8 +61,8 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(80),
-                        side: const BorderSide(
-                          color: Colors.deepPurple,
+                        side: BorderSide(
+                          color: lightThemeData(context).primaryColor,
                           width: 2.0,
                         ),
                       ),

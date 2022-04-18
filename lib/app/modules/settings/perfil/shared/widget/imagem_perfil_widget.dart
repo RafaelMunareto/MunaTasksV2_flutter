@@ -1,9 +1,13 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class ImagemPerfilWidget extends StatefulWidget {
@@ -38,18 +42,46 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
           onTap: () {
             store.atualizaImagem("camera");
           },
-          child: const ListTile(
-            leading: Icon(Icons.camera_alt),
-            title: Text('Camera'),
+          child: ListTile(
+            leading: Icon(
+              Icons.camera_alt,
+              color: lightThemeData(context).primaryColor,
+            ),
+            title: const Text('Camera'),
           ),
         ),
         const PopupMenuDivider(),
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () => {store.atualizaImagem("galeria")},
-          child: const ListTile(
-            leading: Icon(Icons.image),
-            title: Text('Galeria'),
+          child: ListTile(
+            leading: Icon(
+              Icons.image,
+              color: lightThemeData(context).primaryColor,
+            ),
+            title: const Text('Galeria'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  popMenuDesktop() {
+    return PopupMenuButton(
+      icon: IconRedondedWidget(
+        icon: Icons.image,
+        color: lightThemeData(context).primaryColor,
+      ),
+      itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+        PopupMenuItem(
+          mouseCursor: SystemMouseCursors.click,
+          onTap: () => {store.atualizaImagem("galeria")},
+          child: ListTile(
+            leading: Icon(
+              Icons.image,
+              color: lightThemeData(context).primaryColor,
+            ),
+            title: const Text('Galeria'),
           ),
         ),
       ],
@@ -120,9 +152,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
               const Positioned(
                 left: 90,
                 top: 50,
-                child: CircularProgressIndicator(
-                  color: Colors.orange,
-                ),
+                child: CircularProgressWidget(),
               ),
             Positioned(
               top: 125,
@@ -209,7 +239,10 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
             Positioned(
               top: 10,
               left: 165,
-              child: GestureDetector(child: popMenu()),
+              child: GestureDetector(
+                child:
+                    kIsWeb || Platform.isWindows ? popMenuDesktop() : popMenu(),
+              ),
             ),
           ],
         ),

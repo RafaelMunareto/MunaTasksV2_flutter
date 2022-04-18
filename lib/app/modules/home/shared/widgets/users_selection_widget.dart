@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 
 class UsersSelectionWidget extends StatefulWidget {
   const UsersSelectionWidget({Key? key}) : super(key: key);
@@ -58,7 +59,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
             builder: (_) {
               if (store.client.perfis.isEmpty) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressWidget(),
                 );
               } else {
                 List<PerfilDioModel> list = store.client.perfis;

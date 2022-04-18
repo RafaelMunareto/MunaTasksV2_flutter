@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/etiquetas_store.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 
 class ColorsWidget extends StatefulWidget {
@@ -28,7 +29,7 @@ class _ColorsWidgetState extends State<ColorsWidget> {
         builder: (_) {
           if (store.etiquetaStore.colorsDio.isEmpty) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressWidget(),
             );
           } else {
             List list = store.etiquetaStore.colorsDio;

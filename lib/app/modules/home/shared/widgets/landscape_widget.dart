@@ -8,6 +8,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class LandscapeWidget extends StatefulWidget {
   const LandscapeWidget({Key? key}) : super(key: key);
@@ -38,11 +39,14 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                           maxOpenSections: 1,
                           headerBackgroundColor: store.client.theme
                               ? Colors.blueGrey[800]
-                              : Colors.blueGrey[200],
+                              : Colors.grey[300],
                           children: [
                             for (var totais in store.client.tarefasTotais)
                               AccordionSection(
-                                contentBorderColor: Colors.grey,
+                                contentBorderColor: Colors.blueGrey,
+                                contentBackgroundColor: store.client.theme
+                                    ? Colors.grey[600]
+                                    : Colors.white,
                                 header: Wrap(
                                   alignment: WrapAlignment.spaceBetween,
                                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -80,9 +84,16 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                     ),
                                     totais.qtd > 0
                                         ? Text(
-                                            totais.qtd.toString() + ' Tarefas',
-                                            style: const TextStyle(
-                                              color: Colors.white,
+                                            totais.qtd > 1
+                                                ? totais.qtd.toString() +
+                                                    ' Tarefas'
+                                                : totais.qtd.toString() +
+                                                    ' Tarefa',
+                                            style: TextStyle(
+                                              color: store.client.theme
+                                                  ? Colors.white
+                                                  : lightThemeData(context)
+                                                      .primaryColor,
                                               fontWeight: FontWeight.bold,
                                             ))
                                         : const Text('Nenhuma tarefa',
@@ -212,7 +223,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                                   totais.qtd.toString() +
                                                       ' Tarefas',
                                                   style: const TextStyle(
-                                                    color: Colors.white,
+                                                    color: Colors.black,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 )

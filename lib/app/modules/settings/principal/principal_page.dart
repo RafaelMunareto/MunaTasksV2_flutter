@@ -10,7 +10,9 @@ import 'package:munatasks2/app/modules/settings/principal/widgets/dropdown_widge
 import 'package:munatasks2/app/modules/settings/principal/widgets/list_settings_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/widgets/theme_logout_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class PrincipalPage extends StatefulWidget {
   final String title;
@@ -50,7 +52,7 @@ class PrincipalPageState extends State<PrincipalPage>
           settings: true,
           rota: '/home/'),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: lightThemeData(context).primaryColor,
         foregroundColor: Colors.white,
         onPressed: () => {
           DialogButtom().showDialog(
@@ -94,7 +96,7 @@ class PrincipalPageState extends State<PrincipalPage>
                               Expanded(
                                 flex: 1,
                                 child: Card(
-                                  color: Colors.deepPurple,
+                                  color: lightThemeData(context).primaryColor,
                                   elevation: 4,
                                   child: SizedBox(
                                     width: MediaQuery.of(context).size.width,
@@ -116,7 +118,7 @@ class PrincipalPageState extends State<PrincipalPage>
                     ),
                   ),
                 )
-              : const Center(child: CircularProgressIndicator());
+              : const Center(child: CircularProgressWidget());
         },
       ),
     );
