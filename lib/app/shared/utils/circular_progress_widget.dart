@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class CircularProgressWidget extends StatelessWidget {
   final String title;
@@ -9,7 +10,7 @@ class CircularProgressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircularProgressIndicator(
-      color: Colors.deepPurple[300],
+      color: lightThemeData(context).primaryColorLight,
     );
   }
 }

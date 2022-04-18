@@ -6,6 +6,8 @@ ThemeData lightThemeData(BuildContext context) {
   return ThemeData.light().copyWith(
     primaryColor: kPrimaryColor,
     primaryColorLight: kPrimaryColorLight,
+    primaryColorDark: kPrimaryColorDark,
+    secondaryHeaderColor: kPrimaryColorBright,
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: appBarTheme,
     iconTheme: const IconThemeData(color: kContentColorLightTheme),

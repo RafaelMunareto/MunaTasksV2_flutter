@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class NavigationBarWidget extends StatefulWidget {
   final int navigateBarSelection;
@@ -57,10 +58,12 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
                   color: Colors.white),
             ),
             backgroundColor: Colors.amber,
-            badgeColor: Colors.deepPurple.shade700,
+            badgeColor: lightThemeData(context).primaryColorDark,
             icon: Icon(
               Icons.pause_circle,
-              color: widget.theme ? Colors.white : Colors.deepPurple[400],
+              color: widget.theme
+                  ? Colors.white
+                  : lightThemeData(context).primaryColorLight,
             ),
             activeIcon: const Icon(
               Icons.pause_circle,
@@ -76,11 +79,13 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
                 style: TextStyle(
                     fontSize: kIsWeb || Platform.isWindows ? 20 : 12,
                     color: Colors.white)),
-            badgeColor: Colors.deepPurple.shade700,
+            badgeColor: lightThemeData(context).primaryColorDark,
             backgroundColor: Colors.green,
             icon: Icon(
               Icons.play_circle,
-              color: widget.theme ? Colors.white : Colors.deepPurple[400],
+              color: widget.theme
+                  ? Colors.white
+                  : lightThemeData(context).primaryColorLight,
             ),
             activeIcon: const Icon(
               Icons.play_circle,
@@ -97,10 +102,12 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
                     fontSize: kIsWeb || Platform.isWindows ? 20 : 12,
                     color: Colors.white)),
             backgroundColor: Colors.blue,
-            badgeColor: Colors.deepPurple.shade700,
+            badgeColor: lightThemeData(context).primaryColorDark,
             icon: Icon(
               Icons.check_circle,
-              color: widget.theme ? Colors.white : Colors.deepPurple[400],
+              color: widget.theme
+                  ? Colors.white
+                  : lightThemeData(context).primaryColorLight,
             ),
             activeIcon: const Icon(
               Icons.check_circle,

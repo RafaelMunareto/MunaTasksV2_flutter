@@ -106,10 +106,11 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                     child: !search
                         ? Icon(
                             Icons.search,
-                            color: Colors.deepPurple[300],
+                            color: lightThemeData(context).primaryColorLight,
                             size: kIsWeb || Platform.isWindows ? 48 : 24,
                           )
-                        : Icon(Icons.close, color: Colors.deepPurple[300]),
+                        : Icon(Icons.close,
+                            color: lightThemeData(context).primaryColorLight),
                   ),
                   onTap: () {
                     setState(() {
@@ -128,12 +129,14 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 text: TextSpan(
                   children: [
                     WidgetSpan(
-                      child: Icon(widget.icon, color: Colors.deepPurple[300]),
+                      child: Icon(widget.icon,
+                          color: lightThemeData(context).primaryColorLight),
                     ),
                     TextSpan(
                       text: ' ' + widget.title.toUpperCase(),
                       style: TextStyle(
-                          fontSize: 20, color: Colors.deepPurple[300]),
+                          fontSize: 20,
+                          color: lightThemeData(context).primaryColorLight),
                     ),
                   ],
                 ),
@@ -143,7 +146,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 : Container(),
         leading: widget.back
             ? IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.deepPurple[300]),
+                icon: Icon(Icons.arrow_back,
+                    color: lightThemeData(context).primaryColorLight),
                 onPressed: () => Modular.to.navigate(widget.rota))
             : InkWell(
                 onTap: () {
@@ -158,7 +162,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                     ? Container()
                     : Icon(
                         Icons.menu,
-                        color: Colors.deepPurple[300],
+                        color: lightThemeData(context).primaryColorLight,
                       ),
               ),
       ),
@@ -173,7 +177,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             : const EdgeInsets.only(right: 12.0),
         child: Icon(
           Icons.more_vert,
-          color: Colors.deepPurple[300],
+          color: lightThemeData(context).primaryColorLight,
         ),
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
@@ -230,7 +234,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               });
               widget.changeFilterSearch!();
             },
-            style: TextStyle(color: Colors.deepPurple[300], fontSize: 12),
+            style: TextStyle(
+                color: lightThemeData(context).primaryColorLight, fontSize: 12),
             decoration: const InputDecoration(
               contentPadding:
                   EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),

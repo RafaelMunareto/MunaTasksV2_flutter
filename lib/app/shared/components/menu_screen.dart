@@ -91,19 +91,22 @@ class _MenuScreenState extends State<MenuScreen> {
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w800,
-                                        color: Colors.deepPurple.shade900),
+                                        color: lightThemeData(context)
+                                            .primaryColorDark),
                                   ),
                                   InkWell(
                                     onTap: () {
                                       Modular.to.navigate('/settings/perfil');
                                     },
-                                    child: const Padding(
-                                      padding: EdgeInsets.only(bottom: 16.0),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 16.0),
                                       child: Text(
                                         "Edite Perfil",
                                         style: TextStyle(
                                           fontSize: 14,
-                                          color: Colors.deepPurpleAccent,
+                                          color: lightThemeData(context)
+                                              .secondaryHeaderColor,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),

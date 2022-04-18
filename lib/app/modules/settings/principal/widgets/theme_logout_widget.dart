@@ -58,7 +58,8 @@ class _ThemeLogoutWidgetState extends State<ThemeLogoutWidget> {
             title: const Text('Logout'),
             trailing: ElevatedButton.icon(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                backgroundColor: MaterialStateProperty.all(
+                    lightThemeData(context).primaryColor),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80),
