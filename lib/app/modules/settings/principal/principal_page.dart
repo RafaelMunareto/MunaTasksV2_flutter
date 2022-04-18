@@ -5,10 +5,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:flutter/material.dart';
+import 'package:munatasks2/app/modules/settings/principal/widgets/dialog_input_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/widgets/dropdown_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/widgets/list_settings_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/widgets/theme_logout_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
+import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class PrincipalPage extends StatefulWidget {
   final String title;
@@ -47,6 +49,21 @@ class PrincipalPageState extends State<PrincipalPage>
           context: context,
           settings: true,
           rota: '/home/'),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
+        onPressed: () => {
+          DialogButtom().showDialog(
+            DialogInputWidget(
+              value: '',
+              create: 'Novo',
+              editar: store.novo,
+            ),
+            context,
+          ),
+        },
+        child: const Icon(Icons.add),
+      ),
       body: Observer(
         builder: (_) {
           return !store.finalize
@@ -85,7 +102,7 @@ class PrincipalPageState extends State<PrincipalPage>
                                       width: MediaQuery.of(context).size.width,
                                       height:
                                           MediaQuery.of(context).size.height *
-                                              0.1,
+                                              0.3,
                                       child: const DropdownWidget(),
                                     ),
                                   ),

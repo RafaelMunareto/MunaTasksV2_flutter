@@ -39,8 +39,9 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
         },
         borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
         elevation: 13,
-        backgroundColor:
-            widget.theme ? const Color.fromARGB(255, 53, 53, 53) : Colors.white,
+        backgroundColor: widget.theme
+            ? const Color.fromARGB(255, 53, 53, 53)
+            : Colors.grey[300],
         fabLocation: BubbleBottomBarFabLocation.end, //new
         hasNotch: true, //new
         hasInk: true, //new, gives a cute ink effect
@@ -58,7 +59,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             badgeColor: ThemeData().primaryColor,
             icon: Icon(
               Icons.pause_circle,
-              color: widget.theme ? Colors.white : Colors.blueGrey,
+              color: widget.theme ? Colors.white : Colors.deepPurple[400],
             ),
             activeIcon: const Icon(
               Icons.pause_circle,
@@ -77,7 +78,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             backgroundColor: Colors.green,
             icon: Icon(
               Icons.play_circle,
-              color: widget.theme ? Colors.white : Colors.blueGrey,
+              color: widget.theme ? Colors.white : Colors.deepPurple[400],
             ),
             activeIcon: const Icon(
               Icons.play_circle,
@@ -96,7 +97,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             badgeColor: ThemeData().primaryColor,
             icon: Icon(
               Icons.check_circle,
-              color: widget.theme ? Colors.white : Colors.blueGrey,
+              color: widget.theme ? Colors.white : Colors.deepPurple[400],
             ),
             activeIcon: const Icon(
               Icons.check_circle,

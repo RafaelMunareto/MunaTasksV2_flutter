@@ -92,7 +92,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
         height: 210,
         child: Stack(
           children: [
-            if (client.perfilDio.urlImage != null)
+            if (client.perfilDio.id != '')
               Positioned(
                 top: 0,
                 left: 30,

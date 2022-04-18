@@ -53,36 +53,33 @@ class _ThemeLogoutWidgetState extends State<ThemeLogoutWidget> {
             ),
           ),
           const Divider(),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: ListTile(
-              title: const Text('Logout'),
-              trailing: ElevatedButton.icon(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80),
-                      side: const BorderSide(
-                        color: Colors.deepPurple,
-                        width: 2.0,
-                      ),
+          ListTile(
+            title: const Text('Logout'),
+            trailing: ElevatedButton.icon(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(80),
+                    side: const BorderSide(
+                      color: Colors.deepPurple,
+                      width: 2.0,
                     ),
                   ),
                 ),
-                onPressed: () {
-                  store.logoff();
-                },
-                icon: const Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                ),
-                label: const Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    'Sair',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
+              ),
+              onPressed: () {
+                store.logoff();
+              },
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
+              label: const Padding(
+                padding: EdgeInsets.all(14.0),
+                child: Text(
+                  'Sair',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
             ),

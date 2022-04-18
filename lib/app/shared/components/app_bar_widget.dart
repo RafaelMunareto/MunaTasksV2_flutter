@@ -87,14 +87,14 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       preferredSize: Size.fromHeight(widget.size),
       child: AppBar(
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/img/fundo_app_bar.png'),
-              fit: BoxFit.fill,
+            // decoration: const BoxDecoration(
+            //   image: DecorationImage(
+            //     image: AssetImage('assets/img/fundo_app_bar.png'),
+            //     fit: BoxFit.fill,
+            //   ),
+            // ),
             ),
-          ),
-        ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.grey[300],
         actions: [
           widget.settings && !widget.home
               ? _popMenu()
@@ -106,10 +106,10 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                     child: !search
                         ? Icon(
                             Icons.search,
-                            color: Colors.white,
+                            color: Colors.deepPurple[300],
                             size: kIsWeb || Platform.isWindows ? 48 : 24,
                           )
-                        : const Icon(Icons.close, color: Colors.white),
+                        : Icon(Icons.close, color: Colors.deepPurple[300]),
                   ),
                   onTap: () {
                     setState(() {
@@ -128,11 +128,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 text: TextSpan(
                   children: [
                     WidgetSpan(
-                      child: Icon(widget.icon),
+                      child: Icon(widget.icon, color: Colors.deepPurple[300]),
                     ),
                     TextSpan(
                       text: ' ' + widget.title.toUpperCase(),
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(
+                          fontSize: 20, color: Colors.deepPurple[300]),
                     ),
                   ],
                 ),
@@ -142,7 +143,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 : Container(),
         leading: widget.back
             ? IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                icon: Icon(Icons.arrow_back, color: Colors.deepPurple[300]),
                 onPressed: () => Modular.to.navigate(widget.rota))
             : InkWell(
                 onTap: () {
@@ -155,9 +156,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 },
                 child: kIsWeb || Platform.isWindows
                     ? Container()
-                    : const Icon(
+                    : Icon(
                         Icons.menu,
-                        color: Colors.white,
+                        color: Colors.deepPurple[300],
                       ),
               ),
       ),
@@ -170,9 +171,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
         padding: kIsWeb || Platform.isWindows
             ? const EdgeInsets.only(right: 48.0)
             : const EdgeInsets.only(right: 12.0),
-        child: const Icon(
+        child: Icon(
           Icons.more_vert,
-          color: Colors.white,
+          color: Colors.deepPurple[300],
         ),
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
@@ -229,7 +230,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               });
               widget.changeFilterSearch!();
             },
-            style: const TextStyle(color: Colors.white, fontSize: 12),
+            style: TextStyle(color: Colors.deepPurple[300], fontSize: 12),
             decoration: const InputDecoration(
               contentPadding:
                   EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),

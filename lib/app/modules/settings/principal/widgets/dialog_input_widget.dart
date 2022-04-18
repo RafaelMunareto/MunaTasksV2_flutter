@@ -54,6 +54,19 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.deepPurple),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80),
+                        side: const BorderSide(
+                          color: Colors.deepPurple,
+                          width: 2.0,
+                        ),
+                      ),
+                    ),
+                  ),
                   onPressed: () {
                     if (widget.create == 'Novo') {
                       widget.editar(widget.value, valor.text);
@@ -67,8 +80,14 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
                     Modular.to.pop();
                   },
                   child: widget.create == 'Novo'
-                      ? const Text("SALVAR")
-                      : const Text("EDITAR"),
+                      ? const Text(
+                          "SALVAR",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        )
+                      : const Text(
+                          "EDITAR",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
                 ),
               ),
             ),

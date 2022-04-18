@@ -20,31 +20,12 @@ class _DropdownWidgetState extends State<DropdownWidget> {
     return PopupMenuButton(
       icon: Observer(
         builder: (_) {
-          return ListTile(
-            leading: Text(
-              store.label,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            trailing: GestureDetector(
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 48,
-              ),
-              onTap: () {
-                DialogButtom().showDialog(
-                  DialogInputWidget(
-                    value: '',
-                    create: 'Novo',
-                    editar: store.novo,
-                  ),
-                  context,
-                );
-              },
+          return Text(
+            store.label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
           );
         },
