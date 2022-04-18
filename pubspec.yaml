@@ -46,6 +46,7 @@ dependencies:
   flutter_sliding_up_panel: ^2.0.1
   dwds: ^13.1.0
   http_multi_server:
+  file_picker: ^4.5.1
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +73,7 @@ flutter:
 
   assets:
     - assets/img/
+    - assets/img/fundo_app_bar.png
     - assets/icon/icon.png
 
 scripts:
