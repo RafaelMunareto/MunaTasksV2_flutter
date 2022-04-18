@@ -14,6 +14,7 @@ import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -79,7 +80,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                 size: kIsWeb || Platform.isWindows ? 48 : 24,
                 color: Colors.grey[300],
               ),
-              backgroundColor: Colors.deepPurpleAccent,
+              backgroundColor: lightThemeData(context).secondaryHeaderColor,
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.endDocked,
