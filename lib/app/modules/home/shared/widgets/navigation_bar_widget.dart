@@ -39,18 +39,17 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
           widget.setNavigateBarSelection(value);
         },
         borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-        elevation: 13,
-        backgroundColor: widget.theme
-            ? const Color.fromARGB(255, 53, 53, 53)
-            : Colors.grey[300],
+        elevation: 24,
         fabLocation: BubbleBottomBarFabLocation.end, //new
         hasNotch: true, //new
         hasInk: true, //new, gives a cute ink effect
         iconSize: kIsWeb || Platform.isWindows ? 48 : 20,
-        inkColor: Colors.black12, //optional, uses theme color if not specified
         items: <BubbleBottomBarItem>[
           BubbleBottomBarItem(
             showBadge: true,
+            badgeColor: widget.theme
+                ? darkThemeData(context).secondaryHeaderColor
+                : lightThemeData(context).secondaryHeaderColor,
             badge: Text(
               store.client.badgetNavigate[0].toString(),
               style: TextStyle(
@@ -58,12 +57,11 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
                   color: Colors.white),
             ),
             backgroundColor: Colors.amber,
-            badgeColor: lightThemeData(context).primaryColorDark,
             icon: Icon(
               Icons.pause_circle,
               color: widget.theme
-                  ? Colors.white
-                  : lightThemeData(context).primaryColorLight,
+                  ? darkThemeData(context).secondaryHeaderColor
+                  : lightThemeData(context).secondaryHeaderColor,
             ),
             activeIcon: const Icon(
               Icons.pause_circle,
@@ -75,17 +73,19 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
           ),
           BubbleBottomBarItem(
             showBadge: true,
+            badgeColor: widget.theme
+                ? darkThemeData(context).secondaryHeaderColor
+                : lightThemeData(context).secondaryHeaderColor,
             badge: Text(store.client.badgetNavigate[1].toString(),
                 style: TextStyle(
                     fontSize: kIsWeb || Platform.isWindows ? 20 : 12,
                     color: Colors.white)),
-            badgeColor: lightThemeData(context).primaryColorDark,
             backgroundColor: Colors.green,
             icon: Icon(
               Icons.play_circle,
               color: widget.theme
-                  ? Colors.white
-                  : lightThemeData(context).primaryColorLight,
+                  ? darkThemeData(context).secondaryHeaderColor
+                  : lightThemeData(context).secondaryHeaderColor,
             ),
             activeIcon: const Icon(
               Icons.play_circle,
@@ -97,17 +97,19 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
           ),
           BubbleBottomBarItem(
             showBadge: true,
+            badgeColor: widget.theme
+                ? darkThemeData(context).secondaryHeaderColor
+                : lightThemeData(context).secondaryHeaderColor,
             badge: Text(store.client.badgetNavigate[2].toString(),
                 style: TextStyle(
                     fontSize: kIsWeb || Platform.isWindows ? 20 : 12,
                     color: Colors.white)),
             backgroundColor: Colors.blue,
-            badgeColor: lightThemeData(context).primaryColorDark,
             icon: Icon(
               Icons.check_circle,
               color: widget.theme
-                  ? Colors.white
-                  : lightThemeData(context).primaryColorLight,
+                  ? darkThemeData(context).secondaryHeaderColor
+                  : lightThemeData(context).secondaryHeaderColor,
             ),
             activeIcon: const Icon(
               Icons.check_circle,

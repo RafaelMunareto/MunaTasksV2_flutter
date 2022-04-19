@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:munatasks2/app/modules/settings/principal/widgets/dialog_input_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
-import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
+import 'package:munatasks2/app/shared/utils/simple_button_widget.dart';
 
 class ListSettingsWidget extends StatefulWidget {
   const ListSettingsWidget({Key? key}) : super(key: key);
@@ -121,53 +121,19 @@ class _ListSettingsWidgetState extends State<ListSettingsWidget> {
           ),
           content: const Text('Tem certeza que deseja excluír a tarefa ?'),
           actions: [
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                    const Color.fromARGB(255, 140, 82, 241)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(
-                      color: Color.fromARGB(255, 140, 82, 241),
-                      width: 2.0,
-                    ),
-                  ),
-                ),
-              ),
-              onPressed: () {
-                store.setEscolha(store.escolha);
-                Navigator.pop(context);
-              },
-              child: const Text(
-                'CANCELAR',
-                style: TextStyle(color: Colors.white),
-              ),
+            SimpleButtonWidget(
+              theme: store.isSwitched,
+              buttonName: 'CANCELAR',
+              popUp: true,
             ),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                    const Color.fromARGB(255, 140, 82, 241)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(
-                      color: Color.fromARGB(255, 140, 82, 241),
-                      width: 2.0,
-                    ),
-                  ),
-                ),
-              ),
-              onPressed: () {
-                store.delete(tarefa);
-                SnackbarCustom().createSnackBar(
-                    'Deletado com sucesso!', Colors.green, context);
-                Modular.to.pop();
-              },
-              child: const Text(
-                'EXCLUIR',
-                style: TextStyle(color: Colors.white),
-              ),
+            SimpleButtonWidget(
+              theme: store.isSwitched,
+              buttonName: 'EXCLUIR',
+              popUp: true,
+              function: store.setEscolha,
+              dataFunction: store.escolha,
+              scnack: true,
+              msgSnack: 'Deletado com sucesso!',
             ),
           ],
         );

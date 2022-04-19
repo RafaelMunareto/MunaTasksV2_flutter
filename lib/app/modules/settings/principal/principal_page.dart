@@ -12,6 +12,7 @@ import 'package:munatasks2/app/modules/settings/principal/widgets/theme_logout_w
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class PrincipalPage extends StatefulWidget {
@@ -48,11 +49,11 @@ class PrincipalPageState extends State<PrincipalPage>
       appBar: AppBarWidget(
           title: widget.title,
           icon: Icons.settings,
+          theme: store.isSwitched,
           context: context,
           settings: true,
           rota: '/home/'),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: lightThemeData(context).primaryColor,
         foregroundColor: Colors.white,
         onPressed: () => {
           DialogButtom().showDialog(
@@ -96,7 +97,9 @@ class PrincipalPageState extends State<PrincipalPage>
                               Expanded(
                                 flex: 1,
                                 child: Card(
-                                  color: lightThemeData(context).primaryColor,
+                                  color: store.isSwitched
+                                      ? darkThemeData(context).iconTheme.color
+                                      : lightThemeData(context).iconTheme.color,
                                   elevation: 4,
                                   child: SizedBox(
                                     width: MediaQuery.of(context).size.width,

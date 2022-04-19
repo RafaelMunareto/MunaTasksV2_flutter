@@ -32,6 +32,7 @@ abstract class _PerfilStoreBase with Store {
 
   getList() async {
     await getUid();
+    await buscaTheme();
     getBydDioId();
     getDioUsers();
     client.showTextFieldName(true);
@@ -41,6 +42,16 @@ abstract class _PerfilStoreBase with Store {
     storage.get('userDio').then((value) {
       client.setUserSelection(
           UserDioClientModel.fromJson(jsonDecode(value[0])['user']));
+    });
+  }
+
+  buscaTheme() async {
+    await storage.get('theme').then((value) {
+      if (value?[0] == 'dark') {
+        client.setTheme(true);
+      } else {
+        client.setTheme(false);
+      }
     });
   }
 

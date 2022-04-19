@@ -117,7 +117,6 @@ class _NamesWidgetState extends State<NamesWidget>
                           !enabledField
                               ? Icons.drive_file_rename_outline
                               : Icons.task_alt,
-                          color: lightThemeData(context).primaryColor,
                         ),
                       ),
                     ),

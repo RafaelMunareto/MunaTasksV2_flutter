@@ -19,6 +19,7 @@ class _AppWidgetState extends State<AppWidget> {
   ThemeMode _themeMode = ThemeMode.system;
   final ILocalStorage theme = LocalStorageShare();
   late String darkLight = '';
+  bool isDark = false;
 
   @override
   initState() {

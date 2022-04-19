@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 
 const kPrimaryColor = Colors.deepPurple;
-var kPrimaryColorLight = Colors.deepPurple.shade400;
+var kPrimaryColorLight = Colors.deepPurple.shade300;
 var kPrimaryColorDark = Colors.deepPurple.shade700;
 var kPrimaryColorBright = Colors.deepPurpleAccent;
 const kSecondaryColor = Colors.orange;
+var kLightGrey = Colors.grey.shade300;
+const kblue = Colors.blue;
+var kDarkGrey = Colors.grey.shade700;
+const kWhite = Colors.white;
 const kContentColorLightTheme = Color(0xFF1D1D35);
 const kContentColorDarkTheme = Color(0xFFF5FCF9);
 const kWarninngColor = Color(0xFFF3BB1C);
 const kErrorColor = Color(0xFFF03738);
+var kLight = const Color.fromARGB(255, 244, 241, 250);
+const kElevation = 16.00;
+//dark
+const darkPrimaryColorLight = Colors.white;
 
 const kDefaultPadding = 20.0;

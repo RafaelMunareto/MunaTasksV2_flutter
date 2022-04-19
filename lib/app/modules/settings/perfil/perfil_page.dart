@@ -29,6 +29,7 @@ class PerfilPageState extends State<PerfilPage> {
       appBar: AppBarWidget(
           title: widget.title,
           context: context,
+          theme: store.client.theme,
           icon: Icons.account_circle,
           settings: true,
           rota: '/home/',

@@ -42,24 +42,22 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
           onTap: () {
             store.atualizaImagem("camera");
           },
-          child: ListTile(
+          child: const ListTile(
             leading: Icon(
               Icons.camera_alt,
-              color: lightThemeData(context).primaryColor,
             ),
-            title: const Text('Camera'),
+            title: Text('Camera'),
           ),
         ),
         const PopupMenuDivider(),
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () => {store.atualizaImagem("galeria")},
-          child: ListTile(
+          child: const ListTile(
             leading: Icon(
               Icons.image,
-              color: lightThemeData(context).primaryColor,
             ),
-            title: const Text('Galeria'),
+            title: Text('Galeria'),
           ),
         ),
       ],
@@ -76,12 +74,11 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () => {store.atualizaImagem("galeria")},
-          child: ListTile(
+          child: const ListTile(
             leading: Icon(
               Icons.image,
-              color: lightThemeData(context).primaryColor,
             ),
-            title: const Text('Galeria'),
+            title: Text('Galeria'),
           ),
         ),
       ],

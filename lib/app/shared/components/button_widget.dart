@@ -87,7 +87,9 @@ class _ButtonWidgetState extends State<ButtonWidget>
                 widget.function();
               },
               child: widget.loading
-                  ? const CircularProgressWidget()
+                  ? const CircularProgressIndicator(
+                      color: Colors.white,
+                    )
                   : Text(
                       widget.label,
                       style: const TextStyle(

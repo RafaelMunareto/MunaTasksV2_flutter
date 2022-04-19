@@ -7,6 +7,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/auth/repositories/auth_repository.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:simple_animations/simple_animations.dart';
@@ -28,6 +30,7 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   final dynamic etiquetaList;
   final Function? setValueSearch;
   final Function? changeFilterSearch;
+  final bool theme;
   AppBarWidget({
     Key? key,
     this.title = "",
@@ -46,6 +49,7 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
     this.rota = '/auth',
     this.setValueSearch,
     this.changeFilterSearch,
+    required this.theme,
   }) : super(key: key);
 
   @override
@@ -59,6 +63,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   bool search = false;
   PerfilDioModel perfil = PerfilDioModel();
   AuthRepository auth = AuthRepository();
+  ILocalStorage storage = LocalStorageShare();
   UserDioClientModel user = UserDioClientModel();
 
   getPerfil() async {
@@ -94,7 +99,6 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             //   ),
             // ),
             ),
-        backgroundColor: Colors.grey[300],
         actions: [
           widget.settings && !widget.home
               ? _popMenu()
@@ -106,11 +110,11 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                     child: !search
                         ? Icon(
                             Icons.search,
-                            color: lightThemeData(context).primaryColorLight,
                             size: kIsWeb || Platform.isWindows ? 48 : 24,
                           )
-                        : Icon(Icons.close,
-                            color: lightThemeData(context).primaryColorLight),
+                        : const Icon(
+                            Icons.close,
+                          ),
                   ),
                   onTap: () {
                     setState(() {
@@ -129,14 +133,18 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 text: TextSpan(
                   children: [
                     WidgetSpan(
-                      child: Icon(widget.icon,
-                          color: lightThemeData(context).primaryColorLight),
+                      child: Icon(
+                        widget.icon,
+                      ),
                     ),
                     TextSpan(
                       text: ' ' + widget.title.toUpperCase(),
                       style: TextStyle(
-                          fontSize: 20,
-                          color: lightThemeData(context).primaryColorLight),
+                        fontSize: 20,
+                        color: widget.theme
+                            ? darkThemeData(context).primaryColorLight
+                            : lightThemeData(context).primaryColorLight,
+                      ),
                     ),
                   ],
                 ),
@@ -146,8 +154,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 : Container(),
         leading: widget.back
             ? IconButton(
-                icon: Icon(Icons.arrow_back,
-                    color: lightThemeData(context).primaryColorLight),
+                icon: const Icon(
+                  Icons.arrow_back,
+                ),
                 onPressed: () => Modular.to.navigate(widget.rota))
             : InkWell(
                 onTap: () {
@@ -160,9 +169,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 },
                 child: kIsWeb || Platform.isWindows
                     ? Container()
-                    : Icon(
+                    : const Icon(
                         Icons.menu,
-                        color: lightThemeData(context).primaryColorLight,
                       ),
               ),
       ),
@@ -175,9 +183,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
         padding: kIsWeb || Platform.isWindows
             ? const EdgeInsets.only(right: 48.0)
             : const EdgeInsets.only(right: 12.0),
-        child: Icon(
+        child: const Icon(
           Icons.more_vert,
-          color: lightThemeData(context).primaryColorLight,
         ),
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
@@ -197,7 +204,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           child: ListTile(
             leading: Icon(
               Icons.settings,
-              color: lightThemeData(context).primaryColor,
+              color: widget.theme
+                  ? darkThemeData(context).primaryColor
+                  : lightThemeData(context).primaryColor,
             ),
             title: const Text('Configurações'),
           ),
@@ -206,8 +215,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           mouseCursor: SystemMouseCursors.click,
           onTap: () => Modular.to.navigate('/settings/perfil'),
           child: ListTile(
-            leading: Icon(Icons.account_circle,
-                color: lightThemeData(context).primaryColor),
+            leading: Icon(
+              Icons.account_circle,
+              color: widget.theme
+                  ? darkThemeData(context).primaryColor
+                  : lightThemeData(context).primaryColor,
+            ),
             title: const Text('Perfil e Equipes'),
           ),
         ),

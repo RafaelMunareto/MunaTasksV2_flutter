@@ -11,6 +11,9 @@ abstract class _ClientStoreBase with Store {
   String urlImagemRecuperada = '';
 
   @observable
+  bool theme = false;
+
+  @observable
   bool showTeams = false;
 
   @observable
@@ -24,6 +27,9 @@ abstract class _ClientStoreBase with Store {
 
   @observable
   List<PerfilDioModel> perfis = [];
+
+  @action
+  setTheme(value) => theme = value;
 
   @action
   setPerfis(value) => perfis = value;

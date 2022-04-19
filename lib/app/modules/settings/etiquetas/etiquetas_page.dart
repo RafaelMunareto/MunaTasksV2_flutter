@@ -90,6 +90,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
       appBar: AppBarWidget(
           title: widget.title,
           icon: Icons.bookmark,
+          theme: store.etiquetaStore.theme,
           context: context,
           settings: true,
           rota: '/home/'),

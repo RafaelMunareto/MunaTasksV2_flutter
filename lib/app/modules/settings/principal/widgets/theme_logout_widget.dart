@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/app_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
+import 'package:munatasks2/app/shared/utils/simple_button_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 
@@ -64,7 +65,9 @@ class _ThemeLogoutWidgetState extends State<ThemeLogoutWidget> {
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80),
                     side: BorderSide(
-                      color: lightThemeData(context).primaryColor,
+                      color: store.isSwitched
+                          ? darkThemeData(context).primaryColor
+                          : lightThemeData(context).primaryColor,
                       width: 2.0,
                     ),
                   ),
@@ -77,12 +80,14 @@ class _ThemeLogoutWidgetState extends State<ThemeLogoutWidget> {
                 Icons.logout,
                 color: Colors.white,
               ),
-              label: const Padding(
-                padding: EdgeInsets.all(14.0),
-                child: Text(
-                  'Sair',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
+              label: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Text('Sair',
+                    style: TextStyle(
+                      color: store.isSwitched
+                          ? darkThemeData(context).scaffoldBackgroundColor
+                          : lightThemeData(context).scaffoldBackgroundColor,
+                    )),
               ),
             ),
           )

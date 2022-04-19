@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/etiquetas_store.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/simple_button_widget.dart';
 
 class EtiquetasWidget extends StatefulWidget {
   const EtiquetasWidget({Key? key}) : super(key: key);
@@ -113,48 +114,19 @@ class _EtiquetasWidgetState extends State<EtiquetasWidget>
             content: Text(
                 'Tem certeza que deseja excluír a etiqueta ${model!.etiqueta} ?'),
             actions: [
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      const Color.fromARGB(255, 140, 82, 241)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: const BorderSide(
-                        color: Color.fromARGB(255, 140, 82, 241),
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                ),
-                onPressed: () => Navigator.pop(context),
-                child: const Text(
-                  'CANCELAR',
-                  style: TextStyle(color: Colors.white),
-                ),
+              SimpleButtonWidget(
+                theme: store.etiquetaStore.theme,
+                buttonName: 'CANCELAR',
+                popUp: true,
               ),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      const Color.fromARGB(255, 140, 82, 241)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: const BorderSide(
-                        color: Color.fromARGB(255, 140, 82, 241),
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  store.deleteDio(model!);
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  'EXCLUIR',
-                  style: TextStyle(color: Colors.white),
-                ),
+              SimpleButtonWidget(
+                theme: store.etiquetaStore.theme,
+                buttonName: 'EXCLUIR',
+                popUp: true,
+                function: store.deleteDio,
+                dataFunction: model,
+                scnack: true,
+                msgSnack: 'Deletado com sucesso!',
               ),
             ],
           );

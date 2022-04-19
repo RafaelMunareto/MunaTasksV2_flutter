@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/controller/etiqueta_store.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 
 part 'etiquetas_store.g.dart';
 
@@ -10,6 +11,7 @@ class EtiquetasStore = _EtiquetasStoreBase with _$EtiquetasStore;
 
 abstract class _EtiquetasStoreBase with Store {
   final IEtiquetaService etiquetaService;
+  final ILocalStorage storage = Modular.get();
   final EtiquetaStore etiquetaStore = Modular.get();
 
   _EtiquetasStoreBase({required this.etiquetaService}) {
@@ -20,6 +22,16 @@ abstract class _EtiquetasStoreBase with Store {
   void getSettings() {
     etiquetaService.getSettings().then((value) {
       etiquetaStore.setColorsDio(value.color);
+    });
+  }
+
+  void buscaTheme() async {
+    await storage.get('theme').then((value) {
+      if (value?[0] == 'dark') {
+        etiquetaStore.setTheme(true);
+      } else {
+        etiquetaStore.setTheme(false);
+      }
     });
   }
 

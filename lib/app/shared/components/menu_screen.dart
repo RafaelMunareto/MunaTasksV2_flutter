@@ -89,10 +89,13 @@ class _MenuScreenState extends State<MenuScreen> {
                                   Text(
                                     store.client.perfilUserLogado.name.name,
                                     style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w800,
-                                        color: lightThemeData(context)
-                                            .primaryColorDark),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w800,
+                                      color: store.client.theme
+                                          ? darkThemeData(context).primaryColor
+                                          : lightThemeData(context)
+                                              .primaryColorDark,
+                                    ),
                                   ),
                                   InkWell(
                                     onTap: () {
@@ -105,8 +108,11 @@ class _MenuScreenState extends State<MenuScreen> {
                                         "Edite Perfil",
                                         style: TextStyle(
                                           fontSize: 14,
-                                          color: lightThemeData(context)
-                                              .secondaryHeaderColor,
+                                          color: store.client.theme
+                                              ? darkThemeData(context)
+                                                  .secondaryHeaderColor
+                                              : lightThemeData(context)
+                                                  .secondaryHeaderColor,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -114,17 +120,14 @@ class _MenuScreenState extends State<MenuScreen> {
                                   ),
                                   ListTile(
                                     title: Row(
-                                      children: [
+                                      children: const [
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 8.0),
+                                          padding: EdgeInsets.only(right: 8.0),
                                           child: Icon(
                                             Icons.settings,
-                                            color: lightThemeData(context)
-                                                .primaryColor,
                                           ),
                                         ),
-                                        const Flexible(
+                                        Flexible(
                                           child: SizedBox(
                                             child: Text(
                                               "Configurações",
@@ -143,17 +146,12 @@ class _MenuScreenState extends State<MenuScreen> {
                                   ),
                                   ListTile(
                                     title: Row(
-                                      children: [
+                                      children: const [
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 8.0),
-                                          child: Icon(
-                                            Icons.bookmark,
-                                            color: lightThemeData(context)
-                                                .primaryColor,
-                                          ),
+                                          padding: EdgeInsets.only(right: 8.0),
+                                          child: Icon(Icons.bookmark),
                                         ),
-                                        const Flexible(
+                                        Flexible(
                                           child: SizedBox(
                                             child: Text(
                                               "Etiquetas",

@@ -62,6 +62,21 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
+  final _$themeAtom = Atom(name: '_EtiquetaStoreBase.theme');
+
+  @override
+  bool get theme {
+    _$themeAtom.reportRead();
+    return super.theme;
+  }
+
+  @override
+  set theme(bool value) {
+    _$themeAtom.reportWrite(value, super.theme, () {
+      super.theme = value;
+    });
+  }
+
   final _$etiquetaAtom = Atom(name: '_EtiquetaStoreBase.etiqueta');
 
   @override
@@ -227,6 +242,17 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
   }
 
   @override
+  dynamic setTheme(dynamic value) {
+    final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
+        name: '_EtiquetaStoreBase.setTheme');
+    try {
+      return super.setTheme(value);
+    } finally {
+      _$_EtiquetaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setExpansionTitle(dynamic value) {
     final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
         name: '_EtiquetaStoreBase.setExpansionTitle');
@@ -375,6 +401,7 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
 colorsDio: ${colorsDio},
 etiquetaDio: ${etiquetaDio},
 expansionTitle: ${expansionTitle},
+theme: ${theme},
 etiqueta: ${etiqueta},
 showValidation: ${showValidation},
 icon: ${icon},

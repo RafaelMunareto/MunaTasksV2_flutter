@@ -52,8 +52,13 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                     )
                                   : Icon(
                                       Icons.bookmark,
-                                      color:
-                                          lightThemeData(context).primaryColor,
+                                      color: store.client.theme
+                                          ? darkThemeData(context)
+                                              .iconTheme
+                                              .color
+                                          : lightThemeData(context)
+                                              .iconTheme
+                                              .color,
                                     ),
                               onTap: () {
                                 DialogButtom().showDialog(
@@ -78,19 +83,15 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                   title: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.filter_alt,
-                                        color: lightThemeData(context)
-                                            .primaryColor,
                                       ),
                                       Text(
                                         store.client.orderAscDesc
                                             ? '${store.client.orderSelection} DESC'
                                             : '${store.client.orderSelection} ASC',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 12,
-                                          color: lightThemeData(context)
-                                              .primaryColor,
                                         ),
                                       ),
                                     ],
@@ -167,10 +168,8 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                         color: ConvertIcon()
                                             .convertColor(store.client.color),
                                       )
-                                    : Icon(
+                                    : const Icon(
                                         Icons.bookmark,
-                                        color: lightThemeData(context)
-                                            .primaryColor,
                                       ),
                                 onTap: () {
                                   DialogButtom().showDialog(
@@ -196,10 +195,8 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.filter_alt,
-                                          color: lightThemeData(context)
-                                              .primaryColor,
                                         ),
                                         Text(
                                           store.client.orderAscDesc

@@ -14,7 +14,6 @@ import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
-import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -55,6 +54,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                     zoomController: drawerController,
                     setOpen: store.client.setOpen,
                     settings: true,
+                    theme: store.client.theme,
                     back: false,
                     etiquetaList: store.client.etiquetas,
                     tarefas: store.client.taskDio,
@@ -78,9 +78,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
               child: Icon(
                 Icons.add,
                 size: kIsWeb || Platform.isWindows ? 48 : 24,
-                color: Colors.grey[300],
               ),
-              backgroundColor: lightThemeData(context).secondaryHeaderColor,
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.endDocked,

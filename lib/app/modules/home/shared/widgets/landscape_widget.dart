@@ -37,16 +37,16 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                         width: MediaQuery.of(context).size.width,
                         child: Accordion(
                           maxOpenSections: 1,
-                          headerBackgroundColor: store.client.theme
-                              ? Colors.blueGrey[800]
-                              : Colors.grey[300],
                           children: [
                             for (var totais in store.client.tarefasTotais)
                               AccordionSection(
-                                contentBorderColor: Colors.blueGrey,
+                                headerBackgroundColor:
+                                    lightThemeData(context).primaryColorLight,
                                 contentBackgroundColor: store.client.theme
-                                    ? Colors.grey[600]
-                                    : Colors.white,
+                                    ? darkThemeData(context)
+                                        .scaffoldBackgroundColor
+                                    : lightThemeData(context)
+                                        .scaffoldBackgroundColor,
                                 header: Wrap(
                                   alignment: WrapAlignment.spaceBetween,
                                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -59,9 +59,6 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                             bottomRight: Radius.circular(20),
                                           ),
                                         ),
-                                        backgroundColor: store.client.theme
-                                            ? Colors.grey[600]
-                                            : Colors.white,
                                         key: UniqueKey(),
                                         labelPadding: const EdgeInsets.all(2),
                                         elevation: 2.0,
@@ -89,11 +86,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                                     ' Tarefas'
                                                 : totais.qtd.toString() +
                                                     ' Tarefa',
-                                            style: TextStyle(
-                                              color: store.client.theme
-                                                  ? Colors.white
-                                                  : lightThemeData(context)
-                                                      .primaryColor,
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ))
                                         : const Text('Nenhuma tarefa',
@@ -223,7 +216,6 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                                   totais.qtd.toString() +
                                                       ' Tarefas',
                                                   style: const TextStyle(
-                                                    color: Colors.black,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 )

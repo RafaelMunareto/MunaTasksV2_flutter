@@ -40,6 +40,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$themeAtom = Atom(name: '_ClientStoreBase.theme');
+
+  @override
+  bool get theme {
+    _$themeAtom.reportRead();
+    return super.theme;
+  }
+
+  @override
+  set theme(bool value) {
+    _$themeAtom.reportWrite(value, super.theme, () {
+      super.theme = value;
+    });
+  }
+
   final _$showTeamsAtom = Atom(name: '_ClientStoreBase.showTeams');
 
   @override
@@ -247,6 +262,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
       ActionController(name: '_ClientStoreBase');
 
   @override
+  dynamic setTheme(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setTheme');
+    try {
+      return super.setTheme(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setPerfis(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setPerfis');
@@ -415,6 +441,7 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   String toString() {
     return '''
 urlImagemRecuperada: ${urlImagemRecuperada},
+theme: ${theme},
 showTeams: ${showTeams},
 loading: ${loading},
 loadingImagem: ${loadingImagem},

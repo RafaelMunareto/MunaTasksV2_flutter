@@ -18,6 +18,12 @@ abstract class _EtiquetaStoreBase with Store {
   @observable
   bool expansionTitle = false;
 
+  @observable
+  bool theme = false;
+
+  @action
+  setTheme(value) => theme = value;
+
   @action
   setExpansionTitle(value) => expansionTitle = value;
 

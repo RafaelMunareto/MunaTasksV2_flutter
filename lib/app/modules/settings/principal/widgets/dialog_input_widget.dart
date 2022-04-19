@@ -57,12 +57,14 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
-                        lightThemeData(context).primaryColor),
+                      store.isSwitched
+                          ? darkThemeData(context).primaryColor
+                          : lightThemeData(context).primaryColor,
+                    ),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(80),
-                        side: BorderSide(
-                          color: lightThemeData(context).primaryColor,
+                        side: const BorderSide(
                           width: 2.0,
                         ),
                       ),

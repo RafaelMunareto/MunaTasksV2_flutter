@@ -75,9 +75,8 @@ class _EquipesWidgetState extends State<EquipesWidget>
               ),
             ),
             trailing: GestureDetector(
-              child: Icon(
+              child: const Icon(
                 Icons.drive_file_rename_outline,
-                color: lightThemeData(context).primaryColor,
               ),
               onTap: () {
                 setState(() {

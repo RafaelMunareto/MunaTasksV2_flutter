@@ -12,7 +12,8 @@ import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_
 import 'package:munatasks2/app/modules/home/shared/widgets/retard_action_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
-import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
+import 'package:munatasks2/app/shared/utils/simple_button_widget.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class CardWidget extends StatefulWidget {
   const CardWidget({
@@ -36,57 +37,28 @@ class _CardWidgetState extends State<CardWidget> {
             height: 200,
             child: AlertDialog(
               key: Key(tarefa.id!),
-              title: const Text(
+              title: Text(
                 'Excluir Tarefa.',
                 style: TextStyle(
-                    fontSize: 20, color: Color.fromARGB(255, 140, 82, 241)),
+                    color: store.client.theme
+                        ? darkThemeData(context).primaryColor
+                        : lightThemeData(context).primaryColor),
               ),
               content: const Text('Tem certeza que deseja excluír a tarefa ?'),
               actions: [
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        const Color.fromARGB(255, 140, 82, 241)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: const BorderSide(
-                          color: Color.fromARGB(255, 140, 82, 241),
-                          width: 2.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text(
-                    'CANCELAR',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                SimpleButtonWidget(
+                  theme: store.client.theme,
+                  buttonName: 'CANCELAR',
+                  popUp: true,
                 ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        const Color.fromARGB(255, 140, 82, 241)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: const BorderSide(
-                          color: Color.fromARGB(255, 140, 82, 241),
-                          width: 2.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {
-                    Modular.to.pop();
-                    store.deleteDioTasks(tarefa);
-                    SnackbarCustom().createSnackBar(
-                        'Deletado com sucesso!', Colors.green, context);
-                  },
-                  child: const Text(
-                    'EXCLUIR',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                SimpleButtonWidget(
+                  theme: store.client.theme,
+                  buttonName: 'EXCLUIR',
+                  popUp: true,
+                  function: store.deleteTasks,
+                  dataFunction: tarefa,
+                  scnack: true,
+                  msgSnack: 'Deletado com sucesso!',
                 ),
               ],
             ),
