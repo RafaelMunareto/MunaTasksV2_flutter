@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/app_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
-import 'package:munatasks2/app/shared/utils/simple_button_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 

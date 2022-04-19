@@ -12,7 +12,6 @@ import 'package:munatasks2/app/modules/settings/principal/widgets/theme_logout_w
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
-import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class PrincipalPage extends StatefulWidget {

@@ -88,6 +88,7 @@ class ForgetPageState extends State<ForgetPage> {
                         horizontal: 40, vertical: 10),
                     child: ButtonWidget(
                         label: 'ENVIAR SENHA',
+                        theme: store.theme,
                         width: size.width * 0.5,
                         loading: store.loading,
                         function:

@@ -40,8 +40,9 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                           children: [
                             for (var totais in store.client.tarefasTotais)
                               AccordionSection(
-                                headerBackgroundColor:
-                                    lightThemeData(context).primaryColorLight,
+                                headerBackgroundColor: store.client.theme
+                                    ? darkThemeData(context).primaryColorLight
+                                    : lightThemeData(context).primaryColorLight,
                                 contentBackgroundColor: store.client.theme
                                     ? darkThemeData(context)
                                         .scaffoldBackgroundColor

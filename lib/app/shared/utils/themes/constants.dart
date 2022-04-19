@@ -16,6 +16,20 @@ const kErrorColor = Color(0xFFF03738);
 var kLight = const Color.fromARGB(255, 244, 241, 250);
 const kElevation = 16.00;
 //dark
-const darkPrimaryColorLight = Colors.white;
+const darkPrimaryColor = Colors.lightGreen;
+var darkPrimaryColorLight = Colors.lightGreen.shade300;
+var darkPrimaryColorDark = Colors.lightGreen.shade700;
+var darkPrimaryColorBright = Colors.lightGreenAccent;
+const darkSecondaryColor = Colors.orange;
+var darkLightGrey = Colors.grey.shade300;
+const darkblue = Colors.blueAccent;
+var darkDarkGrey = Colors.grey.shade800;
+const darkWhite = Colors.white;
+const darkContentColorLightTheme = Color(0xFF1D1D35);
+const darkContentColorDarkTheme = Color(0xFFF5FCF9);
+const darkWarninngColor = Color(0xFFF3BB1C);
+const darkErrorColor = Color(0xFFF03738);
+var darkLight = Colors.grey.shade700;
+const darkElevation = 16.00;
 
-const kDefaultPadding = 20.0;
+const darkDefaultPadding = 20.0;

@@ -44,31 +44,38 @@ ThemeData lightThemeData(BuildContext context) {
 
 ThemeData darkThemeData(BuildContext context) {
   return ThemeData.dark().copyWith(
-    primaryColor: kPrimaryColor,
+    primaryColor: darkPrimaryColor,
     primaryColorLight: darkPrimaryColorLight,
-    primaryColorDark: kPrimaryColorDark,
-    secondaryHeaderColor: kPrimaryColorBright,
-    scaffoldBackgroundColor: kContentColorLightTheme,
+    primaryColorDark: darkPrimaryColorDark,
+    secondaryHeaderColor: darkblue,
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: darkblue, foregroundColor: darkLight),
+    indicatorColor: darkPrimaryColor,
+    chipTheme: ChipThemeData(backgroundColor: darkLightGrey),
+    scaffoldBackgroundColor: darkLight,
+    bottomSheetTheme: const BottomSheetThemeData(
+      backgroundColor: darkPrimaryColor,
+      elevation: kElevation,
+    ),
     appBarTheme: AppBarTheme(
-      backgroundColor: kLightGrey,
-      foregroundColor: kDarkGrey,
+      backgroundColor: Colors.blueGrey.shade800,
       iconTheme: const IconThemeData(
-        color: kPrimaryColor,
+        color: kblue,
       ),
     ),
-    iconTheme: const IconThemeData(color: kContentColorDarkTheme),
+    iconTheme: const IconThemeData(color: kblue),
     textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme)
-        .apply(bodyColor: kContentColorDarkTheme),
-    colorScheme: const ColorScheme.dark().copyWith(
-      primary: kPrimaryColor,
-      secondary: kSecondaryColor,
-      error: kErrorColor,
+        .apply(bodyColor: darkWhite),
+    colorScheme: const ColorScheme.light(
+      primary: darkPrimaryColor,
+      secondary: darkSecondaryColor,
+      error: darkErrorColor,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: kContentColorLightTheme,
-      selectedItemColor: Colors.white70,
-      unselectedItemColor: kContentColorDarkTheme.withOpacity(0.32),
-      selectedIconTheme: const IconThemeData(color: kPrimaryColor),
+      backgroundColor: darkDarkGrey,
+      selectedItemColor: darkContentColorLightTheme.withOpacity(0.7),
+      unselectedItemColor: darkContentColorLightTheme.withOpacity(0.32),
+      selectedIconTheme: const IconThemeData(color: darkPrimaryColor),
       showUnselectedLabels: true,
     ),
   );

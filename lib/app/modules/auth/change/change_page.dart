@@ -104,6 +104,7 @@ class ChangePageState extends State<ChangePage> {
                         horizontal: 40, vertical: 10),
                     child: ButtonWidget(
                       label: 'ALTERAR',
+                      theme: store.theme,
                       width: size.width * 0.5,
                       loading: store.loading,
                       function: store.client.isValidChangePassword

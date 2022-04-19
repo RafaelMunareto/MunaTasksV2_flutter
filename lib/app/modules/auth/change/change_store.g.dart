@@ -69,6 +69,21 @@ mixin _$ChangeStore on _ChangeStoreBase, Store {
     });
   }
 
+  final _$themeAtom = Atom(name: '_ChangeStoreBase.theme');
+
+  @override
+  bool get theme {
+    _$themeAtom.reportRead();
+    return super.theme;
+  }
+
+  @override
+  set theme(bool value) {
+    _$themeAtom.reportWrite(value, super.theme, () {
+      super.theme = value;
+    });
+  }
+
   final _$_ChangeStoreBaseActionController =
       ActionController(name: '_ChangeStoreBase');
 
@@ -117,12 +132,24 @@ mixin _$ChangeStore on _ChangeStoreBase, Store {
   }
 
   @override
+  dynamic setTheme(dynamic value) {
+    final _$actionInfo = _$_ChangeStoreBaseActionController.startAction(
+        name: '_ChangeStoreBase.setTheme');
+    try {
+      return super.setTheme(value);
+    } finally {
+      _$_ChangeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 loading: ${loading},
 code: ${code},
 msg: ${msg},
-msgErrOrGoal: ${msgErrOrGoal}
+msgErrOrGoal: ${msgErrOrGoal},
+theme: ${theme}
     ''';
   }
 }

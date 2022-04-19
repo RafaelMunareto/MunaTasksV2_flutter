@@ -18,6 +18,10 @@ abstract class _LoginStoreBase with Store {
   ILocalStorage storage = Modular.get();
   final LocalAuthentication bio = Modular.get();
 
+  _LoginStoreBase() {
+    buscaTheme();
+  }
+
   @observable
   SupportState supportState = SupportState.unknown;
 
@@ -44,6 +48,22 @@ abstract class _LoginStoreBase with Store {
 
   @action
   setLoading(value) => loading = value;
+
+  @observable
+  bool theme = false;
+
+  @action
+  setTheme(value) => value = theme;
+
+  buscaTheme() {
+    storage.get('theme').then((value) {
+      if (value?[0] == 'dark') {
+        setTheme(true);
+      } else {
+        setTheme(false);
+      }
+    });
+  }
 
   //biometric
   @observable

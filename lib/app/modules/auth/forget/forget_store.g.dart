@@ -69,6 +69,21 @@ mixin _$ForgetStore on _ForgetStoreBase, Store {
     });
   }
 
+  final _$themeAtom = Atom(name: '_ForgetStoreBase.theme');
+
+  @override
+  bool get theme {
+    _$themeAtom.reportRead();
+    return super.theme;
+  }
+
+  @override
+  set theme(bool value) {
+    _$themeAtom.reportWrite(value, super.theme, () {
+      super.theme = value;
+    });
+  }
+
   final _$_ForgetStoreBaseActionController =
       ActionController(name: '_ForgetStoreBase');
 
@@ -106,6 +121,17 @@ mixin _$ForgetStore on _ForgetStoreBase, Store {
   }
 
   @override
+  dynamic setTheme(dynamic value) {
+    final _$actionInfo = _$_ForgetStoreBaseActionController.startAction(
+        name: '_ForgetStoreBase.setTheme');
+    try {
+      return super.setTheme(value);
+    } finally {
+      _$_ForgetStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic submit() {
     final _$actionInfo = _$_ForgetStoreBaseActionController.startAction(
         name: '_ForgetStoreBase.submit');
@@ -122,7 +148,8 @@ mixin _$ForgetStore on _ForgetStoreBase, Store {
 loading: ${loading},
 checkError: ${checkError},
 msg: ${msg},
-msgErrOrGoal: ${msgErrOrGoal}
+msgErrOrGoal: ${msgErrOrGoal},
+theme: ${theme}
     ''';
   }
 }

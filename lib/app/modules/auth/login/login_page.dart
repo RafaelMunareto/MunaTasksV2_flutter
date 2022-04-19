@@ -105,6 +105,7 @@ class LoginPageState extends State<LoginPage> {
                         horizontal: 40, vertical: 10),
                     child: ButtonWidget(
                         label: 'LOGIN',
+                        theme: store.theme,
                         width: size.width * 0.5,
                         loading: store.loading,
                         function:

@@ -3,6 +3,7 @@ import 'package:munatasks2/app/modules/auth/shared/models/client_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 
 part 'signup_store.g.dart';
 
@@ -11,6 +12,11 @@ class SignupStore = _SignupStoreBase with _$SignupStore;
 abstract class _SignupStoreBase with Store {
   ClientStore client = Modular.get();
   AuthController auth = Modular.get();
+  ILocalStorage storage = Modular.get();
+
+  _SignupStoreBase() {
+    buscaTheme();
+  }
 
   @observable
   bool loading = false;
@@ -26,6 +32,22 @@ abstract class _SignupStoreBase with Store {
 
   @action
   setLoading(value) => loading = value;
+
+  @observable
+  bool theme = false;
+
+  @action
+  setTheme(value) => value = theme;
+
+  buscaTheme() {
+    storage.get('theme').then((value) {
+      if (value?[0] == 'dark') {
+        setTheme(true);
+      } else {
+        setTheme(false);
+      }
+    });
+  }
 
   @action
   setMsg(value) => msg = value;

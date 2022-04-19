@@ -62,6 +62,21 @@ mixin _$SignupStore on _SignupStoreBase, Store {
     });
   }
 
+  final _$themeAtom = Atom(name: '_SignupStoreBase.theme');
+
+  @override
+  bool get theme {
+    _$themeAtom.reportRead();
+    return super.theme;
+  }
+
+  @override
+  set theme(bool value) {
+    _$themeAtom.reportWrite(value, super.theme, () {
+      super.theme = value;
+    });
+  }
+
   final _$_SignupStoreBaseActionController =
       ActionController(name: '_SignupStoreBase');
 
@@ -82,6 +97,17 @@ mixin _$SignupStore on _SignupStoreBase, Store {
         name: '_SignupStoreBase.setLoading');
     try {
       return super.setLoading(value);
+    } finally {
+      _$_SignupStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setTheme(dynamic value) {
+    final _$actionInfo = _$_SignupStoreBaseActionController.startAction(
+        name: '_SignupStoreBase.setTheme');
+    try {
+      return super.setTheme(value);
     } finally {
       _$_SignupStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -115,6 +141,7 @@ mixin _$SignupStore on _SignupStoreBase, Store {
 loading: ${loading},
 msg: ${msg},
 msgErrOrGoal: ${msgErrOrGoal},
+theme: ${theme},
 isValidRegisterEmailGrupo: ${isValidRegisterEmailGrupo}
     ''';
   }

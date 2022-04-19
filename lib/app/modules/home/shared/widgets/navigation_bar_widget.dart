@@ -30,6 +30,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
       return BubbleBottomBar(
+        backgroundColor: widget.theme ? Colors.blueGrey.shade800 : Colors.white,
         opacity: .2,
         tilesPadding: (kIsWeb || Platform.isWindows)
             ? const EdgeInsets.all(18)

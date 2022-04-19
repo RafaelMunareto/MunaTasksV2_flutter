@@ -209,6 +209,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ButtonWidget(
+                            theme: store.etiquetaStore.theme,
                             label: store.etiquetaStore.updateLoading
                                 ? 'ATUALIZAR'
                                 : 'SALVAR',

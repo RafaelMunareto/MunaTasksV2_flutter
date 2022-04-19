@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class ButtonWidget extends StatefulWidget {
@@ -7,12 +6,14 @@ class ButtonWidget extends StatefulWidget {
   final dynamic function;
   final bool loading;
   final double? width;
+  final bool theme;
 
   const ButtonWidget(
       {Key? key,
       this.label = '',
       this.function,
       this.loading = false,
+      required this.theme,
       this.width})
       : super(key: key);
 
@@ -76,7 +77,9 @@ class _ButtonWidgetState extends State<ButtonWidget>
             opacity: opacidade,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: lightThemeData(context).primaryColor,
+                primary: widget.theme
+                    ? darkThemeData(context).primaryColor
+                    : lightThemeData(context).primaryColor,
                 enabledMouseCursor: SystemMouseCursors.click,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(radius.value),
@@ -93,7 +96,9 @@ class _ButtonWidgetState extends State<ButtonWidget>
                   : Text(
                       widget.label,
                       style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
             ),
           ),

@@ -106,6 +106,21 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
+  final _$themeAtom = Atom(name: '_LoginStoreBase.theme');
+
+  @override
+  bool get theme {
+    _$themeAtom.reportRead();
+    return super.theme;
+  }
+
+  @override
+  set theme(bool value) {
+    _$themeAtom.reportWrite(value, super.theme, () {
+      super.theme = value;
+    });
+  }
+
   final _$canCheckBiometricsAtom =
       Atom(name: '_LoginStoreBase.canCheckBiometrics');
 
@@ -255,6 +270,17 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   }
 
   @override
+  dynamic setTheme(dynamic value) {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
+        name: '_LoginStoreBase.setTheme');
+    try {
+      return super.setTheme(value);
+    } finally {
+      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setUser(dynamic value) {
     final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
         name: '_LoginStoreBase.setUser');
@@ -329,6 +355,7 @@ msg: ${msg},
 faceOrFinger: ${faceOrFinger},
 errOrGoal: ${errOrGoal},
 loginStorage: ${loginStorage},
+theme: ${theme},
 canCheckBiometrics: ${canCheckBiometrics},
 availableBiometrics: ${availableBiometrics},
 authorized: ${authorized},

@@ -105,6 +105,7 @@ class SignupPageState extends State<SignupPage> {
                         horizontal: 40, vertical: 10),
                     child: ButtonWidget(
                         label: 'CADASTRAR',
+                        theme: store.theme,
                         width: size.width * 0.5,
                         loading: store.loading,
                         function: store.isValidRegisterEmailGrupo

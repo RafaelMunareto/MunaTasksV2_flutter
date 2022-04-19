@@ -110,7 +110,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                     child: !search
                         ? Icon(
                             Icons.search,
-                            size: kIsWeb || Platform.isWindows ? 48 : 24,
+                            size: kIsWeb || Platform.isWindows ? 36 : 24,
                           )
                         : const Icon(
                             Icons.close,
