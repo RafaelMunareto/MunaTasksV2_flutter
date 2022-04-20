@@ -36,67 +36,60 @@ class ButtonSaveWidget extends StatelessWidget {
       );
     }
 
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: Wrap(
-        alignment: WrapAlignment.end,
-        children: [
-          Observer(builder: (_) {
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(0, 2, 2, 2),
+    return Wrap(
+      alignment: WrapAlignment.end,
+      children: [
+        Observer(builder: (_) {
+          return SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: ElevatedButton(
+              onPressed: () {
+                if (store.clientCreate.isValidTarefa) {
+                  store.clientCreate.setTarefa();
+                  if (store.clientCreate.id != "") {
+                    store.updateNewTarefa().then((e) {
+                      SnackbarCustom().createSnackBar(
+                        "Tarefa editada com sucesso!",
+                        Colors.green,
+                        context,
+                      );
+                      Modular.to.pop();
+                    }, onError: (error) {
+                      SnackbarCustom().createSnackBar(
+                          error.response?.data['error'].toString(),
+                          Colors.red,
+                          context);
+                    });
+                  } else {
+                    store.saveNewTarefa().then((e) {
+                      SnackbarCustom().createSnackBar(
+                        "Tarefa salva com sucesso!",
+                        Colors.green,
+                        context,
+                      );
+                      Modular.to.pop();
+                    }, onError: (error) {
+                      SnackbarCustom().createSnackBar(
+                          error.response?.data['error'].toString(),
+                          Colors.red,
+                          context);
+                    });
+                  }
+                } else {
+                  errors();
+                }
+                FocusScope.of(context).unfocus();
+              },
               child: store.clientCreate.loadingTarefa
                   ? const CircularProgressWidget()
-                  : ElevatedButton.icon(
-                      onPressed: () {
-                        if (store.clientCreate.isValidTarefa) {
-                          store.clientCreate.setTarefa();
-                          if (store.clientCreate.id != "") {
-                            store.updateNewTarefa().then((e) {
-                              SnackbarCustom().createSnackBar(
-                                "Tarefa editada com sucesso!",
-                                Colors.green,
-                                context,
-                              );
-                              Modular.to.pop();
-                            }, onError: (error) {
-                              SnackbarCustom().createSnackBar(
-                                  error.response?.data['error'].toString(),
-                                  Colors.red,
-                                  context);
-                            });
-                          } else {
-                            store.saveNewTarefa().then((e) {
-                              SnackbarCustom().createSnackBar(
-                                "Tarefa salva com sucesso!",
-                                Colors.green,
-                                context,
-                              );
-                              Modular.to.pop();
-                            }, onError: (error) {
-                              SnackbarCustom().createSnackBar(
-                                  error.response?.data['error'].toString(),
-                                  Colors.red,
-                                  context);
-                            });
-                          }
-                        } else {
-                          errors();
-                        }
-                        FocusScope.of(context).unfocus();
-                      },
-                      icon: Icon(
-                          store.clientCreate.id != ''
-                              ? Icons.update
-                              : Icons.add_circle,
-                          size: 18),
-                      label: Text(
-                        store.clientCreate.id != '' ? "EDITAR" : 'SALVAR',
-                      ),
+                  : Text(
+                      store.clientCreate.id != '' ? "EDITAR" : 'SALVAR',
                     ),
-            );
-          })
-        ],
-      ),
+            ),
+          );
+        })
+      ],
     );
   }
 }

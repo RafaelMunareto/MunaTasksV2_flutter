@@ -35,7 +35,9 @@ class _ThemeLogoutWidgetState extends State<ThemeLogoutWidget> {
                 });
               },
               rollingInfoRight: RollingIconInfo(
-                backgroundColor: lightThemeData(context).primaryColor,
+                backgroundColor: store.isSwitched
+                    ? darkThemeData(context).primaryColor
+                    : lightThemeData(context).primaryColor,
                 icon: Icons.nights_stay,
                 text: const Text(
                   'Dark',
@@ -59,7 +61,10 @@ class _ThemeLogoutWidgetState extends State<ThemeLogoutWidget> {
             trailing: ElevatedButton.icon(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
-                    lightThemeData(context).primaryColor),
+                  store.isSwitched
+                      ? darkThemeData(context).primaryColor
+                      : lightThemeData(context).primaryColor,
+                ),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80),

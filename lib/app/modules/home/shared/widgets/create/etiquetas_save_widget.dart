@@ -21,29 +21,25 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-        child: Observer(builder: (_) {
-          return Chip(
-            label: Text(
-              store.clientCreate.tarefaModelSaveEtiqueta.icon != null
-                  ? store.clientCreate.tarefaModelSaveEtiqueta.etiqueta
-                  : 'Etiqueta',
-              style: const TextStyle(fontSize: 12),
+      child: Observer(builder: (_) {
+        return Chip(
+          label: Text(
+            store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+                ? store.clientCreate.tarefaModelSaveEtiqueta.etiqueta
+                : 'Etiqueta',
+            style: const TextStyle(fontSize: 12),
+          ),
+          avatar: Icon(
+            store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+                ? IconData(store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
+                    fontFamily: 'MaterialIcons')
+                : Icons.bookmark,
+            color: ConvertIcon().convertColor(
+              store.clientCreate.tarefaModelSaveEtiqueta.color,
             ),
-            avatar: Icon(
-              store.clientCreate.tarefaModelSaveEtiqueta.icon != null
-                  ? IconData(
-                      store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
-                      fontFamily: 'MaterialIcons')
-                  : Icons.bookmark,
-              color: ConvertIcon().convertColor(
-                store.clientCreate.tarefaModelSaveEtiqueta.color,
-              ),
-            ),
-          );
-        }),
-      ),
+          ),
+        );
+      }),
       onTap: () {
         DialogButtom().showDialog(
             RadioEtiquetasFilterWidget(

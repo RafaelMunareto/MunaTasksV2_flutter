@@ -64,7 +64,9 @@ class _EquipesWidgetState extends State<EquipesWidget>
           ListTile(
             leading: IconRedondedWidget(
               icon: Icons.groups,
-              color: lightThemeData(context).primaryColor,
+              color: store.client.theme
+                  ? darkThemeData(context).primaryColor
+                  : lightThemeData(context).primaryColor,
               size: 42,
             ),
             title: const Text(
@@ -75,8 +77,11 @@ class _EquipesWidgetState extends State<EquipesWidget>
               ),
             ),
             trailing: GestureDetector(
-              child: const Icon(
+              child: Icon(
                 Icons.drive_file_rename_outline,
+                color: store.client.theme
+                    ? darkThemeData(context).primaryColor
+                    : lightThemeData(context).primaryColor,
               ),
               onTap: () {
                 setState(() {

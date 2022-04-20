@@ -48,7 +48,6 @@ class PrincipalPageState extends State<PrincipalPage>
       appBar: AppBarWidget(
           title: widget.title,
           icon: Icons.settings,
-          theme: store.isSwitched,
           context: context,
           settings: true,
           rota: '/home/'),

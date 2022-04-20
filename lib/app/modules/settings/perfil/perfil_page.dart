@@ -29,7 +29,6 @@ class PerfilPageState extends State<PerfilPage> {
       appBar: AppBarWidget(
           title: widget.title,
           context: context,
-          theme: store.client.theme,
           icon: Icons.account_circle,
           settings: true,
           rota: '/home/',
@@ -57,14 +56,16 @@ class PerfilPageState extends State<PerfilPage> {
                               animationDuration:
                                   const Duration(milliseconds: 600),
                               onChanged: (bool state) {
-                                setState(() {
-                                  store.client.changeManager(state);
-                                  store.saveDio();
-                                });
+                                store.client.changeManager(state);
+                                store.saveDio();
                               },
                               rollingInfoRight: RollingIconInfo(
-                                backgroundColor:
-                                    lightThemeData(context).primaryColor,
+                                iconColor: store.client.theme
+                                    ? darkThemeData(context).primaryColor
+                                    : lightThemeData(context).primaryColor,
+                                backgroundColor: store.client.theme
+                                    ? darkThemeData(context).primaryColor
+                                    : lightThemeData(context).primaryColor,
                                 icon: Icons.work,
                                 text: const Text(
                                   'Gerente',

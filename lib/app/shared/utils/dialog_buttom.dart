@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class DialogButtom {
@@ -45,7 +46,7 @@ class DialogButtom {
     );
   }
 
-  showDialogCreate(dynamic widgets, context, {double width = 500.00}) {
+  showDialogCreate(dynamic widgets, context) {
     bool _darkModeEnabled = false;
 
     final ThemeData theme = Theme.of(context);
@@ -57,15 +58,15 @@ class DialogButtom {
       barrierLabel: "Label",
       barrierDismissible: true,
       barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: const Duration(milliseconds: 200),
+      transitionDuration: const Duration(milliseconds: 400),
       context: context,
       pageBuilder: (context, anim1, anim2) {
         return Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            height: width,
+            height: MediaQuery.of(context).size.height * 0.55,
             width: Platform.isWindows
-                ? MediaQuery.of(context).size.width * 0.7
+                ? MediaQuery.of(context).size.width * 0.65
                 : MediaQuery.of(context).size.width,
             child: SizedBox.expand(
               child: widgets,

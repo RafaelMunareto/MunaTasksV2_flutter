@@ -34,7 +34,9 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
     return PopupMenuButton(
       icon: IconRedondedWidget(
         icon: Icons.photo_camera,
-        color: lightThemeData(context).primaryColor,
+        color: store.client.theme
+            ? darkThemeData(context).primaryColor
+            : lightThemeData(context).primaryColor,
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
@@ -42,22 +44,28 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
           onTap: () {
             store.atualizaImagem("camera");
           },
-          child: const ListTile(
+          child: ListTile(
             leading: Icon(
               Icons.camera_alt,
+              color: store.client.theme
+                  ? darkThemeData(context).primaryColor
+                  : lightThemeData(context).primaryColor,
             ),
-            title: Text('Camera'),
+            title: const Text('Camera'),
           ),
         ),
         const PopupMenuDivider(),
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () => {store.atualizaImagem("galeria")},
-          child: const ListTile(
+          child: ListTile(
             leading: Icon(
               Icons.image,
+              color: store.client.theme
+                  ? darkThemeData(context).primaryColor
+                  : lightThemeData(context).primaryColor,
             ),
-            title: Text('Galeria'),
+            title: const Text('Galeria'),
           ),
         ),
       ],
@@ -68,17 +76,22 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
     return PopupMenuButton(
       icon: IconRedondedWidget(
         icon: Icons.image,
-        color: lightThemeData(context).primaryColor,
+        color: store.client.theme
+            ? darkThemeData(context).primaryColor
+            : lightThemeData(context).primaryColor,
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () => {store.atualizaImagem("galeria")},
-          child: const ListTile(
+          child: ListTile(
             leading: Icon(
               Icons.image,
+              color: store.client.theme
+                  ? darkThemeData(context).primaryColor
+                  : lightThemeData(context).primaryColor,
             ),
-            title: Text('Galeria'),
+            title: const Text('Galeria'),
           ),
         ),
       ],
@@ -228,7 +241,9 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                                 client.perfilDio.name.name.length >= 3
                             ? Icons.task_alt
                             : Icons.task_alt,
-                    color: lightThemeData(context).primaryColor,
+                    color: store.client.theme
+                        ? darkThemeData(context).primaryColor
+                        : lightThemeData(context).primaryColor,
                   ),
                 ),
               ),

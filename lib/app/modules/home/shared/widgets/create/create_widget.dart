@@ -34,68 +34,58 @@ class _CreateWidgetState extends State<CreateWidget> {
     return Observer(
       builder: (_) {
         return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(2, 0, 2, 8),
-            child: GestureDetector(
-              onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                      color: ConvertIcon().convertColor(
-                        store.clientCreate.tarefaModelSaveEtiqueta.color,
-                      ),
-                      width: 2),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                elevation: 16,
-                child: Wrap(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      child: Padding(
-                        padding: kIsWeb || Platform.isWindows
-                            ? const EdgeInsets.all(8)
-                            : const EdgeInsets.only(
-                                top: 8.0,
-                                bottom: 8,
-                                right: 4,
-                                left: 4,
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                    color: ConvertIcon().convertColor(
+                      store.clientCreate.tarefaModelSaveEtiqueta.color,
+                    ),
+                    width: 2),
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              child: Wrap(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: EtiquetasSaveWidget(),
                               ),
-                        child: Wrap(
-                          alignment: WrapAlignment.spaceBetween,
-                          children: const [
-                            EtiquetasSaveWidget(),
-                            ActionFaseSaveWidget(),
-                            UsersSaveWidget(),
-                          ],
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: ActionFaseSaveWidget(),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: UsersSaveWidget(),
+                              ),
+                              const PrioridadeSaveWidget(),
+                              DateSaveWidget(dateController: dateController),
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                    TextSaveWidget(controller: textController),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 24),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Wrap(
-                          alignment: WrapAlignment.spaceAround,
-                          children: [
-                            DateSaveWidget(dateController: dateController),
-                            const PrioridadeSaveWidget(),
-                          ],
+                        Expanded(
+                          flex: 8,
+                          child: Wrap(children: [
+                            TextSaveWidget(controller: textController),
+                            const CreateSubtarefaWidget()
+                          ]),
                         ),
-                      ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Wrap(
-                        children: const [
-                          CreateSubtarefaWidget(),
-                          ButtonSaveWidget()
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                  const ButtonSaveWidget()
+                ],
               ),
             ),
           ),

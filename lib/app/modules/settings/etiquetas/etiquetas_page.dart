@@ -37,10 +37,9 @@ class EtiquetasPageState extends State<EtiquetasPage>
 
   @override
   void initState() {
-    super.initState();
-
     _controller = AnimationController(
         duration: const Duration(milliseconds: 200), vsync: this);
+    super.initState();
   }
 
   @override
@@ -90,7 +89,6 @@ class EtiquetasPageState extends State<EtiquetasPage>
       appBar: AppBarWidget(
           title: widget.title,
           icon: Icons.bookmark,
-          theme: store.etiquetaStore.theme,
           context: context,
           settings: true,
           rota: '/home/'),
@@ -133,8 +131,12 @@ class EtiquetasPageState extends State<EtiquetasPage>
                                         style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all(
-                                                  lightThemeData(context)
-                                                      .primaryColor),
+                                            store.etiquetaStore.theme
+                                                ? darkThemeData(context)
+                                                    .primaryColor
+                                                : lightThemeData(context)
+                                                    .primaryColor,
+                                          ),
                                           shape: MaterialStateProperty.all<
                                               RoundedRectangleBorder>(
                                             RoundedRectangleBorder(
@@ -142,8 +144,11 @@ class EtiquetasPageState extends State<EtiquetasPage>
                                                   BorderRadius.circular(
                                                       radius.value),
                                               side: BorderSide(
-                                                color: lightThemeData(context)
-                                                    .primaryColor,
+                                                color: store.etiquetaStore.theme
+                                                    ? darkThemeData(context)
+                                                        .primaryColor
+                                                    : lightThemeData(context)
+                                                        .primaryColor,
                                                 width: 2.0,
                                               ),
                                             ),

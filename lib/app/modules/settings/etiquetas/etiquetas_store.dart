@@ -15,6 +15,7 @@ abstract class _EtiquetasStoreBase with Store {
   final EtiquetaStore etiquetaStore = Modular.get();
 
   _EtiquetasStoreBase({required this.etiquetaService}) {
+    buscaTheme();
     getDio();
     getSettings();
   }
@@ -25,8 +26,8 @@ abstract class _EtiquetasStoreBase with Store {
     });
   }
 
-  void buscaTheme() async {
-    await storage.get('theme').then((value) {
+  void buscaTheme() {
+    storage.get('theme').then((value) {
       if (value?[0] == 'dark') {
         etiquetaStore.setTheme(true);
       } else {

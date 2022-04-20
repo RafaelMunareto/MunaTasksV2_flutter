@@ -52,25 +52,19 @@ class _DateSaveWidgetState extends State<DateSaveWidget> {
       }
     }
 
-    return SizedBox(
-      width: kIsWeb || Platform.isWindows
-          ? MediaQuery.of(context).size.width * 0.2
-          : MediaQuery.of(context).size.width * 0.5,
-      child: TextField(
-        autofocus: false,
-        controller: widget.dateController,
-        onChanged: (value) => store.clientCreate.setTarefaDateSave(value),
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.fromLTRB(0, 14, 0, 0),
-          prefixIcon: InkWell(
-            child: Icon(
-              Icons.calendar_today,
-              color:
-                  widget.dateController.text != "" ? Colors.blue : Colors.grey,
-            ),
-            onTap: () => _selectDate(),
+    return TextField(
+      autofocus: false,
+      controller: widget.dateController,
+      onChanged: (value) => store.clientCreate.setTarefaDateSave(value),
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        contentPadding: const EdgeInsets.fromLTRB(0, 14, 0, 0),
+        prefixIcon: InkWell(
+          child: Icon(
+            Icons.calendar_today,
+            color: widget.dateController.text != "" ? Colors.blue : Colors.grey,
           ),
+          onTap: () => _selectDate(),
         ),
       ),
     );

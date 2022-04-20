@@ -14,6 +14,7 @@ import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class CreateSubtarefaWidget extends StatefulWidget {
   const CreateSubtarefaWidget({
@@ -40,180 +41,189 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
       return Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-            color: store.client.theme ? Colors.black38 : Colors.black12,
+            color: store.client.theme
+                ? darkThemeData(context).scaffoldBackgroundColor
+                : lightThemeData(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(4)),
-        child: Padding(
-          padding: kIsWeb || Platform.isWindows
-              ? const EdgeInsets.all(8.0)
-              : const EdgeInsets.all(0),
-          child: Wrap(
-            alignment: WrapAlignment.spaceAround,
-            children: [
-              GestureDetector(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: Chip(
-                    backgroundColor:
-                        store.client.theme ? Colors.black38 : Colors.grey[100],
-                    label: Text(store.clientCreate.subtarefaModelSaveTitle != ""
-                        ? store.clientCreate.subtarefaModelSaveTitle
-                        : 'Subtarefa'),
-                    avatar: Icon(Icons.work,
-                        color: store.clientCreate.subtarefaModelSaveTitle !=
-                                    "" &&
-                                store.clientCreate.subtarefaModelSaveTitle !=
-                                    "Subtarefa"
-                            ? Colors.blue
-                            : Colors.grey),
-                  ),
-                ),
-                onTap: () => DialogButtom().showDialog(
-                    CreateSubtarefaInsertWidget(
-                        subtarefaInserSelection:
-                            store.clientCreate.subtarefaModelSaveTitle,
-                        setSubtarefaSelection:
-                            store.clientCreate.setSubtarefaInsertCreate,
-                        subtarefaList: const []),
-                    context),
-              ),
-              GestureDetector(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Chip(
-                    backgroundColor:
-                        ConvertIcon().colorStatus(store.clientCreate.fase),
-                    label: Text(
-                      ConvertIcon().nameStatus(store.clientCreate.fase),
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: ConvertIcon()
-                              .colorStatusDark(store.clientCreate.fase)),
-                    ),
-                    avatar: Icon(
-                      ConvertIcon().iconStatus(store.clientCreate.fase),
-                      color: ConvertIcon()
-                          .colorStatusDark(store.clientCreate.fase),
-                    ),
-                  ),
-                ),
-                onTap: () => DialogButtom().showDialog(
-                    ActionsFaseWidget(
-                      faseList: store.client.fase,
-                      setActionsFase: store.clientCreate.setFase,
-                    ),
-                    context),
-              ),
-              Wrap(
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Wrap(
+                alignment: WrapAlignment.center,
                 children: [
                   GestureDetector(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Chip(
+                        label: Text(
+                          store.clientCreate.subtarefaModelSaveTitle != ""
+                              ? store.clientCreate.subtarefaModelSaveTitle
+                              : 'Subtarefa',
+                          style: const TextStyle(fontSize: 11),
+                        ),
+                        avatar: Icon(Icons.work,
+                            color: store.clientCreate.subtarefaModelSaveTitle !=
+                                        "" &&
+                                    store.clientCreate
+                                            .subtarefaModelSaveTitle !=
+                                        "Subtarefa"
+                                ? Colors.blue
+                                : Colors.grey),
+                      ),
+                    ),
                     onTap: () => DialogButtom().showDialog(
-                        CreateUserSubtarefaWidget(
-                          userLista: store.client.perfis,
-                          setCreateImageUser:
-                              store.clientCreate.setCreateImageUser,
-                          setUserCreateSelection:
-                              store.clientCreate.setUserCreateSelection,
+                        CreateSubtarefaInsertWidget(
+                          subtarefaInserSelection:
+                              store.clientCreate.subtarefaModelSaveTitle,
+                          setSubtarefaSelection:
+                              store.clientCreate.setSubtarefaInsertCreate,
                         ),
                         context),
-                    child: Observer(
-                      builder: (_) {
-                        return store.clientCreate.imageUser == ""
-                            ? Padding(
-                                padding: kIsWeb || Platform.isWindows
-                                    ? const EdgeInsets.fromLTRB(0, 4, 4, 16)
-                                    : const EdgeInsets.fromLTRB(0, 12, 8, 16),
-                                child: Icon(
-                                  Icons.people,
-                                  color: store.client.theme
-                                      ? Colors.grey[200]
-                                      : Colors.grey[600],
-                                ),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
-                                child: CircleAvatarWidget(
-                                  url: store.clientCreate.imageUser,
-                                ),
-                              );
-                      },
+                  ),
+                  GestureDetector(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Chip(
+                        backgroundColor:
+                            ConvertIcon().colorStatus(store.clientCreate.fase),
+                        label: Text(
+                          ConvertIcon().nameStatus(store.clientCreate.fase),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: ConvertIcon()
+                                  .colorStatusDark(store.clientCreate.fase)),
+                        ),
+                        avatar: Icon(
+                          ConvertIcon().iconStatus(store.clientCreate.fase),
+                          color: ConvertIcon()
+                              .colorStatusDark(store.clientCreate.fase),
+                        ),
+                      ),
+                    ),
+                    onTap: () => DialogButtom().showDialog(
+                      ActionsFaseWidget(
+                        faseList: store.client.fase,
+                        setActionsFase: store.clientCreate.setFase,
+                      ),
+                      context,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () => DialogButtom().showDialog(
+                              CreateUserSubtarefaWidget(
+                                userLista: store.client.perfis,
+                                setCreateImageUser:
+                                    store.clientCreate.setCreateImageUser,
+                                setUserCreateSelection:
+                                    store.clientCreate.setUserCreateSelection,
+                              ),
+                              context),
+                          child: Observer(
+                            builder: (_) {
+                              return store.clientCreate.imageUser == ""
+                                  ? const Chip(
+                                      label: Text('Equipe'),
+                                      avatar: Icon(
+                                        Icons.people,
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  : CircleAvatarWidget(
+                                      url: store.clientCreate.imageUser,
+                                    );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              Wrap(
+            ),
+            Expanded(
+              flex: 6,
+              child: Wrap(
                 alignment: WrapAlignment.spaceBetween,
                 children: [
                   Observer(builder: (_) {
                     if (store.clientCreate.subtarefaTextSave == "") {
                       textSubtarefaController.text = '';
                     }
-                    return Padding(
-                      padding: const EdgeInsets.fromLTRB(4, 0, 4, 4),
-                      child: TextFormField(
-                        autocorrect: true,
-                        autofocus: false,
-                        controller: textSubtarefaController,
-                        onChanged: (value) =>
-                            store.clientCreate.setSubtarefaTextSave(value),
-                        minLines: 3,
-                        maxLines: 20,
-                        decoration: InputDecoration(
-                            suffixIcon: InkWell(
-                                child: const Icon(Icons.close_outlined),
-                                onTap: () {
-                                  setState(() {
-                                    store.clientCreate.setSubtarefaTextSave('');
-                                    textSubtarefaController.text = '';
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
-                                  });
-                                }),
-                            hintText: "Insira sua subtarefa"),
+                    return TextFormField(
+                      autocorrect: true,
+                      autofocus: false,
+                      controller: textSubtarefaController,
+                      onChanged: (value) =>
+                          store.clientCreate.setSubtarefaTextSave(value),
+                      minLines: 3,
+                      maxLines: 20,
+                      decoration: InputDecoration(
+                        suffixIcon: InkWell(
+                            child: const Icon(Icons.close_outlined),
+                            onTap: () {
+                              setState(() {
+                                store.clientCreate.setSubtarefaTextSave('');
+                                textSubtarefaController.text = '';
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                              });
+                            }),
+                        hintText: "Insira sua subtarefa",
                       ),
                     );
-                  })
+                  }),
+                  if (store.clientCreate.subtarefas.isNotEmpty)
+                    const SubtarefasWidget(),
                 ],
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Wrap(
-                  alignment: WrapAlignment.end,
-                  children: [
-                    Padding(
-                      padding: kIsWeb || Platform.isWindows
-                          ? const EdgeInsets.fromLTRB(4, 8, 4, 8)
-                          : const EdgeInsets.fromLTRB(4, 0, 4, 4),
-                      child: store.clientCreate.loadingSubtarefa
-                          ? const CircularProgressWidget()
-                          : OutlinedButton.icon(
-                              style: TextButton.styleFrom(
-                                backgroundColor: store.client.theme
-                                    ? Colors.black38
-                                    : Colors.grey[100],
-                              ),
-                              onPressed: () {
-                                store.clientCreate.isValidSubtarefa
-                                    ? store.clientCreate.setSubtarefas()
-                                    : DialogButtom().showDialog(
-                                        const ErrorsWidget(
-                                          tarefa: false,
-                                        ),
-                                        context);
-                                FocusScope.of(context).unfocus();
-                              },
-                              icon: const Icon(Icons.add_circle, size: 18),
-                              label: const Text(
+            ),
+            Expanded(
+              flex: 2,
+              child: Wrap(
+                alignment: WrapAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.94,
+                      height: MediaQuery.of(context).size.height * 0.10,
+                      child: ElevatedButton.icon(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                            store.client.theme
+                                ? darkThemeData(context).iconTheme.color
+                                : lightThemeData(context).iconTheme.color,
+                          ),
+                        ),
+                        onPressed: () {
+                          store.clientCreate.isValidSubtarefa
+                              ? store.clientCreate.setSubtarefas()
+                              : DialogButtom().showDialog(
+                                  const ErrorsWidget(
+                                    tarefa: false,
+                                  ),
+                                  context);
+                          FocusScope.of(context).unfocus();
+                        },
+                        icon: const Icon(Icons.add_circle, size: 18),
+                        label: store.clientCreate.loadingSubtarefa
+                            ? const CircularProgressWidget()
+                            : const Text(
                                 "INCLUIR",
                               ),
-                            ),
-                    )
-                  ],
-                ),
+                      ),
+                    ),
+                  )
+                ],
               ),
-              if (store.clientCreate.subtarefas.isNotEmpty)
-                const SubtarefasWidget(),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     });

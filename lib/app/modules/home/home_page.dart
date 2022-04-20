@@ -54,7 +54,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                     zoomController: drawerController,
                     setOpen: store.client.setOpen,
                     settings: true,
-                    theme: store.client.theme,
                     back: false,
                     etiquetaList: store.client.etiquetas,
                     tarefas: store.client.taskDio,

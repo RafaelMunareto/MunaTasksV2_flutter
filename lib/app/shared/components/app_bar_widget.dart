@@ -30,7 +30,6 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   final dynamic etiquetaList;
   final Function? setValueSearch;
   final Function? changeFilterSearch;
-  final bool theme;
   AppBarWidget({
     Key? key,
     this.title = "",
@@ -49,7 +48,6 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
     this.rota = '/auth',
     this.setValueSearch,
     this.changeFilterSearch,
-    required this.theme,
   }) : super(key: key);
 
   @override
@@ -141,9 +139,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                       text: ' ' + widget.title.toUpperCase(),
                       style: TextStyle(
                         fontSize: 20,
-                        color: widget.theme
-                            ? darkThemeData(context).primaryColorLight
-                            : lightThemeData(context).primaryColorLight,
+                        color: lightThemeData(context).iconTheme.color,
                       ),
                     ),
                   ],
@@ -204,9 +200,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           child: ListTile(
             leading: Icon(
               Icons.settings,
-              color: widget.theme
-                  ? darkThemeData(context).primaryColor
-                  : lightThemeData(context).primaryColor,
+              color: lightThemeData(context).iconTheme.color,
             ),
             title: const Text('Configurações'),
           ),
@@ -217,9 +211,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           child: ListTile(
             leading: Icon(
               Icons.account_circle,
-              color: widget.theme
-                  ? darkThemeData(context).primaryColor
-                  : lightThemeData(context).primaryColor,
+              color: lightThemeData(context).iconTheme.color,
             ),
             title: const Text('Perfil e Equipes'),
           ),

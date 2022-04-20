@@ -28,14 +28,11 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
               GestureDetector(
                 onTap: () => DialogButtom()
                     .showDialog(const UsersSelectionWidget(), context),
-                child: const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 2, 0),
-                  child: Chip(
-                    label: Text('Equipe'),
-                    avatar: Icon(
-                      Icons.people,
-                      color: Colors.grey,
-                    ),
+                child: const Chip(
+                  label: Text('Equipe'),
+                  avatar: Icon(
+                    Icons.people,
+                    color: Colors.grey,
                   ),
                 ),
               ),

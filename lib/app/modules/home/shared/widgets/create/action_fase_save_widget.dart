@@ -22,23 +22,19 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
 
     return Observer(builder: (_) {
       return GestureDetector(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-          child: Chip(
-            backgroundColor:
-                ConvertIcon().colorStatus(store.clientCreate.faseTarefa),
-            label: Text(
-              ConvertIcon().nameStatus(store.clientCreate.faseTarefa),
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: ConvertIcon()
-                      .colorStatusDark(store.clientCreate.faseTarefa)),
-            ),
-            avatar: Icon(
-              ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
-              color:
-                  ConvertIcon().colorStatusDark(store.clientCreate.faseTarefa),
-            ),
+        child: Chip(
+          backgroundColor:
+              ConvertIcon().colorStatus(store.clientCreate.faseTarefa),
+          label: Text(
+            ConvertIcon().nameStatus(store.clientCreate.faseTarefa),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: ConvertIcon()
+                    .colorStatusDark(store.clientCreate.faseTarefa)),
+          ),
+          avatar: Icon(
+            ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
+            color: ConvertIcon().colorStatusDark(store.clientCreate.faseTarefa),
           ),
         ),
         onTap: () => DialogButtom().showDialog(

@@ -81,7 +81,9 @@ class _NamesWidgetState extends State<NamesWidget>
                     child: ListTile(
                       leading: IconRedondedWidget(
                         icon: Icons.admin_panel_settings,
-                        color: lightThemeData(context).primaryColor,
+                        color: store.client.theme
+                            ? darkThemeData(context).primaryColor
+                            : lightThemeData(context).primaryColor,
                         size: 48,
                       ),
                       title: Observer(builder: (_) {
@@ -117,6 +119,9 @@ class _NamesWidgetState extends State<NamesWidget>
                           !enabledField
                               ? Icons.drive_file_rename_outline
                               : Icons.task_alt,
+                          color: store.client.theme
+                              ? darkThemeData(context).primaryColor
+                              : lightThemeData(context).primaryColor,
                         ),
                       ),
                     ),
