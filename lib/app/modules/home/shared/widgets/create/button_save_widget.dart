@@ -1,12 +1,10 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/errors_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
+import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class ButtonSaveWidget extends StatelessWidget {
@@ -16,23 +14,13 @@ class ButtonSaveWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final HomeStore store = Modular.get();
     errors() {
-      showDialog(
-        context: context,
-        useSafeArea: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Erros'),
-            content: SizedBox(
-              width: kIsWeb || Platform.isWindows
-                  ? MediaQuery.of(context).size.width * 0.5
-                  : MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: const ErrorsWidget(
-                tarefa: true,
-              ),
-            ),
-          );
-        },
+      DialogButtom().showDialog(
+        ErrorsWidget(
+          theme: store.client.theme,
+          tarefa: true,
+        ),
+        store.client.theme,
+        context,
       );
     }
 

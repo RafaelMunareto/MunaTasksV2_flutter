@@ -42,6 +42,7 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
             faseList: store.client.fase,
             setActionsFase: store.clientCreate.setFaseTarefa,
           ),
+          store.client.theme,
           context,
         ),
       );

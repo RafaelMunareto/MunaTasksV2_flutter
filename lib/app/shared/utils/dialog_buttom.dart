@@ -1,16 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class DialogButtom {
-  showDialog(dynamic widgets, context, {double width = 300.00}) {
-    bool _darkModeEnabled = false;
-
-    final ThemeData theme = Theme.of(context);
-    theme.brightness == Brightness.dark
-        ? _darkModeEnabled = true
-        : _darkModeEnabled = false;
-
+  showDialog(dynamic widgets, bool theme, context, {double width = 300.00}) {
     showGeneralDialog(
       barrierLabel: "Label",
       barrierDismissible: true,
@@ -31,7 +25,9 @@ class DialogButtom {
             margin: const EdgeInsets.only(bottom: 50, left: 12, right: 12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: !_darkModeEnabled ? Colors.white : Colors.black,
+              color: theme
+                  ? darkThemeData(context).scaffoldBackgroundColor
+                  : lightThemeData(context).scaffoldBackgroundColor,
             ),
           ),
         );

@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -73,13 +70,15 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                       ),
                     ),
                     onTap: () => DialogButtom().showDialog(
-                        CreateSubtarefaInsertWidget(
-                          subtarefaInserSelection:
-                              store.clientCreate.subtarefaModelSaveTitle,
-                          setSubtarefaSelection:
-                              store.clientCreate.setSubtarefaInsertCreate,
-                        ),
-                        context),
+                      CreateSubtarefaInsertWidget(
+                        subtarefaInserSelection:
+                            store.clientCreate.subtarefaModelSaveTitle,
+                        setSubtarefaSelection:
+                            store.clientCreate.setSubtarefaInsertCreate,
+                      ),
+                      store.client.theme,
+                      context,
+                    ),
                   ),
                   GestureDetector(
                     child: Padding(
@@ -106,6 +105,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                         faseList: store.client.fase,
                         setActionsFase: store.clientCreate.setFase,
                       ),
+                      store.client.theme,
                       context,
                     ),
                   ),
@@ -116,14 +116,16 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                       children: [
                         GestureDetector(
                           onTap: () => DialogButtom().showDialog(
-                              CreateUserSubtarefaWidget(
-                                userLista: store.client.perfis,
-                                setCreateImageUser:
-                                    store.clientCreate.setCreateImageUser,
-                                setUserCreateSelection:
-                                    store.clientCreate.setUserCreateSelection,
-                              ),
-                              context),
+                            CreateUserSubtarefaWidget(
+                              userLista: store.client.perfis,
+                              setCreateImageUser:
+                                  store.clientCreate.setCreateImageUser,
+                              setUserCreateSelection:
+                                  store.clientCreate.setUserCreateSelection,
+                            ),
+                            store.client.theme,
+                            context,
+                          ),
                           child: Observer(
                             builder: (_) {
                               return store.clientCreate.imageUser == ""
@@ -205,10 +207,13 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                           store.clientCreate.isValidSubtarefa
                               ? store.clientCreate.setSubtarefas()
                               : DialogButtom().showDialog(
-                                  const ErrorsWidget(
+                                  ErrorsWidget(
                                     tarefa: false,
+                                    theme: store.client.theme,
                                   ),
-                                  context);
+                                  store.client.theme,
+                                  context,
+                                );
                           FocusScope.of(context).unfocus();
                         },
                         icon: const Icon(Icons.add_circle, size: 18),

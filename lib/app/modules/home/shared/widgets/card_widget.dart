@@ -96,14 +96,15 @@ class _CardWidgetState extends State<CardWidget> {
                     children: [
                       GestureDetector(
                         onTap: () => DialogButtom().showDialog(
-                            RetardActionWidget(
-                              retardSelection: store.client.retardSelection,
-                              setRetardSelection:
-                                  store.client.setRetardSelection,
-                              updateDate: store.updateDate,
-                              model: linha,
-                            ),
-                            context),
+                          RetardActionWidget(
+                            retardSelection: store.client.retardSelection,
+                            setRetardSelection: store.client.setRetardSelection,
+                            updateDate: store.updateDate,
+                            model: linha,
+                          ),
+                          store.client.theme,
+                          context,
+                        ),
                         child: Wrap(
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
@@ -129,15 +130,17 @@ class _CardWidgetState extends State<CardWidget> {
                       ),
                       GestureDetector(
                         onTap: () => DialogButtom().showDialog(
-                            PrioridadeSelectionWidget(
-                              prioridadeSelection:
-                                  store.client.prioridadeSelection,
-                              setPrioridadeSelection:
-                                  store.client.setPrioridadeSelection,
-                              tarefaModel: linha,
-                              changePrioridadeList: store.changePrioridadeList,
-                            ),
-                            context),
+                          PrioridadeSelectionWidget(
+                            prioridadeSelection:
+                                store.client.prioridadeSelection,
+                            setPrioridadeSelection:
+                                store.client.setPrioridadeSelection,
+                            tarefaModel: linha,
+                            changePrioridadeList: store.changePrioridadeList,
+                          ),
+                          store.client.theme,
+                          context,
+                        ),
                         child: Icon(
                           Icons.flag,
                           color:

@@ -26,8 +26,8 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
             if (store.clientCreate.users.isEmpty &
                 !store.clientCreate.loadingUser)
               GestureDetector(
-                onTap: () => DialogButtom()
-                    .showDialog(const UsersSelectionWidget(), context),
+                onTap: () => DialogButtom().showDialog(
+                    const UsersSelectionWidget(), store.client.theme, context),
                 child: const Chip(
                   label: Text('Equipe'),
                   avatar: Icon(
@@ -43,13 +43,17 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                   baseline: 38,
                   baselineType: TextBaseline.alphabetic,
                   child: GestureDetector(
-                    onTap: () => DialogButtom()
-                        .showDialog(const UsersSelectionWidget(), context),
+                    onTap: () => DialogButtom().showDialog(
+                        const UsersSelectionWidget(),
+                        store.client.theme,
+                        context),
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       child: GestureDetector(
-                        onTap: () => DialogButtom()
-                            .showDialog(const UsersSelectionWidget(), context),
+                        onTap: () => DialogButtom().showDialog(
+                            const UsersSelectionWidget(),
+                            store.client.theme,
+                            context),
                         child: CircleAvatarWidget(
                           key: Key(linha.id),
                           url: linha.urlImage,

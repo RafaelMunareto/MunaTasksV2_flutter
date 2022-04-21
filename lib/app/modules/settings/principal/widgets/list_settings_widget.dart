@@ -84,6 +84,7 @@ class _ListSettingsWidgetState extends State<ListSettingsWidget> {
                                   value: linha,
                                   editar: store.edit,
                                 ),
+                                store.isSwitched,
                                 context,
                               );
                               store.setEscolha(store.escolha);

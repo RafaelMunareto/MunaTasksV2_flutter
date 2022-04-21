@@ -60,6 +60,7 @@ class PrincipalPageState extends State<PrincipalPage>
               create: 'Novo',
               editar: store.novo,
             ),
+            store.isSwitched,
             context,
           ),
         },

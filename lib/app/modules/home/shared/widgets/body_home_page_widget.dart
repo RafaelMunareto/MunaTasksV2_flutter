@@ -73,6 +73,7 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                           store.client.setEtiquetaSelection,
                                     ),
                                   ),
+                                  store.client.theme,
                                   context,
                                 );
                               },
@@ -98,19 +99,23 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                   ),
                                 ),
                                 onTap: () => DialogButtom().showDialog(
-                                    Observer(builder: (_) {
-                                  return RadioOrderWidget(
-                                    orderAscDesc: store.client.orderAscDesc,
-                                    setOrderAscDesc:
-                                        store.client.setOrderAscDesc,
-                                    orderSelection: store.client.orderSelection,
-                                    changeOrderList: store.changeOrderList,
-                                    setOrderSelection:
-                                        store.client.setOrderSelection,
-                                  );
-                                }), context,
-                                    width: MediaQuery.of(context).size.height *
-                                        0.4),
+                                  Observer(builder: (_) {
+                                    return RadioOrderWidget(
+                                      orderAscDesc: store.client.orderAscDesc,
+                                      setOrderAscDesc:
+                                          store.client.setOrderAscDesc,
+                                      orderSelection:
+                                          store.client.orderSelection,
+                                      changeOrderList: store.changeOrderList,
+                                      setOrderSelection:
+                                          store.client.setOrderSelection,
+                                    );
+                                  }),
+                                  store.client.theme,
+                                  context,
+                                  width:
+                                      MediaQuery.of(context).size.height * 0.4,
+                                ),
                               ),
                             ),
                             trailing: GestureDetector(
@@ -120,14 +125,16 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                               onTap: () {
                                 if (store.client.perfilUserLogado.manager) {
                                   DialogButtom().showDialog(
-                                      TeamsSelectionWidget(
-                                        changeFilterUserList:
-                                            store.changeFilterUserList,
-                                        setImageUser: store.client.setImgUrl,
-                                        setUserSelection:
-                                            store.client.setUserSelection,
-                                      ),
-                                      context);
+                                    TeamsSelectionWidget(
+                                      changeFilterUserList:
+                                          store.changeFilterUserList,
+                                      setImageUser: store.client.setImgUrl,
+                                      setUserSelection:
+                                          store.client.setUserSelection,
+                                    ),
+                                    store.client.theme,
+                                    context,
+                                  );
                                 }
                               },
                             ),
@@ -184,6 +191,7 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                             store.client.setEtiquetaSelection,
                                       ),
                                     ),
+                                    store.client.theme,
                                     context,
                                   );
                                 },
@@ -208,21 +216,23 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                     ),
                                   ),
                                   onTap: () => DialogButtom().showDialog(
-                                      Observer(builder: (_) {
-                                    return RadioOrderWidget(
-                                      orderAscDesc: store.client.orderAscDesc,
-                                      setOrderAscDesc:
-                                          store.client.setOrderAscDesc,
-                                      orderSelection:
-                                          store.client.orderSelection,
-                                      changeOrderList: store.changeOrderList,
-                                      setOrderSelection:
-                                          store.client.setOrderSelection,
-                                    );
-                                  }), context,
-                                      width:
-                                          MediaQuery.of(context).size.height *
-                                              0.4),
+                                    Observer(builder: (_) {
+                                      return RadioOrderWidget(
+                                        orderAscDesc: store.client.orderAscDesc,
+                                        setOrderAscDesc:
+                                            store.client.setOrderAscDesc,
+                                        orderSelection:
+                                            store.client.orderSelection,
+                                        changeOrderList: store.changeOrderList,
+                                        setOrderSelection:
+                                            store.client.setOrderSelection,
+                                      );
+                                    }),
+                                    store.client.theme,
+                                    context,
+                                    width: MediaQuery.of(context).size.height *
+                                        0.4,
+                                  ),
                                 ),
                               ),
                               trailing: GestureDetector(
@@ -239,6 +249,7 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                           setUserSelection:
                                               store.client.setUserSelection,
                                         ),
+                                        store.client.theme,
                                         context);
                                   }
                                 },

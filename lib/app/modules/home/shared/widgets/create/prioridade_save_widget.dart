@@ -21,13 +21,14 @@ class _PrioridadeSaveWidgetState extends State<PrioridadeSaveWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => DialogButtom().showDialog(
-          PrioridadeSelectionWidget(
-            create: true,
-            prioridadeSelection: store.clientCreate.tarefaModelPrioritario,
-            setPrioridadeSelection:
-                store.clientCreate.setPrioridadeSaveSelection,
-          ),
-          context),
+        PrioridadeSelectionWidget(
+          create: true,
+          prioridadeSelection: store.clientCreate.tarefaModelPrioritario,
+          setPrioridadeSelection: store.clientCreate.setPrioridadeSaveSelection,
+        ),
+        store.client.theme,
+        context,
+      ),
       child: Observer(
         builder: (_) {
           return Padding(

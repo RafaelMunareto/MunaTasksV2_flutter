@@ -4,8 +4,10 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 
 class ErrorsWidget extends StatelessWidget {
   final bool tarefa;
+  final bool theme;
   const ErrorsWidget({
     Key? key,
+    required this.theme,
     this.tarefa = false,
   }) : super(key: key);
 
@@ -28,26 +30,34 @@ class ErrorsWidget extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Center(
-        child: Wrap(
-          direction: Axis.vertical,
-          children: [
-            for (var erro in errors)
-              erro != null
-                  ? Padding(
-                      padding: const EdgeInsets.only(bottom: 24.0),
-                      child: SizedBox(
-                        child: Text(
-                          erro.toString(),
-                          style:
-                              const TextStyle(color: Colors.red, fontSize: 12),
-                        ),
-                      ),
-                    )
-                  : Container(),
-          ],
-        ),
-      ),
+      body: ListView.separated(
+          scrollDirection: Axis.vertical,
+          controller: ScrollController(),
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(4),
+          itemCount: errors.length,
+          separatorBuilder: (context, index) {
+            return const Divider();
+          },
+          itemBuilder: (BuildContext context, int index) {
+            var erro = errors![index];
+            return ListTile(
+              leading: erro == null
+                  ? const Text('')
+                  : Icon(
+                      Icons.error,
+                      color: theme ? Colors.redAccent : Colors.red,
+                    ),
+              title: Text(
+                erro ?? '',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                  color: theme ? Colors.white : Colors.red,
+                  fontSize: 12,
+                ),
+              ),
+            );
+          }),
     );
   }
 }
