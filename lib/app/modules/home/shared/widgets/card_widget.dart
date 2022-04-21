@@ -74,99 +74,117 @@ class _CardWidgetState extends State<CardWidget> {
           padding: const EdgeInsets.only(bottom: 4.0),
           child: PhysicalModel(
             color: Colors.transparent,
-            elevation: 8,
             child: Card(
+              elevation: 2,
               shape: RoundedRectangleBorder(
-                side: BorderSide(
-                    color: ConvertIcon().convertColor(linha.etiqueta.color),
-                    width: 2),
-                borderRadius: BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(15),
               ),
-              child: ExpansionTile(
-                key: UniqueKey(),
-                textColor: Colors.black,
-                title: HeaderWidget(
-                  tarefa: linha,
-                  theme: store.client.theme,
+              child: ClipPath(
+                clipper: ShapeBorderClipper(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
-                subtitle: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Wrap(
-                    alignment: WrapAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () => DialogButtom().showDialog(
-                          RetardActionWidget(
-                            retardSelection: store.client.retardSelection,
-                            setRetardSelection: store.client.setRetardSelection,
-                            updateDate: store.updateDate,
-                            model: linha,
-                          ),
-                          store.client.theme,
-                          context,
-                        ),
-                        child: Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 4.0),
-                              child: Icon(
-                                changeIconeAndColorTime(linha.data)[1],
-                                color: changeIconeAndColorTime(linha.data)[0],
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                        left: BorderSide(
+                            color: ConvertIcon()
+                                .convertColor(linha.etiqueta.color),
+                            width: 15)),
+                  ),
+                  alignment: Alignment.centerLeft,
+                  child: ExpansionTile(
+                    key: UniqueKey(),
+                    textColor: Colors.black,
+                    title: HeaderWidget(
+                      tarefa: linha,
+                      theme: store.client.theme,
+                    ),
+                    subtitle: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Wrap(
+                        alignment: WrapAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () => DialogButtom().showDialog(
+                              RetardActionWidget(
+                                retardSelection: store.client.retardSelection,
+                                setRetardSelection:
+                                    store.client.setRetardSelection,
+                                updateDate: store.updateDate,
+                                model: linha,
                               ),
+                              store.client.theme,
+                              context,
                             ),
-                            Text(
-                              DateFormat('dd/MM/yyyy')
-                                  .format(linha.data)
-                                  .toString(),
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: store.client.theme
-                                      ? Colors.white
-                                      : Colors.black),
+                            child: Wrap(
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 4.0),
+                                  child: Icon(
+                                    changeIconeAndColorTime(linha.data)[1],
+                                    color:
+                                        changeIconeAndColorTime(linha.data)[0],
+                                  ),
+                                ),
+                                Text(
+                                  DateFormat('dd/MM/yyyy')
+                                      .format(linha.data)
+                                      .toString(),
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: store.client.theme
+                                          ? Colors.white
+                                          : Colors.black),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => DialogButtom().showDialog(
-                          PrioridadeSelectionWidget(
-                            prioridadeSelection:
-                                store.client.prioridadeSelection,
-                            setPrioridadeSelection:
-                                store.client.setPrioridadeSelection,
-                            tarefaModel: linha,
-                            changePrioridadeList: store.changePrioridadeList,
                           ),
-                          store.client.theme,
-                          context,
-                        ),
-                        child: Icon(
-                          Icons.flag,
-                          color:
-                              ConvertIcon().convertColorFlaf(linha.prioridade),
-                        ),
+                          GestureDetector(
+                            onTap: () => DialogButtom().showDialog(
+                              PrioridadeSelectionWidget(
+                                prioridadeSelection:
+                                    store.client.prioridadeSelection,
+                                setPrioridadeSelection:
+                                    store.client.setPrioridadeSelection,
+                                tarefaModel: linha,
+                                changePrioridadeList:
+                                    store.changePrioridadeList,
+                              ),
+                              store.client.theme,
+                              context,
+                            ),
+                            child: Icon(
+                              Icons.flag,
+                              color: ConvertIcon()
+                                  .convertColorFlaf(linha.prioridade),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    children: [
+                      Wrap(
+                        children: [
+                          BodyTextWidget(
+                            tarefa: linha,
+                            theme: store.client.theme,
+                            setSubtarefaModel: store.client.setSubtarefaModel,
+                            subtarefaActionList:
+                                store.client.subtarefaActionList,
+                          ),
+                          ButtonActionWidget(
+                            tarefa: linha,
+                            navigate: store.client.navigateBarSelection,
+                            save: store.save,
+                          ),
+                        ],
                       )
                     ],
                   ),
                 ),
-                children: [
-                  Wrap(
-                    children: [
-                      BodyTextWidget(
-                        tarefa: linha,
-                        theme: store.client.theme,
-                        setSubtarefaModel: store.client.setSubtarefaModel,
-                        subtarefaActionList: store.client.subtarefaActionList,
-                      ),
-                      ButtonActionWidget(
-                        tarefa: linha,
-                        navigate: store.client.navigateBarSelection,
-                        save: store.save,
-                      ),
-                    ],
-                  )
-                ],
               ),
             ),
           ),

@@ -44,7 +44,7 @@ class _MenuScreenState extends State<MenuScreen> {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/icon/icon.png'),
-                  opacity: 0.4,
+                  opacity: 0.1,
                 ),
               ),
               child: widget.open
@@ -65,20 +65,27 @@ class _MenuScreenState extends State<MenuScreen> {
                                   Container(
                                     width: 70.0,
                                     height: 70.0,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                          store.client.perfilUserLogado
-                                                      .urlImage ==
-                                                  ''
-                                              ? 'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/person_people_avatar_man_boy_glasses_icon_131369.png?alt=media&token=19343af9-36fa-422d-88c3-716b1ffdbb88'
-                                              : store.client.perfilUserLogado
-                                                  .urlImage,
-                                        ),
-                                      ),
-                                    ),
+                                    decoration: store.client.perfilUserLogado
+                                                .urlImage !=
+                                            ''
+                                        ? BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: NetworkImage(
+                                                store.client.perfilUserLogado
+                                                    .urlImage,
+                                              ),
+                                            ),
+                                          )
+                                        : const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: AssetImage(
+                                                  'assets/img/person.png'),
+                                            ),
+                                          ),
                                   ),
                                   const Text(
                                     "Olá",

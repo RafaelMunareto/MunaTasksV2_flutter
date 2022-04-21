@@ -236,11 +236,11 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
                                               : InputChip(
                                                   shape:
                                                       const RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(10),
+                                                    ),
+                                                  ),
                                                   key: UniqueKey(),
                                                   labelPadding:
                                                       const EdgeInsets.all(2),

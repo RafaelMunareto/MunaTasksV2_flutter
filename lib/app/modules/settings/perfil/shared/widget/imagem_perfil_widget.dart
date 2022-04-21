@@ -143,17 +143,23 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                     return Container(
                       width: 170.0,
                       height: 170.0,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(
-                            client.perfilDio.urlImage == ''
-                                ? 'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/person_people_avatar_man_boy_glasses_icon_131369.png?alt=media&token=19343af9-36fa-422d-88c3-716b1ffdbb88'
-                                : client.perfilDio.urlImage,
-                          ),
-                        ),
-                      ),
+                      decoration: store.client.perfilDio.urlImage != ''
+                          ? BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: NetworkImage(
+                                  store.client.perfilDio.urlImage,
+                                ),
+                              ),
+                            )
+                          : const BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: AssetImage('assets/img/person.png'),
+                              ),
+                            ),
                     );
                   }),
                 ),

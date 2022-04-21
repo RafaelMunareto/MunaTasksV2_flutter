@@ -73,7 +73,6 @@ flutter:
 
   assets:
     - assets/img/
-    - assets/img/fundo_app_bar.png
     - assets/icon/icon.png
 
 scripts:
