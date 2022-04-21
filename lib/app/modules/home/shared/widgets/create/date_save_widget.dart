@@ -50,6 +50,7 @@ class _DateSaveWidgetState extends State<DateSaveWidget> {
     }
 
     return TextField(
+      textAlign: TextAlign.justify,
       autofocus: false,
       controller: widget.dateController,
       onChanged: (value) => store.clientCreate.setTarefaDateSave(value),

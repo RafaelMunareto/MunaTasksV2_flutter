@@ -107,7 +107,9 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
                             onPressed: () {
                               setState(() {
                                 widget.setUserCreateSelection(linha);
-                                widget.setCreateImageUser(linha.urlImage);
+                                widget.setCreateImageUser(linha.urlImage != ''
+                                    ? linha.urlImage
+                                    : 'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/person_people_avatar_man_boy_glasses_icon_131369.png?alt=media&token=19343af9-36fa-422d-88c3-716b1ffdbb88');
                                 FocusScope.of(context).unfocus();
                                 Modular.to.pop();
                               });

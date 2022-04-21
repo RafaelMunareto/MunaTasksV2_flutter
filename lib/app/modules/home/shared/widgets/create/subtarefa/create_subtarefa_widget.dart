@@ -194,7 +194,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                     padding: const EdgeInsets.all(8.0),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.94,
-                      height: MediaQuery.of(context).size.height * 0.10,
+                      height: MediaQuery.of(context).size.height * 0.085,
                       child: ElevatedButton.icon(
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(

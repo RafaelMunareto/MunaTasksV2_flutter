@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
@@ -16,7 +17,7 @@ class DialogButtom {
           alignment: Alignment.bottomCenter,
           child: Container(
             height: width,
-            width: Platform.isWindows
+            width: kIsWeb || Platform.isWindows
                 ? MediaQuery.of(context).size.width * 0.5
                 : MediaQuery.of(context).size.width,
             child: SizedBox.expand(
@@ -61,8 +62,8 @@ class DialogButtom {
           alignment: Alignment.bottomCenter,
           child: Container(
             height: MediaQuery.of(context).size.height * 0.55,
-            width: Platform.isWindows
-                ? MediaQuery.of(context).size.width * 0.65
+            width: kIsWeb || Platform.isWindows
+                ? MediaQuery.of(context).size.width * 0.50
                 : MediaQuery.of(context).size.width,
             child: SizedBox.expand(
               child: widgets,

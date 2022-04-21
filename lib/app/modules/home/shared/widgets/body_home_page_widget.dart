@@ -242,15 +242,16 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                 onTap: () {
                                   if (store.client.perfilUserLogado.manager) {
                                     DialogButtom().showDialog(
-                                        TeamsSelectionWidget(
-                                          changeFilterUserList:
-                                              store.changeFilterUserList,
-                                          setImageUser: store.client.setImgUrl,
-                                          setUserSelection:
-                                              store.client.setUserSelection,
-                                        ),
-                                        store.client.theme,
-                                        context);
+                                      TeamsSelectionWidget(
+                                        changeFilterUserList:
+                                            store.changeFilterUserList,
+                                        setImageUser: store.client.setImgUrl,
+                                        setUserSelection:
+                                            store.client.setUserSelection,
+                                      ),
+                                      store.client.theme,
+                                      context,
+                                    );
                                   }
                                 },
                               ),
