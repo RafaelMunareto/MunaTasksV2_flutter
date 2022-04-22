@@ -92,7 +92,7 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
                       key: ObjectKey(linha.id),
                       labelPadding: const EdgeInsets.all(2),
                       elevation: 4.0,
-                      avatar: linha.urlImage == ""
+                      avatar: linha.urlImage == null
                           ? const CircularProgressIndicator()
                           : CircleAvatarWidget(
                               url: linha.urlImage,

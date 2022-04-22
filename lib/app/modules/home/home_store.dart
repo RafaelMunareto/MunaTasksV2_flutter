@@ -60,6 +60,7 @@ abstract class HomeStoreBase with Store {
   }
 
   setNavigateBarSelection(value) async {
+    await client.setLoadingTasks(true);
     await client.setNavigateBarSelection(value);
     await client.setEtiquetaSelection(57585);
     await client.setOrderAscDesc(true);
@@ -289,23 +290,32 @@ abstract class HomeStoreBase with Store {
   changeOrderList() {
     switch (client.orderSelection) {
       case 'ETIQUETA':
-        return client.taskDio.sort((a, b) => client.orderAscDesc
+        client.taskDio.sort((a, b) => client.orderAscDesc
             ? a.etiqueta.etiqueta.compareTo(b.etiqueta.etiqueta)
             : b.etiqueta.etiqueta.compareTo(a.etiqueta.etiqueta));
+        client.setTaskDio(client.taskDio);
+        return;
       case 'ASSUNTO':
-        return client.taskDio.sort((a, b) => client.orderAscDesc
+        client.taskDio.sort((a, b) => client.orderAscDesc
             ? a.texto.compareTo(b.texto)
             : b.texto.compareTo(a.texto));
+        client.setTaskDio(client.taskDio);
+        return;
       case 'DATA':
-        return client.taskDio.sort((a, b) => client.orderAscDesc
+        client.taskDio.sort((a, b) => client.orderAscDesc
             ? a.data.compareTo(b.data)
             : b.data.compareTo(a.data));
+        client.setTaskDio(client.taskDio);
+        return;
       case 'PRIORIDADE':
-        return client.taskDio.sort((a, b) => client.orderAscDesc
+        client.taskDio.sort((a, b) => client.orderAscDesc
             ? a.prioridade.compareTo(b.prioridade)
             : b.prioridade.compareTo(a.prioridade));
+        client.setTaskDio(client.taskDio);
+        return;
       default:
-        return client.taskDio;
+        client.setTaskDio(client.taskDio);
+        return;
     }
   }
 }

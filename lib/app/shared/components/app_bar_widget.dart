@@ -222,8 +222,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               });
               widget.changeFilterSearch!();
             },
-            style: TextStyle(
-                color: lightThemeData(context).primaryColorLight, fontSize: 12),
+            style: const TextStyle(fontSize: 12),
             decoration: const InputDecoration(
               contentPadding:
                   EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),

@@ -183,7 +183,7 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                     const Expanded(
                       flex: 3,
                       child: Center(
-                        child: const LandscapeWidget(),
+                        child: LandscapeWidget(),
                       ),
                     )
                   ],
