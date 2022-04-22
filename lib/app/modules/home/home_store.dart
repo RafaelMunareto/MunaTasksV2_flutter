@@ -35,15 +35,18 @@ abstract class HomeStoreBase with Store {
   }
 
   void getList() async {
+    await client.setLoading(true);
+    await client.setLoadingTasks(true);
+    await client.setLoadingTasksTotal(true);
     await getUid();
     await getPerfil();
     await settings();
     await badgets();
+    await getEtiquetas();
+    await getUser();
     await getDioTotal();
-    getEtiquetas();
-    getUser();
-    getDioFase();
-    client.setLoading(false);
+    await getDio();
+    await getDioFase();
   }
 
   buscaTheme() {
@@ -66,7 +69,7 @@ abstract class HomeStoreBase with Store {
     getDioFase();
   }
 
-  void getEtiquetas() async {
+  getEtiquetas() async {
     Response response;
     var dio = await DioStruture().dioAction();
     response = await dio.get('etiquetas');
@@ -76,20 +79,21 @@ abstract class HomeStoreBase with Store {
     }).toList());
   }
 
-  void getDioFase() {
+  getDioFase() {
     dashboardService
         .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
         .then((value) {
       client.setTaskDio(value);
-    }).whenComplete(() => client.setLoadingTasks(false));
+      client.setLoadingTasks(false);
+    });
   }
 
-  void getDio() {
-    client.setLoadingTasks(true);
+  getDio() {
     dashboardService
         .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
         .then((value) {
       client.setTaskDio(value);
+      client.setLoadingTasks(false);
     });
   }
 
@@ -106,10 +110,9 @@ abstract class HomeStoreBase with Store {
   }
 
   getDioTotal() {
-    client.setLoadingTasksTotal(true);
     dashboardService.getDioTotal().then((value) {
-      client.setLoadingTasksTotal(false);
       client.setTarefasTotais(value);
+      client.setLoadingTasksTotal(false);
     });
   }
 
@@ -145,6 +148,7 @@ abstract class HomeStoreBase with Store {
     client.setPerfis((response.data as List).map((e) {
       return PerfilDioModel.fromJson(e);
     }).toList());
+    client.setLoading(false);
   }
 
   getPerfil() async {
@@ -197,16 +201,17 @@ abstract class HomeStoreBase with Store {
   }
 
   changeFilterEtiquetaList() {
+    client.setLoadingTasks(true);
     if (client.etiquetaSelection == 57585) {
       getDio();
+      getDioFase();
     } else if (client.etiquetaSelection == 58873) {
       setNavigateBarSelection(2);
-      client.setTaskDio(
-        client.taskDio
-            .where((b) => b.fase == 2)
-            .where((c) => c.data.isAfter(dataSemana(c.data)))
-            .toList(),
-      );
+      client.setTaskDio(client.taskDio
+          .where((b) => b.fase == 2)
+          .where((c) => c.data.isAfter(dataSemana(c.data)))
+          .toList());
+      client.setLoadingTasks(false);
     } else {
       dashboardService
           .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
@@ -214,6 +219,7 @@ abstract class HomeStoreBase with Store {
         client.setTaskDio(value
             .where((e) => e.etiqueta.icon == client.etiquetaSelection)
             .toList());
+        client.setLoadingTasks(false);
       });
     }
   }
@@ -244,7 +250,7 @@ abstract class HomeStoreBase with Store {
             .toList());
       });
     } else {
-      getDio();
+      getDioFase();
     }
   }
 
@@ -252,9 +258,11 @@ abstract class HomeStoreBase with Store {
     if (client.userSelection?.name.name != 'TODOS') {
       dashboardService
           .getDio(client.userSelection!.id, client.navigateBarSelection)
-          .then((value) => client.setTaskDio(value));
+          .then((value) {
+        client.setTaskDio(value);
+      });
     } else {
-      getDio();
+      getDioFase();
     }
   }
 

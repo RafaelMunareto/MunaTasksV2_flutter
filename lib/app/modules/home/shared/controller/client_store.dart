@@ -87,7 +87,7 @@ abstract class _ClientStoreBase with Store {
   bool loading = true;
 
   @observable
-  bool loadingTasks = true;
+  bool loadingTasks = false;
 
   @observable
   bool loadingTasksTotal = true;

@@ -7,6 +7,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
@@ -24,7 +25,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
       return store.client.loadingTasksTotal
-          ? Container()
+          ? const CircularProgressWidget()
           : kIsWeb || Platform.isWindows
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(8, 40, 8, 8),

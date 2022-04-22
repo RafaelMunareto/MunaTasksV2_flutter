@@ -176,24 +176,14 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                               ),
                             ),
                           ),
-                          store.client.loadingTasks
-                              ? SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.5,
-                                  child: const Center(
-                                    child: CircularProgressWidget(),
-                                  ),
-                                )
-                              : const CardWidget(),
+                          const CardWidget(),
                         ],
                       ),
                     ),
-                    Expanded(
+                    const Expanded(
                       flex: 3,
                       child: Center(
-                        child: store.client.loadingTasksTotal
-                            ? const CircularProgressWidget()
-                            : const LandscapeWidget(),
+                        child: const LandscapeWidget(),
                       ),
                     )
                   ],

@@ -82,7 +82,7 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
                 List<EtiquetaDioModel> list = store.client.etiquetas;
                 if (widget.create == false) {
                   var todos = EtiquetaDioModel(
-                      color: 'black', icon: 57585, etiqueta: 'TODOS');
+                      color: 'blue', icon: 57585, etiqueta: 'TODOS');
                   if (!list
                       .map((e) => e.etiqueta.contains('TODOS'))
                       .contains(true)) {

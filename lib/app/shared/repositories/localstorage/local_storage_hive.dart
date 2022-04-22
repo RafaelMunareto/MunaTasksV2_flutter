@@ -10,7 +10,7 @@ class LocalStorageHive implements ILocalStorage {
   final Completer<Box> _instance = Completer<Box>();
 
   _init() async {
-    if (!kIsWeb || Platform.isWindows) {
+    if (!kIsWeb) {
       var dir = await getApplicationDocumentsDirectory();
       Hive.init(dir.path);
       var box = await Hive.openBox('db');

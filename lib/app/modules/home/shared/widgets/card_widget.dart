@@ -10,6 +10,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.
 import 'package:munatasks2/app/modules/home/shared/widgets/header_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/retard_action_widget.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/simple_button_widget.dart';
@@ -213,117 +214,138 @@ class _CardWidgetState extends State<CardWidget> {
       height: MediaQuery.of(context).size.height * 0.75,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Expanded(
-              key: UniqueKey(),
-              flex: 1,
-              child: SingleChildScrollView(
-                controller: ScrollController(),
-                child: Wrap(
-                  children: [
-                    Wrap(
-                      children: [
-                        Observer(
-                          builder: (_) {
-                            return ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              controller: ScrollController(),
-                              shrinkWrap: true,
-                              padding: const EdgeInsets.all(4),
-                              itemCount: store.client.taskDio.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                TarefaDioModel linha =
-                                    store.client.taskDio[index];
-                                return Wrap(
-                                  key: UniqueKey(),
-                                  children: [
-                                    Dismissible(
-                                      background: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          color: Colors.green,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15),
-                                            child: Row(
-                                              children: const [
-                                                Icon(
-                                                  Icons.edit,
-                                                  color: Colors.white,
-                                                ),
-                                                Text(
-                                                  'Editar',
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      secondaryBackground: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          color: Colors.red,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: const [
-                                                Icon(
-                                                  Icons.delete,
-                                                  color: Colors.white,
-                                                ),
-                                                Text(
-                                                  'Excluir',
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      key: UniqueKey(),
-                                      onDismissed: (direction) {
-                                        if (direction ==
-                                            DismissDirection.startToEnd) {
-                                          store.clientCreate.setTarefaUpdate(
-                                            linha,
-                                          );
-                                          DialogButtom().showDialogCreate(
-                                            const CreateWidget(),
-                                            context,
-                                          );
-                                        } else {
-                                          setState(() {
-                                            dialogDelete(
-                                              linha.texto,
-                                              linha,
-                                              context,
-                                            );
-                                          });
-                                        }
-                                      },
-                                      child: card(linha),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ],
+          padding: const EdgeInsets.all(8.0),
+          child: Observer(builder: (_) {
+            return store.client.loadingTasks
+                ? SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    child: const Center(
+                      child: CircularProgressWidget(),
                     ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+                  )
+                : Column(
+                    children: [
+                      Expanded(
+                        key: UniqueKey(),
+                        flex: 1,
+                        child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          child: Wrap(
+                            children: [
+                              Wrap(
+                                children: [
+                                  Observer(
+                                    builder: (_) {
+                                      return ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        controller: ScrollController(),
+                                        shrinkWrap: true,
+                                        padding: const EdgeInsets.all(4),
+                                        itemCount: store.client.taskDio.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          TarefaDioModel linha =
+                                              store.client.taskDio[index];
+                                          return Wrap(
+                                            key: UniqueKey(),
+                                            children: [
+                                              Dismissible(
+                                                background: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    color: Colors.green,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              15),
+                                                      child: Row(
+                                                        children: const [
+                                                          Icon(
+                                                            Icons.edit,
+                                                            color: Colors.white,
+                                                          ),
+                                                          Text(
+                                                            'Editar',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                secondaryBackground: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    color: Colors.red,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              15),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: const [
+                                                          Icon(
+                                                            Icons.delete,
+                                                            color: Colors.white,
+                                                          ),
+                                                          Text(
+                                                            'Excluir',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                key: UniqueKey(),
+                                                onDismissed: (direction) {
+                                                  if (direction ==
+                                                      DismissDirection
+                                                          .startToEnd) {
+                                                    store.clientCreate
+                                                        .setTarefaUpdate(
+                                                      linha,
+                                                    );
+                                                    DialogButtom()
+                                                        .showDialogCreate(
+                                                      const CreateWidget(),
+                                                      context,
+                                                    );
+                                                  } else {
+                                                    setState(() {
+                                                      dialogDelete(
+                                                        linha.texto,
+                                                        linha,
+                                                        context,
+                                                      );
+                                                    });
+                                                  }
+                                                },
+                                                child: card(linha),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+          })),
     );
   }
 
