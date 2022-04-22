@@ -13,6 +13,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/teams_selection_widge
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class BodyHomePageWidget extends StatefulWidget {
   const BodyHomePageWidget({
@@ -28,134 +29,142 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return kIsWeb || Platform.isWindows
-        ? SizedBox(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 7,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: Column(
-                      children: const [
-                        CardWidget(),
-                      ],
+    return LayoutBuilder(builder: (context, constraint) {
+      return kIsWeb || Platform.isWindows
+          ? SizedBox(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                        ? 7
+                        : 1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: Column(
+                        children: const [
+                          CardWidget(),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const Expanded(
-                  flex: 3,
-                  child: Center(
-                    child: LandscapeWidget(),
-                  ),
-                )
-              ],
-            ),
-          )
-        : Center(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      if (!store.client.loading)
-                        ListTile(
-                          leading: GestureDetector(
-                            child: store.client.icon != 0
-                                ? Icon(
-                                    IconData(store.client.icon,
-                                        fontFamily: 'MaterialIcons'),
-                                    color: ConvertIcon()
-                                        .convertColor(store.client.color),
-                                  )
-                                : const Icon(
-                                    Icons.bookmark,
-                                  ),
-                            onTap: () {
-                              DialogButtom().showDialog(
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: RadioEtiquetasFilterWidget(
-                                    changeFilterEtiquetaList:
-                                        store.changeFilterEtiquetaList,
-                                    setColor: store.client.setColor,
-                                    setIcon: store.client.setIcon,
-                                    setEtiquetaSelection:
-                                        store.client.setEtiquetaSelection,
-                                  ),
-                                ),
-                                store.client.theme,
-                                context,
-                              );
-                            },
+                  constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                      ? const Expanded(
+                          flex: 3,
+                          child: Center(
+                            child: LandscapeWidget(),
                           ),
-                          title: Center(
-                            child: GestureDetector(
-                              child: ListTile(
-                                title: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.filter_alt,
+                        )
+                      : Container()
+                ],
+              ),
+            )
+          : Center(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        if (!store.client.loading)
+                          ListTile(
+                            leading: GestureDetector(
+                              child: store.client.icon != 0
+                                  ? Icon(
+                                      IconData(store.client.icon,
+                                          fontFamily: 'MaterialIcons'),
+                                      color: ConvertIcon()
+                                          .convertColor(store.client.color),
+                                    )
+                                  : const Icon(
+                                      Icons.bookmark,
                                     ),
-                                    Text(
-                                      store.client.orderAscDesc
-                                          ? '${store.client.orderSelection} DESC'
-                                          : '${store.client.orderSelection} ASC',
-                                      style: const TextStyle(fontSize: 12),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              onTap: () => DialogButtom().showDialog(
-                                Observer(builder: (_) {
-                                  return RadioOrderWidget(
-                                    orderAscDesc: store.client.orderAscDesc,
-                                    setOrderAscDesc:
-                                        store.client.setOrderAscDesc,
-                                    orderSelection: store.client.orderSelection,
-                                    changeOrderList: store.changeOrderList,
-                                    setOrderSelection:
-                                        store.client.setOrderSelection,
-                                  );
-                                }),
-                                store.client.theme,
-                                context,
-                                width: MediaQuery.of(context).size.height * 0.4,
-                              ),
-                            ),
-                          ),
-                          trailing: GestureDetector(
-                            child: CircleAvatarWidget(
-                              url: store.client.imgUrl,
-                            ),
-                            onTap: () {
-                              if (store.client.perfilUserLogado.manager) {
+                              onTap: () {
                                 DialogButtom().showDialog(
-                                  TeamsSelectionWidget(
-                                    changeFilterUserList:
-                                        store.changeFilterUserList,
-                                    setImageUser: store.client.setImgUrl,
-                                    setUserSelection:
-                                        store.client.setUserSelection,
+                                  MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: RadioEtiquetasFilterWidget(
+                                      changeFilterEtiquetaList:
+                                          store.changeFilterEtiquetaList,
+                                      setColor: store.client.setColor,
+                                      setIcon: store.client.setIcon,
+                                      setEtiquetaSelection:
+                                          store.client.setEtiquetaSelection,
+                                    ),
                                   ),
                                   store.client.theme,
                                   context,
                                 );
-                              }
-                            },
+                              },
+                            ),
+                            title: Center(
+                              child: GestureDetector(
+                                child: ListTile(
+                                  title: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.filter_alt,
+                                      ),
+                                      Text(
+                                        store.client.orderAscDesc
+                                            ? '${store.client.orderSelection} DESC'
+                                            : '${store.client.orderSelection} ASC',
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                onTap: () => DialogButtom().showDialog(
+                                  Observer(builder: (_) {
+                                    return RadioOrderWidget(
+                                      orderAscDesc: store.client.orderAscDesc,
+                                      setOrderAscDesc:
+                                          store.client.setOrderAscDesc,
+                                      orderSelection:
+                                          store.client.orderSelection,
+                                      changeOrderList: store.changeOrderList,
+                                      setOrderSelection:
+                                          store.client.setOrderSelection,
+                                    );
+                                  }),
+                                  store.client.theme,
+                                  context,
+                                  width:
+                                      MediaQuery.of(context).size.height * 0.4,
+                                ),
+                              ),
+                            ),
+                            trailing: GestureDetector(
+                              child: CircleAvatarWidget(
+                                url: store.client.imgUrl,
+                              ),
+                              onTap: () {
+                                if (store.client.perfilUserLogado.manager) {
+                                  DialogButtom().showDialog(
+                                    TeamsSelectionWidget(
+                                      changeFilterUserList:
+                                          store.changeFilterUserList,
+                                      setImageUser: store.client.setImgUrl,
+                                      setUserSelection:
+                                          store.client.setUserSelection,
+                                    ),
+                                    store.client.theme,
+                                    context,
+                                  );
+                                }
+                              },
+                            ),
                           ),
-                        ),
-                      const CardWidget(),
-                    ],
+                        const CardWidget(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
+            );
+    });
   }
 }

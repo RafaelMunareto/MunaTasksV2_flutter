@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class NavigationBarWidget extends StatefulWidget {
@@ -28,11 +25,11 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (_) {
+    return LayoutBuilder(builder: (context, constraint) {
       return BubbleBottomBar(
         backgroundColor: widget.theme ? Colors.blueGrey.shade800 : Colors.white,
         opacity: .2,
-        tilesPadding: (kIsWeb || Platform.isWindows)
+        tilesPadding: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
             ? const EdgeInsets.all(18)
             : const EdgeInsets.all(0),
         currentIndex: widget.navigateBarSelection,
@@ -44,7 +41,8 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
         fabLocation: BubbleBottomBarFabLocation.end, //new
         hasNotch: true, //new
         hasInk: true, //new, gives a cute ink effect
-        iconSize: kIsWeb || Platform.isWindows ? 48 : 20,
+        iconSize:
+            constraint.maxWidth >= LarguraLayoutBuilder().telaPc ? 48 : 20,
         items: <BubbleBottomBarItem>[
           BubbleBottomBarItem(
             showBadge: true,
@@ -54,7 +52,9 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             badge: Text(
               store.client.badgetNavigate[0].toString(),
               style: TextStyle(
-                  fontSize: kIsWeb || Platform.isWindows ? 20 : 12,
+                  fontSize: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                      ? 20
+                      : 12,
                   color: Colors.white),
             ),
             backgroundColor: Colors.amber,
@@ -70,7 +70,10 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             ),
             title: Text("Backlog",
                 style: TextStyle(
-                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12)),
+                    fontSize:
+                        constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                            ? 20
+                            : 12)),
           ),
           BubbleBottomBarItem(
             showBadge: true,
@@ -79,7 +82,10 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
                 : lightThemeData(context).secondaryHeaderColor,
             badge: Text(store.client.badgetNavigate[1].toString(),
                 style: TextStyle(
-                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12,
+                    fontSize:
+                        constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                            ? 20
+                            : 12,
                     color: Colors.white)),
             backgroundColor: Colors.green,
             icon: Icon(
@@ -94,7 +100,10 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             ),
             title: Text("Fazendo",
                 style: TextStyle(
-                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12)),
+                    fontSize:
+                        constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                            ? 20
+                            : 12)),
           ),
           BubbleBottomBarItem(
             showBadge: true,
@@ -103,7 +112,10 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
                 : lightThemeData(context).secondaryHeaderColor,
             badge: Text(store.client.badgetNavigate[2].toString(),
                 style: TextStyle(
-                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12,
+                    fontSize:
+                        constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                            ? 20
+                            : 12,
                     color: Colors.white)),
             backgroundColor: Colors.blue,
             icon: Icon(
@@ -118,7 +130,10 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             ),
             title: Text("Feito",
                 style: TextStyle(
-                    fontSize: kIsWeb || Platform.isWindows ? 20 : 12)),
+                    fontSize:
+                        constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                            ? 20
+                            : 12)),
           ),
         ],
       );
