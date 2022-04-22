@@ -42,9 +42,31 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Card(
-                              color: Colors.transparent,
+                            padding: const EdgeInsets.only(top: 8.0, bottom: 8),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: store.client.theme
+                                        ? darkThemeData(context)
+                                            .shadowColor
+                                            .withOpacity(0.2)
+                                        : lightThemeData(context)
+                                            .shadowColor
+                                            .withOpacity(0.2),
+                                  ),
+                                  BoxShadow(
+                                    color: store.client.theme
+                                        ? darkThemeData(context)
+                                            .scaffoldBackgroundColor
+                                        : lightThemeData(context)
+                                            .scaffoldBackgroundColor,
+                                    spreadRadius: -3.0,
+                                    blurRadius: 4.0,
+                                  ),
+                                ],
+                              ),
                               child: ListTile(
                                 leading: GestureDetector(
                                   child: store.client.icon != 0

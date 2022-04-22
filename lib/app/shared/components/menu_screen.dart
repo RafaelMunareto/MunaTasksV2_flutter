@@ -40,150 +40,158 @@ class _MenuScreenState extends State<MenuScreen> {
               widget.setOpen(false);
             }
           },
-          child: Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/icon/icon.png'),
-                  opacity: 0.1,
+          child: Padding(
+            padding: kIsWeb || Platform.isWindows
+                ? const EdgeInsets.all(16.0)
+                : const EdgeInsets.all(0),
+            child: Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/icon/icon.png'),
+                    opacity: 0.1,
+                  ),
                 ),
-              ),
-              child: widget.open
-                  ? SizedBox(
-                      width: !kIsWeb
-                          ? MediaQuery.of(context).size.width * 0.2
-                          : MediaQuery.of(context).size.width,
-                      child: ListView(
-                        controller: ScrollController(),
-                        padding: EdgeInsets.zero,
-                        children: <Widget>[
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height,
-                            child: DrawerHeader(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 70.0,
-                                    height: 70.0,
-                                    decoration: store.client.perfilUserLogado
-                                                .urlImage !=
-                                            ''
-                                        ? BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              fit: BoxFit.fill,
-                                              image: NetworkImage(
-                                                store.client.perfilUserLogado
-                                                    .urlImage,
+                child: widget.open
+                    ? SizedBox(
+                        width: !kIsWeb
+                            ? MediaQuery.of(context).size.width * 0.2
+                            : MediaQuery.of(context).size.width,
+                        child: ListView(
+                          controller: ScrollController(),
+                          padding: const EdgeInsets.all(8),
+                          children: <Widget>[
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height,
+                              child: DrawerHeader(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 70.0,
+                                      height: 70.0,
+                                      decoration: store.client.perfilUserLogado
+                                                  .urlImage !=
+                                              ''
+                                          ? BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image: NetworkImage(
+                                                  store.client.perfilUserLogado
+                                                      .urlImage,
+                                                ),
+                                              ),
+                                            )
+                                          : const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image: AssetImage(
+                                                    'assets/img/person.png'),
                                               ),
                                             ),
-                                          )
-                                        : const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              fit: BoxFit.fill,
-                                              image: AssetImage(
-                                                  'assets/img/person.png'),
-                                            ),
-                                          ),
-                                  ),
-                                  const Text(
-                                    "Olá",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  Text(
-                                    store.client.perfilUserLogado.name.name,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w800,
-                                      color: store.client.theme
-                                          ? darkThemeData(context).primaryColor
-                                          : lightThemeData(context)
-                                              .primaryColorDark,
                                     ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Modular.to.navigate('/settings/perfil');
-                                    },
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 16.0),
-                                      child: Text(
-                                        "Edite Perfil",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: store.client.theme
-                                              ? darkThemeData(context)
-                                                  .secondaryHeaderColor
-                                              : lightThemeData(context)
-                                                  .secondaryHeaderColor,
-                                          fontWeight: FontWeight.bold,
+                                    const Text(
+                                      "Olá",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    Text(
+                                      store.client.perfilUserLogado.name.name,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w800,
+                                        color: store.client.theme
+                                            ? darkThemeData(context)
+                                                .primaryColor
+                                            : lightThemeData(context)
+                                                .primaryColorDark,
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Modular.to.navigate('/settings/perfil');
+                                      },
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 16.0),
+                                        child: Text(
+                                          "Edite Perfil",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: store.client.theme
+                                                ? darkThemeData(context)
+                                                    .secondaryHeaderColor
+                                                : lightThemeData(context)
+                                                    .secondaryHeaderColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  ListTile(
-                                    title: Row(
-                                      children: const [
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 8.0),
-                                          child: Icon(
-                                            Icons.settings,
+                                    ListTile(
+                                      title: Row(
+                                        children: const [
+                                          Padding(
+                                            padding:
+                                                EdgeInsets.only(right: 8.0),
+                                            child: Icon(
+                                              Icons.settings,
+                                            ),
                                           ),
-                                        ),
-                                        Flexible(
-                                          child: SizedBox(
-                                            child: Text(
-                                              "Configurações",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
+                                          Flexible(
+                                            child: SizedBox(
+                                              child: Text(
+                                                "Configurações",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Modular.to.navigate('/settings');
+                                      },
                                     ),
-                                    onTap: () {
-                                      Modular.to.navigate('/settings');
-                                    },
-                                  ),
-                                  ListTile(
-                                    title: Row(
-                                      children: const [
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 8.0),
-                                          child: Icon(Icons.bookmark),
-                                        ),
-                                        Flexible(
-                                          child: SizedBox(
-                                            child: Text(
-                                              "Etiquetas",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
+                                    ListTile(
+                                      title: Row(
+                                        children: const [
+                                          Padding(
+                                            padding:
+                                                EdgeInsets.only(right: 8.0),
+                                            child: Icon(Icons.bookmark),
+                                          ),
+                                          Flexible(
+                                            child: SizedBox(
+                                              child: Text(
+                                                "Etiquetas",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Modular.to
+                                            .navigate('/settings/etiquetas');
+                                      },
                                     ),
-                                    onTap: () {
-                                      Modular.to
-                                          .navigate('/settings/etiquetas');
-                                    },
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container()),
+                          ],
+                        ),
+                      )
+                    : Container()),
+          ),
         ),
       ),
     );

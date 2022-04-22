@@ -17,7 +17,7 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   final String title;
   final double size;
   final dynamic context;
-  final IconData icon;
+  final IconData? icon;
   final bool settings;
   final bool back;
   final String rota;
@@ -86,90 +86,73 @@ class _AppBarWidgetState extends State<AppBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(widget.size),
-      child: AppBar(
-        flexibleSpace: Container(
-            // decoration: const BoxDecoration(
-            //   image: DecorationImage(
-            //     image: AssetImage('assets/img/fundo_app_bar.png'),
-            //     fit: BoxFit.fill,
-            //   ),
-            // ),
-            ),
-        actions: [
-          widget.settings && !widget.home
-              ? _popMenu()
-              : GestureDetector(
-                  child: Padding(
-                    padding: kIsWeb || Platform.isWindows
-                        ? const EdgeInsets.only(right: 48.0)
-                        : const EdgeInsets.only(right: 12.0),
-                    child: !search
-                        ? Icon(
-                            Icons.search,
-                            size: kIsWeb || Platform.isWindows ? 36 : 24,
-                          )
-                        : const Icon(
-                            Icons.close,
-                          ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      search = !search;
-                    });
-                    if (search == false) {
-                      setState(() {
-                        widget.setValueSearch!('');
-                      });
-                      widget.changeFilterSearch!();
-                    }
-                  })
-        ],
-        title: !widget.home
-            ? RichText(
-                text: TextSpan(
-                  children: [
-                    WidgetSpan(
-                      child: Icon(
-                        widget.icon,
-                      ),
-                    ),
-                    TextSpan(
-                      text: ' ' + widget.title.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: lightThemeData(context).iconTheme.color,
-                      ),
-                    ),
-                  ],
+    return AppBar(
+      actions: [
+        widget.settings && !widget.home
+            ? _popMenu()
+            : GestureDetector(
+                child: Padding(
+                  padding: kIsWeb || Platform.isWindows
+                      ? const EdgeInsets.only(right: 48.0)
+                      : const EdgeInsets.only(right: 12.0),
+                  child: !search
+                      ? Icon(
+                          Icons.search,
+                          size: kIsWeb || Platform.isWindows ? 36 : 24,
+                        )
+                      : const Icon(
+                          Icons.close,
+                        ),
                 ),
-              )
-            : search
-                ? _popSearch()
-                : Container(),
-        leading: widget.back
-            ? IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                ),
-                onPressed: () => Modular.to.navigate(widget.rota))
-            : InkWell(
                 onTap: () {
-                  widget.zoomController.toggle!();
-                  widget.setOpen!(
-                      widget.zoomController.stateNotifier.value.toString() ==
-                              'DrawerState.opening'
-                          ? true
-                          : false);
-                },
-                child: kIsWeb || Platform.isWindows
-                    ? Container()
-                    : const Icon(
-                        Icons.menu,
-                      ),
+                  setState(() {
+                    search = !search;
+                  });
+                  if (search == false) {
+                    setState(() {
+                      widget.setValueSearch!('');
+                    });
+                    widget.changeFilterSearch!();
+                  }
+                })
+      ],
+      title: !widget.home
+          ? Wrap(
+              children: [
+                Icon(widget.icon),
+                Text(
+                  ' ' + widget.title.toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: lightThemeData(context).iconTheme.color,
+                  ),
+                ),
+              ],
+            )
+          : search
+              ? _popSearch()
+              : Container(),
+      leading: widget.back
+          ? IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
               ),
-      ),
+              onPressed: () => Modular.to.navigate(widget.rota))
+          : InkWell(
+              onTap: () {
+                widget.zoomController.toggle!();
+                widget.setOpen!(
+                    widget.zoomController.stateNotifier.value.toString() ==
+                            'DrawerState.opening'
+                        ? true
+                        : false);
+              },
+              child: kIsWeb || Platform.isWindows
+                  ? Container()
+                  : const Icon(
+                      Icons.menu,
+                    ),
+            ),
     );
   }
 
