@@ -206,13 +206,6 @@ abstract class HomeStoreBase with Store {
     if (client.etiquetaSelection == 57585) {
       getDio();
       getDioFase();
-    } else if (client.etiquetaSelection == 58873) {
-      setNavigateBarSelection(2);
-      client.setTaskDio(client.taskDio
-          .where((b) => b.fase == 2)
-          .where((c) => c.data.isAfter(dataSemana(c.data)))
-          .toList());
-      client.setLoadingTasks(false);
     } else {
       dashboardService
           .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
@@ -225,19 +218,17 @@ abstract class HomeStoreBase with Store {
     }
   }
 
-  dataSemana(DateTime data) {
-    DateTime now = DateTime.now();
-    var diff = now.difference(data).inDays.toInt();
-
-    if (diff < now.weekday.toInt()) {
-      if (diff <= 0) {
-        data = now;
-      }
-      return data.subtract(const Duration(days: 1));
-    } else {
-      data = data.add(const Duration(days: 1));
-      return data;
-    }
+  filterDate() {
+    dashboardService
+        .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
+        .then((value) {
+      client.setTaskDio(value
+          .where((element) =>
+              element.data.isAfter(client.dateInicial) &&
+              element.data
+                  .isBefore(client.dateFinal.add(const Duration(days: 1))))
+          .toList());
+    });
   }
 
   changeFilterSearchList() {

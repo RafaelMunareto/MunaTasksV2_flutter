@@ -481,6 +481,51 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$dateInicialAtom = Atom(name: '_ClientStoreBase.dateInicial');
+
+  @override
+  dynamic get dateInicial {
+    _$dateInicialAtom.reportRead();
+    return super.dateInicial;
+  }
+
+  @override
+  set dateInicial(dynamic value) {
+    _$dateInicialAtom.reportWrite(value, super.dateInicial, () {
+      super.dateInicial = value;
+    });
+  }
+
+  final _$dateFinalAtom = Atom(name: '_ClientStoreBase.dateFinal');
+
+  @override
+  dynamic get dateFinal {
+    _$dateFinalAtom.reportRead();
+    return super.dateFinal;
+  }
+
+  @override
+  set dateFinal(dynamic value) {
+    _$dateFinalAtom.reportWrite(value, super.dateFinal, () {
+      super.dateFinal = value;
+    });
+  }
+
+  final _$filterDateAtom = Atom(name: '_ClientStoreBase.filterDate');
+
+  @override
+  bool get filterDate {
+    _$filterDateAtom.reportRead();
+    return super.filterDate;
+  }
+
+  @override
+  set filterDate(bool value) {
+    _$filterDateAtom.reportWrite(value, super.filterDate, () {
+      super.filterDate = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -815,6 +860,39 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setDateInicial(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setDateInicial');
+    try {
+      return super.setDateInicial(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setDateFinal(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setDateFinal');
+    try {
+      return super.setDateFinal(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setFilterDate(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setFilterDate');
+    try {
+      return super.setFilterDate(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -847,7 +925,10 @@ userDio: ${userDio},
 perfis: ${perfis},
 etiquetas: ${etiquetas},
 retard: ${retard},
-fase: ${fase}
+fase: ${fase},
+dateInicial: ${dateInicial},
+dateFinal: ${dateFinal},
+filterDate: ${filterDate}
     ''';
   }
 }

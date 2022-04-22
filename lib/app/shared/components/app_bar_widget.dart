@@ -3,12 +3,20 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/home/home_store.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/date_filter_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/radio_order_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/teams_selection_widget.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/auth/repositories/auth_repository.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
+import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:simple_animations/simple_animations.dart';
@@ -63,6 +71,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   AuthRepository auth = AuthRepository();
   ILocalStorage storage = LocalStorageShare();
   UserDioClientModel user = UserDioClientModel();
+  final HomeStore store = Modular.get();
 
   getPerfil() async {
     await auth.getUser().then((e) {
@@ -131,7 +140,148 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             )
           : search
               ? _popSearch()
-              : Container(),
+              : Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 8),
+                  child: Wrap(
+                    children: [
+                      ListTile(
+                        leading: GestureDetector(
+                          child: store.client.icon != 0
+                              ? Icon(
+                                  IconData(store.client.icon,
+                                      fontFamily: 'MaterialIcons'),
+                                  color: ConvertIcon()
+                                      .convertColor(store.client.color),
+                                )
+                              : Icon(
+                                  Icons.bookmark,
+                                  color: store.client.theme
+                                      ? darkThemeData(context).iconTheme.color
+                                      : lightThemeData(context).iconTheme.color,
+                                ),
+                          onTap: () {
+                            DialogButtom().showDialog(
+                              MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: RadioEtiquetasFilterWidget(
+                                  changeFilterEtiquetaList:
+                                      store.changeFilterEtiquetaList,
+                                  setColor: store.client.setColor,
+                                  setIcon: store.client.setIcon,
+                                  setEtiquetaSelection:
+                                      store.client.setEtiquetaSelection,
+                                ),
+                              ),
+                              store.client.theme,
+                              context,
+                            );
+                          },
+                        ),
+                        title: Center(
+                          child: GestureDetector(
+                            child: ListTile(
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.filter_alt,
+                                  ),
+                                  Text(
+                                    store.client.orderAscDesc
+                                        ? '${store.client.orderSelection} DESC'
+                                        : '${store.client.orderSelection} ASC',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            onTap: () => DialogButtom().showDialog(
+                              Observer(builder: (_) {
+                                return RadioOrderWidget(
+                                  orderAscDesc: store.client.orderAscDesc,
+                                  setOrderAscDesc: store.client.setOrderAscDesc,
+                                  orderSelection: store.client.orderSelection,
+                                  changeOrderList: store.changeOrderList,
+                                  setOrderSelection:
+                                      store.client.setOrderSelection,
+                                );
+                              }),
+                              store.client.theme,
+                              context,
+                              width: MediaQuery.of(context).size.height * 0.4,
+                            ),
+                          ),
+                        ),
+                        trailing: Wrap(
+                          children: [
+                            GestureDetector(
+                              child: Icon(
+                                Icons.people,
+                                color: store.client.theme
+                                    ? darkThemeData(context).iconTheme.color
+                                    : lightThemeData(context).iconTheme.color,
+                              ),
+                              onTap: () {
+                                if (store.client.perfilUserLogado.manager) {
+                                  DialogButtom().showDialog(
+                                    TeamsSelectionWidget(
+                                      changeFilterUserList:
+                                          store.changeFilterUserList,
+                                      setImageUser: store.client.setImgUrl,
+                                      setUserSelection:
+                                          store.client.setUserSelection,
+                                    ),
+                                    store.client.theme,
+                                    context,
+                                  );
+                                }
+                              },
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 32.0),
+                              child: GestureDetector(
+                                child: Observer(
+                                  builder: (_) {
+                                    return Icon(
+                                      store.client.filterDate
+                                          ? Icons.history
+                                          : Icons.timelapse,
+                                      color: store.client.filterDate
+                                          ? Colors.red
+                                          : store.client.theme
+                                              ? darkThemeData(context)
+                                                  .iconTheme
+                                                  .color
+                                              : lightThemeData(context)
+                                                  .iconTheme
+                                                  .color,
+                                    );
+                                  },
+                                ),
+                                onTap: () {
+                                  if (store.client.perfilUserLogado.manager) {
+                                    if (!store.client.filterDate) {
+                                      DialogButtom().showDialog(
+                                        const DateFilterWidget(),
+                                        store.client.theme,
+                                        context,
+                                      );
+                                    } else {
+                                      store.client.setFilterDate(false);
+                                      store.getDioFase();
+                                    }
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
       leading: widget.back
           ? IconButton(
               icon: const Icon(

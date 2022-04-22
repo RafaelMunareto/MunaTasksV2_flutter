@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
@@ -208,4 +209,22 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setFase(value) => fase = value;
+
+  @observable
+  dynamic dateInicial = '';
+
+  @observable
+  dynamic dateFinal = '';
+
+  @action
+  setDateInicial(value) => dateInicial = value;
+
+  @action
+  setDateFinal(value) => dateFinal = value;
+
+  @observable
+  bool filterDate = false;
+
+  @action
+  setFilterDate(value) => filterDate = value;
 }
