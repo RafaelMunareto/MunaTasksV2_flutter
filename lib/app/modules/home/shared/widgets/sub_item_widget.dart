@@ -1,12 +1,10 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/subitem_actions_widget.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class SubItemWidget extends StatelessWidget {
   final SubtareDiofaModel subTarefa;
@@ -26,7 +24,7 @@ class SubItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    actionSubtarefa(subTarefaModel) {
+    actionSubtarefa(subTarefaModel, constraint) {
       showDialog(
         context: context,
         useSafeArea: false,
@@ -34,7 +32,7 @@ class SubItemWidget extends StatelessWidget {
           return AlertDialog(
             title: const Text('Status'),
             content: SizedBox(
-              width: kIsWeb || Platform.isWindows
+              width: constraint >= LarguraLayoutBuilder().telaPc
                   ? MediaQuery.of(context).size.width * 0.5
                   : MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.15,
@@ -48,45 +46,47 @@ class SubItemWidget extends StatelessWidget {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
-      child: Container(
-        decoration: BoxDecoration(
-            color: theme ? Colors.black38 : Colors.black12,
-            borderRadius: BorderRadius.circular(4)),
-        child: ExpansionTile(
-          key: UniqueKey(),
-          title: ListTile(
-            leading: SizedBox(
-              width: 100,
-              child: Text(
-                subTarefa.title,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+    return LayoutBuilder(builder: (context, constraint) {
+      return Padding(
+        padding: const EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
+        child: Container(
+          decoration: BoxDecoration(
+              color: theme ? Colors.black38 : Colors.black12,
+              borderRadius: BorderRadius.circular(4)),
+          child: ExpansionTile(
+            key: UniqueKey(),
+            title: ListTile(
+              leading: SizedBox(
+                width: 100,
+                child: Text(
+                  subTarefa.title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            title: GestureDetector(
-              onTap: () => actionSubtarefa(subTarefa),
-              child: Icon(
-                ConvertIcon().iconStatus(subTarefa.status),
-                color: ConvertIcon().iconStatusColor(subTarefa.status),
+              title: GestureDetector(
+                onTap: () => actionSubtarefa(subTarefa, constraint.maxWidth),
+                child: Icon(
+                  ConvertIcon().iconStatus(subTarefa.status),
+                  color: ConvertIcon().iconStatusColor(subTarefa.status),
+                ),
               ),
+              trailing: CircleAvatarWidget(url: subTarefa.user.urlImage),
             ),
-            trailing: CircleAvatarWidget(url: subTarefa.user.urlImage),
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  subTarefa.texto,
+                  textAlign: TextAlign.justify,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ),
+            ],
           ),
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                subTarefa.texto,
-                textAlign: TextAlign.justify,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
-                style: const TextStyle(fontSize: 12),
-              ),
-            ),
-          ],
         ),
-      ),
-    );
+      );
+    });
   }
 }

@@ -20,36 +20,39 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Observer(builder: (_) {
-        return Chip(
-          label: Text(
-            store.clientCreate.tarefaModelSaveEtiqueta.icon != null
-                ? store.clientCreate.tarefaModelSaveEtiqueta.etiqueta
-                : 'Etiqueta',
-            style: const TextStyle(fontSize: 12),
-          ),
-          avatar: Icon(
-            store.clientCreate.tarefaModelSaveEtiqueta.icon != null
-                ? IconData(store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
-                    fontFamily: 'MaterialIcons')
-                : Icons.bookmark,
-            color: ConvertIcon().convertColor(
-              store.clientCreate.tarefaModelSaveEtiqueta.color,
+    return LayoutBuilder(builder: (context, constraint) {
+      return GestureDetector(
+        child: Observer(builder: (_) {
+          return Chip(
+            label: Text(
+              store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+                  ? store.clientCreate.tarefaModelSaveEtiqueta.etiqueta
+                  : 'Etiqueta',
+              style: const TextStyle(fontSize: 12),
             ),
-          ),
-        );
-      }),
-      onTap: () {
-        DialogButtom().showDialog(
-          RadioEtiquetasFilterWidget(
-            create: true,
-            setEtiquetaSave: store.clientCreate.setSaveEtiqueta,
-          ),
-          store.client.theme,
-          context,
-        );
-      },
-    );
+            avatar: Icon(
+              store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+                  ? IconData(
+                      store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
+                      fontFamily: 'MaterialIcons')
+                  : Icons.bookmark,
+              color: ConvertIcon().convertColor(
+                store.clientCreate.tarefaModelSaveEtiqueta.color,
+              ),
+            ),
+          );
+        }),
+        onTap: () {
+          DialogButtom().showDialog(
+            const RadioEtiquetasFilterWidget(
+              create: true,
+            ),
+            store.client.theme,
+            constraint.maxWidth,
+            context,
+          );
+        },
+      );
+    });
   }
 }

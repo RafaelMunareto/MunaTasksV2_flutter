@@ -1,7 +1,4 @@
 // ignore_for_file: unnecessary_null_comparison
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -16,6 +13,7 @@ import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/button_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
@@ -116,15 +114,17 @@ class EtiquetasPageState extends State<EtiquetasPage>
                   child: Column(
                     children: [
                       SizedBox(
-                        height: kIsWeb || Platform.isWindows
-                            ? MediaQuery.of(context).size.height * 0.07
-                            : MediaQuery.of(context).size.height * 0.05,
+                        height:
+                            constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                                ? MediaQuery.of(context).size.height * 0.07
+                                : MediaQuery.of(context).size.height * 0.05,
                         child: Observer(builder: (_) {
                           return store.etiquetaStore.updateLoading
                               ? FadeTransition(
                                   opacity: opacidade,
                                   child: Padding(
-                                    padding: kIsWeb || Platform.isWindows
+                                    padding: constraint.maxWidth >=
+                                            LarguraLayoutBuilder().telaPc
                                         ? const EdgeInsets.all(8)
                                         : const EdgeInsets.only(left: 12),
                                     child: ElevatedButton.icon(

@@ -128,143 +128,149 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
   }
 
   Widget _buildAnimation(BuildContext context, Widget? child) {
-    return Observer(builder: (_) {
-      return SizedBox(
-        width: double.infinity,
-        height: 210,
-        child: Stack(
-          children: [
-            if (client.perfilDio.id != '')
-              Positioned(
-                top: 0,
-                left: 30,
-                child: Center(
-                  child: Observer(builder: (_) {
-                    return Container(
-                      width: 170.0,
-                      height: 170.0,
-                      decoration: store.client.perfilDio.urlImage != ''
-                          ? BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: NetworkImage(
-                                  store.client.perfilDio.urlImage,
+    return LayoutBuilder(builder: (context, constraint) {
+      return Observer(builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 16, 8, 8),
+          child: SizedBox(
+            width: double.infinity,
+            height: 210,
+            child: Stack(
+              children: [
+                if (client.perfilDio.id != '')
+                  Positioned(
+                    top: 0,
+                    left: 30,
+                    child: Center(
+                      child: Observer(builder: (_) {
+                        return Container(
+                          width: 170.0,
+                          height: 170.0,
+                          decoration: store.client.perfilDio.urlImage != ''
+                              ? BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: NetworkImage(
+                                      store.client.perfilDio.urlImage,
+                                    ),
+                                  ),
+                                )
+                              : const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: AssetImage('assets/img/person.png'),
+                                  ),
+                                ),
+                        );
+                      }),
+                    ),
+                  )
+                else
+                  const Positioned(
+                    left: 90,
+                    top: 50,
+                    child: CircularProgressWidget(),
+                  ),
+                Positioned(
+                  top: 125,
+                  left: 90,
+                  child: client.textFieldNameBool
+                      ? SizedBox(
+                          width: _animacaoSize.value,
+                          child: Chip(
+                            label: SizedBox(
+                                width: 180,
+                                child: Text(
+                                  client.perfilDio.name != ""
+                                      ? client.perfilDio.name.name
+                                      : "",
+                                  style: const TextStyle(fontSize: 18.00),
+                                )),
+                          ),
+                        )
+                      : Observer(
+                          builder: (_) {
+                            return SizedBox(
+                              width: _animacaoSize2.value,
+                              child: TextFormField(
+                                style: const TextStyle(shadows: <Shadow>[
+                                  Shadow(
+                                    offset: Offset(0.5, 0.5),
+                                    blurRadius: 3.0,
+                                    color: Colors.white,
+                                  ),
+                                  Shadow(
+                                    offset: Offset(0.5, 0.5),
+                                    blurRadius: 8.0,
+                                    color: Colors.white,
+                                  ),
+                                ], height: 1.0, fontWeight: FontWeight.bold),
+                                initialValue: client.perfilDio.name.name,
+                                onChanged: (value) {
+                                  client.changeName(value);
+                                },
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  errorText: widget.errorName == null
+                                      ? null
+                                      : widget.errorName(),
                                 ),
                               ),
-                            )
-                          : const BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: AssetImage('assets/img/person.png'),
-                              ),
-                            ),
-                    );
-                  }),
+                            );
+                          },
+                        ),
                 ),
-              )
-            else
-              const Positioned(
-                left: 90,
-                top: 50,
-                child: CircularProgressWidget(),
-              ),
-            Positioned(
-              top: 125,
-              left: 90,
-              child: client.textFieldNameBool
-                  ? SizedBox(
-                      width: _animacaoSize.value,
-                      child: Chip(
-                        label: SizedBox(
-                            width: 180,
-                            child: Text(
-                              client.perfilDio.name != ""
-                                  ? client.perfilDio.name.name
-                                  : "",
-                              style: const TextStyle(fontSize: 18.00),
-                            )),
-                      ),
-                    )
-                  : Observer(
-                      builder: (_) {
-                        return SizedBox(
-                          width: _animacaoSize2.value,
-                          child: TextFormField(
-                            style: const TextStyle(shadows: <Shadow>[
-                              Shadow(
-                                offset: Offset(0.5, 0.5),
-                                blurRadius: 3.0,
-                                color: Colors.white,
-                              ),
-                              Shadow(
-                                offset: Offset(0.5, 0.5),
-                                blurRadius: 8.0,
-                                color: Colors.white,
-                              ),
-                            ], height: 1.0, fontWeight: FontWeight.bold),
-                            initialValue: client.perfilDio.name.name,
-                            onChanged: (value) {
-                              client.changeName(value);
-                            },
-                            decoration: InputDecoration(
-                              filled: true,
-                              errorText: widget.errorName == null
-                                  ? null
-                                  : widget.errorName(),
-                            ),
-                          ),
-                        );
+                Positioned(
+                  top: 135,
+                  left: 320,
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          client.showTextFieldName(!client.textFieldNameBool &&
+                              client.perfilDio.name.name.length >= 3);
+                          if (client.textFieldNameBool &&
+                              client.perfilDio.name.name.length >= 3) {
+                            _controller.forward();
+                            _controller2.reverse();
+                            store.saveName();
+                          } else {
+                            _controller2.forward();
+                            _controller.reverse();
+                          }
+                        });
                       },
+                      child: Icon(
+                        client.textFieldNameBool
+                            ? Icons.drive_file_rename_outline
+                            : client.perfilDio.name.name.isNotEmpty &&
+                                    client.perfilDio.name.name.length >= 3
+                                ? Icons.task_alt
+                                : Icons.task_alt,
+                        color: store.client.theme
+                            ? darkThemeData(context).primaryColor
+                            : lightThemeData(context).primaryColor,
+                      ),
                     ),
-            ),
-            Positioned(
-              top: 135,
-              left: 320,
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      client.showTextFieldName(!client.textFieldNameBool &&
-                          client.perfilDio.name.name.length >= 3);
-                      if (client.textFieldNameBool &&
-                          client.perfilDio.name.name.length >= 3) {
-                        _controller.forward();
-                        _controller2.reverse();
-                        store.saveName();
-                      } else {
-                        _controller2.forward();
-                        _controller.reverse();
-                      }
-                    });
-                  },
-                  child: Icon(
-                    client.textFieldNameBool
-                        ? Icons.drive_file_rename_outline
-                        : client.perfilDio.name.name.isNotEmpty &&
-                                client.perfilDio.name.name.length >= 3
-                            ? Icons.task_alt
-                            : Icons.task_alt,
-                    color: store.client.theme
-                        ? darkThemeData(context).primaryColor
-                        : lightThemeData(context).primaryColor,
                   ),
                 ),
-              ),
+                Positioned(
+                  top: 10,
+                  left: 165,
+                  child: GestureDetector(
+                    child: kIsWeb || Platform.isWindows
+                        ? popMenuDesktop()
+                        : popMenu(),
+                  ),
+                ),
+              ],
             ),
-            Positioned(
-              top: 10,
-              left: 165,
-              child: GestureDetector(
-                child:
-                    kIsWeb || Platform.isWindows ? popMenuDesktop() : popMenu(),
-              ),
-            ),
-          ],
-        ),
-      );
+          ),
+        );
+      });
     });
   }
 }

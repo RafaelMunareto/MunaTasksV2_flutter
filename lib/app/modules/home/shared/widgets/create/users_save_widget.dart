@@ -18,53 +18,62 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) {
-        return Wrap(
-          crossAxisAlignment: WrapCrossAlignment.end,
-          children: [
-            if (store.clientCreate.users.isEmpty &
-                !store.clientCreate.loadingUser)
-              GestureDetector(
-                onTap: () => DialogButtom().showDialog(
-                    const UsersSelectionWidget(), store.client.theme, context),
-                child: const Chip(
-                  label: Text('Equipe'),
-                  avatar: Icon(
-                    Icons.people,
-                    color: Colors.grey,
+    return LayoutBuilder(builder: (context, constraint) {
+      return Observer(
+        builder: (_) {
+          return Wrap(
+            crossAxisAlignment: WrapCrossAlignment.end,
+            children: [
+              if (store.clientCreate.users.isEmpty &
+                  !store.clientCreate.loadingUser)
+                GestureDetector(
+                  onTap: () => DialogButtom().showDialog(
+                      const UsersSelectionWidget(),
+                      store.client.theme,
+                      constraint.maxWidth,
+                      context),
+                  child: const Chip(
+                    label: Text('Equipe'),
+                    avatar: Icon(
+                      Icons.people,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
-              ),
-            if (store.clientCreate.users.isNotEmpty &&
-                !store.clientCreate.loadingUser)
-              for (var linha in store.clientCreate.users)
-                Baseline(
-                  baseline: 38,
-                  baselineType: TextBaseline.alphabetic,
-                  child: GestureDetector(
-                    onTap: () => DialogButtom().showDialog(
+              if (store.clientCreate.users.isNotEmpty &&
+                  !store.clientCreate.loadingUser)
+                for (var linha in store.clientCreate.users)
+                  Baseline(
+                    baseline: 38,
+                    baselineType: TextBaseline.alphabetic,
+                    child: GestureDetector(
+                      onTap: () => DialogButtom().showDialog(
                         const UsersSelectionWidget(),
                         store.client.theme,
-                        context),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                      child: GestureDetector(
-                        onTap: () => DialogButtom().showDialog(
+                        constraint.maxWidth,
+                        context,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                        child: GestureDetector(
+                          onTap: () => DialogButtom().showDialog(
                             const UsersSelectionWidget(),
                             store.client.theme,
-                            context),
-                        child: CircleAvatarWidget(
-                          key: Key(linha.id),
-                          url: linha.urlImage,
+                            constraint.maxWidth,
+                            context,
+                          ),
+                          child: CircleAvatarWidget(
+                            key: Key(linha.id),
+                            url: linha.urlImage,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-          ],
-        );
-      },
-    );
+            ],
+          );
+        },
+      );
+    });
   }
 }

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/modules/home/home_store.dart';
+import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/date_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_order_widget.dart';
@@ -31,11 +31,11 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   final bool home;
   final dynamic zoomController;
   final Function? setOpen;
-  final int etiquetaSelection;
-  final Function? setEtiquetaSelection;
   final dynamic etiquetaList;
   final Function? setValueSearch;
   final Function? changeFilterSearch;
+  final Function? getDioFase;
+  final dynamic client;
   AppBarWidget({
     Key? key,
     this.title = "",
@@ -47,13 +47,13 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
     this.back = true,
     this.setOpen,
     this.zoomController,
-    this.etiquetaSelection = 57585,
-    this.setEtiquetaSelection,
     this.etiquetaList,
     this.tarefas,
     this.rota = '/auth',
     this.setValueSearch,
     this.changeFilterSearch,
+    this.getDioFase,
+    this.client,
   }) : super(key: key);
 
   @override
@@ -69,7 +69,6 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   AuthRepository auth = AuthRepository();
   ILocalStorage storage = LocalStorageShare();
   UserDioClientModel user = UserDioClientModel();
-  final HomeStore store = Modular.get();
 
   getPerfil() async {
     await auth.getUser().then((e) {
@@ -141,148 +140,141 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                   ),
                 ],
               )
-            : search
+            : search && widget.home
                 ? _popSearch()
                 : Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 8),
                     child: Wrap(
                       children: [
                         ListTile(
-                          leading: GestureDetector(
-                            child: store.client.icon != 0
-                                ? Icon(
-                                    IconData(store.client.icon,
-                                        fontFamily: 'MaterialIcons'),
-                                    color: ConvertIcon()
-                                        .convertColor(store.client.color),
-                                  )
-                                : Icon(
-                                    Icons.bookmark,
-                                    color: store.client.theme
+                          leading: MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              child: widget.client.icon != 0
+                                  ? Icon(
+                                      IconData(widget.client.icon,
+                                          fontFamily: 'MaterialIcons'),
+                                      color: ConvertIcon()
+                                          .convertColor(widget.client.color),
+                                    )
+                                  : Icon(
+                                      Icons.bookmark,
+                                      color: widget.client.theme
+                                          ? darkThemeData(context)
+                                              .iconTheme
+                                              .color
+                                          : lightThemeData(context)
+                                              .iconTheme
+                                              .color,
+                                    ),
+                              onTap: () {
+                                DialogButtom().showDialog(
+                                  const RadioEtiquetasFilterWidget(),
+                                  widget.client.theme,
+                                  constraint.maxWidth,
+                                  context,
+                                );
+                              },
+                            ),
+                          ),
+                          title: GestureDetector(
+                            child: ListTile(
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.filter_alt,
+                                  ),
+                                  constraint.maxWidth >=
+                                          LarguraLayoutBuilder().telaPc
+                                      ? Text(
+                                          widget.client.orderAscDesc
+                                              ? '${widget.client.orderSelection} DESC'
+                                              : '${widget.client.orderSelection} ASC',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        )
+                                      : Container(),
+                                ],
+                              ),
+                            ),
+                            onTap: () => DialogButtom().showDialog(
+                              Observer(builder: (_) {
+                                return const RadioOrderWidget();
+                              }),
+                              widget.client.theme,
+                              constraint.maxWidth,
+                              context,
+                              width: MediaQuery.of(context).size.height * 0.4,
+                            ),
+                          ),
+                          trailing: Wrap(
+                            children: [
+                              MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                  child: Icon(
+                                    Icons.people,
+                                    color: widget.client.theme
                                         ? darkThemeData(context).iconTheme.color
                                         : lightThemeData(context)
                                             .iconTheme
                                             .color,
                                   ),
-                            onTap: () {
-                              DialogButtom().showDialog(
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: RadioEtiquetasFilterWidget(
-                                    changeFilterEtiquetaList:
-                                        store.changeFilterEtiquetaList,
-                                    setColor: store.client.setColor,
-                                    setIcon: store.client.setIcon,
-                                    setEtiquetaSelection:
-                                        store.client.setEtiquetaSelection,
-                                  ),
-                                ),
-                                store.client.theme,
-                                context,
-                              );
-                            },
-                          ),
-                          title: Center(
-                            child: GestureDetector(
-                              child: ListTile(
-                                title: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.filter_alt,
-                                    ),
-                                    constraint.maxWidth >=
-                                            LarguraLayoutBuilder().telaPc
-                                        ? Text(
-                                            store.client.orderAscDesc
-                                                ? '${store.client.orderSelection} DESC'
-                                                : '${store.client.orderSelection} ASC',
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          )
-                                        : Container(),
-                                  ],
-                                ),
-                              ),
-                              onTap: () => DialogButtom().showDialog(
-                                Observer(builder: (_) {
-                                  return RadioOrderWidget(
-                                    orderAscDesc: store.client.orderAscDesc,
-                                    setOrderAscDesc:
-                                        store.client.setOrderAscDesc,
-                                    orderSelection: store.client.orderSelection,
-                                    changeOrderList: store.changeOrderList,
-                                    setOrderSelection:
-                                        store.client.setOrderSelection,
-                                  );
-                                }),
-                                store.client.theme,
-                                context,
-                                width: MediaQuery.of(context).size.height * 0.4,
-                              ),
-                            ),
-                          ),
-                          trailing: Wrap(
-                            children: [
-                              GestureDetector(
-                                child: Icon(
-                                  Icons.people,
-                                  color: store.client.theme
-                                      ? darkThemeData(context).iconTheme.color
-                                      : lightThemeData(context).iconTheme.color,
-                                ),
-                                onTap: () {
-                                  if (store.client.perfilUserLogado.manager) {
-                                    DialogButtom().showDialog(
-                                      TeamsSelectionWidget(
-                                        changeFilterUserList:
-                                            store.changeFilterUserList,
-                                        setImageUser: store.client.setImgUrl,
-                                        setUserSelection:
-                                            store.client.setUserSelection,
-                                      ),
-                                      store.client.theme,
-                                      context,
-                                    );
-                                  }
-                                },
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 32.0),
-                                child: GestureDetector(
-                                  child: Observer(
-                                    builder: (_) {
-                                      return Icon(
-                                        store.client.filterDate
-                                            ? Icons.history
-                                            : Icons.timelapse,
-                                        color: store.client.filterDate
-                                            ? Colors.red
-                                            : store.client.theme
-                                                ? darkThemeData(context)
-                                                    .iconTheme
-                                                    .color
-                                                : lightThemeData(context)
-                                                    .iconTheme
-                                                    .color,
-                                      );
-                                    },
-                                  ),
                                   onTap: () {
-                                    if (store.client.perfilUserLogado.manager) {
-                                      if (!store.client.filterDate) {
-                                        DialogButtom().showDialog(
-                                          const DateFilterWidget(),
-                                          store.client.theme,
-                                          context,
-                                        );
-                                      } else {
-                                        store.client.setFilterDate(false);
-                                        store.getDioFase();
-                                      }
+                                    if (widget
+                                        .client.perfilUserLogado.manager) {
+                                      DialogButtom().showDialog(
+                                        const TeamsSelectionWidget(),
+                                        widget.client.theme,
+                                        constraint.maxWidth,
+                                        context,
+                                      );
                                     }
                                   },
+                                ),
+                              ),
+                              MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 32.0),
+                                  child: GestureDetector(
+                                    child: Observer(
+                                      builder: (_) {
+                                        return Icon(
+                                          widget.client.filterDate
+                                              ? Icons.history
+                                              : Icons.timelapse,
+                                          color: widget.client.filterDate
+                                              ? Colors.red
+                                              : widget.client.theme
+                                                  ? darkThemeData(context)
+                                                      .iconTheme
+                                                      .color
+                                                  : lightThemeData(context)
+                                                      .iconTheme
+                                                      .color,
+                                        );
+                                      },
+                                    ),
+                                    onTap: () {
+                                      if (widget
+                                          .client.perfilUserLogado.manager) {
+                                        if (!widget.client.filterDate) {
+                                          DialogButtom().showDialog(
+                                            const DateFilterWidget(),
+                                            widget.client.theme,
+                                            constraint.maxWidth,
+                                            context,
+                                          );
+                                        } else {
+                                          widget.client.setFilterDate(false);
+                                          widget.getDioFase!();
+                                        }
+                                      }
+                                    },
+                                  ),
                                 ),
                               ),
                             ],
@@ -364,35 +356,39 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   }
 
   _popSearch() {
-    return PlayAnimation<double>(
-      tween: Tween(begin: 0.1, end: MediaQuery.of(context).size.width),
-      duration: const Duration(milliseconds: 600),
-      curve: Curves.easeIn,
-      builder: (context, child, value) {
-        return Container(
-          width: value,
-          decoration: BoxDecoration(
-            color: Colors.black26,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: TextFormField(
-            onChanged: (value) {
-              setState(() {
-                widget.setValueSearch!(value);
-              });
-              widget.changeFilterSearch!();
-            },
-            style: const TextStyle(fontSize: 12),
-            decoration: const InputDecoration(
-              contentPadding:
-                  EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
-              border: InputBorder.none,
-              focusedBorder: InputBorder.none,
+    return Center(
+      child: PlayAnimation<double>(
+        tween: Tween(begin: 0.1, end: MediaQuery.of(context).size.width),
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeIn,
+        builder: (context, child, value) {
+          return Center(
+            child: Container(
+              width: value,
+              decoration: BoxDecoration(
+                color: Colors.black26,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    widget.setValueSearch!(value);
+                  });
+                  widget.changeFilterSearch!();
+                },
+                style: const TextStyle(fontSize: 12),
+                decoration: const InputDecoration(
+                  contentPadding:
+                      EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                ),
+                autofocus: true,
+              ),
             ),
-            autofocus: true,
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

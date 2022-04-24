@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
@@ -10,6 +7,7 @@ import 'package:munatasks2/app/modules/settings/perfil/shared/widget/imagem_perf
 import 'package:munatasks2/app/modules/settings/perfil/shared/widget/names_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 
@@ -33,19 +31,16 @@ class PerfilPageState extends State<PerfilPage> {
           settings: true,
           rota: '/home/',
           back: true),
-      body: SingleChildScrollView(
-        child: Observer(
-          builder: (_) {
-            if (!store.client.loading) {
-              bool enableSwitch = store.client.perfilDio.manager;
-              return GestureDetector(
-                onTap: () {
-                  FocusScope.of(context).requestFocus(FocusNode());
-                },
-                child: Padding(
-                  padding: kIsWeb || Platform.isWindows
-                      ? const EdgeInsets.all(84.0)
-                      : const EdgeInsets.all(0),
+      body: LayoutBuilder(builder: (context, constraint) {
+        return SingleChildScrollView(
+          child: Observer(
+            builder: (_) {
+              if (!store.client.loading) {
+                bool enableSwitch = store.client.perfilDio.manager;
+                return GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
                   child: Column(
                     children: [
                       ImagemPerfilWidget(errorName: store.client.validateName),
@@ -93,23 +88,23 @@ class PerfilPageState extends State<PerfilPage> {
                       )
                     ],
                   ),
-                ),
-              );
-            } else {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(32.0),
-                    child: CircularProgressWidget(),
+                );
+              } else {
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(32.0),
+                      child: CircularProgressWidget(),
+                    ),
                   ),
-                ),
-              );
-            }
-          },
-        ),
-      ),
+                );
+              }
+            },
+          ),
+        );
+      }),
     );
   }
 }

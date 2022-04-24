@@ -1,11 +1,10 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class DialogButtom {
-  showDialog(dynamic widgets, bool theme, context, {double width = 300.00}) {
+  showDialog(dynamic widgets, bool theme, constraint, context,
+      {double width = 300.00}) {
     showGeneralDialog(
       barrierLabel: "Label",
       barrierDismissible: true,
@@ -17,7 +16,7 @@ class DialogButtom {
           alignment: Alignment.bottomCenter,
           child: Container(
             height: width,
-            width: kIsWeb || Platform.isWindows
+            width: constraint >= LarguraLayoutBuilder().telaPc
                 ? MediaQuery.of(context).size.width * 0.5
                 : MediaQuery.of(context).size.width,
             child: SizedBox.expand(
@@ -43,7 +42,7 @@ class DialogButtom {
     );
   }
 
-  showDialogCreate(dynamic widgets, context) {
+  showDialogCreate(dynamic widgets, constraint, context) {
     bool _darkModeEnabled = false;
 
     final ThemeData theme = Theme.of(context);
@@ -62,7 +61,7 @@ class DialogButtom {
           alignment: Alignment.bottomCenter,
           child: Container(
             height: MediaQuery.of(context).size.height * 0.55,
-            width: kIsWeb || Platform.isWindows
+            width: constraint >= LarguraLayoutBuilder().telaPc
                 ? MediaQuery.of(context).size.width * 0.50
                 : MediaQuery.of(context).size.width,
             child: SizedBox.expand(

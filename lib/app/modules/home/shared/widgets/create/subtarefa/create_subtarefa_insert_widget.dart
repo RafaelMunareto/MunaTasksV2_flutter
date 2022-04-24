@@ -1,11 +1,9 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class CreateSubtarefaInsertWidget extends StatefulWidget {
   final dynamic subtarefaInserSelection;
@@ -81,45 +79,48 @@ class _CreateSubtarefaInsertWidgetState
                     list.insert(0, selecione);
                   }
 
-                  return SingleChildScrollView(
-                    child: Wrap(
-                      runAlignment: WrapAlignment.spaceAround,
-                      spacing: 24,
-                      children: [
-                        for (var linha
-                            in store.client.settings.subtarefaInsert!)
-                          Padding(
-                            padding: kIsWeb || Platform.isWindows
-                                ? const EdgeInsets.only(bottom: 16.0)
-                                : const EdgeInsets.only(bottom: 4.0),
-                            child: InputChip(
-                              key: UniqueKey(),
-                              labelPadding: const EdgeInsets.all(2),
-                              elevation: 4.0,
-                              avatar: const Icon(
-                                Icons.work,
-                                color: Colors.grey,
-                              ),
-                              label: SizedBox(
-                                width: 100,
-                                child: Text(
-                                  linha,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 12),
+                  return LayoutBuilder(builder: (context, constraint) {
+                    return SingleChildScrollView(
+                      child: Wrap(
+                        runAlignment: WrapAlignment.spaceAround,
+                        spacing: 24,
+                        children: [
+                          for (var linha
+                              in store.client.settings.subtarefaInsert!)
+                            Padding(
+                              padding: constraint.maxWidth >=
+                                      LarguraLayoutBuilder().telaPc
+                                  ? const EdgeInsets.only(bottom: 16.0)
+                                  : const EdgeInsets.only(bottom: 4.0),
+                              child: InputChip(
+                                key: UniqueKey(),
+                                labelPadding: const EdgeInsets.all(2),
+                                elevation: 4.0,
+                                avatar: const Icon(
+                                  Icons.work,
+                                  color: Colors.grey,
                                 ),
+                                label: SizedBox(
+                                  width: 100,
+                                  child: Text(
+                                    linha,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    widget.setSubtarefaSelection(linha);
+                                    FocusScope.of(context).unfocus();
+                                    Modular.to.pop();
+                                  });
+                                },
                               ),
-                              onPressed: () {
-                                setState(() {
-                                  widget.setSubtarefaSelection(linha);
-                                  FocusScope.of(context).unfocus();
-                                  Modular.to.pop();
-                                });
-                              },
                             ),
-                          ),
-                      ],
-                    ),
-                  );
+                        ],
+                      ),
+                    );
+                  });
                 }
               },
             ),

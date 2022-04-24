@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
@@ -30,14 +32,12 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
-      if (constraint.maxWidth >= LarguraLayoutBuilder().telaPc) {
-        widget.setOpen(true);
-      }
       return Scaffold(
         body: SafeArea(
           child: GestureDetector(
             onTap: () {
-              if (constraint.maxWidth < LarguraLayoutBuilder().telaPc) {
+              if (constraint.maxWidth < LarguraLayoutBuilder().telaPc &&
+                  !Platform.isWindows) {
                 widget.controller.toggle!();
                 widget.setOpen(false);
               }
@@ -195,7 +195,9 @@ class _MenuScreenState extends State<MenuScreen> {
                                         },
                                       ),
                                       constraint.maxWidth <
-                                              LarguraLayoutBuilder().telaPc
+                                              LarguraLayoutBuilder()
+                                                      .telaSmartphone /
+                                                  2.36
                                           ? ListTile(
                                               title: Row(
                                                 children: const [

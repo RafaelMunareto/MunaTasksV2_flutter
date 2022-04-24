@@ -83,18 +83,12 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                     ),
                               onTap: () {
                                 DialogButtom().showDialog(
-                                  MouseRegion(
+                                  const MouseRegion(
                                     cursor: SystemMouseCursors.click,
-                                    child: RadioEtiquetasFilterWidget(
-                                      changeFilterEtiquetaList:
-                                          store.changeFilterEtiquetaList,
-                                      setColor: store.client.setColor,
-                                      setIcon: store.client.setIcon,
-                                      setEtiquetaSelection:
-                                          store.client.setEtiquetaSelection,
-                                    ),
+                                    child: RadioEtiquetasFilterWidget(),
                                   ),
                                   store.client.theme,
+                                  constraint.maxWidth,
                                   context,
                                 );
                               },
@@ -119,18 +113,10 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                                 ),
                                 onTap: () => DialogButtom().showDialog(
                                   Observer(builder: (_) {
-                                    return RadioOrderWidget(
-                                      orderAscDesc: store.client.orderAscDesc,
-                                      setOrderAscDesc:
-                                          store.client.setOrderAscDesc,
-                                      orderSelection:
-                                          store.client.orderSelection,
-                                      changeOrderList: store.changeOrderList,
-                                      setOrderSelection:
-                                          store.client.setOrderSelection,
-                                    );
+                                    return const RadioOrderWidget();
                                   }),
                                   store.client.theme,
+                                  constraint.maxWidth,
                                   context,
                                   width:
                                       MediaQuery.of(context).size.height * 0.4,
@@ -144,14 +130,9 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                               onTap: () {
                                 if (store.client.perfilUserLogado.manager) {
                                   DialogButtom().showDialog(
-                                    TeamsSelectionWidget(
-                                      changeFilterUserList:
-                                          store.changeFilterUserList,
-                                      setImageUser: store.client.setImgUrl,
-                                      setUserSelection:
-                                          store.client.setUserSelection,
-                                    ),
+                                    const TeamsSelectionWidget(),
                                     store.client.theme,
+                                    constraint.maxWidth,
                                     context,
                                   );
                                 }

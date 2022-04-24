@@ -1,11 +1,9 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class PrioridadeSelectionWidget extends StatefulWidget {
   final Function setPrioridadeSelection;
@@ -67,58 +65,63 @@ class _PrioridadeSelectionWidgetState extends State<PrioridadeSelectionWidget>
 
     return FadeTransition(
       opacity: _animacaoOpacity,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Center(
-          child: SingleChildScrollView(
-            child: Wrap(
-              runAlignment: WrapAlignment.spaceAround,
-              spacing: 24,
-              children: [
-                for (var linha in list)
-                  Padding(
-                    padding: kIsWeb || Platform.isWindows
-                        ? const EdgeInsets.only(bottom: 16.0)
-                        : const EdgeInsets.only(bottom: 8.0),
-                    child: InputChip(
-                      key: ObjectKey(linha),
-                      labelPadding: const EdgeInsets.all(2),
-                      elevation: 8.0,
-                      avatar: linha == 4
-                          ? const Icon(Icons.flag_outlined, color: Colors.grey)
-                          : Icon(
-                              Icons.flag,
-                              color: ConvertIcon().convertColorFlaf(linha),
-                            ),
-                      label: SizedBox(
-                        width: kIsWeb || Platform.isWindows
-                            ? 100
-                            : MediaQuery.of(context).size.width,
-                        child: Text(
-                          linha == 4
-                              ? 'Normal'
-                              : 'Prioridade ' + linha.toString(),
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 12),
+      child: LayoutBuilder(builder: (context, constraint) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: SingleChildScrollView(
+              child: Wrap(
+                runAlignment: WrapAlignment.spaceAround,
+                spacing: 24,
+                children: [
+                  for (var linha in list)
+                    Padding(
+                      padding:
+                          constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                              ? const EdgeInsets.only(bottom: 16.0)
+                              : const EdgeInsets.only(bottom: 8.0),
+                      child: InputChip(
+                        key: ObjectKey(linha),
+                        labelPadding: const EdgeInsets.all(2),
+                        elevation: 8.0,
+                        avatar: linha == 4
+                            ? const Icon(Icons.flag_outlined,
+                                color: Colors.grey)
+                            : Icon(
+                                Icons.flag,
+                                color: ConvertIcon().convertColorFlaf(linha),
+                              ),
+                        label: SizedBox(
+                          width: constraint.maxWidth >=
+                                  LarguraLayoutBuilder().telaPc
+                              ? 100
+                              : MediaQuery.of(context).size.width,
+                          child: Text(
+                            linha == 4
+                                ? 'Normal'
+                                : 'Prioridade ' + linha.toString(),
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 12),
+                          ),
                         ),
+                        onPressed: () {
+                          setState(() {
+                            widget.setPrioridadeSelection(linha);
+                            if (!widget.create) {
+                              widget.changePrioridadeList!(widget.tarefaModel!);
+                            }
+                            FocusScope.of(context).unfocus();
+                            Modular.to.pop();
+                          });
+                        },
                       ),
-                      onPressed: () {
-                        setState(() {
-                          widget.setPrioridadeSelection(linha);
-                          if (!widget.create) {
-                            widget.changePrioridadeList!(widget.tarefaModel!);
-                          }
-                          FocusScope.of(context).unfocus();
-                          Modular.to.pop();
-                        });
-                      },
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

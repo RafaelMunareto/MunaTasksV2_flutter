@@ -202,7 +202,6 @@ abstract class HomeStoreBase with Store {
   }
 
   changeFilterEtiquetaList() {
-    client.setLoadingTasks(true);
     if (client.etiquetaSelection == 57585) {
       getDio();
       getDioFase();
@@ -213,7 +212,6 @@ abstract class HomeStoreBase with Store {
         client.setTaskDio(value
             .where((e) => e.etiqueta.icon == client.etiquetaSelection)
             .toList());
-        client.setLoadingTasks(false);
       });
     }
   }

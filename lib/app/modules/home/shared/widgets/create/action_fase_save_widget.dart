@@ -21,31 +21,35 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
     final HomeStore store = Modular.get();
 
     return Observer(builder: (_) {
-      return GestureDetector(
-        child: Chip(
-          backgroundColor:
-              ConvertIcon().colorStatus(store.clientCreate.faseTarefa),
-          label: Text(
-            ConvertIcon().nameStatus(store.clientCreate.faseTarefa),
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: ConvertIcon()
-                    .colorStatusDark(store.clientCreate.faseTarefa)),
+      return LayoutBuilder(builder: (context, constraint) {
+        return GestureDetector(
+          child: Chip(
+            backgroundColor:
+                ConvertIcon().colorStatus(store.clientCreate.faseTarefa),
+            label: Text(
+              ConvertIcon().nameStatus(store.clientCreate.faseTarefa),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: ConvertIcon()
+                      .colorStatusDark(store.clientCreate.faseTarefa)),
+            ),
+            avatar: Icon(
+              ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
+              color:
+                  ConvertIcon().colorStatusDark(store.clientCreate.faseTarefa),
+            ),
           ),
-          avatar: Icon(
-            ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
-            color: ConvertIcon().colorStatusDark(store.clientCreate.faseTarefa),
+          onTap: () => DialogButtom().showDialog(
+            ActionsFaseWidget(
+              faseList: store.client.fase,
+              setActionsFase: store.clientCreate.setFaseTarefa,
+            ),
+            store.client.theme,
+            constraint.maxWidth,
+            context,
           ),
-        ),
-        onTap: () => DialogButtom().showDialog(
-          ActionsFaseWidget(
-            faseList: store.client.fase,
-            setActionsFase: store.clientCreate.setFaseTarefa,
-          ),
-          store.client.theme,
-          context,
-        ),
-      );
+        );
+      });
     });
   }
 }

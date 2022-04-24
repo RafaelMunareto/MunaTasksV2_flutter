@@ -7,7 +7,9 @@ import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/simple_button_widget.dart';
 
 class ListSettingsWidget extends StatefulWidget {
-  const ListSettingsWidget({Key? key}) : super(key: key);
+  final double constraint;
+  const ListSettingsWidget({Key? key, required this.constraint})
+      : super(key: key);
 
   @override
   State<ListSettingsWidget> createState() => _ListSettingsWidgetState();
@@ -18,95 +20,87 @@ class _ListSettingsWidgetState extends State<ListSettingsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 7,
-      child: Column(
-        children: [
-          Observer(builder: (_) {
-            return SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: ListView.separated(
-                  scrollDirection: Axis.vertical,
-                  controller: ScrollController(),
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(4),
-                  itemCount: store.escolha.length,
-                  separatorBuilder: (context, index) {
-                    return const Divider();
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    var linha = store.escolha[index];
-                    return Wrap(
-                      children: [
-                        Dismissible(
-                          background: Container(
-                            color: Colors.green,
-                            child: Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Row(
-                                children: const [
-                                  Icon(
-                                    Icons.edit,
-                                    color: Colors.white,
-                                  ),
-                                  Text(
-                                    'Editar',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ],
-                              ),
-                            ),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: ListView.separated(
+          scrollDirection: Axis.vertical,
+          controller: ScrollController(),
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(4),
+          itemCount: store.escolha.length,
+          separatorBuilder: (context, index) {
+            return const Divider();
+          },
+          itemBuilder: (BuildContext context, int index) {
+            var linha = store.escolha[index];
+            return Wrap(
+              children: [
+                Dismissible(
+                  background: Container(
+                    color: Colors.green,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Row(
+                        children: const [
+                          Icon(
+                            Icons.edit,
+                            color: Colors.white,
                           ),
-                          secondaryBackground: Container(
-                            color: Colors.red,
-                            child: Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
-                                  Icon(
-                                    Icons.delete,
-                                    color: Colors.white,
-                                  ),
-                                  Text(
-                                    'Excluir',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          Text(
+                            'Editar',
+                            style: TextStyle(color: Colors.white),
                           ),
-                          key: UniqueKey(),
-                          onDismissed: (direction) {
-                            if (direction == DismissDirection.startToEnd) {
-                              DialogButtom().showDialog(
-                                DialogInputWidget(
-                                  value: linha,
-                                  editar: store.edit,
-                                ),
-                                store.isSwitched,
-                                context,
-                              );
-                              store.setEscolha(store.escolha);
-                            } else {
-                              dialogDelete(linha, context);
-                            }
-                          },
-                          child: ListTile(
-                            title: Text(
-                              store.label == 'Tempo'
-                                  ? linha.tempoName.toUpperCase()
-                                  : linha.toString().toUpperCase(),
-                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  secondaryBackground: Container(
+                    color: Colors.red,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          Icon(
+                            Icons.delete,
+                            color: Colors.white,
                           ),
+                          Text(
+                            'Excluir',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  key: UniqueKey(),
+                  onDismissed: (direction) {
+                    if (direction == DismissDirection.startToEnd) {
+                      DialogButtom().showDialog(
+                        DialogInputWidget(
+                          value: linha,
+                          editar: store.edit,
                         ),
-                      ],
-                    );
-                  }),
+                        store.isSwitched,
+                        widget.constraint,
+                        context,
+                      );
+                      store.setEscolha(store.escolha);
+                    } else {
+                      dialogDelete(linha, context);
+                    }
+                  },
+                  child: ListTile(
+                    title: Text(
+                      store.label == 'Tempo'
+                          ? linha.tempoName.toUpperCase()
+                          : linha.toString().toUpperCase(),
+                    ),
+                  ),
+                ),
+              ],
             );
           }),
-        ],
-      ),
     );
   }
 

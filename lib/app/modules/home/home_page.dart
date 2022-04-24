@@ -30,7 +30,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
 
   @override
   void initState() {
-    if (kIsWeb) {
+    if (defaultTargetPlatform == TargetPlatform.windows) {
       store.client.setOpen(true);
     }
     super.initState();
@@ -60,9 +60,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                       etiquetaList: store.client.etiquetas,
                       tarefas: store.client.taskDio,
                       setValueSearch: store.client.setSearchValue,
-                      etiquetaSelection: store.client.etiquetaSelection,
-                      setEtiquetaSelection: store.client.setEtiquetaSelection,
                       changeFilterSearch: store.changeFilterSearchList,
+                      client: store.client,
+                      getDioFase: store.getDioFase,
                     )
                   : PreferredSize(
                       child: Container(),
@@ -73,6 +73,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                   store.clientCreate.cleanSave();
                   DialogButtom().showDialogCreate(
                     const CreateWidget(),
+                    constraint.maxWidth,
                     context,
                   );
                 },

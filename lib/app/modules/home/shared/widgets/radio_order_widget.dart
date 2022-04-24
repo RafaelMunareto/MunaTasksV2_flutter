@@ -7,19 +7,9 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 
 class RadioOrderWidget extends StatefulWidget {
-  final dynamic orderSelection;
-  final Function changeOrderList;
-  final Function setOrderSelection;
-  final bool orderAscDesc;
-  final Function setOrderAscDesc;
-  const RadioOrderWidget(
-      {Key? key,
-      required this.orderSelection,
-      required this.changeOrderList,
-      this.orderAscDesc = false,
-      required this.setOrderAscDesc,
-      required this.setOrderSelection})
-      : super(key: key);
+  const RadioOrderWidget({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<RadioOrderWidget> createState() => _RadioOrderWidgetState();
@@ -53,10 +43,11 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
                     title: Transform.scale(
                       scale: 1.5,
                       child: Switch(
-                          value: widget.orderAscDesc,
+                          value: store.client.orderAscDesc,
                           onChanged: (_) {
-                            widget.setOrderAscDesc(!widget.orderAscDesc);
-                            widget.changeOrderList();
+                            store.client
+                                .setOrderAscDesc(!store.client.orderAscDesc);
+                            store.changeOrderList();
                           }),
                     ),
                     trailing: const Text('DESC'),
@@ -75,11 +66,11 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
                             ),
                             leading: Radio(
                               value: linha.toString(),
-                              groupValue: widget.orderSelection,
+                              groupValue: store.client.orderSelection,
                               onChanged: (value) {
                                 setState(() {
-                                  widget.setOrderSelection(value);
-                                  widget.changeOrderList();
+                                  store.client.setOrderSelection(value);
+                                  store.changeOrderList();
                                 });
                               },
                             ),

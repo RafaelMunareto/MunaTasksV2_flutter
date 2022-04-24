@@ -1,22 +1,14 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class TeamsSelectionWidget extends StatefulWidget {
-  final Function changeFilterUserList;
-  final Function? setUserSelection;
-  final Function setImageUser;
   const TeamsSelectionWidget({
     Key? key,
-    required this.changeFilterUserList,
-    required this.setUserSelection,
-    required this.setImageUser,
   }) : super(key: key);
 
   @override
@@ -76,8 +68,8 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
       opacity: _animacaoOpacity,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Center(
-          child: SingleChildScrollView(
+        body: Center(child: LayoutBuilder(builder: (context, constraint) {
+          return SingleChildScrollView(
             child: Wrap(
               runAlignment: WrapAlignment.spaceAround,
               crossAxisAlignment: WrapCrossAlignment.center,
@@ -85,9 +77,10 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
               children: [
                 for (var linha in list)
                   Padding(
-                    padding: kIsWeb || Platform.isWindows
-                        ? const EdgeInsets.only(bottom: 16.0)
-                        : const EdgeInsets.only(bottom: 4.0),
+                    padding:
+                        constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                            ? const EdgeInsets.only(bottom: 16.0)
+                            : const EdgeInsets.only(bottom: 4.0),
                     child: InputChip(
                       key: ObjectKey(linha.id),
                       labelPadding: const EdgeInsets.all(2),
@@ -107,9 +100,9 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
                       ),
                       onPressed: () {
                         setState(() {
-                          widget.setUserSelection!(linha);
-                          widget.changeFilterUserList();
-                          widget.setImageUser(linha.urlImage);
+                          store.client.setUserSelection(linha);
+                          store.changeFilterUserList();
+                          store.client.setImgUrl(linha.urlImage);
                           Modular.to.pop();
                         });
                       },
@@ -117,8 +110,8 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
                   ),
               ],
             ),
-          ),
-        ),
+          );
+        })),
       ),
     );
   }
