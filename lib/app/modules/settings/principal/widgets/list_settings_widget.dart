@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:munatasks2/app/modules/settings/principal/widgets/dialog_input_widget.dart';

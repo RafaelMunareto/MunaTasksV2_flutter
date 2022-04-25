@@ -115,13 +115,16 @@ class _NamesWidgetState extends State<NamesWidget>
                             }
                           });
                         },
-                        child: Icon(
-                          !enabledField
-                              ? Icons.drive_file_rename_outline
-                              : Icons.task_alt,
-                          color: store.client.theme
-                              ? darkThemeData(context).primaryColor
-                              : lightThemeData(context).primaryColor,
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Icon(
+                            !enabledField
+                                ? Icons.drive_file_rename_outline
+                                : Icons.task_alt,
+                            color: store.client.theme
+                                ? darkThemeData(context).primaryColor
+                                : lightThemeData(context).primaryColor,
+                          ),
                         ),
                       ),
                     ),

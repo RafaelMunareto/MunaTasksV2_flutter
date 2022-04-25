@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/date_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_order_widget.dart';
@@ -10,6 +9,8 @@ import 'package:munatasks2/app/modules/home/shared/widgets/teams_selection_widge
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/auth/repositories/auth_repository.dart';
+import 'package:munatasks2/app/shared/components/pop_menu_widget.dart';
+import 'package:munatasks2/app/shared/components/pop_search_widget.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
@@ -17,7 +18,6 @@ import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
-import 'package:simple_animations/simple_animations.dart';
 
 class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   final String title;
@@ -95,26 +95,26 @@ class _AppBarWidgetState extends State<AppBarWidget> {
     return LayoutBuilder(builder: (context, constraint) {
       return AppBar(
         actions: [
-          widget.settings && !widget.home
-              ? _popMenu(constraint.maxWidth)
+          !widget.home
+              ? PopMenuWidget(constraint: constraint.maxWidth, perfil: perfil)
               : GestureDetector(
-                  child: Padding(
-                    padding:
-                        constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                            ? const EdgeInsets.only(right: 48.0)
-                            : const EdgeInsets.only(right: 12.0),
-                    child: !search
-                        ? Icon(
+                  child: !search
+                      ? MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Icon(
                             Icons.search,
                             size: constraint.maxWidth >=
                                     LarguraLayoutBuilder().telaPc
                                 ? 36
                                 : 24,
-                          )
-                        : const Icon(
+                          ),
+                        )
+                      : const MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Icon(
                             Icons.close,
                           ),
-                  ),
+                        ),
                   onTap: () {
                     setState(() {
                       search = !search;
@@ -141,7 +141,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 ],
               )
             : search && widget.home
-                ? _popSearch()
+                ? PopSearchWidget(
+                    setValueSearch: widget.setValueSearch,
+                    changeFilterSearch: widget.changeFilterSearch)
                 : Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 8),
                     child: Wrap(
@@ -182,17 +184,23 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                               title: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Icon(
-                                    Icons.filter_alt,
+                                  const MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: Icon(
+                                      Icons.filter_alt,
+                                    ),
                                   ),
                                   constraint.maxWidth >=
                                           LarguraLayoutBuilder().telaPc
-                                      ? Text(
-                                          widget.client.orderAscDesc
-                                              ? '${widget.client.orderSelection} DESC'
-                                              : '${widget.client.orderSelection} ASC',
-                                          style: const TextStyle(
-                                            fontSize: 12,
+                                      ? MouseRegion(
+                                          cursor: SystemMouseCursors.click,
+                                          child: Text(
+                                            widget.client.orderAscDesc
+                                                ? '${widget.client.orderSelection} DESC'
+                                                : '${widget.client.orderSelection} ASC',
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                            ),
                                           ),
                                         )
                                       : Container(),
@@ -306,89 +314,5 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               ),
       );
     });
-  }
-
-  _popMenu(width) {
-    return PopupMenuButton(
-      icon: Padding(
-        padding: width > 1023
-            ? const EdgeInsets.only(right: 48.0)
-            : const EdgeInsets.only(right: 12.0),
-        child: const Icon(
-          Icons.more_vert,
-        ),
-      ),
-      itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-        PopupMenuItem(
-          child: perfil.urlImage != ''
-              ? InputChip(
-                  avatar: CircleAvatar(
-                    backgroundImage: NetworkImage(perfil.urlImage ?? ''),
-                  ),
-                  label: Text(perfil.name.name),
-                )
-              : Container(),
-        ),
-        PopupMenuItem(
-          mouseCursor: SystemMouseCursors.click,
-          onTap: () => Modular.to.navigate('/settings/'),
-          child: ListTile(
-            leading: Icon(
-              Icons.settings,
-              color: lightThemeData(context).iconTheme.color,
-            ),
-            title: const Text('Configurações'),
-          ),
-        ),
-        PopupMenuItem(
-          mouseCursor: SystemMouseCursors.click,
-          onTap: () => Modular.to.navigate('/settings/perfil'),
-          child: ListTile(
-            leading: Icon(
-              Icons.account_circle,
-              color: lightThemeData(context).iconTheme.color,
-            ),
-            title: const Text('Perfil e Equipes'),
-          ),
-        ),
-      ],
-    );
-  }
-
-  _popSearch() {
-    return Center(
-      child: PlayAnimation<double>(
-        tween: Tween(begin: 0.1, end: MediaQuery.of(context).size.width),
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.easeIn,
-        builder: (context, child, value) {
-          return Center(
-            child: Container(
-              width: value,
-              decoration: BoxDecoration(
-                color: Colors.black26,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: TextFormField(
-                onChanged: (value) {
-                  setState(() {
-                    widget.setValueSearch!(value);
-                  });
-                  widget.changeFilterSearch!();
-                },
-                style: const TextStyle(fontSize: 12),
-                decoration: const InputDecoration(
-                  contentPadding:
-                      EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                ),
-                autofocus: true,
-              ),
-            ),
-          );
-        },
-      ),
-    );
   }
 }

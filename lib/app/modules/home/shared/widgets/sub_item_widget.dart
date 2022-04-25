@@ -65,9 +65,12 @@ class SubItemWidget extends StatelessWidget {
               ),
               title: GestureDetector(
                 onTap: () => actionSubtarefa(subTarefa, constraint.maxWidth),
-                child: Icon(
-                  ConvertIcon().iconStatus(subTarefa.status),
-                  color: ConvertIcon().iconStatusColor(subTarefa.status),
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Icon(
+                    ConvertIcon().iconStatus(subTarefa.status),
+                    color: ConvertIcon().iconStatusColor(subTarefa.status),
+                  ),
                 ),
               ),
               trailing: CircleAvatarWidget(url: subTarefa.user.urlImage),

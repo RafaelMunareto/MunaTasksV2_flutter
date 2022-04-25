@@ -52,9 +52,12 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.tarefa.fase = 1;
                 widget.save(widget.tarefa);
               },
-              child: const Icon(
-                Icons.play_circle,
-                color: Colors.green,
+              child: const MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Icon(
+                  Icons.play_circle,
+                  color: Colors.green,
+                ),
               ),
             ),
             GestureDetector(
@@ -62,9 +65,12 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.tarefa.fase = 2;
                 widget.save(widget.tarefa);
               },
-              child: const Icon(
-                Icons.check_circle,
-                color: Colors.blue,
+              child: const MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Icon(
+                  Icons.check_circle,
+                  color: Colors.blue,
+                ),
               ),
             ),
           ],
@@ -78,9 +84,12 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.tarefa.fase = 0;
                 widget.save(widget.tarefa);
               },
-              child: const Icon(
-                Icons.pause_circle,
-                color: Colors.amber,
+              child: const MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Icon(
+                  Icons.pause_circle,
+                  color: Colors.amber,
+                ),
               ),
             ),
             GestureDetector(
@@ -88,9 +97,12 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.tarefa.fase = 2;
                 widget.save(widget.tarefa);
               },
-              child: const Icon(
-                Icons.task_alt,
-                color: kPrimaryColor,
+              child: const MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Icon(
+                  Icons.task_alt,
+                  color: kPrimaryColor,
+                ),
               ),
             ),
           ],
@@ -104,9 +116,12 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.tarefa.fase = 0;
                 widget.save(widget.tarefa);
               },
-              child: const Icon(
-                Icons.pause_circle,
-                color: Colors.amber,
+              child: const MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Icon(
+                  Icons.pause_circle,
+                  color: Colors.amber,
+                ),
               ),
             ),
             GestureDetector(
@@ -114,9 +129,12 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.tarefa.fase = 1;
                 widget.save(widget.tarefa);
               },
-              child: const Icon(
-                Icons.play_circle,
-                color: Colors.green,
+              child: const MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Icon(
+                  Icons.play_circle,
+                  color: Colors.green,
+                ),
               ),
             ),
           ],

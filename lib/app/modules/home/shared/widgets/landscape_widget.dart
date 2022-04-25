@@ -25,7 +25,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
       return store.client.loadingTasksTotal
-          ? const CircularProgressWidget()
+          ? const Center(child: SizedBox(child: CircularProgressWidget()))
           : kIsWeb || Platform.isWindows
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(8, 40, 8, 8),

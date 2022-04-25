@@ -7,7 +7,6 @@ import 'package:munatasks2/app/modules/settings/perfil/shared/widget/imagem_perf
 import 'package:munatasks2/app/modules/settings/perfil/shared/widget/names_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
-import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 

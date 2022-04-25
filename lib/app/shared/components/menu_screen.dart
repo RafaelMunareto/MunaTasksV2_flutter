@@ -164,7 +164,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                           ],
                                         ),
                                         onTap: () {
-                                          Modular.to.navigate('/settings');
+                                          Modular.to.navigate('/settings/');
                                         },
                                       ),
                                       ListTile(

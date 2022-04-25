@@ -77,11 +77,14 @@ class _EquipesWidgetState extends State<EquipesWidget>
               ),
             ),
             trailing: GestureDetector(
-              child: Icon(
-                Icons.drive_file_rename_outline,
-                color: store.client.theme
-                    ? darkThemeData(context).primaryColor
-                    : lightThemeData(context).primaryColor,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Icon(
+                  Icons.drive_file_rename_outline,
+                  color: store.client.theme
+                      ? darkThemeData(context).primaryColor
+                      : lightThemeData(context).primaryColor,
+                ),
               ),
               onTap: () {
                 setState(() {

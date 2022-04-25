@@ -45,11 +45,14 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
             store.atualizaImagem("camera");
           },
           child: ListTile(
-            leading: Icon(
-              Icons.camera_alt,
-              color: store.client.theme
-                  ? darkThemeData(context).primaryColor
-                  : lightThemeData(context).primaryColor,
+            leading: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Icon(
+                Icons.camera_alt,
+                color: store.client.theme
+                    ? darkThemeData(context).primaryColor
+                    : lightThemeData(context).primaryColor,
+              ),
             ),
             title: const Text('Camera'),
           ),
@@ -59,11 +62,16 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
           mouseCursor: SystemMouseCursors.click,
           onTap: () => {store.atualizaImagem("galeria")},
           child: ListTile(
-            leading: Icon(
-              Icons.image,
-              color: store.client.theme
-                  ? darkThemeData(context).primaryColor
-                  : lightThemeData(context).primaryColor,
+            leading: Center(
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Icon(
+                  Icons.image,
+                  color: store.client.theme
+                      ? darkThemeData(context).primaryColor
+                      : lightThemeData(context).primaryColor,
+                ),
+              ),
             ),
             title: const Text('Galeria'),
           ),
@@ -85,11 +93,14 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
           mouseCursor: SystemMouseCursors.click,
           onTap: () => {store.atualizaImagem("galeria")},
           child: ListTile(
-            leading: Icon(
-              Icons.image,
-              color: store.client.theme
-                  ? darkThemeData(context).primaryColor
-                  : lightThemeData(context).primaryColor,
+            leading: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Icon(
+                Icons.image,
+                color: store.client.theme
+                    ? darkThemeData(context).primaryColor
+                    : lightThemeData(context).primaryColor,
+              ),
             ),
             title: const Text('Galeria'),
           ),
@@ -243,16 +254,19 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                           }
                         });
                       },
-                      child: Icon(
-                        client.textFieldNameBool
-                            ? Icons.drive_file_rename_outline
-                            : client.perfilDio.name.name.isNotEmpty &&
-                                    client.perfilDio.name.name.length >= 3
-                                ? Icons.task_alt
-                                : Icons.task_alt,
-                        color: store.client.theme
-                            ? darkThemeData(context).primaryColor
-                            : lightThemeData(context).primaryColor,
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: Icon(
+                          client.textFieldNameBool
+                              ? Icons.drive_file_rename_outline
+                              : client.perfilDio.name.name.isNotEmpty &&
+                                      client.perfilDio.name.name.length >= 3
+                                  ? Icons.task_alt
+                                  : Icons.task_alt,
+                          color: store.client.theme
+                              ? darkThemeData(context).primaryColor
+                              : lightThemeData(context).primaryColor,
+                        ),
                       ),
                     ),
                   ),
