@@ -78,8 +78,12 @@ class _ButtonWidgetState extends State<ButtonWidget>
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: widget.theme
-                    ? darkThemeData(context).primaryColor
-                    : lightThemeData(context).primaryColor,
+                    ? widget.function == null
+                        ? Colors.grey
+                        : darkThemeData(context).primaryColor
+                    : widget.function == null
+                        ? Colors.grey
+                        : lightThemeData(context).primaryColor,
                 enabledMouseCursor: SystemMouseCursors.click,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(radius.value),
@@ -87,7 +91,9 @@ class _ButtonWidgetState extends State<ButtonWidget>
               ),
               onPressed: () {
                 FocusScope.of(context).requestFocus(FocusNode());
-                widget.function();
+                if (widget.function != null) {
+                  widget.function();
+                }
               },
               child: widget.loading
                   ? const CircularProgressIndicator(

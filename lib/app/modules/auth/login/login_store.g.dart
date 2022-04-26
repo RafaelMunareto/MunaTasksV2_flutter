@@ -9,13 +9,6 @@ part of 'login_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$LoginStore on _LoginStoreBase, Store {
-  Computed<dynamic>? _$loginComputed;
-
-  @override
-  dynamic get login => (_$loginComputed ??=
-          Computed<dynamic>(() => super.login, name: '_LoginStoreBase.login'))
-      .value;
-
   final _$supportStateAtom = Atom(name: '_LoginStoreBase.supportState');
 
   @override
@@ -215,15 +208,6 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     return _$getStorageLoginAsyncAction.run(() => super.getStorageLogin());
   }
 
-  final _$getStorageLoginNormalAsyncAction =
-      AsyncAction('_LoginStoreBase.getStorageLoginNormal');
-
-  @override
-  Future getStorageLoginNormal() {
-    return _$getStorageLoginNormalAsyncAction
-        .run(() => super.getStorageLoginNormal());
-  }
-
   final _$checkSupportDeviceAsyncAction =
       AsyncAction('_LoginStoreBase.checkSupportDevice');
 
@@ -314,28 +298,6 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   }
 
   @override
-  void setStorageLogin() {
-    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
-        name: '_LoginStoreBase.setStorageLogin');
-    try {
-      return super.setStorageLogin();
-    } finally {
-      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setStorageLoginNormal() {
-    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
-        name: '_LoginStoreBase.setStorageLoginNormal');
-    try {
-      return super.setStorageLoginNormal();
-    } finally {
-      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic submitStorage() {
     final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
         name: '_LoginStoreBase.submitStorage');
@@ -360,8 +322,7 @@ canCheckBiometrics: ${canCheckBiometrics},
 availableBiometrics: ${availableBiometrics},
 authorized: ${authorized},
 isAuthenticating: ${isAuthenticating},
-user: ${user},
-login: ${login}
+user: ${user}
     ''';
   }
 }

@@ -17,7 +17,7 @@ import 'modules/home/home_module.dart';
 class AppModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.singleton<ILocalStorage>((i) => LocalStorageShare()),
+    Bind<ILocalStorage>((i) => LocalStorageShare()),
     Bind.instance<LocalAuthentication>(LocalAuthentication()),
     Bind.singleton<ThemePreferences>((i) => ThemePreferences()),
     Bind.singleton<IAuthRepository>((i) => AuthRepository()),

@@ -1,9 +1,13 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:munatasks2/app/modules/auth/shared/models/client_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
@@ -20,6 +24,7 @@ abstract class _LoginStoreBase with Store {
 
   _LoginStoreBase() {
     buscaTheme();
+    submitStorage();
   }
 
   @observable
@@ -84,20 +89,25 @@ abstract class _LoginStoreBase with Store {
   @action
   setUser(value) => user = value;
 
-  submit() async {
-    await setLoading(true);
-    await auth.getLoginDio(client.email, client.password).then((value) {
-      setStorageLogin();
-      setStorageLoginNormal();
+  submit() {
+    setLoading(true);
+    auth.getLoginDio(client.email, client.password).then((value) {
       setLoading(false);
       setErrOrGoal(false);
-      Modular.to.navigate('/home/');
+
+      UserDioModel user = UserDioModel.fromJson(value.data);
+      SessionManager().set("token", user.token);
+
+      storage.put('token', [user.token]);
+      storage.put('userDio', [jsonEncode(user)]);
+      storage.put('biometric', [client.email, client.password]);
+      storage.put('login-normal', [client.email, client.password]);
     }).catchError((erro) {
-      if (erro.response.statusCode != 200) {
-        setLoading(false);
-        setErrOrGoal(false);
-        setMsg(erro.response.data['error']);
-      }
+      setLoading(false);
+      setErrOrGoal(false);
+      setMsg(erro.message ?? erro.response?.data['error']);
+    }).then((value) {
+      Modular.to.navigate('/home/');
     });
   }
 
@@ -138,49 +148,28 @@ abstract class _LoginStoreBase with Store {
   authenticateBiometric() {
     auth.authenticateWithBiometrics(faceOrFinger).then((value) {
       if (value == 'Authorized') {
-        setLoading(true);
-        auth.getLoginDio(client.email, client.password).then((value) {
-          setStorageLogin();
-          setStorageLoginNormal();
-          setLoading(false);
-          setErrOrGoal(false);
-          Modular.to.navigate('/home/');
-        }).catchError((erro) {
-          if (erro.response.statusCode != 200) {
+        if (loginStorage![0] != '') {
+          setLoading(true);
+          auth.getLoginDio(loginStorage![0], loginStorage![1]).then((value) {
             setLoading(false);
             setErrOrGoal(false);
-            setMsg(erro.response.data['error']);
-          }
-        });
+            UserDioModel user = UserDioModel.fromJson(value.data);
+            storage.put('userDio', [jsonEncode(user)]);
+            SessionManager().set("token", user.token);
+            Modular.to.navigate('/home/');
+          }).catchError((erro) {
+            setLoading(false);
+            setErrOrGoal(false);
+            setMsg(erro.message ?? erro.response?.data['error']);
+          });
+        }
       }
     });
-  }
-
-  @computed
-  get login {
-    List<String> login = [client.email, client.password];
-    return login;
-  }
-
-  //storage save login e password
-  @action
-  void setStorageLogin() {
-    storage.put('biometric', login);
-  }
-
-  @action
-  void setStorageLoginNormal() {
-    storage.put('login-normal', login);
   }
 
   @action
   getStorageLogin() async {
     await storage.get('biometric').then((value) => loginStorage = value);
-  }
-
-  @action
-  getStorageLoginNormal() async {
-    await storage.get('login-normal').then((value) => loginStorage = value);
   }
 
   //check support device
@@ -200,20 +189,18 @@ abstract class _LoginStoreBase with Store {
   @action
   submitStorage() {
     storage.get('login-normal').then((value) {
-      if (value == []) {
-        auth.getLoginDio(client.email, client.password).then((value) {
-          setStorageLogin();
-          setStorageLoginNormal();
-          setLoading(false);
-          setErrOrGoal(false);
-          Modular.to.navigate('/home/');
-        }).catchError((erro) {
-          if (erro.response.statusCode != 200) {
+      if (value != null) {
+        if (value[0] != '') {
+          auth.getLoginDio(value[0], value[1]).then((value) {
             setLoading(false);
             setErrOrGoal(false);
-            setMsg(erro.response.data['error']);
-          }
-        });
+            Modular.to.navigate('/home/');
+          }).catchError((erro) {
+            setLoading(false);
+            setErrOrGoal(false);
+            setMsg(erro.message ?? erro.response?.data['error']);
+          });
+        }
       }
     });
   }

@@ -4,10 +4,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
-import 'package:munatasks2/app/shared/auth/model/user_dio_model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
@@ -61,6 +61,7 @@ class AuthRepository implements IAuthRepository {
 
   @override
   getLogout() async {
+    await SessionManager().destroy();
     await storage.put('token', []);
     await storage.put('userDio', []);
     Modular.to.navigate('/auth/');
@@ -78,9 +79,7 @@ class AuthRepository implements IAuthRepository {
     response = await dio.post('sessions',
         data: jsonEncode({"email": email, "password": password}));
     DioStruture().statusRequest(response);
-    UserDioModel user = UserDioModel.fromJson(response.data);
-    await storage.put('userDio', [jsonEncode(user)]);
-    await storage.put('token', [user.token]);
+
     return response;
   }
 

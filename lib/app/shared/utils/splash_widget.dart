@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:munatasks2/app/shared/auth/repositories/auth_repository.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
@@ -30,12 +31,8 @@ class _SplashWidgetState extends State<SplashWidget> {
   void initState() {
     super.initState();
     changeThemeStorage();
-    theme.get('token').then((value) {
-      if (value != null) {
-        Modular.to.navigate('/home/');
-      } else {
-        Modular.to.navigate('/auth/');
-      }
+    SessionManager().containsKey("token").then((value) {
+      value ? Modular.to.navigate('/home/') : Modular.to.navigate('/auth/');
     });
   }
 

@@ -29,9 +29,9 @@ class SignupPageState extends State<SignupPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     autorun(
-      (_) async {
+      (_) {
         if (store.msg != '') {
-          await SnackbarCustom().createSnackBareErrOrGoal(_scaffoldKey,
+          SnackbarCustom().createSnackBareErrOrGoal(_scaffoldKey,
               errOrGoal: store.msgErrOrGoal,
               message: store.msg,
               rota: '/auth/');

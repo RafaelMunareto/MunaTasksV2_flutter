@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
@@ -81,6 +82,8 @@ abstract class _PrincipalStoreBase with Store {
   logoff() async {
     await storage.put('login-normal', []);
     await storage.put('user', []);
+    await storage.put('token', []);
+    await SessionManager().destroy();
     await Modular.get<AuthController>().logout();
   }
 

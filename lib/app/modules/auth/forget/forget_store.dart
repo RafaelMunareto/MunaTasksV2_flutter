@@ -61,12 +61,14 @@ abstract class _ForgetStoreBase with Store {
     setLoading(true);
     auth.sendEmailChangePassword(client.email).then((value) async {
       setLoading(false);
-      setMsgErrOrGoal(true);
-      setMsg('Senha enviada com sucesso!');
+      value?.data == 'Email enviado com sucesso!'
+          ? setMsgErrOrGoal(true)
+          : setMsgErrOrGoal(false);
+      setMsg(value?.data);
     }).catchError((erro) {
       setLoading(false);
       setMsgErrOrGoal(false);
-      setMsg(erro.response.data['error']);
+      setMsg(erro.message ?? erro.response?.data['error']);
     });
   }
 }

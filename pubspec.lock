@@ -361,6 +361,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  flutter_session_manager:
+    dependency: "direct main"
+    description:
+      name: flutter_session_manager
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   flutter_sliding_up_panel:
     dependency: "direct main"
     description:
