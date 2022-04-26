@@ -1,4 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -126,7 +129,8 @@ class EtiquetasPageState extends State<EtiquetasPage>
                                     padding: constraint.maxWidth >=
                                             LarguraLayoutBuilder().telaPc
                                         ? const EdgeInsets.all(8)
-                                        : const EdgeInsets.only(left: 12),
+                                        : const EdgeInsets.only(
+                                            left: 12, top: 8),
                                     child: ElevatedButton.icon(
                                         style: ButtonStyle(
                                           backgroundColor:

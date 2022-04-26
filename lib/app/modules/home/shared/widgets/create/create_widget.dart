@@ -11,11 +11,11 @@ import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/crea
 import 'package:munatasks2/app/modules/home/shared/widgets/create/text_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/users_save_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class CreateWidget extends StatefulWidget {
-  const CreateWidget({
-    Key? key,
-  }) : super(key: key);
+  final double constraint;
+  const CreateWidget({Key? key, required this.constraint}) : super(key: key);
 
   @override
   State<CreateWidget> createState() => _CreateWidgetState();
@@ -45,40 +45,58 @@ class _CreateWidgetState extends State<CreateWidget> {
               child: Wrap(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Row(
                       children: [
                         Expanded(
-                          flex: 2,
+                          flex:
+                              widget.constraint >= LarguraLayoutBuilder().telaPc
+                                  ? 2
+                                  : 3,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Padding(
-                                padding: EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(4.0),
                                 child: EtiquetasSaveWidget(),
                               ),
                               const Padding(
-                                padding: EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(4.0),
                                 child: ActionFaseSaveWidget(),
                               ),
                               const Padding(
-                                padding: EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(4.0),
                                 child: UsersSaveWidget(),
                               ),
                               const PrioridadeSaveWidget(),
-                              DateSaveWidget(dateController: dateController),
+                              widget.constraint >= LarguraLayoutBuilder().telaPc
+                                  ? DateSaveWidget(
+                                      dateController: dateController,
+                                      constraint: widget.constraint)
+                                  : Container()
                             ],
                           ),
                         ),
                         Expanded(
-                          flex: 8,
+                          flex:
+                              widget.constraint >= LarguraLayoutBuilder().telaPc
+                                  ? 8
+                                  : 7,
                           child: Wrap(children: [
                             TextSaveWidget(controller: textController),
                             const CreateSubtarefaWidget()
                           ]),
                         ),
                       ],
+                    ),
+                  ),
+                  Center(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: DateSaveWidget(
+                          dateController: dateController,
+                          constraint: widget.constraint),
                     ),
                   ),
                   const ButtonSaveWidget()

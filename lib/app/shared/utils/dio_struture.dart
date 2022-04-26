@@ -5,7 +5,8 @@ import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_sh
 
 class DioStruture {
   final ILocalStorage storage = LocalStorageShare();
-  final baseUrlMunatasks = 'http://localhost:3333/';
+  final baseUrlMunatasks =
+      'http://10.0.2.2:3333/'; //web desktop local 'http://localhost:3333/'
   List<String> localStorage = [];
   String token = '';
   dioAction() async {

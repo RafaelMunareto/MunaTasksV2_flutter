@@ -5,6 +5,7 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/actions_fase_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class ActionFaseSaveWidget extends StatefulWidget {
   final String title;
@@ -30,6 +31,9 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
               ConvertIcon().nameStatus(store.clientCreate.faseTarefa),
               style: TextStyle(
                   fontWeight: FontWeight.bold,
+                  fontSize: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                      ? 14
+                      : 12,
                   color: ConvertIcon()
                       .colorStatusDark(store.clientCreate.faseTarefa)),
             ),

@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class DateSaveWidget extends StatefulWidget {
   final TextEditingController dateController;
+  final double constraint;
   const DateSaveWidget({
     Key? key,
     required this.dateController,
+    required this.constraint,
   }) : super(key: key);
 
   @override
@@ -51,12 +54,17 @@ class _DateSaveWidgetState extends State<DateSaveWidget> {
 
     return TextField(
       textAlign: TextAlign.justify,
+      style: TextStyle(
+          fontSize:
+              widget.constraint < LarguraLayoutBuilder().telaPc ? 14 : 16),
       autofocus: false,
       controller: widget.dateController,
       onChanged: (value) => store.clientCreate.setTarefaDateSave(value),
       decoration: InputDecoration(
         border: InputBorder.none,
-        contentPadding: const EdgeInsets.fromLTRB(0, 14, 0, 0),
+        contentPadding: widget.constraint < LarguraLayoutBuilder().telaPc
+            ? null
+            : const EdgeInsets.fromLTRB(0, 14, 0, 0),
         prefixIcon: InkWell(
           child: Icon(
             Icons.calendar_today,

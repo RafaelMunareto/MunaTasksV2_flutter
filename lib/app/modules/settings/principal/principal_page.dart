@@ -69,6 +69,7 @@ class PrincipalPageState extends State<PrincipalPage>
                 value: '',
                 create: 'Novo',
                 editar: store.novo,
+                constraint: constraint.maxWidth,
               ),
               store.isSwitched,
               constraint.maxWidth,

@@ -5,6 +5,7 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class EtiquetasSaveWidget extends StatefulWidget {
   const EtiquetasSaveWidget({
@@ -28,7 +29,11 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
               store.clientCreate.tarefaModelSaveEtiqueta.icon != null
                   ? store.clientCreate.tarefaModelSaveEtiqueta.etiqueta
                   : 'Etiqueta',
-              style: const TextStyle(fontSize: 12),
+              style: TextStyle(
+                fontSize: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                    ? 14
+                    : 12,
+              ),
             ),
             avatar: Icon(
               store.clientCreate.tarefaModelSaveEtiqueta.icon != null

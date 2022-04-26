@@ -19,7 +19,7 @@ class _PopSearchWidgetState extends State<PopSearchWidget> {
   Widget build(BuildContext context) {
     return Center(
       child: PlayAnimation<double>(
-        tween: Tween(begin: 0.1, end: MediaQuery.of(context).size.width),
+        tween: Tween(begin: 0.1, end: MediaQuery.of(context).size.width * 0.7),
         duration: const Duration(milliseconds: 600),
         curve: Curves.easeIn,
         builder: (context, child, value) {

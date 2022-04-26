@@ -327,7 +327,11 @@ class _CardWidgetState extends State<CardWidget> {
                                                           );
                                                           DialogButtom()
                                                               .showDialogCreate(
-                                                            const CreateWidget(),
+                                                            CreateWidget(
+                                                              constraint:
+                                                                  constraint
+                                                                      .maxWidth,
+                                                            ),
                                                             constraint.maxWidth,
                                                             context,
                                                           );

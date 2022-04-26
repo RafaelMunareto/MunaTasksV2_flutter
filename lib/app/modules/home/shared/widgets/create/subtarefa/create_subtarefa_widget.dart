@@ -11,6 +11,7 @@ import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class CreateSubtarefaWidget extends StatefulWidget {
@@ -154,7 +155,9 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                 ),
               ),
               Expanded(
-                flex: 6,
+                flex: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                    ? 6
+                    : 8,
                 child: Wrap(
                   alignment: WrapAlignment.spaceBetween,
                   children: [
@@ -190,50 +193,47 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                   ],
                 ),
               ),
-              Expanded(
-                flex: 2,
-                child: Wrap(
-                  alignment: WrapAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.94,
-                        height: MediaQuery.of(context).size.height * 0.085,
-                        child: ElevatedButton.icon(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                              store.client.theme
-                                  ? darkThemeData(context).iconTheme.color
-                                  : lightThemeData(context).iconTheme.color,
+              constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                  ? Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.94,
+                          height: MediaQuery.of(context).size.height * 0.085,
+                          child: ElevatedButton.icon(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                store.client.theme
+                                    ? darkThemeData(context).iconTheme.color
+                                    : lightThemeData(context).iconTheme.color,
+                              ),
                             ),
+                            onPressed: () {
+                              store.clientCreate.isValidSubtarefa
+                                  ? store.clientCreate.setSubtarefas()
+                                  : DialogButtom().showDialog(
+                                      ErrorsWidget(
+                                        tarefa: false,
+                                        theme: store.client.theme,
+                                      ),
+                                      store.client.theme,
+                                      constraint.maxWidth,
+                                      context,
+                                    );
+                              FocusScope.of(context).unfocus();
+                            },
+                            icon: const Icon(Icons.add_circle, size: 18),
+                            label: store.clientCreate.loadingSubtarefa
+                                ? const CircularProgressWidget()
+                                : const Text(
+                                    "INCLUIR",
+                                  ),
                           ),
-                          onPressed: () {
-                            store.clientCreate.isValidSubtarefa
-                                ? store.clientCreate.setSubtarefas()
-                                : DialogButtom().showDialog(
-                                    ErrorsWidget(
-                                      tarefa: false,
-                                      theme: store.client.theme,
-                                    ),
-                                    store.client.theme,
-                                    constraint.maxWidth,
-                                    context,
-                                  );
-                            FocusScope.of(context).unfocus();
-                          },
-                          icon: const Icon(Icons.add_circle, size: 18),
-                          label: store.clientCreate.loadingSubtarefa
-                              ? const CircularProgressWidget()
-                              : const Text(
-                                  "INCLUIR",
-                                ),
                         ),
                       ),
                     )
-                  ],
-                ),
-              ),
+                  : Container(),
             ],
           ),
         );

@@ -79,6 +79,7 @@ class _ListSettingsWidgetState extends State<ListSettingsWidget> {
                         DialogInputWidget(
                           value: linha,
                           editar: store.edit,
+                          constraint: widget.constraint,
                         ),
                         store.isSwitched,
                         widget.constraint,

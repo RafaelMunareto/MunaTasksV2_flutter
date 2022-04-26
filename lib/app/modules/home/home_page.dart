@@ -72,7 +72,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                 onPressed: () {
                   store.clientCreate.cleanSave();
                   DialogButtom().showDialogCreate(
-                    const CreateWidget(),
+                    CreateWidget(
+                      constraint: constraint.maxWidth,
+                    ),
                     constraint.maxWidth,
                     context,
                   );
