@@ -13,6 +13,9 @@ class AuthGuard extends RouteGuard {
     await storage.get('token').then((value) {
       if (value != null) {
         token = value[0];
+      } else {
+        Modular.to.navigate('/auth/');
+        return false;
       }
     });
 

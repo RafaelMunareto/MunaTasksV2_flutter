@@ -59,7 +59,7 @@ abstract class _PerfilStoreBase with Store {
     perfilService.getDio(client.userSelection.id).then((value) async {
       await client.setPerfildio(value);
       await client.setNameTime(value.nameTime);
-      var users = await client.perfilDio.idStaff!.map((e) {
+      var users = await client.perfilDio.idStaff.map((e) {
         var perfil = PerfilDioModel.fromJson(e);
         if (!client.individualChip.contains(perfil.id)) {
           client.individualChip.add(perfil.id);

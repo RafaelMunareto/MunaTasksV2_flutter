@@ -4,6 +4,7 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class TeamsSelectionWidget extends StatefulWidget {
@@ -58,8 +59,7 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
         nameTime: "",
         idStaff: [],
         manager: true,
-        urlImage:
-            'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/allPeople.png?alt=media&token=19a38226-7467-4f83-a201-20214af45bc1');
+        urlImage: DioStruture().baseUrlMunatasks + 'files/todos.png');
     if (!list.map((e) => e.name.name.contains('TODOS')).contains(true)) {
       list.insert(0, todos);
     }

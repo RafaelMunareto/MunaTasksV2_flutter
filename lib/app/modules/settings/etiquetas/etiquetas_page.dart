@@ -1,7 +1,3 @@
-// ignore_for_file: unnecessary_null_comparison
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';

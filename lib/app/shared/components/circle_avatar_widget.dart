@@ -9,9 +9,7 @@ class CircleAvatarWidget extends StatelessWidget {
     return CircleAvatar(
       minRadius: 10,
       maxRadius: 15,
-      backgroundImage: NetworkImage(url == '' || url == null
-          ? 'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/person_people_avatar_man_boy_glasses_icon_131369.png?alt=media&token=19343af9-36fa-422d-88c3-716b1ffdbb88'
-          : url),
+      backgroundImage: NetworkImage(url),
       backgroundColor: Colors.transparent,
     );
   }

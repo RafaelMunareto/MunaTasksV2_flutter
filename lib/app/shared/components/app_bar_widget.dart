@@ -178,37 +178,6 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                           ? MouseRegion(
                               cursor: SystemMouseCursors.click,
                               child: GestureDetector(
-                                child: widget.client.imgUrl != ''
-                                    ? Icon(
-                                        Icons.people,
-                                        color: widget.client.theme
-                                            ? darkThemeData(context)
-                                                .iconTheme
-                                                .color
-                                            : lightThemeData(context)
-                                                .iconTheme
-                                                .color,
-                                      )
-                                    : CircleAvatarWidget(
-                                        url: widget.client.imgUrl,
-                                      ),
-                                onTap: () {
-                                  if (widget.client.perfilUserLogado.manager) {
-                                    DialogButtom().showDialog(
-                                      const TeamsSelectionWidget(),
-                                      widget.client.theme,
-                                      constraint.maxWidth,
-                                      context,
-                                    );
-                                  }
-                                },
-                              ),
-                            )
-                          : Container(),
-                      !search
-                          ? MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: GestureDetector(
                                 child: Icon(
                                   widget.client.filterDate
                                       ? Icons.history
@@ -236,6 +205,37 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                       widget.client.setFilterDate(false);
                                       widget.getDioFase!();
                                     }
+                                  }
+                                },
+                              ),
+                            )
+                          : Container(),
+                      !search && widget.client.perfilUserLogado.manager
+                          ? MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: GestureDetector(
+                                child: widget.client.imgUrl != ''
+                                    ? Icon(
+                                        Icons.people,
+                                        color: widget.client.theme
+                                            ? darkThemeData(context)
+                                                .iconTheme
+                                                .color
+                                            : lightThemeData(context)
+                                                .iconTheme
+                                                .color,
+                                      )
+                                    : CircleAvatarWidget(
+                                        url: widget.client.imgUrl,
+                                      ),
+                                onTap: () {
+                                  if (widget.client.perfilUserLogado.manager) {
+                                    DialogButtom().showDialog(
+                                      const TeamsSelectionWidget(),
+                                      widget.client.theme,
+                                      constraint.maxWidth,
+                                      context,
+                                    );
                                   }
                                 },
                               ),

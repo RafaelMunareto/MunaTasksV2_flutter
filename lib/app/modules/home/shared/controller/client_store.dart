@@ -132,8 +132,7 @@ abstract class _ClientStoreBase with Store {
   setSubtarefaModel(value) => subtarefaModel.add(value);
 
   @observable
-  String imgUrl =
-      'https://firebasestorage.googleapis.com/v0/b/munatasksv2.appspot.com/o/allPeople.png?alt=media&token=19a38226-7467-4f83-a201-20214af45bc1';
+  String imgUrl = 'todos.png';
 
   @action
   setImgUrl(value) => imgUrl = value;

@@ -32,7 +32,7 @@ class PerfilRepository implements IPerfilRepository {
   @override
   saveDio(PerfilDioModel model) async {
     Response response;
-    if (model.idStaff != null || model.idStaff.isNotEmpty) {
+    if (model.idStaff != null) {
       try {
         model.idStaff[0].id;
       } catch (e) {
