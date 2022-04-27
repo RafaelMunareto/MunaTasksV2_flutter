@@ -65,10 +65,10 @@ abstract class _ForgetStoreBase with Store {
           ? setMsgErrOrGoal(true)
           : setMsgErrOrGoal(false);
       setMsg(value?.data);
-    }).catchError((erro) {
+    }).catchError((error) {
       setLoading(false);
       setMsgErrOrGoal(false);
-      setMsg(erro.message ?? erro.response?.data['error']);
+      setMsg(error.response?.data['error'] ?? error?.message);
     });
   }
 }

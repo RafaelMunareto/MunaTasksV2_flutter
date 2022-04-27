@@ -24,7 +24,6 @@ abstract class _LoginStoreBase with Store {
 
   _LoginStoreBase() {
     buscaTheme();
-    submitStorage();
   }
 
   @observable
@@ -91,23 +90,20 @@ abstract class _LoginStoreBase with Store {
 
   submit() {
     setLoading(true);
-    auth.getLoginDio(client.email, client.password).then((value) {
+    auth.getLoginDio(client.email, client.password).then((value) async {
       setLoading(false);
       setErrOrGoal(false);
-
       UserDioModel user = UserDioModel.fromJson(value.data);
       SessionManager().set("token", user.token);
-
-      storage.put('token', [user.token]);
-      storage.put('userDio', [jsonEncode(user)]);
-      storage.put('biometric', [client.email, client.password]);
-      storage.put('login-normal', [client.email, client.password]);
-    }).catchError((erro) {
+      await storage.put('token', [user.token]);
+      await storage.put('userDio', [jsonEncode(user)]);
+      await storage.put('biometric', [client.email, client.password]);
+      await storage.put('login-normal', [client.email, client.password]);
+      Modular.to.navigate('/home/');
+    }).catchError((error) {
       setLoading(false);
       setErrOrGoal(false);
-      setMsg(erro.message ?? erro.response?.data['error']);
-    }).then((value) {
-      Modular.to.navigate('/home/');
+      setMsg(error.response?.data['error'] ?? error?.message);
     });
   }
 
@@ -150,17 +146,21 @@ abstract class _LoginStoreBase with Store {
       if (value == 'Authorized') {
         if (loginStorage![0] != '') {
           setLoading(true);
-          auth.getLoginDio(loginStorage![0], loginStorage![1]).then((value) {
+          auth
+              .getLoginDio(loginStorage![0], loginStorage![1])
+              .then((value) async {
             setLoading(false);
             setErrOrGoal(false);
             UserDioModel user = UserDioModel.fromJson(value.data);
-            storage.put('userDio', [jsonEncode(user)]);
             SessionManager().set("token", user.token);
+            await storage.put('token', [user.token]);
+            await storage.put('userDio', [jsonEncode(user)]);
+            await storage.put('login-normal', [client.email, client.password]);
             Modular.to.navigate('/home/');
-          }).catchError((erro) {
+          }).catchError((error) {
             setLoading(false);
             setErrOrGoal(false);
-            setMsg(erro.message ?? erro.response?.data['error']);
+            setMsg(error.response?.data['error'] ?? error?.message);
           });
         }
       }
@@ -169,7 +169,11 @@ abstract class _LoginStoreBase with Store {
 
   @action
   getStorageLogin() async {
-    await storage.get('biometric').then((value) => loginStorage = value);
+    await storage.get('biometric').then((value) {
+      if (value != null) {
+        loginStorage = value;
+      }
+    });
   }
 
   //check support device
@@ -190,15 +194,15 @@ abstract class _LoginStoreBase with Store {
   submitStorage() {
     storage.get('login-normal').then((value) {
       if (value != null) {
-        if (value[0] != '') {
+        if (value.isNotEmpty) {
           auth.getLoginDio(value[0], value[1]).then((value) {
             setLoading(false);
             setErrOrGoal(false);
             Modular.to.navigate('/home/');
-          }).catchError((erro) {
+          }).catchError((error) {
             setLoading(false);
             setErrOrGoal(false);
-            setMsg(erro.message ?? erro.response?.data['error']);
+            setMsg(error.response?.data['error'] ?? error?.message);
           });
         }
       }

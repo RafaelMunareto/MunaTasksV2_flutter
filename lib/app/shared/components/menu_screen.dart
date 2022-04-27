@@ -105,16 +105,22 @@ class _MenuScreenState extends State<MenuScreen> {
                                             fontSize: 20,
                                             fontWeight: FontWeight.w400),
                                       ),
-                                      Text(
-                                        store.client.perfilUserLogado.name.name,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w800,
-                                          color: store.client.theme
-                                              ? darkThemeData(context)
-                                                  .primaryColor
-                                              : lightThemeData(context)
-                                                  .primaryColorDark,
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
+                                        child: Text(
+                                          store.client.perfilUserLogado.name
+                                              .name,
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w800,
+                                            color: store.client.theme
+                                                ? darkThemeData(context)
+                                                    .primaryColor
+                                                : lightThemeData(context)
+                                                    .primaryColorDark,
+                                          ),
                                         ),
                                       ),
                                       InkWell(

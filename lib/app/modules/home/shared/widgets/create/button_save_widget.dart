@@ -47,7 +47,7 @@ class ButtonSaveWidget extends StatelessWidget {
                         Modular.to.pop();
                       }, onError: (error) {
                         SnackbarCustom().createSnackBar(
-                            error.response?.data['error'].toString(),
+                            error.response?.data['error'] ?? error?.message,
                             Colors.red,
                             context);
                       });
@@ -61,7 +61,7 @@ class ButtonSaveWidget extends StatelessWidget {
                         Modular.to.pop();
                       }, onError: (error) {
                         SnackbarCustom().createSnackBar(
-                            error.response?.data['error'].toString(),
+                            error.response?.data['error'] ?? error?.message,
                             Colors.red,
                             context);
                       });

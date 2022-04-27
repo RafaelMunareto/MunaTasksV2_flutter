@@ -48,6 +48,7 @@ class LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     store.submitStorage();
+    store.getStorageLogin();
     store.checkSupportDevice();
     super.initState();
   }

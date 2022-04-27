@@ -49,9 +49,7 @@ class _LinkRoteWidgetState extends State<LinkRoteWidget>
             opacity: _animacaoFade,
             child: Text(
               widget.label,
-              style: const TextStyle(
-                fontSize: 12.0,
-              ),
+              style: const TextStyle(fontSize: 12.0, color: Colors.blueAccent),
             ),
           ),
           FadeTransition(

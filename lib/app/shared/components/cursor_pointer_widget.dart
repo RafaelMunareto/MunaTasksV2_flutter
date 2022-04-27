@@ -5,7 +5,9 @@ class CursorPointerWidget extends StatefulWidget {
   final String route;
   final String label;
 
-  const CursorPointerWidget({Key? key, required this.route, required this.label}) : super(key: key);
+  const CursorPointerWidget(
+      {Key? key, required this.route, required this.label})
+      : super(key: key);
 
   @override
   State<CursorPointerWidget> createState() => _CursorPointerWidgetState();
@@ -13,7 +15,6 @@ class CursorPointerWidget extends StatefulWidget {
 
 class _CursorPointerWidgetState extends State<CursorPointerWidget> {
   bool _hover = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +30,7 @@ class _CursorPointerWidgetState extends State<CursorPointerWidget> {
         child: Text(
           widget.label,
           style: TextStyle(
-              color: _hover ? Colors.blue : const Color(0XFF2661FA),
-              fontSize: 12.0),
+              color: _hover ? Colors.blue : Colors.blueAccent, fontSize: 12.0),
         ),
         onTap: () => Modular.to.navigate(widget.route),
       ),

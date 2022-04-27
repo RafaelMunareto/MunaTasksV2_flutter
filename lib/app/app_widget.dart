@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:uni_links/uni_links.dart';
 
 class AppWidget extends StatefulWidget {
   @override
@@ -23,8 +25,27 @@ class _AppWidgetState extends State<AppWidget> {
 
   @override
   initState() {
+    initUniLinks().then(
+      (value) => setState(
+        () {
+          if (value != '') {
+            Modular.to
+                .navigate('/auth/change/?code=${value.split('code=')[1]}');
+          }
+        },
+      ),
+    );
     changeThemeStorage();
     super.initState();
+  }
+
+  Future<String> initUniLinks() async {
+    try {
+      final initialLink = await getInitialLink();
+      return initialLink ?? '';
+    } on PlatformException {
+      return '';
+    }
   }
 
   void changeThemeStorage() async {

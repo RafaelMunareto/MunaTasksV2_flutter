@@ -80,10 +80,10 @@ abstract class _PrincipalStoreBase with Store {
   }
 
   logoff() async {
-    await storage.put('login-normal', []);
-    await storage.put('user', []);
-    await storage.put('token', []);
-    await SessionManager().destroy();
+    await storage.delete('login-normal');
+    await storage.delete('user');
+    await storage.delete('token');
+    await SessionManager().remove('token');
     await Modular.get<AuthController>().logout();
   }
 

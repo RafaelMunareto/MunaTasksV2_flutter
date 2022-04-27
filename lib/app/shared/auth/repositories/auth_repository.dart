@@ -61,9 +61,10 @@ class AuthRepository implements IAuthRepository {
 
   @override
   getLogout() async {
-    await SessionManager().destroy();
+    await SessionManager().remove('token');
     await storage.put('token', []);
     await storage.put('userDio', []);
+    await storage.put('login-normal', []);
     Modular.to.navigate('/auth/');
   }
 

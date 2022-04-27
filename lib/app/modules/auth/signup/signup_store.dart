@@ -78,13 +78,13 @@ abstract class _SignupStoreBase with Store {
         UserDioModel user = UserDioModel.fromJson(value.data);
         await SessionManager().set("token", user.token);
         await storage.put('token', [user.token]);
-        storage.put('userDio', [jsonEncode(user)]);
-        storage.put('biometric', [client.email, client.password]);
+        await storage.put('userDio', [jsonEncode(user)]);
+        await storage.put('biometric', [client.email, client.password]);
         Modular.to.navigate('/auth/');
       });
     }).catchError((error) {
       setMsgErrOrGoal(false);
-      setMsg(error.response?.data['error'].toString());
+      setMsg(error.response?.data['error'] ?? error?.message);
       setLoading(false);
     });
   }
