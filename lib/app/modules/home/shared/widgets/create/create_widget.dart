@@ -36,10 +36,12 @@ class _CreateWidgetState extends State<CreateWidget> {
             child: Card(
               shape: RoundedRectangleBorder(
                 side: BorderSide(
-                    color: ConvertIcon().convertColor(
-                      store.clientCreate.tarefaModelSaveEtiqueta.color,
-                    ),
-                    width: 2),
+                  color: ConvertIcon().convertColor(
+                        store.clientCreate.tarefaModelSaveEtiqueta.color,
+                      ) ??
+                      Colors.grey,
+                  width: 2,
+                ),
                 borderRadius: BorderRadius.circular(5.0),
               ),
               child: Wrap(
@@ -73,7 +75,8 @@ class _CreateWidgetState extends State<CreateWidget> {
                               widget.constraint >= LarguraLayoutBuilder().telaPc
                                   ? DateSaveWidget(
                                       dateController: dateController,
-                                      constraint: widget.constraint)
+                                      constraint: widget.constraint,
+                                    )
                                   : Container()
                             ],
                           ),
@@ -95,8 +98,9 @@ class _CreateWidgetState extends State<CreateWidget> {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.3,
                       child: DateSaveWidget(
-                          dateController: dateController,
-                          constraint: widget.constraint),
+                        dateController: dateController,
+                        constraint: widget.constraint,
+                      ),
                     ),
                   ),
                   const ButtonSaveWidget()

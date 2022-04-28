@@ -59,13 +59,15 @@ abstract class _PerfilStoreBase with Store {
     perfilService.getDio(client.userSelection.id).then((value) async {
       await client.setPerfildio(value);
       await client.setNameTime(value.nameTime);
-      var users = await client.perfilDio.idStaff.map((e) {
-        var perfil = PerfilDioModel.fromJson(e);
-        if (!client.individualChip.contains(perfil.id)) {
-          client.individualChip.add(perfil.id);
-        }
-        return perfil;
-      }).toList();
+      var users = await client.perfilDio.idStaff == null
+          ? []
+          : client.perfilDio.idStaff.map((e) {
+              var perfil = PerfilDioModel.fromJson(e);
+              if (!client.individualChip.contains(perfil.id)) {
+                client.individualChip.add(perfil.id);
+              }
+              return perfil;
+            }).toList();
       client.setUsersDio(users);
     });
   }
@@ -126,7 +128,7 @@ abstract class _PerfilStoreBase with Store {
         client.setLoadingImagem(true);
       }
       var imagebytes = await image?.readAsBytes();
-      List<int> listData = imagebytes!.cast();
+      List<int>? listData = imagebytes!.cast();
       FormData formData = FormData.fromMap(
         {
           "urlImage": MultipartFile.fromBytes(listData,

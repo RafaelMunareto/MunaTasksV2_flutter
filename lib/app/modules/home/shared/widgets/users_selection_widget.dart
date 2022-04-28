@@ -7,7 +7,9 @@ import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 
 class UsersSelectionWidget extends StatefulWidget {
-  const UsersSelectionWidget({Key? key}) : super(key: key);
+  final double constraint;
+  const UsersSelectionWidget({Key? key, required this.constraint})
+      : super(key: key);
 
   @override
   State<UsersSelectionWidget> createState() => _UsersSelectionWidgetState();
@@ -63,54 +65,68 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                 );
               } else {
                 List<PerfilDioModel> list = store.client.perfis;
-                return SingleChildScrollView(
-                  child: Wrap(
-                    runAlignment: WrapAlignment.spaceAround,
-                    spacing: 24,
+                list.removeWhere((e) => e.name.name == 'TODOS');
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      for (var linha in list)
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 4.0),
-                          child: SizedBox(
-                            child: InputChip(
-                              key: ObjectKey(linha.name.email),
-                              labelPadding: const EdgeInsets.all(2),
-                              selected: store.clientCreate.individualChip
-                                  .contains(linha.name.email),
-                              elevation: 4.0,
-                              avatar: CircleAvatarWidget(
-                                url: linha.urlImage,
-                              ),
-                              label: SizedBox(
-                                width: 100,
-                                child: Text(
-                                  linha.name.name,
-                                  overflow: TextOverflow.ellipsis,
+                      Expanded(
+                        flex: 8,
+                        child: SingleChildScrollView(
+                          child: Wrap(
+                            runAlignment: WrapAlignment.spaceAround,
+                            spacing: 24,
+                            children: [
+                              for (var linha in list)
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                  child: SizedBox(
+                                    child: InputChip(
+                                      key: ObjectKey(linha.name.email),
+                                      labelPadding: const EdgeInsets.all(2),
+                                      selected: store
+                                          .clientCreate.individualChip
+                                          .contains(linha.name.email),
+                                      elevation: 4.0,
+                                      avatar: CircleAvatarWidget(
+                                        url: linha.urlImage,
+                                      ),
+                                      label: SizedBox(
+                                        width: 100,
+                                        child: Text(
+                                          linha.name.name,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      onSelected: (bool value) {
+                                        setState(() {
+                                          store.clientCreate
+                                              .setIdReferenceStaff(
+                                            linha.name.email,
+                                          );
+                                          store.clientCreate.setIdStaff(linha);
+                                          FocusScope.of(context).unfocus();
+                                          store.clientCreate
+                                              .setLoadingUser(false);
+                                        });
+                                      },
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              onSelected: (bool value) {
-                                setState(() {
-                                  store.clientCreate
-                                      .setIdReferenceStaff(linha.name.email);
-                                  store.clientCreate.setIdStaff(linha);
-                                  FocusScope.of(context).unfocus();
-                                  store.clientCreate.setLoadingUser(false);
-                                });
-                              },
-                            ),
+                            ],
                           ),
                         ),
-                      Baseline(
-                        baseline: MediaQuery.of(context).size.height * 0.2,
-                        baselineType: TextBaseline.alphabetic,
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: TextButton(
-                            onPressed: () {
-                              Modular.to.pop();
-                            },
-                            child: const Text('FECHAR'),
-                          ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: TextButton(
+                          onPressed: () {
+                            Modular.to.pop();
+                          },
+                          child: const Text('FECHAR'),
                         ),
                       ),
                     ],

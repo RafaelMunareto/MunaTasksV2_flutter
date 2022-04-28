@@ -6,15 +6,14 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
+import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class NamesWidget extends StatefulWidget {
-  final Function errorTime;
   final bool enableSwitch;
 
   const NamesWidget({
     Key? key,
-    required this.errorTime,
     required this.enableSwitch,
   }) : super(key: key);
 
@@ -60,37 +59,37 @@ class _NamesWidgetState extends State<NamesWidget>
 
   Widget _buildAnimation(BuildContext context, Widget? child) {
     widget.enableSwitch ? _controller.forward() : _controller.reverse();
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        const SizedBox(
-          height: 10,
-        ),
-        FadeTransition(
-          opacity: _animacaoOpacity,
-          child: Row(
+    return client.perfilDio.id == ''
+        ? const CircularProgressWidget()
+        : Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: SizedBox(
-                    width: 350,
-                    height: 80,
-                    child: ListTile(
-                      leading: IconRedondedWidget(
-                        icon: Icons.admin_panel_settings,
-                        color: store.client.theme
-                            ? darkThemeData(context).primaryColor
-                            : lightThemeData(context).primaryColor,
-                        size: 48,
-                      ),
-                      title: Observer(builder: (_) {
-                        return SizedBox(
-                          child: client.nameTime == ''
-                              ? Container()
-                              : TextFormField(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const SizedBox(
+                height: 10,
+              ),
+              FadeTransition(
+                opacity: _animacaoOpacity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: SizedBox(
+                          width: 350,
+                          height: 80,
+                          child: ListTile(
+                            leading: IconRedondedWidget(
+                              icon: Icons.admin_panel_settings,
+                              color: store.client.theme
+                                  ? darkThemeData(context).primaryColor
+                                  : lightThemeData(context).primaryColor,
+                              size: 48,
+                            ),
+                            title: Observer(builder: (_) {
+                              return SizedBox(
+                                child: TextFormField(
                                   enabled: enabledField,
                                   initialValue: client.perfilDio.nameTime,
                                   onChanged: (value) {
@@ -99,42 +98,42 @@ class _NamesWidgetState extends State<NamesWidget>
                                   decoration: InputDecoration(
                                     filled: enabledField,
                                     label: const Text('Time'),
-                                    errorText: widget.errorTime == null
+                                    errorText: client.validateTime == null
                                         ? null
-                                        : widget.errorTime(),
+                                        : client.validateTime(),
                                   ),
                                 ),
-                        );
-                      }),
-                      trailing: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            enabledField = !enabledField;
-                            if (!enabledField) {
-                              store.saveDio();
-                            }
-                          });
-                        },
-                        child: MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: Icon(
-                            !enabledField
-                                ? Icons.drive_file_rename_outline
-                                : Icons.task_alt,
-                            color: store.client.theme
-                                ? darkThemeData(context).primaryColor
-                                : lightThemeData(context).primaryColor,
+                              );
+                            }),
+                            trailing: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  enabledField = !enabledField;
+                                  if (!enabledField) {
+                                    store.saveDio();
+                                  }
+                                });
+                              },
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: Icon(
+                                  !enabledField
+                                      ? Icons.drive_file_rename_outline
+                                      : Icons.task_alt,
+                                  color: store.client.theme
+                                      ? darkThemeData(context).primaryColor
+                                      : lightThemeData(context).primaryColor,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ),
+              )
             ],
-          ),
-        )
-      ],
-    );
+          );
   }
 }

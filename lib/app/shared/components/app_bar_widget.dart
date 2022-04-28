@@ -125,7 +125,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                       search
                           ? PopSearchWidget(
                               setValueSearch: widget.setValueSearch,
-                              changeFilterSearch: widget.changeFilterSearch)
+                              changeFilterSearch: widget.changeFilterSearch,
+                            )
                           : Container(),
                       !search
                           ? MouseRegion(

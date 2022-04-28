@@ -32,7 +32,7 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
               style: TextStyle(
                 fontSize: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
                     ? 14
-                    : 12,
+                    : 10,
               ),
             ),
             avatar: Icon(

@@ -109,11 +109,12 @@ class _ButtonWidgetState extends State<ButtonWidget>
             ),
           ),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(radius.value),
-              gradient: const LinearGradient(colors: [
-                Color.fromARGB(255, 255, 136, 34),
-                Color.fromARGB(255, 255, 177, 41)
-              ])),
+            borderRadius: BorderRadius.circular(radius.value),
+            // gradient: const LinearGradient(colors: [
+            //   Color.fromARGB(255, 255, 136, 34),
+            //   Color.fromARGB(255, 255, 177, 41)
+            // ]),
+          ),
         ),
       ),
     );

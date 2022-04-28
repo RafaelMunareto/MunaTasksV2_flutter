@@ -129,8 +129,6 @@ class ConvertIcon {
         return Colors.orange;
       case 'brown':
         return Colors.brown;
-      default:
-        return Colors.grey;
     }
   }
 
@@ -152,8 +150,6 @@ class ConvertIcon {
         return Colors.amber;
       case 'orange':
         return Colors.orange;
-      default:
-        return Colors.grey;
     }
   }
 

@@ -22,63 +22,69 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
     return LayoutBuilder(builder: (context, constraint) {
       return Observer(
         builder: (_) {
-          return Wrap(
-            crossAxisAlignment: WrapCrossAlignment.end,
-            children: [
-              if (store.clientCreate.users.isEmpty &
-                  !store.clientCreate.loadingUser)
-                GestureDetector(
-                  onTap: () => DialogButtom().showDialog(
-                      const UsersSelectionWidget(),
-                      store.client.theme,
-                      constraint.maxWidth,
-                      context),
-                  child: Chip(
-                    label: Text(
-                      'Equipe',
-                      style: TextStyle(
-                          fontSize: constraint.maxWidth >=
-                                  LarguraLayoutBuilder().telaPc
-                              ? 14
-                              : 12),
-                    ),
-                    avatar: const Icon(
-                      Icons.people,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              if (store.clientCreate.users.isNotEmpty &&
-                  !store.clientCreate.loadingUser)
-                for (var linha in store.clientCreate.users)
-                  Baseline(
-                    baseline: 38,
-                    baselineType: TextBaseline.alphabetic,
-                    child: GestureDetector(
+          return Center(
+            child: SizedBox(
+              child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.end,
+                children: [
+                  if (store.clientCreate.users.isEmpty &
+                      !store.clientCreate.loadingUser)
+                    GestureDetector(
                       onTap: () => DialogButtom().showDialog(
-                        const UsersSelectionWidget(),
-                        store.client.theme,
-                        constraint.maxWidth,
-                        context,
+                          UsersSelectionWidget(constraint: constraint.maxWidth),
+                          store.client.theme,
+                          constraint.maxWidth,
+                          context),
+                      child: Chip(
+                        label: Text(
+                          'Equipe',
+                          style: TextStyle(
+                              fontSize: constraint.maxWidth >=
+                                      LarguraLayoutBuilder().telaPc
+                                  ? 14
+                                  : 12),
+                        ),
+                        avatar: const Icon(
+                          Icons.people,
+                          color: Colors.grey,
+                        ),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                    ),
+                  if (store.clientCreate.users.isNotEmpty &&
+                      !store.clientCreate.loadingUser)
+                    for (var linha in store.clientCreate.users)
+                      Baseline(
+                        baseline: 38,
+                        baselineType: TextBaseline.alphabetic,
                         child: GestureDetector(
                           onTap: () => DialogButtom().showDialog(
-                            const UsersSelectionWidget(),
+                            UsersSelectionWidget(
+                                constraint: constraint.maxWidth),
                             store.client.theme,
                             constraint.maxWidth,
                             context,
                           ),
-                          child: CircleAvatarWidget(
-                            key: Key(linha.id),
-                            url: linha.urlImage,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                            child: GestureDetector(
+                              onTap: () => DialogButtom().showDialog(
+                                UsersSelectionWidget(
+                                    constraint: constraint.maxWidth),
+                                store.client.theme,
+                                constraint.maxWidth,
+                                context,
+                              ),
+                              child: CircleAvatarWidget(
+                                key: Key(linha.id),
+                                url: linha.urlImage,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-            ],
+                ],
+              ),
+            ),
           );
         },
       );

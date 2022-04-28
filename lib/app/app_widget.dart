@@ -1,5 +1,6 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
@@ -22,39 +23,38 @@ class _AppWidgetState extends State<AppWidget> {
   final ILocalStorage theme = LocalStorageShare();
   late String darkLight = '';
   bool isDark = false;
+  StreamSubscription? _sub;
 
   @override
   initState() {
-    initUniLinks().then(
-      (value) => setState(
-        () {
-          if (value != '') {
-            Modular.to
-                .navigate('/auth/change/?code=${value.split('code=')[1]}');
-          }
-        },
-      ),
-    );
     changeThemeStorage();
     super.initState();
+    _handleIncomingLinks();
   }
 
-  Future<String> initUniLinks() async {
-    try {
-      final initialLink = await getInitialLink();
-      return initialLink ?? '';
-    } on PlatformException {
-      return '';
+  @override
+  void dispose() {
+    _sub?.cancel();
+    super.dispose();
+  }
+
+  void _handleIncomingLinks() {
+    if (!kIsWeb && defaultTargetPlatform != TargetPlatform.windows) {
+      _sub = uriLinkStream.listen((Uri? uri) {
+        if (!mounted) return;
+        Modular.to
+            .navigate('/auth/change/?code=${uri.toString().split('code=')[1]}');
+      }, onError: (Object err) {
+        if (!mounted) return;
+      });
     }
   }
 
   void changeThemeStorage() async {
     await theme.get('theme').then((value) {
-      setState(() {
-        value?[0] == 'dark'
-            ? _themeMode = ThemeMode.dark
-            : _themeMode = ThemeMode.light;
-      });
+      value?[0] == 'dark'
+          ? _themeMode = ThemeMode.dark
+          : _themeMode = ThemeMode.light;
     });
   }
 

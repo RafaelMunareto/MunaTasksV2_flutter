@@ -10,10 +10,12 @@ import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 class ActionsFaseWidget extends StatefulWidget {
   final Function setActionsFase;
   final dynamic faseList;
+  final double constraint;
   const ActionsFaseWidget({
     Key? key,
     required this.setActionsFase,
     required this.faseList,
+    required this.constraint,
   }) : super(key: key);
 
   @override
@@ -61,69 +63,74 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
-          child: Observer(
-            builder: (_) {
-              if (store.client.fase.isEmpty) {
-                return const Center(
-                  child: CircularProgressWidget(),
-                );
-              } else {
-                List<FaseDioModel>? list = store.client.fase;
-                return LayoutBuilder(builder: (context, constraint) {
-                  return SingleChildScrollView(
-                    child: Wrap(
-                      runAlignment: WrapAlignment.center,
-                      spacing: 24,
-                      children: [
-                        for (var linha in list)
-                          Padding(
-                            padding: constraint.maxWidth >=
-                                    LarguraLayoutBuilder().telaPc
-                                ? const EdgeInsets.only(bottom: 16.0)
-                                : const EdgeInsets.only(bottom: 4.0),
-                            child: InputChip(
-                              key: UniqueKey(),
-                              labelPadding: const EdgeInsets.all(2),
-                              elevation: 8.0,
-                              backgroundColor:
-                                  ConvertIcon().colorStatus(linha.status),
-                              avatar: Icon(
-                                IconData(linha.icon,
-                                    fontFamily: 'MaterialIcons'),
-                                color:
-                                    ConvertIcon().convertColorFase(linha.color),
-                              ),
-                              label: SizedBox(
-                                width: constraint.maxWidth >=
-                                        LarguraLayoutBuilder().telaPc
-                                    ? 100
-                                    : MediaQuery.of(context).size.width,
-                                child: Text(
-                                  linha.name.toString(),
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: ConvertIcon()
-                                        .colorStatusDark(linha.status),
+          child: SizedBox(
+            width: widget.constraint >= LarguraLayoutBuilder().telaPc
+                ? MediaQuery.of(context).size.width
+                : MediaQuery.of(context).size.width * 0.5,
+            child: Observer(
+              builder: (_) {
+                if (store.client.fase.isEmpty) {
+                  return const Center(
+                    child: CircularProgressWidget(),
+                  );
+                } else {
+                  List<FaseDioModel>? list = store.client.fase;
+                  return LayoutBuilder(builder: (context, constraint) {
+                    return SingleChildScrollView(
+                      child: Wrap(
+                        runAlignment: WrapAlignment.center,
+                        spacing: 24,
+                        children: [
+                          for (var linha in list)
+                            Padding(
+                              padding: constraint.maxWidth >=
+                                      LarguraLayoutBuilder().telaPc
+                                  ? const EdgeInsets.only(bottom: 16.0)
+                                  : const EdgeInsets.only(bottom: 4.0),
+                              child: InputChip(
+                                key: UniqueKey(),
+                                labelPadding: const EdgeInsets.all(2),
+                                elevation: 8.0,
+                                backgroundColor:
+                                    ConvertIcon().colorStatus(linha.status),
+                                avatar: Icon(
+                                  IconData(linha.icon,
+                                      fontFamily: 'MaterialIcons'),
+                                  color: ConvertIcon()
+                                      .convertColorFase(linha.color),
+                                ),
+                                label: SizedBox(
+                                  width: constraint.maxWidth >=
+                                          LarguraLayoutBuilder().telaPc
+                                      ? 100
+                                      : MediaQuery.of(context).size.width,
+                                  child: Text(
+                                    linha.name.toString(),
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: ConvertIcon()
+                                          .colorStatusDark(linha.status),
+                                    ),
                                   ),
                                 ),
+                                onPressed: () {
+                                  setState(() {
+                                    widget.setActionsFase(linha.status);
+                                    FocusScope.of(context).unfocus();
+                                    Modular.to.pop();
+                                  });
+                                },
                               ),
-                              onPressed: () {
-                                setState(() {
-                                  widget.setActionsFase(linha.status);
-                                  FocusScope.of(context).unfocus();
-                                  Modular.to.pop();
-                                });
-                              },
                             ),
-                          ),
-                      ],
-                    ),
-                  );
-                });
-              }
-            },
+                        ],
+                      ),
+                    );
+                  });
+                }
+              },
+            ),
           ),
         ),
       ),

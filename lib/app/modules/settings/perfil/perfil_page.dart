@@ -80,7 +80,6 @@ class PerfilPageState extends State<PerfilPage> {
                           : Container(),
                       NamesWidget(
                         enableSwitch: enableSwitch,
-                        errorTime: store.client.validateTime,
                       ),
                       EquipesWidget(
                         enableSwitch: enableSwitch,

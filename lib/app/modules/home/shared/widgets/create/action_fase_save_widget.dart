@@ -21,8 +21,8 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
   Widget build(BuildContext context) {
     final HomeStore store = Modular.get();
 
-    return Observer(builder: (_) {
-      return LayoutBuilder(builder: (context, constraint) {
+    return LayoutBuilder(builder: (context, constraint) {
+      return Observer(builder: (_) {
         return GestureDetector(
           child: Chip(
             backgroundColor:
@@ -33,7 +33,7 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
                   fontWeight: FontWeight.bold,
                   fontSize: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
                       ? 14
-                      : 12,
+                      : 10,
                   color: ConvertIcon()
                       .colorStatusDark(store.clientCreate.faseTarefa)),
             ),
@@ -47,6 +47,7 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
             ActionsFaseWidget(
               faseList: store.client.fase,
               setActionsFase: store.clientCreate.setFaseTarefa,
+              constraint: constraint.maxWidth,
             ),
             store.client.theme,
             constraint.maxWidth,

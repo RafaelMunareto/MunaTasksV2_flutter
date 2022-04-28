@@ -48,7 +48,10 @@ class _IconWidgetState extends State<IconWidget> {
           children: <Widget>[
             GestureDetector(
               child: const ListTile(
-                leading: Icon(Icons.settings),
+                leading: Icon(
+                  Icons.settings,
+                  color: Colors.grey,
+                ),
                 title: Text('Escolha uma ícone'),
               ),
               onTap: _pickIcon,

@@ -28,7 +28,6 @@ class _SplashWidgetState extends State<SplashWidget> {
 
   @override
   void initState() {
-    super.initState();
     changeThemeStorage();
     theme.get('token').then((value) {
       if (value != null) {
@@ -41,6 +40,7 @@ class _SplashWidgetState extends State<SplashWidget> {
         Modular.to.navigate('/auth/');
       }
     });
+    super.initState();
   }
 
   @override

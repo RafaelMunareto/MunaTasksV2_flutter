@@ -5,7 +5,6 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
-import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class CreateUserSubtarefaWidget extends StatefulWidget {
   final dynamic userLista;
@@ -76,44 +75,70 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
                 );
               } else {
                 List<PerfilDioModel> list = store.client.perfis;
+                list.removeWhere((e) => e.name.name == 'TODOS');
 
                 return LayoutBuilder(builder: (context, constraint) {
-                  return SingleChildScrollView(
-                    child: Wrap(
-                      runAlignment: WrapAlignment.spaceAround,
-                      spacing: 24,
+                  return SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        for (var linha in list)
-                          Padding(
-                            padding: constraint.maxWidth >=
-                                    LarguraLayoutBuilder().telaPc
-                                ? const EdgeInsets.only(bottom: 16.0)
-                                : const EdgeInsets.only(bottom: 4.0),
-                            child: InputChip(
-                              key: ObjectKey(linha.id),
-                              labelPadding: const EdgeInsets.all(2),
-                              elevation: 4.0,
-                              avatar: CircleAvatarWidget(
-                                url: linha.urlImage,
-                              ),
-                              label: SizedBox(
-                                width: 70,
-                                child: Text(
-                                  linha.name.name,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 12),
-                                ),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  widget.setUserCreateSelection(linha);
-                                  widget.setCreateImageUser(linha.urlImage);
-                                  FocusScope.of(context).unfocus();
-                                  Modular.to.pop();
-                                });
-                              },
+                        Expanded(
+                          flex: 8,
+                          child: SingleChildScrollView(
+                            child: Wrap(
+                              runAlignment: WrapAlignment.spaceAround,
+                              spacing: 24,
+                              children: [
+                                for (var linha in list)
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 4.0),
+                                    child: InputChip(
+                                      key: ObjectKey(linha.id),
+                                      labelPadding: const EdgeInsets.all(2),
+                                      elevation: 4.0,
+                                      avatar: CircleAvatarWidget(
+                                        url: linha.urlImage,
+                                      ),
+                                      label: SizedBox(
+                                        width: 100,
+                                        child: Text(
+                                          linha.name.name,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(fontSize: 12),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          widget.setUserCreateSelection(linha);
+                                          widget.setCreateImageUser(
+                                              linha.urlImage);
+                                          store.clientCreate
+                                              .setIdReferenceStaff(
+                                            linha.name.email,
+                                          );
+                                          store.clientCreate.setIdStaff(linha);
+                                          FocusScope.of(context).unfocus();
+                                          Modular.to.pop();
+                                        });
+                                      },
+                                    ),
+                                  ),
+                              ],
                             ),
                           ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: TextButton(
+                            onPressed: () {
+                              Modular.to.pop();
+                            },
+                            child: const Text('FECHAR'),
+                          ),
+                        ),
                       ],
                     ),
                   );

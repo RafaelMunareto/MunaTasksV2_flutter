@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -180,7 +179,7 @@ abstract class _LoginStoreBase with Store {
   @action
   checkSupportDevice() async {
     await getStorageLogin();
-    if (!kIsWeb || !Platform.isWindows) {
+    if (!kIsWeb && defaultTargetPlatform != TargetPlatform.windows) {
       await bio.isDeviceSupported().then((isSupported) => supportState =
           isSupported && loginStorage != null
               ? SupportState.supported

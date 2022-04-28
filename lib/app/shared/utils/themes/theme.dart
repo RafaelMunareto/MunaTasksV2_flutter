@@ -71,6 +71,7 @@ ThemeData darkThemeData(BuildContext context) {
       secondary: darkSecondaryColor,
       error: darkErrorColor,
     ),
+    inputDecorationTheme: const InputDecorationTheme(iconColor: Colors.grey),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: darkDarkGrey,
       selectedItemColor: darkContentColorLightTheme.withOpacity(0.7),
