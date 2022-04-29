@@ -6,12 +6,12 @@ class ButtonActionWidget extends StatefulWidget {
   final TarefaDioModel tarefa;
   final int navigate;
   final Function save;
-  const ButtonActionWidget(
-      {Key? key,
-      required this.tarefa,
-      required this.navigate,
-      required this.save})
-      : super(key: key);
+  const ButtonActionWidget({
+    Key? key,
+    required this.tarefa,
+    required this.navigate,
+    required this.save,
+  }) : super(key: key);
 
   @override
   State<ButtonActionWidget> createState() => _ButtonActionWidgetState();

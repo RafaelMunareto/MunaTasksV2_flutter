@@ -27,10 +27,7 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
             ? const Center(child: SizedBox(child: CircularProgressWidget()))
             : Center(
                 child: Padding(
-                  padding:
-                      constraint.maxWidth >= LarguraLayoutBuilder().larguraModal
-                          ? const EdgeInsets.fromLTRB(8, 40, 8, 8)
-                          : const EdgeInsets.fromLTRB(8, 40, 8, 8),
+                  padding: const EdgeInsets.all(8),
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height,
                     width: constraint.maxWidth >=
