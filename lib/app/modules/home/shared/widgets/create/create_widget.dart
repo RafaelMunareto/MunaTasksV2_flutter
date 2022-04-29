@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -12,6 +14,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/create/text_save_widg
 import 'package:munatasks2/app/modules/home/shared/widgets/create/users_save_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class CreateWidget extends StatefulWidget {
   final double constraint;
@@ -46,15 +49,36 @@ class _CreateWidgetState extends State<CreateWidget> {
               ),
               child: Wrap(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Modular.to.pop();
+                          store.getDioFase();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            'X',
+                            style: TextStyle(
+                              color: store.client.theme
+                                  ? darkThemeData(context).primaryColor
+                                  : lightThemeData(context).primaryColor,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Row(
                       children: [
                         Expanded(
-                          flex:
-                              widget.constraint >= LarguraLayoutBuilder().telaPc
-                                  ? 2
-                                  : 3,
+                          flex: widget.constraint > 100 ? 2 : 3,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -72,7 +96,8 @@ class _CreateWidgetState extends State<CreateWidget> {
                                 child: UsersSaveWidget(),
                               ),
                               const PrioridadeSaveWidget(),
-                              widget.constraint >= LarguraLayoutBuilder().telaPc
+                              widget.constraint >
+                                      LarguraLayoutBuilder().larguraModal
                                   ? DateSaveWidget(
                                       dateController: dateController,
                                       constraint: widget.constraint,
@@ -82,10 +107,10 @@ class _CreateWidgetState extends State<CreateWidget> {
                           ),
                         ),
                         Expanded(
-                          flex:
-                              widget.constraint >= LarguraLayoutBuilder().telaPc
-                                  ? 8
-                                  : 7,
+                          flex: widget.constraint >
+                                  LarguraLayoutBuilder().larguraModal
+                              ? 8
+                              : 7,
                           child: Wrap(children: [
                             TextSaveWidget(controller: textController),
                             const CreateSubtarefaWidget()
@@ -94,15 +119,17 @@ class _CreateWidgetState extends State<CreateWidget> {
                       ],
                     ),
                   ),
-                  Center(
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      child: DateSaveWidget(
-                        dateController: dateController,
-                        constraint: widget.constraint,
-                      ),
-                    ),
-                  ),
+                  widget.constraint <= LarguraLayoutBuilder().larguraModal
+                      ? Center(
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            child: DateSaveWidget(
+                              dateController: dateController,
+                              constraint: widget.constraint,
+                            ),
+                          ),
+                        )
+                      : Container(),
                   const ButtonSaveWidget()
                 ],
               ),

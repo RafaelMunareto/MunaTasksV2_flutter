@@ -23,7 +23,7 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  getGoogleLogin() async {
+  Future getGoogleLogin() async {
     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
         await googleUser!.authentication;
@@ -43,17 +43,14 @@ class AuthRepository implements IAuthRepository {
     response = await dio.get('usuarios/email/${googleUser.email}');
     DioStruture().statusRequest(response);
     if (response.data != null) {
-      UserDioClientModel userGet = UserDioClientModel.fromJson(response.data);
-      loginDio(user.email, user.password)
-          .then((value) => Modular.to.navigate('/home/'));
+      UserDioClientModel? userGet = UserDioClientModel.fromJson(response.data);
+      return userGet;
     } else {
-      saveUser(user).then((e) {
+      saveUser(user).then((e) async {
         if (e.data != null) {
           UserDioClientModel userGet = UserDioClientModel.fromJson(e.data);
           perfilUser(userGet);
-          loginDio(userGet.email, userGet.password).then((value) => Timer(
-              const Duration(milliseconds: 300),
-              () => Modular.to.navigate('/home/')));
+          return userGet;
         }
       });
     }

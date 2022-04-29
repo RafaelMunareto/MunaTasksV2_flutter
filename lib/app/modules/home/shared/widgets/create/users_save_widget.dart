@@ -35,20 +35,26 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                           store.client.theme,
                           constraint.maxWidth,
                           context),
-                      child: Chip(
-                        label: Text(
-                          'Equipe',
-                          style: TextStyle(
-                              fontSize: constraint.maxWidth >=
-                                      LarguraLayoutBuilder().telaPc
-                                  ? 14
-                                  : 12),
-                        ),
-                        avatar: const Icon(
-                          Icons.people,
-                          color: Colors.grey,
-                        ),
-                      ),
+                      child: constraint.maxWidth <=
+                              LarguraLayoutBuilder().larguraModal
+                          ? const Icon(
+                              Icons.people,
+                              color: Colors.grey,
+                            )
+                          : Chip(
+                              label: Text(
+                                'Equipe',
+                                style: TextStyle(
+                                    fontSize: constraint.maxWidth >
+                                            LarguraLayoutBuilder().larguraModal
+                                        ? 14
+                                        : 12),
+                              ),
+                              avatar: const Icon(
+                                Icons.people,
+                                color: Colors.grey,
+                              ),
+                            ),
                     ),
                   if (store.clientCreate.users.isNotEmpty &&
                       !store.clientCreate.loadingUser)

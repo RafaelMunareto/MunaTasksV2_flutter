@@ -69,60 +69,54 @@ class _PrioridadeSelectionWidgetState extends State<PrioridadeSelectionWidget>
         return Scaffold(
           backgroundColor: Colors.transparent,
           body: Center(
-            child: SizedBox(
-              width: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                  ? MediaQuery.of(context).size.width
-                  : MediaQuery.of(context).size.width * 0.5,
-              child: SingleChildScrollView(
-                child: Wrap(
-                  runAlignment: WrapAlignment.spaceAround,
-                  spacing: 24,
-                  children: [
-                    for (var linha in list)
-                      Padding(
-                        padding:
-                            constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                                ? const EdgeInsets.only(bottom: 16.0)
-                                : const EdgeInsets.only(bottom: 8.0),
-                        child: InputChip(
-                          key: ObjectKey(linha),
-                          labelPadding: const EdgeInsets.all(2),
-                          elevation: 8.0,
-                          avatar: linha == 4
-                              ? const Icon(Icons.flag_outlined,
-                                  color: Colors.grey)
-                              : Icon(
-                                  Icons.flag,
-                                  color: ConvertIcon().convertColorFlaf(linha),
-                                ),
-                          label: SizedBox(
-                            width: constraint.maxWidth >=
-                                    LarguraLayoutBuilder().telaPc
-                                ? 100
-                                : MediaQuery.of(context).size.width,
-                            child: Text(
-                              linha == 4
-                                  ? 'Normal'
-                                  : 'Prioridade ' + linha.toString(),
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12),
-                            ),
+            child: SingleChildScrollView(
+              child: Wrap(
+                runAlignment: WrapAlignment.spaceAround,
+                spacing: 24,
+                children: [
+                  for (var linha in list)
+                    Padding(
+                      padding: constraint.maxWidth >
+                              LarguraLayoutBuilder().larguraModal
+                          ? const EdgeInsets.only(bottom: 16.0)
+                          : const EdgeInsets.only(bottom: 16.0),
+                      child: InputChip(
+                        key: ObjectKey(linha),
+                        labelPadding: const EdgeInsets.all(2),
+                        elevation: 8.0,
+                        avatar: linha == 4
+                            ? const Icon(Icons.flag_outlined,
+                                color: Colors.grey)
+                            : Icon(
+                                Icons.flag,
+                                color: ConvertIcon().convertColorFlaf(linha),
+                              ),
+                        label: SizedBox(
+                          width: constraint.maxWidth >
+                                  LarguraLayoutBuilder().larguraModal
+                              ? MediaQuery.of(context).size.width * 0.1
+                              : MediaQuery.of(context).size.width * 0.3,
+                          child: Text(
+                            linha == 4
+                                ? 'Normal'
+                                : 'Prioridade ' + linha.toString(),
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 12),
                           ),
-                          onPressed: () {
-                            setState(() {
-                              widget.setPrioridadeSelection(linha);
-                              if (!widget.create) {
-                                widget
-                                    .changePrioridadeList!(widget.tarefaModel!);
-                              }
-                              FocusScope.of(context).unfocus();
-                              Modular.to.pop();
-                            });
-                          },
                         ),
+                        onPressed: () {
+                          setState(() {
+                            widget.setPrioridadeSelection(linha);
+                            if (!widget.create) {
+                              widget.changePrioridadeList!(widget.tarefaModel!);
+                            }
+                            FocusScope.of(context).unfocus();
+                            Modular.to.pop();
+                          });
+                        },
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
             ),
           ),

@@ -24,28 +24,46 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
     return LayoutBuilder(builder: (context, constraint) {
       return GestureDetector(
         child: Observer(builder: (_) {
-          return Chip(
-            label: Text(
-              store.clientCreate.tarefaModelSaveEtiqueta.icon != null
-                  ? store.clientCreate.tarefaModelSaveEtiqueta.etiqueta
-                  : 'Etiqueta',
-              style: TextStyle(
-                fontSize: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                    ? 14
-                    : 10,
-              ),
-            ),
-            avatar: Icon(
-              store.clientCreate.tarefaModelSaveEtiqueta.icon != null
-                  ? IconData(
-                      store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
-                      fontFamily: 'MaterialIcons')
-                  : Icons.bookmark,
-              color: ConvertIcon().convertColor(
-                store.clientCreate.tarefaModelSaveEtiqueta.color,
-              ),
-            ),
-          );
+          return constraint.maxWidth < 100
+              ? Icon(
+                  store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+                      ? IconData(
+                          store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
+                          fontFamily: 'MaterialIcons')
+                      : Icons.bookmark,
+                  color: ConvertIcon().convertColor(
+                    store.clientCreate.tarefaModelSaveEtiqueta.color,
+                  ),
+                )
+              : Chip(
+                  label: Text(
+                    store.clientCreate.tarefaModelSaveEtiqueta.etiqueta ==
+                            'TODOS'
+                        ? 'Etiqueta'
+                        : store.clientCreate.tarefaModelSaveEtiqueta.icon !=
+                                null
+                            ? store
+                                .clientCreate.tarefaModelSaveEtiqueta.etiqueta
+                            : 'Etiqueta',
+                    style: TextStyle(
+                      fontSize: constraint.maxWidth >
+                              LarguraLayoutBuilder().larguraModal
+                          ? 12
+                          : 10,
+                    ),
+                  ),
+                  avatar: Icon(
+                    store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+                        ? IconData(
+                            store.clientCreate.tarefaModelSaveEtiqueta.icon ??
+                                0,
+                            fontFamily: 'MaterialIcons')
+                        : Icons.bookmark,
+                    color: ConvertIcon().convertColor(
+                      store.clientCreate.tarefaModelSaveEtiqueta.color,
+                    ),
+                  ),
+                );
         }),
         onTap: () {
           DialogButtom().showDialog(

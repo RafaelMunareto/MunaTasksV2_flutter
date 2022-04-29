@@ -72,10 +72,10 @@ class _RetardActionWidgetState extends State<RetardActionWidget>
                 children: [
                   for (var linha in list)
                     Padding(
-                      padding:
-                          constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                              ? const EdgeInsets.only(bottom: 16.0)
-                              : const EdgeInsets.only(bottom: 4.0),
+                      padding: constraint.maxWidth >
+                              LarguraLayoutBuilder().larguraModal
+                          ? const EdgeInsets.only(bottom: 16.0)
+                          : const EdgeInsets.only(bottom: 16.0),
                       child: InputChip(
                         key: ObjectKey(linha.id),
                         labelPadding: const EdgeInsets.all(2),

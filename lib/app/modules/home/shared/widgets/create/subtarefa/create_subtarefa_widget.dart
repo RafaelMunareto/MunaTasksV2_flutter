@@ -161,7 +161,8 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                     ),
                   ),
                   Expanded(
-                    flex: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                    flex: constraint.maxWidth >
+                            LarguraLayoutBuilder().larguraModal
                         ? 6
                         : 8,
                     child: Wrap(
@@ -200,7 +201,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                       ],
                     ),
                   ),
-                  constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                  constraint.maxWidth > LarguraLayoutBuilder().larguraModal
                       ? Expanded(
                           flex: 2,
                           child: ButtonSaveCreateSubtarefaWidget(
@@ -210,12 +211,9 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                       : Container(),
                 ],
               ),
-              constraint.maxWidth < LarguraLayoutBuilder().telaPc
-                  ? Expanded(
-                      flex: 2,
-                      child: ButtonSaveCreateSubtarefaWidget(
-                        constraint: constraint.maxWidth,
-                      ),
+              constraint.maxWidth <= LarguraLayoutBuilder().larguraModal
+                  ? ButtonSaveCreateSubtarefaWidget(
+                      constraint: constraint.maxWidth,
                     )
                   : Container(),
             ],

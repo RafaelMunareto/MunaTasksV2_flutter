@@ -113,17 +113,17 @@ class EtiquetasPageState extends State<EtiquetasPage>
                   child: Column(
                     children: [
                       SizedBox(
-                        height:
-                            constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                                ? MediaQuery.of(context).size.height * 0.07
-                                : MediaQuery.of(context).size.height * 0.05,
+                        height: constraint.maxWidth >
+                                LarguraLayoutBuilder().larguraModal
+                            ? MediaQuery.of(context).size.height * 0.07
+                            : MediaQuery.of(context).size.height * 0.05,
                         child: Observer(builder: (_) {
                           return store.etiquetaStore.updateLoading
                               ? FadeTransition(
                                   opacity: opacidade,
                                   child: Padding(
-                                    padding: constraint.maxWidth >=
-                                            LarguraLayoutBuilder().telaPc
+                                    padding: constraint.maxWidth >
+                                            LarguraLayoutBuilder().larguraModal
                                         ? const EdgeInsets.all(8)
                                         : const EdgeInsets.only(
                                             left: 12, top: 8),

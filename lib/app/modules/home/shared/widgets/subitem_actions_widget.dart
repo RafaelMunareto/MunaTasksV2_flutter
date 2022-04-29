@@ -31,9 +31,10 @@ class _SubitemActionsWidgetState extends State<SubitemActionsWidget> {
             children: [
               for (var linha in store.client.subtarefaActionList)
                 Padding(
-                  padding: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                      ? const EdgeInsets.all(8)
-                      : const EdgeInsets.only(bottom: 4.0),
+                  padding:
+                      constraint.maxWidth > LarguraLayoutBuilder().larguraModal
+                          ? const EdgeInsets.all(8)
+                          : const EdgeInsets.all(8),
                   child: InputChip(
                     key: ObjectKey(linha.toString()),
                     labelPadding: const EdgeInsets.all(2),

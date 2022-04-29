@@ -38,7 +38,7 @@ class TarefasNoneWidget extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(32.0),
                   child: Text(
-                    'Você ainda não possui tarefas!',
+                    'Você não possui tarefas nesta categoria!',
                     style: TextStyle(
                       color: theme
                           ? darkThemeData(context).primaryColor

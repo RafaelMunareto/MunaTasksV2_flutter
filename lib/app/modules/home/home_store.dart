@@ -158,9 +158,7 @@ abstract class HomeStoreBase with Store {
       var dio = await DioStruture().dioAction();
       response = await dio.get('perfil/user/${client.userDio.id}');
       DioStruture().statusRequest(response);
-      if (response.data.isEmpty) {
-        return auth.logout();
-      }
+
       var resposta = PerfilDioModel.fromJson(response.data[0]);
       client.setPerfilUserlogado(resposta);
     }

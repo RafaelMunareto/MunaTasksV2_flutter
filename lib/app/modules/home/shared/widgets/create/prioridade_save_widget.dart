@@ -36,7 +36,7 @@ class _PrioridadeSaveWidgetState extends State<PrioridadeSaveWidget> {
           builder: (_) {
             return Padding(
               key: UniqueKey(),
-              padding: const EdgeInsets.fromLTRB(0, 12, 24, 12),
+              padding: const EdgeInsets.all(8),
               child: Icon(
                 store.clientCreate.tarefaModelPrioritario == 0
                     ? Icons.flag_outlined

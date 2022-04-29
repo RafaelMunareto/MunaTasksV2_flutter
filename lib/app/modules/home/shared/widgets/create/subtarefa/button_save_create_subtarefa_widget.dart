@@ -24,12 +24,12 @@ class _ButtonSaveCreateSubtarefaWidgetState
     final HomeStore store = Modular.get();
 
     return Padding(
-      padding: widget.constraint >= LarguraLayoutBuilder().telaPc
+      padding: widget.constraint > LarguraLayoutBuilder().larguraModal
           ? const EdgeInsets.all(8.0)
           : const EdgeInsets.all(0),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.94,
-        height: widget.constraint >= LarguraLayoutBuilder().telaPc
+        height: widget.constraint > LarguraLayoutBuilder().larguraModal
             ? MediaQuery.of(context).size.height * 0.085
             : MediaQuery.of(context).size.height * 0.045,
         child: ElevatedButton.icon(

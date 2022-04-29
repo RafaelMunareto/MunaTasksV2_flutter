@@ -95,7 +95,7 @@ abstract class _LoginStoreBase with Store {
       UserDioModel user = UserDioModel.fromJson(value.data);
       SessionManager().set("token", user.token);
       await storage.put('token', [user.token]);
-      await storage.put('userDio', [jsonEncode(user)]);
+      await storage.put('userDio', [jsonEncode(user.user)]);
       await storage.put('biometric', [client.email, client.password]);
       await storage.put('login-normal', [client.email, client.password]);
       Modular.to.navigate('/home/');
@@ -110,8 +110,18 @@ abstract class _LoginStoreBase with Store {
   loginWithGoogle() async {
     setLoading(true);
     try {
-      await auth.loginWithGoogle();
-      setLoading(false);
+      await auth.loginWithGoogle().then((value) {
+        auth.getLoginDio(value.email, value.password).then((e) async {
+          UserDioModel user = UserDioModel.fromJson(e.data);
+          await SessionManager().set("token", user.token);
+          await storage.put('token', [user.token]);
+          await storage.put('userDio', [jsonEncode(user)]);
+          await storage.put('login-normal', [value.email, value.password]);
+          await storage.put('biometric', [value.email, value.password]);
+          setLoading(false);
+          Modular.to.navigate('/home/');
+        });
+      });
     } catch (erro) {
       setLoading(false);
       setErrOrGoal(false);

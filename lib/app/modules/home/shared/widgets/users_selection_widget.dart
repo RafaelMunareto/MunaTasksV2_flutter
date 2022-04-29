@@ -5,6 +5,7 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class UsersSelectionWidget extends StatefulWidget {
   final double constraint;
@@ -66,70 +67,77 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
               } else {
                 List<PerfilDioModel> list = store.client.perfis;
                 list.removeWhere((e) => e.name.name == 'TODOS');
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        flex: 8,
-                        child: SingleChildScrollView(
-                          child: Wrap(
-                            runAlignment: WrapAlignment.spaceAround,
-                            spacing: 24,
-                            children: [
-                              for (var linha in list)
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 4.0),
-                                  child: SizedBox(
-                                    child: InputChip(
-                                      key: ObjectKey(linha.name.email),
-                                      labelPadding: const EdgeInsets.all(2),
-                                      selected: store
-                                          .clientCreate.individualChip
-                                          .contains(linha.name.email),
-                                      elevation: 4.0,
-                                      avatar: CircleAvatarWidget(
-                                        url: linha.urlImage,
-                                      ),
-                                      label: SizedBox(
-                                        width: 100,
-                                        child: Text(
-                                          linha.name.name,
-                                          overflow: TextOverflow.ellipsis,
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 8,
+                          child: SingleChildScrollView(
+                            child: Wrap(
+                              runAlignment: WrapAlignment.spaceAround,
+                              spacing: 24,
+                              children: [
+                                for (var linha in list)
+                                  Padding(
+                                    padding: widget.constraint >
+                                            LarguraLayoutBuilder().larguraModal
+                                        ? const EdgeInsets.only(bottom: 16.0)
+                                        : const EdgeInsets.only(bottom: 16.0),
+                                    child: SizedBox(
+                                      child: InputChip(
+                                        key: ObjectKey(linha.name.email),
+                                        labelPadding: const EdgeInsets.all(2),
+                                        selected: store
+                                            .clientCreate.individualChip
+                                            .contains(linha.name.email),
+                                        elevation: 4.0,
+                                        avatar: CircleAvatarWidget(
+                                          url: linha.urlImage,
                                         ),
+                                        label: SizedBox(
+                                          width: 100,
+                                          child: Text(
+                                            linha.name.name,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        onSelected: (bool value) {
+                                          setState(() {
+                                            store.clientCreate
+                                                .setIdReferenceStaff(
+                                              linha.name.email,
+                                            );
+                                            store.clientCreate
+                                                .setIdStaff(linha);
+                                            FocusScope.of(context).unfocus();
+                                            store.clientCreate
+                                                .setLoadingUser(false);
+                                          });
+                                        },
                                       ),
-                                      onSelected: (bool value) {
-                                        setState(() {
-                                          store.clientCreate
-                                              .setIdReferenceStaff(
-                                            linha.name.email,
-                                          );
-                                          store.clientCreate.setIdStaff(linha);
-                                          FocusScope.of(context).unfocus();
-                                          store.clientCreate
-                                              .setLoadingUser(false);
-                                        });
-                                      },
                                     ),
                                   ),
-                                ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: TextButton(
-                          onPressed: () {
-                            Modular.to.pop();
-                          },
-                          child: const Text('FECHAR'),
+                        Expanded(
+                          flex: 2,
+                          child: TextButton(
+                            onPressed: () {
+                              Modular.to.pop();
+                            },
+                            child: const Text('FECHAR'),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               }

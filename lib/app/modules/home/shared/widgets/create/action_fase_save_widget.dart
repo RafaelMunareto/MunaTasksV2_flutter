@@ -24,25 +24,32 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
     return LayoutBuilder(builder: (context, constraint) {
       return Observer(builder: (_) {
         return GestureDetector(
-          child: Chip(
-            backgroundColor:
-                ConvertIcon().colorStatus(store.clientCreate.faseTarefa),
-            label: Text(
-              ConvertIcon().nameStatus(store.clientCreate.faseTarefa),
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                      ? 14
-                      : 10,
+          child: constraint.maxWidth <= 100
+              ? Icon(
+                  ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
                   color: ConvertIcon()
-                      .colorStatusDark(store.clientCreate.faseTarefa)),
-            ),
-            avatar: Icon(
-              ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
-              color:
-                  ConvertIcon().colorStatusDark(store.clientCreate.faseTarefa),
-            ),
-          ),
+                      .colorStatusDark(store.clientCreate.faseTarefa),
+                )
+              : Chip(
+                  backgroundColor:
+                      ConvertIcon().colorStatus(store.clientCreate.faseTarefa),
+                  label: Text(
+                    ConvertIcon().nameStatus(store.clientCreate.faseTarefa),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: constraint.maxWidth >
+                                LarguraLayoutBuilder().larguraModal
+                            ? 14
+                            : 10,
+                        color: ConvertIcon()
+                            .colorStatusDark(store.clientCreate.faseTarefa)),
+                  ),
+                  avatar: Icon(
+                    ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
+                    color: ConvertIcon()
+                        .colorStatusDark(store.clientCreate.faseTarefa),
+                  ),
+                ),
           onTap: () => DialogButtom().showDialog(
             ActionsFaseWidget(
               faseList: store.client.fase,

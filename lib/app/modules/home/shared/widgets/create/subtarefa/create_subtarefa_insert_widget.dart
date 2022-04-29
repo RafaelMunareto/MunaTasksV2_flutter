@@ -77,10 +77,10 @@ class _CreateSubtarefaInsertWidgetState
                             for (var linha
                                 in store.client.settings.subtarefaInsert ?? [])
                               Padding(
-                                padding: constraint.maxWidth >=
-                                        LarguraLayoutBuilder().telaPc
+                                padding: constraint.maxWidth >
+                                        LarguraLayoutBuilder().larguraModal
                                     ? const EdgeInsets.only(bottom: 16.0)
-                                    : const EdgeInsets.only(bottom: 4.0),
+                                    : const EdgeInsets.only(bottom: 16.0),
                                 child: InputChip(
                                   key: UniqueKey(),
                                   labelPadding: const EdgeInsets.all(2),

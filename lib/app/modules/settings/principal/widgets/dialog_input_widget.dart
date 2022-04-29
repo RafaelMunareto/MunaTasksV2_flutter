@@ -62,7 +62,7 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
               ),
               Center(
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.5,
+                  width: MediaQuery.of(context).size.width * 0.2,
                   height: MediaQuery.of(context).size.height * 0.06,
                   child: ElevatedButton(
                     style: ButtonStyle(
@@ -97,8 +97,8 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
                             "SALVAR",
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: widget.constraint >=
-                                      LarguraLayoutBuilder().telaPc
+                              fontSize: widget.constraint >
+                                      LarguraLayoutBuilder().larguraModal
                                   ? 20
                                   : 12,
                             ),
@@ -107,8 +107,8 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
                             "EDITAR",
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: widget.constraint >=
-                                      LarguraLayoutBuilder().telaPc
+                              fontSize: widget.constraint >
+                                      LarguraLayoutBuilder().larguraModal
                                   ? 20
                                   : 12,
                             ),

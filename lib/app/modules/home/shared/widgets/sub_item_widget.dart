@@ -32,7 +32,7 @@ class SubItemWidget extends StatelessWidget {
           return AlertDialog(
             title: const Text('Status'),
             content: SizedBox(
-              width: constraint >= LarguraLayoutBuilder().telaPc
+              width: constraint > LarguraLayoutBuilder().larguraModal
                   ? MediaQuery.of(context).size.width * 0.5
                   : MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.15,

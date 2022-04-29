@@ -76,15 +76,6 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
                       .contains(true)) {
                     list.insert(0, todos);
                   }
-                } else {
-                  var selecione = EtiquetaDioModel(
-                      color: 'black', icon: 57585, etiqueta: 'Etiqueta');
-                  if (!list
-                      .map((e) => e.etiqueta.contains('Etiqueta'))
-                      .contains(true)) {
-                    list.insert(0, selecione);
-                    list.removeWhere((element) => element.icon == 58873);
-                  }
                 }
 
                 return LayoutBuilder(builder: (context, constraint) {
@@ -95,10 +86,10 @@ class _RadioEtiquetasFilterWidgetState extends State<RadioEtiquetasFilterWidget>
                       children: [
                         for (var index = 0; index < list.length; index++)
                           Padding(
-                            padding: constraint.maxWidth >=
-                                    LarguraLayoutBuilder().telaPc
+                            padding: constraint.maxWidth >
+                                    LarguraLayoutBuilder().larguraModal
                                 ? const EdgeInsets.only(bottom: 16.0)
-                                : const EdgeInsets.only(bottom: 4.0),
+                                : const EdgeInsets.only(bottom: 16.0),
                             child: InputChip(
                               key: UniqueKey(),
                               labelPadding: const EdgeInsets.all(2),
