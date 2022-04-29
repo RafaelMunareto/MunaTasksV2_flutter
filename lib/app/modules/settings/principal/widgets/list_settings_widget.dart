@@ -77,6 +77,7 @@ class _ListSettingsWidgetState extends State<ListSettingsWidget> {
                     key: UniqueKey(),
                     onDismissed: (direction) {
                       if (direction == DismissDirection.startToEnd) {
+                        store.setValueEscolha(linha);
                         DialogButtom().showDialog(
                           DialogInputWidget(
                             value: linha,
@@ -128,8 +129,8 @@ class _ListSettingsWidgetState extends State<ListSettingsWidget> {
               theme: store.isSwitched,
               buttonName: 'EXCLUIR',
               popUp: true,
-              function: store.setEscolha,
-              dataFunction: store.escolha,
+              function: store.delete,
+              dataFunction: tarefa,
               scnack: true,
               msgSnack: 'Deletado com sucesso!',
             ),

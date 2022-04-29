@@ -61,23 +61,6 @@ class PrincipalPageState extends State<PrincipalPage>
             context: context,
             settings: true,
             rota: '/home/'),
-        floatingActionButton: FloatingActionButton(
-          foregroundColor: Colors.white,
-          onPressed: () => {
-            DialogButtom().showDialog(
-              DialogInputWidget(
-                value: '',
-                create: 'Novo',
-                editar: store.novo,
-                constraint: constraint.maxWidth,
-              ),
-              store.isSwitched,
-              constraint.maxWidth,
-              context,
-            ),
-          },
-          child: const Icon(Icons.add),
-        ),
         body: Observer(
           builder: (_) {
             return !store.finalize
@@ -166,7 +149,7 @@ class PrincipalPageState extends State<PrincipalPage>
                                   label: Padding(
                                     padding: const EdgeInsets.fromLTRB(
                                         16, 12, 16, 12),
-                                    child: Text('Sair',
+                                    child: Text('SAIR',
                                         style: TextStyle(
                                           fontSize: 18,
                                           color: store.isSwitched
@@ -192,7 +175,39 @@ class PrincipalPageState extends State<PrincipalPage>
                                     width: MediaQuery.of(context).size.width,
                                     height: MediaQuery.of(context).size.height *
                                         0.3,
-                                    child: const DropdownWidget(),
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Expanded(
+                                              flex: 5, child: DropdownWidget()),
+                                          Expanded(
+                                            flex: 5,
+                                            child: IconButton(
+                                              color: Colors.white,
+                                              icon: const Icon(Icons.add),
+                                              onPressed: () => {
+                                                DialogButtom().showDialog(
+                                                  DialogInputWidget(
+                                                    value: '',
+                                                    create: 'Novo',
+                                                    editar: store.novo,
+                                                    constraint:
+                                                        constraint.maxWidth,
+                                                  ),
+                                                  store.isSwitched,
+                                                  constraint.maxWidth,
+                                                  context,
+                                                ),
+                                                store.setValueEscolha('')
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -200,8 +215,9 @@ class PrincipalPageState extends State<PrincipalPage>
                             Expanded(
                               flex: 400,
                               child: ListSettingsWidget(
-                                  constraint: constraint.maxWidth),
-                            )
+                                constraint: constraint.maxWidth,
+                              ),
+                            ),
                           ],
                         ),
                       ),

@@ -9,6 +9,29 @@ part of 'principal_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PrincipalStore on _PrincipalStoreBase, Store {
+  Computed<bool>? _$isValidTarefaComputed;
+
+  @override
+  bool get isValidTarefa =>
+      (_$isValidTarefaComputed ??= Computed<bool>(() => super.isValidTarefa,
+              name: '_PrincipalStoreBase.isValidTarefa'))
+          .value;
+
+  final _$valueEscolhaAtom = Atom(name: '_PrincipalStoreBase.valueEscolha');
+
+  @override
+  dynamic get valueEscolha {
+    _$valueEscolhaAtom.reportRead();
+    return super.valueEscolha;
+  }
+
+  @override
+  set valueEscolha(dynamic value) {
+    _$valueEscolhaAtom.reportWrite(value, super.valueEscolha, () {
+      super.valueEscolha = value;
+    });
+  }
+
   final _$finalizeAtom = Atom(name: '_PrincipalStoreBase.finalize');
 
   @override
@@ -95,6 +118,17 @@ mixin _$PrincipalStore on _PrincipalStoreBase, Store {
       ActionController(name: '_PrincipalStoreBase');
 
   @override
+  dynamic setValueEscolha(dynamic value) {
+    final _$actionInfo = _$_PrincipalStoreBaseActionController.startAction(
+        name: '_PrincipalStoreBase.setValueEscolha');
+    try {
+      return super.setValueEscolha(value);
+    } finally {
+      _$_PrincipalStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setfinalize(dynamic value) {
     final _$actionInfo = _$_PrincipalStoreBaseActionController.startAction(
         name: '_PrincipalStoreBase.setfinalize');
@@ -163,11 +197,13 @@ mixin _$PrincipalStore on _PrincipalStoreBase, Store {
   @override
   String toString() {
     return '''
+valueEscolha: ${valueEscolha},
 finalize: ${finalize},
 isSwitched: ${isSwitched},
 escolha: ${escolha},
 label: ${label},
-settings: ${settings}
+settings: ${settings},
+isValidTarefa: ${isValidTarefa}
     ''';
   }
 }

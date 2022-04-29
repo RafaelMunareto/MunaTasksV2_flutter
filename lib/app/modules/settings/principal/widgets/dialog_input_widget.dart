@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
+import 'package:munatasks2/app/shared/components/text_field_widget.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
@@ -23,16 +25,15 @@ class DialogInputWidget extends StatefulWidget {
 }
 
 class _DialogInputWidgetState extends State<DialogInputWidget> {
-  TextEditingController valor = TextEditingController();
   final PrincipalStore store = Modular.get();
 
   @override
   void initState() {
     if (widget.value != '') {
       if (store.label == 'Tempo') {
-        valor.text = widget.value.tempoName;
+        store.setValueEscolha(widget.value.tempoName);
       } else {
-        valor.text = widget.value;
+        store.setValueEscolha(widget.value);
       }
     }
     super.initState();
@@ -50,70 +51,81 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
             children: [
               Center(
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.15,
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: MediaQuery.of(context).size.height * 0.10,
+                  width: MediaQuery.of(context).size.width * 0.5,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: valor,
-                    ),
+                    padding: const EdgeInsets.all(4.0),
+                    child: Observer(builder: (_) {
+                      return TextFieldWidget(
+                        initialValue: store.valueEscolha,
+                        errorText: store.validTextoTarefa,
+                        onChanged: store.setValueEscolha,
+                        labelText: store.label,
+                      );
+                    }),
                   ),
                 ),
               ),
               Center(
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.2,
+                  width: MediaQuery.of(context).size.width * 0.3,
                   height: MediaQuery.of(context).size.height * 0.06,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        store.isSwitched
-                            ? darkThemeData(context).primaryColor
-                            : lightThemeData(context).primaryColor,
-                      ),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(80),
-                          side: const BorderSide(
-                            width: 1.0,
+                  child: Observer(builder: (_) {
+                    return ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          store.isValidTarefa
+                              ? store.isSwitched
+                                  ? darkThemeData(context).primaryColor
+                                  : lightThemeData(context).primaryColor
+                              : Colors.grey,
+                        ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
-                    ),
-                    onPressed: () {
-                      if (widget.create == 'Novo') {
-                        widget.editar(widget.value, valor.text);
-                        SnackbarCustom().createSnackBar(
-                            'Salvo com sucesso!', Colors.green, context);
-                      } else {
-                        widget.editar(valor.text, widget.value);
-                        SnackbarCustom().createSnackBar(
-                            'Editado com sucesso!', Colors.green, context);
-                      }
-                      Modular.to.pop();
-                    },
-                    child: widget.create == 'Novo'
-                        ? Text(
-                            "SALVAR",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: widget.constraint >
-                                      LarguraLayoutBuilder().larguraModal
-                                  ? 20
-                                  : 12,
+                      onPressed: () {
+                        if (store.isValidTarefa) {
+                          if (widget.create == 'Novo') {
+                            widget.editar(widget.value, store.valueEscolha);
+                            SnackbarCustom().createSnackBar(
+                                'Salvo com sucesso!', Colors.green, context);
+                          } else {
+                            widget.editar(store.valueEscolha, widget.value);
+                            SnackbarCustom().createSnackBar(
+                                'Editado com sucesso!', Colors.green, context);
+                          }
+                          Modular.to.pop();
+                        } else {
+                          null;
+                        }
+                      },
+                      child: widget.create == 'Novo'
+                          ? Text(
+                              "SALVAR",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: widget.constraint >
+                                        LarguraLayoutBuilder().larguraModal
+                                    ? 20
+                                    : 12,
+                              ),
+                            )
+                          : Text(
+                              "EDITAR",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: widget.constraint >
+                                        LarguraLayoutBuilder().larguraModal
+                                    ? 20
+                                    : 12,
+                              ),
                             ),
-                          )
-                        : Text(
-                            "EDITAR",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: widget.constraint >
-                                      LarguraLayoutBuilder().larguraModal
-                                  ? 20
-                                  : 12,
-                            ),
-                          ),
-                  ),
+                    );
+                  }),
                 ),
               ),
             ],

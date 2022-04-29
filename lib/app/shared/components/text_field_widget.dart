@@ -6,14 +6,18 @@ class TextFieldWidget extends StatefulWidget {
   final dynamic onChanged;
   final bool obscure;
   final dynamic errorText;
+  final bool outline;
+  final dynamic initialValue;
 
-  const TextFieldWidget(
-      {Key? key,
-      required this.labelText,
-      required this.onChanged,
-      this.obscure = false,
-      required this.errorText})
-      : super(key: key);
+  const TextFieldWidget({
+    Key? key,
+    required this.labelText,
+    required this.onChanged,
+    this.obscure = false,
+    required this.errorText,
+    this.outline = false,
+    this.initialValue = '',
+  }) : super(key: key);
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -23,10 +27,15 @@ class _TextFieldWidgetState extends State<TextFieldWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animacaoSize;
+  TextEditingController initial = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+
+    setState(() {
+      initial.text = widget.initialValue;
+    });
 
     _controller =
         AnimationController(duration: const Duration(seconds: 1), vsync: this);
@@ -58,10 +67,11 @@ class _TextFieldWidgetState extends State<TextFieldWidget>
           child: TextField(
             key: Key(widget.labelText),
             onChanged: widget.onChanged,
+            controller: initial,
             obscureText: widget.obscure,
             decoration: InputDecoration(
               errorStyle: const TextStyle(color: Colors.redAccent),
-              //border: const OutlineInputBorder(),
+              border: widget.outline ? null : const OutlineInputBorder(),
               labelText: widget.labelText,
               errorText: widget.errorText == null ? null : widget.errorText(),
             ),

@@ -21,6 +21,42 @@ abstract class _PrincipalStoreBase with Store {
   }
 
   @observable
+  dynamic valueEscolha = '';
+
+  @action
+  setValueEscolha(value) {
+    valueEscolha = value;
+  }
+
+  @computed
+  bool get isValidTarefa {
+    return validTextoTarefa() == null;
+  }
+
+  String? validTextoTarefa() {
+    if (label == 'Prioridade') {
+      if (double.tryParse(valueEscolha) == null) {
+        return 'Deve ser um número.';
+      }
+      return null;
+    } else if (label == 'Tempo') {
+      if (valueEscolha.length > 0) {
+        if (double.tryParse(valueEscolha.split(' ')[0]) == null) {
+          return 'Formato em dias, 1 dia, 2 dias etc';
+        }
+
+        return null;
+      }
+      return null;
+    } else {
+      if (valueEscolha.length < 3) {
+        return 'Descrição deve ser > 3 caracteres.';
+      }
+      return null;
+    }
+  }
+
+  @observable
   bool finalize = true;
 
   @action
@@ -101,7 +137,7 @@ abstract class _PrincipalStoreBase with Store {
     if (label == 'Tempo') {
       escolha.removeWhere((element) => element.tempoName == value.tempoName);
     } else {
-      escolha.removeWhere((element) => element.toString() == value.toString());
+      escolha.removeWhere((element) => element == value);
     }
     changeSettings();
   }
@@ -109,31 +145,32 @@ abstract class _PrincipalStoreBase with Store {
   edit(value, valueOld) {
     if (label == 'Order') {
       settings.order = escolha.map((e) {
-        return e == valueOld ? value : e;
+        return e == valueOld ? valueEscolha : e;
       }).toList();
       setEscolha(settings.order);
     } else if (label == 'Color') {
       settings.color = escolha.map((e) {
-        return e == valueOld ? value : e;
+        return e == valueOld ? valueEscolha : e;
       }).toList();
       setEscolha(settings.color);
     } else if (label == 'Subtarefa') {
       settings.subtarefaInsert = escolha.map((e) {
-        return e == valueOld ? value : e;
+        return e == valueOld ? valueEscolha : e;
       }).toList();
       setEscolha(settings.subtarefaInsert);
     } else if (label == 'Prioridade') {
       settings.prioridade = escolha.map((e) {
-        return e == valueOld ? value : e;
+        return e == valueOld ? valueEscolha : e;
       }).toList();
       setEscolha(settings.prioridade);
     } else if (label == 'Tempo') {
       settings.retard = escolha.map((e) {
         if (e.id == valueOld.id) {
           return RetardDioModel(
-              id: e.id,
-              tempoName: value,
-              tempoValue: int.parse(value.split(' ')[0]) * 24);
+                  id: e.id,
+                  tempoName: valueEscolha.toString(),
+                  tempoValue: int.parse(valueEscolha.split(' ')[0]) * 24)
+              .toString();
         }
         return e;
       }).toList();
@@ -144,10 +181,10 @@ abstract class _PrincipalStoreBase with Store {
 
   novo(valueOld, value) {
     if (label == 'Prioridade') {
-      value = int.parse(value);
+      value = int.parse(valueEscolha);
     }
     if (label == 'Tempo') {
-      var tempoValue = int.parse(value.split(' ')[0]) * 24;
+      var tempoValue = int.parse(valueEscolha.split(' ')[0]) * 24;
       RetardDioModel data = RetardDioModel(
         id: DateTime.now().microsecondsSinceEpoch.toString(),
         tempoName: value,
@@ -178,5 +215,12 @@ abstract class _PrincipalStoreBase with Store {
       setEscolha(settings.retard);
     }
     etiquetaService.updateSettings(settings);
+    etiquetaService.getSettings().then((value) {
+      value.retard = value.retard!.map((e) {
+        return RetardDioModel.fromJson(e);
+      }).toList();
+      setEscolha(escolha);
+      setSettings(value);
+    }).then((value) => setfinalize(false));
   }
 }
