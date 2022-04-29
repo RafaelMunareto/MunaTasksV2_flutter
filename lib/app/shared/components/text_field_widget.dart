@@ -71,7 +71,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget>
             obscureText: widget.obscure,
             decoration: InputDecoration(
               errorStyle: const TextStyle(color: Colors.redAccent),
-              border: widget.outline ? null : const OutlineInputBorder(),
+              border: !widget.outline ? null : const OutlineInputBorder(),
               labelText: widget.labelText,
               errorText: widget.errorText == null ? null : widget.errorText(),
             ),

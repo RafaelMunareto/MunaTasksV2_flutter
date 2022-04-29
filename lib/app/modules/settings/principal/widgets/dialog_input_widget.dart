@@ -57,6 +57,7 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
                     padding: const EdgeInsets.all(4.0),
                     child: Observer(builder: (_) {
                       return TextFieldWidget(
+                        outline: true,
                         initialValue: store.valueEscolha,
                         errorText: store.validTextoTarefa,
                         onChanged: store.setValueEscolha,

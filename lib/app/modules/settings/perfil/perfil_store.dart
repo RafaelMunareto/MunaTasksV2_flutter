@@ -40,8 +40,8 @@ abstract class _PerfilStoreBase with Store {
 
   getUid() {
     storage.get('userDio').then((value) {
-      client.setUserSelection(
-          UserDioClientModel.fromJson(jsonDecode(value[0])['user']));
+      client
+          .setUserSelection(UserDioClientModel.fromJson(jsonDecode(value[0])));
     });
   }
 

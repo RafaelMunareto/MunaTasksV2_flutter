@@ -7,6 +7,7 @@ import 'package:munatasks2/app/modules/settings/perfil/shared/widget/imagem_perf
 import 'package:munatasks2/app/modules/settings/perfil/shared/widget/names_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 
@@ -31,75 +32,84 @@ class PerfilPageState extends State<PerfilPage> {
           rota: '/home/',
           back: true),
       body: LayoutBuilder(builder: (context, constraint) {
-        return SingleChildScrollView(
-          child: Observer(
-            builder: (_) {
-              if (!store.client.loading) {
-                bool enableSwitch = store.client.perfilDio.manager;
-                return GestureDetector(
-                  onTap: () {
-                    FocusScope.of(context).requestFocus(FocusNode());
-                  },
-                  child: Column(
-                    children: [
-                      ImagemPerfilWidget(errorName: store.client.validateName),
-                      store.client.perfilDio.id != ""
-                          ? RollingSwitch.icon(
-                              initialState: store.client.perfilDio.manager,
-                              width: 200,
-                              animationDuration:
-                                  const Duration(milliseconds: 600),
-                              onChanged: (bool state) {
-                                store.client.changeManager(state);
-                                store.saveDio();
-                              },
-                              rollingInfoRight: RollingIconInfo(
-                                iconColor: store.client.theme
-                                    ? darkThemeData(context).primaryColor
-                                    : lightThemeData(context).primaryColor,
-                                backgroundColor: store.client.theme
-                                    ? darkThemeData(context).primaryColor
-                                    : lightThemeData(context).primaryColor,
-                                icon: Icons.work,
-                                text: const Text(
-                                  'Gerente',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              rollingInfoLeft: const RollingIconInfo(
-                                backgroundColor: Colors.grey,
-                                icon: Icons.engineering,
-                                text: Text(
-                                  'Técnico',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            )
-                          : Container(),
-                      NamesWidget(
-                        enableSwitch: enableSwitch,
+        return Center(
+          child: SizedBox(
+            width: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                ? MediaQuery.of(context).size.width * 0.5
+                : MediaQuery.of(context).size.width,
+            child: SingleChildScrollView(
+              child: Observer(
+                builder: (_) {
+                  if (!store.client.loading) {
+                    bool enableSwitch = store.client.perfilDio.manager;
+                    return GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Column(
+                        children: [
+                          ImagemPerfilWidget(
+                              errorName: store.client.validateName),
+                          store.client.perfilDio.id != ""
+                              ? RollingSwitch.icon(
+                                  initialState: store.client.perfilDio.manager,
+                                  width: 200,
+                                  animationDuration:
+                                      const Duration(milliseconds: 600),
+                                  onChanged: (bool state) {
+                                    store.client.changeManager(state);
+                                    store.saveDio();
+                                  },
+                                  rollingInfoRight: RollingIconInfo(
+                                    iconColor: store.client.theme
+                                        ? darkThemeData(context).primaryColor
+                                        : lightThemeData(context).primaryColor,
+                                    backgroundColor: store.client.theme
+                                        ? darkThemeData(context).primaryColor
+                                        : lightThemeData(context).primaryColor,
+                                    icon: Icons.work,
+                                    text: const Text(
+                                      'Gerente',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  rollingInfoLeft: const RollingIconInfo(
+                                    backgroundColor: Colors.grey,
+                                    icon: Icons.engineering,
+                                    text: Text(
+                                      'Técnico',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          NamesWidget(
+                            enableSwitch: enableSwitch,
+                          ),
+                          EquipesWidget(
+                            enableSwitch: enableSwitch,
+                          )
+                        ],
                       ),
-                      EquipesWidget(
-                        enableSwitch: enableSwitch,
-                      )
-                    ],
-                  ),
-                );
-              } else {
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(32.0),
-                      child: CircularProgressWidget(),
-                    ),
-                  ),
-                );
-              }
-            },
+                    );
+                  } else {
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(32.0),
+                          child: CircularProgressWidget(),
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
           ),
         );
       }),
