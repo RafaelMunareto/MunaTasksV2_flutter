@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class TarefasNoneWidget extends StatelessWidget {
-  final title;
+  final String title;
   final bool theme;
   const TarefasNoneWidget(
       {Key? key,
