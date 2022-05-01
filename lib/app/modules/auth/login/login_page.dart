@@ -8,6 +8,7 @@ import 'package:munatasks2/app/shared/components/background_widget.dart';
 import 'package:munatasks2/app/shared/components/button_widget.dart';
 import 'package:munatasks2/app/shared/components/link_rote_widget.dart';
 import 'package:munatasks2/app/shared/components/text_field_widget.dart';
+import 'package:munatasks2/app/shared/utils/downloads_widget.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 import 'package:mobx/mobx.dart';
@@ -157,7 +158,11 @@ class LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   );
-                })
+                }),
+                const Padding(
+                  padding: EdgeInsets.only(top: 28.0),
+                  child: DownloadsWidget(),
+                ),
               ],
             ),
           ));

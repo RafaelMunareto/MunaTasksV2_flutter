@@ -36,8 +36,9 @@ class BackgroundWidget extends StatelessWidget {
               Positioned(
                 top: 0,
                 right: 20,
-                child: Image.asset("assets/img/main.png",
-                   ),
+                child: Image.asset(
+                  "assets/img/main.png",
+                ),
               ),
               Positioned(
                 bottom: 0,
