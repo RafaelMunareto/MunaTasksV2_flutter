@@ -80,6 +80,7 @@ flutter:
 scripts:
   mobx: flutter pub run build_runner watch --delete-conflicting-outputs
   chrome: flutter run -d chrome --web-renderer html --web-port 52230
+  build_web: flutter build web --web-renderer html
   build_bundle: flutter build appbundle --build-name=1.1.6+4 --build-number=13 --no-tree-shake-icons
   build_apk: flutter build apk
   launch_icon: flutter pub run flutter_launcher_icons:main
