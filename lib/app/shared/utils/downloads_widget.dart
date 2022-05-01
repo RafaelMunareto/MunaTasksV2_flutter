@@ -1,33 +1,19 @@
-import 'package:download_assets/download_assets.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 class DownloadsWidget extends StatefulWidget {
-  const DownloadsWidget({
-    Key? key,
-  }) : super(key: key);
+  final String title;
+  const DownloadsWidget(
+      {Key? key, this.title = " Clique aqui para Baixar versão Desktop!"})
+      : super(key: key);
 
   @override
   State<DownloadsWidget> createState() => _DownloadsWidgetState();
 }
 
 class _DownloadsWidgetState extends State<DownloadsWidget> {
-  String message = " Clique aqui para Baixar versão Desktop!";
-  DownloadAssetsController downloadAssetsController =
-      DownloadAssetsController();
-  bool downloaded = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _init();
-  }
-
-  Future _init() async {
-    await downloadAssetsController.init();
-    downloaded = await downloadAssetsController.assetsDirAlreadyExists();
-  }
-
   @override
   Widget build(BuildContext context) {
     return !kIsWeb
@@ -35,7 +21,24 @@ class _DownloadsWidgetState extends State<DownloadsWidget> {
         : MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
-              onTap: () => _downloadAssets(),
+              onTap: () async {
+                Response response;
+                var dio = Dio(
+                  BaseOptions(
+                    baseUrl: DioStruture().baseUrlMunatasks,
+                  ),
+                );
+                response = await dio.download(
+                  'https://github.com/RafaelMunareto/MunaTasksV2_flutter/blob/main/assets/exe/Output/munatasksSetup.exe',
+                  Options(
+                      responseType: ResponseType.bytes,
+                      followRedirects: false,
+                      validateStatus: (status) {
+                        return status! < 500;
+                      }),
+                );
+                DioStruture().statusRequest(response);
+              },
               child: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
@@ -45,50 +48,11 @@ class _DownloadsWidgetState extends State<DownloadsWidget> {
                     image: AssetImage('assets/icon/icon.png'),
                   ),
                   Text(
-                    message,
+                    widget.title,
                   ),
                 ],
               ),
             ),
           );
-  }
-
-  Future _downloadAssets() async {
-    bool assetsDownloaded =
-        await downloadAssetsController.assetsDirAlreadyExists();
-
-    if (assetsDownloaded) {
-      setState(() {
-        message = "Click in refresh button to force download";
-        print(message);
-      });
-      return;
-    }
-
-    try {
-      await downloadAssetsController.startDownload(
-        assetsUrl:
-            "https://github.com/edjostenes/download_assets/raw/master/assets.zip",
-        onProgress: (progressValue) {
-          downloaded = false;
-          setState(() {
-            if (progressValue < 100) {
-              message = "Downloading - ${progressValue.toStringAsFixed(2)}";
-              print(message);
-            } else {
-              message =
-                  "Download completed\nClick in refresh button to force download";
-              print(message);
-              downloaded = true;
-            }
-          });
-        },
-      );
-    } on DownloadAssetsException catch (e) {
-      setState(() {
-        downloaded = false;
-        message = "Error: ${e.toString()}";
-      });
-    }
   }
 }
