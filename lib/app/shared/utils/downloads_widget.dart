@@ -1,7 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:munatasks2/app/shared/utils/dio_struture.dart';
+import 'dart:html' as html;
 
 class DownloadsWidget extends StatefulWidget {
   final String title;
@@ -14,6 +13,12 @@ class DownloadsWidget extends StatefulWidget {
 }
 
 class _DownloadsWidgetState extends State<DownloadsWidget> {
+  void downloadFile(String url) {
+    html.AnchorElement anchorElement = html.AnchorElement(href: url);
+    anchorElement.download = url;
+    anchorElement.click();
+  }
+
   @override
   Widget build(BuildContext context) {
     return !kIsWeb
@@ -21,24 +26,8 @@ class _DownloadsWidgetState extends State<DownloadsWidget> {
         : MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
-              onTap: () async {
-                Response response;
-                var dio = Dio(
-                  BaseOptions(
-                    baseUrl: DioStruture().baseUrlMunatasks,
-                  ),
-                );
-                response = await dio.download(
-                  'https://github.com/RafaelMunareto/MunaTasksV2_flutter/blob/main/assets/exe/Output/munatasksSetup.exe',
-                  Options(
-                      responseType: ResponseType.bytes,
-                      followRedirects: false,
-                      validateStatus: (status) {
-                        return status! < 500;
-                      }),
-                );
-                DioStruture().statusRequest(response);
-              },
+              onTap: () => downloadFile(
+                  'https://github.com/RafaelMunareto/MunaTasksV2_flutter/raw/main/assets/exe/Output/munatasksSetup.exe'),
               child: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
