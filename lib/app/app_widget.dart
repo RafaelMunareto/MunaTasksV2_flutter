@@ -61,7 +61,7 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MunaTasks V2',
+      title: 'MunaTask',
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       theme: lightThemeData(context),
