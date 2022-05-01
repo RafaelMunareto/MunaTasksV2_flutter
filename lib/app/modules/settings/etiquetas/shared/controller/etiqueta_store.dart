@@ -61,6 +61,12 @@ abstract class _EtiquetaStoreBase with Store {
   setLoading(value) => loading = value;
 
   @observable
+  bool loadingEtiquetas = false;
+
+  @action
+  setLoadingEtiquetas(value) => loadingEtiquetas = value;
+
+  @observable
   bool errOrGoal = false;
 
   @observable

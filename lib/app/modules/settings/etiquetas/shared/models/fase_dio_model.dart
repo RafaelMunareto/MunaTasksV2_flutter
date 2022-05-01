@@ -14,7 +14,7 @@ class FaseDioModel {
 
   factory FaseDioModel.fromDocument(doc) {
     return FaseDioModel(
-      id: doc['_id'],
+      id: doc['id'],
       color: doc['color'],
       name: doc['name'],
       icon: doc['icon'],
@@ -24,7 +24,7 @@ class FaseDioModel {
 
   factory FaseDioModel.fromJson(Map<String, dynamic> json) {
     return FaseDioModel(
-      id: json['_id'],
+      id: json['id'],
       color: json['color'],
       name: json['name'],
       icon: json['icon'],

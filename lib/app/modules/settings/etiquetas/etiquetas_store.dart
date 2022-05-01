@@ -37,9 +37,10 @@ abstract class _EtiquetasStoreBase with Store {
   }
 
   void getDio() {
+    etiquetaStore.setLoading(true);
     etiquetaService.getDio().then((value) {
       etiquetaStore.setEtiquetaDio(value);
-    });
+    }).whenComplete(() => etiquetaStore.setLoading(false));
   }
 
   submitDio() async {

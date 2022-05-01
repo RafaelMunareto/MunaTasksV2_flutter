@@ -77,7 +77,7 @@ class _RetardActionWidgetState extends State<RetardActionWidget>
                           ? const EdgeInsets.only(bottom: 16.0)
                           : const EdgeInsets.only(bottom: 16.0),
                       child: InputChip(
-                        key: ObjectKey(linha.id),
+                        key: UniqueKey(),
                         labelPadding: const EdgeInsets.all(2),
                         elevation: 4.0,
                         avatar: const Icon(Icons.more_time_rounded),

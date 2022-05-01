@@ -167,7 +167,6 @@ abstract class _PrincipalStoreBase with Store {
       settings.retard = escolha.map((e) {
         if (e.id == valueOld.id) {
           return RetardDioModel(
-                  id: e.id,
                   tempoName: valueEscolha.toString(),
                   tempoValue: int.parse(valueEscolha.split(' ')[0]) * 24)
               .toString();
@@ -186,7 +185,6 @@ abstract class _PrincipalStoreBase with Store {
     if (label == 'Tempo') {
       var tempoValue = int.parse(valueEscolha.split(' ')[0]) * 24;
       RetardDioModel data = RetardDioModel(
-        id: DateTime.now().microsecondsSinceEpoch.toString(),
         tempoName: value,
         tempoValue: tempoValue,
       );

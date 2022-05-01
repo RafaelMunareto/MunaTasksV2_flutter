@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/etiquetas_store.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
+import 'package:munatasks2/app/shared/components/tarefas_none_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/simple_button_widget.dart';
 
@@ -51,52 +52,61 @@ class _EtiquetasWidgetState extends State<EtiquetasWidget>
   Widget _buildAnimation(BuildContext context, Widget? child) {
     return FadeTransition(
       opacity: opacidade,
-      child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.4,
-          child: Observer(builder: (_) {
-            return ListView.builder(
-              itemCount: store.etiquetaStore.etiquetaDio.length,
-              itemBuilder: (_, index) {
-                var model = store.etiquetaStore.etiquetaDio[index];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          store.loadingUpdate(model);
-                        },
-                        child: ListTile(
-                          leading: Icon(
-                            IconData(model.icon ?? 0,
-                                fontFamily: 'MaterialIcons'),
-                            color: ConvertIcon().convertColor(model.color),
-                          ),
-                          title: Text(
-                            model.etiqueta,
-                            style: TextStyle(
-                              color: ConvertIcon().convertColor(model.color),
-                            ),
-                          ),
-                          trailing: GestureDetector(
-                            child: const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                            ),
+      child: store.etiquetaStore.etiquetaDio.isEmpty
+          ? SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
+              child: TarefasNoneWidget(
+                theme: store.etiquetaStore.theme,
+                title: "Não há nenhuma etiqueta!",
+              ),
+            )
+          : SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: Observer(builder: (_) {
+                return ListView.builder(
+                  itemCount: store.etiquetaStore.etiquetaDio.length,
+                  itemBuilder: (_, index) {
+                    var model = store.etiquetaStore.etiquetaDio[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Column(
+                        children: [
+                          GestureDetector(
                             onTap: () {
-                              _showDialog(model: model);
+                              store.loadingUpdate(model);
                             },
+                            child: ListTile(
+                              leading: Icon(
+                                IconData(model.icon ?? 0,
+                                    fontFamily: 'MaterialIcons'),
+                                color: ConvertIcon().convertColor(model.color),
+                              ),
+                              title: Text(
+                                model.etiqueta,
+                                style: TextStyle(
+                                  color:
+                                      ConvertIcon().convertColor(model.color),
+                                ),
+                              ),
+                              trailing: GestureDetector(
+                                child: const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                                onTap: () {
+                                  _showDialog(model: model);
+                                },
+                              ),
+                            ),
                           ),
-                        ),
+                          const Divider(),
+                        ],
                       ),
-                      const Divider(),
-                    ],
-                  ),
+                    );
+                  },
                 );
-              },
-            );
-          })),
+              })),
     );
   }
 

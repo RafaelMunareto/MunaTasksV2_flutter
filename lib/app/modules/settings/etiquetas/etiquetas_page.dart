@@ -238,7 +238,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
                         },
                       ),
                       Observer(builder: (_) {
-                        return store.etiquetaStore.etiquetaDio.isEmpty
+                        return store.etiquetaStore.loading
                             ? SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.4,

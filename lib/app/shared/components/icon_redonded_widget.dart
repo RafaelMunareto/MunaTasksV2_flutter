@@ -6,7 +6,7 @@ class IconRedondedWidget extends StatelessWidget {
   final Color color;
   final double size;
   const IconRedondedWidget(
-      {Key? key, required this.icon, required this.color, this.size = 22})
+      {Key? key, required this.icon, required this.color, this.size = 20})
       : super(key: key);
 
   @override

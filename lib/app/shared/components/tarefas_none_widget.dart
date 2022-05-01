@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class TarefasNoneWidget extends StatelessWidget {
+  final title;
   final bool theme;
-  const TarefasNoneWidget({Key? key, required this.theme}) : super(key: key);
+  const TarefasNoneWidget(
+      {Key? key,
+      required this.theme,
+      this.title = 'Você não possui tarefas nesta categoria!'})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,7 @@ class TarefasNoneWidget extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(32.0),
                   child: Text(
-                    'Você não possui tarefas nesta categoria!',
+                    title,
                     style: TextStyle(
                       color: theme
                           ? darkThemeData(context).primaryColor

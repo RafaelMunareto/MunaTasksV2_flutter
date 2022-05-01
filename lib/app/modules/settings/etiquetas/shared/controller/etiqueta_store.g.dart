@@ -152,6 +152,22 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
+  final _$loadingEtiquetasAtom =
+      Atom(name: '_EtiquetaStoreBase.loadingEtiquetas');
+
+  @override
+  bool get loadingEtiquetas {
+    _$loadingEtiquetasAtom.reportRead();
+    return super.loadingEtiquetas;
+  }
+
+  @override
+  set loadingEtiquetas(bool value) {
+    _$loadingEtiquetasAtom.reportWrite(value, super.loadingEtiquetas, () {
+      super.loadingEtiquetas = value;
+    });
+  }
+
   final _$errOrGoalAtom = Atom(name: '_EtiquetaStoreBase.errOrGoal');
 
   @override
@@ -330,6 +346,17 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
   }
 
   @override
+  dynamic setLoadingEtiquetas(dynamic value) {
+    final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
+        name: '_EtiquetaStoreBase.setLoadingEtiquetas');
+    try {
+      return super.setLoadingEtiquetas(value);
+    } finally {
+      _$_EtiquetaStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setErrOrGoal(dynamic value) {
     final _$actionInfo = _$_EtiquetaStoreBaseActionController.startAction(
         name: '_EtiquetaStoreBase.setErrOrGoal');
@@ -407,6 +434,7 @@ showValidation: ${showValidation},
 icon: ${icon},
 iconAction: ${iconAction},
 loading: ${loading},
+loadingEtiquetas: ${loadingEtiquetas},
 errOrGoal: ${errOrGoal},
 msg: ${msg},
 updateLoading: ${updateLoading},
