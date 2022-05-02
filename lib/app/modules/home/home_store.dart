@@ -132,10 +132,11 @@ abstract class HomeStoreBase with Store {
     client.setSettings(resposta);
   }
 
-  getUid() {
+  getUid() async {
     storage.get('userDio').then((value) {
       if (value != null) {
-        client.setUserDio(UserDioClientModel.fromJson(jsonDecode(value[0])));
+        client.setUserDio(
+            UserDioClientModel.fromJson(jsonDecode(value[0])['user']));
       }
     });
   }

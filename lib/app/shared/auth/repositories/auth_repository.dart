@@ -101,7 +101,7 @@ class AuthRepository implements IAuthRepository {
   getUser() async {
     return await storage.get('userDio').then((value) {
       if (value != null) {
-        return UserDioClientModel.fromJson(jsonDecode(value[0]));
+        return UserDioClientModel.fromJson(jsonDecode(value[0])['user']);
       }
     });
   }

@@ -121,6 +121,10 @@ abstract class _LoginStoreBase with Store {
           setLoading(false);
           Modular.to.navigate('/home/');
         });
+      }).onError((error, stackTrace) {
+        setLoading(false);
+        setErrOrGoal(false);
+        setMsg(error.toString());
       });
     } catch (erro) {
       setLoading(false);
