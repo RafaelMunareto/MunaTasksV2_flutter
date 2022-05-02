@@ -159,10 +159,12 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   );
                 }),
-                const Padding(
-                  padding: EdgeInsets.only(top: 28.0),
-                  child: DownloadsWidget(),
-                ),
+                constraint.maxWidth < LarguraLayoutBuilder().telaPc
+                    ? Container()
+                    : const Padding(
+                        padding: EdgeInsets.only(top: 28.0),
+                        child: DownloadsWidget(),
+                      ),
               ],
             ),
           ));
