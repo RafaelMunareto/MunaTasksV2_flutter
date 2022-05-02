@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
+//import 'dart:html' as html;
 
 class DownloadsWidget extends StatefulWidget {
   final String title;
@@ -15,9 +15,9 @@ class DownloadsWidget extends StatefulWidget {
 
 class _DownloadsWidgetState extends State<DownloadsWidget> {
   void downloadFile(String url) {
-    html.AnchorElement anchorElement = html.AnchorElement(href: url);
-    anchorElement.download = url;
-    anchorElement.click();
+    // html.AnchorElement anchorElement = html.AnchorElement(href: url);
+    // anchorElement.download = url;
+    // anchorElement.click();
   }
 
   @override
