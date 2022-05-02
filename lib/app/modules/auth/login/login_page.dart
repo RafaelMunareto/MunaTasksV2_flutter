@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/auth/login/login_store.dart';
@@ -159,12 +160,14 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   );
                 }),
-                constraint.maxWidth < LarguraLayoutBuilder().telaPc
-                    ? Container()
-                    : const Padding(
-                        padding: EdgeInsets.only(top: 28.0),
-                        child: DownloadsWidget(),
-                      ),
+                defaultTargetPlatform != TargetPlatform.windows
+                    ? constraint.maxWidth < LarguraLayoutBuilder().telaPc
+                        ? Container()
+                        : const Padding(
+                            padding: EdgeInsets.only(top: 28.0),
+                            child: DownloadsWidget(),
+                          )
+                    : Container(),
               ],
             ),
           ));
