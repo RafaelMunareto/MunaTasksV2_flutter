@@ -68,26 +68,32 @@ class _CardWidgetState extends State<CardWidget> {
                                         return store.client.taskDio.isEmpty
                                             ? TarefasNoneWidget(
                                                 theme: store.client.theme)
-                                            : ListView.builder(
-                                                scrollDirection: Axis.vertical,
-                                                controller: ScrollController(),
-                                                shrinkWrap: true,
-                                                padding:
-                                                    const EdgeInsets.all(4),
-                                                itemCount:
-                                                    store.client.taskDio.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return CardIntWidget(
-                                                    tarefaDioModel: List.from(
-                                                        store.client
-                                                            .taskDio)[index],
-                                                    constraint:
-                                                        constraint.maxWidth,
-                                                  );
-                                                },
-                                              );
+                                            : store.client.taskDio.isNotEmpty
+                                                ? ListView.builder(
+                                                    scrollDirection:
+                                                        Axis.vertical,
+                                                    controller:
+                                                        ScrollController(),
+                                                    shrinkWrap: true,
+                                                    padding:
+                                                        const EdgeInsets.all(4),
+                                                    itemCount: store
+                                                        .client.taskDio.length,
+                                                    itemBuilder:
+                                                        (BuildContext context,
+                                                            int index) {
+                                                      return CardIntWidget(
+                                                        tarefaDioModel:
+                                                            List.from(store
+                                                                    .client
+                                                                    .taskDio)[
+                                                                index],
+                                                        constraint:
+                                                            constraint.maxWidth,
+                                                      );
+                                                    },
+                                                  )
+                                                : const CircularProgressWidget();
                                       },
                                     ),
                                   ),

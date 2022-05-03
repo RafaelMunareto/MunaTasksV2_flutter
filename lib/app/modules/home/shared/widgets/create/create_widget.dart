@@ -134,7 +134,9 @@ class _CreateWidgetState extends State<CreateWidget> {
                           ),
                         )
                       : Container(),
-                  const ButtonSaveWidget()
+                  ButtonSaveWidget(
+                    constraint: widget.constraint,
+                  )
                 ],
               ),
             ),

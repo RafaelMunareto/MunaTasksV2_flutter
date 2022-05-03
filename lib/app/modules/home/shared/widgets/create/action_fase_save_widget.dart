@@ -23,7 +23,7 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
 
     return Observer(builder: (_) {
       return GestureDetector(
-        child: widget.constraint <= 100
+        child: widget.constraint < LarguraLayoutBuilder().telaPc
             ? Icon(
                 ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
                 color: ConvertIcon()

@@ -324,6 +324,21 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
+  final _$editarAtom = Atom(name: '_ClientCreateStoreBase.editar');
+
+  @override
+  bool get editar {
+    _$editarAtom.reportRead();
+    return super.editar;
+  }
+
+  @override
+  set editar(bool value) {
+    _$editarAtom.reportWrite(value, super.editar, () {
+      super.editar = value;
+    });
+  }
+
   final _$_ClientCreateStoreBaseActionController =
       ActionController(name: '_ClientCreateStoreBase');
 
@@ -757,6 +772,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic setSubtarefaUpdate(SubtareDiofaModel model) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setSubtarefaUpdate');
+    try {
+      return super.setSubtarefaUpdate(model);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setTarefaUpdate(dynamic tarefa) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setTarefaUpdate');
@@ -773,6 +799,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
         name: '_ClientCreateStoreBase.removeDismissSubtarefa');
     try {
       return super.removeDismissSubtarefa(model);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setEditar(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setEditar');
+    try {
+      return super.setEditar(value);
     } finally {
       _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -811,6 +848,7 @@ loadingUser: ${loadingUser},
 loadingTarefa: ${loadingTarefa},
 id: ${id},
 subtarefaModel: ${subtarefaModel},
+editar: ${editar},
 isValidTarefa: ${isValidTarefa},
 isValidSubtarefa: ${isValidSubtarefa}
     ''';

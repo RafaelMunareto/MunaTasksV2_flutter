@@ -34,10 +34,32 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                       background: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
+                          color: Colors.green,
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  Icons.edit,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  'Editar',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      secondaryBackground: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
                           color: Colors.red,
                           child: Padding(
                             padding: const EdgeInsets.all(15),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: const [
                                 Icon(
                                   Icons.delete,
@@ -54,11 +76,14 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                       ),
                       key: UniqueKey(),
                       onDismissed: (direction) {
-                        setState(() {
+                        if (direction == DismissDirection.startToEnd) {
+                          store.clientCreate.setEditar(true);
+                          store.clientCreate.setSubtarefaUpdate(model);
+                        } else {
                           store.clientCreate.removeDismissSubtarefa(model);
-                        });
-                        SnackbarCustom().createSnackBar(
-                            '${model.title} excluída', Colors.green, context);
+                          SnackbarCustom().createSnackBar(
+                              '${model.title} excluída', Colors.green, context);
+                        }
                       },
                       child: SubItemSaveWidget(
                         theme: store.client.theme,

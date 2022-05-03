@@ -24,7 +24,7 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(child: Observer(builder: (_) {
-      return widget.constraint < LarguraLayoutBuilder().larguraModal
+      return widget.constraint < LarguraLayoutBuilder().telaPc
           ? Icon(
               store.clientCreate.tarefaModelSaveEtiqueta.icon != null
                   ? IconData(

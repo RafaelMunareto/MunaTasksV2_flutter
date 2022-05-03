@@ -35,8 +35,7 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                         store.client.theme,
                         widget.constraint,
                         context),
-                    child: widget.constraint <=
-                            LarguraLayoutBuilder().larguraModal
+                    child: widget.constraint < LarguraLayoutBuilder().telaPc
                         ? const Icon(
                             Icons.people,
                             color: Colors.grey,

@@ -237,6 +237,19 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   @action
+  setSubtarefaUpdate(SubtareDiofaModel model) {
+    setSubtarefaTextSave(model.texto);
+    setSubtarefaInsertCreate(model.title);
+    setFase(model.status);
+    setUserCreateSelection(model.user);
+    setCreateImageUser(model.user.urlImage);
+    setIdReferenceStaff(
+      model.user.name.email,
+    );
+    setIdStaff(model.user);
+  }
+
+  @action
   setTarefaUpdate(dynamic tarefa) {
     setSaveEtiqueta(tarefa.etiqueta);
     setTarefaTextSave(tarefa.texto);
@@ -297,6 +310,12 @@ abstract class _ClientCreateStoreBase with Store {
   @observable
   SubtareDiofaModel subtarefaModel = SubtareDiofaModel();
 
+  @observable
+  bool editar = false;
+
+  @action
+  setEditar(value) => editar = value;
+
   @action
   setSubtarefas() {
     setLoadingSubtarefa(true);
@@ -319,7 +338,14 @@ abstract class _ClientCreateStoreBase with Store {
         users = [];
       }
     }
-    subtarefas.add(subtarefaModel);
+    subtarefas.map((e) {
+      if (e.title == subtarefaModel.title) {
+        e = subtarefaModel;
+      } else {
+        subtarefas.add(subtarefaModel);
+      }
+    });
+
     subtarefaModel = SubtareDiofaModel();
     setLoadingSubtarefa(false);
     setLoadingUser(false);

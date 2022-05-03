@@ -8,7 +8,9 @@ import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class ButtonSaveWidget extends StatelessWidget {
-  const ButtonSaveWidget({Key? key}) : super(key: key);
+  final double constraint;
+  const ButtonSaveWidget({Key? key, required this.constraint})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,62 +27,59 @@ class ButtonSaveWidget extends StatelessWidget {
       );
     }
 
-    return LayoutBuilder(builder: (context, constraint) {
-      return Wrap(
-        alignment: WrapAlignment.end,
-        children: [
-          Observer(builder: (_) {
-            return SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.1,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (store.clientCreate.isValidTarefa) {
-                    store.clientCreate.setTarefa();
-                    if (store.clientCreate.id != "") {
-                      store.updateNewTarefa().then((e) {
-                        SnackbarCustom().createSnackBar(
-                          "Tarefa editada com sucesso!",
-                          Colors.green,
-                          context,
-                        );
-                        Modular.to.pop();
-                      }, onError: (error) {
-                        SnackbarCustom().createSnackBar(
-                            error.response?.data['error'] ?? error?.message,
-                            Colors.red,
-                            context);
-                      });
-                    } else {
-                      store.saveNewTarefa().then((e) {
-                        SnackbarCustom().createSnackBar(
-                          "Tarefa salva com sucesso!",
-                          Colors.green,
-                          context,
-                        );
-                        Modular.to.pop();
-                      }, onError: (error) {
-                        SnackbarCustom().createSnackBar(
-                            error.response?.data['error'] ?? error?.message,
-                            Colors.red,
-                            context);
-                      });
-                    }
+    return Wrap(
+      alignment: WrapAlignment.end,
+      children: [
+        Observer(builder: (_) {
+          return SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: ElevatedButton(
+              onPressed: () {
+                if (store.clientCreate.isValidTarefa) {
+                  store.clientCreate.setTarefa();
+                  if (store.clientCreate.id != "") {
+                    store.updateNewTarefa().then((e) {
+                      SnackbarCustom().createSnackBar(
+                        "Tarefa editada com sucesso!",
+                        Colors.green,
+                        context,
+                      );
+                      Modular.to.pop();
+                    }, onError: (error) {
+                      SnackbarCustom().createSnackBar(
+                          error.response?.data['error'] ?? error?.message,
+                          Colors.red,
+                          context);
+                    });
                   } else {
-                    errors(constraint);
+                    store.saveNewTarefa().then((e) {
+                      SnackbarCustom().createSnackBar(
+                        "Tarefa salva com sucesso!",
+                        Colors.green,
+                        context,
+                      );
+                      Modular.to.pop();
+                    }, onError: (error) {
+                      SnackbarCustom().createSnackBar(
+                          error.response?.data['error'] ?? error?.message,
+                          Colors.red,
+                          context);
+                    });
                   }
-                  FocusScope.of(context).unfocus();
-                },
-                child: store.clientCreate.loadingTarefa
-                    ? const CircularProgressWidget()
-                    : Text(
-                        store.clientCreate.id != '' ? "EDITAR" : 'SALVAR',
-                      ),
-              ),
-            );
-          })
-        ],
-      );
-    });
+                } else {
+                  errors(constraint);
+                }
+              },
+              child: store.clientCreate.loadingTarefa
+                  ? const CircularProgressWidget()
+                  : Text(
+                      store.clientCreate.id != '' ? "EDITAR" : 'SALVAR',
+                    ),
+            ),
+          );
+        })
+      ],
+    );
   }
 }

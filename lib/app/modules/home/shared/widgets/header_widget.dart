@@ -46,7 +46,7 @@ class HeaderWidget extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
+          padding: const EdgeInsets.only(bottom: 16.0, top: 16),
           child: Text(
             tarefa.texto,
             textAlign: TextAlign.justify,

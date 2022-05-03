@@ -64,7 +64,7 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
         backgroundColor: Colors.transparent,
         body: Center(
           child: SizedBox(
-            width: widget.constraint > LarguraLayoutBuilder().larguraModal
+            width: widget.constraint > LarguraLayoutBuilder().telaPc
                 ? MediaQuery.of(context).size.width
                 : MediaQuery.of(context).size.width * 0.5,
             child: Observer(
@@ -84,9 +84,7 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
                           children: [
                             for (var linha in list)
                               Padding(
-                                padding: constraint.maxWidth > 100
-                                    ? const EdgeInsets.only(bottom: 16.0)
-                                    : const EdgeInsets.only(bottom: 4.0),
+                                padding: const EdgeInsets.only(bottom: 16.0),
                                 child: InputChip(
                                   key: UniqueKey(),
                                   labelPadding: const EdgeInsets.all(2),
@@ -101,7 +99,7 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
                                   ),
                                   label: SizedBox(
                                     width: constraint.maxWidth >
-                                            LarguraLayoutBuilder().larguraModal
+                                            LarguraLayoutBuilder().telaPc
                                         ? 100
                                         : MediaQuery.of(context).size.width,
                                     child: Text(

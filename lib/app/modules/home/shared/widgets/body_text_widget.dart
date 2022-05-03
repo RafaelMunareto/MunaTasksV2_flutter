@@ -20,7 +20,7 @@ class BodyTextWidget extends StatelessWidget {
     return Wrap(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: Text(
             tarefa.texto,
             textAlign: TextAlign.justify,

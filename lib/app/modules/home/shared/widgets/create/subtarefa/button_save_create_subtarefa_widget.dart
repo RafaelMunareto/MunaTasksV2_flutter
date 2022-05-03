@@ -57,8 +57,8 @@ class _ButtonSaveCreateSubtarefaWidgetState
           icon: const Icon(Icons.add_circle, size: 18),
           label: store.clientCreate.loadingSubtarefa
               ? const CircularProgressWidget()
-              : const Text(
-                  "INCLUIR",
+              : Text(
+                  store.clientCreate.editar ? 'EDITAR' : "INCLUIR",
                 ),
         ),
       ),

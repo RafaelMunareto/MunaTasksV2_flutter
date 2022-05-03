@@ -55,26 +55,42 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                     children: [
                       GestureDetector(
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Chip(
-                            label: Text(
-                              store.clientCreate.subtarefaModelSaveTitle != ""
-                                  ? store.clientCreate.subtarefaModelSaveTitle
-                                  : 'Subtarefa',
-                              style: const TextStyle(fontSize: 11),
-                            ),
-                            avatar: Icon(
-                              Icons.work,
-                              color:
-                                  store.clientCreate.subtarefaModelSaveTitle !=
-                                              "" &&
-                                          store.clientCreate
-                                                  .subtarefaModelSaveTitle !=
-                                              "Subtarefa"
-                                      ? Colors.blue
-                                      : Colors.grey,
-                            ),
-                          ),
+                          padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
+                          child:
+                              widget.constraint >= LarguraLayoutBuilder().telaPc
+                                  ? Chip(
+                                      label: Text(
+                                        store.clientCreate
+                                                    .subtarefaModelSaveTitle !=
+                                                ""
+                                            ? store.clientCreate
+                                                .subtarefaModelSaveTitle
+                                            : 'Subtarefa',
+                                        style: const TextStyle(fontSize: 11),
+                                      ),
+                                      avatar: Icon(
+                                        Icons.work,
+                                        color: store.clientCreate
+                                                        .subtarefaModelSaveTitle !=
+                                                    "" &&
+                                                store.clientCreate
+                                                        .subtarefaModelSaveTitle !=
+                                                    "Subtarefa"
+                                            ? Colors.blue
+                                            : Colors.grey,
+                                      ),
+                                    )
+                                  : Icon(
+                                      Icons.work,
+                                      color: store.clientCreate
+                                                      .subtarefaModelSaveTitle !=
+                                                  "" &&
+                                              store.clientCreate
+                                                      .subtarefaModelSaveTitle !=
+                                                  "Subtarefa"
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    ),
                         ),
                         onTap: () => DialogButtom().showDialog(
                           CreateSubtarefaInsertWidget(
@@ -90,23 +106,33 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                       ),
                       GestureDetector(
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Chip(
-                            backgroundColor: ConvertIcon()
-                                .colorStatus(store.clientCreate.fase),
-                            label: Text(
-                              ConvertIcon().nameStatus(store.clientCreate.fase),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: ConvertIcon().colorStatusDark(
-                                      store.clientCreate.fase)),
-                            ),
-                            avatar: Icon(
-                              ConvertIcon().iconStatus(store.clientCreate.fase),
-                              color: ConvertIcon()
-                                  .colorStatusDark(store.clientCreate.fase),
-                            ),
-                          ),
+                          padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
+                          child: widget.constraint >=
+                                  LarguraLayoutBuilder().telaPc
+                              ? Chip(
+                                  backgroundColor: ConvertIcon()
+                                      .colorStatus(store.clientCreate.fase),
+                                  label: Text(
+                                    ConvertIcon()
+                                        .nameStatus(store.clientCreate.fase),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: ConvertIcon().colorStatusDark(
+                                            store.clientCreate.fase)),
+                                  ),
+                                  avatar: Icon(
+                                    ConvertIcon()
+                                        .iconStatus(store.clientCreate.fase),
+                                    color: ConvertIcon().colorStatusDark(
+                                        store.clientCreate.fase),
+                                  ),
+                                )
+                              : Icon(
+                                  ConvertIcon()
+                                      .iconStatus(store.clientCreate.fase),
+                                  color: ConvertIcon()
+                                      .colorStatusDark(store.clientCreate.fase),
+                                ),
                         ),
                         onTap: () => DialogButtom().showDialog(
                           ActionsFaseWidget(
@@ -120,7 +146,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Wrap(
                           alignment: WrapAlignment.center,
                           children: [
@@ -140,13 +166,19 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                               child: Observer(
                                 builder: (_) {
                                   return store.clientCreate.imageUser == ""
-                                      ? const Chip(
-                                          label: Text('Equipe'),
-                                          avatar: Icon(
-                                            Icons.people,
-                                            color: Colors.grey,
-                                          ),
-                                        )
+                                      ? widget.constraint >=
+                                              LarguraLayoutBuilder().telaPc
+                                          ? const Chip(
+                                              label: Text('Equipe'),
+                                              avatar: Icon(
+                                                Icons.people,
+                                                color: Colors.grey,
+                                              ),
+                                            )
+                                          : const Icon(
+                                              Icons.people,
+                                              color: Colors.grey,
+                                            )
                                       : CircleAvatarWidget(
                                           url: store.clientCreate.imageUser,
                                         );
@@ -160,15 +192,17 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                   ),
                 ),
                 Expanded(
-                  flex: widget.constraint > LarguraLayoutBuilder().larguraModal
-                      ? 6
-                      : 8,
+                  flex:
+                      widget.constraint > LarguraLayoutBuilder().telaPc ? 6 : 8,
                   child: Wrap(
                     alignment: WrapAlignment.spaceBetween,
                     children: [
                       Observer(builder: (_) {
                         if (store.clientCreate.subtarefaTextSave == "") {
                           textSubtarefaController.text = '';
+                        } else {
+                          textSubtarefaController.text =
+                              store.clientCreate.subtarefaTextSave;
                         }
                         return TextFormField(
                           autocorrect: true,
@@ -198,7 +232,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                     ],
                   ),
                 ),
-                widget.constraint > LarguraLayoutBuilder().larguraModal
+                widget.constraint >= LarguraLayoutBuilder().telaPc
                     ? Expanded(
                         flex: 2,
                         child: ButtonSaveCreateSubtarefaWidget(
@@ -208,7 +242,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                     : Container(),
               ],
             ),
-            widget.constraint <= LarguraLayoutBuilder().larguraModal
+            widget.constraint < LarguraLayoutBuilder().telaPc
                 ? ButtonSaveCreateSubtarefaWidget(
                     constraint: widget.constraint,
                   )
