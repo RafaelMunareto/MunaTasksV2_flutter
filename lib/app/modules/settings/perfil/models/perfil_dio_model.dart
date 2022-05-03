@@ -24,9 +24,7 @@ class PerfilDioModel {
       manager: doc['manager'],
       id: doc['_id'],
       name: UserDioClientModel.fromJson(doc['name']),
-      urlImage: doc['urlImage'] == null
-          ? doc['urlImage']
-          : DioStruture().baseUrlMunatasks + 'files/' + doc['urlImage'],
+      urlImage: DioStruture().baseUrlMunatasks + 'files/' + doc['urlImage'],
       nameTime: doc['nameTime'],
     );
   }
@@ -37,9 +35,7 @@ class PerfilDioModel {
       idStaff: json['idStaff'],
       manager: json['manager'],
       name: UserDioClientModel.fromJson(json['name']),
-      urlImage: json['urlImage'] == null
-          ? ''
-          : DioStruture().baseUrlMunatasks + 'files/' + json['urlImage'],
+      urlImage: DioStruture().baseUrlMunatasks + 'files/' + json['urlImage'],
       nameTime: json['nameTime'],
     );
   }

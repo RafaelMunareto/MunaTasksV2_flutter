@@ -270,10 +270,9 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                 top: 10,
                 left: 165,
                 child: GestureDetector(
-                  child:
-                      kIsWeb || defaultTargetPlatform == TargetPlatform.windows
-                          ? popMenuDesktop()
-                          : popMenu(),
+                  child: defaultTargetPlatform == TargetPlatform.windows
+                      ? popMenuDesktop()
+                      : popMenu(),
                 ),
               ),
             ],

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
@@ -83,17 +84,17 @@ abstract class _PerfilStoreBase with Store {
 
   saveDio() async {
     await perfilService.saveDio(client.perfilDio);
-    getList();
+    getBydDioId();
   }
 
   @action
   saveName() async {
     await perfilService.saveName(client.perfilDio);
-    getList();
+    getBydDioId();
   }
 
   Future atualizaImagem(String origemImagem) async {
-    if (Platform.isWindows) {
+    if (!kIsWeb && defaultTargetPlatform != TargetPlatform.android) {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
 
       if (result != null) {
@@ -106,6 +107,7 @@ abstract class _PerfilStoreBase with Store {
                   ? client.perfilDio.id
                   : client.perfilDio.urlImage! + '.png'),
         });
+
         Response response;
         var dio = await DioStruture().dioAction();
         response =

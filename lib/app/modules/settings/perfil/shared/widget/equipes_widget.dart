@@ -59,111 +59,115 @@ class _EquipesWidgetState extends State<EquipesWidget>
     List<PerfilDioModel> list = client.perfis;
     return FadeTransition(
       opacity: _animacaoOpacity,
-      child: Column(
-        children: [
-          ListTile(
-            leading: IconRedondedWidget(
-              icon: Icons.groups,
-              color: store.client.theme
-                  ? darkThemeData(context).primaryColor
-                  : lightThemeData(context).primaryColor,
-              size: 42,
-            ),
-            title: const Text(
-              'Equipe',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+        child: Column(
+          children: [
+            ListTile(
+              leading: IconRedondedWidget(
+                icon: Icons.groups,
+                color: store.client.theme
+                    ? darkThemeData(context).primaryColor
+                    : lightThemeData(context).primaryColor,
+                size: 42,
               ),
-            ),
-            trailing: GestureDetector(
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Icon(
-                  Icons.drive_file_rename_outline,
-                  color: store.client.theme
-                      ? darkThemeData(context).primaryColor
-                      : lightThemeData(context).primaryColor,
+              title: const Text(
+                'Equipe',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
               ),
-              onTap: () {
-                setState(() {
-                  client.setShowTeams(!client.showTeams);
-                });
-              },
+              trailing: GestureDetector(
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Icon(
+                    Icons.drive_file_rename_outline,
+                    color: store.client.theme
+                        ? darkThemeData(context).primaryColor
+                        : lightThemeData(context).primaryColor,
+                  ),
+                ),
+                onTap: () {
+                  setState(() {
+                    client.setShowTeams(!client.showTeams);
+                  });
+                },
+              ),
             ),
-          ),
-          client.showTeams
-              ? Wrap(
-                  alignment: WrapAlignment.start,
-                  runAlignment: WrapAlignment.start,
-                  children: [
-                    for (var linha in list)
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(child: Observer(builder: (_) {
-                          return InputChip(
-                            key: ObjectKey(linha.id),
-                            labelPadding: const EdgeInsets.all(2),
-                            selected: client.individualChip.contains(linha.id),
-                            elevation: 4.0,
-                            avatar: CircleAvatarWidget(
-                              url: linha.urlImage,
-                            ),
-                            label: SizedBox(
-                              width: 100,
-                              child: Text(
-                                linha.name.name,
-                                overflow: TextOverflow.ellipsis,
+            client.showTeams
+                ? Wrap(
+                    alignment: WrapAlignment.start,
+                    runAlignment: WrapAlignment.start,
+                    children: [
+                      for (var linha in list)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(child: Observer(builder: (_) {
+                            return InputChip(
+                              key: ObjectKey(linha.id),
+                              labelPadding: const EdgeInsets.all(2),
+                              selected:
+                                  client.individualChip.contains(linha.id),
+                              elevation: 4.0,
+                              avatar: CircleAvatarWidget(
+                                url: linha.urlImage,
                               ),
-                            ),
-                            onSelected: (bool value) {
-                              if (client.individualChip.contains(linha.id)) {
-                                client.individualChip.removeWhere(
-                                    (element) => element == linha.id);
-                              } else {
-                                client.individualChip.add(linha.id);
-                              }
-                              client
-                                  .setIdStaff(linha)
-                                  .then((value) => store.saveDio());
-                            },
-                          );
-                        })),
-                      )
-                  ],
-                )
-              : client.perfilDio.manager
-                  ? client.users.isNotEmpty
-                      ? Wrap(
-                          alignment: WrapAlignment.start,
-                          runAlignment: WrapAlignment.start,
-                          children: [
-                            for (var userModel in client.users)
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InputChip(
-                                  isEnabled: false,
-                                  labelPadding: const EdgeInsets.all(2),
-                                  elevation: 4.0,
-                                  avatar: CircleAvatarWidget(
-                                    url: userModel!.urlImage,
-                                  ),
-                                  label: SizedBox(
-                                    width: 100,
-                                    child: Text(
-                                      userModel.name.name,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  onSelected: (bool value) {},
+                              label: SizedBox(
+                                width: 100,
+                                child: Text(
+                                  linha.name.name,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              )
-                          ],
+                              ),
+                              onSelected: (bool value) {
+                                if (client.individualChip.contains(linha.id)) {
+                                  client.individualChip.removeWhere(
+                                      (element) => element == linha.id);
+                                } else {
+                                  client.individualChip.add(linha.id);
+                                }
+                                client
+                                    .setIdStaff(linha)
+                                    .then((value) => store.saveDio());
+                              },
+                            );
+                          })),
                         )
-                      : Container()
-                  : Container(),
-        ],
+                    ],
+                  )
+                : client.perfilDio.manager
+                    ? client.users.isNotEmpty
+                        ? Wrap(
+                            alignment: WrapAlignment.start,
+                            runAlignment: WrapAlignment.start,
+                            children: [
+                              for (var userModel in client.users)
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InputChip(
+                                    isEnabled: false,
+                                    labelPadding: const EdgeInsets.all(2),
+                                    elevation: 4.0,
+                                    avatar: CircleAvatarWidget(
+                                      url: userModel!.urlImage,
+                                    ),
+                                    label: SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        userModel.name.name,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    onSelected: (bool value) {},
+                                  ),
+                                )
+                            ],
+                          )
+                        : Container()
+                    : Container(),
+          ],
+        ),
       ),
     );
   }
