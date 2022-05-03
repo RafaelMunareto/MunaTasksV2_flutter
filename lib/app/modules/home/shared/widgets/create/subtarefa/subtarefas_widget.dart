@@ -79,6 +79,8 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                         if (direction == DismissDirection.startToEnd) {
                           store.clientCreate.setEditar(true);
                           store.clientCreate.setSubtarefaUpdate(model);
+                          store.clientCreate.setSubtarefasUpdate(
+                              store.clientCreate.subtarefas);
                         } else {
                           store.clientCreate.removeDismissSubtarefa(model);
                           SnackbarCustom().createSnackBar(

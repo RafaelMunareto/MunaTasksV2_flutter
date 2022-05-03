@@ -289,7 +289,7 @@ abstract class _ClientCreateStoreBase with Store {
     setLoadingUser(true);
     if (subtarefas.map((e) => e.user.email == model.user.name.email).length >
         2) {
-      users.removeWhere((e) => e.name.mail == model.user.name.email);
+      users.removeWhere((e) => e.name.email == model.user.name.email);
     } else if (subtarefas
             .map((e) => e.user.email == model.user.name.email)
             .length ==
@@ -338,17 +338,21 @@ abstract class _ClientCreateStoreBase with Store {
         users = [];
       }
     }
-    subtarefas.map((e) {
-      if (e.title == subtarefaModel.title) {
-        e = subtarefaModel;
-      } else {
-        subtarefas.add(subtarefaModel);
-      }
-    });
+    if (subtarefas.where((e) => e.title == subtarefaModel.title).isNotEmpty) {
+      subtarefas = subtarefas.map((e) {
+        if (e.title == subtarefaModel.title) {
+          return subtarefaModel;
+        }
+        return e;
+      }).toList();
+    } else {
+      subtarefas.add(subtarefaModel);
+    }
 
     subtarefaModel = SubtareDiofaModel();
     setLoadingSubtarefa(false);
     setLoadingUser(false);
+    setEditar(false);
     cleanSubtarefa();
   }
 
