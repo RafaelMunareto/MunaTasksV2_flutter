@@ -25,7 +25,7 @@ class _DownloadsWidgetState extends State<DownloadsWidget> {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () => downloadFile(
-            'https://github.com/RafaelMunareto/MunaTasksV2_flutter/blob/main/assets/exe/Release.zip'),
+            'https://github.com/RafaelMunareto/MunaTasksV2_flutter/raw/main/assets/exe/Output/munatask.exe'),
         child: Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
