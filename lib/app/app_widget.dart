@@ -52,9 +52,11 @@ class _AppWidgetState extends State<AppWidget> {
 
   void changeThemeStorage() async {
     await theme.get('theme').then((value) {
-      value?[0] == 'dark'
-          ? _themeMode = ThemeMode.dark
-          : _themeMode = ThemeMode.light;
+      setState(() {
+        value?[0] == 'dark'
+            ? _themeMode = ThemeMode.dark
+            : _themeMode = ThemeMode.light;
+      });
     });
   }
 

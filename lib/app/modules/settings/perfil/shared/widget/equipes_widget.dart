@@ -118,6 +118,11 @@ class _EquipesWidgetState extends State<EquipesWidget>
                                 child: Text(
                                   linha.name.name,
                                   overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: store.client.theme
+                                        ? Colors.blueGrey
+                                        : lightThemeData(context).primaryColor,
+                                  ),
                                 ),
                               ),
                               onSelected: (bool value) {

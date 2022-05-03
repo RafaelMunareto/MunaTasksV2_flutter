@@ -30,8 +30,8 @@ abstract class HomeStoreBase with Store {
   final ClientCreateStore clientCreate = Modular.get();
 
   HomeStoreBase({required this.dashboardService}) {
-    getList();
     buscaTheme();
+    getList();
   }
 
   void getList() async {
@@ -52,9 +52,9 @@ abstract class HomeStoreBase with Store {
   buscaTheme() {
     storage.get('theme').then((value) {
       if (value?[0] == 'dark') {
-        client.theme = true;
+        client.setTheme(true);
       } else {
-        client.theme = false;
+        client.setTheme(false);
       }
     });
   }
@@ -168,34 +168,36 @@ abstract class HomeStoreBase with Store {
         ? await dashboardService.saveDio(model)
         : await dashboardService.updateDio(model);
     badgets();
-    getDioTotal();
     getDio();
+    getDioTotal();
   }
 
   Future saveNewTarefa() async {
     await dashboardService.saveDio(clientCreate.tarefaModelSave);
     badgets();
-    getDioTotal();
     getDio();
+    getDioTotal();
   }
 
   Future updateNewTarefa() async {
     await dashboardService.updateDio(clientCreate.tarefaModelSave);
+    getDio();
     badgets();
     getDioTotal();
-    getDio();
   }
 
   void deleteTasks(TarefaDioModel model) {
     dashboardService.deleteDio(model);
+    badgets();
     getDio();
+    getDioTotal();
   }
 
   void deleteDioTasks(TarefaDioModel model) async {
     await dashboardService.deleteDio(model);
     badgets();
-    getDioTotal();
     getDio();
+    getDioTotal();
   }
 
   changeFilterEtiquetaList() {

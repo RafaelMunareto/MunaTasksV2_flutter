@@ -14,12 +14,13 @@ class MenuScreen extends StatefulWidget {
   final ZoomDrawerController controller;
   final bool open;
   final Function setOpen;
-  const MenuScreen(
-      {Key? key,
-      required this.controller,
-      this.open = false,
-      required this.setOpen})
-      : super(key: key);
+
+  const MenuScreen({
+    Key? key,
+    required this.controller,
+    this.open = false,
+    required this.setOpen,
+  }) : super(key: key);
   @override
   _MenuScreenState createState() => _MenuScreenState();
 }
