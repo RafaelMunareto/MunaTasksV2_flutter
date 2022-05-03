@@ -135,8 +135,7 @@ abstract class HomeStoreBase with Store {
   getUid() async {
     storage.get('userDio').then((value) {
       if (value != null) {
-        client.setUserDio(
-            UserDioClientModel.fromJson(jsonDecode(value[0])['user']));
+        client.setUserDio(UserDioClientModel.fromJson(jsonDecode(value[0])));
       }
     });
   }

@@ -127,18 +127,22 @@ class LoginPageState extends State<LoginPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 40),
-                          child: MouseRegion(
-                            cursor: SystemMouseCursors.click,
-                            child: GestureDetector(
-                              child: const Image(
-                                image: AssetImage('assets/img/google.png'),
-                              ),
-                              onTap: store.loginWithGoogle,
-                            ),
-                          ),
-                        ),
+                        defaultTargetPlatform == TargetPlatform.android
+                            ? Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 40),
+                                child: MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: GestureDetector(
+                                    child: const Image(
+                                      image:
+                                          AssetImage('assets/img/google.png'),
+                                    ),
+                                    onTap: store.loginWithGoogle,
+                                  ),
+                                ),
+                              )
+                            : Container(),
                         store.supportState == SupportState.supported
                             ? GestureDetector(
                                 onTap: store.authenticateBiometric,
@@ -160,7 +164,7 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   );
                 }),
-                defaultTargetPlatform != TargetPlatform.windows
+                kIsWeb
                     ? constraint.maxWidth < LarguraLayoutBuilder().telaPc
                         ? Container()
                         : const Padding(
