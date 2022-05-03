@@ -7,8 +7,8 @@ import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class PrioridadeSaveWidget extends StatefulWidget {
-  final String title;
-  const PrioridadeSaveWidget({Key? key, this.title = "PrioridadeSaveWidget"})
+  final double constraint;
+  const PrioridadeSaveWidget({Key? key, required this.constraint})
       : super(key: key);
 
   @override
@@ -23,13 +23,14 @@ class _PrioridadeSaveWidgetState extends State<PrioridadeSaveWidget> {
       return GestureDetector(
         onTap: () => DialogButtom().showDialog(
           PrioridadeSelectionWidget(
+            constraint: widget.constraint,
             create: true,
             prioridadeSelection: store.clientCreate.tarefaModelPrioritario,
             setPrioridadeSelection:
                 store.clientCreate.setPrioridadeSaveSelection,
           ),
           store.client.theme,
-          constraint.maxWidth,
+          widget.constraint,
           context,
         ),
         child: Observer(

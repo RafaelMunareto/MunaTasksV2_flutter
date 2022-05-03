@@ -81,21 +81,25 @@ class _CreateWidgetState extends State<CreateWidget> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: EtiquetasSaveWidget(),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: EtiquetasSaveWidget(
+                                  constraint: widget.constraint,
+                                ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: ActionFaseSaveWidget(),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: ActionFaseSaveWidget(
+                                    constraint: widget.constraint),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: UsersSaveWidget(),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: UsersSaveWidget(
+                                    constraint: widget.constraint),
                               ),
-                              const PrioridadeSaveWidget(),
-                              widget.constraint >
-                                      LarguraLayoutBuilder().larguraModal
+                              PrioridadeSaveWidget(
+                                  constraint: widget.constraint),
+                              widget.constraint >= LarguraLayoutBuilder().telaPc
                                   ? DateSaveWidget(
                                       dateController: dateController,
                                       constraint: widget.constraint,
@@ -111,13 +115,15 @@ class _CreateWidgetState extends State<CreateWidget> {
                               : 7,
                           child: Wrap(children: [
                             TextSaveWidget(controller: textController),
-                            const CreateSubtarefaWidget()
+                            CreateSubtarefaWidget(
+                              constraint: widget.constraint,
+                            )
                           ]),
                         ),
                       ],
                     ),
                   ),
-                  widget.constraint <= LarguraLayoutBuilder().larguraModal
+                  widget.constraint < LarguraLayoutBuilder().telaPc
                       ? Center(
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.3,

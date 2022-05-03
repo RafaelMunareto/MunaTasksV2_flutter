@@ -8,8 +8,10 @@ import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class EtiquetasSaveWidget extends StatefulWidget {
+  final double constraint;
   const EtiquetasSaveWidget({
     Key? key,
+    required this.constraint,
   }) : super(key: key);
 
   @override
@@ -21,60 +23,51 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraint) {
-      return GestureDetector(
-        child: Observer(builder: (_) {
-          return constraint.maxWidth < 100
-              ? Icon(
-                  store.clientCreate.tarefaModelSaveEtiqueta.icon != null
-                      ? IconData(
-                          store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
-                          fontFamily: 'MaterialIcons')
-                      : Icons.bookmark,
-                  color: ConvertIcon().convertColor(
-                    store.clientCreate.tarefaModelSaveEtiqueta.color,
-                  ),
-                )
-              : Chip(
-                  label: Text(
-                    store.clientCreate.tarefaModelSaveEtiqueta.etiqueta ==
-                            'TODOS'
-                        ? 'Etiqueta'
-                        : store.clientCreate.tarefaModelSaveEtiqueta.icon !=
-                                null
-                            ? store
-                                .clientCreate.tarefaModelSaveEtiqueta.etiqueta
-                            : 'Etiqueta',
-                    style: TextStyle(
-                      fontSize: constraint.maxWidth >
-                              LarguraLayoutBuilder().larguraModal
+    return GestureDetector(child: Observer(builder: (_) {
+      return widget.constraint < LarguraLayoutBuilder().larguraModal
+          ? Icon(
+              store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+                  ? IconData(
+                      store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
+                      fontFamily: 'MaterialIcons')
+                  : Icons.bookmark,
+              color: ConvertIcon().convertColor(
+                store.clientCreate.tarefaModelSaveEtiqueta.color,
+              ),
+            )
+          : Chip(
+              label: Text(
+                store.clientCreate.tarefaModelSaveEtiqueta.etiqueta == 'TODOS'
+                    ? 'Etiqueta'
+                    : store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+                        ? store.clientCreate.tarefaModelSaveEtiqueta.etiqueta
+                        : 'Etiqueta',
+                style: TextStyle(
+                  fontSize:
+                      widget.constraint > LarguraLayoutBuilder().larguraModal
                           ? 12
                           : 10,
-                    ),
-                  ),
-                  avatar: Icon(
-                    store.clientCreate.tarefaModelSaveEtiqueta.icon != null
-                        ? IconData(
-                            store.clientCreate.tarefaModelSaveEtiqueta.icon ??
-                                0,
-                            fontFamily: 'MaterialIcons')
-                        : Icons.bookmark,
-                    color: ConvertIcon().convertColor(
-                      store.clientCreate.tarefaModelSaveEtiqueta.color,
-                    ),
-                  ),
-                );
-        }),
-        onTap: () {
-          DialogButtom().showDialog(
-            const RadioEtiquetasFilterWidget(
-              create: true,
-            ),
-            store.client.theme,
-            constraint.maxWidth,
-            context,
-          );
-        },
+                ),
+              ),
+              avatar: Icon(
+                store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+                    ? IconData(
+                        store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
+                        fontFamily: 'MaterialIcons')
+                    : Icons.bookmark,
+                color: ConvertIcon().convertColor(
+                  store.clientCreate.tarefaModelSaveEtiqueta.color,
+                ),
+              ),
+            );
+    }), onTap: () {
+      DialogButtom().showDialog(
+        const RadioEtiquetasFilterWidget(
+          create: true,
+        ),
+        store.client.theme,
+        widget.constraint,
+        context,
       );
     });
   }

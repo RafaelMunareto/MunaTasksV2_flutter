@@ -14,8 +14,10 @@ import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class CreateSubtarefaWidget extends StatefulWidget {
+  final double constraint;
   const CreateSubtarefaWidget({
     Key? key,
+    required this.constraint,
   }) : super(key: key);
 
   @override
@@ -34,192 +36,186 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraint) {
-      return Observer(builder: (_) {
-        return Container(
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              color: store.client.theme
-                  ? darkThemeData(context).scaffoldBackgroundColor
-                  : lightThemeData(context).scaffoldBackgroundColor,
-              borderRadius: BorderRadius.circular(4)),
-          child: Wrap(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Wrap(
-                      alignment: WrapAlignment.center,
-                      children: [
-                        GestureDetector(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Chip(
-                              label: Text(
-                                store.clientCreate.subtarefaModelSaveTitle != ""
-                                    ? store.clientCreate.subtarefaModelSaveTitle
-                                    : 'Subtarefa',
-                                style: const TextStyle(fontSize: 11),
-                              ),
-                              avatar: Icon(
-                                Icons.work,
-                                color: store.clientCreate
-                                                .subtarefaModelSaveTitle !=
-                                            "" &&
-                                        store.clientCreate
-                                                .subtarefaModelSaveTitle !=
-                                            "Subtarefa"
-                                    ? Colors.blue
-                                    : Colors.grey,
-                              ),
-                            ),
-                          ),
-                          onTap: () => DialogButtom().showDialog(
-                            CreateSubtarefaInsertWidget(
-                              subtarefaInserSelection:
-                                  store.clientCreate.subtarefaModelSaveTitle,
-                              setSubtarefaSelection:
-                                  store.clientCreate.setSubtarefaInsertCreate,
-                            ),
-                            store.client.theme,
-                            constraint.maxWidth,
-                            context,
-                          ),
-                        ),
-                        GestureDetector(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Chip(
-                              backgroundColor: ConvertIcon()
-                                  .colorStatus(store.clientCreate.fase),
-                              label: Text(
-                                ConvertIcon()
-                                    .nameStatus(store.clientCreate.fase),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: ConvertIcon().colorStatusDark(
-                                        store.clientCreate.fase)),
-                              ),
-                              avatar: Icon(
-                                ConvertIcon()
-                                    .iconStatus(store.clientCreate.fase),
-                                color: ConvertIcon()
-                                    .colorStatusDark(store.clientCreate.fase),
-                              ),
-                            ),
-                          ),
-                          onTap: () => DialogButtom().showDialog(
-                            ActionsFaseWidget(
-                              faseList: store.client.fase,
-                              setActionsFase: store.clientCreate.setFase,
-                              constraint: constraint.maxWidth,
-                            ),
-                            store.client.theme,
-                            constraint.maxWidth,
-                            context,
-                          ),
-                        ),
-                        Padding(
+    return Observer(builder: (_) {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+            color: store.client.theme
+                ? darkThemeData(context).scaffoldBackgroundColor
+                : lightThemeData(context).scaffoldBackgroundColor,
+            borderRadius: BorderRadius.circular(4)),
+        child: Wrap(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    children: [
+                      GestureDetector(
+                        child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Wrap(
-                            alignment: WrapAlignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: () => DialogButtom().showDialog(
-                                  CreateUserSubtarefaWidget(
-                                    userLista: store.client.perfis,
-                                    setCreateImageUser:
-                                        store.clientCreate.setCreateImageUser,
-                                    setUserCreateSelection: store
-                                        .clientCreate.setUserCreateSelection,
-                                  ),
-                                  store.client.theme,
-                                  constraint.maxWidth,
-                                  context,
-                                ),
-                                child: Observer(
-                                  builder: (_) {
-                                    return store.clientCreate.imageUser == ""
-                                        ? const Chip(
-                                            label: Text('Equipe'),
-                                            avatar: Icon(
-                                              Icons.people,
-                                              color: Colors.grey,
-                                            ),
-                                          )
-                                        : CircleAvatarWidget(
-                                            url: store.clientCreate.imageUser,
-                                          );
-                                  },
-                                ),
-                              ),
-                            ],
+                          child: Chip(
+                            label: Text(
+                              store.clientCreate.subtarefaModelSaveTitle != ""
+                                  ? store.clientCreate.subtarefaModelSaveTitle
+                                  : 'Subtarefa',
+                              style: const TextStyle(fontSize: 11),
+                            ),
+                            avatar: Icon(
+                              Icons.work,
+                              color:
+                                  store.clientCreate.subtarefaModelSaveTitle !=
+                                              "" &&
+                                          store.clientCreate
+                                                  .subtarefaModelSaveTitle !=
+                                              "Subtarefa"
+                                      ? Colors.blue
+                                      : Colors.grey,
+                            ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: constraint.maxWidth >
-                            LarguraLayoutBuilder().larguraModal
-                        ? 6
-                        : 8,
-                    child: Wrap(
-                      alignment: WrapAlignment.spaceBetween,
-                      children: [
-                        Observer(builder: (_) {
-                          if (store.clientCreate.subtarefaTextSave == "") {
-                            textSubtarefaController.text = '';
-                          }
-                          return TextFormField(
-                            autocorrect: true,
-                            autofocus: false,
-                            controller: textSubtarefaController,
-                            onChanged: (value) =>
-                                store.clientCreate.setSubtarefaTextSave(value),
-                            minLines: 3,
-                            maxLines: 20,
-                            decoration: InputDecoration(
-                              suffixIcon: InkWell(
-                                  child: const Icon(Icons.close_outlined),
-                                  onTap: () {
-                                    setState(() {
-                                      store.clientCreate
-                                          .setSubtarefaTextSave('');
-                                      textSubtarefaController.text = '';
-                                      FocusScope.of(context)
-                                          .requestFocus(FocusNode());
-                                    });
-                                  }),
-                              hintText: "Insira sua subtarefa",
-                            ),
-                          );
-                        }),
-                        if (store.clientCreate.subtarefas.isNotEmpty)
-                          const SubtarefasWidget(),
-                      ],
-                    ),
-                  ),
-                  constraint.maxWidth > LarguraLayoutBuilder().larguraModal
-                      ? Expanded(
-                          flex: 2,
-                          child: ButtonSaveCreateSubtarefaWidget(
-                            constraint: constraint.maxWidth,
+                        onTap: () => DialogButtom().showDialog(
+                          CreateSubtarefaInsertWidget(
+                            subtarefaInserSelection:
+                                store.clientCreate.subtarefaModelSaveTitle,
+                            setSubtarefaSelection:
+                                store.clientCreate.setSubtarefaInsertCreate,
                           ),
-                        )
-                      : Container(),
-                ],
-              ),
-              constraint.maxWidth <= LarguraLayoutBuilder().larguraModal
-                  ? ButtonSaveCreateSubtarefaWidget(
-                      constraint: constraint.maxWidth,
-                    )
-                  : Container(),
-            ],
-          ),
-        );
-      });
+                          store.client.theme,
+                          widget.constraint,
+                          context,
+                        ),
+                      ),
+                      GestureDetector(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Chip(
+                            backgroundColor: ConvertIcon()
+                                .colorStatus(store.clientCreate.fase),
+                            label: Text(
+                              ConvertIcon().nameStatus(store.clientCreate.fase),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: ConvertIcon().colorStatusDark(
+                                      store.clientCreate.fase)),
+                            ),
+                            avatar: Icon(
+                              ConvertIcon().iconStatus(store.clientCreate.fase),
+                              color: ConvertIcon()
+                                  .colorStatusDark(store.clientCreate.fase),
+                            ),
+                          ),
+                        ),
+                        onTap: () => DialogButtom().showDialog(
+                          ActionsFaseWidget(
+                            faseList: store.client.fase,
+                            setActionsFase: store.clientCreate.setFase,
+                            constraint: widget.constraint,
+                          ),
+                          store.client.theme,
+                          widget.constraint,
+                          context,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () => DialogButtom().showDialog(
+                                CreateUserSubtarefaWidget(
+                                  userLista: store.client.perfis,
+                                  setCreateImageUser:
+                                      store.clientCreate.setCreateImageUser,
+                                  setUserCreateSelection:
+                                      store.clientCreate.setUserCreateSelection,
+                                ),
+                                store.client.theme,
+                                widget.constraint,
+                                context,
+                              ),
+                              child: Observer(
+                                builder: (_) {
+                                  return store.clientCreate.imageUser == ""
+                                      ? const Chip(
+                                          label: Text('Equipe'),
+                                          avatar: Icon(
+                                            Icons.people,
+                                            color: Colors.grey,
+                                          ),
+                                        )
+                                      : CircleAvatarWidget(
+                                          url: store.clientCreate.imageUser,
+                                        );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: widget.constraint > LarguraLayoutBuilder().larguraModal
+                      ? 6
+                      : 8,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    children: [
+                      Observer(builder: (_) {
+                        if (store.clientCreate.subtarefaTextSave == "") {
+                          textSubtarefaController.text = '';
+                        }
+                        return TextFormField(
+                          autocorrect: true,
+                          autofocus: false,
+                          controller: textSubtarefaController,
+                          onChanged: (value) =>
+                              store.clientCreate.setSubtarefaTextSave(value),
+                          minLines: 3,
+                          maxLines: 20,
+                          decoration: InputDecoration(
+                            suffixIcon: InkWell(
+                                child: const Icon(Icons.close_outlined),
+                                onTap: () {
+                                  setState(() {
+                                    store.clientCreate.setSubtarefaTextSave('');
+                                    textSubtarefaController.text = '';
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                  });
+                                }),
+                            hintText: "Insira sua subtarefa",
+                          ),
+                        );
+                      }),
+                      if (store.clientCreate.subtarefas.isNotEmpty)
+                        const SubtarefasWidget(),
+                    ],
+                  ),
+                ),
+                widget.constraint > LarguraLayoutBuilder().larguraModal
+                    ? Expanded(
+                        flex: 2,
+                        child: ButtonSaveCreateSubtarefaWidget(
+                          constraint: widget.constraint,
+                        ),
+                      )
+                    : Container(),
+              ],
+            ),
+            widget.constraint <= LarguraLayoutBuilder().larguraModal
+                ? ButtonSaveCreateSubtarefaWidget(
+                    constraint: widget.constraint,
+                  )
+                : Container(),
+          ],
+        ),
+      );
     });
   }
 }

@@ -16,7 +16,7 @@ class DialogButtom {
           alignment: Alignment.bottomCenter,
           child: Container(
             height: width,
-            width: constraint > LarguraLayoutBuilder().larguraModal
+            width: constraint >= LarguraLayoutBuilder().telaPc
                 ? MediaQuery.of(context).size.width * 0.4
                 : MediaQuery.of(context).size.width,
             child: SizedBox.expand(

@@ -175,6 +175,7 @@ class _CardIntWidgetState extends State<CardIntWidget> {
                           GestureDetector(
                             onTap: () => DialogButtom().showDialog(
                               PrioridadeSelectionWidget(
+                                constraint: widget.constraint,
                                 prioridadeSelection:
                                     store.client.prioridadeSelection,
                                 setPrioridadeSelection:

@@ -8,8 +8,8 @@ import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class ActionFaseSaveWidget extends StatefulWidget {
-  final String title;
-  const ActionFaseSaveWidget({Key? key, this.title = "ActionFaseSaveWidget"})
+  final double constraint;
+  const ActionFaseSaveWidget({Key? key, required this.constraint})
       : super(key: key);
 
   @override
@@ -21,47 +21,45 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
   Widget build(BuildContext context) {
     final HomeStore store = Modular.get();
 
-    return LayoutBuilder(builder: (context, constraint) {
-      return Observer(builder: (_) {
-        return GestureDetector(
-          child: constraint.maxWidth <= 100
-              ? Icon(
+    return Observer(builder: (_) {
+      return GestureDetector(
+        child: widget.constraint <= 100
+            ? Icon(
+                ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
+                color: ConvertIcon()
+                    .colorStatusDark(store.clientCreate.faseTarefa),
+              )
+            : Chip(
+                backgroundColor:
+                    ConvertIcon().colorStatus(store.clientCreate.faseTarefa),
+                label: Text(
+                  ConvertIcon().nameStatus(store.clientCreate.faseTarefa),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: widget.constraint >
+                              LarguraLayoutBuilder().larguraModal
+                          ? 14
+                          : 10,
+                      color: ConvertIcon()
+                          .colorStatusDark(store.clientCreate.faseTarefa)),
+                ),
+                avatar: Icon(
                   ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
                   color: ConvertIcon()
                       .colorStatusDark(store.clientCreate.faseTarefa),
-                )
-              : Chip(
-                  backgroundColor:
-                      ConvertIcon().colorStatus(store.clientCreate.faseTarefa),
-                  label: Text(
-                    ConvertIcon().nameStatus(store.clientCreate.faseTarefa),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: constraint.maxWidth >
-                                LarguraLayoutBuilder().larguraModal
-                            ? 14
-                            : 10,
-                        color: ConvertIcon()
-                            .colorStatusDark(store.clientCreate.faseTarefa)),
-                  ),
-                  avatar: Icon(
-                    ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
-                    color: ConvertIcon()
-                        .colorStatusDark(store.clientCreate.faseTarefa),
-                  ),
                 ),
-          onTap: () => DialogButtom().showDialog(
-            ActionsFaseWidget(
-              faseList: store.client.fase,
-              setActionsFase: store.clientCreate.setFaseTarefa,
-              constraint: constraint.maxWidth,
-            ),
-            store.client.theme,
-            constraint.maxWidth,
-            context,
+              ),
+        onTap: () => DialogButtom().showDialog(
+          ActionsFaseWidget(
+            faseList: store.client.fase,
+            setActionsFase: store.clientCreate.setFaseTarefa,
+            constraint: widget.constraint,
           ),
-        );
-      });
+          store.client.theme,
+          widget.constraint,
+          context,
+        ),
+      );
     });
   }
 }

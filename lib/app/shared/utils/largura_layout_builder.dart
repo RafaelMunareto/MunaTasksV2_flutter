@@ -2,7 +2,7 @@ class LarguraLayoutBuilder {
   final telaSmartphone = 600;
   final telaTablet = 768;
   final telaPc = 1023;
-  final larguraModal = 1023;
+  final larguraModal = 400;
 
   largura(larguraBuilder) {
     var largura = larguraBuilder;
