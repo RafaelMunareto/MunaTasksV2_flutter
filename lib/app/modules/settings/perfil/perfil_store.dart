@@ -14,6 +14,7 @@ import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/image/image_repository.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 part 'perfil_store.g.dart';
 
@@ -99,6 +100,7 @@ abstract class _PerfilStoreBase with Store {
 
       if (result != null) {
         File file = File(result.files.single.path!);
+
         var imagebytes = await file.readAsBytes();
         List<int> listData = imagebytes.cast();
         FormData formData = FormData.fromMap({

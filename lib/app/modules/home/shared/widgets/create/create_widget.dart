@@ -47,36 +47,15 @@ class _CreateWidgetState extends State<CreateWidget> {
               ),
               child: Wrap(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Modular.to.pop();
-                          store.getDioFase();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(
-                            'X',
-                            style: TextStyle(
-                              color: store.client.theme
-                                  ? darkThemeData(context).primaryColor
-                                  : lightThemeData(context).primaryColor,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Row(
                       children: [
                         Expanded(
-                          flex: widget.constraint > 100 ? 2 : 3,
+                          flex:
+                              widget.constraint >= LarguraLayoutBuilder().telaPc
+                                  ? 2
+                                  : 3,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -109,10 +88,10 @@ class _CreateWidgetState extends State<CreateWidget> {
                           ),
                         ),
                         Expanded(
-                          flex: widget.constraint >
-                                  LarguraLayoutBuilder().larguraModal
-                              ? 8
-                              : 7,
+                          flex:
+                              widget.constraint > LarguraLayoutBuilder().telaPc
+                                  ? 8
+                                  : 7,
                           child: Wrap(children: [
                             TextSaveWidget(controller: textController),
                             CreateSubtarefaWidget(

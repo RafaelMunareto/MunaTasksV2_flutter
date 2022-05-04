@@ -53,6 +53,44 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                   child: Wrap(
                     alignment: WrapAlignment.center,
                     children: [
+                      store.clientCreate.subtarefaTextSave != ""
+                          ? MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: GestureDetector(
+                                child: widget.constraint >=
+                                        LarguraLayoutBuilder().telaPc
+                                    ? Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            8, 16, 8, 16),
+                                        child: Chip(
+                                          label: const Text(
+                                            'Novo',
+                                            style: TextStyle(fontSize: 11),
+                                          ),
+                                          avatar: Icon(
+                                            Icons.add_circle_sharp,
+                                            color: store.clientCreate
+                                                            .subtarefaModelSaveTitle !=
+                                                        "" &&
+                                                    store.clientCreate
+                                                            .subtarefaModelSaveTitle !=
+                                                        "Subtarefa"
+                                                ? Colors.blue
+                                                : Colors.grey,
+                                          ),
+                                        ),
+                                      )
+                                    : const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Icon(Icons.add_circle_sharp),
+                                      ),
+                                onTap: () {
+                                  store.clientCreate.cleanSubtarefa();
+                                  store.clientCreate.setEditar(false);
+                                },
+                              ),
+                            )
+                          : Container(),
                       GestureDetector(
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
@@ -208,8 +246,6 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                           autocorrect: true,
                           autofocus: false,
                           controller: textSubtarefaController,
-                          onChanged: (value) =>
-                              store.clientCreate.setSubtarefaTextSave(value),
                           minLines: 3,
                           maxLines: 20,
                           decoration: InputDecoration(
