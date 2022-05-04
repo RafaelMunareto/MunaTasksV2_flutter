@@ -63,73 +63,66 @@ class _ActionsFaseWidgetState extends State<ActionsFaseWidget>
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
-          child: SizedBox(
-            width: widget.constraint > LarguraLayoutBuilder().telaPc
-                ? MediaQuery.of(context).size.width
-                : MediaQuery.of(context).size.width * 0.5,
-            child: Observer(
-              builder: (_) {
-                if (store.client.fase.isEmpty) {
-                  return const Center(
-                    child: CircularProgressWidget(),
-                  );
-                } else {
-                  List<FaseDioModel>? list = store.client.fase;
-                  return LayoutBuilder(builder: (context, constraint) {
-                    return SingleChildScrollView(
-                      child: Center(
-                        child: Wrap(
-                          runAlignment: WrapAlignment.center,
-                          spacing: 24,
-                          children: [
-                            for (var linha in list)
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 16.0),
-                                child: InputChip(
-                                  key: UniqueKey(),
-                                  labelPadding: const EdgeInsets.all(2),
-                                  elevation: 8.0,
-                                  backgroundColor:
-                                      ConvertIcon().colorStatus(linha.status),
-                                  avatar: Icon(
-                                    IconData(linha.icon,
-                                        fontFamily: 'MaterialIcons'),
+          child: Observer(
+            builder: (_) {
+              if (store.client.fase.isEmpty) {
+                return const Center(
+                  child: CircularProgressWidget(),
+                );
+              } else {
+                List<FaseDioModel>? list = store.client.fase;
+                return SingleChildScrollView(
+                  child: Center(
+                    child: Wrap(
+                      runAlignment: WrapAlignment.center,
+                      spacing: 24,
+                      children: [
+                        for (var linha in list)
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: InputChip(
+                              key: UniqueKey(),
+                              labelPadding: const EdgeInsets.all(2),
+                              elevation: 8.0,
+                              backgroundColor:
+                                  ConvertIcon().colorStatus(linha.status),
+                              avatar: Icon(
+                                IconData(linha.icon,
+                                    fontFamily: 'MaterialIcons'),
+                                color:
+                                    ConvertIcon().convertColorFase(linha.color),
+                              ),
+                              label: SizedBox(
+                                width: widget.constraint >=
+                                        LarguraLayoutBuilder().telaPc
+                                    ? MediaQuery.of(context).size.width * 0.1
+                                    : MediaQuery.of(context).size.width * 0.4,
+                                child: Text(
+                                  linha.name.toString(),
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
                                     color: ConvertIcon()
-                                        .convertColorFase(linha.color),
+                                        .colorStatusDark(linha.status),
                                   ),
-                                  label: SizedBox(
-                                    width: constraint.maxWidth >
-                                            LarguraLayoutBuilder().telaPc
-                                        ? 100
-                                        : MediaQuery.of(context).size.width,
-                                    child: Text(
-                                      linha.name.toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: ConvertIcon()
-                                            .colorStatusDark(linha.status),
-                                      ),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      widget.setActionsFase(linha.status);
-                                      FocusScope.of(context).unfocus();
-                                      Modular.to.pop();
-                                    });
-                                  },
                                 ),
                               ),
-                          ],
-                        ),
-                      ),
-                    );
-                  });
-                }
-              },
-            ),
+                              onPressed: () {
+                                setState(() {
+                                  widget.setActionsFase(linha.status);
+                                  FocusScope.of(context).unfocus();
+                                  Modular.to.pop();
+                                });
+                              },
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+            },
           ),
         ),
       ),

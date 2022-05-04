@@ -71,13 +71,15 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
                   store.clientCreate.cleanSave();
+                  store.clientCreate.setEditar(false);
                   DialogButtom().showDialogCreate(
-                      CreateWidget(
-                        constraint: constraint.maxWidth,
-                      ),
-                      constraint.maxWidth,
-                      context,
-                      store.getDioFase());
+                    CreateWidget(
+                      constraint: constraint.maxWidth,
+                    ),
+                    constraint.maxWidth,
+                    context,
+                    store.getDioFase(),
+                  );
                 },
                 child: Icon(
                   Icons.add,

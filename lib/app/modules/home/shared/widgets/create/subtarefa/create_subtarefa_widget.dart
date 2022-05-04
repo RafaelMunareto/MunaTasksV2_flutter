@@ -32,6 +32,9 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
   void initState() {
     super.initState();
     textSubtarefaController.text = store.clientCreate.subtarefaTextSave;
+    store.clientCreate.setSubtarefaId(store.clientCreate.subtarefaModel.id == ""
+        ? DateTime.now().millisecondsSinceEpoch.toString()
+        : store.clientCreate.subtarefaModel.id);
   }
 
   @override
@@ -54,42 +57,44 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                     alignment: WrapAlignment.center,
                     children: [
                       store.clientCreate.subtarefaTextSave != ""
-                          ? MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: GestureDetector(
-                                child: widget.constraint >=
-                                        LarguraLayoutBuilder().telaPc
-                                    ? Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            8, 16, 8, 16),
-                                        child: Chip(
-                                          label: const Text(
-                                            'Novo',
-                                            style: TextStyle(fontSize: 11),
+                          ? !store.clientCreate.editar
+                              ? Container()
+                              : MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: GestureDetector(
+                                    child: widget.constraint >=
+                                            LarguraLayoutBuilder().telaPc
+                                        ? Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                8, 16, 8, 16),
+                                            child: Chip(
+                                              label: const Text(
+                                                'Novo',
+                                                style: TextStyle(fontSize: 11),
+                                              ),
+                                              avatar: Icon(
+                                                Icons.add_circle_sharp,
+                                                color: store.clientCreate
+                                                                .subtarefaModelSaveTitle !=
+                                                            "" &&
+                                                        store.clientCreate
+                                                                .subtarefaModelSaveTitle !=
+                                                            "Subtarefa"
+                                                    ? Colors.blue
+                                                    : Colors.grey,
+                                              ),
+                                            ),
+                                          )
+                                        : const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Icon(Icons.add_circle_sharp),
                                           ),
-                                          avatar: Icon(
-                                            Icons.add_circle_sharp,
-                                            color: store.clientCreate
-                                                            .subtarefaModelSaveTitle !=
-                                                        "" &&
-                                                    store.clientCreate
-                                                            .subtarefaModelSaveTitle !=
-                                                        "Subtarefa"
-                                                ? Colors.blue
-                                                : Colors.grey,
-                                          ),
-                                        ),
-                                      )
-                                    : const Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Icon(Icons.add_circle_sharp),
-                                      ),
-                                onTap: () {
-                                  store.clientCreate.cleanSubtarefa();
-                                  store.clientCreate.setEditar(false);
-                                },
-                              ),
-                            )
+                                    onTap: () {
+                                      store.clientCreate.cleanSubtarefa();
+                                      store.clientCreate.setEditar(false);
+                                    },
+                                  ),
+                                )
                           : Container(),
                       GestureDetector(
                         child: Padding(
@@ -236,13 +241,11 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                     alignment: WrapAlignment.spaceBetween,
                     children: [
                       Observer(builder: (_) {
-                        if (store.clientCreate.subtarefaTextSave == "") {
-                          textSubtarefaController.text = '';
-                        } else {
+                        if (store.clientCreate.editar) {
                           textSubtarefaController.text =
                               store.clientCreate.subtarefaTextSave;
                         }
-                        return TextFormField(
+                        return TextField(
                           autocorrect: true,
                           autofocus: false,
                           controller: textSubtarefaController,
@@ -272,6 +275,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                     ? Expanded(
                         flex: 2,
                         child: ButtonSaveCreateSubtarefaWidget(
+                          texto: textSubtarefaController,
                           constraint: widget.constraint,
                         ),
                       )
@@ -280,6 +284,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
             ),
             widget.constraint < LarguraLayoutBuilder().telaPc
                 ? ButtonSaveCreateSubtarefaWidget(
+                    texto: textSubtarefaController,
                     constraint: widget.constraint,
                   )
                 : Container(),

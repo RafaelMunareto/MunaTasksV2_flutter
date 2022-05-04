@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 
@@ -227,7 +228,6 @@ abstract class _ClientCreateStoreBase with Store {
   @action
   setTarefa() {
     tarefaModelSave.etiqueta = tarefaModelSaveEtiqueta;
-    tarefaModelSave.id = id;
     tarefaModelSave.texto = tarefaModelSaveTexto;
     tarefaModelSave.fase = changeFaseTarefa(faseTarefa);
     tarefaModelSave.data = tarefaModelData;
@@ -237,7 +237,10 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   @action
-  setSubtarefaUpdate(SubtareDiofaModel model) {
+  setSubtarefaId(value) => subtarefaModel.id = value;
+
+  @action
+  setSubtarefaUpdate(dynamic model) {
     setSubtarefaTextSave(model.texto);
     setSubtarefaInsertCreate(model.title);
     setFase(model.status);
@@ -247,6 +250,7 @@ abstract class _ClientCreateStoreBase with Store {
       model.user.name.email,
     );
     setIdStaff(model.user);
+    setSubtarefaId(model.id);
   }
 
   @action
@@ -308,7 +312,7 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   @observable
-  SubtareDiofaModel subtarefaModel = SubtareDiofaModel();
+  SubtarefasDioModel subtarefaModel = SubtarefasDioModel();
 
   @observable
   bool editar = false;
@@ -338,9 +342,9 @@ abstract class _ClientCreateStoreBase with Store {
         users = [];
       }
     }
-    if (subtarefas.where((e) => e.title == subtarefaModel.title).isNotEmpty) {
+    if (subtarefas.where((e) => e.id == subtarefaModel.id).isNotEmpty) {
       subtarefas = subtarefas.map((e) {
-        if (e.title == subtarefaModel.title) {
+        if (e.id == subtarefaModel.id) {
           return subtarefaModel;
         }
         return e;
@@ -349,7 +353,7 @@ abstract class _ClientCreateStoreBase with Store {
       subtarefas.add(subtarefaModel);
     }
 
-    subtarefaModel = SubtareDiofaModel();
+    subtarefaModel = SubtarefasDioModel();
     setLoadingSubtarefa(false);
     setLoadingUser(false);
     setEditar(false);

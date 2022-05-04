@@ -312,13 +312,13 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
       Atom(name: '_ClientCreateStoreBase.subtarefaModel');
 
   @override
-  SubtareDiofaModel get subtarefaModel {
+  SubtarefasDioModel get subtarefaModel {
     _$subtarefaModelAtom.reportRead();
     return super.subtarefaModel;
   }
 
   @override
-  set subtarefaModel(SubtareDiofaModel value) {
+  set subtarefaModel(SubtarefasDioModel value) {
     _$subtarefaModelAtom.reportWrite(value, super.subtarefaModel, () {
       super.subtarefaModel = value;
     });
@@ -772,7 +772,18 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
-  dynamic setSubtarefaUpdate(SubtareDiofaModel model) {
+  dynamic setSubtarefaId(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setSubtarefaId');
+    try {
+      return super.setSubtarefaId(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setSubtarefaUpdate(dynamic model) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setSubtarefaUpdate');
     try {

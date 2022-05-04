@@ -9,8 +9,12 @@ import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class ButtonSaveCreateSubtarefaWidget extends StatefulWidget {
   final double constraint;
-  const ButtonSaveCreateSubtarefaWidget({Key? key, required this.constraint})
-      : super(key: key);
+  final TextEditingController texto;
+  const ButtonSaveCreateSubtarefaWidget({
+    Key? key,
+    required this.constraint,
+    required this.texto,
+  }) : super(key: key);
 
   @override
   State<ButtonSaveCreateSubtarefaWidget> createState() =>
@@ -24,12 +28,12 @@ class _ButtonSaveCreateSubtarefaWidgetState
     final HomeStore store = Modular.get();
 
     return Padding(
-      padding: widget.constraint > LarguraLayoutBuilder().larguraModal
+      padding: widget.constraint > LarguraLayoutBuilder().telaPc
           ? const EdgeInsets.all(8.0)
           : const EdgeInsets.all(0),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.94,
-        height: widget.constraint > LarguraLayoutBuilder().larguraModal
+        height: widget.constraint > LarguraLayoutBuilder().telaPc
             ? MediaQuery.of(context).size.height * 0.085
             : MediaQuery.of(context).size.height * 0.045,
         child: ElevatedButton.icon(
@@ -41,6 +45,7 @@ class _ButtonSaveCreateSubtarefaWidgetState
             ),
           ),
           onPressed: () {
+            store.clientCreate.setSubtarefaTextSave(widget.texto.text);
             store.clientCreate.isValidSubtarefa
                 ? store.clientCreate.setSubtarefas()
                 : DialogButtom().showDialog(
@@ -52,6 +57,8 @@ class _ButtonSaveCreateSubtarefaWidgetState
                     widget.constraint,
                     context,
                   );
+            store.clientCreate.setSubtarefaTextSave('');
+            widget.texto.text = '';
             FocusScope.of(context).unfocus();
           },
           icon: const Icon(Icons.add_circle, size: 18),

@@ -258,7 +258,7 @@ class _CardIntWidgetState extends State<CardIntWidget> {
                 theme: store.client.theme,
                 buttonName: 'EXCLUIR',
                 popUp: true,
-                function: store.deleteTasks,
+                function: store.deleteDioTasks,
                 dataFunction: tarefa,
                 scnack: true,
                 msgSnack: 'Deletado com sucesso!',

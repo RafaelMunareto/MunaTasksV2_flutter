@@ -68,9 +68,10 @@ ThemeData darkThemeData(BuildContext context) {
         .apply(bodyColor: darkWhite),
     colorScheme: const ColorScheme.light(
       primary: darkPrimaryColor,
-      secondary: darkSecondaryColor,
+      secondary: Colors.grey,
       error: darkErrorColor,
     ),
+    dialogBackgroundColor: Colors.blueGrey,
     inputDecorationTheme: const InputDecorationTheme(iconColor: Colors.grey),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: darkDarkGrey,

@@ -149,27 +149,30 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                   left: 30,
                   child: Center(
                     child: Observer(builder: (_) {
-                      return Container(
-                        width: 170.0,
-                        height: 170.0,
-                        decoration: store.client.perfilDio.urlImage != ''
-                            ? BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: NetworkImage(
-                                    store.client.perfilDio.urlImage,
-                                  ),
-                                ),
-                              )
-                            : const BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage('assets/img/person.png'),
-                                ),
-                              ),
-                      );
+                      return store.client.loadingImagem
+                          ? const CircularProgressWidget()
+                          : Container(
+                              width: 170.0,
+                              height: 170.0,
+                              decoration: store.client.perfilDio.urlImage != ''
+                                  ? BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(
+                                          store.client.perfilDio.urlImage,
+                                        ),
+                                      ),
+                                    )
+                                  : const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image:
+                                            AssetImage('assets/img/person.png'),
+                                      ),
+                                    ),
+                            );
                     }),
                   ),
                 )
@@ -270,9 +273,10 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                 top: 10,
                 left: 165,
                 child: GestureDetector(
-                  child: defaultTargetPlatform == TargetPlatform.windows
-                      ? popMenuDesktop()
-                      : popMenu(),
+                  child:
+                      kIsWeb || defaultTargetPlatform == TargetPlatform.windows
+                          ? popMenuDesktop()
+                          : popMenu(),
                 ),
               ),
             ],

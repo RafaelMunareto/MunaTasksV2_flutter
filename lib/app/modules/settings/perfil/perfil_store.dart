@@ -14,7 +14,6 @@ import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/image/image_repository.dart';
-import 'package:image_cropper/image_cropper.dart';
 
 part 'perfil_store.g.dart';
 
@@ -71,6 +70,7 @@ abstract class _PerfilStoreBase with Store {
               return perfil;
             }).toList();
       client.setUsersDio(users);
+      client.setLoadingImagem(false);
     });
   }
 
@@ -130,6 +130,18 @@ abstract class _PerfilStoreBase with Store {
       }
       if (image != null) {
         client.setLoadingImagem(true);
+        // dynamic cropped = await ImageCropper.platform.cropImage(
+        //   sourcePath: image.path,
+        //   aspectRatioPresets: [
+        //     CropAspectRatioPreset.original,
+        //     CropAspectRatioPreset.ratio16x9,
+        //     CropAspectRatioPreset.ratio4x3,
+        //   ],
+        //   maxWidth: 800,
+        // );
+        // if (cropped != null) {
+        //   image = cropped;
+        // }
       }
       var imagebytes = await image?.readAsBytes();
       List<int>? listData = imagebytes!.cast();
@@ -146,7 +158,6 @@ abstract class _PerfilStoreBase with Store {
       response = await dio.put('perfil/${client.perfilDio.id}', data: formData);
       DioStruture().statusRequest(response);
       getBydDioId();
-      client.setLoadingImagem(false);
     }
   }
 }
