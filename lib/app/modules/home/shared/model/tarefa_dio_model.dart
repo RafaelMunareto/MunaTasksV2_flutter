@@ -54,6 +54,7 @@ class TarefaDioModel {
       "data": doc.data.toString(),
       "subtarefa": doc.subTarefa!.map((element) {
         return {
+          "id": element.id,
           "title": element.title,
           "status": element.status,
           "texto": element.texto,

@@ -45,6 +45,10 @@ class _ButtonSaveCreateSubtarefaWidgetState
             ),
           ),
           onPressed: () {
+            if (!store.clientCreate.editar) {
+              store.clientCreate.setSubtarefaId(
+                  DateTime.now().millisecondsSinceEpoch.toString());
+            }
             store.clientCreate.setSubtarefaTextSave(widget.texto.text);
             store.clientCreate.isValidSubtarefa
                 ? store.clientCreate.setSubtarefas()

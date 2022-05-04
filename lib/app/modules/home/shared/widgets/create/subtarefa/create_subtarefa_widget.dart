@@ -36,9 +36,6 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
 
   @override
   Widget build(BuildContext context) {
-    store.clientCreate.setSubtarefaId(store.clientCreate.subtarefaModel.id == ""
-        ? DateTime.now().millisecondsSinceEpoch.toString()
-        : store.clientCreate.subtarefaModel.id);
     return Observer(builder: (_) {
       return Container(
         width: MediaQuery.of(context).size.width,
@@ -90,6 +87,8 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                             child: Icon(Icons.add_circle_sharp),
                                           ),
                                     onTap: () {
+                                      store.clientCreate.setSubtarefaTextSave(
+                                          textSubtarefaController.text);
                                       store.clientCreate.cleanSubtarefa();
                                       store.clientCreate.setEditar(false);
                                     },
@@ -97,33 +96,21 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                 )
                           : Container(),
                       GestureDetector(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                          child:
-                              widget.constraint >= LarguraLayoutBuilder().telaPc
-                                  ? Chip(
-                                      label: Text(
-                                        store.clientCreate
-                                                    .subtarefaModelSaveTitle !=
-                                                ""
-                                            ? store.clientCreate
-                                                .subtarefaModelSaveTitle
-                                            : 'Subtarefa',
-                                        style: const TextStyle(fontSize: 11),
-                                      ),
-                                      avatar: Icon(
-                                        Icons.work,
-                                        color: store.clientCreate
-                                                        .subtarefaModelSaveTitle !=
-                                                    "" &&
-                                                store.clientCreate
-                                                        .subtarefaModelSaveTitle !=
-                                                    "Subtarefa"
-                                            ? Colors.blue
-                                            : Colors.grey,
-                                      ),
-                                    )
-                                  : Icon(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
+                            child: widget.constraint >=
+                                    LarguraLayoutBuilder().telaPc
+                                ? Chip(
+                                    label: Text(
+                                      store.clientCreate
+                                                  .subtarefaModelSaveTitle !=
+                                              ""
+                                          ? store.clientCreate
+                                              .subtarefaModelSaveTitle
+                                          : 'Subtarefa',
+                                      style: const TextStyle(fontSize: 11),
+                                    ),
+                                    avatar: Icon(
                                       Icons.work,
                                       color: store.clientCreate
                                                       .subtarefaModelSaveTitle !=
@@ -134,78 +121,100 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                           ? Colors.blue
                                           : Colors.grey,
                                     ),
-                        ),
-                        onTap: () => DialogButtom().showDialog(
-                          CreateSubtarefaInsertWidget(
-                            subtarefaInserSelection:
-                                store.clientCreate.subtarefaModelSaveTitle,
-                            setSubtarefaSelection:
-                                store.clientCreate.setSubtarefaInsertCreate,
-                          ),
-                          store.client.theme,
-                          widget.constraint,
-                          context,
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                          child: widget.constraint >=
-                                  LarguraLayoutBuilder().telaPc
-                              ? Chip(
-                                  backgroundColor: ConvertIcon()
-                                      .colorStatus(store.clientCreate.fase),
-                                  label: Text(
-                                    ConvertIcon()
-                                        .nameStatus(store.clientCreate.fase),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: ConvertIcon().colorStatusDark(
-                                            store.clientCreate.fase)),
+                                  )
+                                : Icon(
+                                    Icons.work,
+                                    color: store.clientCreate
+                                                    .subtarefaModelSaveTitle !=
+                                                "" &&
+                                            store.clientCreate
+                                                    .subtarefaModelSaveTitle !=
+                                                "Subtarefa"
+                                        ? Colors.blue
+                                        : Colors.grey,
                                   ),
-                                  avatar: Icon(
+                          ),
+                          onTap: () {
+                            DialogButtom().showDialog(
+                              CreateSubtarefaInsertWidget(
+                                subtarefaInserSelection:
+                                    store.clientCreate.subtarefaModelSaveTitle,
+                                setSubtarefaSelection:
+                                    store.clientCreate.setSubtarefaInsertCreate,
+                              ),
+                              store.client.theme,
+                              widget.constraint,
+                              context,
+                            );
+                            store.clientCreate.setSubtarefaTextSave(
+                                textSubtarefaController.text);
+                          }),
+                      GestureDetector(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
+                            child: widget.constraint >=
+                                    LarguraLayoutBuilder().telaPc
+                                ? Chip(
+                                    backgroundColor: ConvertIcon()
+                                        .colorStatus(store.clientCreate.fase),
+                                    label: Text(
+                                      ConvertIcon()
+                                          .nameStatus(store.clientCreate.fase),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: ConvertIcon().colorStatusDark(
+                                              store.clientCreate.fase)),
+                                    ),
+                                    avatar: Icon(
+                                      ConvertIcon()
+                                          .iconStatus(store.clientCreate.fase),
+                                      color: ConvertIcon().colorStatusDark(
+                                          store.clientCreate.fase),
+                                    ),
+                                  )
+                                : Icon(
                                     ConvertIcon()
                                         .iconStatus(store.clientCreate.fase),
                                     color: ConvertIcon().colorStatusDark(
                                         store.clientCreate.fase),
                                   ),
-                                )
-                              : Icon(
-                                  ConvertIcon()
-                                      .iconStatus(store.clientCreate.fase),
-                                  color: ConvertIcon()
-                                      .colorStatusDark(store.clientCreate.fase),
-                                ),
-                        ),
-                        onTap: () => DialogButtom().showDialog(
-                          ActionsFaseWidget(
-                            faseList: store.client.fase,
-                            setActionsFase: store.clientCreate.setFase,
-                            constraint: widget.constraint,
                           ),
-                          store.client.theme,
-                          widget.constraint,
-                          context,
-                        ),
-                      ),
+                          onTap: () {
+                            store.clientCreate.setSubtarefaTextSave(
+                                textSubtarefaController.text);
+                            DialogButtom().showDialog(
+                              ActionsFaseWidget(
+                                faseList: store.client.fase,
+                                setActionsFase: store.clientCreate.setFase,
+                                constraint: widget.constraint,
+                              ),
+                              store.client.theme,
+                              widget.constraint,
+                              context,
+                            );
+                          }),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Wrap(
                           alignment: WrapAlignment.center,
                           children: [
                             GestureDetector(
-                              onTap: () => DialogButtom().showDialog(
-                                CreateUserSubtarefaWidget(
-                                  userLista: store.client.perfis,
-                                  setCreateImageUser:
-                                      store.clientCreate.setCreateImageUser,
-                                  setUserCreateSelection:
-                                      store.clientCreate.setUserCreateSelection,
-                                ),
-                                store.client.theme,
-                                widget.constraint,
-                                context,
-                              ),
+                              onTap: () {
+                                store.clientCreate.setSubtarefaTextSave(
+                                    textSubtarefaController.text);
+                                DialogButtom().showDialog(
+                                  CreateUserSubtarefaWidget(
+                                    userLista: store.client.perfis,
+                                    setCreateImageUser:
+                                        store.clientCreate.setCreateImageUser,
+                                    setUserCreateSelection: store
+                                        .clientCreate.setUserCreateSelection,
+                                  ),
+                                  store.client.theme,
+                                  widget.constraint,
+                                  context,
+                                );
+                              },
                               child: Observer(
                                 builder: (_) {
                                   return store.clientCreate.imageUser == ""
