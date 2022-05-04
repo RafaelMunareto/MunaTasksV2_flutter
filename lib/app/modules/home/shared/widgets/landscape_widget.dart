@@ -10,7 +10,8 @@ import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class LandscapeWidget extends StatefulWidget {
-  const LandscapeWidget({Key? key}) : super(key: key);
+  final double constraint;
+  const LandscapeWidget({Key? key, required this.constraint}) : super(key: key);
 
   @override
   State<LandscapeWidget> createState() => _LandscapeWidgetState();
@@ -21,146 +22,145 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraint) {
-      return Observer(builder: (_) {
-        return store.client.loadingTasksTotal
-            ? const Center(child: SizedBox(child: CircularProgressWidget()))
-            : Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    width: constraint.maxWidth >=
-                            LarguraLayoutBuilder().larguraModal
-                        ? MediaQuery.of(context).size.width * 0.5
-                        : MediaQuery.of(context).size.width,
-                    child: SingleChildScrollView(
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        child: Accordion(
-                          maxOpenSections: 1,
-                          children: [
-                            for (var totais in store.client.tarefasTotais)
-                              AccordionSection(
-                                headerBackgroundColor: store.client.theme
-                                    ? darkThemeData(context).primaryColorLight
-                                    : lightThemeData(context).primaryColorLight,
-                                contentBackgroundColor: store.client.theme
-                                    ? darkThemeData(context)
-                                        .scaffoldBackgroundColor
-                                    : lightThemeData(context)
-                                        .scaffoldBackgroundColor,
-                                header: Wrap(
-                                  alignment: WrapAlignment.spaceBetween,
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      child: InputChip(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(20),
-                                            bottomRight: Radius.circular(20),
-                                          ),
+    return Observer(builder: (_) {
+      return store.client.loadingTasksTotal
+          ? const Center(child: SizedBox(child: CircularProgressWidget()))
+          : Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: widget.constraint >= LarguraLayoutBuilder().telaPc
+                      ? MediaQuery.of(context).size.width * 0.5
+                      : MediaQuery.of(context).size.width,
+                  child: SingleChildScrollView(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child: Accordion(
+                        maxOpenSections: 1,
+                        children: [
+                          for (var totais in store.client.tarefasTotais)
+                            AccordionSection(
+                              headerBackgroundColor: store.client.theme
+                                  ? darkThemeData(context).primaryColorLight
+                                  : lightThemeData(context).primaryColorLight,
+                              contentBackgroundColor: store.client.theme
+                                  ? darkThemeData(context)
+                                      .scaffoldBackgroundColor
+                                  : lightThemeData(context)
+                                      .scaffoldBackgroundColor,
+                              header: Wrap(
+                                alignment: WrapAlignment.spaceBetween,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    child: InputChip(
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(20),
+                                          bottomRight: Radius.circular(20),
                                         ),
-                                        key: UniqueKey(),
-                                        labelPadding: const EdgeInsets.all(2),
-                                        elevation: 2.0,
-                                        avatar: CircleAvatarWidget(
-                                          url: totais.name!.urlImage,
-                                        ),
-                                        label: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.1,
-                                          child: Text(
-                                            totais.name!.name.name,
-                                            textAlign: TextAlign.justify,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style:
-                                                const TextStyle(fontSize: 12),
-                                          ),
-                                        ),
-                                        onPressed: () {},
                                       ),
+                                      key: UniqueKey(),
+                                      labelPadding: const EdgeInsets.all(2),
+                                      elevation: 2.0,
+                                      avatar: CircleAvatarWidget(
+                                        url: totais.name!.urlImage,
+                                      ),
+                                      label: SizedBox(
+                                        width: widget.constraint >=
+                                                LarguraLayoutBuilder().telaPc
+                                            ? MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.07
+                                            : MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.3,
+                                        child: Text(
+                                          totais.name!.name.name,
+                                          textAlign: TextAlign.justify,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(fontSize: 12),
+                                        ),
+                                      ),
+                                      onPressed: () {},
                                     ),
-                                    totais.qtd > 0
-                                        ? Text(
-                                            totais.qtd > 1
-                                                ? totais.qtd.toString() +
-                                                    ' Tarefas'
-                                                : totais.qtd.toString() +
-                                                    ' Tarefa',
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ))
-                                        : const Text('Nenhuma tarefa',
-                                            style: TextStyle(
-                                              color: Colors.red,
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                  ],
-                                ),
-                                content: Wrap(
-                                  children: [
-                                    for (var task in totais.tarefa ?? [])
-                                      totais.tarefa.isEmpty
-                                          ? Container()
-                                          : Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: InputChip(
-                                                shape:
-                                                    const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(10),
-                                                  ),
-                                                ),
-                                                key: UniqueKey(),
-                                                labelPadding:
-                                                    const EdgeInsets.all(2),
-                                                elevation: 1.0,
-                                                avatar: Icon(
-                                                  IconData(
-                                                      task.etiqueta.icon ?? 0,
-                                                      fontFamily:
-                                                          'MaterialIcons'),
-                                                  color: ConvertIcon()
-                                                      .convertColor(
-                                                          task.etiqueta.color),
-                                                ),
-                                                label: SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  child: Text(
-                                                    task.texto,
-                                                    textAlign:
-                                                        TextAlign.justify,
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        fontSize: 12),
-                                                  ),
-                                                ),
-                                                onPressed: () {},
-                                              ),
-                                            ),
-                                  ],
-                                ),
+                                  ),
+                                  totais.qtd > 0
+                                      ? Text(
+                                          totais.qtd > 1
+                                              ? totais.qtd.toString() +
+                                                  ' Tarefas'
+                                              : totais.qtd.toString() +
+                                                  ' Tarefa',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ))
+                                      : const Text('Nenhuma tarefa',
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                ],
                               ),
-                          ],
-                        ),
+                              content: Wrap(
+                                children: [
+                                  for (var task in totais.tarefa ?? [])
+                                    totais.tarefa.isEmpty
+                                        ? Container()
+                                        : Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: InputChip(
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(10),
+                                                ),
+                                              ),
+                                              key: UniqueKey(),
+                                              labelPadding:
+                                                  const EdgeInsets.all(2),
+                                              elevation: 1.0,
+                                              avatar: Icon(
+                                                IconData(
+                                                    task.etiqueta.icon ?? 0,
+                                                    fontFamily:
+                                                        'MaterialIcons'),
+                                                color: ConvertIcon()
+                                                    .convertColor(
+                                                        task.etiqueta.color),
+                                              ),
+                                              label: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: Text(
+                                                  task.texto,
+                                                  textAlign: TextAlign.justify,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontSize: 12),
+                                                ),
+                                              ),
+                                              onPressed: () {},
+                                            ),
+                                          ),
+                                ],
+                              ),
+                            ),
+                        ],
                       ),
                     ),
                   ),
                 ),
-              );
-      });
+              ),
+            );
     });
   }
 }

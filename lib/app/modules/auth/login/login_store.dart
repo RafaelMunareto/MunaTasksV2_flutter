@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
@@ -87,6 +88,10 @@ abstract class _LoginStoreBase with Store {
   @action
   setUser(value) => user = value;
 
+  String textToMd5(String text) {
+    return md5.convert(utf8.encode(text)).toString();
+  }
+
   submit() {
     setLoading(true);
     auth.getLoginDio(client.email, client.password).then((value) async {
@@ -96,8 +101,10 @@ abstract class _LoginStoreBase with Store {
       SessionManager().set("token", user.token);
       await storage.put('token', [user.token]);
       await storage.put('userDio', [jsonEncode(user.user)]);
-      await storage.put('biometric', [client.email, client.password]);
-      await storage.put('login-normal', [client.email, client.password]);
+      await storage.put('biometric',
+          [textToMd5(client.email.toLowerCase()), textToMd5(client.password)]);
+      await storage.put('login-normal',
+          [textToMd5(client.email.toLowerCase()), textToMd5(client.password)]);
       Modular.to.navigate('/home/');
     }).catchError((error) {
       setLoading(false);
@@ -116,8 +123,10 @@ abstract class _LoginStoreBase with Store {
           await SessionManager().set("token", user.token);
           await storage.put('token', [user.token]);
           await storage.put('userDio', [jsonEncode(user)]);
-          await storage.put('login-normal', [value.email, value.password]);
-          await storage.put('biometric', [value.email, value.password]);
+          await storage.put('login-normal',
+              [textToMd5(value.email), textToMd5(value.password)]);
+          await storage.put(
+              'biometric', [textToMd5(value.email), textToMd5(value.password)]);
           setLoading(false);
           Modular.to.navigate('/home/');
         });
@@ -168,7 +177,8 @@ abstract class _LoginStoreBase with Store {
             SessionManager().set("token", user.token);
             await storage.put('token', [user.token]);
             await storage.put('userDio', [jsonEncode(user)]);
-            await storage.put('login-normal', [client.email, client.password]);
+            await storage.put('login-normal',
+                [textToMd5(client.email), textToMd5(client.password)]);
             Modular.to.navigate('/home/');
           }).catchError((error) {
             setLoading(false);

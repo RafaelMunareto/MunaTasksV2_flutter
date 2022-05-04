@@ -42,7 +42,7 @@ class DialogButtom {
     );
   }
 
-  showDialogCreate(dynamic widgets, constraint, context) {
+  showDialogCreate(dynamic widgets, constraint, context, Function? function) {
     bool _darkModeEnabled = false;
 
     final ThemeData theme = Theme.of(context);
@@ -83,6 +83,10 @@ class DialogButtom {
           child: child,
         );
       },
-    );
+    ).then((value) {
+      if (value != null) {
+        function!();
+      }
+    });
   }
 }

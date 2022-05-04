@@ -37,10 +37,12 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
               ),
             ),
             constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                ? const Expanded(
+                ? Expanded(
                     flex: 3,
                     child: Center(
-                      child: LandscapeWidget(),
+                      child: LandscapeWidget(
+                        constraint: constraint.maxWidth,
+                      ),
                     ),
                   )
                 : Container()

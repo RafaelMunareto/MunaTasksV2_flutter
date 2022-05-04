@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
@@ -67,6 +68,7 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future loginDio(email, password) async {
+    email = email.toLowerCase();
     Response response;
     var dio = Dio(
       BaseOptions(
@@ -83,6 +85,7 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future sendEmailChangePassword(email) async {
+    email = email.toLowerCase();
     Response response;
     var dio = Dio(
       BaseOptions(
@@ -108,6 +111,7 @@ class AuthRepository implements IAuthRepository {
 
   @override
   saveUser(UserDioClientModel model) async {
+    model.email = model.email.toLowerCase();
     Response response;
     var dio = Dio(
       BaseOptions(

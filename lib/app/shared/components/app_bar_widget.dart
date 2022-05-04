@@ -217,20 +217,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                           ? MouseRegion(
                               cursor: SystemMouseCursors.click,
                               child: GestureDetector(
-                                child: widget.client.imgUrl != ''
-                                    ? Icon(
-                                        Icons.people,
-                                        color: widget.client.theme
-                                            ? darkThemeData(context)
-                                                .iconTheme
-                                                .color
-                                            : lightThemeData(context)
-                                                .iconTheme
-                                                .color,
-                                      )
-                                    : CircleAvatarWidget(
-                                        url: widget.client.imgUrl,
-                                      ),
+                                child: CircleAvatarWidget(
+                                  url: widget.client.imgUrl,
+                                ),
                                 onTap: () {
                                   if (widget.client.perfilUserLogado.manager) {
                                     DialogButtom().showDialog(

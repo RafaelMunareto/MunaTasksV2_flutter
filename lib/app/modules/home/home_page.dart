@@ -42,11 +42,11 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
 
   @override
   Widget build(BuildContext context) {
-    return OrientationBuilder(
-      builder: (context, orientation) {
-        if (orientation == Orientation.portrait ||
-            (kIsWeb || Platform.isWindows)) {
-          return LayoutBuilder(builder: (context, constraint) {
+    return LayoutBuilder(builder: (context, constraint) {
+      return OrientationBuilder(
+        builder: (context, orientation) {
+          if (orientation == Orientation.portrait ||
+              (kIsWeb || Platform.isWindows)) {
             return Scaffold(
               appBar: !appVisible
                   ? AppBarWidget(
@@ -72,12 +72,12 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                 onPressed: () {
                   store.clientCreate.cleanSave();
                   DialogButtom().showDialogCreate(
-                    CreateWidget(
-                      constraint: constraint.maxWidth,
-                    ),
-                    constraint.maxWidth,
-                    context,
-                  );
+                      CreateWidget(
+                        constraint: constraint.maxWidth,
+                      ),
+                      constraint.maxWidth,
+                      context,
+                      store.getDioFase());
                 },
                 child: Icon(
                   Icons.add,
@@ -107,6 +107,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                                   Expanded(
                                     flex: 2,
                                     child: MenuScreen(
+                                      constraint: constraint.maxWidth,
                                       open: store.client.open,
                                       setOpen: store.client.setOpen,
                                       controller: drawerController,
@@ -128,6 +129,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                           return store.client.loading
                               ? const Center(child: CircularProgressWidget())
                               : MenuScreen(
+                                  constraint: constraint.maxWidth,
                                   open: store.client.open,
                                   setOpen: store.client.setOpen,
                                   controller: drawerController,
@@ -143,11 +145,13 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                       closeCurve: Curves.easeInOut,
                     ),
             );
-          });
-        } else {
-          return const LandscapeWidget();
-        }
-      },
-    );
+          } else {
+            return LandscapeWidget(
+              constraint: constraint.maxWidth,
+            );
+          }
+        },
+      );
+    });
   }
 }
