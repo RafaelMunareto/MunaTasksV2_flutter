@@ -36,9 +36,9 @@ class ButtonSaveWidget extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.1,
             child: ElevatedButton(
               onPressed: () {
+                store.clientCreate.setTarefa();
                 if (store.clientCreate.isValidTarefa) {
-                  store.clientCreate.setTarefa();
-                  if (store.clientCreate.id != "") {
+                  if (store.clientCreate.tarefaModelSave.id != "") {
                     store.updateNewTarefa().then((e) {
                       SnackbarCustom().createSnackBar(
                         "Tarefa editada com sucesso!",
@@ -74,7 +74,9 @@ class ButtonSaveWidget extends StatelessWidget {
               child: store.clientCreate.loadingTarefa
                   ? const CircularProgressWidget()
                   : Text(
-                      store.clientCreate.id != '' ? "EDITAR" : 'SALVAR',
+                      store.clientCreate.tarefaModelSave.id != ''
+                          ? "EDITAR"
+                          : 'SALVAR',
                     ),
             ),
           );

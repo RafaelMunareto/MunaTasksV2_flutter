@@ -783,6 +783,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic cleanSubtarefaId() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanSubtarefaId');
+    try {
+      return super.cleanSubtarefaId();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setSubtarefaUpdate(dynamic model) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setSubtarefaUpdate');
@@ -794,7 +805,7 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
-  dynamic setTarefaUpdate(dynamic tarefa) {
+  dynamic setTarefaUpdate(TarefaDioModel tarefa) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setTarefaUpdate');
     try {

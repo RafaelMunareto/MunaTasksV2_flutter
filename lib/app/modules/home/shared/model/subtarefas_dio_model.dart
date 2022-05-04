@@ -8,7 +8,7 @@ class SubtarefasDioModel {
   dynamic user;
 
   SubtarefasDioModel({
-    this.id = '',
+    this.id,
     this.title = '',
     this.status = '',
     this.user,
@@ -17,7 +17,7 @@ class SubtarefasDioModel {
 
   factory SubtarefasDioModel.fromDocument(doc) {
     return SubtarefasDioModel(
-      id: doc['id'],
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: doc['title'],
       status: doc['status'],
       texto: doc['texto'],
@@ -27,7 +27,7 @@ class SubtarefasDioModel {
 
   factory SubtarefasDioModel.fromJson(Map<String, dynamic> json) {
     return SubtarefasDioModel(
-        id: json['id'],
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
         title: json['title'],
         status: json['status'],
         texto: json['texto'],

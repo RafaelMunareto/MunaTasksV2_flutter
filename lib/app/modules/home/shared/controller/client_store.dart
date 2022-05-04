@@ -1,5 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/fase_dio_model.dart';
@@ -127,7 +127,7 @@ abstract class _ClientStoreBase with Store {
   int icon = 0;
 
   @observable
-  List<SubtareDiofaModel> subtarefaModel = [];
+  List<SubtarefasDioModel> subtarefaModel = [];
 
   @action
   cleanSubtarefaModel() => subtarefaModel = [];

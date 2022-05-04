@@ -318,13 +318,13 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   final _$subtarefaModelAtom = Atom(name: '_ClientStoreBase.subtarefaModel');
 
   @override
-  List<SubtareDiofaModel> get subtarefaModel {
+  List<SubtarefasDioModel> get subtarefaModel {
     _$subtarefaModelAtom.reportRead();
     return super.subtarefaModel;
   }
 
   @override
-  set subtarefaModel(List<SubtareDiofaModel> value) {
+  set subtarefaModel(List<SubtarefasDioModel> value) {
     _$subtarefaModelAtom.reportWrite(value, super.subtarefaModel, () {
       super.subtarefaModel = value;
     });

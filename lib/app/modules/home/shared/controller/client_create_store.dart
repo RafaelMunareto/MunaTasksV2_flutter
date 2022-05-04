@@ -1,5 +1,4 @@
 import 'package:mobx/mobx.dart';
-import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
@@ -69,7 +68,7 @@ abstract class _ClientCreateStoreBase with Store {
   String id = '';
 
   @action
-  setReference(value) => id = value;
+  setReference(value) => tarefaModelSave.id = value;
 
   @action
   cleanImageUser() => imageUser = "";
@@ -153,7 +152,7 @@ abstract class _ClientCreateStoreBase with Store {
   cleanFaseTarefa() => faseTarefa = 'pause';
 
   @action
-  cleanReference() => id = '';
+  cleanReference() => tarefaModelSave.id = '';
 
   @action
   cleanTarefaModelSaveEtiqueta() =>
@@ -182,6 +181,7 @@ abstract class _ClientCreateStoreBase with Store {
     cleanSubtarefaInsertCreate();
     cleanFase();
     cleanCreateUser();
+    cleanSubtarefaId();
   }
 
   @action
@@ -240,6 +240,9 @@ abstract class _ClientCreateStoreBase with Store {
   setSubtarefaId(value) => subtarefaModel.id = value;
 
   @action
+  cleanSubtarefaId() => subtarefaModel.id = '';
+
+  @action
   setSubtarefaUpdate(dynamic model) {
     setSubtarefaTextSave(model.texto);
     setSubtarefaInsertCreate(model.title);
@@ -254,7 +257,7 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   @action
-  setTarefaUpdate(dynamic tarefa) {
+  setTarefaUpdate(TarefaDioModel tarefa) {
     setSaveEtiqueta(tarefa.etiqueta);
     setTarefaTextSave(tarefa.texto);
     setFaseTarefa(changeFaseTarefaReverse(tarefa.fase));

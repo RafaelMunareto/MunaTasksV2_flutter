@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:munatasks2/app/modules/home/repositories/interfaces/dashboard_interfaces.dart';
-import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_total_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
@@ -26,7 +26,7 @@ class DashboardRepository implements IDashboardRepository {
         return PerfilDioModel.fromJson(u);
       }).toList();
       e.subTarefa = e.subTarefa!.map((f) {
-        return SubtareDiofaModel.fromJson(f);
+        return SubtarefasDioModel.fromJson(f);
       }).toList();
       e.data = DateTime.parse(e.data);
 
@@ -46,7 +46,7 @@ class DashboardRepository implements IDashboardRepository {
         return PerfilDioModel.fromJson(u);
       }).toList();
       e.subTarefa = e.subTarefa!.map((f) {
-        return SubtareDiofaModel.fromJson(f);
+        return SubtarefasDioModel.fromJson(f);
       }).toList();
       e.data = DateTime.parse(e.data);
       return e as TarefaDioModel;

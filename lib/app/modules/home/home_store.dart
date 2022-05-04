@@ -5,7 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_create_store.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
-import 'package:munatasks2/app/modules/home/shared/model/subtarefa_dio_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/fase_dio_model.dart';
@@ -254,7 +254,7 @@ abstract class HomeStoreBase with Store {
   }
 
   changeSubtarefaDioAction(
-      SubtareDiofaModel subtarefaModel, TarefaDioModel tarefaModel) {
+      SubtarefasDioModel subtarefaModel, TarefaDioModel tarefaModel) {
     for (var a in tarefaModel.subTarefa!) {
       if (a.title == subtarefaModel.title && a.texto == subtarefaModel.texto) {
         a.status = client.subtarefaAction;

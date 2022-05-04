@@ -32,13 +32,13 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
   void initState() {
     super.initState();
     textSubtarefaController.text = store.clientCreate.subtarefaTextSave;
-    store.clientCreate.setSubtarefaId(store.clientCreate.subtarefaModel.id == ""
-        ? DateTime.now().millisecondsSinceEpoch.toString()
-        : store.clientCreate.subtarefaModel.id);
   }
 
   @override
   Widget build(BuildContext context) {
+    store.clientCreate.setSubtarefaId(store.clientCreate.subtarefaModel.id == ""
+        ? DateTime.now().millisecondsSinceEpoch.toString()
+        : store.clientCreate.subtarefaModel.id);
     return Observer(builder: (_) {
       return Container(
         width: MediaQuery.of(context).size.width,
