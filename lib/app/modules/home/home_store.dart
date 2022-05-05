@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_create_store.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
@@ -158,6 +159,13 @@ abstract class HomeStoreBase with Store {
       var dio = await DioStruture().dioAction();
       response = await dio.get('perfil/user/${client.userDio.id}');
       DioStruture().statusRequest(response);
+      if (response.statusCode != 200) {
+        await SessionManager().remove('token');
+        await storage.put('token', []);
+        await storage.put('userDio', []);
+        await storage.put('login-normal', []);
+        Modular.to.navigate('/auth/');
+      }
 
       var resposta = PerfilDioModel.fromJson(response.data[0]);
       client.setPerfilUserlogado(resposta);
