@@ -195,7 +195,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                           Padding(
                                             padding:
                                                 EdgeInsets.only(right: 8.0),
-                                            child: Icon(Icons.people_outline),
+                                            child: Icon(Icons.people),
                                           ),
                                           Flexible(
                                             child: SizedBox(
