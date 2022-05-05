@@ -50,7 +50,7 @@ dependencies:
   flutter_session_manager: ^1.0.3
   uni_links: ^0.5.1
   crypto: ^3.0.2
-  image_cropper: ^2.0.0
+  universal_html: ^2.0.8
 
 dev_dependencies:
   flutter_test:

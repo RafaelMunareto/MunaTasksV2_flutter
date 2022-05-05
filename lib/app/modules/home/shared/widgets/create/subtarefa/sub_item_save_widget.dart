@@ -71,8 +71,6 @@ class _SubItemSaveWidgetState extends State<SubItemSaveWidget> {
                   child: Text(
                     widget.subtarefa.texto,
                     textAlign: TextAlign.justify,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
                     style: const TextStyle(fontSize: 12),
                   ),
                 ),

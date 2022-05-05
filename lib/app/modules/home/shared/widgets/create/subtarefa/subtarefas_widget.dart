@@ -34,7 +34,10 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                       background: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          color: Colors.green,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.green,
+                          ),
                           child: Padding(
                             padding: const EdgeInsets.all(15),
                             child: Row(
@@ -55,7 +58,10 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                       secondaryBackground: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          color: Colors.red,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.red,
+                          ),
                           child: Padding(
                             padding: const EdgeInsets.all(15),
                             child: Row(

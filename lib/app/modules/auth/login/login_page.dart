@@ -28,6 +28,11 @@ class LoginPageState extends State<LoginPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     autorun(
@@ -45,14 +50,6 @@ class LoginPageState extends State<LoginPage> {
         }
       },
     );
-  }
-
-  @override
-  void initState() {
-    store.submitStorage();
-    store.getStorageLogin();
-    store.checkSupportDevice();
-    super.initState();
   }
 
   @override

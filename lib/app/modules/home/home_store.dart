@@ -112,6 +112,7 @@ abstract class HomeStoreBase with Store {
 
   getDioTotal() {
     dashboardService.getDioTotal().then((value) {
+      value.sort((a, b) => b.qtd.compareTo(a.qtd));
       client.setTarefasTotais(value);
       client.setLoadingTasksTotal(false);
     });
