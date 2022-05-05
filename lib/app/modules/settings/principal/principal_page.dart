@@ -164,7 +164,7 @@ class PrincipalPageState extends State<PrincipalPage>
                                 ),
                               ),
                             ),
-                            defaultTargetPlatform == TargetPlatform.windows &&
+                            defaultTargetPlatform == TargetPlatform.windows ||
                                     constraint.maxWidth <=
                                         LarguraLayoutBuilder().telaSmartphone
                                 ? Container()
