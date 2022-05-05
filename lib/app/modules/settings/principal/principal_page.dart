@@ -12,6 +12,7 @@ import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:rolling_switch/rolling_switch.dart';
+import "package:universal_html/html.dart" as html;
 
 class PrincipalPage extends StatefulWidget {
   final String title;
@@ -26,6 +27,12 @@ class PrincipalPageState extends State<PrincipalPage>
   final PrincipalStore store = Modular.get();
   late Animation<double> opacidade;
   late AnimationController _controller;
+
+  void downloadFile(String url) {
+    html.AnchorElement anchorElement = html.AnchorElement(href: url);
+    anchorElement.download = url;
+    anchorElement.click();
+  }
 
   @override
   void initState() {
@@ -197,7 +204,8 @@ class PrincipalPageState extends State<PrincipalPage>
                                           ),
                                         ),
                                         onPressed: () {
-                                          store.logoff();
+                                          downloadFile(
+                                              'https://github.com/RafaelMunareto/MunaTasksV2_flutter/raw/main/assets/exe/Output/munatask.exe');
                                         },
                                         icon: const Icon(
                                           Icons.download,
