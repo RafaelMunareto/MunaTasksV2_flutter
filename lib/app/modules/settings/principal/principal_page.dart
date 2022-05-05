@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/app_widget.dart';
@@ -164,9 +163,8 @@ class PrincipalPageState extends State<PrincipalPage>
                                 ),
                               ),
                             ),
-                            defaultTargetPlatform == TargetPlatform.windows ||
-                                    constraint.maxWidth <=
-                                        LarguraLayoutBuilder().telaSmartphone
+                            constraint.maxWidth <=
+                                    LarguraLayoutBuilder().telaSmartphone
                                 ? Container()
                                 : Expanded(
                                     flex: 50,

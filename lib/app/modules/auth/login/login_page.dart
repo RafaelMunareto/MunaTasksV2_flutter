@@ -128,22 +128,22 @@ class LoginPageState extends State<LoginPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        defaultTargetPlatform == TargetPlatform.android
-                            ? Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 40),
-                                child: MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: GestureDetector(
-                                    child: const Image(
-                                      image:
-                                          AssetImage('assets/img/google.png'),
-                                    ),
-                                    onTap: store.loginWithGoogle,
-                                  ),
-                                ),
-                              )
-                            : Container(),
+                        // defaultTargetPlatform == TargetPlatform.android
+                        //     ? Container(
+                        //         margin:
+                        //             const EdgeInsets.symmetric(horizontal: 40),
+                        //         child: MouseRegion(
+                        //           cursor: SystemMouseCursors.click,
+                        //           child: GestureDetector(
+                        //             child: const Image(
+                        //               image:
+                        //                   AssetImage('assets/img/google.png'),
+                        //             ),
+                        //             onTap: store.loginWithGoogle,
+                        //           ),
+                        //         ),
+                        //       )
+                        //     : Container(),
                         store.supportState == SupportState.supported
                             ? GestureDetector(
                                 onTap: store.authenticateBiometric,
