@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
@@ -38,8 +36,7 @@ class _MenuScreenState extends State<MenuScreen> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () {
-            if (widget.constraint < LarguraLayoutBuilder().telaPc &&
-                !Platform.isWindows) {
+            if (widget.constraint < LarguraLayoutBuilder().telaPc) {
               widget.controller.toggle!();
               widget.setOpen(false);
             }
@@ -192,38 +189,31 @@ class _MenuScreenState extends State<MenuScreen> {
                                             .navigate('/settings/etiquetas');
                                       },
                                     ),
-                                    widget.constraint <
-                                            LarguraLayoutBuilder().telaPc
-                                        ? ListTile(
-                                            title: Row(
-                                              children: const [
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: 8.0),
-                                                  child: Icon(
-                                                      Icons.people_outline),
+                                    ListTile(
+                                      title: Row(
+                                        children: const [
+                                          Padding(
+                                            padding:
+                                                EdgeInsets.only(right: 8.0),
+                                            child: Icon(Icons.people_outline),
+                                          ),
+                                          Flexible(
+                                            child: SizedBox(
+                                              child: Text(
+                                                "Tarefas",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                                Flexible(
-                                                  child: SizedBox(
-                                                    child: Text(
-                                                      "Tarefas",
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                            onTap: () {
-                                              Modular.to
-                                                  .navigate('/home/tarefas');
-                                            },
-                                          )
-                                        : Container(),
+                                          ),
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Modular.to.navigate('/home/tarefas');
+                                      },
+                                    )
                                   ],
                                 ),
                               ),
