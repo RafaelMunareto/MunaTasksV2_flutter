@@ -6,6 +6,8 @@ class TextFieldWidget extends StatefulWidget {
   final dynamic onChanged;
   final bool obscure;
   final dynamic errorText;
+  final dynamic function;
+  final bool functionBool;
   final bool outline;
   final dynamic initialValue;
 
@@ -17,6 +19,8 @@ class TextFieldWidget extends StatefulWidget {
     required this.errorText,
     this.outline = false,
     this.initialValue = '',
+    this.function,
+    this.functionBool = false,
   }) : super(key: key);
 
   @override
@@ -67,6 +71,11 @@ class _TextFieldWidgetState extends State<TextFieldWidget>
           child: TextField(
             key: Key(widget.labelText),
             onChanged: widget.onChanged,
+            onEditingComplete: () {
+              if (widget.functionBool) {
+                widget.function();
+              }
+            },
             controller: initial,
             obscureText: widget.obscure,
             decoration: InputDecoration(

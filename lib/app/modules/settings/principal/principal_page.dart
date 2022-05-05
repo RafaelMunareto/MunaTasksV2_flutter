@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/app_widget.dart';
@@ -9,6 +10,8 @@ import 'package:munatasks2/app/modules/settings/principal/widgets/list_settings_
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/downloads_widget.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 
@@ -162,6 +165,63 @@ class PrincipalPageState extends State<PrincipalPage>
                                 ),
                               ),
                             ),
+                            kIsWeb &&
+                                    constraint.maxWidth <
+                                        LarguraLayoutBuilder().telaPc
+                                ? Container()
+                                : Expanded(
+                                    flex: 50,
+                                    child: ListTile(
+                                      title: const Text('VERSÃO DESKTOP'),
+                                      trailing: ElevatedButton.icon(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                            store.isSwitched
+                                                ? darkThemeData(context)
+                                                    .primaryColor
+                                                : lightThemeData(context)
+                                                    .primaryColor,
+                                          ),
+                                          shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(80),
+                                              side: BorderSide(
+                                                color: store.isSwitched
+                                                    ? darkThemeData(context)
+                                                        .primaryColor
+                                                    : lightThemeData(context)
+                                                        .primaryColor,
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          store.logoff();
+                                        },
+                                        icon: const Icon(
+                                          Icons.download,
+                                          color: Colors.white,
+                                        ),
+                                        label: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              16, 12, 16, 12),
+                                          child: Text('BAIXAR',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: store.isSwitched
+                                                    ? darkThemeData(context)
+                                                        .scaffoldBackgroundColor
+                                                    : lightThemeData(context)
+                                                        .scaffoldBackgroundColor,
+                                              )),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                             Expanded(
                               flex: 50,
                               child: Card(

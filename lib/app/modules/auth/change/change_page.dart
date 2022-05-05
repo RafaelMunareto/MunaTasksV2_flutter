@@ -87,15 +87,20 @@ class ChangePageState extends State<ChangePage> {
                       labelText: 'Senha',
                       obscure: true,
                       onChanged: store.client.changePassword,
+                      functionBool: false,
                       errorText: store.client.validatePassword),
                 ),
-                SizedBox(
-                  child: TextFieldWidget(
-                      labelText: 'Confirmação de senha',
-                      obscure: true,
-                      onChanged: store.client.changeConfirmPassword,
-                      errorText: store.client.validateConfirmPassword),
-                ),
+                Observer(builder: (_) {
+                  return SizedBox(
+                    child: TextFieldWidget(
+                        labelText: 'Confirmação de senha',
+                        obscure: true,
+                        onChanged: store.client.changeConfirmPassword,
+                        functionBool: store.client.isValidChangePassword,
+                        function: store.submit,
+                        errorText: store.client.validateConfirmPassword),
+                  );
+                }),
                 SizedBox(height: size.height * 0.05),
                 Observer(builder: (_) {
                   return Container(

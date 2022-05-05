@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "MunaTasks"
-#define MyAppVersion "2.9"
+#define MyAppVersion "3.1"
 #define MyAppPublisher "MunaCorp"
 #define MyAppURL "http://www.munatask.com/"
 #define MyAppExeName "munatasks.exe"
@@ -31,6 +31,8 @@ SetupIconFile=C:\codes\munatasks\windows\runner\resources\app_icon.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
+DisableDirPage=auto
+
 
 [Languages]
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"

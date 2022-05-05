@@ -85,13 +85,17 @@ class LoginPageState extends State<LoginPage> {
                         labelText: 'E-mail',
                         onChanged: store.client.changeEmail,
                         errorText: store.client.validateEmail)),
-                SizedBox(
-                  child: TextFieldWidget(
-                      labelText: 'Senha',
-                      obscure: true,
-                      onChanged: store.client.changePassword,
-                      errorText: store.client.validatePassword),
-                ),
+                Observer(builder: (_) {
+                  return SizedBox(
+                    child: TextFieldWidget(
+                        labelText: 'Senha',
+                        obscure: true,
+                        onChanged: store.client.changePassword,
+                        functionBool: store.client.isValidLogin,
+                        function: store.submit,
+                        errorText: store.client.validatePassword),
+                  );
+                }),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 32),
                   child: const LinkRoteWidget(
