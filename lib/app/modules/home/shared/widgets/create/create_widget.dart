@@ -24,6 +24,7 @@ class CreateWidget extends StatefulWidget {
 class _CreateWidgetState extends State<CreateWidget> {
   TextEditingController textController = TextEditingController();
   TextEditingController dateController = TextEditingController();
+
   final HomeStore store = Modular.get();
 
   @override

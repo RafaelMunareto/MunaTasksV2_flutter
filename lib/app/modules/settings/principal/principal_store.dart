@@ -1,11 +1,20 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
+
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
+
+import '../etiquetas/shared/models/settings_user_model.dart';
 
 part 'principal_store.g.dart';
 
@@ -16,9 +25,64 @@ abstract class _PrincipalStoreBase with Store {
   final IEtiquetaService etiquetaService;
 
   _PrincipalStoreBase({required this.etiquetaService}) {
+    getList();
     buscaTheme();
     settingsAction();
   }
+
+  @observable
+  UserDioClientModel user = UserDioClientModel();
+
+  @action
+  setUser(value) => user = value;
+
+  @observable
+  PerfilDioModel perfil = PerfilDioModel();
+
+  @action
+  setPerfil(value) => perfil = value;
+
+  getList() async {
+    await getUid();
+    await getBydDioId();
+    await getSettingsUser();
+  }
+
+  getUid() {
+    storage.get('userDio').then((value) {
+      setUser(UserDioClientModel.fromJson(jsonDecode(value[0])));
+    });
+  }
+
+  getBydDioId() async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('perfil/user/${user.id}');
+    setPerfil(PerfilDioModel.fromJson(response.data[0]));
+  }
+
+  getSettingsUser() {
+    setLoadingSettingsUser(true);
+    etiquetaService.getSettingsUser(perfil.id).then((value) {
+      setSettingsUser(value);
+    }).whenComplete(() => setLoadingSettingsUser(false));
+  }
+
+  updateSettingsUser(SettingsUserModel settings) {
+    etiquetaService.updateSettingsUser(settings);
+  }
+
+  @observable
+  SettingsUserModel settingsUser = SettingsUserModel();
+
+  @action
+  setSettingsUser(value) => settingsUser = value;
+
+  @observable
+  bool loadingSettingsUser = false;
+
+  @action
+  setLoadingSettingsUser(value) => loadingSettingsUser = value;
 
   @observable
   dynamic valueEscolha = '';

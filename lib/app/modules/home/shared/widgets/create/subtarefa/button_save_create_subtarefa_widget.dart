@@ -50,19 +50,21 @@ class _ButtonSaveCreateSubtarefaWidgetState
                   DateTime.now().millisecondsSinceEpoch.toString());
             }
             store.clientCreate.setSubtarefaTextSave(widget.texto.text);
-            store.clientCreate.isValidSubtarefa
-                ? store.clientCreate.setSubtarefas()
-                : DialogButtom().showDialog(
-                    ErrorsWidget(
-                      tarefa: false,
-                      theme: store.client.theme,
-                    ),
-                    store.client.theme,
-                    widget.constraint,
-                    context,
-                  );
-            store.clientCreate.setSubtarefaTextSave('');
-            widget.texto.text = '';
+            if (store.clientCreate.isValidSubtarefa) {
+              store.clientCreate.setSubtarefas();
+              store.clientCreate.setSubtarefaTextSave('');
+              widget.texto.text = '';
+            } else {
+              DialogButtom().showDialog(
+                ErrorsWidget(
+                  tarefa: false,
+                  theme: store.client.theme,
+                ),
+                store.client.theme,
+                widget.constraint,
+                context,
+              );
+            }
             FocusScope.of(context).unfocus();
           },
           icon: const Icon(Icons.add_circle, size: 18),

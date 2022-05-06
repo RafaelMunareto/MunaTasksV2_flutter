@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_home_page_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
@@ -15,6 +18,7 @@ import 'package:munatasks2/app/shared/components/menu_screen.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -29,11 +33,35 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   bool appVisible = false;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    autorun(
+      (_) {
+        if (!kIsWeb && defaultTargetPlatform != TargetPlatform.windows) {
+          if (store.client.loadingNotifications == true) {
+            Timer.periodic(const Duration(minutes: 10), (value) {
+              store.getNotificationsBd();
+            });
+          }
+        }
+      },
+    );
+  }
+
+  @override
   void initState() {
     if (defaultTargetPlatform == TargetPlatform.windows) {
       store.client.setOpen(true);
     }
+    tz.initializeTimeZones();
+    sendNotification();
     super.initState();
+  }
+
+  void sendNotification() {
+    // ignore: unused_local_variable
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
   }
 
   @override
@@ -42,6 +70,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
 
   @override
   Widget build(BuildContext context) {
+    sendNotification();
     return LayoutBuilder(builder: (context, constraint) {
       return OrientationBuilder(
         builder: (context, orientation) {

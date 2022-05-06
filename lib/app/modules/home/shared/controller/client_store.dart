@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:munatasks2/app/modules/home/shared/model/notifications_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
@@ -197,8 +198,20 @@ abstract class _ClientStoreBase with Store {
   @observable
   List<EtiquetaDioModel> etiquetas = [];
 
+  @observable
+  List<NotificationsDioModel> notifications = [];
+
+  @action
+  setNotifications(value) => notifications = value;
+
   @action
   setEtiquetas(value) => etiquetas = value;
+
+  @observable
+  bool loadingNotifications = false;
+
+  @action
+  setLoadingNotifications(value) => loadingNotifications = value;
 
   @observable
   List<RetardDioModel> retard = [];

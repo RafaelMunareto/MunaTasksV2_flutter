@@ -7,11 +7,16 @@ import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
-class ButtonSaveWidget extends StatelessWidget {
+class ButtonSaveWidget extends StatefulWidget {
   final double constraint;
   const ButtonSaveWidget({Key? key, required this.constraint})
       : super(key: key);
 
+  @override
+  State<ButtonSaveWidget> createState() => _ButtonSaveWidgetState();
+}
+
+class _ButtonSaveWidgetState extends State<ButtonSaveWidget> {
   @override
   Widget build(BuildContext context) {
     final HomeStore store = Modular.get();
@@ -59,6 +64,7 @@ class ButtonSaveWidget extends StatelessWidget {
                         Colors.green,
                         context,
                       );
+
                       Modular.to.pop();
                     }, onError: (error) {
                       SnackbarCustom().createSnackBar(
@@ -68,7 +74,7 @@ class ButtonSaveWidget extends StatelessWidget {
                     });
                   }
                 } else {
-                  errors(constraint);
+                  errors(widget.constraint);
                 }
               },
               child: store.clientCreate.loadingTarefa

@@ -451,6 +451,38 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$notificationsAtom = Atom(name: '_ClientStoreBase.notifications');
+
+  @override
+  List<NotificationsDioModel> get notifications {
+    _$notificationsAtom.reportRead();
+    return super.notifications;
+  }
+
+  @override
+  set notifications(List<NotificationsDioModel> value) {
+    _$notificationsAtom.reportWrite(value, super.notifications, () {
+      super.notifications = value;
+    });
+  }
+
+  final _$loadingNotificationsAtom =
+      Atom(name: '_ClientStoreBase.loadingNotifications');
+
+  @override
+  bool get loadingNotifications {
+    _$loadingNotificationsAtom.reportRead();
+    return super.loadingNotifications;
+  }
+
+  @override
+  set loadingNotifications(bool value) {
+    _$loadingNotificationsAtom.reportWrite(value, super.loadingNotifications,
+        () {
+      super.loadingNotifications = value;
+    });
+  }
+
   final _$retardAtom = Atom(name: '_ClientStoreBase.retard');
 
   @override
@@ -838,11 +870,33 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setNotifications(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setNotifications');
+    try {
+      return super.setNotifications(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setEtiquetas(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setEtiquetas');
     try {
       return super.setEtiquetas(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setLoadingNotifications(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setLoadingNotifications');
+    try {
+      return super.setLoadingNotifications(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -935,6 +989,8 @@ taskDio: ${taskDio},
 userDio: ${userDio},
 perfis: ${perfis},
 etiquetas: ${etiquetas},
+notifications: ${notifications},
+loadingNotifications: ${loadingNotifications},
 retard: ${retard},
 fase: ${fase},
 dateInicial: ${dateInicial},

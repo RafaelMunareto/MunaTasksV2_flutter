@@ -100,8 +100,8 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
               child: const MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: Icon(
-                  Icons.task_alt,
-                  color: kPrimaryColor,
+                  Icons.check_circle,
+                  color: Colors.blue,
                 ),
               ),
             ),

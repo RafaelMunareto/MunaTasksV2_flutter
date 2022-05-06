@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/app_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:flutter/material.dart';
+import 'package:munatasks2/app/modules/settings/principal/widgets/check_email_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/widgets/dialog_input_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/widgets/dropdown_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/widgets/list_settings_widget.dart';
@@ -213,7 +214,7 @@ class PrincipalPageState extends State<PrincipalPage>
                                         ),
                                         label: Padding(
                                           padding: const EdgeInsets.fromLTRB(
-                                              16, 12, 16, 12),
+                                              4, 12, 4, 12),
                                           child: Text('BAIXAR',
                                               style: TextStyle(
                                                 fontSize: 18,
@@ -226,6 +227,15 @@ class PrincipalPageState extends State<PrincipalPage>
                                         ),
                                       ),
                                     ),
+                                  ),
+                            store.settingsUser.user != ''
+                                ? CheckEmailWidget(
+                                    settings: store.settingsUser,
+                                    update: store.updateSettingsUser,
+                                  )
+                                : const Padding(
+                                    padding: EdgeInsets.all(64.0),
+                                    child: CircularProgressWidget(),
                                   ),
                             Expanded(
                               flex: 50,

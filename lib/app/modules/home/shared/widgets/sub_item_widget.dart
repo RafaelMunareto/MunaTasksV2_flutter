@@ -81,8 +81,6 @@ class SubItemWidget extends StatelessWidget {
                 child: Text(
                   subTarefa.texto,
                   textAlign: TextAlign.justify,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 3,
                   style: const TextStyle(fontSize: 12),
                 ),
               ),

@@ -52,6 +52,7 @@ dependencies:
   crypto: ^3.0.2
   universal_html: ^2.0.8
   desktop_window: ^0.4.0
+  flutter_local_notifications: ^9.5.2
 
 dev_dependencies:
   flutter_test:
@@ -86,7 +87,7 @@ scripts:
   chrome: flutter run -d chrome --web-renderer html --web-port 52230
   build_web: flutter build web --web-renderer html && scp -r .\build\web\* root@45.82.75.3:/home/munatask/public_html/
   build_windows: flutter build windows
-  build_bundle: flutter build appbundle --build-name=1.1.6+4 --build-number=13 --no-tree-shake-icons
+  build_bundle: flutter build appbundle --build-name=1.0.3+8 --build-number=1 --no-tree-shake-icons
   build_apk: flutter build apk
   launch_icon: flutter pub run flutter_launcher_icons:main
   launch_splash: flutter pub run flutter_native_splash:create

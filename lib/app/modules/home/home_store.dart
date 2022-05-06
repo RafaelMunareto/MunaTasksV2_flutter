@@ -18,6 +18,7 @@ import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
+import 'package:munatasks2/app/shared/utils/notification_service.dart';
 
 part 'home_store.g.dart';
 
@@ -48,6 +49,7 @@ abstract class HomeStoreBase with Store {
     await getDioTotal();
     await getDio();
     await getDioFase();
+    await getNotificationsBd();
   }
 
   buscaTheme() {
@@ -58,6 +60,34 @@ abstract class HomeStoreBase with Store {
         client.setTheme(false);
       }
     });
+  }
+
+  getNotificationsBd() async {
+    await dashboardService
+        .getNotifications(client.perfilUserLogado.id)
+        .then((e) {
+      client.setNotifications(e);
+    }).then((value) => client.setLoadingNotifications(true));
+    // .whenComplete(
+    //     () => dashboardService.deleteNotifications(client.perfilUserLogado.id));
+
+    if (client.notifications.isNotEmpty) {
+      retornaNotifications(client.notifications);
+    }
+  }
+
+  retornaNotifications(e) async {
+    var texto = e.length > 1 ? 'novas tarefas' : 'nova tarefa';
+    var textos = '';
+    for (var i = 0; i < e.length; i++) {
+      var pontos = i < (e.length - 1) ? ', ' : '.';
+      textos = textos + e[i].texto.toString() + pontos;
+
+      if (i == (e.length - 1)) {
+        NotificationService().showNotification(
+            2, "Você possuí ${e.length} $texto", "  $textos", 10);
+      }
+    }
   }
 
   setNavigateBarSelection(value) async {
@@ -177,6 +207,7 @@ abstract class HomeStoreBase with Store {
     model.id == null
         ? await dashboardService.saveDio(model)
         : await dashboardService.updateDio(model);
+
     badgets();
     getDio();
     getDioTotal();
