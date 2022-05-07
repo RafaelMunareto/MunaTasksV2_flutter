@@ -5,7 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/principal/controller/principal_client_store_store.dart';
 import 'package:munatasks2/app/modules/settings/principal/services/interfaces/principal_service_interface.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
@@ -63,10 +63,8 @@ abstract class _PrincipalStoreBase with Store {
 
   @action
   changeSwitch(value) {
-    List<String> data = [];
-    client.isSwitched = value;
-    client.isSwitched ? data = ['dark'] : data = ['light'];
-    storage.put('theme', data);
+    value = value ? ['dark'] : ['light'];
+    storage.put('theme', value);
   }
 
   getSettingsUser() {

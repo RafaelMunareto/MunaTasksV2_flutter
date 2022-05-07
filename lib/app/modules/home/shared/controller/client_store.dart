@@ -6,7 +6,7 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/fase_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/principal/shared/model/settings_user_model.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 

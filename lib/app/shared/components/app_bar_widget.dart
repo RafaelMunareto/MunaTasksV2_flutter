@@ -6,7 +6,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/date_filter_widget.da
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_order_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/teams_selection_widget.dart';
-import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/auth/repositories/auth_repository.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';

@@ -1,9 +1,8 @@
 import 'package:mobx/mobx.dart';
-
-import '../../../../shared/auth/model/user_dio_client.model.dart';
-import '../../etiquetas/shared/models/settings_model.dart';
-import '../../perfil/models/perfil_dio_model.dart';
-import '../shared/model/settings_user_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/principal/shared/model/settings_user_model.dart';
+import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 
 part 'principal_client_store_store.g.dart';
 

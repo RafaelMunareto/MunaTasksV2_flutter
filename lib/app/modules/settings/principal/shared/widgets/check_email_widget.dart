@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/app_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/shared/model/settings_user_model.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:munatasks2/app/modules/settings/principal/shared/widgets/configuracao_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/shared/widgets/dialog_input_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/shared/widgets/dropdown_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 
 import 'list_settings_widget.dart';
@@ -26,6 +28,7 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
   bool emailInicial = true;
   bool emailFinal = true;
   bool mobile = true;
+  bool theme = false;
 
   update() {
     SettingsUserModel settingsLoad = SettingsUserModel(
@@ -33,6 +36,7 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
       emailFinal: emailFinal,
       emailInicial: emailInicial,
       mobile: mobile,
+      theme: theme,
     );
     store.updateSettingsUser(settingsLoad);
   }
@@ -42,6 +46,7 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
       emailInicial = store.client.settingsUser.emailInicial;
       emailFinal = store.client.settingsUser.emailFinal;
       mobile = store.client.settingsUser.mobile;
+      theme = store.client.settingsUser.theme;
     });
   }
 
@@ -55,6 +60,45 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
   Widget build(BuildContext context) {
     return Wrap(children: [
       ConfiguracaoWidget(constraint: widget.constraint),
+      Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: ListTile(
+          title: const Text('TEMA'),
+          trailing: RollingSwitch.icon(
+            initialState: theme,
+            animationDuration: const Duration(milliseconds: 600),
+            onChanged: (bool state) async {
+              setState(() {
+                AppWidget.of(context)!
+                    .changeTheme(state ? ThemeMode.dark : ThemeMode.light);
+                theme = state;
+                store.client.setIsSwitched(state);
+                store.changeSwitch(state);
+              });
+              update();
+            },
+            rollingInfoRight: RollingIconInfo(
+              backgroundColor: theme
+                  ? darkThemeData(context).primaryColor
+                  : lightThemeData(context).primaryColor,
+              icon: Icons.nights_stay,
+              text: const Text(
+                'Dark',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+            rollingInfoLeft: const RollingIconInfo(
+              backgroundColor: Colors.amber,
+              icon: Icons.wb_sunny,
+              text: Text(
+                'Light',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ),
+      ),
       Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: ListTile(

@@ -3,12 +3,14 @@ class SettingsUserModel {
   bool emailInicial;
   bool emailFinal;
   bool mobile;
+  bool theme;
 
   SettingsUserModel({
     this.user = '',
     this.emailInicial = true,
     this.emailFinal = true,
     this.mobile = true,
+    this.theme = false,
   });
 
   factory SettingsUserModel.fromDocument(doc) {
@@ -17,6 +19,7 @@ class SettingsUserModel {
       emailInicial: doc['emailInicial'],
       emailFinal: doc['emailFinal'],
       mobile: doc['mobile'],
+      theme: doc['theme'],
     );
   }
 
@@ -26,6 +29,7 @@ class SettingsUserModel {
       emailInicial: json['emailInicial'],
       emailFinal: json['emailFinal'],
       mobile: json['mobile'],
+      theme: json['theme'],
     );
   }
 
@@ -34,5 +38,6 @@ class SettingsUserModel {
         "emailInicial": model.emailInicial,
         "emailFinal": model.emailFinal,
         "mobile": model.mobile,
+        "theme": model.theme,
       };
 }

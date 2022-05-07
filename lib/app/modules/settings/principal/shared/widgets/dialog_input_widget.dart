@@ -41,100 +41,108 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Center(
-          child: Wrap(
-            children: [
-              Center(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.10,
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Observer(builder: (_) {
-                      return TextFieldWidget(
-                        outline: true,
-                        initialValue: store.client.valueEscolha,
-                        errorText: store.client.validTextoTarefa,
-                        onChanged: store.client.setValueEscolha,
-                        labelText: store.client.label,
-                      );
-                    }),
-                  ),
-                ),
-              ),
-              Center(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  child: Observer(builder: (_) {
-                    return ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          store.client.isValidTarefa
-                              ? store.client.isSwitched
-                                  ? darkThemeData(context).primaryColor
-                                  : lightThemeData(context).primaryColor
-                              : Colors.grey,
-                        ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
+    return Observer(
+      builder: (_) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Center(
+              child: Wrap(
+                children: [
+                  Center(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.10,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Observer(builder: (_) {
+                          return TextFieldWidget(
+                            outline: true,
+                            initialValue: store.client.valueEscolha,
+                            errorText: store.client.validTextoTarefa,
+                            onChanged: store.client.setValueEscolha,
+                            labelText: store.client.label,
+                          );
+                        }),
                       ),
-                      onPressed: () {
-                        if (store.client.isValidTarefa) {
-                          if (widget.create == 'Novo') {
-                            widget.editar(
-                                widget.value, store.client.valueEscolha);
-                            SnackbarCustom().createSnackBar(
-                                'Salvo com sucesso!', Colors.green, context);
-                          } else {
-                            widget.editar(
-                                store.client.valueEscolha, widget.value);
-                            SnackbarCustom().createSnackBar(
-                                'Editado com sucesso!', Colors.green, context);
-                          }
-                          Modular.to.pop();
-                        } else {
-                          null;
-                        }
-                      },
-                      child: widget.create == 'Novo'
-                          ? Text(
-                              "SALVAR",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: widget.constraint >
-                                        LarguraLayoutBuilder().larguraModal
-                                    ? 20
-                                    : 12,
-                              ),
-                            )
-                          : Text(
-                              "EDITAR",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: widget.constraint >
-                                        LarguraLayoutBuilder().larguraModal
-                                    ? 20
-                                    : 12,
+                    ),
+                  ),
+                  Center(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      child: Observer(builder: (_) {
+                        return ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                              store.client.isValidTarefa
+                                  ? store.client.isSwitched
+                                      ? darkThemeData(context).primaryColor
+                                      : lightThemeData(context).primaryColor
+                                  : Colors.grey,
+                            ),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                    );
-                  }),
-                ),
+                          ),
+                          onPressed: () {
+                            if (store.client.isValidTarefa) {
+                              if (widget.create == 'Novo') {
+                                widget.editar(
+                                    widget.value, store.client.valueEscolha);
+                                SnackbarCustom().createSnackBar(
+                                    'Salvo com sucesso!',
+                                    Colors.green,
+                                    context);
+                              } else {
+                                widget.editar(
+                                    store.client.valueEscolha, widget.value);
+                                SnackbarCustom().createSnackBar(
+                                    'Editado com sucesso!',
+                                    Colors.green,
+                                    context);
+                              }
+                              Modular.to.pop();
+                            } else {
+                              null;
+                            }
+                          },
+                          child: widget.create == 'Novo'
+                              ? Text(
+                                  "SALVAR",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: widget.constraint >
+                                            LarguraLayoutBuilder().larguraModal
+                                        ? 20
+                                        : 12,
+                                  ),
+                                )
+                              : Text(
+                                  "EDITAR",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: widget.constraint >
+                                            LarguraLayoutBuilder().larguraModal
+                                        ? 20
+                                        : 12,
+                                  ),
+                                ),
+                        );
+                      }),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
