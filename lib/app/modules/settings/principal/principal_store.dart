@@ -4,10 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:mobx/mobx.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/principal/controller/principal_client_store_store.dart';
+import 'package:munatasks2/app/modules/settings/principal/services/interfaces/principal_service_interface.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
@@ -21,10 +21,10 @@ class PrincipalStore = _PrincipalStoreBase with _$PrincipalStore;
 
 abstract class _PrincipalStoreBase with Store {
   final ILocalStorage storage = Modular.get();
-  final IEtiquetaService etiquetaService;
+  final IPrincipalService principalService;
   PrincipalClientStoreStore client = PrincipalClientStoreStore();
 
-  _PrincipalStoreBase({required this.etiquetaService}) {
+  _PrincipalStoreBase({required this.principalService}) {
     getList();
     buscaTheme();
     settingsAction();
@@ -71,13 +71,13 @@ abstract class _PrincipalStoreBase with Store {
 
   getSettingsUser() {
     client.setLoadingSettingsUser(true);
-    etiquetaService.getSettingsUser(client.perfil.id).then((value) {
+    principalService.getSettingsUser(client.perfil.id).then((value) {
       client.setSettingsUser(value);
     }).whenComplete(() => client.setLoadingSettingsUser(false));
   }
 
   updateSettingsUser(SettingsUserModel settings) {
-    etiquetaService.updateSettingsUser(settings);
+    principalService.updateSettingsUser(settings);
   }
 
   logoff() async {
@@ -89,7 +89,7 @@ abstract class _PrincipalStoreBase with Store {
   }
 
   settingsAction() {
-    etiquetaService.getSettings().then((value) {
+    principalService.getSettings().then((value) {
       value.retard = value.retard!.map((e) {
         return RetardDioModel.fromJson(e);
       }).toList();
@@ -141,7 +141,7 @@ abstract class _PrincipalStoreBase with Store {
       }).toList();
       client.setEscolha(client.settings.retard);
     }
-    etiquetaService.updateSettings(client.settings);
+    principalService.updateSettings(client.settings);
   }
 
   novo(valueOld, value) {
@@ -178,8 +178,8 @@ abstract class _PrincipalStoreBase with Store {
       client.settings.retard = client.escolha;
       client.setEscolha(client.settings.retard);
     }
-    etiquetaService.updateSettings(client.settings);
-    etiquetaService.getSettings().then((value) {
+    principalService.updateSettings(client.settings);
+    principalService.getSettings().then((value) {
       value.retard = value.retard!.map((e) {
         return RetardDioModel.fromJson(e);
       }).toList();

@@ -3,13 +3,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/settings/principal/shared/widgets/check_email_widget.dart';
-import 'package:munatasks2/app/modules/settings/principal/shared/widgets/dialog_input_widget.dart';
-import 'package:munatasks2/app/modules/settings/principal/shared/widgets/dropdown_widget.dart';
-import 'package:munatasks2/app/modules/settings/principal/shared/widgets/list_settings_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
-import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
-import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class PrincipalPage extends StatefulWidget {
   final String title;

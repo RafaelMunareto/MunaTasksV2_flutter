@@ -1,9 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/controller/etiqueta_store.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 part 'etiquetas_store.g.dart';
 
@@ -20,10 +23,13 @@ abstract class _EtiquetasStoreBase with Store {
     getSettings();
   }
 
-  void getSettings() {
-    etiquetaService.getSettings().then((value) {
-      etiquetaStore.setColorsDio(value.color);
-    });
+  void getSettings() async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('settings');
+    DioStruture().statusRequest(response);
+    var resposta = SettingsModel.fromJson(response.data[0]);
+    etiquetaStore.setColorsDio(resposta.color);
   }
 
   void buscaTheme() {

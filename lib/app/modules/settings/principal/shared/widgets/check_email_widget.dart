@@ -37,14 +37,22 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
     store.updateSettingsUser(settingsLoad);
   }
 
-  @override
-  Widget build(BuildContext context) {
+  init() {
     setState(() {
       emailInicial = store.client.settingsUser.emailInicial;
       emailFinal = store.client.settingsUser.emailFinal;
       mobile = store.client.settingsUser.mobile;
     });
+  }
 
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Wrap(children: [
       ConfiguracaoWidget(constraint: widget.constraint),
       Padding(
@@ -55,10 +63,10 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
             initialState: emailInicial,
             animationDuration: const Duration(milliseconds: 600),
             onChanged: (bool state) {
-              if (state) {
+              setState(() {
                 emailInicial = state;
-                update();
-              }
+              });
+              update();
             },
             rollingInfoRight: const RollingIconInfo(
               icon: Icons.check,
@@ -89,8 +97,8 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
             onChanged: (bool state) {
               setState(() {
                 emailFinal = state;
-                update();
               });
+              update();
             },
             rollingInfoRight: const RollingIconInfo(
               icon: Icons.check,
@@ -121,8 +129,8 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
             onChanged: (bool state) {
               setState(() {
                 mobile = state;
-                update();
               });
+              update();
             },
             rollingInfoRight: const RollingIconInfo(
               icon: Icons.check,

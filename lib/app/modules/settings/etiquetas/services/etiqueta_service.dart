@@ -2,8 +2,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/repositories/interfaces/etiqueta_interfaces.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/services/interfaces/etiqueta_service_interface.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
-import 'package:munatasks2/app/modules/settings/principal/shared/model/settings_user_model.dart';
 
 class EtiquetaService extends Disposable implements IEtiquetaService {
   final IEtiquetaRepository etiquetaRepository;
@@ -19,6 +17,11 @@ class EtiquetaService extends Disposable implements IEtiquetaService {
   }
 
   @override
+  Future<EtiquetaDioModel> getByDocumentIdDio(String documentID) {
+    return etiquetaRepository.getByDocumentIdDio(documentID);
+  }
+
+  @override
   Future deleteDio(EtiquetaDioModel model) {
     return etiquetaRepository.deleteDio(model);
   }
@@ -26,25 +29,5 @@ class EtiquetaService extends Disposable implements IEtiquetaService {
   @override
   Future saveDio(EtiquetaDioModel model) {
     return etiquetaRepository.saveDio(model);
-  }
-
-  @override
-  Future<SettingsModel> getSettings() {
-    return etiquetaRepository.getSettings();
-  }
-
-  @override
-  Future updateSettings(SettingsModel model) {
-    return etiquetaRepository.updateSettings(model);
-  }
-
-  @override
-  Future<SettingsUserModel> getSettingsUser(String id) {
-    return etiquetaRepository.getSettingsUser(id);
-  }
-
-  @override
-  Future updateSettingsUser(SettingsUserModel model) {
-    return etiquetaRepository.updateSettingsUser(model);
   }
 }

@@ -15,6 +15,10 @@ import 'package:munatasks2/app/modules/settings/perfil/services/perfil_service.d
 import 'package:munatasks2/app/modules/settings/principal/principal_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
+import 'package:munatasks2/app/modules/settings/principal/repositories/interfaces/principal_interfaces.dart';
+import 'package:munatasks2/app/modules/settings/principal/repositories/principal_repository.dart';
+import 'package:munatasks2/app/modules/settings/principal/services/interfaces/principal_service_interface.dart';
+import 'package:munatasks2/app/modules/settings/principal/services/principal_service.dart';
 import 'package:munatasks2/app/shared/auth/repositories/guard.dart';
 import 'package:munatasks2/app/shared/utils/image/image_repository.dart';
 
@@ -29,7 +33,10 @@ class SettingsModule extends Module {
     Bind.lazySingleton<IEtiquetaService>(
         (i) => EtiquetaService(etiquetaRepository: i.get())),
     Bind.lazySingleton<IEtiquetaRepository>((i) => EtiquetaRepository()),
-    Bind.lazySingleton((i) => PrincipalStore(etiquetaService: i.get())),
+    Bind.lazySingleton<IPrincipalRepository>((i) => PrincipalRepository()),
+    Bind.lazySingleton<IPrincipalService>(
+        (i) => PrincipalService(principalRepository: i.get())),
+    Bind.lazySingleton((i) => PrincipalStore(principalService: i.get())),
     Bind.lazySingleton((i) => EtiquetasStore(etiquetaService: i.get())),
     Bind.lazySingleton<ImageRepository>((i) => ImageRepository()),
     Bind.lazySingleton(
