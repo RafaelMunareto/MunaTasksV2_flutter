@@ -1,22 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/card_int_widget.dart';
 
 class ButtonActionWidget extends StatefulWidget {
   final TarefaDioModel tarefa;
   final int navigate;
+  final int index;
   final Function save;
-  const ButtonActionWidget({
-    Key? key,
-    required this.tarefa,
-    required this.navigate,
-    required this.save,
-  }) : super(key: key);
+  final GlobalKey<AnimatedListState> chave;
+  final double constraint;
+  const ButtonActionWidget(
+      {Key? key,
+      required this.tarefa,
+      required this.navigate,
+      required this.save,
+      required this.index,
+      required this.constraint,
+      required this.chave})
+      : super(key: key);
 
   @override
   State<ButtonActionWidget> createState() => _ButtonActionWidgetState();
 }
 
 class _ButtonActionWidgetState extends State<ButtonActionWidget> {
+  atRemove() {
+    widget.save(widget.tarefa);
+    widget.chave.currentState!.removeItem(
+        widget.index,
+        (context, animation) => CardIntWidget(
+              index: widget.index,
+              constraint: widget.constraint,
+              tarefaDioModel: widget.tarefa,
+              animation: animation,
+              chave: widget.chave,
+            ),
+        duration: const Duration(milliseconds: 200));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -49,7 +70,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
             GestureDetector(
               onTap: () {
                 widget.tarefa.fase = 1;
-                widget.save(widget.tarefa);
+                atRemove();
               },
               child: const MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -62,7 +83,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
             GestureDetector(
               onTap: () {
                 widget.tarefa.fase = 2;
-                widget.save(widget.tarefa);
+                atRemove();
               },
               child: const MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -81,7 +102,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
             GestureDetector(
               onTap: () {
                 widget.tarefa.fase = 0;
-                widget.save(widget.tarefa);
+                atRemove();
               },
               child: const MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -94,7 +115,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
             GestureDetector(
               onTap: () {
                 widget.tarefa.fase = 2;
-                widget.save(widget.tarefa);
+                atRemove();
               },
               child: const MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -113,7 +134,7 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
             GestureDetector(
               onTap: () {
                 widget.tarefa.fase = 0;
-                widget.save(widget.tarefa);
+                atRemove();
               },
               child: const MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -124,9 +145,9 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
               ),
             ),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 widget.tarefa.fase = 1;
-                widget.save(widget.tarefa);
+                atRemove();
               },
               child: const MouseRegion(
                 cursor: SystemMouseCursors.click,

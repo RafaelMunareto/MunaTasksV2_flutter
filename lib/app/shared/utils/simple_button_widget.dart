@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/card_int_widget.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
@@ -11,6 +12,11 @@ class SimpleButtonWidget extends StatelessWidget {
   final bool scnack;
   final String msgSnack;
   final String buttonName;
+  final bool delete;
+  final int? index;
+  final GlobalKey<AnimatedListState>? chave;
+  final double? constraint;
+  final dynamic getFase;
   const SimpleButtonWidget(
       {Key? key,
       required this.theme,
@@ -19,7 +25,12 @@ class SimpleButtonWidget extends StatelessWidget {
       this.dataFunction,
       this.scnack = false,
       required this.buttonName,
-      this.msgSnack = ''})
+      this.msgSnack = '',
+      this.delete = false,
+      this.index,
+      this.chave,
+      this.constraint,
+      this.getFase})
       : super(key: key);
 
   @override
@@ -45,10 +56,25 @@ class SimpleButtonWidget extends StatelessWidget {
       ),
       onPressed: () {
         if (popUp) {
+          if (getFase != null) {
+            getFase!();
+          }
           Modular.to.pop();
         }
         if (function != null) {
-          function!(dataFunction);
+          if (delete == true) {
+            function!(dataFunction);
+            chave!.currentState!.removeItem(
+              index!,
+              (context, animation) => CardIntWidget(
+                index: index!,
+                constraint: constraint!,
+                tarefaDioModel: dataFunction,
+                animation: animation,
+                chave: chave!,
+              ),
+            );
+          }
         }
         if (scnack) {
           SnackbarCustom().createSnackBar(msgSnack, Colors.green, context);

@@ -15,7 +15,9 @@ import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class CreateWidget extends StatefulWidget {
   final double constraint;
-  const CreateWidget({Key? key, required this.constraint}) : super(key: key);
+  final GlobalKey<AnimatedListState> chave;
+  const CreateWidget({Key? key, required this.constraint, required this.chave})
+      : super(key: key);
 
   @override
   State<CreateWidget> createState() => _CreateWidgetState();
@@ -114,6 +116,7 @@ class _CreateWidgetState extends State<CreateWidget> {
                         )
                       : Container(),
                   ButtonSaveWidget(
+                    chave: widget.chave,
                     constraint: widget.constraint,
                   )
                 ],

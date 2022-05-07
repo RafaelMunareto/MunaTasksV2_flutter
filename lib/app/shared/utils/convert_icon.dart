@@ -12,6 +12,17 @@ class ConvertIcon {
     }
   }
 
+  iconFase(String status) {
+    switch (status) {
+      case 'pause':
+        return 0;
+      case 'play':
+        return 1;
+      case 'check':
+        return 2;
+    }
+  }
+
   colorStatus(String status) {
     switch (status) {
       case 'play':

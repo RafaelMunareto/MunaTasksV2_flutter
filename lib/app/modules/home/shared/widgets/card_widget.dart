@@ -8,15 +8,15 @@ import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class CardWidget extends StatefulWidget {
-  const CardWidget({
-    Key? key,
-  }) : super(key: key);
+  final GlobalKey<AnimatedListState> chave;
+  const CardWidget({Key? key, required this.chave}) : super(key: key);
 
   @override
   State<CardWidget> createState() => _CardWidgetState();
 }
 
-class _CardWidgetState extends State<CardWidget> {
+class _CardWidgetState extends State<CardWidget>
+    with SingleTickerProviderStateMixin {
   final HomeStore store = Modular.get();
 
   @override
@@ -68,32 +68,31 @@ class _CardWidgetState extends State<CardWidget> {
                                         return store.client.taskDio.isEmpty
                                             ? TarefasNoneWidget(
                                                 theme: store.client.theme)
-                                            : store.client.taskDio.isNotEmpty
-                                                ? ListView.builder(
-                                                    scrollDirection:
-                                                        Axis.vertical,
-                                                    controller:
-                                                        ScrollController(),
-                                                    shrinkWrap: true,
-                                                    padding:
-                                                        const EdgeInsets.all(4),
-                                                    itemCount: store
-                                                        .client.taskDio.length,
-                                                    itemBuilder:
-                                                        (BuildContext context,
-                                                            int index) {
-                                                      return CardIntWidget(
-                                                        tarefaDioModel:
-                                                            List.from(store
-                                                                    .client
-                                                                    .taskDio)[
-                                                                index],
-                                                        constraint:
-                                                            constraint.maxWidth,
-                                                      );
-                                                    },
-                                                  )
-                                                : const CircularProgressWidget();
+                                            : AnimatedList(
+                                                key: widget.chave,
+                                                scrollDirection: Axis.vertical,
+                                                controller: ScrollController(),
+                                                shrinkWrap: true,
+                                                padding:
+                                                    const EdgeInsets.all(4),
+                                                initialItemCount: List.from(
+                                                        store.client.taskDio)
+                                                    .length,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int index, animation) {
+                                                  return CardIntWidget(
+                                                    chave: widget.chave,
+                                                    index: index,
+                                                    animation: animation,
+                                                    tarefaDioModel: List.from(
+                                                      store.client.taskDio,
+                                                    )[index],
+                                                    constraint:
+                                                        constraint.maxWidth,
+                                                  );
+                                                },
+                                              );
                                       },
                                     ),
                                   ),

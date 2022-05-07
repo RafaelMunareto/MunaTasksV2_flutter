@@ -30,6 +30,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends ModularState<HomePage, HomeStore> {
   final GlobalKey expansionTile = GlobalKey();
+  final GlobalKey<AnimatedListState> listKey = GlobalKey();
+
   bool appVisible = false;
 
   @override
@@ -78,106 +80,121 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
         builder: (context, orientation) {
           if (orientation == Orientation.portrait ||
               (kIsWeb || Platform.isWindows)) {
-            return Scaffold(
-              appBar: !appVisible
-                  ? AppBarWidget(
-                      icon: Icons.bookmark,
-                      home: true,
-                      context: context,
-                      zoomController: drawerController,
-                      setOpen: store.client.setOpen,
-                      settings: true,
-                      back: false,
-                      etiquetaList: store.client.etiquetas,
-                      tarefas: store.client.taskDio,
-                      setValueSearch: store.client.setSearchValue,
-                      changeFilterSearch: store.changeFilterSearchList,
-                      client: store.client,
-                      getDioFase: store.getDioFase,
+            return Observer(builder: (_) {
+              return store.client.loading
+                  ? const Scaffold(
+                      body: Center(child: CircularProgressWidget()),
                     )
-                  : PreferredSize(
-                      child: Container(),
-                      preferredSize: const Size(0, 32),
-                    ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  store.clientCreate.cleanSave();
-                  store.clientCreate.setEditar(false);
-                  DialogButtom().showDialogCreate(
-                    CreateWidget(
-                      constraint: constraint.maxWidth,
-                    ),
-                    constraint.maxWidth,
-                    context,
-                    store.getDioFase(),
-                  );
-                },
-                child: Icon(
-                  Icons.add,
-                  size: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                      ? 48
-                      : 24,
-                ),
-              ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.endDocked,
-              bottomNavigationBar: Observer(builder: (_) {
-                return NavigationBarWidget(
-                  theme: store.client.theme,
-                  navigateBarSelection: store.client.navigateBarSelection,
-                  setNavigateBarSelection: store.setNavigateBarSelection,
-                );
-              }),
-              body: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                  ? Observer(
-                      builder: (_) {
-                        return store.client.loading
-                            ? const Center(
-                                child: CircularProgressWidget(),
-                              )
-                            : Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: MenuScreen(
-                                      constraint: constraint.maxWidth,
-                                      open: store.client.open,
-                                      setOpen: store.client.setOpen,
-                                      controller: drawerController,
-                                    ),
-                                  ),
-                                  const Expanded(
-                                    flex: 8,
-                                    child: BodyHomePageWidget(),
-                                  ),
-                                ],
-                              );
-                      },
-                    )
-                  : ZoomDrawer(
-                      controller: drawerController,
-                      style: DrawerStyle.Style1,
-                      menuScreen: Observer(
-                        builder: (_) {
-                          return store.client.loading
-                              ? const Center(child: CircularProgressWidget())
-                              : MenuScreen(
-                                  constraint: constraint.maxWidth,
-                                  open: store.client.open,
-                                  setOpen: store.client.setOpen,
-                                  controller: drawerController,
-                                );
+                  : Scaffold(
+                      appBar: !appVisible
+                          ? AppBarWidget(
+                              icon: Icons.bookmark,
+                              home: true,
+                              context: context,
+                              zoomController: drawerController,
+                              setOpen: store.client.setOpen,
+                              settings: true,
+                              back: false,
+                              etiquetaList: store.client.etiquetas,
+                              tarefas: store.client.taskDio,
+                              setValueSearch: store.client.setSearchValue,
+                              changeFilterSearch: store.changeFilterSearchList,
+                              client: store.client,
+                              getDioFase: store.getDioFase,
+                            )
+                          : PreferredSize(
+                              child: Container(),
+                              preferredSize: const Size(0, 32),
+                            ),
+                      floatingActionButton: FloatingActionButton(
+                        onPressed: () {
+                          store.clientCreate.cleanSave();
+                          store.clientCreate.setEditar(false);
+                          DialogButtom().showDialogCreate(
+                            CreateWidget(
+                              chave: listKey,
+                              constraint: constraint.maxWidth,
+                            ),
+                            constraint.maxWidth,
+                            context,
+                            store.getDioFase(),
+                          );
                         },
+                        child: Icon(
+                          Icons.add,
+                          size: constraint.maxWidth >=
+                                  LarguraLayoutBuilder().telaPc
+                              ? 48
+                              : 24,
+                        ),
                       ),
-                      mainScreen: const BodyHomePageWidget(),
-                      borderRadius: 24.0,
-                      showShadow: false,
-                      backgroundColor: Colors.transparent,
-                      slideWidth: MediaQuery.of(context).size.width * .65,
-                      openCurve: Curves.fastOutSlowIn,
-                      closeCurve: Curves.easeInOut,
-                    ),
-            );
+                      floatingActionButtonLocation:
+                          FloatingActionButtonLocation.endDocked,
+                      bottomNavigationBar: Observer(builder: (_) {
+                        return store.client.loading
+                            ? Container()
+                            : NavigationBarWidget(
+                                theme: store.client.theme,
+                                navigateBarSelection:
+                                    store.client.navigateBarSelection,
+                                setNavigateBarSelection:
+                                    store.setNavigateBarSelection,
+                              );
+                      }),
+                      body: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+                          ? Observer(
+                              builder: (_) {
+                                return Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: MenuScreen(
+                                        constraint: constraint.maxWidth,
+                                        open: store.client.open,
+                                        setOpen: store.client.setOpen,
+                                        controller: drawerController,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 8,
+                                      child: BodyHomePageWidget(
+                                        chave: listKey,
+                                        constraint: constraint.maxWidth,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            )
+                          : ZoomDrawer(
+                              controller: drawerController,
+                              style: DrawerStyle.Style1,
+                              menuScreen: Observer(
+                                builder: (_) {
+                                  return store.client.loading
+                                      ? const Center(
+                                          child: CircularProgressWidget())
+                                      : MenuScreen(
+                                          constraint: constraint.maxWidth,
+                                          open: store.client.open,
+                                          setOpen: store.client.setOpen,
+                                          controller: drawerController,
+                                        );
+                                },
+                              ),
+                              mainScreen: BodyHomePageWidget(
+                                  chave: listKey,
+                                  constraint: constraint.maxWidth),
+                              borderRadius: 24.0,
+                              showShadow: false,
+                              backgroundColor: Colors.transparent,
+                              slideWidth:
+                                  MediaQuery.of(context).size.width * .65,
+                              openCurve: Curves.fastOutSlowIn,
+                              closeCurve: Curves.easeInOut,
+                            ),
+                    );
+            });
           } else {
             return LandscapeWidget(
               constraint: constraint.maxWidth,

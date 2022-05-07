@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/app_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
-import 'package:rolling_switch/rolling_switch.dart';
 import "package:universal_html/html.dart" as html;
 
 class ConfiguracaoWidget extends StatefulWidget {

@@ -9,7 +9,9 @@ import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class ButtonSaveWidget extends StatefulWidget {
   final double constraint;
-  const ButtonSaveWidget({Key? key, required this.constraint})
+  final GlobalKey<AnimatedListState> chave;
+  const ButtonSaveWidget(
+      {Key? key, required this.constraint, required this.chave})
       : super(key: key);
 
   @override
@@ -64,6 +66,20 @@ class _ButtonSaveWidgetState extends State<ButtonSaveWidget> {
                         Colors.green,
                         context,
                       );
+
+                      if (store.clientCreate.tarefaModelSave.fase ==
+                          store.client.navigateBarSelection) {
+                        var newIndex = store.client.taskDio.length;
+                        final newItem =
+                            (List.of(store.client.taskDio)..shuffle()).first;
+                        store.client.taskDio.insert(newIndex, newItem);
+                        widget.chave.currentState!.insertItem(
+                          newIndex,
+                          duration: const Duration(milliseconds: 300),
+                        );
+                      } else {
+                        widget.chave.currentState!.dispose();
+                      }
 
                       Modular.to.pop();
                     }, onError: (error) {

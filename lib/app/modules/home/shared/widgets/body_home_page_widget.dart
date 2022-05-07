@@ -6,8 +6,12 @@ import 'package:munatasks2/app/modules/home/shared/widgets/landscape_widget.dart
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class BodyHomePageWidget extends StatefulWidget {
+  final double constraint;
+  final GlobalKey<AnimatedListState> chave;
   const BodyHomePageWidget({
     Key? key,
+    required this.chave,
+    required this.constraint,
   }) : super(key: key);
 
   @override
@@ -19,36 +23,35 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraint) {
-      return SizedBox(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex:
-                  constraint.maxWidth >= LarguraLayoutBuilder().telaPc ? 7 : 1,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: Column(
-                  children: const [
-                    CardWidget(),
-                  ],
-                ),
+    return SizedBox(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: widget.constraint >= LarguraLayoutBuilder().telaPc ? 7 : 1,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Column(
+                children: [
+                  CardWidget(
+                    chave: widget.chave,
+                  ),
+                ],
               ),
             ),
-            constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                ? Expanded(
-                    flex: 3,
-                    child: Center(
-                      child: LandscapeWidget(
-                        constraint: constraint.maxWidth,
-                      ),
+          ),
+          widget.constraint >= LarguraLayoutBuilder().telaPc
+              ? Expanded(
+                  flex: 3,
+                  child: Center(
+                    child: LandscapeWidget(
+                      constraint: widget.constraint,
                     ),
-                  )
-                : Container()
-          ],
-        ),
-      );
-    });
+                  ),
+                )
+              : Container()
+        ],
+      ),
+    );
   }
 }

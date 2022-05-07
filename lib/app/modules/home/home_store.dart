@@ -129,6 +129,12 @@ abstract class HomeStoreBase with Store {
     getDioFase();
   }
 
+  getPass() async {
+    await getDio();
+    await badgets();
+    getDioTotal();
+  }
+
   getEtiquetas() async {
     Response response;
     var dio = await DioStruture().dioAction();
@@ -144,8 +150,7 @@ abstract class HomeStoreBase with Store {
         .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
         .then((value) {
       client.setTaskDio(value);
-      client.setLoadingTasks(false);
-    });
+    }).whenComplete(() => client.setLoadingTasks(false));
   }
 
   getDio() {
@@ -153,7 +158,6 @@ abstract class HomeStoreBase with Store {
         .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
         .then((value) {
       client.setTaskDio(value);
-      client.setLoadingTasks(false);
     });
   }
 
@@ -239,10 +243,7 @@ abstract class HomeStoreBase with Store {
               dashboardService.emailDio(value.data['id'], '1');
             }
           });
-
-    badgets();
-    getDio();
-    getDioTotal();
+    getPass();
   }
 
   Future saveNewTarefa() async {
@@ -251,23 +252,17 @@ abstract class HomeStoreBase with Store {
         dashboardService.emailDio(value.data['id'], '0');
       }
     });
-    badgets();
-    getDio();
-    getDioTotal();
+    getPass();
   }
 
   Future updateNewTarefa() async {
     await dashboardService.updateDio(clientCreate.tarefaModelSave);
-    getDio();
-    badgets();
-    getDioTotal();
+    getPass();
   }
 
   void deleteDioTasks(TarefaDioModel model) async {
     await dashboardService.deleteDio(model);
-    badgets();
-    getDioFase();
-    getDioTotal();
+    getPass();
   }
 
   changeFilterEtiquetaList() {
