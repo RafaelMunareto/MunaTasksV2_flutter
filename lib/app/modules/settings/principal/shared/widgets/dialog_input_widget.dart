@@ -30,10 +30,10 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
   @override
   void initState() {
     if (widget.value != '') {
-      if (store.label == 'Tempo') {
-        store.setValueEscolha(widget.value.tempoName);
+      if (store.client.label == 'Tempo') {
+        store.client.setValueEscolha(widget.value.tempoName);
       } else {
-        store.setValueEscolha(widget.value);
+        store.client.setValueEscolha(widget.value);
       }
     }
     super.initState();
@@ -58,10 +58,10 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
                     child: Observer(builder: (_) {
                       return TextFieldWidget(
                         outline: true,
-                        initialValue: store.valueEscolha,
-                        errorText: store.validTextoTarefa,
-                        onChanged: store.setValueEscolha,
-                        labelText: store.label,
+                        initialValue: store.client.valueEscolha,
+                        errorText: store.client.validTextoTarefa,
+                        onChanged: store.client.setValueEscolha,
+                        labelText: store.client.label,
                       );
                     }),
                   ),
@@ -75,8 +75,8 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
                     return ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                          store.isValidTarefa
-                              ? store.isSwitched
+                          store.client.isValidTarefa
+                              ? store.client.isSwitched
                                   ? darkThemeData(context).primaryColor
                                   : lightThemeData(context).primaryColor
                               : Colors.grey,
@@ -89,13 +89,15 @@ class _DialogInputWidgetState extends State<DialogInputWidget> {
                         ),
                       ),
                       onPressed: () {
-                        if (store.isValidTarefa) {
+                        if (store.client.isValidTarefa) {
                           if (widget.create == 'Novo') {
-                            widget.editar(widget.value, store.valueEscolha);
+                            widget.editar(
+                                widget.value, store.client.valueEscolha);
                             SnackbarCustom().createSnackBar(
                                 'Salvo com sucesso!', Colors.green, context);
                           } else {
-                            widget.editar(store.valueEscolha, widget.value);
+                            widget.editar(
+                                store.client.valueEscolha, widget.value);
                             SnackbarCustom().createSnackBar(
                                 'Editado com sucesso!', Colors.green, context);
                           }

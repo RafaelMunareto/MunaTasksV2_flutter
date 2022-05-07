@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
-import 'package:munatasks2/app/modules/settings/principal/widgets/dialog_input_widget.dart';
+import 'package:munatasks2/app/modules/settings/principal/shared/widgets/dialog_input_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/simple_button_widget.dart';
 
@@ -28,12 +28,12 @@ class _ListSettingsWidgetState extends State<ListSettingsWidget> {
             controller: ScrollController(),
             shrinkWrap: true,
             padding: const EdgeInsets.all(4),
-            itemCount: store.escolha.length,
+            itemCount: store.client.escolha.length,
             separatorBuilder: (context, index) {
               return const Divider();
             },
             itemBuilder: (BuildContext context, int index) {
-              var linha = store.escolha[index];
+              var linha = store.client.escolha[index];
               return Wrap(
                 children: [
                   Dismissible(
@@ -77,25 +77,25 @@ class _ListSettingsWidgetState extends State<ListSettingsWidget> {
                     key: UniqueKey(),
                     onDismissed: (direction) {
                       if (direction == DismissDirection.startToEnd) {
-                        store.setValueEscolha(linha);
+                        store.client.setValueEscolha(linha);
                         DialogButtom().showDialog(
                           DialogInputWidget(
                             value: linha,
                             editar: store.edit,
                             constraint: widget.constraint,
                           ),
-                          store.isSwitched,
+                          store.client.isSwitched,
                           widget.constraint,
                           context,
                         );
-                        store.setEscolha(store.escolha);
+                        store.client.setEscolha(store.client.escolha);
                       } else {
                         dialogDelete(linha, context);
                       }
                     },
                     child: ListTile(
                       title: Text(
-                        store.label == 'Tempo'
+                        store.client.label == 'Tempo'
                             ? linha.tempoName.toUpperCase()
                             : linha.toString().toUpperCase(),
                       ),
@@ -121,12 +121,12 @@ class _ListSettingsWidgetState extends State<ListSettingsWidget> {
           content: const Text('Tem certeza que deseja excluír a tarefa ?'),
           actions: [
             SimpleButtonWidget(
-              theme: store.isSwitched,
+              theme: store.client.isSwitched,
               buttonName: 'CANCELAR',
               popUp: true,
             ),
             SimpleButtonWidget(
-              theme: store.isSwitched,
+              theme: store.client.isSwitched,
               buttonName: 'EXCLUIR',
               popUp: true,
               function: store.delete,

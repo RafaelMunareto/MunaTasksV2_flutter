@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/repositories/interfaces/etiqueta_interfaces.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
-import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_user_model.dart';
+import 'package:munatasks2/app/modules/settings/principal/shared/model/settings_user_model.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 class EtiquetaRepository implements IEtiquetaRepository {

@@ -19,7 +19,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
       icon: Observer(
         builder: (_) {
           return Text(
-            store.label,
+            store.client.label,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 22,
@@ -28,12 +28,13 @@ class _DropdownWidgetState extends State<DropdownWidget> {
           );
         },
       ),
+      iconSize: 120,
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
           child: ListTile(
             onTap: () {
-              store.setLabel('Order');
-              store.setEscolha(store.settings.order);
+              store.client.setLabel('Order');
+              store.client.setEscolha(store.client.settings.order);
               Navigator.pop(context);
             },
             leading: const Text(
@@ -45,8 +46,8 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         PopupMenuItem(
           child: ListTile(
             onTap: () {
-              store.setLabel('Color');
-              store.setEscolha(store.settings.color);
+              store.client.setLabel('Color');
+              store.client.setEscolha(store.client.settings.color);
               Navigator.pop(context);
             },
             leading: const Text("Color"),
@@ -56,8 +57,8 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         PopupMenuItem(
           child: ListTile(
             onTap: () {
-              store.setLabel('Subtarefa');
-              store.setEscolha(store.settings.subtarefaInsert);
+              store.client.setLabel('Subtarefa');
+              store.client.setEscolha(store.client.settings.subtarefaInsert);
               Navigator.pop(context);
             },
             leading: const Text("Subtarefa"),
@@ -67,8 +68,8 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         PopupMenuItem(
           child: ListTile(
             onTap: () {
-              store.setLabel('Prioridade');
-              store.setEscolha(store.settings.prioridade);
+              store.client.setLabel('Prioridade');
+              store.client.setEscolha(store.client.settings.prioridade);
               Navigator.pop(context);
             },
             leading: const Text("Prioridade"),
@@ -78,8 +79,8 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         PopupMenuItem(
           child: ListTile(
             onTap: () {
-              store.setLabel('Tempo');
-              store.setEscolha(store.settings.retard);
+              store.client.setLabel('Tempo');
+              store.client.setEscolha(store.client.settings.retard);
               Navigator.pop(context);
             },
             leading: const Text("Tempo"),

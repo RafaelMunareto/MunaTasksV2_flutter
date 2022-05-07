@@ -1,14 +1,14 @@
 class SettingsUserModel {
   String user;
-  String emailInicial;
-  String emailFinal;
-  String mobile;
+  bool emailInicial;
+  bool emailFinal;
+  bool mobile;
 
   SettingsUserModel({
     this.user = '',
-    this.emailInicial = 's',
-    this.emailFinal = 's',
-    this.mobile = 's',
+    this.emailInicial = true,
+    this.emailFinal = true,
+    this.mobile = true,
   });
 
   factory SettingsUserModel.fromDocument(doc) {
