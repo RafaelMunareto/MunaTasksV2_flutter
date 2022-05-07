@@ -7,6 +7,7 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/fase_dio
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/principal/shared/model/settings_user_model.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 import '../../../../shared/auth/model/user_dio_client.model.dart';
@@ -242,4 +243,10 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setFilterDate(value) => filterDate = value;
+
+  @observable
+  SettingsUserModel settingsUser = SettingsUserModel();
+
+  @action
+  setSettingsUser(value) => settingsUser = value;
 }

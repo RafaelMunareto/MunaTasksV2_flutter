@@ -17,7 +17,7 @@ class DialogButtom {
           child: Container(
             height: width,
             width: constraint >= LarguraLayoutBuilder().telaPc
-                ? MediaQuery.of(context).size.width * 0.4
+                ? MediaQuery.of(context).size.width * 0.45
                 : MediaQuery.of(context).size.width,
             child: SizedBox.expand(
               child: widgets,

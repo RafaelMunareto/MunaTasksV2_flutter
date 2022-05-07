@@ -13,6 +13,7 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/fase_dio
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/models/perfil_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/principal/shared/model/settings_user_model.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
@@ -45,6 +46,7 @@ abstract class HomeStoreBase with Store {
     await settings();
     await badgets();
     await getEtiquetas();
+    await getSettingsUser();
     await getUser();
     await getDioTotal();
     await getDio();
@@ -63,17 +65,43 @@ abstract class HomeStoreBase with Store {
   }
 
   getNotificationsBd() async {
-    await dashboardService
-        .getNotifications(client.perfilUserLogado.id)
-        .then((e) {
-      client.setNotifications(e);
-    }).then((value) => client.setLoadingNotifications(true));
-    // .whenComplete(
-    //     () => dashboardService.deleteNotifications(client.perfilUserLogado.id));
+    if (client.settingsUser.mobile) {
+      await dashboardService
+          .getNotifications(client.perfilUserLogado.id)
+          .then((e) {
+            client.setNotifications(e);
+          })
+          .then((value) => client.setLoadingNotifications(true))
+          .whenComplete(() =>
+              dashboardService.deleteNotifications(client.perfilUserLogado.id));
 
-    if (client.notifications.isNotEmpty) {
-      retornaNotifications(client.notifications);
+      if (client.notifications.isNotEmpty) {
+        retornaNotifications(client.notifications);
+      }
     }
+  }
+
+  getSettingsUser() async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response =
+        await dio.get('perfil/settingsUser/${client.perfilUserLogado.id}');
+    DioStruture().statusRequest(response);
+    if (response.data.isEmpty) {
+      SettingsUserModel settings =
+          SettingsUserModel(user: client.perfilUserLogado.id);
+      saveSettings(settings);
+    } else {
+      client.setSettingsUser(SettingsUserModel.fromJson(response.data[0]));
+    }
+  }
+
+  Future saveSettings(SettingsUserModel model) async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response = await dio.post('perfil/settingsUser', data: model.toJson(model));
+    DioStruture().statusRequest(response);
+    return client.setSettingsUser(SettingsUserModel.fromJson(response.data));
   }
 
   retornaNotifications(e) async {
@@ -206,7 +234,11 @@ abstract class HomeStoreBase with Store {
   save(TarefaDioModel model) async {
     model.id == null
         ? await dashboardService.saveDio(model)
-        : await dashboardService.updateDio(model);
+        : await dashboardService.updateDio(model).then((value) {
+            if (client.settingsUser.emailFinal && model.fase == 2) {
+              dashboardService.emailDio(value.data['id'], '1');
+            }
+          });
 
     badgets();
     getDio();
@@ -214,7 +246,11 @@ abstract class HomeStoreBase with Store {
   }
 
   Future saveNewTarefa() async {
-    await dashboardService.saveDio(clientCreate.tarefaModelSave);
+    await dashboardService.saveDio(clientCreate.tarefaModelSave).then((value) {
+      if (client.settingsUser.emailInicial) {
+        dashboardService.emailDio(value.data['id'], '0');
+      }
+    });
     badgets();
     getDio();
     getDioTotal();

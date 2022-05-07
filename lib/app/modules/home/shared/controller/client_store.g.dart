@@ -558,6 +558,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$settingsUserAtom = Atom(name: '_ClientStoreBase.settingsUser');
+
+  @override
+  SettingsUserModel get settingsUser {
+    _$settingsUserAtom.reportRead();
+    return super.settingsUser;
+  }
+
+  @override
+  set settingsUser(SettingsUserModel value) {
+    _$settingsUserAtom.reportWrite(value, super.settingsUser, () {
+      super.settingsUser = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -958,6 +973,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setSettingsUser(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setSettingsUser');
+    try {
+      return super.setSettingsUser(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -995,7 +1021,8 @@ retard: ${retard},
 fase: ${fase},
 dateInicial: ${dateInicial},
 dateFinal: ${dateFinal},
-filterDate: ${filterDate}
+filterDate: ${filterDate},
+settingsUser: ${settingsUser}
     ''';
   }
 }

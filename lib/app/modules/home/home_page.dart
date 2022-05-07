@@ -37,11 +37,13 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
     super.didChangeDependencies();
     autorun(
       (_) {
-        if (!kIsWeb && defaultTargetPlatform != TargetPlatform.windows) {
-          if (store.client.loadingNotifications == true) {
-            Timer.periodic(const Duration(minutes: 10), (value) {
-              store.getNotificationsBd();
-            });
+        if (store.client.settingsUser.mobile) {
+          if (!kIsWeb && defaultTargetPlatform != TargetPlatform.windows) {
+            if (store.client.loadingNotifications == true) {
+              Timer.periodic(const Duration(minutes: 10), (value) {
+                store.getNotificationsBd();
+              });
+            }
           }
         }
       },
