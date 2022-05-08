@@ -36,9 +36,9 @@ class _AppWidgetState extends State<AppWidget> {
 
   @override
   initState() {
-    changeSettings();
     super.initState();
     _handleIncomingLinks();
+    getSettings();
   }
 
   @override
@@ -61,8 +61,13 @@ class _AppWidgetState extends State<AppWidget> {
 
   getUid() {
     theme.get('userDio').then((value) {
-      setState(() {});
-      user = UserDioClientModel.fromJson(jsonDecode(value[0]));
+      if (value != null) {
+        if (value.isNotEmpty) {
+          setState(() {
+            user = UserDioClientModel.fromJson(jsonDecode(value[0]));
+          });
+        }
+      }
     });
   }
 
@@ -70,29 +75,41 @@ class _AppWidgetState extends State<AppWidget> {
     Response response;
     var dio = await DioStruture().dioAction();
     response = await dio.get('perfil/user/${user.id}');
-    setState(() {
-      perfil = PerfilDioModel.fromJson(response.data[0]);
-    });
-  }
-
-  void changeSettings() async {
-    await getUid();
-    await getBydDioId();
-    Response response;
-    var dio = await DioStruture().dioAction();
-    response = await dio.get('perfil/settingsUser/${perfil.id}');
-    DioStruture().statusRequest(response);
-    if (response.data.isEmpty) {
-      SettingsUserModel settings = SettingsUserModel(user: perfil.id);
-      response = await dio.post('perfil/settingsUser',
-          data: settings.toJson(settings));
-      theme.put('theme', settings.theme ? ['dark'] : ['light']);
-    } else {
+    if (response.data.isNotEmpty) {
       setState(() {
-        settings = SettingsUserModel.fromJson(response.data[0]);
-        theme.put('theme', settings.theme ? ['dark'] : ['light']);
+        perfil = PerfilDioModel.fromJson(response.data[0]);
       });
     }
+  }
+
+  getSettings() async {
+    await changeSettings();
+    buscaStorage();
+  }
+
+  changeSettings() async {
+    await getUid();
+    if (user.id != null) {
+      await getBydDioId();
+      Response response;
+      var dio = await DioStruture().dioAction();
+      response = await dio.get('perfil/settingsUser/${perfil.id}');
+      DioStruture().statusRequest(response);
+      if (response.data.isEmpty) {
+        SettingsUserModel settings = SettingsUserModel(user: perfil.id);
+        response = await dio.post('perfil/settingsUser',
+            data: settings.toJson(settings));
+        theme.put('theme', settings.theme ? ['dark'] : ['light']);
+      } else {
+        setState(() {
+          settings = SettingsUserModel.fromJson(response.data[0]);
+          theme.put('theme', settings.theme ? ['dark'] : ['light']);
+        });
+      }
+    }
+  }
+
+  buscaStorage() async {
     await theme.get('theme').then((value) {
       setState(() {
         value?[0] == 'dark'

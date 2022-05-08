@@ -268,6 +268,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$themeLoadingAtom = Atom(name: '_ClientStoreBase.themeLoading');
+
+  @override
+  bool get themeLoading {
+    _$themeLoadingAtom.reportRead();
+    return super.themeLoading;
+  }
+
+  @override
+  set themeLoading(bool value) {
+    _$themeLoadingAtom.reportWrite(value, super.themeLoading, () {
+      super.themeLoading = value;
+    });
+  }
+
   final _$navigateBarSelectionAtom =
       Atom(name: '_ClientStoreBase.navigateBarSelection');
 
@@ -709,6 +724,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setThemeLoading(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setThemeLoading');
+    try {
+      return super.setThemeLoading(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setTheme(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setTheme');
@@ -1003,6 +1029,7 @@ loading: ${loading},
 loadingTasks: ${loadingTasks},
 loadingTasksTotal: ${loadingTasksTotal},
 theme: ${theme},
+themeLoading: ${themeLoading},
 navigateBarSelection: ${navigateBarSelection},
 color: ${color},
 icon: ${icon},

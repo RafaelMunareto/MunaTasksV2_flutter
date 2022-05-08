@@ -104,6 +104,12 @@ abstract class _ClientStoreBase with Store {
   @observable
   bool theme = false;
 
+  @observable
+  bool themeLoading = false;
+
+  @action
+  setThemeLoading(value) => themeLoading = value;
+
   @action
   setTheme(value) => theme = value;
 

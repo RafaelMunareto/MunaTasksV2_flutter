@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/app_widget.dart';
 import 'package:munatasks2/app/shared/auth/repositories/auth_repository.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
@@ -17,11 +18,17 @@ class _SplashWidgetState extends State<SplashWidget> {
   final ILocalStorage theme = LocalStorageShare();
   final AuthRepository auth = AuthRepository();
   bool lightMode = true;
+  Color? color;
 
   void changeThemeStorage() async {
     await theme.get('theme').then((value) {
       setState(() {
-        value?[0] == 'dark' ? lightMode = false : lightMode = true;
+        value?[0] == 'dark' ? lightMode = true : lightMode = false;
+        AppWidget.of(context)
+            ?.changeTheme(value?[0] ? ThemeMode.dark : ThemeMode.light);
+        lightMode
+            ? color = const Color(0xfff7f6f4)
+            : color = const Color(0xff042a49);
       });
     });
   }
@@ -46,8 +53,6 @@ class _SplashWidgetState extends State<SplashWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          lightMode ? const Color(0xfff7f6f4) : const Color(0xff042a49),
       body: LayoutBuilder(
         builder: (context, constraint) {
           double withDevice = constraint.maxWidth;
@@ -63,16 +68,12 @@ class _SplashWidgetState extends State<SplashWidget> {
           }
           return Center(
             child: Container(
-              child: lightMode
-                  ? Center(
-                      child: Image(
-                          image: const AssetImage('assets/icon/icon.png'),
-                          width: withDevice))
-                  : Center(
-                      child: Image(
-                          image: const AssetImage('assets/icon/icon.png'),
-                          width: withDevice),
-                    ),
+              color: Colors.black,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Image(
+                  image: const AssetImage('assets/icon/icon.png'),
+                  width: withDevice),
             ),
           );
         },

@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
+import 'package:munatasks2/app/app_widget.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_create_store.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
@@ -33,7 +35,6 @@ abstract class HomeStoreBase with Store {
   final ClientCreateStore clientCreate = Modular.get();
 
   HomeStoreBase({required this.dashboardService}) {
-    buscaTheme();
     getList();
   }
 
@@ -54,14 +55,18 @@ abstract class HomeStoreBase with Store {
     await getNotificationsBd();
   }
 
-  buscaTheme() {
-    storage.get('theme').then((value) {
+  buscaTheme(context) async {
+    await storage.get('theme').then((value) {
       if (value?[0] == 'dark') {
         client.setTheme(true);
       } else {
         client.setTheme(false);
       }
+      client.setThemeLoading(true);
     });
+
+    AppWidget.of(context)
+        ?.changeTheme(client.theme ? ThemeMode.dark : ThemeMode.light);
   }
 
   getNotificationsBd() async {
