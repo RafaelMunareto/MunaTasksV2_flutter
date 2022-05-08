@@ -73,11 +73,8 @@ class _SplashWidgetState extends State<SplashWidget> {
           return Center(
             child: Container(
               color: color,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Image(
-                  image: const AssetImage('assets/icon/icon.png'),
-                  width: withDevice),
+              width: withDevice,
+              child: const Image(image: AssetImage('assets/icon/icon.png')),
             ),
           );
         },
