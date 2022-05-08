@@ -8,7 +8,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:mobx/mobx.dart';
-import 'package:munatasks2/app/app_widget.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/body_home_page_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
