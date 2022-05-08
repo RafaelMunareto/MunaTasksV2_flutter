@@ -28,13 +28,13 @@ class _SplashWidgetState extends State<SplashWidget> {
             value?[0] == 'dark' ? lightMode = true : lightMode = false;
             AppWidget.of(context)?.changeTheme(
                 value?[0] == 'dark' ? ThemeMode.dark : ThemeMode.light);
-            lightMode
-                ? color = const Color(0xfff7f6f4)
-                : color = const Color(0xff042a49);
           });
         }
       }
     });
+    lightMode
+        ? color = const Color(0xfff7f6f4)
+        : color = const Color(0xff042a49);
   }
 
   @override
@@ -72,7 +72,7 @@ class _SplashWidgetState extends State<SplashWidget> {
           }
           return Center(
             child: Container(
-              color: Colors.black,
+              color: color,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: Image(

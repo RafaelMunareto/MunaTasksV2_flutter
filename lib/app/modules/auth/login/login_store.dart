@@ -134,7 +134,7 @@ abstract class _LoginStoreBase with Store {
     var dio = await DioStruture().dioAction();
     response = await dio.get('perfil/settingsUser/${perfil.id}');
     if (response.data.isEmpty) {
-      var settings = SettingsUserModel.fromJson(response.data[0]);
+      var settings = SettingsUserModel(user: perfil.id);
       saveSettings(settings);
     } else {
       var settings = SettingsUserModel.fromJson(response.data[0]);
