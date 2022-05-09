@@ -7,6 +7,7 @@ import 'package:munatasks2/app/modules/settings/principal/shared/widgets/configu
 import 'package:munatasks2/app/modules/settings/principal/shared/widgets/dialog_input_widget.dart';
 import 'package:munatasks2/app/modules/settings/principal/shared/widgets/dropdown_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:rolling_switch/rolling_switch.dart';
 
@@ -63,7 +64,13 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
       Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: ListTile(
-          title: const Text('TEMA'),
+          title: Text(
+            'TEMA',
+            style: TextStyle(
+                fontSize: widget.constraint >= LarguraLayoutBuilder().telaPc
+                    ? 18
+                    : 14),
+          ),
           trailing: RollingSwitch.icon(
             initialState: theme,
             animationDuration: const Duration(milliseconds: 600),
@@ -102,7 +109,13 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
       Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: ListTile(
-          title: const Text('EMAIL - CRIAÇÃO'),
+          title: Text(
+            'EMAIL - CRIAÇÃO',
+            style: TextStyle(
+                fontSize: widget.constraint >= LarguraLayoutBuilder().telaPc
+                    ? 18
+                    : 14),
+          ),
           trailing: RollingSwitch.icon(
             initialState: emailInicial,
             animationDuration: const Duration(milliseconds: 600),
@@ -134,7 +147,13 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
       Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: ListTile(
-          title: const Text('EMAIL - FINALIZAÇÃO'),
+          title: Text(
+            'EMAIL - FINALIZAÇÃO',
+            style: TextStyle(
+                fontSize: widget.constraint >= LarguraLayoutBuilder().telaPc
+                    ? 18
+                    : 14),
+          ),
           trailing: RollingSwitch.icon(
             initialState: emailFinal,
             animationDuration: const Duration(milliseconds: 600),
@@ -166,7 +185,13 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
       Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: ListTile(
-          title: const Text('NOTIFICAÇÕES - MOBILE'),
+          title: Text(
+            'NOTIFICAÇÕES - MOBILE',
+            style: TextStyle(
+                fontSize: widget.constraint >= LarguraLayoutBuilder().telaPc
+                    ? 18
+                    : 14),
+          ),
           trailing: RollingSwitch.icon(
             initialState: mobile,
             animationDuration: const Duration(milliseconds: 600),

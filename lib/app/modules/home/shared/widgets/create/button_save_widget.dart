@@ -9,9 +9,7 @@ import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class ButtonSaveWidget extends StatefulWidget {
   final double constraint;
-  final GlobalKey<AnimatedListState> chave;
-  const ButtonSaveWidget(
-      {Key? key, required this.constraint, required this.chave})
+  const ButtonSaveWidget({Key? key, required this.constraint})
       : super(key: key);
 
   @override
@@ -73,12 +71,6 @@ class _ButtonSaveWidgetState extends State<ButtonSaveWidget> {
                         final newItem =
                             (List.of(store.client.taskDio)..shuffle()).first;
                         store.client.taskDio.insert(newIndex, newItem);
-                        widget.chave.currentState!.insertItem(
-                          newIndex,
-                          duration: const Duration(milliseconds: 300),
-                        );
-                      } else {
-                        widget.chave.currentState!.dispose();
                       }
 
                       Modular.to.pop();

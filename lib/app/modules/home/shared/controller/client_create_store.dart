@@ -428,4 +428,10 @@ abstract class _ClientCreateStoreBase with Store {
     }
     return null;
   }
+
+  @observable
+  bool loadingSearch = false;
+
+  @action
+  setLoadingSearch(value) => loadingSearch = value;
 }

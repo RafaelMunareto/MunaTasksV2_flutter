@@ -421,6 +421,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$taskDioSearchAtom = Atom(name: '_ClientStoreBase.taskDioSearch');
+
+  @override
+  List<TarefaDioModel> get taskDioSearch {
+    _$taskDioSearchAtom.reportRead();
+    return super.taskDioSearch;
+  }
+
+  @override
+  set taskDioSearch(List<TarefaDioModel> value) {
+    _$taskDioSearchAtom.reportWrite(value, super.taskDioSearch, () {
+      super.taskDioSearch = value;
+    });
+  }
+
   final _$userDioAtom = Atom(name: '_ClientStoreBase.userDio');
 
   @override
@@ -889,6 +904,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setTaskDioSearch(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setTaskDioSearch');
+    try {
+      return super.setTaskDioSearch(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setUserDio(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setUserDio');
@@ -1039,6 +1065,7 @@ searchValue: ${searchValue},
 perfilUserLogado: ${perfilUserLogado},
 expandTarefa: ${expandTarefa},
 taskDio: ${taskDio},
+taskDioSearch: ${taskDioSearch},
 userDio: ${userDio},
 perfis: ${perfis},
 etiquetas: ${etiquetas},

@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:munatasks2/app/modules/settings/principal/shared/widgets/dialog_input_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/simple_button_widget.dart';
 
 class ListSettingsWidget extends StatefulWidget {
@@ -98,6 +99,11 @@ class _ListSettingsWidgetState extends State<ListSettingsWidget> {
                         store.client.label == 'Tempo'
                             ? linha.tempoName.toUpperCase()
                             : linha.toString().toUpperCase(),
+                        style: TextStyle(
+                            fontSize: widget.constraint >=
+                                    LarguraLayoutBuilder().telaPc
+                                ? 18
+                                : 14),
                       ),
                     ),
                   ),

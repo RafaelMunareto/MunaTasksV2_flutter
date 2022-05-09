@@ -191,6 +191,12 @@ abstract class _ClientStoreBase with Store {
   setTaskDio(value) => taskDio = value;
 
   @observable
+  List<TarefaDioModel> taskDioSearch = [];
+
+  @action
+  setTaskDioSearch(value) => taskDioSearch = value;
+
+  @observable
   UserDioClientModel userDio = UserDioClientModel();
 
   @action

@@ -30,7 +30,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends ModularState<HomePage, HomeStore> {
   final GlobalKey expansionTile = GlobalKey();
-  final GlobalKey<AnimatedListState> listKey = GlobalKey();
   bool appVisible = false;
 
   @override
@@ -93,7 +92,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                         settings: true,
                         back: false,
                         etiquetaList: store.client.etiquetas,
-                        tarefas: store.client.taskDio,
                         setValueSearch: store.client.setSearchValue,
                         changeFilterSearch: store.changeFilterSearchList,
                         client: store.client,
@@ -109,7 +107,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                     store.clientCreate.setEditar(false);
                     DialogButtom().showDialogCreate(
                       CreateWidget(
-                        chave: listKey,
                         constraint: constraint.maxWidth,
                       ),
                       constraint.maxWidth,
@@ -154,7 +151,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                                     Expanded(
                                       flex: 8,
                                       child: BodyHomePageWidget(
-                                        chave: listKey,
                                         constraint: constraint.maxWidth,
                                       ),
                                     ),
@@ -177,8 +173,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                                   );
                           },
                         ),
-                        mainScreen: BodyHomePageWidget(
-                            chave: listKey, constraint: constraint.maxWidth),
+                        mainScreen:
+                            BodyHomePageWidget(constraint: constraint.maxWidth),
                         borderRadius: 24.0,
                         showShadow: false,
                         backgroundColor: Colors.transparent,

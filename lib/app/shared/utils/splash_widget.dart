@@ -62,7 +62,7 @@ class _SplashWidgetState extends State<SplashWidget> {
           double withDevice = constraint.maxWidth;
 
           if (withDevice < 600) {
-            withDevice = withDevice * 0.58;
+            withDevice = withDevice * 0.30;
           } else if (withDevice < 960) {
             withDevice = withDevice * 0.3;
           } else if (withDevice < 1025) {
@@ -73,11 +73,10 @@ class _SplashWidgetState extends State<SplashWidget> {
           return Center(
             child: Container(
               color: color,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Image(
-                  image: const AssetImage('assets/icon/icon.png'),
-                  width: withDevice),
+              width: withDevice,
+              child: const Image(
+                image: AssetImage('assets/icon/icon.png'),
+              ),
             ),
           );
         },

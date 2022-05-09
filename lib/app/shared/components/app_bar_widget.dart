@@ -28,7 +28,6 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   final bool settings;
   final bool back;
   final String rota;
-  final dynamic tarefas;
   final bool home;
   final dynamic zoomController;
   final Function? setOpen;
@@ -37,6 +36,7 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   final Function? changeFilterSearch;
   final Function? getDioFase;
   final dynamic client;
+
   AppBarWidget({
     Key? key,
     this.title = "",
@@ -49,7 +49,6 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
     this.setOpen,
     this.zoomController,
     this.etiquetaList,
-    this.tarefas,
     this.rota = '/auth',
     this.setValueSearch,
     this.changeFilterSearch,
@@ -181,22 +180,21 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                           ? MouseRegion(
                               cursor: SystemMouseCursors.click,
                               child: GestureDetector(
-                                child: Icon(
-                                  widget.client.filterDate
-                                      ? Icons.history
-                                      : Icons.timelapse,
-                                  color: widget.client.filterDate
-                                      ? Colors.red
-                                      : widget.client.theme
-                                          ? darkThemeData(context)
-                                              .iconTheme
-                                              .color
-                                          : lightThemeData(context)
-                                              .iconTheme
-                                              .color,
-                                ),
-                                onTap: () {
-                                  if (widget.client.perfilUserLogado.manager) {
+                                  child: Icon(
+                                    widget.client.filterDate
+                                        ? Icons.history
+                                        : Icons.timelapse,
+                                    color: widget.client.filterDate
+                                        ? Colors.red
+                                        : widget.client.theme
+                                            ? darkThemeData(context)
+                                                .iconTheme
+                                                .color
+                                            : lightThemeData(context)
+                                                .iconTheme
+                                                .color,
+                                  ),
+                                  onTap: () {
                                     if (!widget.client.filterDate) {
                                       DialogButtom().showDialog(
                                         const DateFilterWidget(),
@@ -208,9 +206,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                       widget.client.setFilterDate(false);
                                       widget.getDioFase!();
                                     }
-                                  }
-                                },
-                              ),
+                                  }),
                             )
                           : Container(),
                       !search && widget.client.perfilUserLogado.manager

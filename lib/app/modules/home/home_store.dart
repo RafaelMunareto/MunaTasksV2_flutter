@@ -301,7 +301,7 @@ abstract class HomeStoreBase with Store {
   changeFilterSearchList() {
     if (client.searchValue != '') {
       Timer(const Duration(milliseconds: 600), () {
-        client.setTaskDio(client.taskDio
+        client.setTaskDioSearch(client.taskDio
             .where((t) => t.texto
                 .toLowerCase()
                 .contains(client.searchValue.toLowerCase()))
@@ -309,15 +309,13 @@ abstract class HomeStoreBase with Store {
             .toList());
       });
     } else {
-      getDioFase();
+      client.setTaskDioSearch(client.taskDio);
     }
   }
 
   changeFilterUserList() async {
     if (client.userSelection?.name.name != 'TODOS') {
-      dashboardService
-          .getDio(client.userSelection!.id, client.navigateBarSelection)
-          .then((value) {
+      dashboardService.getFilterUser(client.userSelection!.id).then((value) {
         client.setTaskDio(value);
       });
     } else {

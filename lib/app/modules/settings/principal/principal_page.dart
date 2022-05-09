@@ -17,6 +17,7 @@ class PrincipalPage extends StatefulWidget {
 class PrincipalPageState extends State<PrincipalPage>
     with SingleTickerProviderStateMixin {
   final PrincipalStore store = Modular.get();
+
   late Animation<double> opacidade;
   late AnimationController _controller;
 

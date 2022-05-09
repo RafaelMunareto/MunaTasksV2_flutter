@@ -23,6 +23,11 @@ class DashboardService extends Disposable implements IDashboardService {
   }
 
   @override
+  getFilterUser(String id) {
+    return dashboardRepository.getFilterUser(id);
+  }
+
+  @override
   getDioTotal() {
     return dashboardRepository.getDioTotal();
   }

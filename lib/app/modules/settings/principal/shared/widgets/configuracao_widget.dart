@@ -34,7 +34,13 @@ class _ConfiguracaoWidgetState extends State<ConfiguracaoWidget> {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: ListTile(
-              title: const Text('LOGOUT'),
+              title: Text(
+                'LOGOUT',
+                style: TextStyle(
+                    fontSize: widget.constraint >= LarguraLayoutBuilder().telaPc
+                        ? 18
+                        : 14),
+              ),
               trailing: ElevatedButton.icon(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(

@@ -7,10 +7,8 @@ import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class BodyHomePageWidget extends StatefulWidget {
   final double constraint;
-  final GlobalKey<AnimatedListState> chave;
   const BodyHomePageWidget({
     Key? key,
-    required this.chave,
     required this.constraint,
   }) : super(key: key);
 
@@ -32,10 +30,8 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
             child: Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Column(
-                children: [
-                  CardWidget(
-                    chave: widget.chave,
-                  ),
+                children: const [
+                  CardWidget(),
                 ],
               ),
             ),

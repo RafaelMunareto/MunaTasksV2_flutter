@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/card_int_widget.dart';
 
 class ButtonActionWidget extends StatefulWidget {
   final TarefaDioModel tarefa;
   final int navigate;
-  final int index;
   final Function save;
-  final GlobalKey<AnimatedListState> chave;
   final double constraint;
   const ButtonActionWidget(
       {Key? key,
       required this.tarefa,
       required this.navigate,
       required this.save,
-      required this.index,
-      required this.constraint,
-      required this.chave})
+      required this.constraint})
       : super(key: key);
 
   @override
@@ -26,16 +21,6 @@ class ButtonActionWidget extends StatefulWidget {
 class _ButtonActionWidgetState extends State<ButtonActionWidget> {
   atRemove() {
     widget.save(widget.tarefa);
-    widget.chave.currentState!.removeItem(
-        widget.index,
-        (context, animation) => CardIntWidget(
-              index: widget.index,
-              constraint: widget.constraint,
-              tarefaDioModel: widget.tarefa,
-              animation: animation,
-              chave: widget.chave,
-            ),
-        duration: const Duration(milliseconds: 200));
   }
 
   @override

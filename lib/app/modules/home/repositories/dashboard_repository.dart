@@ -55,6 +55,25 @@ class DashboardRepository implements IDashboardRepository {
   }
 
   @override
+  Future<List<TarefaDioModel>> getFilterUser(String id) async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('tasks/filter_user/$id');
+    DioStruture().statusRequest(response);
+    return (response.data as List).map((e) {
+      e = TarefaDioModel.fromJson(e);
+      e.users = e.users!.map((u) {
+        return PerfilDioModel.fromJson(u);
+      }).toList();
+      e.subTarefa = e.subTarefa!.map((f) {
+        return SubtarefasDioModel.fromJson(f);
+      }).toList();
+      e.data = DateTime.parse(e.data);
+      return e as TarefaDioModel;
+    }).toList();
+  }
+
+  @override
   Future<List<TarefaDioTotalModel>> getDioTotal() async {
     Response response;
     var dio = await DioStruture().dioAction();

@@ -213,6 +213,31 @@ class _MenuScreenState extends State<MenuScreen> {
                                       onTap: () {
                                         Modular.to.navigate('/home/tarefas');
                                       },
+                                    ),
+                                    ListTile(
+                                      title: Row(
+                                        children: const [
+                                          Padding(
+                                            padding:
+                                                EdgeInsets.only(right: 8.0),
+                                            child: Icon(Icons.privacy_tip),
+                                          ),
+                                          Flexible(
+                                            child: SizedBox(
+                                              child: Text(
+                                                "Privacy",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Modular.to.navigate('/privacy/');
+                                      },
                                     )
                                   ],
                                 ),
