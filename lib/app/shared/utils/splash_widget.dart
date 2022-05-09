@@ -57,6 +57,7 @@ class _SplashWidgetState extends State<SplashWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: color,
       body: LayoutBuilder(
         builder: (context, constraint) {
           double withDevice = constraint.maxWidth;
@@ -72,7 +73,6 @@ class _SplashWidgetState extends State<SplashWidget> {
           }
           return Center(
             child: Container(
-              color: color,
               width: withDevice,
               child: const Image(image: AssetImage('assets/icon/icon.png')),
             ),
