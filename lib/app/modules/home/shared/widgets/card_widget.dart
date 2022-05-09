@@ -18,25 +18,6 @@ class CardWidget extends StatefulWidget {
 class _CardWidgetState extends State<CardWidget>
     with SingleTickerProviderStateMixin {
   final HomeStore store = Modular.get();
-  var list = [];
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    autorun(
-      (_) {
-        if (store.client.taskDioSearch.isNotEmpty) {
-          setState(() {
-            list = store.client.taskDioSearch;
-          });
-        } else {
-          setState(() {
-            list = store.client.taskDio;
-          });
-        }
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +61,7 @@ class _CardWidgetState extends State<CardWidget>
                               flex: 1,
                               child: SingleChildScrollView(
                                 controller: ScrollController(),
-                                child: list.isEmpty
+                                child: store.client.taskDioSearch.isEmpty
                                     ? TarefasNoneWidget(
                                         theme: store.client.theme)
                                     : ListView.builder(
@@ -88,11 +69,13 @@ class _CardWidgetState extends State<CardWidget>
                                         controller: ScrollController(),
                                         shrinkWrap: true,
                                         padding: const EdgeInsets.all(4),
-                                        itemCount: list.length,
+                                        itemCount:
+                                            store.client.taskDioSearch.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           return CardIntWidget(
-                                            tarefaDioModel: list[index],
+                                            tarefaDioModel: store
+                                                .client.taskDioSearch[index],
                                             constraint: constraint.maxWidth,
                                           );
                                         },

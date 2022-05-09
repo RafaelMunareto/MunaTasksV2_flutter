@@ -155,6 +155,7 @@ abstract class HomeStoreBase with Store {
         .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
         .then((value) {
       client.setTaskDio(value);
+      client.setTaskDioSearch(value);
     }).whenComplete(() => client.setLoadingTasks(false));
   }
 
@@ -162,6 +163,7 @@ abstract class HomeStoreBase with Store {
     dashboardService
         .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
         .then((value) {
+      client.setTaskDioSearch(value);
       client.setTaskDio(value);
     });
   }
@@ -305,7 +307,6 @@ abstract class HomeStoreBase with Store {
             .where((t) => t.texto
                 .toLowerCase()
                 .contains(client.searchValue.toLowerCase()))
-            .where((b) => b.fase == client.navigateBarSelection)
             .toList());
       });
     } else {

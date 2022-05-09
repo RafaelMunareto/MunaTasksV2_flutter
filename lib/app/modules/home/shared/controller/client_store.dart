@@ -196,6 +196,9 @@ abstract class _ClientStoreBase with Store {
   @action
   setTaskDioSearch(value) => taskDioSearch = value;
 
+  @action
+  cleanTaskDioSearch() => taskDioSearch = [];
+
   @observable
   UserDioClientModel userDio = UserDioClientModel();
 

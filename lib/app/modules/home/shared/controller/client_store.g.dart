@@ -915,6 +915,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic cleanTaskDioSearch() {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.cleanTaskDioSearch');
+    try {
+      return super.cleanTaskDioSearch();
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setUserDio(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setUserDio');

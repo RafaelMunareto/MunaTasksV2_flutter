@@ -193,7 +193,9 @@ class _CardIntWidgetState extends State<CardIntWidget> {
                             context,
                           ),
                           child: Icon(
-                            Icons.flag,
+                            widget.tarefaDioModel.prioridade > 3
+                                ? Icons.flag_outlined
+                                : Icons.flag,
                             color: ConvertIcon().convertColorFlaf(
                                 widget.tarefaDioModel.prioridade),
                           ),
