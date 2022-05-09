@@ -88,6 +88,6 @@ scripts:
   build_web: flutter build web --web-renderer html && scp -r .\build\web\* root@45.82.75.3:/home/munatask/public_html/
   build_windows: flutter build windows
   build_bundle: flutter build appbundle --build-name=1.0.3+8 --build-number=1 --no-tree-shake-icons
-  build_apk: flutter build apk --build-name=1.0.3+8 --build-number=1 --no-tree-shake-icons
+  build_apk: flutter build apk --build-name=1.0.4+1 --build-number=2 --no-tree-shake-icons
   launch_icon: flutter pub run flutter_launcher_icons:main
   launch_splash: flutter pub run flutter_native_splash:create
