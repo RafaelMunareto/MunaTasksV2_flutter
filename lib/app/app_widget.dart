@@ -145,4 +145,5 @@ class _AppWidgetState extends State<AppWidget> {
       _themeMode = themeMode;
     });
   }
+  
 }

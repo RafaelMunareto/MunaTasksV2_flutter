@@ -74,9 +74,7 @@ class _SplashWidgetState extends State<SplashWidget> {
             child: Container(
               color: color,
               width: withDevice,
-              child: const Image(
-                image: AssetImage('assets/icon/icon.png'),
-              ),
+              child: const Image(image: AssetImage('assets/icon/icon.png')),
             ),
           );
         },
