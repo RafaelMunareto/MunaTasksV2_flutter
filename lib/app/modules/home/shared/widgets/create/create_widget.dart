@@ -51,43 +51,77 @@ class _CreateWidgetState extends State<CreateWidget> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0),
-                      child: Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        alignment: WrapAlignment.spaceAround,
-                        children: [
-                          EtiquetasSaveWidget(
-                            constraint: widget.constraint,
-                          ),
-                          ActionFaseSaveWidget(constraint: widget.constraint),
-                          PrioridadeSaveWidget(constraint: widget.constraint),
-                          widget.constraint >= LarguraLayoutBuilder().telaPc
-                              ? DateSaveWidget(
-                                  dateController: dateController,
-                                  constraint: widget.constraint,
-                                )
-                              : Container(),
-                        ],
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                              flex: 5,
+                              child: Wrap(
+                                alignment: WrapAlignment.spaceAround,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  EtiquetasSaveWidget(
+                                    constraint: widget.constraint,
+                                  ),
+                                  ActionFaseSaveWidget(
+                                      constraint: widget.constraint),
+                                  PrioridadeSaveWidget(
+                                      constraint: widget.constraint),
+                                  widget.constraint >=
+                                          LarguraLayoutBuilder().telaPc
+                                      ? SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.1,
+                                          child: UsersSaveWidget(
+                                              constraint: widget.constraint),
+                                        )
+                                      : Container(),
+                                  widget.constraint >=
+                                          LarguraLayoutBuilder().telaPc
+                                      ? SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.1,
+                                          child: DateSaveWidget(
+                                            dateController: dateController,
+                                            constraint: widget.constraint,
+                                          ),
+                                        )
+                                      : Container()
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child:
-                                UsersSaveWidget(constraint: widget.constraint),
+                    widget.constraint >= LarguraLayoutBuilder().telaPc
+                        ? Container()
+                        : Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: UsersSaveWidget(
+                                      constraint: widget.constraint),
+                                ),
+                              ),
+                              Expanded(
+                                child: DateSaveWidget(
+                                  dateController: dateController,
+                                  constraint: widget.constraint,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Expanded(
-                          child: DateSaveWidget(
-                            dateController: dateController,
-                            constraint: widget.constraint,
-                          ),
-                        ),
-                      ],
-                    ),
                     TextSaveWidget(controller: textController),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
