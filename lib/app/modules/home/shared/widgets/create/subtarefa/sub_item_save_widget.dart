@@ -41,6 +41,7 @@ class _SubItemSaveWidgetState extends State<SubItemSaveWidget> {
                             .iconStatusColor(widget.subtarefa.status),
                       ),
                       trailing: CircleAvatarWidget(
+                          nameUser: widget.subtarefa.user.name.name,
                           url: widget.subtarefa.user.urlImage),
                     )
                   : Wrap(
@@ -61,6 +62,7 @@ class _SubItemSaveWidgetState extends State<SubItemSaveWidget> {
                                 .iconStatusColor(widget.subtarefa.status),
                           ),
                           trailing: CircleAvatarWidget(
+                              nameUser: widget.subtarefa.user.name,
                               url: widget.subtarefa.user.urlImage),
                         ),
                       ],

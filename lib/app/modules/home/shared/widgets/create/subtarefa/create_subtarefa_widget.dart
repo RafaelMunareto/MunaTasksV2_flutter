@@ -232,6 +232,8 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                               color: Colors.grey,
                                             )
                                       : CircleAvatarWidget(
+                                          nameUser: store.clientCreate
+                                              .createUser.name.name,
                                           url: store.clientCreate.imageUser,
                                         );
                                 },

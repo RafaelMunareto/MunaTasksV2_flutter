@@ -107,6 +107,7 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
                                         labelPadding: const EdgeInsets.all(2),
                                         elevation: 4.0,
                                         avatar: CircleAvatarWidget(
+                                          nameUser: '',
                                           url: linha.urlImage,
                                         ),
                                         label: SizedBox(

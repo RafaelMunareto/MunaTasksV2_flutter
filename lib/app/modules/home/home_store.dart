@@ -280,7 +280,7 @@ abstract class HomeStoreBase with Store {
       dashboardService
           .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
           .then((value) {
-        client.setTaskDio(value
+        client.setTaskDioSearch(value
             .where((e) => e.etiqueta.icon == client.etiquetaSelection)
             .toList());
       });
@@ -291,7 +291,7 @@ abstract class HomeStoreBase with Store {
     dashboardService
         .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
         .then((value) {
-      client.setTaskDio(value
+      client.setTaskDioSearch(value
           .where((element) =>
               element.data.isAfter(client.dateInicial) &&
               element.data
@@ -317,7 +317,7 @@ abstract class HomeStoreBase with Store {
   changeFilterUserList() async {
     if (client.userSelection?.name.name != 'TODOS') {
       dashboardService.getFilterUser(client.userSelection!.id).then((value) {
-        client.setTaskDio(value);
+        client.setTaskDioSearch(value);
       });
     } else {
       getDioFase();
@@ -350,28 +350,28 @@ abstract class HomeStoreBase with Store {
         client.taskDio.sort((a, b) => client.orderAscDesc
             ? a.etiqueta.etiqueta.compareTo(b.etiqueta.etiqueta)
             : b.etiqueta.etiqueta.compareTo(a.etiqueta.etiqueta));
-        client.setTaskDio(client.taskDio);
+        client.setTaskDioSearch(client.taskDio);
         return;
       case 'ASSUNTO':
         client.taskDio.sort((a, b) => client.orderAscDesc
             ? a.texto.compareTo(b.texto)
             : b.texto.compareTo(a.texto));
-        client.setTaskDio(client.taskDio);
+        client.setTaskDioSearch(client.taskDio);
         return;
       case 'DATA':
         client.taskDio.sort((a, b) => client.orderAscDesc
             ? a.data.compareTo(b.data)
             : b.data.compareTo(a.data));
-        client.setTaskDio(client.taskDio);
+        client.setTaskDioSearch(client.taskDio);
         return;
       case 'PRIORIDADE':
         client.taskDio.sort((a, b) => client.orderAscDesc
             ? a.prioridade.compareTo(b.prioridade)
             : b.prioridade.compareTo(a.prioridade));
-        client.setTaskDio(client.taskDio);
+        client.setTaskDioSearch(client.taskDio);
         return;
       default:
-        client.setTaskDio(client.taskDio);
+        client.setTaskDioSearch(client.taskDio);
         return;
     }
   }

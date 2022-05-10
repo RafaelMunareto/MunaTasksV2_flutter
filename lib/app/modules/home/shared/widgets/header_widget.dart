@@ -36,6 +36,7 @@ class HeaderWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: CircleAvatarWidget(
+                        nameUser: tarefa.users![i].name.name,
                         key: Key(tarefa.users![i].id.toString()),
                         url: tarefa.users![i].urlImage,
                       ),

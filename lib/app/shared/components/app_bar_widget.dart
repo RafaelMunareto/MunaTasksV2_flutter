@@ -213,8 +213,19 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                           ? MouseRegion(
                               cursor: SystemMouseCursors.click,
                               child: GestureDetector(
-                                child: CircleAvatarWidget(
-                                  url: widget.client.imgUrl,
+                                child: Observer(
+                                  builder: (_) {
+                                    return widget.client.userSelection == null
+                                        ? CircleAvatarWidget(
+                                            nameUser: 'TODOS',
+                                            url: widget.client.imgUrl,
+                                          )
+                                        : CircleAvatarWidget(
+                                            nameUser: widget.client
+                                                .userSelection.name!.name,
+                                            url: widget.client.imgUrl,
+                                          );
+                                  },
                                 ),
                                 onTap: () {
                                   if (widget.client.perfilUserLogado.manager) {

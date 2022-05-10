@@ -72,7 +72,7 @@ class _SplashWidgetState extends State<SplashWidget> {
             withDevice = withDevice * 0.15;
           }
           return Center(
-            child: Container(
+            child: SizedBox(
               width: withDevice,
               child: const Image(image: AssetImage('assets/icon/icon.png')),
             ),

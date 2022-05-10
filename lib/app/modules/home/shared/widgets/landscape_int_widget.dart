@@ -62,6 +62,7 @@ class _LandscapeIntWidgetState extends State<LandscapeIntWidget> {
                               labelPadding: const EdgeInsets.all(2),
                               elevation: 2.0,
                               avatar: CircleAvatarWidget(
+                                nameUser: totais.name.name.name,
                                 url: totais.name!.urlImage,
                               ),
                               label: SizedBox(

@@ -111,6 +111,7 @@ class _EquipesWidgetState extends State<EquipesWidget>
                                   client.individualChip.contains(linha.id),
                               elevation: 4.0,
                               avatar: CircleAvatarWidget(
+                                nameUser: '',
                                 url: linha.urlImage,
                               ),
                               label: SizedBox(
@@ -155,6 +156,7 @@ class _EquipesWidgetState extends State<EquipesWidget>
                                     labelPadding: const EdgeInsets.all(2),
                                     elevation: 4.0,
                                     avatar: CircleAvatarWidget(
+                                      nameUser: '',
                                       url: userModel!.urlImage,
                                     ),
                                     label: SizedBox(

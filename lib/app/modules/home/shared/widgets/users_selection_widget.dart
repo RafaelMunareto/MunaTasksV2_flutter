@@ -98,6 +98,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                             .contains(linha.name.email),
                                         elevation: 4.0,
                                         avatar: CircleAvatarWidget(
+                                          nameUser: '',
                                           url: linha.urlImage,
                                         ),
                                         label: SizedBox(

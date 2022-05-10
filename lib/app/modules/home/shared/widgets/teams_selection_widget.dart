@@ -88,6 +88,7 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
                       avatar: linha.urlImage == null
                           ? const CircularProgressIndicator()
                           : CircleAvatarWidget(
+                              nameUser: '',
                               url: linha.urlImage,
                             ),
                       label: SizedBox(

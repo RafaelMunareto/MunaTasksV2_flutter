@@ -73,7 +73,10 @@ class SubItemWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              trailing: CircleAvatarWidget(url: subTarefa.user.urlImage),
+              trailing: CircleAvatarWidget(
+                url: subTarefa.user.urlImage,
+                nameUser: subTarefa.user.name.name,
+              ),
             ),
             children: [
               Padding(

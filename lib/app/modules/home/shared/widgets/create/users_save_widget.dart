@@ -79,6 +79,7 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                               context,
                             ),
                             child: CircleAvatarWidget(
+                              nameUser: linha.name.name,
                               key: Key(linha.id),
                               url: linha.urlImage,
                             ),
