@@ -71,7 +71,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
       store.client.setOpen(true);
     }
     store.buscaTheme(context);
-    //verifyVersion();
+    verifyVersion();
     tz.initializeTimeZones();
     sendNotification();
     super.initState();
