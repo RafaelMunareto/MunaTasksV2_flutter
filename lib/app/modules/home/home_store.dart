@@ -293,7 +293,8 @@ abstract class HomeStoreBase with Store {
         .then((value) {
       client.setTaskDioSearch(value
           .where((element) =>
-              element.data.isAfter(client.dateInicial) &&
+              element.data.isAfter(
+                  client.dateInicial.subtract(const Duration(days: 1))) &&
               element.data
                   .isBefore(client.dateFinal.add(const Duration(days: 1))))
           .toList());

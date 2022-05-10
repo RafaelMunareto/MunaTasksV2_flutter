@@ -128,85 +128,95 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                             )
                           : Container(),
                       !search
-                          ? MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: GestureDetector(
-                                child: widget.client.icon != 0
-                                    ? Icon(
-                                        IconData(widget.client.icon,
-                                            fontFamily: 'MaterialIcons'),
-                                        color: ConvertIcon()
-                                            .convertColor(widget.client.color),
-                                      )
-                                    : Icon(
-                                        Icons.bookmark,
-                                        color: widget.client.theme
-                                            ? darkThemeData(context)
-                                                .iconTheme
-                                                .color
-                                            : lightThemeData(context)
-                                                .iconTheme
-                                                .color,
-                                      ),
-                                onTap: () {
-                                  DialogButtom().showDialog(
-                                    const RadioEtiquetasFilterWidget(),
-                                    widget.client.theme,
-                                    constraint.maxWidth,
-                                    context,
-                                  );
-                                },
-                              ),
-                            )
-                          : Container(),
-                      !search
-                          ? GestureDetector(
-                              child: const MouseRegion(
+                          ? Tooltip(
+                              message: "Filtra Etiquetas",
+                              child: MouseRegion(
                                 cursor: SystemMouseCursors.click,
-                                child: Icon(
-                                  Icons.filter_alt,
+                                child: GestureDetector(
+                                  child: widget.client.icon != 0
+                                      ? Icon(
+                                          IconData(widget.client.icon,
+                                              fontFamily: 'MaterialIcons'),
+                                          color: ConvertIcon().convertColor(
+                                              widget.client.color),
+                                        )
+                                      : Icon(
+                                          Icons.bookmark,
+                                          color: widget.client.theme
+                                              ? darkThemeData(context)
+                                                  .iconTheme
+                                                  .color
+                                              : lightThemeData(context)
+                                                  .iconTheme
+                                                  .color,
+                                        ),
+                                  onTap: () {
+                                    DialogButtom().showDialog(
+                                      const RadioEtiquetasFilterWidget(),
+                                      widget.client.theme,
+                                      constraint.maxWidth,
+                                      context,
+                                    );
+                                  },
                                 ),
                               ),
-                              onTap: () => DialogButtom().showDialog(
-                                const RadioOrderWidget(),
-                                widget.client.theme,
-                                constraint.maxWidth,
-                                context,
-                                width: MediaQuery.of(context).size.height * 0.4,
+                            )
+                          : Container(),
+                      !search
+                          ? Tooltip(
+                              message: "Faz o ordenamento.",
+                              child: GestureDetector(
+                                child: const MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: Icon(
+                                    Icons.filter_alt,
+                                  ),
+                                ),
+                                onTap: () => DialogButtom().showDialog(
+                                  const RadioOrderWidget(),
+                                  widget.client.theme,
+                                  constraint.maxWidth,
+                                  context,
+                                  width:
+                                      MediaQuery.of(context).size.height * 0.4,
+                                ),
                               ),
                             )
                           : Container(),
                       !search
-                          ? MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: GestureDetector(
-                                  child: Icon(
-                                    widget.client.filterDate
-                                        ? Icons.history
-                                        : Icons.timelapse,
-                                    color: widget.client.filterDate
-                                        ? Colors.red
-                                        : widget.client.theme
-                                            ? darkThemeData(context)
-                                                .iconTheme
-                                                .color
-                                            : lightThemeData(context)
-                                                .iconTheme
-                                                .color,
-                                  ),
-                                  onTap: () {
-                                    if (!widget.client.filterDate) {
-                                      DialogButtom().showDialog(
-                                        const DateFilterWidget(),
-                                        widget.client.theme,
-                                        constraint.maxWidth,
-                                        context,
-                                      );
-                                    } else {
-                                      widget.client.setFilterDate(false);
-                                      widget.getDioFase!();
-                                    }
-                                  }),
+                          ? Tooltip(
+                              message: "Faz filtro de datas.",
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                    child: Icon(
+                                      widget.client.filterDate
+                                          ? Icons.history
+                                          : Icons.timelapse,
+                                      color: widget.client.filterDate
+                                          ? Colors.red
+                                          : widget.client.theme
+                                              ? darkThemeData(context)
+                                                  .iconTheme
+                                                  .color
+                                              : lightThemeData(context)
+                                                  .iconTheme
+                                                  .color,
+                                    ),
+                                    onTap: () {
+                                      if (!widget.client.filterDate) {
+                                        DialogButtom().showDialog(
+                                          const DateFilterWidget(),
+                                          widget.client.theme,
+                                          constraint.maxWidth,
+                                          context,
+                                        );
+                                      } else {
+                                        widget.client.setFilterDate(false);
+                                        widget.getDioFase!();
+                                      }
+                                    }),
+                              ),
                             )
                           : Container(),
                       !search && widget.client.perfilUserLogado.manager

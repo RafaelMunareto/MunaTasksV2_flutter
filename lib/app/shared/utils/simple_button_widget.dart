@@ -57,12 +57,10 @@ class SimpleButtonWidget extends StatelessWidget {
           Modular.to.pop();
         }
         if (function != null) {
-          if (delete == true) {
-            function!(dataFunction);
+          function!(dataFunction);
+          if (scnack) {
+            SnackbarCustom().createSnackBar(msgSnack, Colors.green, context);
           }
-        }
-        if (scnack) {
-          SnackbarCustom().createSnackBar(msgSnack, Colors.green, context);
         }
       },
       child: Text(

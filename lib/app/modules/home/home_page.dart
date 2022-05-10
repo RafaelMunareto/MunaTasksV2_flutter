@@ -18,6 +18,7 @@ import 'package:munatasks2/app/shared/components/menu_screen.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
+import 'package:show_update_dialog/show_update_dialog.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 class HomePage extends StatefulWidget {
@@ -50,13 +51,27 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
     );
   }
 
+  verifyVersion() async {
+    final versionCheck =
+        ShowUpdateDialog(androidId: 'munacorp.munatasks2.br.munatasks2');
+    final VersionModel vs = await versionCheck.fetchVersionInfo();
+    versionCheck.showCustomDialogUpdate(
+      context: context,
+      versionStatus: vs,
+      buttonColor: Colors.black,
+      buttonText: "Atualizar",
+      title: "Estamos mais novos do que nunca!",
+      forceUpdate: true,
+    );
+  }
+
   @override
   void initState() {
     if (defaultTargetPlatform == TargetPlatform.windows) {
       store.client.setOpen(true);
     }
     store.buscaTheme(context);
-
+    //verifyVersion();
     tz.initializeTimeZones();
     sendNotification();
     super.initState();

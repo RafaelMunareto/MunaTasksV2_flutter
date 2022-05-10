@@ -137,6 +137,7 @@ class _ListSettingsWidgetState extends State<ListSettingsWidget> {
               popUp: true,
               function: store.delete,
               dataFunction: tarefa,
+              delete: true,
               scnack: true,
               msgSnack: 'Deletado com sucesso!',
             ),
