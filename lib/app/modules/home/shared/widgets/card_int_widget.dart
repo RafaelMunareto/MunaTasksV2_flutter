@@ -88,6 +88,7 @@ class _CardIntWidgetState extends State<CardIntWidget> {
           store.clientCreate.setTarefaUpdate(
             widget.tarefaDioModel,
           );
+          store.clientCreate.cleanSubtarefa();
           DialogButtom().showDialogCreate(
               CreateWidget(
                 constraint: widget.constraint,

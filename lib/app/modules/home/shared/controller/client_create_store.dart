@@ -159,6 +159,9 @@ abstract class _ClientCreateStoreBase with Store {
       tarefaModelSaveEtiqueta = EtiquetaDioModel();
 
   @action
+  setIndividualChip(value) => individualChip = value;
+
+  @action
   cleanSave() {
     cleanUsersSave();
     cleanSaveEtiqueta();
@@ -252,7 +255,6 @@ abstract class _ClientCreateStoreBase with Store {
     setIdReferenceStaff(
       model.user.name.email,
     );
-    setIdStaff(model.user);
     setSubtarefaId(model.id);
   }
 

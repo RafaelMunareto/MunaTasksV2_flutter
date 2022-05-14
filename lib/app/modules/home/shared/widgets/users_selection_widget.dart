@@ -66,6 +66,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                 );
               } else {
                 List<PerfilDioModel> list = store.client.perfis;
+                store.clientCreate.setIndividualChip(store.clientCreate.users);
                 list.removeWhere((e) => e.name.name == 'TODOS');
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
@@ -95,7 +96,8 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                         labelPadding: const EdgeInsets.all(2),
                                         selected: store
                                             .clientCreate.individualChip
-                                            .contains(linha.name.email),
+                                            .where((a) => a.id == linha.id)
+                                            .isNotEmpty,
                                         elevation: 4.0,
                                         avatar: CircleAvatarWidget(
                                           nameUser: '',
@@ -106,13 +108,15 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                           child: Text(
                                             linha.name.name,
                                             overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: Colors.blue.shade700),
                                           ),
                                         ),
                                         onSelected: (bool value) {
                                           setState(() {
                                             store.clientCreate
                                                 .setIdReferenceStaff(
-                                              linha.name.email,
+                                              linha,
                                             );
                                             store.clientCreate
                                                 .setIdStaff(linha);

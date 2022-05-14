@@ -195,51 +195,54 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                           }),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Wrap(
-                          alignment: WrapAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                store.clientCreate.setSubtarefaTextSave(
-                                    textSubtarefaController.text);
-                                DialogButtom().showDialog(
-                                  CreateUserSubtarefaWidget(
-                                    userLista: store.client.perfis,
-                                    setCreateImageUser:
-                                        store.clientCreate.setCreateImageUser,
-                                    setUserCreateSelection: store
-                                        .clientCreate.setUserCreateSelection,
-                                  ),
-                                  store.client.theme,
-                                  widget.constraint,
-                                  context,
-                                );
-                              },
-                              child: Observer(
-                                builder: (_) {
-                                  return store.clientCreate.imageUser == ""
-                                      ? widget.constraint >=
-                                              LarguraLayoutBuilder().telaPc
-                                          ? const Chip(
-                                              label: Text('Equipe'),
-                                              avatar: Icon(
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Wrap(
+                            alignment: WrapAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  store.clientCreate.setSubtarefaTextSave(
+                                      textSubtarefaController.text);
+                                  DialogButtom().showDialog(
+                                    CreateUserSubtarefaWidget(
+                                      userLista: store.client.perfis,
+                                      setCreateImageUser:
+                                          store.clientCreate.setCreateImageUser,
+                                      setUserCreateSelection: store
+                                          .clientCreate.setUserCreateSelection,
+                                    ),
+                                    store.client.theme,
+                                    widget.constraint,
+                                    context,
+                                  );
+                                },
+                                child: Observer(
+                                  builder: (_) {
+                                    return store.clientCreate.imageUser == ""
+                                        ? widget.constraint >=
+                                                LarguraLayoutBuilder().telaPc
+                                            ? const Chip(
+                                                label: Text('Equipe'),
+                                                avatar: Icon(
+                                                  Icons.people,
+                                                  color: Colors.grey,
+                                                ),
+                                              )
+                                            : const Icon(
                                                 Icons.people,
                                                 color: Colors.grey,
-                                              ),
-                                            )
-                                          : const Icon(
-                                              Icons.people,
-                                              color: Colors.grey,
-                                            )
-                                      : CircleAvatarWidget(
-                                          nameUser: store.clientCreate
-                                              .createUser.name.name,
-                                          url: store.clientCreate.imageUser,
-                                        );
-                                },
+                                              )
+                                        : CircleAvatarWidget(
+                                            nameUser: store.clientCreate
+                                                .createUser.name.name,
+                                            url: store.clientCreate.imageUser,
+                                          );
+                                  },
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],

@@ -77,6 +77,8 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
               } else {
                 List<PerfilDioModel> list = store.client.perfis;
                 list.removeWhere((e) => e.name.name == 'TODOS');
+                store.clientCreate
+                    .setIndividualChip([store.clientCreate.createUser]);
 
                 return LayoutBuilder(builder: (context, constraint) {
                   return Padding(
@@ -106,6 +108,10 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
                                         key: ObjectKey(linha.id),
                                         labelPadding: const EdgeInsets.all(2),
                                         elevation: 4.0,
+                                        selected: store
+                                            .clientCreate.individualChip
+                                            .where((a) => a.id == linha.id)
+                                            .isNotEmpty,
                                         avatar: CircleAvatarWidget(
                                           nameUser: '',
                                           url: linha.urlImage,
@@ -115,8 +121,9 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
                                           child: Text(
                                             linha.name.name,
                                             overflow: TextOverflow.ellipsis,
-                                            style:
-                                                const TextStyle(fontSize: 12),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.blue.shade700),
                                           ),
                                         ),
                                         onPressed: () {

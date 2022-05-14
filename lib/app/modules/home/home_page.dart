@@ -122,6 +122,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                 floatingActionButton: FloatingActionButton(
                   onPressed: () {
                     store.clientCreate.cleanSave();
+                    store.clientCreate.cleanSubtarefa();
                     store.clientCreate.setEditar(false);
                     DialogButtom().showDialogCreate(
                       CreateWidget(

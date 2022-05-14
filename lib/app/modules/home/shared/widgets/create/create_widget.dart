@@ -122,7 +122,10 @@ class _CreateWidgetState extends State<CreateWidget> {
                               ),
                             ],
                           ),
-                    TextSaveWidget(controller: textController),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
+                      child: TextSaveWidget(controller: textController),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CreateSubtarefaWidget(
