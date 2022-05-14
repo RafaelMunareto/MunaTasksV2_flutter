@@ -58,7 +58,7 @@ ThemeData darkThemeData(BuildContext context) {
       elevation: kElevation,
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.blueGrey.shade800,
+      backgroundColor: kDardBlueGrey,
       iconTheme: const IconThemeData(
         color: kblue,
       ),
@@ -66,13 +66,13 @@ ThemeData darkThemeData(BuildContext context) {
     iconTheme: const IconThemeData(color: kblue),
     textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme)
         .apply(bodyColor: darkWhite),
-    colorScheme: const ColorScheme.light(
+    colorScheme: ColorScheme.light(
       primary: darkPrimaryColor,
-      secondary: Colors.grey,
+      secondary: klightGrey,
       error: darkErrorColor,
     ),
-    dialogBackgroundColor: Colors.blueGrey,
-    inputDecorationTheme: const InputDecorationTheme(iconColor: Colors.grey),
+    dialogBackgroundColor: kligthBlueGrey,
+    inputDecorationTheme: InputDecorationTheme(iconColor: klightGrey),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: darkDarkGrey,
       selectedItemColor: darkContentColorLightTheme.withOpacity(0.7),

@@ -33,6 +33,19 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         PopupMenuItem(
           child: ListTile(
             onTap: () {
+              store.client.setLabel('Version');
+              store.client.setEscolha(store.client.settings.version);
+              Navigator.pop(context);
+            },
+            leading: const Text(
+              "Version",
+            ),
+            trailing: const Icon(Icons.verified),
+          ),
+        ),
+        PopupMenuItem(
+          child: ListTile(
+            onTap: () {
               store.client.setLabel('Order');
               store.client.setEscolha(store.client.settings.order);
               Navigator.pop(context);

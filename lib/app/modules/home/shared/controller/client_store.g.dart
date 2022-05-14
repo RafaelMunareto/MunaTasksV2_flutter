@@ -603,6 +603,21 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  final _$versionAtom = Atom(name: '_ClientStoreBase.version');
+
+  @override
+  String get version {
+    _$versionAtom.reportRead();
+    return super.version;
+  }
+
+  @override
+  set version(String value) {
+    _$versionAtom.reportWrite(value, super.version, () {
+      super.version = value;
+    });
+  }
+
   final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase');
 
@@ -1047,6 +1062,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setVersion(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setVersion');
+    try {
+      return super.setVersion(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -1087,7 +1113,8 @@ fase: ${fase},
 dateInicial: ${dateInicial},
 dateFinal: ${dateFinal},
 filterDate: ${filterDate},
-settingsUser: ${settingsUser}
+settingsUser: ${settingsUser},
+version: ${version}
     ''';
   }
 }

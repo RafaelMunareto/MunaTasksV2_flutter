@@ -264,4 +264,10 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setSettingsUser(value) => settingsUser = value;
+
+  @observable
+  String version = '';
+
+  @action
+  setVersion(value) => version = value;
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -80,7 +81,8 @@ class _ConfiguracaoWidgetState extends State<ConfiguracaoWidget> {
               ),
             ),
           ),
-          widget.constraint <= LarguraLayoutBuilder().telaSmartphone
+          widget.constraint <= LarguraLayoutBuilder().telaSmartphone ||
+                  defaultTargetPlatform == TargetPlatform.windows
               ? Container()
               : Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),

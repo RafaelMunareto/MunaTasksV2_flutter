@@ -5,8 +5,7 @@ import 'package:munatasks2/app/modules/home/repositories/dashboard_repository.da
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/services/dashboard_service.dart';
-import 'package:munatasks2/app/modules/home/tarefas/tarefas_page.dart';
-import 'package:munatasks2/app/modules/home/tarefas/tarefas_store.dart';
+import 'package:munatasks2/app/modules/home/tarefas/tarefas_module.dart';
 import 'package:munatasks2/app/shared/auth/repositories/guard.dart';
 import '../home/home_store.dart';
 
@@ -15,7 +14,6 @@ import 'home_page.dart';
 class HomeModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.lazySingleton((i) => TarefasStore()),
     Bind.lazySingleton((i) => ClientStore()),
     Bind.lazySingleton((i) => ClientCreateStore()),
     Bind.lazySingleton<IDashboardService>(
@@ -28,9 +26,8 @@ class HomeModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute('/',
         child: (context, args) => const HomePage(), guards: [AuthGuard()]),
-    ChildRoute('/tarefas',
-        child: (_, args) => const TarefasPage(),
-        guards: [AuthGuard()],
+    ModuleRoute('/tarefas',
+        module: TarefasModule(),
         transition: TransitionType.leftToRightWithFade),
   ];
 }

@@ -6,7 +6,7 @@ class SettingsModel {
   List? prioridade;
   List? retard;
   List? subtarefaInsert;
-  int? version;
+  List? version;
 
   SettingsModel({
     this.id,

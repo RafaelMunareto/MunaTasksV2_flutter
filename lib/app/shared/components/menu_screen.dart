@@ -13,6 +13,7 @@ class MenuScreen extends StatefulWidget {
   final bool open;
   final Function setOpen;
   final double constraint;
+  final String version;
 
   const MenuScreen({
     Key? key,
@@ -20,6 +21,7 @@ class MenuScreen extends StatefulWidget {
     this.open = false,
     required this.setOpen,
     required this.constraint,
+    required this.version,
   }) : super(key: key);
   @override
   _MenuScreenState createState() => _MenuScreenState();
@@ -238,7 +240,29 @@ class _MenuScreenState extends State<MenuScreen> {
                                       onTap: () {
                                         Modular.to.navigate('/privacy/');
                                       },
-                                    )
+                                    ),
+                                    ListTile(
+                                      title: Row(
+                                        children: [
+                                          const Padding(
+                                            padding:
+                                                EdgeInsets.only(right: 8.0),
+                                            child: Icon(Icons.verified),
+                                          ),
+                                          Flexible(
+                                            child: SizedBox(
+                                              child: Text(
+                                                "Versão ${widget.version}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

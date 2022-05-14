@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -54,15 +52,18 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   verifyVersion() async {
     final versionCheck =
         ShowUpdateDialog(androidId: 'munacorp.munatasks2.br.munatasks2');
-    final VersionModel vs = await versionCheck.fetchVersionInfo();
-    versionCheck.showCustomDialogUpdate(
-      context: context,
-      versionStatus: vs,
-      buttonColor: Colors.black,
-      buttonText: "Atualizar",
-      title: "Estamos mais novos do que nunca!",
-      forceUpdate: true,
-    );
+
+    final VersionModel? vs = await versionCheck.fetchVersionInfo();
+    if (vs != null) {
+      versionCheck.showCustomDialogUpdate(
+        context: context,
+        versionStatus: vs,
+        buttonColor: Colors.black,
+        buttonText: "Atualizar",
+        title: "Estamos mais novos do que nunca!",
+        forceUpdate: true,
+      );
+    }
   }
 
   @override
@@ -71,7 +72,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
       store.client.setOpen(true);
     }
     store.buscaTheme(context);
-    verifyVersion();
+    if (defaultTargetPlatform != TargetPlatform.windows) {
+      verifyVersion();
+    }
     tz.initializeTimeZones();
     sendNotification();
     super.initState();
@@ -94,7 +97,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
       return OrientationBuilder(
         builder: (context, orientation) {
           if (orientation == Orientation.portrait ||
-              (kIsWeb || Platform.isWindows)) {
+              (kIsWeb || defaultTargetPlatform == TargetPlatform.windows)) {
             return Observer(builder: (_) {
               return Scaffold(
                 appBar: !appVisible
@@ -161,6 +164,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                                         open: store.client.open,
                                         setOpen: store.client.setOpen,
                                         controller: drawerController,
+                                        version: store.client.version,
                                       ),
                                     ),
                                     Expanded(
@@ -185,6 +189,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                                     open: store.client.open,
                                     setOpen: store.client.setOpen,
                                     controller: drawerController,
+                                    version: store.client.version,
                                   );
                           },
                         ),
@@ -202,6 +207,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
           } else {
             return LandscapeWidget(
               constraint: constraint.maxWidth,
+              theme: store.client.theme,
             );
           }
         },

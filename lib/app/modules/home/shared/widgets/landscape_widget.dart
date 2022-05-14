@@ -7,7 +7,10 @@ import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 
 class LandscapeWidget extends StatefulWidget {
   final double constraint;
-  const LandscapeWidget({Key? key, required this.constraint}) : super(key: key);
+  final bool theme;
+  const LandscapeWidget(
+      {Key? key, required this.constraint, required this.theme})
+      : super(key: key);
 
   @override
   State<LandscapeWidget> createState() => _LandscapeWidgetState();
@@ -22,7 +25,10 @@ class _LandscapeWidgetState extends State<LandscapeWidget> {
       return store.client.loadingTasksTotal
           ? const Center(child: SizedBox(child: CircularProgressWidget()))
           : Scaffold(
-              body: LandscapeIntWidget(constraint: widget.constraint),
+              body: LandscapeIntWidget(
+                constraint: widget.constraint,
+                theme: widget.theme,
+              ),
             );
     });
   }

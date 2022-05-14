@@ -41,6 +41,7 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
                   flex: 3,
                   child: Center(
                     child: LandscapeWidget(
+                      theme: store.client.theme,
                       constraint: widget.constraint,
                     ),
                   ),

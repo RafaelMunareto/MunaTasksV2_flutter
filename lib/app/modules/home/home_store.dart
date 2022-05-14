@@ -22,6 +22,7 @@ import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/notification_service.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 part 'home_store.g.dart';
 
@@ -39,6 +40,7 @@ abstract class HomeStoreBase with Store {
   }
 
   void getList() async {
+    await getVersion();
     await client.setLoading(true);
     await client.setLoadingTasks(true);
     await client.setLoadingTasksTotal(true);
@@ -67,6 +69,12 @@ abstract class HomeStoreBase with Store {
 
     AppWidget.of(context)
         ?.changeTheme(client.theme ? ThemeMode.dark : ThemeMode.light);
+  }
+
+  getVersion() {
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      client.setVersion(packageInfo.version);
+    });
   }
 
   getNotificationsBd() async {

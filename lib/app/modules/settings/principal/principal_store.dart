@@ -127,6 +127,11 @@ abstract class _PrincipalStoreBase with Store {
         return e == valueOld ? client.valueEscolha : e;
       }).toList();
       client.setEscolha(client.settings.prioridade);
+    } else if (client.label == 'Version') {
+      client.settings.version = client.escolha.map((e) {
+        return e == valueOld ? client.valueEscolha : e;
+      }).toList();
+      client.setEscolha(client.settings.version);
     } else if (client.label == 'Tempo') {
       client.settings.retard = client.escolha.map((e) {
         if (e.id == valueOld.id) {
@@ -175,6 +180,9 @@ abstract class _PrincipalStoreBase with Store {
     } else if (client.label == 'Tempo') {
       client.settings.retard = client.escolha;
       client.setEscolha(client.settings.retard);
+    } else if (client.label == 'Version') {
+      client.settings.version = client.escolha;
+      client.setEscolha(client.settings.version);
     }
     principalService.updateSettings(client.settings);
     principalService.getSettings().then((value) {
