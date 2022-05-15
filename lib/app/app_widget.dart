@@ -121,13 +121,14 @@ class _AppWidgetState extends State<AppWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'MunaTask',
       debugShowCheckedModeBanner: false,
-      initialRoute: "/",
       theme: lightThemeData(context),
       darkTheme: darkThemeData(context),
       themeMode: _themeMode,
+      routeInformationParser: Modular.routeInformationParser,
+      routerDelegate: Modular.routerDelegate,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -137,7 +138,7 @@ class _AppWidgetState extends State<AppWidget> {
         Locale('pt', 'BR'),
       ],
       // ignore: deprecated_member_use
-    ).modular();
+    );
   }
 
   void changeTheme(ThemeMode themeMode) {
@@ -145,5 +146,4 @@ class _AppWidgetState extends State<AppWidget> {
       _themeMode = themeMode;
     });
   }
-  
 }

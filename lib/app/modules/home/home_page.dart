@@ -27,8 +27,10 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends ModularState<HomePage, HomeStore> {
+class _HomePageState extends State<HomePage> {
   final GlobalKey expansionTile = GlobalKey();
+  final HomeStore store = Modular.get();
+  final drawerController = ZoomDrawerController();
   bool appVisible = false;
 
   @override
@@ -68,11 +70,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
 
   @override
   void initState() {
-    if (defaultTargetPlatform == TargetPlatform.windows) {
-      store.client.setOpen(true);
-    }
     store.buscaTheme(context);
-    if (defaultTargetPlatform != TargetPlatform.windows) {
+    if (defaultTargetPlatform == TargetPlatform.android) {
       verifyVersion();
     }
     tz.initializeTimeZones();
@@ -87,13 +86,12 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   }
 
   @override
-  final HomeStore store = Modular.get();
-  final drawerController = ZoomDrawerController();
-
-  @override
   Widget build(BuildContext context) {
     sendNotification();
     return LayoutBuilder(builder: (context, constraint) {
+      if (constraint.maxWidth >= LarguraLayoutBuilder().telaPc) {
+        store.client.setOpen(true);
+      }
       return OrientationBuilder(
         builder: (context, orientation) {
           if (orientation == Orientation.portrait ||

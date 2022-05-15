@@ -18,9 +18,10 @@ class TarefasPage extends StatefulWidget {
   TarefasPageState createState() => TarefasPageState();
 }
 
-class TarefasPageState extends ModularState<TarefasPage, TarefasStore> {
+class TarefasPageState extends State<TarefasPage> {
   bool theme = false;
   ILocalStorage storage = LocalStorageShare();
+  TarefasStore store = Modular.get();
   @override
   void initState() {
     storage.get('theme').then((value) {
