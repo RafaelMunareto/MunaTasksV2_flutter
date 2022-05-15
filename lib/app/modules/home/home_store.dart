@@ -234,13 +234,15 @@ abstract class HomeStoreBase with Store {
     Response response;
     if (client.userDio.id != null) {
       var dio = await DioStruture().dioAction();
-      response = await dio.get('perfil/user/${client.userDio.id}');
-      DioStruture().statusRequest(response);
+      try {
+        response = await dio.get('perfil/user/${client.userDio.id}');
+        DioStruture().statusRequest(response);
 
-      if (response.data != null) {
-        var resposta = PerfilDioModel.fromJson(response.data[0]);
-        client.setPerfilUserlogado(resposta);
-      } else {
+        if (response.data != null) {
+          var resposta = PerfilDioModel.fromJson(response.data[0]);
+          client.setPerfilUserlogado(resposta);
+        }
+      } catch (e) {
         await SessionManager().remove('token');
         await storage.put('token', []);
         await storage.put('userDio', []);

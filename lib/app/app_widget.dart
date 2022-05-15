@@ -48,7 +48,7 @@ class _AppWidgetState extends State<AppWidget> {
   }
 
   void _handleIncomingLinks() {
-    if (!kIsWeb && defaultTargetPlatform != TargetPlatform.windows) {
+    if (defaultTargetPlatform == TargetPlatform.android) {
       _sub = uriLinkStream.listen((Uri? uri) {
         if (!mounted) return;
         Modular.to
