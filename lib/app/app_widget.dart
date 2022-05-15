@@ -12,7 +12,7 @@ import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_sh
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:uni_links/uni_links.dart';
+import 'package:uni_links2/uni_links.dart';
 
 class AppWidget extends StatefulWidget {
   @override
