@@ -9,7 +9,8 @@ part of 'change_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ChangeStore on _ChangeStoreBase, Store {
-  final _$loadingAtom = Atom(name: '_ChangeStoreBase.loading');
+  late final _$loadingAtom =
+      Atom(name: '_ChangeStoreBase.loading', context: context);
 
   @override
   bool get loading {
@@ -24,7 +25,7 @@ mixin _$ChangeStore on _ChangeStoreBase, Store {
     });
   }
 
-  final _$codeAtom = Atom(name: '_ChangeStoreBase.code');
+  late final _$codeAtom = Atom(name: '_ChangeStoreBase.code', context: context);
 
   @override
   String get code {
@@ -39,7 +40,7 @@ mixin _$ChangeStore on _ChangeStoreBase, Store {
     });
   }
 
-  final _$msgAtom = Atom(name: '_ChangeStoreBase.msg');
+  late final _$msgAtom = Atom(name: '_ChangeStoreBase.msg', context: context);
 
   @override
   String get msg {
@@ -54,7 +55,8 @@ mixin _$ChangeStore on _ChangeStoreBase, Store {
     });
   }
 
-  final _$msgErrOrGoalAtom = Atom(name: '_ChangeStoreBase.msgErrOrGoal');
+  late final _$msgErrOrGoalAtom =
+      Atom(name: '_ChangeStoreBase.msgErrOrGoal', context: context);
 
   @override
   bool get msgErrOrGoal {
@@ -69,7 +71,8 @@ mixin _$ChangeStore on _ChangeStoreBase, Store {
     });
   }
 
-  final _$themeAtom = Atom(name: '_ChangeStoreBase.theme');
+  late final _$themeAtom =
+      Atom(name: '_ChangeStoreBase.theme', context: context);
 
   @override
   bool get theme {
@@ -84,8 +87,8 @@ mixin _$ChangeStore on _ChangeStoreBase, Store {
     });
   }
 
-  final _$_ChangeStoreBaseActionController =
-      ActionController(name: '_ChangeStoreBase');
+  late final _$_ChangeStoreBaseActionController =
+      ActionController(name: '_ChangeStoreBase', context: context);
 
   @override
   dynamic setCode(dynamic value) {

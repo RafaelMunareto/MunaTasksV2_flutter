@@ -9,7 +9,8 @@ part of 'auth_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AuthController on _AuthControllerBase, Store {
-  final _$statusAtom = Atom(name: '_AuthControllerBase.status');
+  late final _$statusAtom =
+      Atom(name: '_AuthControllerBase.status', context: context);
 
   @override
   AuthStatus get status {
@@ -24,7 +25,8 @@ mixin _$AuthController on _AuthControllerBase, Store {
     });
   }
 
-  final _$userAtom = Atom(name: '_AuthControllerBase.user');
+  late final _$userAtom =
+      Atom(name: '_AuthControllerBase.user', context: context);
 
   @override
   UserDioClientModel? get user {
@@ -39,8 +41,8 @@ mixin _$AuthController on _AuthControllerBase, Store {
     });
   }
 
-  final _$_AuthControllerBaseActionController =
-      ActionController(name: '_AuthControllerBase');
+  late final _$_AuthControllerBaseActionController =
+      ActionController(name: '_AuthControllerBase', context: context);
 
   @override
   dynamic setUser(UserDioClientModel value) {

@@ -9,7 +9,8 @@ part of 'client_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ClientStore on _ClientStoreBase, Store {
-  final _$badgetNavigateAtom = Atom(name: '_ClientStoreBase.badgetNavigate');
+  late final _$badgetNavigateAtom =
+      Atom(name: '_ClientStoreBase.badgetNavigate', context: context);
 
   @override
   List<int> get badgetNavigate {
@@ -24,7 +25,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$cardSelectionAtom = Atom(name: '_ClientStoreBase.cardSelection');
+  late final _$cardSelectionAtom =
+      Atom(name: '_ClientStoreBase.cardSelection', context: context);
 
   @override
   String get cardSelection {
@@ -39,7 +41,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$settingsAtom = Atom(name: '_ClientStoreBase.settings');
+  late final _$settingsAtom =
+      Atom(name: '_ClientStoreBase.settings', context: context);
 
   @override
   SettingsModel get settings {
@@ -54,8 +57,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$subtarefaActionListAtom =
-      Atom(name: '_ClientStoreBase.subtarefaActionList');
+  late final _$subtarefaActionListAtom =
+      Atom(name: '_ClientStoreBase.subtarefaActionList', context: context);
 
   @override
   List<String> get subtarefaActionList {
@@ -70,7 +73,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$tarefasTotaisAtom = Atom(name: '_ClientStoreBase.tarefasTotais');
+  late final _$tarefasTotaisAtom =
+      Atom(name: '_ClientStoreBase.tarefasTotais', context: context);
 
   @override
   List<dynamic> get tarefasTotais {
@@ -85,7 +89,7 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$openAtom = Atom(name: '_ClientStoreBase.open');
+  late final _$openAtom = Atom(name: '_ClientStoreBase.open', context: context);
 
   @override
   bool get open {
@@ -100,8 +104,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$etiquetaSelectionAtom =
-      Atom(name: '_ClientStoreBase.etiquetaSelection');
+  late final _$etiquetaSelectionAtom =
+      Atom(name: '_ClientStoreBase.etiquetaSelection', context: context);
 
   @override
   int get etiquetaSelection {
@@ -116,7 +120,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$userSelectionAtom = Atom(name: '_ClientStoreBase.userSelection');
+  late final _$userSelectionAtom =
+      Atom(name: '_ClientStoreBase.userSelection', context: context);
 
   @override
   PerfilDioModel? get userSelection {
@@ -131,7 +136,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$orderSelectionAtom = Atom(name: '_ClientStoreBase.orderSelection');
+  late final _$orderSelectionAtom =
+      Atom(name: '_ClientStoreBase.orderSelection', context: context);
 
   @override
   String get orderSelection {
@@ -146,8 +152,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$prioridadeSelectionAtom =
-      Atom(name: '_ClientStoreBase.prioridadeSelection');
+  late final _$prioridadeSelectionAtom =
+      Atom(name: '_ClientStoreBase.prioridadeSelection', context: context);
 
   @override
   int get prioridadeSelection {
@@ -162,7 +168,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$subtarefaActionAtom = Atom(name: '_ClientStoreBase.subtarefaAction');
+  late final _$subtarefaActionAtom =
+      Atom(name: '_ClientStoreBase.subtarefaAction', context: context);
 
   @override
   String get subtarefaAction {
@@ -177,7 +184,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$retardSelectionAtom = Atom(name: '_ClientStoreBase.retardSelection');
+  late final _$retardSelectionAtom =
+      Atom(name: '_ClientStoreBase.retardSelection', context: context);
 
   @override
   int get retardSelection {
@@ -192,7 +200,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$orderAscDescAtom = Atom(name: '_ClientStoreBase.orderAscDesc');
+  late final _$orderAscDescAtom =
+      Atom(name: '_ClientStoreBase.orderAscDesc', context: context);
 
   @override
   bool get orderAscDesc {
@@ -207,7 +216,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$loadingAtom = Atom(name: '_ClientStoreBase.loading');
+  late final _$loadingAtom =
+      Atom(name: '_ClientStoreBase.loading', context: context);
 
   @override
   bool get loading {
@@ -222,7 +232,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$loadingTasksAtom = Atom(name: '_ClientStoreBase.loadingTasks');
+  late final _$loadingTasksAtom =
+      Atom(name: '_ClientStoreBase.loadingTasks', context: context);
 
   @override
   bool get loadingTasks {
@@ -237,8 +248,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$loadingTasksTotalAtom =
-      Atom(name: '_ClientStoreBase.loadingTasksTotal');
+  late final _$loadingTasksTotalAtom =
+      Atom(name: '_ClientStoreBase.loadingTasksTotal', context: context);
 
   @override
   bool get loadingTasksTotal {
@@ -253,7 +264,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$themeAtom = Atom(name: '_ClientStoreBase.theme');
+  late final _$themeAtom =
+      Atom(name: '_ClientStoreBase.theme', context: context);
 
   @override
   bool get theme {
@@ -268,7 +280,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$themeLoadingAtom = Atom(name: '_ClientStoreBase.themeLoading');
+  late final _$themeLoadingAtom =
+      Atom(name: '_ClientStoreBase.themeLoading', context: context);
 
   @override
   bool get themeLoading {
@@ -283,8 +296,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$navigateBarSelectionAtom =
-      Atom(name: '_ClientStoreBase.navigateBarSelection');
+  late final _$navigateBarSelectionAtom =
+      Atom(name: '_ClientStoreBase.navigateBarSelection', context: context);
 
   @override
   int get navigateBarSelection {
@@ -300,7 +313,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$colorAtom = Atom(name: '_ClientStoreBase.color');
+  late final _$colorAtom =
+      Atom(name: '_ClientStoreBase.color', context: context);
 
   @override
   String get color {
@@ -315,7 +329,7 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$iconAtom = Atom(name: '_ClientStoreBase.icon');
+  late final _$iconAtom = Atom(name: '_ClientStoreBase.icon', context: context);
 
   @override
   int get icon {
@@ -330,7 +344,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$subtarefaModelAtom = Atom(name: '_ClientStoreBase.subtarefaModel');
+  late final _$subtarefaModelAtom =
+      Atom(name: '_ClientStoreBase.subtarefaModel', context: context);
 
   @override
   List<SubtarefasDioModel> get subtarefaModel {
@@ -345,7 +360,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$imgUrlAtom = Atom(name: '_ClientStoreBase.imgUrl');
+  late final _$imgUrlAtom =
+      Atom(name: '_ClientStoreBase.imgUrl', context: context);
 
   @override
   String get imgUrl {
@@ -360,7 +376,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$searchValueAtom = Atom(name: '_ClientStoreBase.searchValue');
+  late final _$searchValueAtom =
+      Atom(name: '_ClientStoreBase.searchValue', context: context);
 
   @override
   String get searchValue {
@@ -375,8 +392,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$perfilUserLogadoAtom =
-      Atom(name: '_ClientStoreBase.perfilUserLogado');
+  late final _$perfilUserLogadoAtom =
+      Atom(name: '_ClientStoreBase.perfilUserLogado', context: context);
 
   @override
   PerfilDioModel get perfilUserLogado {
@@ -391,7 +408,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$expandTarefaAtom = Atom(name: '_ClientStoreBase.expandTarefa');
+  late final _$expandTarefaAtom =
+      Atom(name: '_ClientStoreBase.expandTarefa', context: context);
 
   @override
   bool get expandTarefa {
@@ -406,7 +424,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$taskDioAtom = Atom(name: '_ClientStoreBase.taskDio');
+  late final _$taskDioAtom =
+      Atom(name: '_ClientStoreBase.taskDio', context: context);
 
   @override
   List<TarefaDioModel> get taskDio {
@@ -421,7 +440,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$taskDioSearchAtom = Atom(name: '_ClientStoreBase.taskDioSearch');
+  late final _$taskDioSearchAtom =
+      Atom(name: '_ClientStoreBase.taskDioSearch', context: context);
 
   @override
   List<TarefaDioModel> get taskDioSearch {
@@ -436,7 +456,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$userDioAtom = Atom(name: '_ClientStoreBase.userDio');
+  late final _$userDioAtom =
+      Atom(name: '_ClientStoreBase.userDio', context: context);
 
   @override
   UserDioClientModel get userDio {
@@ -451,7 +472,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$perfisAtom = Atom(name: '_ClientStoreBase.perfis');
+  late final _$perfisAtom =
+      Atom(name: '_ClientStoreBase.perfis', context: context);
 
   @override
   List<PerfilDioModel> get perfis {
@@ -466,7 +488,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$etiquetasAtom = Atom(name: '_ClientStoreBase.etiquetas');
+  late final _$etiquetasAtom =
+      Atom(name: '_ClientStoreBase.etiquetas', context: context);
 
   @override
   List<EtiquetaDioModel> get etiquetas {
@@ -481,7 +504,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$notificationsAtom = Atom(name: '_ClientStoreBase.notifications');
+  late final _$notificationsAtom =
+      Atom(name: '_ClientStoreBase.notifications', context: context);
 
   @override
   List<NotificationsDioModel> get notifications {
@@ -496,8 +520,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$loadingNotificationsAtom =
-      Atom(name: '_ClientStoreBase.loadingNotifications');
+  late final _$loadingNotificationsAtom =
+      Atom(name: '_ClientStoreBase.loadingNotifications', context: context);
 
   @override
   bool get loadingNotifications {
@@ -513,7 +537,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$retardAtom = Atom(name: '_ClientStoreBase.retard');
+  late final _$retardAtom =
+      Atom(name: '_ClientStoreBase.retard', context: context);
 
   @override
   List<RetardDioModel> get retard {
@@ -528,7 +553,7 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$faseAtom = Atom(name: '_ClientStoreBase.fase');
+  late final _$faseAtom = Atom(name: '_ClientStoreBase.fase', context: context);
 
   @override
   List<FaseDioModel> get fase {
@@ -543,7 +568,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$dateInicialAtom = Atom(name: '_ClientStoreBase.dateInicial');
+  late final _$dateInicialAtom =
+      Atom(name: '_ClientStoreBase.dateInicial', context: context);
 
   @override
   dynamic get dateInicial {
@@ -558,7 +584,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$dateFinalAtom = Atom(name: '_ClientStoreBase.dateFinal');
+  late final _$dateFinalAtom =
+      Atom(name: '_ClientStoreBase.dateFinal', context: context);
 
   @override
   dynamic get dateFinal {
@@ -573,7 +600,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$filterDateAtom = Atom(name: '_ClientStoreBase.filterDate');
+  late final _$filterDateAtom =
+      Atom(name: '_ClientStoreBase.filterDate', context: context);
 
   @override
   bool get filterDate {
@@ -588,7 +616,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$settingsUserAtom = Atom(name: '_ClientStoreBase.settingsUser');
+  late final _$settingsUserAtom =
+      Atom(name: '_ClientStoreBase.settingsUser', context: context);
 
   @override
   SettingsUserModel get settingsUser {
@@ -603,7 +632,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$versionAtom = Atom(name: '_ClientStoreBase.version');
+  late final _$versionAtom =
+      Atom(name: '_ClientStoreBase.version', context: context);
 
   @override
   String get version {
@@ -618,8 +648,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$_ClientStoreBaseActionController =
-      ActionController(name: '_ClientStoreBase');
+  late final _$_ClientStoreBaseActionController =
+      ActionController(name: '_ClientStoreBase', context: context);
 
   @override
   dynamic setBadgetNavigate(dynamic value) {

@@ -24,8 +24,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
           name: '_ClientStoreBase.isValideNameTime'))
       .value;
 
-  final _$urlImagemRecuperadaAtom =
-      Atom(name: '_ClientStoreBase.urlImagemRecuperada');
+  late final _$urlImagemRecuperadaAtom =
+      Atom(name: '_ClientStoreBase.urlImagemRecuperada', context: context);
 
   @override
   String get urlImagemRecuperada {
@@ -40,7 +40,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$themeAtom = Atom(name: '_ClientStoreBase.theme');
+  late final _$themeAtom =
+      Atom(name: '_ClientStoreBase.theme', context: context);
 
   @override
   bool get theme {
@@ -55,7 +56,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$showTeamsAtom = Atom(name: '_ClientStoreBase.showTeams');
+  late final _$showTeamsAtom =
+      Atom(name: '_ClientStoreBase.showTeams', context: context);
 
   @override
   bool get showTeams {
@@ -70,7 +72,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$loadingAtom = Atom(name: '_ClientStoreBase.loading');
+  late final _$loadingAtom =
+      Atom(name: '_ClientStoreBase.loading', context: context);
 
   @override
   bool get loading {
@@ -85,7 +88,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$loadingImagemAtom = Atom(name: '_ClientStoreBase.loadingImagem');
+  late final _$loadingImagemAtom =
+      Atom(name: '_ClientStoreBase.loadingImagem', context: context);
 
   @override
   bool get loadingImagem {
@@ -100,7 +104,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$userModelAtom = Atom(name: '_ClientStoreBase.userModel');
+  late final _$userModelAtom =
+      Atom(name: '_ClientStoreBase.userModel', context: context);
 
   @override
   List<PerfilDioModel> get userModel {
@@ -115,7 +120,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$perfisAtom = Atom(name: '_ClientStoreBase.perfis');
+  late final _$perfisAtom =
+      Atom(name: '_ClientStoreBase.perfis', context: context);
 
   @override
   List<PerfilDioModel> get perfis {
@@ -130,7 +136,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$inputChipAtom = Atom(name: '_ClientStoreBase.inputChip');
+  late final _$inputChipAtom =
+      Atom(name: '_ClientStoreBase.inputChip', context: context);
 
   @override
   bool get inputChip {
@@ -145,7 +152,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$individualChipAtom = Atom(name: '_ClientStoreBase.individualChip');
+  late final _$individualChipAtom =
+      Atom(name: '_ClientStoreBase.individualChip', context: context);
 
   @override
   List<dynamic> get individualChip {
@@ -160,8 +168,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$textFieldNameBoolAtom =
-      Atom(name: '_ClientStoreBase.textFieldNameBool');
+  late final _$textFieldNameBoolAtom =
+      Atom(name: '_ClientStoreBase.textFieldNameBool', context: context);
 
   @override
   bool get textFieldNameBool {
@@ -176,7 +184,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$nameTimeAtom = Atom(name: '_ClientStoreBase.nameTime');
+  late final _$nameTimeAtom =
+      Atom(name: '_ClientStoreBase.nameTime', context: context);
 
   @override
   String get nameTime {
@@ -191,7 +200,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$userSelectionAtom = Atom(name: '_ClientStoreBase.userSelection');
+  late final _$userSelectionAtom =
+      Atom(name: '_ClientStoreBase.userSelection', context: context);
 
   @override
   UserDioClientModel get userSelection {
@@ -206,7 +216,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$perfilDioAtom = Atom(name: '_ClientStoreBase.perfilDio');
+  late final _$perfilDioAtom =
+      Atom(name: '_ClientStoreBase.perfilDio', context: context);
 
   @override
   PerfilDioModel get perfilDio {
@@ -221,7 +232,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$usersAtom = Atom(name: '_ClientStoreBase.users');
+  late final _$usersAtom =
+      Atom(name: '_ClientStoreBase.users', context: context);
 
   @override
   List<dynamic> get users {
@@ -236,7 +248,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$urlImageAtom = Atom(name: '_ClientStoreBase.urlImage');
+  late final _$urlImageAtom =
+      Atom(name: '_ClientStoreBase.urlImage', context: context);
 
   @override
   String get urlImage {
@@ -251,15 +264,16 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$setIdStaffAsyncAction = AsyncAction('_ClientStoreBase.setIdStaff');
+  late final _$setIdStaffAsyncAction =
+      AsyncAction('_ClientStoreBase.setIdStaff', context: context);
 
   @override
   Future setIdStaff(dynamic value) {
     return _$setIdStaffAsyncAction.run(() => super.setIdStaff(value));
   }
 
-  final _$_ClientStoreBaseActionController =
-      ActionController(name: '_ClientStoreBase');
+  late final _$_ClientStoreBaseActionController =
+      ActionController(name: '_ClientStoreBase', context: context);
 
   @override
   dynamic setTheme(dynamic value) {

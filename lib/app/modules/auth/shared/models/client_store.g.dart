@@ -31,7 +31,7 @@ mixin _$ClientStore on _ClientStoreBase, Store {
               name: '_ClientStoreBase.isValidEmail'))
           .value;
 
-  final _$nameAtom = Atom(name: '_ClientStoreBase.name');
+  late final _$nameAtom = Atom(name: '_ClientStoreBase.name', context: context);
 
   @override
   String get name {
@@ -46,7 +46,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$emailAtom = Atom(name: '_ClientStoreBase.email');
+  late final _$emailAtom =
+      Atom(name: '_ClientStoreBase.email', context: context);
 
   @override
   String get email {
@@ -61,7 +62,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$passwordAtom = Atom(name: '_ClientStoreBase.password');
+  late final _$passwordAtom =
+      Atom(name: '_ClientStoreBase.password', context: context);
 
   @override
   String get password {
@@ -76,7 +78,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$confirmPasswordAtom = Atom(name: '_ClientStoreBase.confirmPassword');
+  late final _$confirmPasswordAtom =
+      Atom(name: '_ClientStoreBase.confirmPassword', context: context);
 
   @override
   String get confirmPassword {
@@ -91,8 +94,8 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
-  final _$_ClientStoreBaseActionController =
-      ActionController(name: '_ClientStoreBase');
+  late final _$_ClientStoreBaseActionController =
+      ActionController(name: '_ClientStoreBase', context: context);
 
   @override
   dynamic changeName(String value) {

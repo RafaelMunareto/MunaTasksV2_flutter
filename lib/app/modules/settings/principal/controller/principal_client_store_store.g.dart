@@ -17,7 +17,8 @@ mixin _$PrincipalClientStoreStore on _PrincipalClientStoreStoreBase, Store {
               name: '_PrincipalClientStoreStoreBase.isValidTarefa'))
           .value;
 
-  final _$userAtom = Atom(name: '_PrincipalClientStoreStoreBase.user');
+  late final _$userAtom =
+      Atom(name: '_PrincipalClientStoreStoreBase.user', context: context);
 
   @override
   UserDioClientModel get user {
@@ -32,7 +33,8 @@ mixin _$PrincipalClientStoreStore on _PrincipalClientStoreStoreBase, Store {
     });
   }
 
-  final _$perfilAtom = Atom(name: '_PrincipalClientStoreStoreBase.perfil');
+  late final _$perfilAtom =
+      Atom(name: '_PrincipalClientStoreStoreBase.perfil', context: context);
 
   @override
   PerfilDioModel get perfil {
@@ -47,8 +49,8 @@ mixin _$PrincipalClientStoreStore on _PrincipalClientStoreStoreBase, Store {
     });
   }
 
-  final _$settingsUserAtom =
-      Atom(name: '_PrincipalClientStoreStoreBase.settingsUser');
+  late final _$settingsUserAtom = Atom(
+      name: '_PrincipalClientStoreStoreBase.settingsUser', context: context);
 
   @override
   SettingsUserModel get settingsUser {
@@ -63,8 +65,9 @@ mixin _$PrincipalClientStoreStore on _PrincipalClientStoreStoreBase, Store {
     });
   }
 
-  final _$loadingSettingsUserAtom =
-      Atom(name: '_PrincipalClientStoreStoreBase.loadingSettingsUser');
+  late final _$loadingSettingsUserAtom = Atom(
+      name: '_PrincipalClientStoreStoreBase.loadingSettingsUser',
+      context: context);
 
   @override
   bool get loadingSettingsUser {
@@ -79,8 +82,8 @@ mixin _$PrincipalClientStoreStore on _PrincipalClientStoreStoreBase, Store {
     });
   }
 
-  final _$valueEscolhaAtom =
-      Atom(name: '_PrincipalClientStoreStoreBase.valueEscolha');
+  late final _$valueEscolhaAtom = Atom(
+      name: '_PrincipalClientStoreStoreBase.valueEscolha', context: context);
 
   @override
   dynamic get valueEscolha {
@@ -95,7 +98,8 @@ mixin _$PrincipalClientStoreStore on _PrincipalClientStoreStoreBase, Store {
     });
   }
 
-  final _$finalizeAtom = Atom(name: '_PrincipalClientStoreStoreBase.finalize');
+  late final _$finalizeAtom =
+      Atom(name: '_PrincipalClientStoreStoreBase.finalize', context: context);
 
   @override
   bool get finalize {
@@ -110,8 +114,8 @@ mixin _$PrincipalClientStoreStore on _PrincipalClientStoreStoreBase, Store {
     });
   }
 
-  final _$isSwitchedAtom =
-      Atom(name: '_PrincipalClientStoreStoreBase.isSwitched');
+  late final _$isSwitchedAtom =
+      Atom(name: '_PrincipalClientStoreStoreBase.isSwitched', context: context);
 
   @override
   bool get isSwitched {
@@ -126,7 +130,8 @@ mixin _$PrincipalClientStoreStore on _PrincipalClientStoreStoreBase, Store {
     });
   }
 
-  final _$escolhaAtom = Atom(name: '_PrincipalClientStoreStoreBase.escolha');
+  late final _$escolhaAtom =
+      Atom(name: '_PrincipalClientStoreStoreBase.escolha', context: context);
 
   @override
   List<dynamic> get escolha {
@@ -141,7 +146,8 @@ mixin _$PrincipalClientStoreStore on _PrincipalClientStoreStoreBase, Store {
     });
   }
 
-  final _$labelAtom = Atom(name: '_PrincipalClientStoreStoreBase.label');
+  late final _$labelAtom =
+      Atom(name: '_PrincipalClientStoreStoreBase.label', context: context);
 
   @override
   String get label {
@@ -156,7 +162,8 @@ mixin _$PrincipalClientStoreStore on _PrincipalClientStoreStoreBase, Store {
     });
   }
 
-  final _$settingsAtom = Atom(name: '_PrincipalClientStoreStoreBase.settings');
+  late final _$settingsAtom =
+      Atom(name: '_PrincipalClientStoreStoreBase.settings', context: context);
 
   @override
   SettingsModel get settings {
@@ -171,8 +178,9 @@ mixin _$PrincipalClientStoreStore on _PrincipalClientStoreStoreBase, Store {
     });
   }
 
-  final _$_PrincipalClientStoreStoreBaseActionController =
-      ActionController(name: '_PrincipalClientStoreStoreBase');
+  late final _$_PrincipalClientStoreStoreBaseActionController =
+      ActionController(
+          name: '_PrincipalClientStoreStoreBase', context: context);
 
   @override
   dynamic setUser(dynamic value) {

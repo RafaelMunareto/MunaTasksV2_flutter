@@ -9,7 +9,7 @@ part of 'verify_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$VerifyStore on _VerifyStoreBase, Store {
-  final _$codeAtom = Atom(name: '_VerifyStoreBase.code');
+  late final _$codeAtom = Atom(name: '_VerifyStoreBase.code', context: context);
 
   @override
   String get code {
@@ -24,7 +24,7 @@ mixin _$VerifyStore on _VerifyStoreBase, Store {
     });
   }
 
-  final _$msgAtom = Atom(name: '_VerifyStoreBase.msg');
+  late final _$msgAtom = Atom(name: '_VerifyStoreBase.msg', context: context);
 
   @override
   String get msg {
@@ -39,7 +39,7 @@ mixin _$VerifyStore on _VerifyStoreBase, Store {
     });
   }
 
-  final _$modeAtom = Atom(name: '_VerifyStoreBase.mode');
+  late final _$modeAtom = Atom(name: '_VerifyStoreBase.mode', context: context);
 
   @override
   String get mode {
@@ -54,7 +54,8 @@ mixin _$VerifyStore on _VerifyStoreBase, Store {
     });
   }
 
-  final _$msgErrOrGoalAtom = Atom(name: '_VerifyStoreBase.msgErrOrGoal');
+  late final _$msgErrOrGoalAtom =
+      Atom(name: '_VerifyStoreBase.msgErrOrGoal', context: context);
 
   @override
   bool get msgErrOrGoal {
@@ -69,8 +70,8 @@ mixin _$VerifyStore on _VerifyStoreBase, Store {
     });
   }
 
-  final _$_VerifyStoreBaseActionController =
-      ActionController(name: '_VerifyStoreBase');
+  late final _$_VerifyStoreBaseActionController =
+      ActionController(name: '_VerifyStoreBase', context: context);
 
   @override
   dynamic setMode(dynamic value) {

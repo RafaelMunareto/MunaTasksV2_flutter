@@ -9,7 +9,8 @@ part of 'forget_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ForgetStore on _ForgetStoreBase, Store {
-  final _$loadingAtom = Atom(name: '_ForgetStoreBase.loading');
+  late final _$loadingAtom =
+      Atom(name: '_ForgetStoreBase.loading', context: context);
 
   @override
   bool get loading {
@@ -24,7 +25,8 @@ mixin _$ForgetStore on _ForgetStoreBase, Store {
     });
   }
 
-  final _$checkErrorAtom = Atom(name: '_ForgetStoreBase.checkError');
+  late final _$checkErrorAtom =
+      Atom(name: '_ForgetStoreBase.checkError', context: context);
 
   @override
   bool get checkError {
@@ -39,7 +41,7 @@ mixin _$ForgetStore on _ForgetStoreBase, Store {
     });
   }
 
-  final _$msgAtom = Atom(name: '_ForgetStoreBase.msg');
+  late final _$msgAtom = Atom(name: '_ForgetStoreBase.msg', context: context);
 
   @override
   String get msg {
@@ -54,7 +56,8 @@ mixin _$ForgetStore on _ForgetStoreBase, Store {
     });
   }
 
-  final _$msgErrOrGoalAtom = Atom(name: '_ForgetStoreBase.msgErrOrGoal');
+  late final _$msgErrOrGoalAtom =
+      Atom(name: '_ForgetStoreBase.msgErrOrGoal', context: context);
 
   @override
   bool get msgErrOrGoal {
@@ -69,7 +72,8 @@ mixin _$ForgetStore on _ForgetStoreBase, Store {
     });
   }
 
-  final _$themeAtom = Atom(name: '_ForgetStoreBase.theme');
+  late final _$themeAtom =
+      Atom(name: '_ForgetStoreBase.theme', context: context);
 
   @override
   bool get theme {
@@ -84,8 +88,8 @@ mixin _$ForgetStore on _ForgetStoreBase, Store {
     });
   }
 
-  final _$_ForgetStoreBaseActionController =
-      ActionController(name: '_ForgetStoreBase');
+  late final _$_ForgetStoreBaseActionController =
+      ActionController(name: '_ForgetStoreBase', context: context);
 
   @override
   dynamic setMsg(dynamic value) {

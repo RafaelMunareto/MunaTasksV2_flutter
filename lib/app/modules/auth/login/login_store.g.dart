@@ -9,7 +9,8 @@ part of 'login_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$LoginStore on _LoginStoreBase, Store {
-  final _$supportStateAtom = Atom(name: '_LoginStoreBase.supportState');
+  late final _$supportStateAtom =
+      Atom(name: '_LoginStoreBase.supportState', context: context);
 
   @override
   SupportState get supportState {
@@ -24,7 +25,8 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$loadingAtom = Atom(name: '_LoginStoreBase.loading');
+  late final _$loadingAtom =
+      Atom(name: '_LoginStoreBase.loading', context: context);
 
   @override
   bool get loading {
@@ -39,7 +41,7 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$msgAtom = Atom(name: '_LoginStoreBase.msg');
+  late final _$msgAtom = Atom(name: '_LoginStoreBase.msg', context: context);
 
   @override
   String get msg {
@@ -54,7 +56,8 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$faceOrFingerAtom = Atom(name: '_LoginStoreBase.faceOrFinger');
+  late final _$faceOrFingerAtom =
+      Atom(name: '_LoginStoreBase.faceOrFinger', context: context);
 
   @override
   bool get faceOrFinger {
@@ -69,7 +72,8 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$errOrGoalAtom = Atom(name: '_LoginStoreBase.errOrGoal');
+  late final _$errOrGoalAtom =
+      Atom(name: '_LoginStoreBase.errOrGoal', context: context);
 
   @override
   bool get errOrGoal {
@@ -84,7 +88,8 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$loginStorageAtom = Atom(name: '_LoginStoreBase.loginStorage');
+  late final _$loginStorageAtom =
+      Atom(name: '_LoginStoreBase.loginStorage', context: context);
 
   @override
   List<String>? get loginStorage {
@@ -99,7 +104,8 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$themeAtom = Atom(name: '_LoginStoreBase.theme');
+  late final _$themeAtom =
+      Atom(name: '_LoginStoreBase.theme', context: context);
 
   @override
   bool get theme {
@@ -114,8 +120,8 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$canCheckBiometricsAtom =
-      Atom(name: '_LoginStoreBase.canCheckBiometrics');
+  late final _$canCheckBiometricsAtom =
+      Atom(name: '_LoginStoreBase.canCheckBiometrics', context: context);
 
   @override
   bool get canCheckBiometrics {
@@ -130,8 +136,8 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$availableBiometricsAtom =
-      Atom(name: '_LoginStoreBase.availableBiometrics');
+  late final _$availableBiometricsAtom =
+      Atom(name: '_LoginStoreBase.availableBiometrics', context: context);
 
   @override
   List<BiometricType> get availableBiometrics {
@@ -146,7 +152,8 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$authorizedAtom = Atom(name: '_LoginStoreBase.authorized');
+  late final _$authorizedAtom =
+      Atom(name: '_LoginStoreBase.authorized', context: context);
 
   @override
   String get authorized {
@@ -161,7 +168,8 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$isAuthenticatingAtom = Atom(name: '_LoginStoreBase.isAuthenticating');
+  late final _$isAuthenticatingAtom =
+      Atom(name: '_LoginStoreBase.isAuthenticating', context: context);
 
   @override
   bool get isAuthenticating {
@@ -176,7 +184,7 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$userAtom = Atom(name: '_LoginStoreBase.user');
+  late final _$userAtom = Atom(name: '_LoginStoreBase.user', context: context);
 
   @override
   dynamic get user {
@@ -191,8 +199,8 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
-  final _$getAvailableBiometricsAsyncAction =
-      AsyncAction('_LoginStoreBase.getAvailableBiometrics');
+  late final _$getAvailableBiometricsAsyncAction =
+      AsyncAction('_LoginStoreBase.getAvailableBiometrics', context: context);
 
   @override
   Future getAvailableBiometrics() {
@@ -200,16 +208,16 @@ mixin _$LoginStore on _LoginStoreBase, Store {
         .run(() => super.getAvailableBiometrics());
   }
 
-  final _$getStorageLoginAsyncAction =
-      AsyncAction('_LoginStoreBase.getStorageLogin');
+  late final _$getStorageLoginAsyncAction =
+      AsyncAction('_LoginStoreBase.getStorageLogin', context: context);
 
   @override
   Future getStorageLogin() {
     return _$getStorageLoginAsyncAction.run(() => super.getStorageLogin());
   }
 
-  final _$checkSupportDeviceAsyncAction =
-      AsyncAction('_LoginStoreBase.checkSupportDevice');
+  late final _$checkSupportDeviceAsyncAction =
+      AsyncAction('_LoginStoreBase.checkSupportDevice', context: context);
 
   @override
   Future checkSupportDevice() {
@@ -217,8 +225,8 @@ mixin _$LoginStore on _LoginStoreBase, Store {
         .run(() => super.checkSupportDevice());
   }
 
-  final _$_LoginStoreBaseActionController =
-      ActionController(name: '_LoginStoreBase');
+  late final _$_LoginStoreBaseActionController =
+      ActionController(name: '_LoginStoreBase', context: context);
 
   @override
   dynamic setErrOrGoal(dynamic value) {

@@ -17,7 +17,8 @@ mixin _$SignupStore on _SignupStoreBase, Store {
               name: '_SignupStoreBase.isValidRegisterEmailGrupo'))
       .value;
 
-  final _$loadingAtom = Atom(name: '_SignupStoreBase.loading');
+  late final _$loadingAtom =
+      Atom(name: '_SignupStoreBase.loading', context: context);
 
   @override
   bool get loading {
@@ -32,7 +33,7 @@ mixin _$SignupStore on _SignupStoreBase, Store {
     });
   }
 
-  final _$msgAtom = Atom(name: '_SignupStoreBase.msg');
+  late final _$msgAtom = Atom(name: '_SignupStoreBase.msg', context: context);
 
   @override
   String get msg {
@@ -47,7 +48,8 @@ mixin _$SignupStore on _SignupStoreBase, Store {
     });
   }
 
-  final _$msgErrOrGoalAtom = Atom(name: '_SignupStoreBase.msgErrOrGoal');
+  late final _$msgErrOrGoalAtom =
+      Atom(name: '_SignupStoreBase.msgErrOrGoal', context: context);
 
   @override
   bool get msgErrOrGoal {
@@ -62,7 +64,8 @@ mixin _$SignupStore on _SignupStoreBase, Store {
     });
   }
 
-  final _$themeAtom = Atom(name: '_SignupStoreBase.theme');
+  late final _$themeAtom =
+      Atom(name: '_SignupStoreBase.theme', context: context);
 
   @override
   bool get theme {
@@ -77,8 +80,8 @@ mixin _$SignupStore on _SignupStoreBase, Store {
     });
   }
 
-  final _$_SignupStoreBaseActionController =
-      ActionController(name: '_SignupStoreBase');
+  late final _$_SignupStoreBaseActionController =
+      ActionController(name: '_SignupStoreBase', context: context);
 
   @override
   dynamic setMsgErrOrGoal(dynamic value) {

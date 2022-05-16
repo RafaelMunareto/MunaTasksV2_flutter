@@ -9,7 +9,8 @@ part of 'tarefas_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$TarefasStore on _TarefasStoreBase, Store {
-  final _$themeAtom = Atom(name: '_TarefasStoreBase.theme');
+  late final _$themeAtom =
+      Atom(name: '_TarefasStoreBase.theme', context: context);
 
   @override
   bool get theme {
@@ -24,7 +25,8 @@ mixin _$TarefasStore on _TarefasStoreBase, Store {
     });
   }
 
-  final _$themeLoadingAtom = Atom(name: '_TarefasStoreBase.themeLoading');
+  late final _$themeLoadingAtom =
+      Atom(name: '_TarefasStoreBase.themeLoading', context: context);
 
   @override
   bool get themeLoading {
@@ -39,8 +41,8 @@ mixin _$TarefasStore on _TarefasStoreBase, Store {
     });
   }
 
-  final _$_TarefasStoreBaseActionController =
-      ActionController(name: '_TarefasStoreBase');
+  late final _$_TarefasStoreBaseActionController =
+      ActionController(name: '_TarefasStoreBase', context: context);
 
   @override
   dynamic setTheme(dynamic value) {

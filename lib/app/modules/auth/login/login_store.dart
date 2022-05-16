@@ -98,17 +98,23 @@ abstract class _LoginStoreBase with Store {
 
   submit() async {
     await setLoading(true);
-    await auth.getLoginDio(client.email, client.password).then((value) async {
+    await auth
+        .getLoginDio(client.email.trim(), client.password)
+        .then((value) async {
       setLoading(false);
       setErrOrGoal(false);
       UserDioModel user = UserDioModel.fromJson(value.data);
       SessionManager().set("token", user.token);
       await storage.put('token', [user.token]);
       await storage.put('userDio', [jsonEncode(user.user)]);
-      await storage.put('biometric',
-          [textToMd5(client.email.toLowerCase()), textToMd5(client.password)]);
-      await storage.put('login-normal',
-          [textToMd5(client.email.toLowerCase()), textToMd5(client.password)]);
+      await storage.put('biometric', [
+        textToMd5(client.email.toLowerCase().trim()),
+        textToMd5(client.password)
+      ]);
+      await storage.put('login-normal', [
+        textToMd5(client.email.toLowerCase().trim()),
+        textToMd5(client.password)
+      ]);
       await getPerfil(user.user.id);
     }).catchError((error) {
       setLoading(false);

@@ -24,8 +24,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
           name: '_ClientCreateStoreBase.isValidSubtarefa'))
       .value;
 
-  final _$tarefaModelSaveAtom =
-      Atom(name: '_ClientCreateStoreBase.tarefaModelSave');
+  late final _$tarefaModelSaveAtom =
+      Atom(name: '_ClientCreateStoreBase.tarefaModelSave', context: context);
 
   @override
   dynamic get tarefaModelSave {
@@ -40,7 +40,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$usersAtom = Atom(name: '_ClientCreateStoreBase.users');
+  late final _$usersAtom =
+      Atom(name: '_ClientCreateStoreBase.users', context: context);
 
   @override
   List<dynamic> get users {
@@ -55,8 +56,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$tarefaModelSaveEtiquetaAtom =
-      Atom(name: '_ClientCreateStoreBase.tarefaModelSaveEtiqueta');
+  late final _$tarefaModelSaveEtiquetaAtom = Atom(
+      name: '_ClientCreateStoreBase.tarefaModelSaveEtiqueta', context: context);
 
   @override
   EtiquetaDioModel get tarefaModelSaveEtiqueta {
@@ -72,8 +73,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$tarefaModelSaveTextoAtom =
-      Atom(name: '_ClientCreateStoreBase.tarefaModelSaveTexto');
+  late final _$tarefaModelSaveTextoAtom = Atom(
+      name: '_ClientCreateStoreBase.tarefaModelSaveTexto', context: context);
 
   @override
   String get tarefaModelSaveTexto {
@@ -89,8 +90,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$tarefaModelDataAtom =
-      Atom(name: '_ClientCreateStoreBase.tarefaModelData');
+  late final _$tarefaModelDataAtom =
+      Atom(name: '_ClientCreateStoreBase.tarefaModelData', context: context);
 
   @override
   dynamic get tarefaModelData {
@@ -105,8 +106,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$tarefaModelPrioritarioAtom =
-      Atom(name: '_ClientCreateStoreBase.tarefaModelPrioritario');
+  late final _$tarefaModelPrioritarioAtom = Atom(
+      name: '_ClientCreateStoreBase.tarefaModelPrioritario', context: context);
 
   @override
   int get tarefaModelPrioritario {
@@ -122,8 +123,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$subtarefaModelSaveTitleAtom =
-      Atom(name: '_ClientCreateStoreBase.subtarefaModelSaveTitle');
+  late final _$subtarefaModelSaveTitleAtom = Atom(
+      name: '_ClientCreateStoreBase.subtarefaModelSaveTitle', context: context);
 
   @override
   String get subtarefaModelSaveTitle {
@@ -139,8 +140,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$individualChipAtom =
-      Atom(name: '_ClientCreateStoreBase.individualChip');
+  late final _$individualChipAtom =
+      Atom(name: '_ClientCreateStoreBase.individualChip', context: context);
 
   @override
   List<dynamic> get individualChip {
@@ -155,7 +156,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$faseAtom = Atom(name: '_ClientCreateStoreBase.fase');
+  late final _$faseAtom =
+      Atom(name: '_ClientCreateStoreBase.fase', context: context);
 
   @override
   String get fase {
@@ -170,7 +172,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$faseTarefaAtom = Atom(name: '_ClientCreateStoreBase.faseTarefa');
+  late final _$faseTarefaAtom =
+      Atom(name: '_ClientCreateStoreBase.faseTarefa', context: context);
 
   @override
   String get faseTarefa {
@@ -185,7 +188,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$imageUserAtom = Atom(name: '_ClientCreateStoreBase.imageUser');
+  late final _$imageUserAtom =
+      Atom(name: '_ClientCreateStoreBase.imageUser', context: context);
 
   @override
   String get imageUser {
@@ -200,7 +204,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$createUserAtom = Atom(name: '_ClientCreateStoreBase.createUser');
+  late final _$createUserAtom =
+      Atom(name: '_ClientCreateStoreBase.createUser', context: context);
 
   @override
   dynamic get createUser {
@@ -215,8 +220,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$subtarefaTextSaveAtom =
-      Atom(name: '_ClientCreateStoreBase.subtarefaTextSave');
+  late final _$subtarefaTextSaveAtom =
+      Atom(name: '_ClientCreateStoreBase.subtarefaTextSave', context: context);
 
   @override
   String get subtarefaTextSave {
@@ -231,7 +236,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$subtarefasAtom = Atom(name: '_ClientCreateStoreBase.subtarefas');
+  late final _$subtarefasAtom =
+      Atom(name: '_ClientCreateStoreBase.subtarefas', context: context);
 
   @override
   List<dynamic> get subtarefas {
@@ -246,8 +252,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$loadingSubtarefaAtom =
-      Atom(name: '_ClientCreateStoreBase.loadingSubtarefa');
+  late final _$loadingSubtarefaAtom =
+      Atom(name: '_ClientCreateStoreBase.loadingSubtarefa', context: context);
 
   @override
   bool get loadingSubtarefa {
@@ -262,7 +268,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$loadingUserAtom = Atom(name: '_ClientCreateStoreBase.loadingUser');
+  late final _$loadingUserAtom =
+      Atom(name: '_ClientCreateStoreBase.loadingUser', context: context);
 
   @override
   bool get loadingUser {
@@ -277,8 +284,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$loadingTarefaAtom =
-      Atom(name: '_ClientCreateStoreBase.loadingTarefa');
+  late final _$loadingTarefaAtom =
+      Atom(name: '_ClientCreateStoreBase.loadingTarefa', context: context);
 
   @override
   bool get loadingTarefa {
@@ -293,7 +300,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$idAtom = Atom(name: '_ClientCreateStoreBase.id');
+  late final _$idAtom =
+      Atom(name: '_ClientCreateStoreBase.id', context: context);
 
   @override
   String get id {
@@ -308,8 +316,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$subtarefaModelAtom =
-      Atom(name: '_ClientCreateStoreBase.subtarefaModel');
+  late final _$subtarefaModelAtom =
+      Atom(name: '_ClientCreateStoreBase.subtarefaModel', context: context);
 
   @override
   SubtarefasDioModel get subtarefaModel {
@@ -324,7 +332,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$editarAtom = Atom(name: '_ClientCreateStoreBase.editar');
+  late final _$editarAtom =
+      Atom(name: '_ClientCreateStoreBase.editar', context: context);
 
   @override
   bool get editar {
@@ -339,8 +348,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$loadingSearchAtom =
-      Atom(name: '_ClientCreateStoreBase.loadingSearch');
+  late final _$loadingSearchAtom =
+      Atom(name: '_ClientCreateStoreBase.loadingSearch', context: context);
 
   @override
   bool get loadingSearch {
@@ -355,8 +364,8 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
-  final _$_ClientCreateStoreBaseActionController =
-      ActionController(name: '_ClientCreateStoreBase');
+  late final _$_ClientCreateStoreBaseActionController =
+      ActionController(name: '_ClientCreateStoreBase', context: context);
 
   @override
   dynamic setSubtarefasUpdate(dynamic value) {

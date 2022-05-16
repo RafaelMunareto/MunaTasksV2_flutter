@@ -17,7 +17,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
               name: '_EtiquetaStoreBase.isValidateEtiqueta'))
       .value;
 
-  final _$colorsDioAtom = Atom(name: '_EtiquetaStoreBase.colorsDio');
+  late final _$colorsDioAtom =
+      Atom(name: '_EtiquetaStoreBase.colorsDio', context: context);
 
   @override
   List<dynamic> get colorsDio {
@@ -32,7 +33,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$etiquetaDioAtom = Atom(name: '_EtiquetaStoreBase.etiquetaDio');
+  late final _$etiquetaDioAtom =
+      Atom(name: '_EtiquetaStoreBase.etiquetaDio', context: context);
 
   @override
   List<EtiquetaDioModel> get etiquetaDio {
@@ -47,7 +49,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$expansionTitleAtom = Atom(name: '_EtiquetaStoreBase.expansionTitle');
+  late final _$expansionTitleAtom =
+      Atom(name: '_EtiquetaStoreBase.expansionTitle', context: context);
 
   @override
   bool get expansionTitle {
@@ -62,7 +65,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$themeAtom = Atom(name: '_EtiquetaStoreBase.theme');
+  late final _$themeAtom =
+      Atom(name: '_EtiquetaStoreBase.theme', context: context);
 
   @override
   bool get theme {
@@ -77,7 +81,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$etiquetaAtom = Atom(name: '_EtiquetaStoreBase.etiqueta');
+  late final _$etiquetaAtom =
+      Atom(name: '_EtiquetaStoreBase.etiqueta', context: context);
 
   @override
   String get etiqueta {
@@ -92,7 +97,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$showValidationAtom = Atom(name: '_EtiquetaStoreBase.showValidation');
+  late final _$showValidationAtom =
+      Atom(name: '_EtiquetaStoreBase.showValidation', context: context);
 
   @override
   bool get showValidation {
@@ -107,7 +113,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$iconAtom = Atom(name: '_EtiquetaStoreBase.icon');
+  late final _$iconAtom =
+      Atom(name: '_EtiquetaStoreBase.icon', context: context);
 
   @override
   int? get icon {
@@ -122,7 +129,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$iconActionAtom = Atom(name: '_EtiquetaStoreBase.iconAction');
+  late final _$iconActionAtom =
+      Atom(name: '_EtiquetaStoreBase.iconAction', context: context);
 
   @override
   bool get iconAction {
@@ -137,7 +145,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$loadingAtom = Atom(name: '_EtiquetaStoreBase.loading');
+  late final _$loadingAtom =
+      Atom(name: '_EtiquetaStoreBase.loading', context: context);
 
   @override
   bool get loading {
@@ -152,8 +161,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$loadingEtiquetasAtom =
-      Atom(name: '_EtiquetaStoreBase.loadingEtiquetas');
+  late final _$loadingEtiquetasAtom =
+      Atom(name: '_EtiquetaStoreBase.loadingEtiquetas', context: context);
 
   @override
   bool get loadingEtiquetas {
@@ -168,7 +177,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$errOrGoalAtom = Atom(name: '_EtiquetaStoreBase.errOrGoal');
+  late final _$errOrGoalAtom =
+      Atom(name: '_EtiquetaStoreBase.errOrGoal', context: context);
 
   @override
   bool get errOrGoal {
@@ -183,7 +193,7 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$msgAtom = Atom(name: '_EtiquetaStoreBase.msg');
+  late final _$msgAtom = Atom(name: '_EtiquetaStoreBase.msg', context: context);
 
   @override
   String get msg {
@@ -198,7 +208,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$updateLoadingAtom = Atom(name: '_EtiquetaStoreBase.updateLoading');
+  late final _$updateLoadingAtom =
+      Atom(name: '_EtiquetaStoreBase.updateLoading', context: context);
 
   @override
   bool get updateLoading {
@@ -213,7 +224,7 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$idAtom = Atom(name: '_EtiquetaStoreBase.id');
+  late final _$idAtom = Atom(name: '_EtiquetaStoreBase.id', context: context);
 
   @override
   String? get id {
@@ -228,7 +239,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$colorAtom = Atom(name: '_EtiquetaStoreBase.color');
+  late final _$colorAtom =
+      Atom(name: '_EtiquetaStoreBase.color', context: context);
 
   @override
   String get color {
@@ -243,8 +255,8 @@ mixin _$EtiquetaStore on _EtiquetaStoreBase, Store {
     });
   }
 
-  final _$_EtiquetaStoreBaseActionController =
-      ActionController(name: '_EtiquetaStoreBase');
+  late final _$_EtiquetaStoreBaseActionController =
+      ActionController(name: '_EtiquetaStoreBase', context: context);
 
   @override
   dynamic setColorsDio(dynamic value) {
