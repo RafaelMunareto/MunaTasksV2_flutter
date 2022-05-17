@@ -208,6 +208,12 @@ abstract class HomeStoreBase with Store {
     Response response;
     var dio = await DioStruture().dioAction();
     response = await dio.get('settings');
+    if (response.statusCode == 401) {
+      storage.put('token', []);
+      storage.put('userDio', []);
+      storage.put('login-normal', []);
+      Modular.to.navigate('/auth/');
+    }
     DioStruture().statusRequest(response);
     var resposta = SettingsModel.fromJson(response.data[0]);
     client.setFase((resposta.fase as List).map((e) {
@@ -244,6 +250,12 @@ abstract class HomeStoreBase with Store {
       var dio = await DioStruture().dioAction();
       try {
         response = await dio.get('perfil/user/${client.userDio.id}');
+        if (response.statusCode == 401) {
+          storage.put('token', []);
+          storage.put('userDio', []);
+          storage.put('login-normal', []);
+          Modular.to.navigate('/auth/');
+        }
         DioStruture().statusRequest(response);
 
         if (response.data != null) {
