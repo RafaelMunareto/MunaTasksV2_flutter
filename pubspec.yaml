@@ -3,7 +3,7 @@ description: MunaTasks versão 2.0.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.0.1+3
+version: 2.0.2+3
 
 environment:
   sdk: '>=2.15.0 <3.0.0'
@@ -82,7 +82,7 @@ scripts:
   chrome: flutter run -d chrome --web-renderer html --web-port 52230
   build_web: flutter build web --web-renderer html && scp -r .\build\web\* root@45.82.75.3:/home/munatask/public_html/
   build_windows: flutter build windows
-  build_bundle: flutter build appbundle --build-name=2.0.1 --build-number=21 --no-tree-shake-icons
+  build_bundle: flutter build appbundle --build-name=2.0.2 --build-number=22 --no-tree-shake-icons
   build_apk: flutter build apk --build-name=2.0.0+1 --build-number=2 --no-tree-shake-icons
   launch_icon: flutter pub run flutter_launcher_icons:main
   launch_splash: flutter pub run flutter_native_splash:create
