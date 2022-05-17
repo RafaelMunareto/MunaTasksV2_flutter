@@ -18,69 +18,75 @@ class _SubItemSaveWidgetState extends State<SubItemSaveWidget> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
-      return Padding(
-        padding: const EdgeInsets.all(8),
-        child: Center(
-          child: Container(
-            decoration: BoxDecoration(
-                color: widget.theme ? Colors.black38 : Colors.black12,
-                borderRadius: BorderRadius.circular(4)),
-            child: ExpansionTile(
-              key: UniqueKey(),
-              title: constraint.maxWidth > LarguraLayoutBuilder().larguraModal
-                  ? ListTile(
-                      leading: SizedBox(
-                        child: Text(
-                          widget.subtarefa.title,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      title: Icon(
-                        ConvertIcon().iconStatus(widget.subtarefa.status),
-                        color: ConvertIcon()
-                            .iconStatusColor(widget.subtarefa.status),
-                      ),
-                      trailing: CircleAvatarWidget(
-                          nameUser: widget.subtarefa.user.name.name,
-                          url: widget.subtarefa.user.urlImage),
-                    )
-                  : Wrap(
-                      children: [
-                        ListTile(
-                          title: SizedBox(
-                            child: Text(
-                              widget.subtarefa.title,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 10),
+      return widget.subtarefa == null
+          ? Container()
+          : Padding(
+              padding: const EdgeInsets.all(8),
+              child: Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: widget.theme ? Colors.black38 : Colors.black12,
+                      borderRadius: BorderRadius.circular(4)),
+                  child: ExpansionTile(
+                    key: UniqueKey(),
+                    title: constraint.maxWidth >
+                            LarguraLayoutBuilder().larguraModal
+                        ? ListTile(
+                            leading: SizedBox(
+                              child: Text(
+                                widget.subtarefa.title,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
+                            title: Icon(
+                              ConvertIcon().iconStatus(widget.subtarefa.status),
+                              color: ConvertIcon()
+                                  .iconStatusColor(widget.subtarefa.status),
+                            ),
+                            trailing: CircleAvatarWidget(
+                                nameUser: widget.subtarefa.user.name.name,
+                                url: widget.subtarefa.user.urlImage),
+                          )
+                        : Wrap(
+                            children: [
+                              ListTile(
+                                title: SizedBox(
+                                  child: Text(
+                                    widget.subtarefa.title,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 10),
+                                  ),
+                                ),
+                              ),
+                              ListTile(
+                                leading: Icon(
+                                  ConvertIcon()
+                                      .iconStatus(widget.subtarefa.status),
+                                  color: ConvertIcon()
+                                      .iconStatusColor(widget.subtarefa.status),
+                                ),
+                                trailing: CircleAvatarWidget(
+                                    nameUser: widget.subtarefa.user.name.name,
+                                    url: widget.subtarefa.user.urlImage),
+                              ),
+                            ],
                           ),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(
+                          widget.subtarefa.texto,
+                          textAlign: TextAlign.justify,
+                          style: const TextStyle(fontSize: 12),
                         ),
-                        ListTile(
-                          leading: Icon(
-                            ConvertIcon().iconStatus(widget.subtarefa.status),
-                            color: ConvertIcon()
-                                .iconStatusColor(widget.subtarefa.status),
-                          ),
-                          trailing: CircleAvatarWidget(
-                              nameUser: widget.subtarefa.user.name,
-                              url: widget.subtarefa.user.urlImage),
-                        ),
-                      ],
-                    ),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text(
-                    widget.subtarefa.texto,
-                    textAlign: TextAlign.justify,
-                    style: const TextStyle(fontSize: 12),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      );
+              ),
+            );
     });
   }
 }

@@ -44,7 +44,6 @@ dependencies:
   dwds: ^13.1.0
   file_picker: ^4.5.1
   flutter_session_manager: ^1.0.3
-  uni_links2: ^0.6.0+2
   crypto: ^3.0.2
   universal_html: ^2.0.8
   flutter_local_notifications: ^9.5.2
@@ -83,7 +82,7 @@ scripts:
   chrome: flutter run -d chrome --web-renderer html --web-port 52230
   build_web: flutter build web --web-renderer html && scp -r .\build\web\* root@45.82.75.3:/home/munatask/public_html/
   build_windows: flutter build windows
-  build_bundle: flutter build appbundle --build-name=2.0.1+2 --build-number=21 --no-tree-shake-icons
+  build_bundle: flutter build appbundle --build-name=2.0.1 --build-number=21 --no-tree-shake-icons
   build_apk: flutter build apk --build-name=2.0.0+1 --build-number=2 --no-tree-shake-icons
   launch_icon: flutter pub run flutter_launcher_icons:main
   launch_splash: flutter pub run flutter_native_splash:create

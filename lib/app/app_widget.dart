@@ -12,7 +12,7 @@ import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_sh
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:uni_links2/uni_links.dart';
+//import 'package:uni_links2/uni_links.dart';
 
 class AppWidget extends StatefulWidget {
   @override
@@ -37,7 +37,7 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   initState() {
     super.initState();
-    _handleIncomingLinks();
+    // _handleIncomingLinks();
     getSettings();
   }
 
@@ -47,17 +47,17 @@ class _AppWidgetState extends State<AppWidget> {
     super.dispose();
   }
 
-  void _handleIncomingLinks() {
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      _sub = uriLinkStream.listen((Uri? uri) {
-        if (!mounted) return;
-        Modular.to
-            .navigate('/auth/change/?code=${uri.toString().split('code=')[1]}');
-      }, onError: (Object err) {
-        if (!mounted) return;
-      });
-    }
-  }
+  // void _handleIncomingLinks() {
+  //   if (defaultTargetPlatform == TargetPlatform.android) {
+  //     _sub = uriLinkStream.listen((Uri? uri) {
+  //       if (!mounted) return;
+  //       Modular.to
+  //           .navigate('/auth/change/?code=${uri.toString().split('code=')[1]}');
+  //     }, onError: (Object err) {
+  //       if (!mounted) return;
+  //     });
+  //   }
+  // }
 
   getUid() {
     theme.get('userDio').then((value) {

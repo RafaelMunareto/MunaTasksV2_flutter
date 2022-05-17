@@ -55,17 +55,48 @@ class _HomePageState extends State<HomePage> {
     final versionCheck =
         ShowUpdateDialog(androidId: 'munacorp.munatasks2.br.munatasks2');
 
-    final VersionModel? vs = await versionCheck.fetchVersionInfo();
-    if (vs != null) {
-      versionCheck.showCustomDialogUpdate(
-        context: context,
-        versionStatus: vs,
-        buttonColor: Colors.black,
-        buttonText: "Atualizar",
-        title: "Estamos mais novos do que nunca!",
-        forceUpdate: true,
-      );
-    }
+    final VersionModel vs = await versionCheck.fetchVersionInfo();
+    versionCheck.showCustomDialogUpdate(
+      context: context,
+      versionStatus: vs,
+      buttonText: "Atualizar",
+      buttonColor: Colors.blueGrey,
+      bodyoverride: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(
+                Icons.update,
+                size: 150,
+                color: Colors.blueGrey,
+              ),
+            ],
+          ),
+          const Text(
+            "Por favor atualize a versão",
+            style: TextStyle(
+                fontWeight: FontWeight.w700, fontSize: 18, color: Colors.black),
+          ),
+          Text(
+            "Versão do seu aparelho: ${vs.localVersion}",
+            style: const TextStyle(fontSize: 17, color: Colors.black),
+          ),
+          Text(
+            "Versão vigente: ${vs.storeVersion}",
+            style: const TextStyle(fontSize: 17, color: Colors.black),
+          ),
+          const SizedBox(height: 30),
+          vs.releaseNotes == null
+              ? Container()
+              : Text(
+                  "${vs.releaseNotes}",
+                  style: const TextStyle(fontSize: 15, color: Colors.black),
+                ),
+        ],
+      ),
+    );
   }
 
   @override

@@ -200,11 +200,17 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   @action
+  setAddIndividualChip(value) => individualChip.add(value);
+
+  @action
+  removeIndividualChip(value) => individualChip.remove(value);
+
+  @action
   setIdReferenceStaff(value) {
     if (!individualChip.map((e) => e).contains(value)) {
-      individualChip.add(value);
+      setAddIndividualChip(value);
     } else {
-      individualChip.remove(value);
+      removeIndividualChip(value);
       if (individualChip.isEmpty) {
         individualChip = [];
       }

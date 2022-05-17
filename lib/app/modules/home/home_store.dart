@@ -139,6 +139,14 @@ abstract class HomeStoreBase with Store {
     await client.setOrderSelection('DATA');
     await client.setColor('blue');
     await client.setIcon(0);
+    await client.setUserSelection(PerfilDioModel(
+        name: UserDioClientModel(
+            name: "TODOS", email: "todos@todos.com.br", password: ""),
+        nameTime: "",
+        idStaff: [],
+        manager: true,
+        urlImage: DioStruture().baseUrlMunatasks + 'files/todos.png'));
+    await client.setImgUrl(DioStruture().baseUrlMunatasks + 'files/todos.png');
     getDioFase();
   }
 
@@ -328,7 +336,9 @@ abstract class HomeStoreBase with Store {
   changeFilterUserList() async {
     if (client.userSelection?.name.name != 'TODOS') {
       dashboardService.getFilterUser(client.userSelection!.id).then((value) {
-        client.setTaskDioSearch(value);
+        client.setTaskDioSearch(value
+            .where((element) => element.fase == client.navigateBarSelection)
+            .toList());
       });
     } else {
       getDioFase();

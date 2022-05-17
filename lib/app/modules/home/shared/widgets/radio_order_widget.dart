@@ -82,7 +82,7 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
                     ),
                   ),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: TextButton(

@@ -134,10 +134,9 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
                                                 linha.urlImage);
                                             store.clientCreate
                                                 .setIdReferenceStaff(
-                                              linha.name.email,
+                                              linha,
                                             );
-                                            store.clientCreate
-                                                .setIdStaff(linha);
+
                                             FocusScope.of(context).unfocus();
                                             Modular.to.pop();
                                           });

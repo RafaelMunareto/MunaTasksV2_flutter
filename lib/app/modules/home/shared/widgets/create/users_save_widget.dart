@@ -31,7 +31,10 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                     !store.clientCreate.loadingUser)
                   GestureDetector(
                     onTap: () => DialogButtom().showDialog(
-                        UsersSelectionWidget(constraint: widget.constraint),
+                        UsersSelectionWidget(
+                          constraint: widget.constraint,
+                          subtarefa: false,
+                        ),
                         store.client.theme,
                         widget.constraint,
                         context),
@@ -63,7 +66,10 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                       baselineType: TextBaseline.alphabetic,
                       child: GestureDetector(
                         onTap: () => DialogButtom().showDialog(
-                          UsersSelectionWidget(constraint: widget.constraint),
+                          UsersSelectionWidget(
+                            constraint: widget.constraint,
+                            subtarefa: false,
+                          ),
                           store.client.theme,
                           widget.constraint,
                           context,
@@ -73,7 +79,9 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                           child: GestureDetector(
                             onTap: () => DialogButtom().showDialog(
                               UsersSelectionWidget(
-                                  constraint: widget.constraint),
+                                constraint: widget.constraint,
+                                subtarefa: false,
+                              ),
                               store.client.theme,
                               widget.constraint,
                               context,

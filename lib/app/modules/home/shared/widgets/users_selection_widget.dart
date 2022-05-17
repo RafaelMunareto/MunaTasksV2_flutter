@@ -9,8 +9,12 @@ import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class UsersSelectionWidget extends StatefulWidget {
   final double constraint;
-  const UsersSelectionWidget({Key? key, required this.constraint})
-      : super(key: key);
+  final bool subtarefa;
+  const UsersSelectionWidget({
+    Key? key,
+    required this.constraint,
+    required this.subtarefa,
+  }) : super(key: key);
 
   @override
   State<UsersSelectionWidget> createState() => _UsersSelectionWidgetState();
@@ -25,7 +29,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
   @override
   void initState() {
     super.initState();
-
+    store.clientCreate.setIndividualChip(store.clientCreate.users);
     _controller =
         AnimationController(duration: const Duration(seconds: 1), vsync: this);
     _controller.forward();
@@ -66,7 +70,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                 );
               } else {
                 List<PerfilDioModel> list = store.client.perfis;
-                store.clientCreate.setIndividualChip(store.clientCreate.users);
+
                 list.removeWhere((e) => e.name.name == 'TODOS');
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
@@ -118,8 +122,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                                 .setIdReferenceStaff(
                                               linha,
                                             );
-                                            store.clientCreate
-                                                .setIdStaff(linha);
+
                                             FocusScope.of(context).unfocus();
                                             store.clientCreate
                                                 .setLoadingUser(false);
