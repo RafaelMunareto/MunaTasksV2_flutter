@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -159,7 +160,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
                                         fit: BoxFit.fill,
-                                        image: NetworkImage(
+                                        image: CachedNetworkImageProvider(
                                           store.client.perfilDio.urlImage,
                                         ),
                                       ),

@@ -149,11 +149,18 @@ abstract class _PerfilStoreBase with Store {
                   : client.perfilDio.urlImage! + '.png'),
         },
       );
-      Response response;
-      var dio = await DioStruture().dioAction();
-      response = await dio.put('perfil/${client.perfilDio.id}', data: formData);
-      DioStruture().statusRequest(response);
-      getBydDioId();
+      try {
+        Response response;
+        var dio = await DioStruture().dioAction();
+        response =
+            await dio.put('perfil/${client.perfilDio.id}', data: formData);
+        DioStruture().statusRequest(response);
+        getBydDioId();
+      } catch (e) {
+        if (kDebugMode) {
+          print(e.toString());
+        }
+      }
     }
   }
 }

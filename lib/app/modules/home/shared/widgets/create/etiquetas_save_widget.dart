@@ -36,27 +36,33 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
               ),
             )
           : Chip(
-              label: Text(
-                store.clientCreate.tarefaModelSaveEtiqueta.etiqueta == 'TODOS'
-                    ? 'Etiqueta'
-                    : store.clientCreate.tarefaModelSaveEtiqueta.icon != null
-                        ? store.clientCreate.tarefaModelSaveEtiqueta.etiqueta
-                        : 'Etiqueta',
-                style: TextStyle(
-                  fontSize:
-                      widget.constraint > LarguraLayoutBuilder().larguraModal
-                          ? 12
-                          : 10,
+              label: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Text(
+                  store.clientCreate.tarefaModelSaveEtiqueta.etiqueta == 'TODOS'
+                      ? 'Etiqueta'
+                      : store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+                          ? store.clientCreate.tarefaModelSaveEtiqueta.etiqueta
+                          : 'Etiqueta',
+                  style: TextStyle(
+                    fontSize:
+                        widget.constraint > LarguraLayoutBuilder().larguraModal
+                            ? 12
+                            : 10,
+                  ),
                 ),
               ),
-              avatar: Icon(
-                store.clientCreate.tarefaModelSaveEtiqueta.icon != null
-                    ? IconData(
-                        store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
-                        fontFamily: 'MaterialIcons')
-                    : Icons.bookmark,
-                color: ConvertIcon().convertColor(
-                  store.clientCreate.tarefaModelSaveEtiqueta.color,
+              avatar: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Icon(
+                  store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+                      ? IconData(
+                          store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
+                          fontFamily: 'MaterialIcons')
+                      : Icons.bookmark,
+                  color: ConvertIcon().convertColor(
+                    store.clientCreate.tarefaModelSaveEtiqueta.color,
+                  ),
                 ),
               ),
             );

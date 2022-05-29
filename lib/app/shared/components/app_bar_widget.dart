@@ -35,6 +35,7 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   final Function? setValueSearch;
   final Function? changeFilterSearch;
   final Function? getDioFase;
+  final Function? getPass;
   final dynamic client;
 
   AppBarWidget({
@@ -53,6 +54,7 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
     this.setValueSearch,
     this.changeFilterSearch,
     this.getDioFase,
+    this.getPass,
     this.client,
   }) : super(key: key);
 
@@ -183,6 +185,31 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                               ),
                             )
                           : Container(),
+                      GestureDetector(
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Observer(
+                            builder: (_) {
+                              return widget.client.loadingRefresh
+                                  ? const SizedBox(
+                                      width: 30,
+                                      height: 30,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.blue,
+                                        strokeWidth: 3,
+                                      ),
+                                    )
+                                  : const Icon(
+                                      Icons.refresh,
+                                      size: 32,
+                                    );
+                            },
+                          ),
+                        ),
+                        onTap: () {
+                          widget.getPass!();
+                        },
+                      ),
                       !search
                           ? Tooltip(
                               message: "Faz filtro de datas.",

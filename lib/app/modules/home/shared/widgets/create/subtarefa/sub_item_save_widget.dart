@@ -28,6 +28,8 @@ class _SubItemSaveWidgetState extends State<SubItemSaveWidget> {
                       color: widget.theme ? Colors.black38 : Colors.black12,
                       borderRadius: BorderRadius.circular(4)),
                   child: ExpansionTile(
+                    initiallyExpanded: true,
+                    expandedCrossAxisAlignment: CrossAxisAlignment.start,
                     key: UniqueKey(),
                     title: constraint.maxWidth >
                             LarguraLayoutBuilder().larguraModal
@@ -35,14 +37,21 @@ class _SubItemSaveWidgetState extends State<SubItemSaveWidget> {
                             leading: SizedBox(
                               child: Text(
                                 widget.subtarefa.title,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: widget.theme
+                                        ? Colors.grey
+                                        : Colors.black),
                               ),
                             ),
-                            title: Icon(
-                              ConvertIcon().iconStatus(widget.subtarefa.status),
-                              color: ConvertIcon()
-                                  .iconStatusColor(widget.subtarefa.status),
+                            title: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: Icon(
+                                ConvertIcon()
+                                    .iconStatus(widget.subtarefa.status),
+                                color: ConvertIcon()
+                                    .iconStatusColor(widget.subtarefa.status),
+                              ),
                             ),
                             trailing: CircleAvatarWidget(
                                 nameUser: widget.subtarefa.user.name.name,
@@ -74,12 +83,15 @@ class _SubItemSaveWidgetState extends State<SubItemSaveWidget> {
                             ],
                           ),
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Text(
-                          widget.subtarefa.texto,
-                          textAlign: TextAlign.justify,
-                          style: const TextStyle(fontSize: 12),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                          child: Text(
+                            widget.subtarefa.texto,
+                            textAlign: TextAlign.justify,
+                            style: const TextStyle(fontSize: 12),
+                          ),
                         ),
                       ),
                     ],

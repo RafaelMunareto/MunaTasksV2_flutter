@@ -6,6 +6,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/create/errors_widget.
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class ButtonSaveWidget extends StatefulWidget {
   final double constraint;
@@ -40,6 +41,13 @@ class _ButtonSaveWidgetState extends State<ButtonSaveWidget> {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.1,
             child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  store.client.theme
+                      ? darkThemeData(context).iconTheme.color
+                      : lightThemeData(context).iconTheme.color,
+                ),
+              ),
               onPressed: () {
                 store.clientCreate.setTarefa();
                 if (store.clientCreate.isValidTarefa) {
@@ -89,8 +97,8 @@ class _ButtonSaveWidgetState extends State<ButtonSaveWidget> {
                   ? const CircularProgressWidget()
                   : Text(
                       store.clientCreate.tarefaModelSave.id != ''
-                          ? "EDITAR"
-                          : 'SALVAR',
+                          ? "EDITAR TAREFA"
+                          : 'SALVAR TAREFA',
                     ),
             ),
           );

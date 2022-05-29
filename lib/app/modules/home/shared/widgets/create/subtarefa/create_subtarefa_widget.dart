@@ -49,7 +49,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
             Row(
               children: [
                 Expanded(
-                  flex: 2,
+                  flex: 1,
                   child: Wrap(
                     alignment: WrapAlignment.center,
                     children: [
@@ -65,26 +65,39 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                             padding: const EdgeInsets.fromLTRB(
                                                 8, 16, 8, 16),
                                             child: Chip(
-                                              label: const Text(
-                                                'Novo',
-                                                style: TextStyle(fontSize: 11),
+                                              label: const MouseRegion(
+                                                cursor:
+                                                    SystemMouseCursors.click,
+                                                child: Text(
+                                                  'Novo',
+                                                  style:
+                                                      TextStyle(fontSize: 11),
+                                                ),
                                               ),
-                                              avatar: Icon(
-                                                Icons.add_circle_sharp,
-                                                color: store.clientCreate
-                                                                .subtarefaModelSaveTitle !=
-                                                            "" &&
-                                                        store.clientCreate
-                                                                .subtarefaModelSaveTitle !=
-                                                            "Subtarefa"
-                                                    ? Colors.blue
-                                                    : Colors.grey,
+                                              avatar: MouseRegion(
+                                                cursor:
+                                                    SystemMouseCursors.click,
+                                                child: Icon(
+                                                  Icons.add_circle_sharp,
+                                                  color: store.clientCreate
+                                                                  .subtarefaModelSaveTitle !=
+                                                              "" &&
+                                                          store.clientCreate
+                                                                  .subtarefaModelSaveTitle !=
+                                                              "Subtarefa"
+                                                      ? Colors.blue
+                                                      : Colors.grey,
+                                                ),
                                               ),
                                             ),
                                           )
                                         : const Padding(
                                             padding: EdgeInsets.all(8.0),
-                                            child: Icon(Icons.add_circle_sharp),
+                                            child: MouseRegion(
+                                              cursor: SystemMouseCursors.click,
+                                              child:
+                                                  Icon(Icons.add_circle_sharp),
+                                            ),
                                           ),
                                     onTap: () {
                                       store.clientCreate.setSubtarefaTextSave(
@@ -101,16 +114,36 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                             child: widget.constraint >=
                                     LarguraLayoutBuilder().telaPc
                                 ? Chip(
-                                    label: Text(
-                                      store.clientCreate
-                                                  .subtarefaModelSaveTitle !=
-                                              ""
-                                          ? store.clientCreate
-                                              .subtarefaModelSaveTitle
-                                          : 'Subtarefa',
-                                      style: const TextStyle(fontSize: 11),
+                                    label: MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      child: Text(
+                                        store.clientCreate
+                                                    .subtarefaModelSaveTitle !=
+                                                ""
+                                            ? store.clientCreate
+                                                .subtarefaModelSaveTitle
+                                            : 'Subtarefa',
+                                        style: const TextStyle(fontSize: 11),
+                                      ),
                                     ),
-                                    avatar: Icon(
+                                    avatar: MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      child: Icon(
+                                        Icons.work,
+                                        color: store.clientCreate
+                                                        .subtarefaModelSaveTitle !=
+                                                    "" &&
+                                                store.clientCreate
+                                                        .subtarefaModelSaveTitle !=
+                                                    "Subtarefa"
+                                            ? Colors.blue
+                                            : Colors.grey,
+                                      ),
+                                    ),
+                                  )
+                                : MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: Icon(
                                       Icons.work,
                                       color: store.clientCreate
                                                       .subtarefaModelSaveTitle !=
@@ -121,17 +154,6 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                           ? Colors.blue
                                           : Colors.grey,
                                     ),
-                                  )
-                                : Icon(
-                                    Icons.work,
-                                    color: store.clientCreate
-                                                    .subtarefaModelSaveTitle !=
-                                                "" &&
-                                            store.clientCreate
-                                                    .subtarefaModelSaveTitle !=
-                                                "Subtarefa"
-                                        ? Colors.blue
-                                        : Colors.grey,
                                   ),
                           ),
                           onTap: () {
@@ -157,26 +179,36 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                 ? Chip(
                                     backgroundColor: ConvertIcon()
                                         .colorStatus(store.clientCreate.fase),
-                                    label: Text(
-                                      ConvertIcon()
-                                          .nameStatus(store.clientCreate.fase),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: ConvertIcon().colorStatusDark(
-                                              store.clientCreate.fase)),
+                                    label: MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      child: Text(
+                                        ConvertIcon().nameStatus(
+                                            store.clientCreate.fase),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: ConvertIcon()
+                                                .colorStatusDark(
+                                                    store.clientCreate.fase)),
+                                      ),
                                     ),
-                                    avatar: Icon(
+                                    avatar: MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      child: Icon(
+                                        ConvertIcon().iconStatus(
+                                            store.clientCreate.fase),
+                                        color: ConvertIcon().colorStatusDark(
+                                            store.clientCreate.fase),
+                                      ),
+                                    ),
+                                  )
+                                : MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: Icon(
                                       ConvertIcon()
                                           .iconStatus(store.clientCreate.fase),
                                       color: ConvertIcon().colorStatusDark(
                                           store.clientCreate.fase),
                                     ),
-                                  )
-                                : Icon(
-                                    ConvertIcon()
-                                        .iconStatus(store.clientCreate.fase),
-                                    color: ConvertIcon().colorStatusDark(
-                                        store.clientCreate.fase),
                                   ),
                           ),
                           onTap: () {
@@ -223,15 +255,26 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                         ? widget.constraint >=
                                                 LarguraLayoutBuilder().telaPc
                                             ? const Chip(
-                                                label: Text('Equipe'),
-                                                avatar: Icon(
+                                                label: MouseRegion(
+                                                    cursor: SystemMouseCursors
+                                                        .click,
+                                                    child: Text('Equipe')),
+                                                avatar: MouseRegion(
+                                                  cursor:
+                                                      SystemMouseCursors.click,
+                                                  child: Icon(
+                                                    Icons.people,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                              )
+                                            : const MouseRegion(
+                                                cursor:
+                                                    SystemMouseCursors.click,
+                                                child: Icon(
                                                   Icons.people,
                                                   color: Colors.grey,
                                                 ),
-                                              )
-                                            : const Icon(
-                                                Icons.people,
-                                                color: Colors.grey,
                                               )
                                         : CircleAvatarWidget(
                                             nameUser: store.clientCreate
@@ -249,8 +292,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                   ),
                 ),
                 Expanded(
-                  flex:
-                      widget.constraint > LarguraLayoutBuilder().telaPc ? 6 : 8,
+                  flex: 8,
                   child: Wrap(
                     alignment: WrapAlignment.spaceBetween,
                     children: [
@@ -267,7 +309,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                           maxLines: 20,
                           decoration: InputDecoration(
                             suffixIcon: InkWell(
-                                child: const Icon(Icons.close_outlined),
+                                child: const Icon(Icons.replay),
                                 onTap: () {
                                   setState(() {
                                     store.clientCreate.setSubtarefaTextSave('');
@@ -285,23 +327,12 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                     ],
                   ),
                 ),
-                widget.constraint >= LarguraLayoutBuilder().telaPc
-                    ? Expanded(
-                        flex: 2,
-                        child: ButtonSaveCreateSubtarefaWidget(
-                          texto: textSubtarefaController,
-                          constraint: widget.constraint,
-                        ),
-                      )
-                    : Container(),
               ],
             ),
-            widget.constraint < LarguraLayoutBuilder().telaPc
-                ? ButtonSaveCreateSubtarefaWidget(
-                    texto: textSubtarefaController,
-                    constraint: widget.constraint,
-                  )
-                : Container(),
+            ButtonSaveCreateSubtarefaWidget(
+              texto: textSubtarefaController,
+              constraint: widget.constraint,
+            ),
           ],
         ),
       );

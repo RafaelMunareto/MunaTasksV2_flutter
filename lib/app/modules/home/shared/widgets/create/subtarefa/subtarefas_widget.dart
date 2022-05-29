@@ -19,12 +19,14 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.45,
       child: Observer(
         builder: (_) {
           return store.clientCreate.loadingSubtarefa
               ? const CircularProgressWidget()
               : ListView.builder(
                   scrollDirection: Axis.vertical,
+                  physics: const ScrollPhysics(),
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(4),
                   itemCount: store.clientCreate.subtarefas.length,

@@ -39,7 +39,7 @@ class _TextSaveWidgetState extends State<TextSaveWidget> {
             maxLines: 20,
             decoration: InputDecoration(
                 suffixIcon: InkWell(
-                    child: const Icon(Icons.close_outlined),
+                    child: const Icon(Icons.replay),
                     onTap: () {
                       setState(() {
                         store.clientCreate.setTarefaTextSave('');

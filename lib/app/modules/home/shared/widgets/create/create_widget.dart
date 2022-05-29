@@ -31,116 +31,117 @@ class _CreateWidgetState extends State<CreateWidget> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
-        return SingleChildScrollView(
-          child: GestureDetector(
-            onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: ConvertIcon().convertColor(
-                        store.clientCreate.tarefaModelSaveEtiqueta.color,
-                      ) ??
-                      Colors.grey,
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(5.0),
+        return SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: ConvertIcon().convertColor(
+                      store.clientCreate.tarefaModelSaveEtiqueta.color,
+                    ) ??
+                    Colors.grey,
+                width: 2,
               ),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Wrap(
-                                alignment: WrapAlignment.spaceAround,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  EtiquetasSaveWidget(
-                                    constraint: widget.constraint,
-                                  ),
-                                  ActionFaseSaveWidget(
-                                      constraint: widget.constraint),
-                                  PrioridadeSaveWidget(
-                                      constraint: widget.constraint),
-                                  widget.constraint >=
-                                          LarguraLayoutBuilder().telaPc
-                                      ? SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.1,
-                                          child: UsersSaveWidget(
-                                              constraint: widget.constraint),
-                                        )
-                                      : Container(),
-                                  widget.constraint >=
-                                          LarguraLayoutBuilder().telaPc
-                                      ? SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.1,
-                                          child: DateSaveWidget(
-                                            dateController: dateController,
-                                            constraint: widget.constraint,
-                                          ),
-                                        )
-                                      : Container()
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    widget.constraint >= LarguraLayoutBuilder().telaPc
-                        ? Container()
-                        : Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: UsersSaveWidget(
-                                      constraint: widget.constraint),
-                                ),
-                              ),
-                              Expanded(
-                                child: DateSaveWidget(
-                                  dateController: dateController,
-                                  constraint: widget.constraint,
-                                ),
-                              ),
-                            ],
-                          ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
-                      child: TextSaveWidget(controller: textController),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CreateSubtarefaWidget(
-                        constraint: widget.constraint,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: ButtonSaveWidget(
-                        constraint: widget.constraint,
+                    GestureDetector(
+                      onTap: () => Modular.to.pop(),
+                      child: const Padding(
+                        padding: EdgeInsets.fromLTRB(0, 8, 16, 0),
+                        child: MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: Icon(
+                              Icons.close,
+                              size: 36,
+                            )),
                       ),
                     )
                   ],
                 ),
-              ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      EtiquetasSaveWidget(
+                        constraint: widget.constraint,
+                      ),
+                      ActionFaseSaveWidget(constraint: widget.constraint),
+                      PrioridadeSaveWidget(constraint: widget.constraint),
+                      widget.constraint >= LarguraLayoutBuilder().telaPc
+                          ? SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.1,
+                              child: UsersSaveWidget(
+                                  constraint: widget.constraint),
+                            )
+                          : Container(),
+                      widget.constraint >= LarguraLayoutBuilder().telaPc
+                          ? SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.1,
+                              child: DateSaveWidget(
+                                dateController: dateController,
+                                constraint: widget.constraint,
+                              ),
+                            )
+                          : Container()
+                    ],
+                  ),
+                ),
+                widget.constraint >= LarguraLayoutBuilder().telaPc
+                    ? Container()
+                    : Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: UsersSaveWidget(
+                                  constraint: widget.constraint),
+                            ),
+                          ),
+                          Expanded(
+                            child: DateSaveWidget(
+                              dateController: dateController,
+                              constraint: widget.constraint,
+                            ),
+                          ),
+                        ],
+                      ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 18.0),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
+                      child: TextSaveWidget(controller: textController),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CreateSubtarefaWidget(
+                      constraint: widget.constraint,
+                    ),
+                  ),
+                ),
+                Expanded(child: Container()),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: ButtonSaveWidget(
+                    constraint: widget.constraint,
+                  ),
+                )
+              ],
             ),
           ),
         );

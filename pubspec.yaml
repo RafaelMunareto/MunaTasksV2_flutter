@@ -49,6 +49,8 @@ dependencies:
   flutter_local_notifications: ^9.5.2
   show_update_dialog: ^1.0.9
   package_info_plus: ^1.0.6
+  responsive_framework: ^0.2.0
+  cached_network_image: ^3.2.1
 
 dev_dependencies:
   flutter_test:

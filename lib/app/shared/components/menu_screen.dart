@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
+import 'package:munatasks2/app/shared/components/name_widget.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
@@ -70,52 +71,9 @@ class _MenuScreenState extends State<MenuScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      width: 70.0,
-                                      height: 70.0,
-                                      decoration: store.client.perfilUserLogado
-                                                  .urlImage !=
-                                              ''
-                                          ? BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                fit: BoxFit.fill,
-                                                image: NetworkImage(
-                                                  store.client.perfilUserLogado
-                                                      .urlImage,
-                                                ),
-                                              ),
-                                            )
-                                          : const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                fit: BoxFit.fill,
-                                                image: AssetImage(
-                                                    'assets/img/person.png'),
-                                              ),
-                                            ),
-                                    ),
-                                    const Text(
-                                      "Olá",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.5,
-                                      child: Text(
-                                        store.client.perfilUserLogado.name.name,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w800,
-                                          color: store.client.theme
-                                              ? darkThemeData(context)
-                                                  .primaryColor
-                                              : lightThemeData(context)
-                                                  .primaryColorDark,
-                                        ),
-                                      ),
+                                    NameWidget(
+                                      store: store,
+                                      constraint: widget.constraint,
                                     ),
                                     InkWell(
                                       onTap: () {

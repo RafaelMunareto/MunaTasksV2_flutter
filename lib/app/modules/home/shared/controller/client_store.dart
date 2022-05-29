@@ -270,4 +270,10 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setVersion(value) => version = value;
+
+  @observable
+  bool loadingRefresh = false;
+
+  @action
+  setLoadingRefresh(value) => loadingRefresh = value;
 }

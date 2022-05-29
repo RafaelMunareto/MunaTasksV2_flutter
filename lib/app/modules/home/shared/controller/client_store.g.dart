@@ -648,6 +648,22 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  late final _$loadingRefreshAtom =
+      Atom(name: '_ClientStoreBase.loadingRefresh', context: context);
+
+  @override
+  bool get loadingRefresh {
+    _$loadingRefreshAtom.reportRead();
+    return super.loadingRefresh;
+  }
+
+  @override
+  set loadingRefresh(bool value) {
+    _$loadingRefreshAtom.reportWrite(value, super.loadingRefresh, () {
+      super.loadingRefresh = value;
+    });
+  }
+
   late final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase', context: context);
 
@@ -1103,6 +1119,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setLoadingRefresh(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setLoadingRefresh');
+    try {
+      return super.setLoadingRefresh(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -1144,7 +1171,8 @@ dateInicial: ${dateInicial},
 dateFinal: ${dateFinal},
 filterDate: ${filterDate},
 settingsUser: ${settingsUser},
-version: ${version}
+version: ${version},
+loadingRefresh: ${loadingRefresh}
     ''';
   }
 }

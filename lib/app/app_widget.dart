@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';
@@ -12,6 +11,7 @@ import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_sh
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 //import 'package:uni_links2/uni_links.dart';
 
 class AppWidget extends StatefulWidget {
@@ -129,6 +129,17 @@ class _AppWidgetState extends State<AppWidget> {
       themeMode: _themeMode,
       routeInformationParser: Modular.routeInformationParser,
       routerDelegate: Modular.routerDelegate,
+      builder: (context, widget) => ResponsiveWrapper.builder(
+        ClampingScrollWrapper.builder(context, widget!),
+        defaultScale: true,
+        minWidth: 450,
+        defaultName: DESKTOP,
+        breakpoints: const [
+          ResponsiveBreakpoint.resize(450, name: MOBILE),
+          ResponsiveBreakpoint.resize(700, name: TABLET),
+          ResponsiveBreakpoint.resize(800, name: DESKTOP),
+        ],
+      ),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

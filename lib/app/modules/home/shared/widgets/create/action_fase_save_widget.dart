@@ -24,29 +24,38 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
     return Observer(builder: (_) {
       return GestureDetector(
         child: widget.constraint < LarguraLayoutBuilder().telaPc
-            ? Icon(
-                ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
-                color: ConvertIcon()
-                    .colorStatusDark(store.clientCreate.faseTarefa),
+            ? MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Icon(
+                  ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
+                  color: ConvertIcon()
+                      .colorStatusDark(store.clientCreate.faseTarefa),
+                ),
               )
             : Chip(
                 backgroundColor:
                     ConvertIcon().colorStatus(store.clientCreate.faseTarefa),
-                label: Text(
-                  ConvertIcon().nameStatus(store.clientCreate.faseTarefa),
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: widget.constraint >
-                              LarguraLayoutBuilder().larguraModal
-                          ? 14
-                          : 10,
-                      color: ConvertIcon()
-                          .colorStatusDark(store.clientCreate.faseTarefa)),
+                label: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Text(
+                    ConvertIcon().nameStatus(store.clientCreate.faseTarefa),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: widget.constraint >
+                                LarguraLayoutBuilder().larguraModal
+                            ? 14
+                            : 10,
+                        color: ConvertIcon()
+                            .colorStatusDark(store.clientCreate.faseTarefa)),
+                  ),
                 ),
-                avatar: Icon(
-                  ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
-                  color: ConvertIcon()
-                      .colorStatusDark(store.clientCreate.faseTarefa),
+                avatar: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Icon(
+                    ConvertIcon().iconStatus(store.clientCreate.faseTarefa),
+                    color: ConvertIcon()
+                        .colorStatusDark(store.clientCreate.faseTarefa),
+                  ),
                 ),
               ),
         onTap: () => DialogButtom().showDialog(

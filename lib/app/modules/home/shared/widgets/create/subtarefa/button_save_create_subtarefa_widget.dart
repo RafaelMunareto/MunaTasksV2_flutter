@@ -29,19 +29,19 @@ class _ButtonSaveCreateSubtarefaWidgetState
 
     return Padding(
       padding: widget.constraint > LarguraLayoutBuilder().telaPc
-          ? const EdgeInsets.all(8.0)
+          ? const EdgeInsets.all(4.0)
           : const EdgeInsets.all(0),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.94,
         height: widget.constraint > LarguraLayoutBuilder().telaPc
-            ? MediaQuery.of(context).size.height * 0.085
+            ? MediaQuery.of(context).size.height * 0.055
             : MediaQuery.of(context).size.height * 0.045,
         child: ElevatedButton.icon(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
               store.client.theme
-                  ? darkThemeData(context).iconTheme.color
-                  : lightThemeData(context).iconTheme.color,
+                  ? darkThemeData(context).primaryColor
+                  : lightThemeData(context).primaryColor,
             ),
           ),
           onPressed: () {
@@ -67,11 +67,13 @@ class _ButtonSaveCreateSubtarefaWidgetState
             }
             FocusScope.of(context).unfocus();
           },
-          icon: const Icon(Icons.add_circle, size: 18),
+          icon: const Icon(Icons.add_circle, size: 16),
           label: store.clientCreate.loadingSubtarefa
               ? const CircularProgressWidget()
               : Text(
-                  store.clientCreate.editar ? 'EDITAR' : "INCLUIR",
+                  store.clientCreate.editar
+                      ? 'EDITAR SUBTAREFA'
+                      : "INCLUIR SUBTAREFA",
                 ),
         ),
       ),

@@ -38,12 +38,15 @@ class _PrioridadeSaveWidgetState extends State<PrioridadeSaveWidget> {
             return Padding(
               key: UniqueKey(),
               padding: const EdgeInsets.all(8),
-              child: Icon(
-                store.clientCreate.tarefaModelPrioritario == 0
-                    ? Icons.flag_outlined
-                    : Icons.flag,
-                color: ConvertIcon().convertColorFlaf(
-                  store.clientCreate.tarefaModelPrioritario,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Icon(
+                  store.clientCreate.tarefaModelPrioritario == 0
+                      ? Icons.flag_outlined
+                      : Icons.flag,
+                  color: ConvertIcon().convertColorFlaf(
+                    store.clientCreate.tarefaModelPrioritario,
+                  ),
                 ),
               ),
             );

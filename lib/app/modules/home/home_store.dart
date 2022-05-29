@@ -151,6 +151,7 @@ abstract class HomeStoreBase with Store {
   }
 
   getPass() async {
+    await client.setLoadingRefresh(true);
     await getDio();
     await badgets();
     getDioTotal();
@@ -201,7 +202,7 @@ abstract class HomeStoreBase with Store {
       value.sort((a, b) => b.qtd.compareTo(a.qtd));
       client.setTarefasTotais(value);
       client.setLoadingTasksTotal(false);
-    });
+    }).whenComplete(() => client.setLoadingRefresh(false));
   }
 
   settings() async {

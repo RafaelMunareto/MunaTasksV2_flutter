@@ -81,8 +81,7 @@ class _ConfiguracaoWidgetState extends State<ConfiguracaoWidget> {
               ),
             ),
           ),
-          widget.constraint <= LarguraLayoutBuilder().telaSmartphone ||
-                  defaultTargetPlatform == TargetPlatform.windows
+          !kIsWeb || widget.constraint < LarguraLayoutBuilder().telaPc
               ? Container()
               : Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),

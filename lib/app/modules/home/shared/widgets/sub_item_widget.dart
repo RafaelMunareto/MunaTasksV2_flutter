@@ -54,13 +54,17 @@ class SubItemWidget extends StatelessWidget {
               color: theme ? Colors.black38 : Colors.black12,
               borderRadius: BorderRadius.circular(4)),
           child: ExpansionTile(
+            initiallyExpanded: true,
+            expandedCrossAxisAlignment: CrossAxisAlignment.start,
             key: UniqueKey(),
             title: ListTile(
               leading: SizedBox(
                 width: 100,
                 child: Text(
                   subTarefa.title,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: theme ? Colors.grey : Colors.black),
                 ),
               ),
               title: GestureDetector(
@@ -79,12 +83,15 @@ class SubItemWidget extends StatelessWidget {
               ),
             ),
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(
-                  subTarefa.texto,
-                  textAlign: TextAlign.justify,
-                  style: const TextStyle(fontSize: 12),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                  child: Text(
+                    subTarefa.texto,
+                    textAlign: TextAlign.justify,
+                    style: const TextStyle(fontSize: 12),
+                  ),
                 ),
               ),
             ],
