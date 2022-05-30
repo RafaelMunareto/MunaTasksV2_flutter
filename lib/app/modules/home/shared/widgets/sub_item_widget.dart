@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/subitem_actions_widget.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
-class SubItemWidget extends StatelessWidget {
+class SubItemWidget extends StatefulWidget {
   final SubtarefasDioModel subTarefa;
   final TarefaDioModel tarefaModel;
   final Function setSubtarefaModel;
@@ -23,7 +24,14 @@ class SubItemWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<SubItemWidget> createState() => _SubItemWidgetState();
+}
+
+class _SubItemWidgetState extends State<SubItemWidget> {
+  @override
   Widget build(BuildContext context) {
+    final HomeStore store = Modular.get();
+
     actionSubtarefa(subTarefaModel, constraint) {
       showDialog(
         context: context,
@@ -36,9 +44,44 @@ class SubItemWidget extends StatelessWidget {
                   ? MediaQuery.of(context).size.width * 0.5
                   : MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.15,
-              child: SubitemActionsWidget(
-                subtarefaModel: subTarefaModel,
-                tarefaModel: tarefaModel,
+              child: Center(
+                child: Wrap(
+                  children: [
+                    for (var linha in store.client.subtarefaActionList)
+                      Padding(
+                        padding:
+                            constraint > LarguraLayoutBuilder().larguraModal
+                                ? const EdgeInsets.all(8)
+                                : const EdgeInsets.all(8),
+                        child: InputChip(
+                          key: ObjectKey(linha.toString()),
+                          labelPadding: const EdgeInsets.all(2),
+                          elevation: 4.0,
+                          avatar: Icon(ConvertIcon().iconStatus(linha),
+                              color: ConvertIcon().iconStatusColor(linha)),
+                          label: SizedBox(
+                            child: Text(
+                              ConvertIcon().labelStatus(linha),
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ),
+                          onPressed: () {
+                            store.client.setSubtarefaAction(linha);
+
+                            store.changeSubtarefaDioAction(
+                              widget.subTarefa,
+                              widget.tarefaModel,
+                            );
+                            setState(() {
+                              widget.subTarefa.status = linha;
+                            });
+                            Modular.to.pop();
+                          },
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           );
@@ -51,7 +94,7 @@ class SubItemWidget extends StatelessWidget {
         padding: const EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
         child: Container(
           decoration: BoxDecoration(
-              color: theme ? Colors.black38 : Colors.black12,
+              color: widget.theme ? Colors.black38 : Colors.black12,
               borderRadius: BorderRadius.circular(4)),
           child: ExpansionTile(
             initiallyExpanded: true,
@@ -61,25 +104,27 @@ class SubItemWidget extends StatelessWidget {
               leading: SizedBox(
                 width: 100,
                 child: Text(
-                  subTarefa.title,
+                  widget.subTarefa.title,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: theme ? Colors.grey : Colors.black),
+                      color: widget.theme ? Colors.grey : Colors.black),
                 ),
               ),
               title: GestureDetector(
-                onTap: () => actionSubtarefa(subTarefa, constraint.maxWidth),
+                onTap: () =>
+                    actionSubtarefa(widget.subTarefa, constraint.maxWidth),
                 child: MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: Icon(
-                    ConvertIcon().iconStatus(subTarefa.status),
-                    color: ConvertIcon().iconStatusColor(subTarefa.status),
+                    ConvertIcon().iconStatus(widget.subTarefa.status),
+                    color:
+                        ConvertIcon().iconStatusColor(widget.subTarefa.status),
                   ),
                 ),
               ),
               trailing: CircleAvatarWidget(
-                url: subTarefa.user.urlImage,
-                nameUser: subTarefa.user.name.name,
+                url: widget.subTarefa.user.urlImage,
+                nameUser: widget.subTarefa.user.name.name,
               ),
             ),
             children: [
@@ -88,7 +133,7 @@ class SubItemWidget extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
                   child: Text(
-                    subTarefa.texto,
+                    widget.subTarefa.texto,
                     textAlign: TextAlign.justify,
                     style: const TextStyle(fontSize: 12),
                   ),

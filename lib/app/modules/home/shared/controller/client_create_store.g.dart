@@ -742,39 +742,6 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
-  dynamic setIdStaff(dynamic value) {
-    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
-        name: '_ClientCreateStoreBase.setIdStaff');
-    try {
-      return super.setIdStaff(value);
-    } finally {
-      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setAddIndividualChip(dynamic value) {
-    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
-        name: '_ClientCreateStoreBase.setAddIndividualChip');
-    try {
-      return super.setAddIndividualChip(value);
-    } finally {
-      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic removeIndividualChip(dynamic value) {
-    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
-        name: '_ClientCreateStoreBase.removeIndividualChip');
-    try {
-      return super.removeIndividualChip(value);
-    } finally {
-      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic setIdReferenceStaff(dynamic value) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setIdReferenceStaff');

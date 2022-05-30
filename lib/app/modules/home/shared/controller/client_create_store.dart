@@ -26,7 +26,7 @@ abstract class _ClientCreateStoreBase with Store {
   dynamic tarefaModelData = '';
 
   @observable
-  int tarefaModelPrioritario = 0;
+  int tarefaModelPrioritario = 4;
 
   @observable
   String subtarefaModelSaveTitle = '';
@@ -122,7 +122,7 @@ abstract class _ClientCreateStoreBase with Store {
   cleanSubtarefaInsertCreate() => subtarefaModelSaveTitle = '';
 
   @action
-  cleanPrioridadeSaveSelection() => tarefaModelPrioritario = 0;
+  cleanPrioridadeSaveSelection() => tarefaModelPrioritario = 4;
 
   @action
   cleanTarefaModelSave() => tarefaModelSave = TarefaDioModel();
@@ -188,32 +188,11 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   @action
-  setIdStaff(value) {
-    if (!users.map((e) => e.name.email).contains(value.name.email)) {
-      users.add(value);
-    } else {
-      users.removeWhere((e) => e.name.email == value.name.email);
-      if (users.isEmpty) {
-        users = [];
-      }
-    }
-  }
-
-  @action
-  setAddIndividualChip(value) => individualChip.add(value);
-
-  @action
-  removeIndividualChip(value) => individualChip.remove(value);
-
-  @action
   setIdReferenceStaff(value) {
-    if (!individualChip.map((e) => e).contains(value)) {
-      setAddIndividualChip(value);
+    if (individualChip.where((e) => e.id == value.id).isEmpty) {
+      individualChip.add(value);
     } else {
-      removeIndividualChip(value);
-      if (individualChip.isEmpty) {
-        individualChip = [];
-      }
+      individualChip.removeWhere((a) => a.id == value.id);
     }
   }
 
@@ -259,7 +238,7 @@ abstract class _ClientCreateStoreBase with Store {
     setUserCreateSelection(model.user);
     setCreateImageUser(model.user.urlImage);
     setIdReferenceStaff(
-      model.user.name.email,
+      model.user,
     );
     setSubtarefaId(model.id);
   }
@@ -343,7 +322,7 @@ abstract class _ClientCreateStoreBase with Store {
     if (users.where((e) => e.name.email == createUser.name.email).length < 1) {
       setLoadingUser(true);
       users.add(createUser);
-      setIdReferenceStaff(createUser.name.email);
+      setIdReferenceStaff(createUser);
     } else if (users
             .where((e) => e.name.email == createUser.name.email)
             .length >

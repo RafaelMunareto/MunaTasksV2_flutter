@@ -41,7 +41,7 @@ class _PrioridadeSaveWidgetState extends State<PrioridadeSaveWidget> {
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: Icon(
-                  store.clientCreate.tarefaModelPrioritario == 0
+                  store.clientCreate.tarefaModelPrioritario == 4
                       ? Icons.flag_outlined
                       : Icons.flag,
                   color: ConvertIcon().convertColorFlaf(

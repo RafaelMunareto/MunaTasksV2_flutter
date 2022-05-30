@@ -6,12 +6,15 @@ import 'package:munatasks2/app/modules/home/shared/widgets/create/errors_widget.
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
-import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class ButtonSaveWidget extends StatefulWidget {
   final double constraint;
-  const ButtonSaveWidget({Key? key, required this.constraint})
-      : super(key: key);
+  final Color? color;
+  const ButtonSaveWidget({
+    Key? key,
+    required this.constraint,
+    required this.color,
+  }) : super(key: key);
 
   @override
   State<ButtonSaveWidget> createState() => _ButtonSaveWidgetState();
@@ -42,11 +45,7 @@ class _ButtonSaveWidgetState extends State<ButtonSaveWidget> {
             height: MediaQuery.of(context).size.height * 0.1,
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  store.client.theme
-                      ? darkThemeData(context).iconTheme.color
-                      : lightThemeData(context).iconTheme.color,
-                ),
+                backgroundColor: MaterialStateProperty.all(widget.color),
               ),
               onPressed: () {
                 store.clientCreate.setTarefa();

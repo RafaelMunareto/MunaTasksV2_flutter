@@ -6,7 +6,7 @@ import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class DialogButtom {
   showDialog(dynamic widgets, bool theme, constraint, context,
-      {double width = 300.00}) {
+      {double width = 400.00}) {
     showGeneralDialog(
       barrierLabel: "Label",
       barrierDismissible: true,
@@ -19,7 +19,7 @@ class DialogButtom {
           child: Container(
             height: width,
             width: constraint >= LarguraLayoutBuilder().telaTablet
-                ? MediaQuery.of(context).size.width * 0.45
+                ? MediaQuery.of(context).size.width * 0.50
                 : MediaQuery.of(context).size.width,
             child: SizedBox.expand(
               child: widgets,

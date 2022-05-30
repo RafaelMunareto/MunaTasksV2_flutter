@@ -52,12 +52,17 @@ class _CreateWidgetState extends State<CreateWidget> {
                   children: [
                     GestureDetector(
                       onTap: () => Modular.to.pop(),
-                      child: const Padding(
-                        padding: EdgeInsets.fromLTRB(0, 8, 16, 0),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 8, 16, 0),
                         child: MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: Icon(
                               Icons.close,
+                              color: ConvertIcon().convertColor(
+                                    store.clientCreate.tarefaModelSaveEtiqueta
+                                        .color,
+                                  ) ??
+                                  Colors.grey,
                               size: 36,
                             )),
                       ),
@@ -138,6 +143,10 @@ class _CreateWidgetState extends State<CreateWidget> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: ButtonSaveWidget(
+                    color: ConvertIcon().convertColor(
+                          store.clientCreate.tarefaModelSaveEtiqueta.color,
+                        ) ??
+                        Colors.grey,
                     constraint: widget.constraint,
                   ),
                 )

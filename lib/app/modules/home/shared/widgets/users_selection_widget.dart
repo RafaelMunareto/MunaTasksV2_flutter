@@ -96,7 +96,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                         : const EdgeInsets.only(bottom: 16.0),
                                     child: SizedBox(
                                       child: InputChip(
-                                        key: ObjectKey(linha.name.email),
+                                        key: ObjectKey(linha.id),
                                         labelPadding: const EdgeInsets.all(2),
                                         selected: store
                                             .clientCreate.individualChip
@@ -119,10 +119,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                         onSelected: (bool value) {
                                           setState(() {
                                             store.clientCreate
-                                                .setIdReferenceStaff(
-                                              linha,
-                                            );
-
+                                                .setIdReferenceStaff(linha);
                                             FocusScope.of(context).unfocus();
                                             store.clientCreate
                                                 .setLoadingUser(false);

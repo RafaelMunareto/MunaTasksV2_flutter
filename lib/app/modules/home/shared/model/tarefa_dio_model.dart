@@ -15,7 +15,7 @@ class TarefaDioModel {
       this.texto = '',
       this.fase = 0,
       this.id,
-      this.prioridade = 0,
+      this.prioridade = 4,
       this.data,
       this.subTarefa,
       this.users});
