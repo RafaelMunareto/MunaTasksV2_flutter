@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -125,7 +124,7 @@ class _ListSettingsWidgetState extends State<ListSettingsWidget> {
             style: TextStyle(
                 fontSize: 20, color: Color.fromARGB(255, 140, 82, 241)),
           ),
-          content: const AutoSizeText(
+          content: const Text(
             'Tem certeza que deseja excluír a tarefa ?',
             maxLines: 1,
           ),

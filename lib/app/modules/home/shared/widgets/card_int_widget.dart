@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +7,6 @@ import 'package:munatasks2/app/modules/home/shared/widgets/body_text_widget.dart
 import 'package:munatasks2/app/modules/home/shared/widgets/button_action_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/header_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
@@ -261,7 +259,7 @@ class _CardIntWidgetState extends State<CardIntWidget> {
                       ? darkThemeData(context).primaryColor
                       : lightThemeData(context).primaryColor),
             ),
-            content: const AutoSizeText(
+            content: const Text(
               'Tem certeza que deseja excluír a tarefa ?',
               maxLines: 1,
             ),

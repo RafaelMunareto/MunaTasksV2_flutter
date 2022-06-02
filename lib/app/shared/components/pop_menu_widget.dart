@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -28,7 +27,7 @@ class PopMenuWidget extends StatelessWidget {
                     backgroundImage:
                         CachedNetworkImageProvider(perfil.urlImage ?? ''),
                   ),
-                  label: AutoSizeText(
+                  label: Text(
                     perfil.name.name,
                     maxLines: 1,
                   ),
@@ -63,7 +62,7 @@ class PopMenuWidget extends StatelessWidget {
             ),
             title: const MouseRegion(
                 cursor: SystemMouseCursors.click,
-                child: AutoSizeText(
+                child: Text(
                   'Perfil e Equipes',
                   maxLines: 1,
                 )),

@@ -81,11 +81,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
     var dio = await DioStruture().dioAction();
     response = await dio.get('perfil/user/${user.id}');
     DioStruture().statusRequest(response);
-    setState(() {
-      perfil = response.data.isNotEmpty
-          ? PerfilDioModel.fromJson(response.data[0])
-          : PerfilDioModel();
-    });
+    perfil = response.data.isNotEmpty
+        ? PerfilDioModel.fromJson(response.data[0])
+        : PerfilDioModel();
   }
 
   @override

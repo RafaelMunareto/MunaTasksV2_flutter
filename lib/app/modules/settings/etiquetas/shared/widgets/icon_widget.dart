@@ -25,13 +25,12 @@ class _IconWidgetState extends State<IconWidget> {
   _pickIcon() async {
     IconData? icon = await FlutterIconPicker.showIconPicker(
       context,
-      title: const AutoSizeText(
+      title: const Text(
         'Escolha um ícone',
         maxLines: 1,
       ),
       searchHintText: 'Pesquisar',
-      closeChild:
-          const AutoSizeText('Fechar', maxLines: 1, textScaleFactor: 1.25),
+      closeChild: const Text('Fechar', maxLines: 1, textScaleFactor: 1.25),
       iconPackModes: [IconPack.material],
     );
     setState(() {

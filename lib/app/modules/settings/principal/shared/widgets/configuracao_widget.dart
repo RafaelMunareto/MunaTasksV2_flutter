@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -7,6 +6,7 @@ import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import "package:universal_html/html.dart" as html;
+import 'package:url_launcher/url_launcher.dart';
 
 class ConfiguracaoWidget extends StatefulWidget {
   final double constraint;
@@ -71,7 +71,7 @@ class _ConfiguracaoWidgetState extends State<ConfiguracaoWidget> {
                 ),
                 label: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-                  child: AutoSizeText('SAIR',
+                  child: Text('SAIR',
                       maxLines: 1,
                       style: TextStyle(
                         fontSize: 18,
@@ -83,7 +83,7 @@ class _ConfiguracaoWidgetState extends State<ConfiguracaoWidget> {
               ),
             ),
           ),
-          !kIsWeb || widget.constraint < LarguraLayoutBuilder().telaPc
+          widget.constraint < LarguraLayoutBuilder().telaPc
               ? Container()
               : Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
@@ -113,8 +113,8 @@ class _ConfiguracaoWidgetState extends State<ConfiguracaoWidget> {
                         ),
                       ),
                       onPressed: () {
-                        downloadFile(
-                            'https://github.com/RafaelMunareto/MunaTasksV2_flutter/raw/main/assets/exe/Output/munatask.exe');
+                        launchUrl(Uri.parse(
+                            'https://github.com/RafaelMunareto/MunaTasksV2_flutter/raw/main/assets/exe/Output/munatask.exe'));
                       },
                       icon: const Icon(
                         Icons.download,

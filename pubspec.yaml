@@ -52,6 +52,8 @@ dependencies:
   responsive_framework: ^0.2.0
   cached_network_image: ^3.2.1
   auto_size_text: ^3.0.0
+  bitsdojo_window: ^0.1.2
+  url_launcher: ^6.1.2
 
 dev_dependencies:
   flutter_test:

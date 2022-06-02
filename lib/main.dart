@@ -1,3 +1,4 @@
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/shared/utils/notification_service.dart';
@@ -9,4 +10,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService().initNotification();
   runApp(ModularApp(module: AppModule(), child: const AppWidget()));
+  doWhenWindowReady(() {
+    final win = appWindow;
+    const initialSize = Size(1600, 900);
+    win.minSize = initialSize;
+    win.size = initialSize;
+    win.alignment = Alignment.center;
+    win.title = "Munatask";
+    win.show();
+  });
 }

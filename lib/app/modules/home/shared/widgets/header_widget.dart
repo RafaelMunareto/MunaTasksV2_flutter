@@ -49,17 +49,20 @@ class HeaderWidget extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16.0, top: 16),
-          child: Text(
-            tarefa.texto,
-            textAlign: TextAlign.justify,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-              color: theme ? Colors.white : Colors.black,
+        Align(
+          alignment: Alignment.bottomLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 16.0, top: 16, left: 16),
+            child: Text(
+              tarefa.texto,
+              textAlign: TextAlign.justify,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                color: theme ? Colors.white : Colors.black,
+              ),
             ),
           ),
         ),

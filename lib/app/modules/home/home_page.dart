@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -16,8 +17,10 @@ import 'package:munatasks2/app/shared/components/menu_screen.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:show_update_dialog/show_update_dialog.dart';
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -46,6 +49,9 @@ class _HomePageState extends State<HomePage> {
               });
             }
           }
+        }
+        if (Platform.isWindows && store.client.checkUpdateDesktop) {
+          checkUpdateDesktop();
         }
       },
     );
@@ -105,6 +111,7 @@ class _HomePageState extends State<HomePage> {
     if (defaultTargetPlatform == TargetPlatform.android) {
       verifyVersion();
     }
+
     tz.initializeTimeZones();
     sendNotification();
     super.initState();
@@ -244,5 +251,38 @@ class _HomePageState extends State<HomePage> {
         },
       );
     });
+  }
+
+  checkUpdateDesktop() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          width: 200,
+          height: 200,
+          child: AlertDialog(
+            title: Text(
+              'Atualizar versão',
+              style: TextStyle(
+                  color: store.client.theme
+                      ? darkThemeData(context).primaryColor
+                      : lightThemeData(context).primaryColor),
+            ),
+            content: Text(
+              'Sua versão está desatualizada a nova versão é a ${store.client.version}',
+            ),
+            actions: [
+              ElevatedButton(
+                  onPressed: () => Modular.to.pop(),
+                  child: const Text('Cancelar')),
+              ElevatedButton(
+                  onPressed: () => launchUrl(Uri.parse(
+                      'https://github.com/RafaelMunareto/MunaTasksV2_flutter/raw/main/assets/exe/Output/munatask.exe')),
+                  child: const Text('Atualizar')),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

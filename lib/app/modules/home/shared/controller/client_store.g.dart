@@ -664,6 +664,38 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  late final _$checkUpdateDesktopAtom =
+      Atom(name: '_ClientStoreBase.checkUpdateDesktop', context: context);
+
+  @override
+  bool get checkUpdateDesktop {
+    _$checkUpdateDesktopAtom.reportRead();
+    return super.checkUpdateDesktop;
+  }
+
+  @override
+  set checkUpdateDesktop(bool value) {
+    _$checkUpdateDesktopAtom.reportWrite(value, super.checkUpdateDesktop, () {
+      super.checkUpdateDesktop = value;
+    });
+  }
+
+  late final _$versionBdAtom =
+      Atom(name: '_ClientStoreBase.versionBd', context: context);
+
+  @override
+  String get versionBd {
+    _$versionBdAtom.reportRead();
+    return super.versionBd;
+  }
+
+  @override
+  set versionBd(String value) {
+    _$versionBdAtom.reportWrite(value, super.versionBd, () {
+      super.versionBd = value;
+    });
+  }
+
   late final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase', context: context);
 
@@ -1130,6 +1162,28 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setCheckUpdateDesktop(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setCheckUpdateDesktop');
+    try {
+      return super.setCheckUpdateDesktop(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setVersionBd(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setVersionBd');
+    try {
+      return super.setVersionBd(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -1172,7 +1226,9 @@ dateFinal: ${dateFinal},
 filterDate: ${filterDate},
 settingsUser: ${settingsUser},
 version: ${version},
-loadingRefresh: ${loadingRefresh}
+loadingRefresh: ${loadingRefresh},
+checkUpdateDesktop: ${checkUpdateDesktop},
+versionBd: ${versionBd}
     ''';
   }
 }

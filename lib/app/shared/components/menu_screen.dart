@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
+import 'package:munatasks2/app/shared/components/list_menu_widget.dart';
 import 'package:munatasks2/app/shared/components/name_widget.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
@@ -66,164 +67,55 @@ class _MenuScreenState extends State<MenuScreen> {
                           controller: ScrollController(),
                           padding: const EdgeInsets.all(8),
                           children: <Widget>[
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height,
-                              child: DrawerHeader(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    NameWidget(
-                                      store: store,
-                                      constraint: widget.constraint,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        Modular.to.navigate('/settings/perfil');
-                                      },
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 16.0),
-                                        child: AutoSizeText(
-                                          "Edite Perfil",
-                                          maxLines: 1,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: store.client.theme
-                                                ? darkThemeData(context)
-                                                    .secondaryHeaderColor
-                                                : lightThemeData(context)
-                                                    .secondaryHeaderColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                            Center(
+                              child: SizedBox(
+                                height: MediaQuery.of(context).size.height,
+                                child: DrawerHeader(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Center(
+                                        child: NameWidget(
+                                          store: store,
+                                          constraint: widget.constraint,
                                         ),
                                       ),
-                                    ),
-                                    ListTile(
-                                      title: Row(
-                                        children: const [
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 8.0),
-                                            child: Icon(
-                                              Icons.settings,
-                                            ),
-                                          ),
-                                          Flexible(
-                                            child: SizedBox(
-                                              child: AutoSizeText(
-                                                "Configurações",
-                                                maxLines: 1,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      const Padding(
+                                        padding: EdgeInsets.only(top: 16),
+                                        child: ListMenuWidget(
+                                          label: "Editar Perfil",
+                                          rota: '/settings/perfil',
+                                          icon: Icons.emoji_people,
+                                        ),
                                       ),
-                                      onTap: () {
-                                        Modular.to.navigate('/settings/');
-                                      },
-                                    ),
-                                    ListTile(
-                                      title: Row(
-                                        children: const [
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 8.0),
-                                            child: Icon(Icons.bookmark),
-                                          ),
-                                          Flexible(
-                                            child: SizedBox(
-                                              child: AutoSizeText(
-                                                "Etiquetas",
-                                                maxLines: 1,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      const ListMenuWidget(
+                                        label: "Configurações",
+                                        rota: '/settings/',
+                                        icon: Icons.settings,
                                       ),
-                                      onTap: () {
-                                        Modular.to
-                                            .navigate('/settings/etiquetas');
-                                      },
-                                    ),
-                                    ListTile(
-                                      title: Row(
-                                        children: const [
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 8.0),
-                                            child: Icon(Icons.people),
-                                          ),
-                                          Flexible(
-                                            child: SizedBox(
-                                              child: AutoSizeText(
-                                                "Tarefas",
-                                                maxLines: 1,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      const ListMenuWidget(
+                                        label: "Etiquetas",
+                                        rota: '/settings/etiquetas',
+                                        icon: Icons.bookmark,
                                       ),
-                                      onTap: () {
-                                        Modular.to.navigate('/home/tarefas');
-                                      },
-                                    ),
-                                    ListTile(
-                                      title: Row(
-                                        children: const [
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 8.0),
-                                            child: Icon(Icons.privacy_tip),
-                                          ),
-                                          Flexible(
-                                            child: SizedBox(
-                                              child: AutoSizeText(
-                                                "Privacy",
-                                                maxLines: 1,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      const ListMenuWidget(
+                                        label: "Tarefas",
+                                        rota: '/home/tarefas',
+                                        icon: Icons.people,
                                       ),
-                                      onTap: () {
-                                        Modular.to.navigate('/privacy/');
-                                      },
-                                    ),
-                                    ListTile(
-                                      title: Row(
-                                        children: [
-                                          const Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 8.0),
-                                            child: Icon(Icons.verified),
-                                          ),
-                                          Flexible(
-                                            child: SizedBox(
-                                              child: AutoSizeText(
-                                                "Versão ${widget.version}",
-                                                maxLines: 1,
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
+                                      const ListMenuWidget(
+                                        label: "Privacy",
+                                        rota: '/privacy/',
+                                        icon: Icons.privacy_tip,
                                       ),
-                                    ),
-                                  ],
+                                      ListMenuWidget(
+                                        label: "Versão ${widget.version}",
+                                        rota: '',
+                                        icon: Icons.verified,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

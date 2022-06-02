@@ -7,7 +7,6 @@ import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
-import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class SubItemWidget extends StatefulWidget {
   final SubtarefasDioModel subTarefa;

@@ -55,6 +55,8 @@ abstract class HomeStoreBase with Store {
     await getDio();
     await getDioFase();
     await getNotificationsBd();
+    await getSettings();
+    await checkUpdateWindows();
   }
 
   buscaTheme(context) async {
@@ -75,6 +77,21 @@ abstract class HomeStoreBase with Store {
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       client.setVersion(packageInfo.version);
     });
+  }
+
+  getSettings() async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('settings');
+    DioStruture().statusRequest(response);
+    var resposta = SettingsModel.fromJson(response.data[0]);
+    client.setVersionBd(resposta.version![0]);
+  }
+
+  checkUpdateWindows() {
+    if (client.versionBd != client.version) {
+      client.setCheckUpdateDesktop(true);
+    }
   }
 
   getNotificationsBd() async {

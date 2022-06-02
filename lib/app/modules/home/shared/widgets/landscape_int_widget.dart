@@ -74,7 +74,7 @@ class _LandscapeIntWidgetState extends State<LandscapeIntWidget> {
                                           LarguraLayoutBuilder().telaPc
                                       ? MediaQuery.of(context).size.width * 0.07
                                       : MediaQuery.of(context).size.width * 0.3,
-                                  child: AutoSizeText(
+                                  child: Text(
                                     ' ' + totais.name!.name.name,
                                     textAlign: TextAlign.justify,
                                     maxLines: 1,

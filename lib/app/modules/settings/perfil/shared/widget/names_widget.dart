@@ -1,6 +1,5 @@
 // ignore_for_file: unnecessary_null_comparison
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -98,7 +97,7 @@ class _NamesWidgetState extends State<NamesWidget>
                                   },
                                   decoration: InputDecoration(
                                     filled: enabledField,
-                                    label: const AutoSizeText(
+                                    label: const Text(
                                       'Time',
                                       maxLines: 1,
                                     ),

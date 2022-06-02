@@ -276,4 +276,16 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setLoadingRefresh(value) => loadingRefresh = value;
+
+  @observable
+  bool checkUpdateDesktop = false;
+
+  @action
+  setCheckUpdateDesktop(value) => checkUpdateDesktop = value;
+
+  @observable
+  String versionBd = '';
+
+  @action
+  setVersionBd(value) => versionBd = value;
 }
