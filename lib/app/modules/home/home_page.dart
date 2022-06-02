@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       constraint.maxWidth,
                       context,
-                      store.getDioFase(),
+                      store.changeFilterUserList,
                     );
                   },
                   child: Icon(
@@ -199,7 +199,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                     Expanded(
-                                      flex: 8,
+                                      flex: 10,
                                       child: BodyHomePageWidget(
                                         constraint: constraint.maxWidth,
                                       ),

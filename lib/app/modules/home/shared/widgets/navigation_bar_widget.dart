@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -39,11 +40,11 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
           onTap: (value) {
             widget.setNavigateBarSelection(value);
           },
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+          borderRadius: BorderRadius.circular(5),
           elevation: 24,
-          fabLocation: BubbleBottomBarFabLocation.end, //new
-          hasNotch: true, //new
-          hasInk: true, //new, gives a cute ink effect
+          fabLocation: BubbleBottomBarFabLocation.end,
+          hasNotch: true,
+          hasInk: true,
           iconSize:
               constraint.maxWidth >= LarguraLayoutBuilder().telaPc ? 48 : 20,
           items: <BubbleBottomBarItem>[
@@ -72,7 +73,8 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
                 Icons.pause_circle,
                 color: Colors.amber,
               ),
-              title: Text("Backlog",
+              title: AutoSizeText("Backlog",
+                  maxLines: 1,
                   style: TextStyle(
                       fontSize:
                           constraint.maxWidth >= LarguraLayoutBuilder().telaPc

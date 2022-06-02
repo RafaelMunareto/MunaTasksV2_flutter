@@ -27,62 +27,62 @@ class _SubItemSaveWidgetState extends State<SubItemSaveWidget> {
                   decoration: BoxDecoration(
                       color: widget.theme ? Colors.black38 : Colors.black12,
                       borderRadius: BorderRadius.circular(4)),
-                  child: ExpansionTile(
-                    initiallyExpanded: true,
-                    expandedCrossAxisAlignment: CrossAxisAlignment.start,
-                    key: UniqueKey(),
-                    title: constraint.maxWidth >
-                            LarguraLayoutBuilder().larguraModal
-                        ? ListTile(
-                            leading: SizedBox(
-                              child: Text(
-                                widget.subtarefa.title,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: widget.theme
-                                        ? Colors.grey
-                                        : Colors.black),
-                              ),
-                            ),
-                            title: MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: Icon(
-                                ConvertIcon()
-                                    .iconStatus(widget.subtarefa.status),
-                                color: ConvertIcon()
-                                    .iconStatusColor(widget.subtarefa.status),
-                              ),
-                            ),
-                            trailing: CircleAvatarWidget(
-                                nameUser: widget.subtarefa.user.name.name,
-                                url: widget.subtarefa.user.urlImage),
-                          )
-                        : Wrap(
-                            children: [
-                              ListTile(
-                                title: SizedBox(
-                                  child: Text(
-                                    widget.subtarefa.title,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 10),
-                                  ),
+                  child: Wrap(
+                    children: [
+                      constraint.maxWidth > LarguraLayoutBuilder().larguraModal
+                          ? ListTile(
+                              leading: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.04,
+                                child: Text(
+                                  widget.subtarefa.title,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: widget.theme
+                                          ? Colors.grey
+                                          : Colors.black),
                                 ),
                               ),
-                              ListTile(
-                                leading: Icon(
+                              title: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: Icon(
                                   ConvertIcon()
                                       .iconStatus(widget.subtarefa.status),
                                   color: ConvertIcon()
                                       .iconStatusColor(widget.subtarefa.status),
                                 ),
-                                trailing: CircleAvatarWidget(
+                              ),
+                              trailing: Padding(
+                                padding: const EdgeInsets.only(right: 24),
+                                child: CircleAvatarWidget(
                                     nameUser: widget.subtarefa.user.name.name,
                                     url: widget.subtarefa.user.urlImage),
                               ),
-                            ],
-                          ),
-                    children: [
+                            )
+                          : Wrap(
+                              children: [
+                                ListTile(
+                                  title: SizedBox(
+                                    child: Text(
+                                      widget.subtarefa.title,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 10),
+                                    ),
+                                  ),
+                                ),
+                                ListTile(
+                                  leading: Icon(
+                                    ConvertIcon()
+                                        .iconStatus(widget.subtarefa.status),
+                                    color: ConvertIcon().iconStatusColor(
+                                        widget.subtarefa.status),
+                                  ),
+                                  trailing: CircleAvatarWidget(
+                                      nameUser: widget.subtarefa.user.name.name,
+                                      url: widget.subtarefa.user.urlImage),
+                                ),
+                              ],
+                            ),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
@@ -82,7 +83,10 @@ class _DateFilterWidgetState extends State<DateFilterWidget> {
             ListTile(
               leading: const Padding(
                 padding: EdgeInsets.only(right: 8.0),
-                child: Text('DATA INICIAL'),
+                child: AutoSizeText(
+                  'DATA INICIAL',
+                  maxLines: 1,
+                ),
               ),
               title: TextField(
                 textAlign: TextAlign.justify,
@@ -104,7 +108,10 @@ class _DateFilterWidgetState extends State<DateFilterWidget> {
             ListTile(
               leading: const Padding(
                 padding: EdgeInsets.only(right: 17.0),
-                child: Text('DATA FINAL'),
+                child: AutoSizeText(
+                  'DATA FINAL',
+                  maxLines: 1,
+                ),
               ),
               title: TextField(
                 textAlign: TextAlign.justify,

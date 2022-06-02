@@ -19,7 +19,10 @@ class HeaderWidget extends StatelessWidget {
             alignment: WrapAlignment.spaceBetween,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              Chip(
+              InputChip(
+                onPressed: () {},
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
                 label: Text(
                   tarefa.etiqueta.etiqueta,
                   style: const TextStyle(fontSize: 10),

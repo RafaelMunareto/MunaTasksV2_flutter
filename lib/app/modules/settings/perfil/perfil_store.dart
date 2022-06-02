@@ -95,6 +95,7 @@ abstract class _PerfilStoreBase with Store {
   }
 
   Future atualizaImagem(String origemImagem) async {
+    client.setLoadingImagem(true);
     if (!kIsWeb && defaultTargetPlatform != TargetPlatform.android) {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
 
@@ -103,12 +104,15 @@ abstract class _PerfilStoreBase with Store {
 
         var imagebytes = await file.readAsBytes();
         List<int> listData = imagebytes.cast();
-        FormData formData = FormData.fromMap({
-          "urlImage": MultipartFile.fromBytes(listData,
-              filename: client.perfilDio.urlImage == ''
-                  ? client.perfilDio.id
-                  : client.perfilDio.urlImage! + '.png'),
-        });
+        FormData formData = FormData.fromMap(
+          {
+            "urlImage": MultipartFile.fromBytes(listData,
+                filename: client.perfilDio.urlImage ==
+                        'http://api.munatask.com/files/'
+                    ? client.perfilDio.id
+                    : client.perfilDio.urlImage!),
+          },
+        );
 
         Response response;
         var dio = await DioStruture().dioAction();
@@ -116,7 +120,6 @@ abstract class _PerfilStoreBase with Store {
             await dio.put('perfil/${client.perfilDio.id}', data: formData);
         DioStruture().statusRequest(response);
         getBydDioId();
-        client.setLoadingImagem(false);
       }
     } else {
       XFile? image;
@@ -136,17 +139,17 @@ abstract class _PerfilStoreBase with Store {
           );
           break;
       }
-      if (image != null) {
-        client.setLoadingImagem(true);
-      }
+
       var imagebytes = await image?.readAsBytes();
       List<int>? listData = imagebytes!.cast();
+
       FormData formData = FormData.fromMap(
         {
           "urlImage": MultipartFile.fromBytes(listData,
-              filename: client.perfilDio.urlImage == ''
-                  ? client.perfilDio.id
-                  : client.perfilDio.urlImage! + '.png'),
+              filename:
+                  client.perfilDio.urlImage == 'http://api.munatask.com/files/'
+                      ? client.perfilDio.id
+                      : client.perfilDio.urlImage!),
         },
       );
       try {

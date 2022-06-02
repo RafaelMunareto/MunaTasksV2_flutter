@@ -4,7 +4,6 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/errors_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
-import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class ButtonSaveCreateSubtarefaWidget extends StatefulWidget {
@@ -28,14 +27,9 @@ class _ButtonSaveCreateSubtarefaWidgetState
     final HomeStore store = Modular.get();
 
     return Padding(
-      padding: widget.constraint > LarguraLayoutBuilder().telaPc
-          ? const EdgeInsets.all(4.0)
-          : const EdgeInsets.all(0),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.94,
-        height: widget.constraint > LarguraLayoutBuilder().telaPc
-            ? MediaQuery.of(context).size.height * 0.055
-            : MediaQuery.of(context).size.height * 0.045,
+      padding: const EdgeInsets.all(8),
+      child: Align(
+        alignment: Alignment.bottomRight,
         child: ElevatedButton.icon(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(

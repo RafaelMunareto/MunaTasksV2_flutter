@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
@@ -24,9 +25,13 @@ class _IconWidgetState extends State<IconWidget> {
   _pickIcon() async {
     IconData? icon = await FlutterIconPicker.showIconPicker(
       context,
-      title: const Text('Escolha um ícone'),
+      title: const AutoSizeText(
+        'Escolha um ícone',
+        maxLines: 1,
+      ),
       searchHintText: 'Pesquisar',
-      closeChild: const Text('Fechar', textScaleFactor: 1.25),
+      closeChild:
+          const AutoSizeText('Fechar', maxLines: 1, textScaleFactor: 1.25),
       iconPackModes: [IconPack.material],
     );
     setState(() {
@@ -52,7 +57,10 @@ class _IconWidgetState extends State<IconWidget> {
                   Icons.settings,
                   color: Colors.grey,
                 ),
-                title: Text('Escolha uma ícone'),
+                title: AutoSizeText(
+                  'Escolha uma ícone',
+                  maxLines: 1,
+                ),
               ),
               onTap: _pickIcon,
             ),

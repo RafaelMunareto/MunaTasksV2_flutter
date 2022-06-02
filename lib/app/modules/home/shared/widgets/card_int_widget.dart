@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
@@ -8,9 +9,9 @@ import 'package:munatasks2/app/modules/home/shared/widgets/button_action_widget.
 import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/header_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/retard_action_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/simple_button_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
@@ -44,7 +45,7 @@ class _CardIntWidgetState extends State<CardIntWidget> {
             ),
             widget.constraint,
             context,
-            store.getDioFase());
+            store.changeFilterUserList);
       },
       child: Dismissible(
         background: Padding(
@@ -109,7 +110,7 @@ class _CardIntWidgetState extends State<CardIntWidget> {
                 ),
                 widget.constraint,
                 context,
-                store.getDioFase());
+                store.changeFilterUserList);
           } else {
             dialogDelete(
               widget.tarefaDioModel.texto,
@@ -126,12 +127,12 @@ class _CardIntWidgetState extends State<CardIntWidget> {
               key: UniqueKey(),
               elevation: 2,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(10),
               ),
               child: ClipPath(
                 clipper: ShapeBorderClipper(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 child: Container(
@@ -156,13 +157,7 @@ class _CardIntWidgetState extends State<CardIntWidget> {
                         children: [
                           GestureDetector(
                             onTap: () => DialogButtom().showDialog(
-                              RetardActionWidget(
-                                retardSelection: store.client.retardSelection,
-                                setRetardSelection:
-                                    store.client.setRetardSelection,
-                                updateDate: store.updateDate,
-                                model: widget.tarefaDioModel,
-                              ),
+                              retard(),
                               store.client.theme,
                               widget.constraint,
                               context,
@@ -194,16 +189,7 @@ class _CardIntWidgetState extends State<CardIntWidget> {
                           ),
                           GestureDetector(
                             onTap: () => DialogButtom().showDialog(
-                              PrioridadeSelectionWidget(
-                                constraint: widget.constraint,
-                                prioridadeSelection:
-                                    store.client.prioridadeSelection,
-                                setPrioridadeSelection:
-                                    store.client.setPrioridadeSelection,
-                                tarefaModel: widget.tarefaDioModel,
-                                changePrioridadeList:
-                                    store.changePrioridadeList,
-                              ),
+                              prioridade(),
                               store.client.theme,
                               widget.constraint,
                               context,
@@ -275,7 +261,10 @@ class _CardIntWidgetState extends State<CardIntWidget> {
                       ? darkThemeData(context).primaryColor
                       : lightThemeData(context).primaryColor),
             ),
-            content: const Text('Tem certeza que deseja excluír a tarefa ?'),
+            content: const AutoSizeText(
+              'Tem certeza que deseja excluír a tarefa ?',
+              maxLines: 1,
+            ),
             actions: [
               SimpleButtonWidget(
                 theme: store.client.theme,
@@ -297,6 +286,109 @@ class _CardIntWidgetState extends State<CardIntWidget> {
           ),
         );
       },
+    );
+  }
+
+  retard() {
+    return Scaffold(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Wrap(
+            runAlignment: WrapAlignment.spaceAround,
+            spacing: 24,
+            children: [
+              for (var linha in store.client.retard)
+                Padding(
+                  padding:
+                      widget.constraint > LarguraLayoutBuilder().larguraModal
+                          ? const EdgeInsets.only(bottom: 16.0)
+                          : const EdgeInsets.only(bottom: 16.0),
+                  child: InputChip(
+                    key: UniqueKey(),
+                    labelPadding: const EdgeInsets.all(2),
+                    elevation: 4.0,
+                    avatar: const Icon(Icons.more_time_rounded),
+                    label: SizedBox(
+                      width: 100,
+                      child: Text(
+                        linha.tempoName,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        store.client.setRetardSelection(linha.tempoValue);
+                        Modular.to.pop();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        store.updateDate(widget.tarefaDioModel);
+                        setState(() {
+                          widget.tarefaDioModel.data = widget
+                              .tarefaDioModel.data
+                              .add(Duration(hours: linha.tempoValue));
+                        });
+                      });
+                    },
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  prioridade() {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Wrap(
+            runAlignment: WrapAlignment.spaceAround,
+            spacing: 24,
+            children: [
+              for (var linha in store.client.settings.prioridade ?? [])
+                Padding(
+                  padding:
+                      widget.constraint > LarguraLayoutBuilder().larguraModal
+                          ? const EdgeInsets.only(bottom: 16.0)
+                          : const EdgeInsets.only(bottom: 16.0),
+                  child: InputChip(
+                    key: ObjectKey(linha),
+                    labelPadding: const EdgeInsets.all(2),
+                    elevation: 8.0,
+                    avatar: linha == 4
+                        ? const Icon(Icons.flag_outlined, color: Colors.grey)
+                        : Icon(
+                            Icons.flag,
+                            color: ConvertIcon().convertColorFlaf(linha),
+                          ),
+                    label: SizedBox(
+                      width: widget.constraint >= LarguraLayoutBuilder().telaPc
+                          ? MediaQuery.of(context).size.width * 0.05
+                          : MediaQuery.of(context).size.width * 0.3,
+                      child: Text(
+                        linha == 4
+                            ? 'Normal'
+                            : 'Prioridade ' + linha.toString(),
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        store.client.setPrioridadeSelection(linha);
+                        store.changePrioridadeList(widget.tarefaDioModel);
+                        FocusScope.of(context).unfocus();
+                        Modular.to.pop();
+                      });
+                    },
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

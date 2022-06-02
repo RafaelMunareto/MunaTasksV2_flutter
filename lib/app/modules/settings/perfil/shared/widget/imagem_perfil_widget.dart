@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,10 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                     ? darkThemeData(context).primaryColor
                     : lightThemeData(context).primaryColor,
               ),
-              title: const Text('Camera'),
+              title: const AutoSizeText(
+                'Camera',
+                maxLines: 1,
+              ),
             ),
           ),
         ),
@@ -69,7 +73,10 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                     ? darkThemeData(context).primaryColor
                     : lightThemeData(context).primaryColor,
               ),
-              title: const Text('Galeria'),
+              title: const AutoSizeText(
+                'Galeria',
+                maxLines: 1,
+              ),
             ),
           ),
         ),
@@ -99,7 +106,10 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                     : lightThemeData(context).primaryColor,
               ),
             ),
-            title: const Text('Galeria'),
+            title: const AutoSizeText(
+              'Galeria',
+              maxLines: 1,
+            ),
           ),
         ),
       ],

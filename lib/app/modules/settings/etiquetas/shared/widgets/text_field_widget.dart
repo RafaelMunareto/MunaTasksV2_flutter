@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatefulWidget {
@@ -35,7 +36,10 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             widget.setEtiqueta(value);
           },
           decoration: const InputDecoration(
-            label: Text('Etiqueta'),
+            label: AutoSizeText(
+              'Etiqueta',
+              maxLines: 1,
+            ),
             icon: Icon(Icons.bookmark),
           ),
         ),

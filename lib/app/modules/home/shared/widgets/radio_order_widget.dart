@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -89,7 +90,10 @@ class _RadioOrderWidgetState extends State<RadioOrderWidget> {
                         onPressed: () {
                           Modular.to.pop();
                         },
-                        child: const Text('FECHAR'),
+                        child: const AutoSizeText(
+                          'FECHAR',
+                          maxLines: 1,
+                        ),
                       ),
                     ),
                   ),

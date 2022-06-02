@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -70,7 +71,8 @@ class _ConfiguracaoWidgetState extends State<ConfiguracaoWidget> {
                 ),
                 label: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-                  child: Text('SAIR',
+                  child: AutoSizeText('SAIR',
+                      maxLines: 1,
                       style: TextStyle(
                         fontSize: 18,
                         color: store.client.isSwitched
@@ -86,7 +88,10 @@ class _ConfiguracaoWidgetState extends State<ConfiguracaoWidget> {
               : Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: ListTile(
-                    title: const Text('VERSÃO DESKTOP'),
+                    title: const AutoSizeText(
+                      'VERSÃO DESKTOP',
+                      maxLines: 1,
+                    ),
                     trailing: ElevatedButton.icon(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
@@ -117,7 +122,8 @@ class _ConfiguracaoWidgetState extends State<ConfiguracaoWidget> {
                       ),
                       label: Padding(
                         padding: const EdgeInsets.fromLTRB(4, 12, 4, 12),
-                        child: Text('BAIXAR',
+                        child: AutoSizeText('BAIXAR',
+                            maxLines: 1,
                             style: TextStyle(
                               fontSize: 18,
                               color: store.client.isSwitched

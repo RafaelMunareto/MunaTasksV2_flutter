@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
@@ -43,7 +44,7 @@ class ErrorsWidget extends StatelessWidget {
             var erro = errors![index];
             return ListTile(
               leading: erro == null
-                  ? const Text('')
+                  ? const AutoSizeText('')
                   : Icon(
                       Icons.error,
                       color: theme ? Colors.redAccent : Colors.red,

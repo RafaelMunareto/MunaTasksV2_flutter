@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
@@ -82,8 +83,9 @@ class _MenuScreenState extends State<MenuScreen> {
                                       child: Padding(
                                         padding:
                                             const EdgeInsets.only(bottom: 16.0),
-                                        child: Text(
+                                        child: AutoSizeText(
                                           "Edite Perfil",
+                                          maxLines: 1,
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: store.client.theme
@@ -108,9 +110,9 @@ class _MenuScreenState extends State<MenuScreen> {
                                           ),
                                           Flexible(
                                             child: SizedBox(
-                                              child: Text(
+                                              child: AutoSizeText(
                                                 "Configurações",
-                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -133,9 +135,9 @@ class _MenuScreenState extends State<MenuScreen> {
                                           ),
                                           Flexible(
                                             child: SizedBox(
-                                              child: Text(
+                                              child: AutoSizeText(
                                                 "Etiquetas",
-                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -159,9 +161,9 @@ class _MenuScreenState extends State<MenuScreen> {
                                           ),
                                           Flexible(
                                             child: SizedBox(
-                                              child: Text(
+                                              child: AutoSizeText(
                                                 "Tarefas",
-                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -184,9 +186,9 @@ class _MenuScreenState extends State<MenuScreen> {
                                           ),
                                           Flexible(
                                             child: SizedBox(
-                                              child: Text(
+                                              child: AutoSizeText(
                                                 "Privacy",
-                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -209,9 +211,9 @@ class _MenuScreenState extends State<MenuScreen> {
                                           ),
                                           Flexible(
                                             child: SizedBox(
-                                              child: Text(
+                                              child: AutoSizeText(
                                                 "Versão ${widget.version}",
-                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                 ),

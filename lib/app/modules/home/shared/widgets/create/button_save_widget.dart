@@ -40,66 +40,65 @@ class _ButtonSaveWidgetState extends State<ButtonSaveWidget> {
       alignment: WrapAlignment.end,
       children: [
         Observer(builder: (_) {
-          return SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.1,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(widget.color),
-              ),
-              onPressed: () {
-                store.clientCreate.setTarefa();
-                if (store.clientCreate.isValidTarefa) {
-                  if (store.clientCreate.tarefaModelSave.id != "") {
-                    store.updateNewTarefa().then((e) {
-                      SnackbarCustom().createSnackBar(
-                        "Tarefa editada com sucesso!",
-                        Colors.green,
-                        context,
-                      );
-                      Modular.to.pop();
-                    }, onError: (error) {
-                      SnackbarCustom().createSnackBar(
-                          error.response?.data['error'] ?? error?.message,
-                          Colors.red,
-                          context);
-                    });
-                  } else {
-                    store.saveNewTarefa().then((e) {
-                      SnackbarCustom().createSnackBar(
-                        "Tarefa salva com sucesso!",
-                        Colors.green,
-                        context,
-                      );
-
-                      if (store.clientCreate.tarefaModelSave.fase ==
-                          store.client.navigateBarSelection) {
-                        var newIndex = store.client.taskDio.length;
-                        final newItem =
-                            (List.of(store.client.taskDio)..shuffle()).first;
-                        store.client.taskDio.insert(newIndex, newItem);
-                      }
-
-                      Modular.to.pop();
-                    }, onError: (error) {
-                      SnackbarCustom().createSnackBar(
-                          error.response?.data['error'] ?? error?.message,
-                          Colors.red,
-                          context);
-                    });
-                  }
+          return ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(widget.color),
+            ),
+            onPressed: () {
+              store.clientCreate.setTarefa();
+              if (store.clientCreate.isValidTarefa) {
+                if (store.clientCreate.tarefaModelSave.id != "") {
+                  store.updateNewTarefa().then((e) {
+                    SnackbarCustom().createSnackBar(
+                      "Tarefa editada com sucesso!",
+                      Colors.green,
+                      context,
+                    );
+                    Modular.to.pop();
+                  }, onError: (error) {
+                    SnackbarCustom().createSnackBar(
+                        error.response?.data['error'] ?? error?.message,
+                        Colors.red,
+                        context);
+                  });
                 } else {
-                  errors(widget.constraint);
+                  store.saveNewTarefa().then((e) {
+                    SnackbarCustom().createSnackBar(
+                      "Tarefa salva com sucesso!",
+                      Colors.green,
+                      context,
+                    );
+
+                    if (store.clientCreate.tarefaModelSave.fase ==
+                        store.client.navigateBarSelection) {
+                      var newIndex = store.client.taskDio.length;
+                      final newItem =
+                          (List.of(store.client.taskDio)..shuffle()).first;
+                      store.client.taskDio.insert(newIndex, newItem);
+                    }
+
+                    Modular.to.pop();
+                  }, onError: (error) {
+                    SnackbarCustom().createSnackBar(
+                        error.response?.data['error'] ?? error?.message,
+                        Colors.red,
+                        context);
+                  });
                 }
-              },
-              child: store.clientCreate.loadingTarefa
-                  ? const CircularProgressWidget()
-                  : Text(
+              } else {
+                errors(widget.constraint);
+              }
+            },
+            child: store.clientCreate.loadingTarefa
+                ? const CircularProgressWidget()
+                : Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
                       store.clientCreate.tarefaModelSave.id != ''
                           ? "EDITAR TAREFA"
                           : 'SALVAR TAREFA',
                     ),
-            ),
+                  ),
           );
         })
       ],

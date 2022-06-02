@@ -139,6 +139,10 @@ abstract class HomeStoreBase with Store {
     await client.setOrderSelection('DATA');
     await client.setColor('blue');
     await client.setIcon(0);
+    changeFilterUserList();
+  }
+
+  getPass() async {
     await client.setUserSelection(PerfilDioModel(
         name: UserDioClientModel(
             name: "TODOS", email: "todos@todos.com.br", password: ""),
@@ -147,10 +151,6 @@ abstract class HomeStoreBase with Store {
         manager: true,
         urlImage: DioStruture().baseUrlMunatasks + 'files/todos.png'));
     await client.setImgUrl(DioStruture().baseUrlMunatasks + 'files/todos.png');
-    getDioFase();
-  }
-
-  getPass() async {
     await client.setLoadingRefresh(true);
     await getDio();
     await badgets();
@@ -175,7 +175,9 @@ abstract class HomeStoreBase with Store {
           .toLowerCase()
           .compareTo(b.etiqueta.etiqueta.toLowerCase()));
       client.setTaskDio(value);
-      client.setTaskDioSearch(value);
+      client.setTaskDioSearch(value
+          .where((element) => element.fase == client.navigateBarSelection)
+          .toList());
     }).whenComplete(() => client.setLoadingTasks(false));
   }
 
@@ -350,20 +352,24 @@ abstract class HomeStoreBase with Store {
   }
 
   changeFilterUserList() async {
-    if (client.userSelection?.name.name != 'TODOS') {
-      dashboardService.getFilterUser(client.userSelection!.id).then((value) {
-        client.setTaskDioSearch(value
-            .where((element) => element.fase == client.navigateBarSelection)
-            .toList());
-      });
-    } else {
+    if (client.userSelection == null) {
       getDioFase();
+    } else {
+      if (client.userSelection?.name.name != 'TODOS') {
+        dashboardService.getFilterUser(client.userSelection!.id).then((value) {
+          client.setTaskDioSearch(value
+              .where((element) => element.fase == client.navigateBarSelection)
+              .toList());
+        }).whenComplete(() => client.setLoadingTasks(false));
+      } else {
+        getDioFase();
+      }
     }
   }
 
   changePrioridadeList(TarefaDioModel model) {
     model.prioridade = client.prioridadeSelection;
-    save(model);
+    dashboardService.updateDio(model);
   }
 
   changeSubtarefaDioAction(
@@ -378,7 +384,7 @@ abstract class HomeStoreBase with Store {
 
   updateDate(TarefaDioModel model) {
     model.data = model.data.add(Duration(hours: client.retardSelection));
-    save(model);
+    dashboardService.updateDio(model);
   }
 
   changeOrderList() {

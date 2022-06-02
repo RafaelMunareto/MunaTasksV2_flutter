@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -50,8 +51,8 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       store.clientCreate.subtarefaTextSave != ""
                           ? !store.clientCreate.editar
@@ -61,33 +62,26 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                   child: GestureDetector(
                                     child: widget.constraint >=
                                             LarguraLayoutBuilder().telaPc
-                                        ? Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                8, 16, 8, 16),
-                                            child: Chip(
-                                              label: const MouseRegion(
-                                                cursor:
-                                                    SystemMouseCursors.click,
-                                                child: Text(
-                                                  'Novo',
-                                                  style:
-                                                      TextStyle(fontSize: 11),
-                                                ),
+                                        ? Chip(
+                                            label: const MouseRegion(
+                                              cursor: SystemMouseCursors.click,
+                                              child: Text(
+                                                'Novo',
+                                                style: TextStyle(fontSize: 11),
                                               ),
-                                              avatar: MouseRegion(
-                                                cursor:
-                                                    SystemMouseCursors.click,
-                                                child: Icon(
-                                                  Icons.add_circle_sharp,
-                                                  color: store.clientCreate
-                                                                  .subtarefaModelSaveTitle !=
-                                                              "" &&
-                                                          store.clientCreate
-                                                                  .subtarefaModelSaveTitle !=
-                                                              "Subtarefa"
-                                                      ? Colors.blue
-                                                      : Colors.grey,
-                                                ),
+                                            ),
+                                            avatar: MouseRegion(
+                                              cursor: SystemMouseCursors.click,
+                                              child: Icon(
+                                                Icons.add_circle_sharp,
+                                                color: store.clientCreate
+                                                                .subtarefaModelSaveTitle !=
+                                                            "" &&
+                                                        store.clientCreate
+                                                                .subtarefaModelSaveTitle !=
+                                                            "Subtarefa"
+                                                    ? Colors.blue
+                                                    : Colors.grey,
                                               ),
                                             ),
                                           )
@@ -258,7 +252,10 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                                 label: MouseRegion(
                                                     cursor: SystemMouseCursors
                                                         .click,
-                                                    child: Text('Equipe')),
+                                                    child: AutoSizeText(
+                                                      'Equipe',
+                                                      maxLines: 1,
+                                                    )),
                                                 avatar: MouseRegion(
                                                   cursor:
                                                       SystemMouseCursors.click,
@@ -276,10 +273,13 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                                   color: Colors.grey,
                                                 ),
                                               )
-                                        : CircleAvatarWidget(
-                                            nameUser: store.clientCreate
-                                                .createUser.name.name,
-                                            url: store.clientCreate.imageUser,
+                                        : MouseRegion(
+                                            cursor: SystemMouseCursors.click,
+                                            child: CircleAvatarWidget(
+                                              nameUser: store.clientCreate
+                                                  .createUser.name.name,
+                                              url: store.clientCreate.imageUser,
+                                            ),
                                           );
                                   },
                                 ),
@@ -292,7 +292,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                   ),
                 ),
                 Expanded(
-                  flex: 8,
+                  flex: 13,
                   child: Wrap(
                     alignment: WrapAlignment.spaceBetween,
                     children: [

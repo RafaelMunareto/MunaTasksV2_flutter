@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
@@ -5,6 +6,7 @@ import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.da
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class SubItemWidget extends StatefulWidget {
@@ -32,61 +34,50 @@ class _SubItemWidgetState extends State<SubItemWidget> {
   Widget build(BuildContext context) {
     final HomeStore store = Modular.get();
 
-    actionSubtarefa(subTarefaModel, constraint) {
-      showDialog(
-        context: context,
-        useSafeArea: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Status'),
-            content: SizedBox(
-              width: constraint > LarguraLayoutBuilder().larguraModal
-                  ? MediaQuery.of(context).size.width * 0.5
-                  : MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.15,
-              child: Center(
-                child: Wrap(
-                  children: [
-                    for (var linha in store.client.subtarefaActionList)
-                      Padding(
-                        padding:
-                            constraint > LarguraLayoutBuilder().larguraModal
-                                ? const EdgeInsets.all(8)
-                                : const EdgeInsets.all(8),
-                        child: InputChip(
-                          key: ObjectKey(linha.toString()),
-                          labelPadding: const EdgeInsets.all(2),
-                          elevation: 4.0,
-                          avatar: Icon(ConvertIcon().iconStatus(linha),
-                              color: ConvertIcon().iconStatusColor(linha)),
-                          label: SizedBox(
-                            child: Text(
-                              ConvertIcon().labelStatus(linha),
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          onPressed: () {
-                            store.client.setSubtarefaAction(linha);
+    listOptions() {
+      return Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: Wrap(
+            children: [
+              for (var linha in store.client.subtarefaActionList)
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: InputChip(
+                    key: ObjectKey(linha.toString()),
+                    labelPadding: const EdgeInsets.all(2),
+                    elevation: 4.0,
+                    avatar: Icon(ConvertIcon().iconStatus(linha),
+                        color: ConvertIcon().iconStatusColor(linha)),
+                    label: AutoSizeText(
+                      ConvertIcon().labelStatus(linha),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                    onPressed: () {
+                      store.client.setSubtarefaAction(linha);
 
-                            store.changeSubtarefaDioAction(
-                              widget.subTarefa,
-                              widget.tarefaModel,
-                            );
-                            setState(() {
-                              widget.subTarefa.status = linha;
-                            });
-                            Modular.to.pop();
-                          },
-                        ),
-                      ),
-                  ],
+                      store.changeSubtarefaDioAction(
+                        widget.subTarefa,
+                        widget.tarefaModel,
+                      );
+                      setState(() {
+                        widget.subTarefa.status = linha;
+                      });
+                      Modular.to.pop();
+                    },
+                  ),
                 ),
-              ),
-            ),
-          );
-        },
+            ],
+          ),
+        ),
       );
+    }
+
+    actionSubtarefa(subTarefaModel, constraint) {
+      DialogButtom()
+          .showDialog(listOptions(), widget.theme, constraint, context);
     }
 
     return LayoutBuilder(builder: (context, constraint) {

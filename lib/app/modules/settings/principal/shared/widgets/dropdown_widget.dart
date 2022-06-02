@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -63,7 +64,10 @@ class _DropdownWidgetState extends State<DropdownWidget> {
               store.client.setEscolha(store.client.settings.color);
               Navigator.pop(context);
             },
-            leading: const Text("Color"),
+            leading: const AutoSizeText(
+              "Color",
+              maxLines: 1,
+            ),
             trailing: const Icon(Icons.color_lens_outlined),
           ),
         ),
@@ -74,7 +78,10 @@ class _DropdownWidgetState extends State<DropdownWidget> {
               store.client.setEscolha(store.client.settings.subtarefaInsert);
               Navigator.pop(context);
             },
-            leading: const Text("Subtarefa"),
+            leading: const AutoSizeText(
+              "Subtarefa",
+              maxLines: 1,
+            ),
             trailing: const Icon(Icons.task),
           ),
         ),
@@ -96,7 +103,10 @@ class _DropdownWidgetState extends State<DropdownWidget> {
               store.client.setEscolha(store.client.settings.retard);
               Navigator.pop(context);
             },
-            leading: const Text("Tempo"),
+            leading: const AutoSizeText(
+              "Tempo",
+              maxLines: 1,
+            ),
             trailing: const Icon(Icons.timelapse_rounded),
           ),
         ),
