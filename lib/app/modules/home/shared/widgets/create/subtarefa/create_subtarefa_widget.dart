@@ -45,7 +45,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                 ? darkThemeData(context).scaffoldBackgroundColor
                 : lightThemeData(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(4)),
-        child: Wrap(
+        child: Column(
           children: [
             Row(
               children: [
@@ -329,9 +329,11 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                 ),
               ],
             ),
-            ButtonSaveCreateSubtarefaWidget(
-              texto: textSubtarefaController,
-              constraint: widget.constraint,
+            Expanded(
+              child: ButtonSaveCreateSubtarefaWidget(
+                texto: textSubtarefaController,
+                constraint: widget.constraint,
+              ),
             ),
           ],
         ),

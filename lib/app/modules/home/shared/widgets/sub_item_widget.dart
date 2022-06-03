@@ -48,11 +48,13 @@ class _SubItemWidgetState extends State<SubItemWidget> {
                     elevation: 4.0,
                     avatar: Icon(ConvertIcon().iconStatus(linha),
                         color: ConvertIcon().iconStatusColor(linha)),
-                    label: AutoSizeText(
-                      ConvertIcon().labelStatus(linha),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 12),
+                    label: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      child: Text(
+                        ConvertIcon().labelStatus(linha),
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 12),
+                      ),
                     ),
                     onPressed: () {
                       store.client.setSubtarefaAction(linha);
