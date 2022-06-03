@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
@@ -9,7 +8,6 @@ import 'package:munatasks2/app/shared/components/name_widget.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
-import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class MenuScreen extends StatefulWidget {
   final ZoomDrawerController controller;

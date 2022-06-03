@@ -31,105 +31,115 @@ class _CreateWidgetState extends State<CreateWidget> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
-        return SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Card(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: ConvertIcon().convertColor(
-                      store.clientCreate.tarefaModelSaveEtiqueta.color,
-                    ) ??
-                    Colors.grey,
-                width: 2,
-              ),
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-            child: Column(
-              children: [
-                Flexible(
-                  flex: 3,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () => Modular.to.pop(),
-                        child: MouseRegion(
-                            cursor: SystemMouseCursors.click,
-                            child: Icon(
-                              Icons.close,
-                              color: ConvertIcon().convertColor(
-                                    store.clientCreate.tarefaModelSaveEtiqueta
-                                        .color,
-                                  ) ??
-                                  Colors.grey,
-                              size: 36,
-                            )),
-                      )
-                    ],
-                  ),
+        return Align(
+          alignment: Alignment.topCenter,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.85,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  color: ConvertIcon().convertColor(
+                        store.clientCreate.tarefaModelSaveEtiqueta.color,
+                      ) ??
+                      Colors.grey,
+                  width: 2,
                 ),
-                Flexible(
-                  flex: 3,
-                  child: SizedBox(
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
                     width: MediaQuery.of(context).size.width,
-                    child: Wrap(
-                      alignment: WrapAlignment.spaceAround,
-                      crossAxisAlignment: WrapCrossAlignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        EtiquetasSaveWidget(
-                          constraint: widget.constraint,
-                        ),
-                        ActionFaseSaveWidget(constraint: widget.constraint),
-                        PrioridadeSaveWidget(constraint: widget.constraint),
-                        widget.constraint > LarguraLayoutBuilder().telaPc
-                            ? SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.1,
-                                child: UsersSaveWidget(
-                                    constraint: widget.constraint),
-                              )
-                            : Container(),
-                        widget.constraint > LarguraLayoutBuilder().telaPc
-                            ? SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.1,
-                                child: DateSaveWidget(
-                                  dateController: dateController,
-                                  constraint: widget.constraint,
-                                ),
-                              )
-                            : Container()
+                        GestureDetector(
+                          onTap: () => Modular.to.pop(),
+                          child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: Icon(
+                                Icons.close,
+                                color: ConvertIcon().convertColor(
+                                      store.clientCreate.tarefaModelSaveEtiqueta
+                                          .color,
+                                    ) ??
+                                    Colors.grey,
+                                size: 36,
+                              )),
+                        )
                       ],
                     ),
                   ),
-                ),
-                Flexible(
-                  flex: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
-                    child: TextSaveWidget(controller: textController),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    width: MediaQuery.of(context).size.width,
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Wrap(
+                        alignment: WrapAlignment.spaceAround,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          EtiquetasSaveWidget(
+                            constraint: widget.constraint,
+                          ),
+                          ActionFaseSaveWidget(constraint: widget.constraint),
+                          PrioridadeSaveWidget(constraint: widget.constraint),
+                          widget.constraint > LarguraLayoutBuilder().telaTablet
+                              ? SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.1,
+                                  child: MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: UsersSaveWidget(
+                                        constraint: widget.constraint),
+                                  ),
+                                )
+                              : Container(),
+                          widget.constraint > LarguraLayoutBuilder().telaTablet
+                              ? SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.2,
+                                  child: DateSaveWidget(
+                                    dateController: dateController,
+                                    constraint: widget.constraint,
+                                  ),
+                                )
+                              : Container()
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                Flexible(
-                  flex: 21,
-                  child: CreateSubtarefaWidget(
-                    constraint: widget.constraint,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.15,
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
+                      child: TextSaveWidget(controller: textController),
+                    ),
                   ),
-                ),
-                Expanded(child: Container()),
-                Flexible(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ButtonSaveWidget(
-                      color: ConvertIcon().convertColor(
-                            store.clientCreate.tarefaModelSaveEtiqueta.color,
-                          ) ??
-                          Colors.grey,
+                  Expanded(
+                    child: CreateSubtarefaWidget(
                       constraint: widget.constraint,
                     ),
                   ),
-                )
-              ],
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.12,
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ButtonSaveWidget(
+                        color: ConvertIcon().convertColor(
+                              store.clientCreate.tarefaModelSaveEtiqueta.color,
+                            ) ??
+                            Colors.grey,
+                        constraint: widget.constraint,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );

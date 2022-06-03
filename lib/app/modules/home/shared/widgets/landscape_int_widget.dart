@@ -77,7 +77,7 @@ class _LandscapeIntWidgetState extends State<LandscapeIntWidget> {
                                   child: Text(
                                     ' ' + totais.name!.name.name,
                                     textAlign: TextAlign.justify,
-                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: widget.theme

@@ -22,6 +22,7 @@ class AppModule extends Module {
     Bind.instance<LocalAuthentication>(LocalAuthentication()),
     Bind.singleton<ThemePreferences>((i) => ThemePreferences()),
     Bind.singleton<IAuthRepository>((i) => AuthRepository()),
+    Bind.singleton<IAuthRepository>((i) => AuthRepository()),
     Bind.singleton<IBiometricRepository>((i) => BiometricRepository()),
     Bind.singleton<AuthController>((i) =>
         AuthController(authRepository: i.get(), biometricRepository: i.get())),

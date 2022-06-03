@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -41,15 +40,6 @@ class _HomePageState extends State<HomePage> {
     super.didChangeDependencies();
     autorun(
       (_) {
-        if (store.client.settingsUser.mobile) {
-          if (!kIsWeb && defaultTargetPlatform != TargetPlatform.windows) {
-            if (store.client.loadingNotifications == true) {
-              Timer.periodic(const Duration(minutes: 10), (value) {
-                store.getNotificationsBd();
-              });
-            }
-          }
-        }
         if (Platform.isWindows && store.client.checkUpdateDesktop) {
           checkUpdateDesktop();
         }

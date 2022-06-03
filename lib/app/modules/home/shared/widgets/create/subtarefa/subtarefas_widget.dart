@@ -19,110 +19,112 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.45,
-      child: Observer(
-        builder: (_) {
-          return store.clientCreate.loadingSubtarefa
-              ? const CircularProgressWidget()
-              : ReorderableListView.builder(
-                  scrollDirection: Axis.vertical,
-                  physics: const ScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(4),
-                  itemCount: store.clientCreate.subtarefas.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var model = store.clientCreate.subtarefas[index];
-                    return GestureDetector(
-                      key: ValueKey(index),
-                      onDoubleTap: () {
-                        store.clientCreate.setEditar(true);
-                        store.clientCreate.setSubtarefaUpdate(model);
-                        store.clientCreate
-                            .setSubtarefasUpdate(store.clientCreate.subtarefas);
-                      },
-                      child: Dismissible(
-                        background: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.green,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Row(
-                                children: const [
-                                  Icon(
-                                    Icons.edit,
-                                    color: Colors.white,
-                                  ),
-                                  Text(
-                                    'Editar',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        secondaryBackground: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.red,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
-                                  Icon(
-                                    Icons.delete,
-                                    color: Colors.white,
-                                  ),
-                                  Text(
-                                    'Excluir',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        key: UniqueKey(),
-                        onDismissed: (direction) {
-                          if (direction == DismissDirection.startToEnd) {
-                            store.clientCreate.setEditar(true);
-                            store.clientCreate.setSubtarefaUpdate(model);
-                            store.clientCreate.setSubtarefasUpdate(
-                                store.clientCreate.subtarefas);
-                          } else {
-                            store.clientCreate.removeDismissSubtarefa(model);
-                            SnackbarCustom().createSnackBar(
-                                '${model.title} excluída',
-                                Colors.green,
-                                context);
-                          }
+      height: MediaQuery.of(context).size.height * 0.35,
+      child: SingleChildScrollView(
+        child: Observer(
+          builder: (_) {
+            return store.clientCreate.loadingSubtarefa
+                ? const CircularProgressWidget()
+                : ReorderableListView.builder(
+                    scrollDirection: Axis.vertical,
+                    physics: const ScrollPhysics(),
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(4),
+                    itemCount: store.clientCreate.subtarefas.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var model = store.clientCreate.subtarefas[index];
+                      return GestureDetector(
+                        key: ValueKey(index),
+                        onDoubleTap: () {
+                          store.clientCreate.setEditar(true);
+                          store.clientCreate.setSubtarefaUpdate(model);
+                          store.clientCreate.setSubtarefasUpdate(
+                              store.clientCreate.subtarefas);
                         },
-                        child: SubItemSaveWidget(
-                          theme: store.client.theme,
-                          subtarefa: model,
+                        child: Dismissible(
+                          background: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.green,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15),
+                                child: Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    ),
+                                    Text(
+                                      'Editar',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          secondaryBackground: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.red,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: const [
+                                    Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                    ),
+                                    Text(
+                                      'Excluir',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          key: UniqueKey(),
+                          onDismissed: (direction) {
+                            if (direction == DismissDirection.startToEnd) {
+                              store.clientCreate.setEditar(true);
+                              store.clientCreate.setSubtarefaUpdate(model);
+                              store.clientCreate.setSubtarefasUpdate(
+                                  store.clientCreate.subtarefas);
+                            } else {
+                              store.clientCreate.removeDismissSubtarefa(model);
+                              SnackbarCustom().createSnackBar(
+                                  '${model.title} excluída',
+                                  Colors.green,
+                                  context);
+                            }
+                          },
+                          child: SubItemSaveWidget(
+                            theme: store.client.theme,
+                            subtarefa: model,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  onReorder: (int oldIndex, int newIndex) {
-                    setState(() {
-                      if (oldIndex < newIndex) {
-                        newIndex -= 1;
-                      }
-                      final dynamic item =
-                          store.clientCreate.subtarefas.removeAt(oldIndex);
-                      store.clientCreate.subtarefas.insert(newIndex, item);
+                      );
+                    },
+                    onReorder: (int oldIndex, int newIndex) {
+                      setState(() {
+                        if (oldIndex < newIndex) {
+                          newIndex -= 1;
+                        }
+                        final dynamic item =
+                            store.clientCreate.subtarefas.removeAt(oldIndex);
+                        store.clientCreate.subtarefas.insert(newIndex, item);
+                      });
                     });
-                  });
-        },
+          },
+        ),
       ),
     );
   }

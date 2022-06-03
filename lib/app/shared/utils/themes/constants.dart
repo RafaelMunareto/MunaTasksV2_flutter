@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const kPrimaryColor = Colors.deepPurple;
-var kPrimaryColorLight = Colors.deepPurple.shade300;
+var kPrimaryColorLight = Colors.deepPurple.shade200;
 var kPrimaryColorDark = Colors.deepPurple.shade700;
 var kPrimaryColorBright = Colors.deepPurpleAccent;
 const kSecondaryColor = Colors.orange;

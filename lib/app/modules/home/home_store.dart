@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
@@ -23,6 +24,7 @@ import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_in
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/notification_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 part 'home_store.g.dart';
 
@@ -34,12 +36,14 @@ abstract class HomeStoreBase with Store {
   final AuthController auth = Modular.get();
   final ClientStore client = Modular.get();
   final ClientCreateStore clientCreate = Modular.get();
+  IO.Socket? socket;
 
   HomeStoreBase({required this.dashboardService}) {
     getList();
   }
 
   void getList() async {
+    await connectToServer();
     await getVersion();
     await client.setLoading(true);
     await client.setLoadingTasks(true);
@@ -99,10 +103,8 @@ abstract class HomeStoreBase with Store {
       await dashboardService
           .getNotifications(client.perfilUserLogado.id)
           .then((e) {
-            client.setNotifications(e);
-          })
-          .then((value) => client.setLoadingNotifications(true))
-          .whenComplete(() =>
+        client.setNotifications(e);
+      }).whenComplete(() =>
               dashboardService.deleteNotifications(client.perfilUserLogado.id));
 
       if (client.notifications.isNotEmpty) {
@@ -303,7 +305,30 @@ abstract class HomeStoreBase with Store {
               dashboardService.emailDio(value.data['id'], '1');
             }
           });
+    socket!.emit('updateList', true);
     getPass();
+  }
+
+  connectToServer() {
+    socket = IO.io('http://api.munatask.com:3030', <String, dynamic>{
+      'transports': ['websocket']
+    });
+    socket!.onConnect((_) {
+      if (kDebugMode) {
+        print('connect');
+      }
+    });
+    socket!.on('new_task', (data) => getNotificationsBd());
+    socket!.on('updateList', (data) {
+      getDio();
+      badgets();
+      getDioTotal();
+    });
+    socket!.onDisconnect((_) {
+      if (kDebugMode) {
+        print('disconnect');
+      }
+    });
   }
 
   Future saveNewTarefa() async {
@@ -312,17 +337,22 @@ abstract class HomeStoreBase with Store {
         dashboardService.emailDio(value.data['id'], '0');
       }
     });
+    socket!.emit('newTaskFront', true);
+
     getPass();
   }
 
   Future updateNewTarefa() async {
     await dashboardService.updateDio(clientCreate.tarefaModelSave);
+    socket!.emit('updateList', true);
     getPass();
   }
 
   void deleteDioTasks(TarefaDioModel model) async {
     await dashboardService.deleteDio(model);
-    getPass();
+    socket!.emit('updateList', true);
+    badgets();
+    getDioTotal();
   }
 
   changeFilterEtiquetaList() {
@@ -386,6 +416,7 @@ abstract class HomeStoreBase with Store {
 
   changePrioridadeList(TarefaDioModel model) {
     model.prioridade = client.prioridadeSelection;
+    socket!.emit('updateList', true);
     dashboardService.updateDio(model);
   }
 
@@ -401,6 +432,7 @@ abstract class HomeStoreBase with Store {
 
   updateDate(TarefaDioModel model) {
     model.data = model.data.add(Duration(hours: client.retardSelection));
+    socket!.emit('updateList', true);
     dashboardService.updateDio(model);
   }
 

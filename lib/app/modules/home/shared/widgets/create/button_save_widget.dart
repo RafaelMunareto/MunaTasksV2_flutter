@@ -91,12 +91,20 @@ class _ButtonSaveWidgetState extends State<ButtonSaveWidget> {
             },
             child: store.clientCreate.loadingTarefa
                 ? const CircularProgressWidget()
-                : Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      store.clientCreate.tarefaModelSave.id != ''
-                          ? "EDITAR TAREFA"
-                          : 'SALVAR TAREFA',
+                : SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    child: Center(
+                      child: Text(
+                        store.clientCreate.tarefaModelSave.id != ''
+                            ? "EDITAR TAREFA"
+                            : 'SALVAR TAREFA',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
           );

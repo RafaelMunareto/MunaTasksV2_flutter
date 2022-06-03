@@ -9,7 +9,6 @@ import 'app/app_widget.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService().initNotification();
-  runApp(ModularApp(module: AppModule(), child: const AppWidget()));
   doWhenWindowReady(() {
     final win = appWindow;
     const initialSize = Size(1600, 900);
@@ -19,4 +18,5 @@ void main() async {
     win.title = "Munatask";
     win.show();
   });
+  runApp(ModularApp(module: AppModule(), child: const AppWidget()));
 }
