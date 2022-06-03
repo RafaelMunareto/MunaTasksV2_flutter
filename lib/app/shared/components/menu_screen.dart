@@ -73,7 +73,8 @@ class _MenuScreenState extends State<MenuScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Center(
+                                      Align(
+                                        alignment: Alignment.topLeft,
                                         child: NameWidget(
                                           store: store,
                                           constraint: widget.constraint,

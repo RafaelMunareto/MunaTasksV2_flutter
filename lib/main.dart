@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -9,6 +11,8 @@ import 'app/app_widget.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService().initNotification();
+  runApp(ModularApp(module: AppModule(), child: const AppWidget()));
+  if(Platform.isWindows){
   doWhenWindowReady(() {
     final win = appWindow;
     const initialSize = Size(1600, 900);
@@ -18,5 +22,5 @@ void main() async {
     win.title = "Munatask";
     win.show();
   });
-  runApp(ModularApp(module: AppModule(), child: const AppWidget()));
+  }
 }

@@ -29,7 +29,7 @@ class PopMenuWidget extends StatelessWidget {
                   ),
                   label: Text(
                     perfil.name.name,
-                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 )
               : Container(),

@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
@@ -28,6 +30,56 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
   late Animation<double> _animacaoSize2;
   final ClientStore client = Modular.get();
   final PerfilStore store = Modular.get();
+  final ImagePicker picker = ImagePicker();
+  CroppedFile? imageFile;
+
+  List<PlatformUiSettings>? buildUiSettings(BuildContext context) {
+    return [
+      AndroidUiSettings(
+          toolbarTitle: 'Recortar',
+          toolbarColor: Colors.deepOrange,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false),
+      IOSUiSettings(
+        title: 'Recortar',
+      ),
+    ];
+  }
+
+  _getFromGallery() async {
+    XFile? pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    _cropImage(pickedFile);
+  }
+
+  _getFromCamera() async {
+    XFile? pickedFile = await picker.pickImage(
+      source: ImageSource.camera,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    _cropImage(pickedFile);
+  }
+
+  _cropImage(filePath) async {
+    if (filePath != null) {
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: filePath.path!,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 100,
+        uiSettings: buildUiSettings(context),
+      );
+      if (croppedFile != null) {
+        setState(() {
+          store.atualizaImagem(croppedFile);
+        });
+      }
+    }
+  }
 
   popMenu() {
     return PopupMenuButton(
@@ -40,9 +92,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
-          onTap: () {
-            store.atualizaImagem("camera");
-          },
+          onTap: () => _getFromCamera(),
           child: SizedBox(
             width: double.infinity,
             child: ListTile(
@@ -62,7 +112,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
         const PopupMenuDivider(),
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
-          onTap: () => {store.atualizaImagem("galeria")},
+          onTap: () => _getFromGallery(),
           child: SizedBox(
             width: double.infinity,
             child: ListTile(
@@ -94,7 +144,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
-          onTap: () => {store.atualizaImagem("galeria")},
+          onTap: () => _getFromGallery(),
           child: ListTile(
             leading: MouseRegion(
               cursor: SystemMouseCursors.click,

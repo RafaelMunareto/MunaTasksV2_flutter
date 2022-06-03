@@ -25,6 +25,7 @@ class HeaderWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5)),
                 label: Text(
                   tarefa.etiqueta.etiqueta,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 10),
                 ),
                 avatar: Icon(

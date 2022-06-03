@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -50,7 +49,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
             Row(
               children: [
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -67,6 +66,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                               cursor: SystemMouseCursors.click,
                                               child: Text(
                                                 'Novo',
+                                                overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(fontSize: 11),
                                               ),
                                             ),
@@ -117,6 +117,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                             ? store.clientCreate
                                                 .subtarefaModelSaveTitle
                                             : 'Subtarefa',
+                                        overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(fontSize: 11),
                                       ),
                                     ),
@@ -178,6 +179,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                       child: Text(
                                         ConvertIcon().nameStatus(
                                             store.clientCreate.fase),
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: ConvertIcon()
@@ -252,9 +254,10 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                                                 label: MouseRegion(
                                                     cursor: SystemMouseCursors
                                                         .click,
-                                                    child: AutoSizeText(
+                                                    child: Text(
                                                       'Equipe',
-                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                     )),
                                                 avatar: MouseRegion(
                                                   cursor:
@@ -292,7 +295,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
                   ),
                 ),
                 Expanded(
-                  flex: 13,
+                  flex: 12,
                   child: Wrap(
                     alignment: WrapAlignment.spaceBetween,
                     children: [

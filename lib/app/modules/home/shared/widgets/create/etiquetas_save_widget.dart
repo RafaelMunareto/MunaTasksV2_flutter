@@ -44,6 +44,7 @@ class _EtiquetasSaveWidgetState extends State<EtiquetasSaveWidget> {
                       : store.clientCreate.tarefaModelSaveEtiqueta.icon != null
                           ? store.clientCreate.tarefaModelSaveEtiqueta.etiqueta
                           : 'Etiqueta',
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize:
                         widget.constraint > LarguraLayoutBuilder().larguraModal

@@ -37,13 +37,8 @@ class _CardIntWidgetState extends State<CardIntWidget> {
           widget.tarefaDioModel,
         );
         store.clientCreate.cleanSubtarefa();
-        DialogButtom().showDialogCreate(
-            CreateWidget(
-              constraint: widget.constraint,
-            ),
-            widget.constraint,
-            context,
-            store.changeFilterUserList);
+        DialogButtom().showDialogCreate(const CreateWidget(), widget.constraint,
+            context, store.changeFilterUserList);
       },
       child: Dismissible(
         background: Padding(
@@ -102,13 +97,8 @@ class _CardIntWidgetState extends State<CardIntWidget> {
               widget.tarefaDioModel,
             );
             store.clientCreate.cleanSubtarefa();
-            DialogButtom().showDialogCreate(
-                CreateWidget(
-                  constraint: widget.constraint,
-                ),
-                widget.constraint,
-                context,
-                store.changeFilterUserList);
+            DialogButtom().showDialogCreate(const CreateWidget(),
+                widget.constraint, context, store.changeFilterUserList);
           } else {
             dialogDelete(
               widget.tarefaDioModel.texto,

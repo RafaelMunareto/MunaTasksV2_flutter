@@ -152,9 +152,7 @@ class _HomePageState extends State<HomePage> {
                     store.clientCreate.cleanSubtarefa();
                     store.clientCreate.setEditar(false);
                     DialogButtom().showDialogCreate(
-                      CreateWidget(
-                        constraint: constraint.maxWidth,
-                      ),
+                      const CreateWidget(),
                       constraint.maxWidth,
                       context,
                       store.changeFilterUserList,

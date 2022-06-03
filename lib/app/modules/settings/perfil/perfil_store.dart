@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/perfil/services/interfaces/perfil_service_interface.dart';
@@ -94,54 +92,29 @@ abstract class _PerfilStoreBase with Store {
     getBydDioId();
   }
 
-  Future atualizaImagem(String origemImagem) async {
+  Future atualizaImagem(CroppedFile image) async {
     client.setLoadingImagem(true);
     if (!kIsWeb && defaultTargetPlatform != TargetPlatform.android) {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      var imagebytes = await image.readAsBytes();
+      List<int> listData = imagebytes.cast();
+      FormData formData = FormData.fromMap(
+        {
+          "urlImage": MultipartFile.fromBytes(listData,
+              filename:
+                  client.perfilDio.urlImage == 'http://api.munatask.com/files/'
+                      ? client.perfilDio.id
+                      : client.perfilDio.urlImage!),
+        },
+      );
 
-      if (result != null) {
-        File file = File(result.files.single.path!);
-
-        var imagebytes = await file.readAsBytes();
-        List<int> listData = imagebytes.cast();
-        FormData formData = FormData.fromMap(
-          {
-            "urlImage": MultipartFile.fromBytes(listData,
-                filename: client.perfilDio.urlImage ==
-                        'http://api.munatask.com/files/'
-                    ? client.perfilDio.id
-                    : client.perfilDio.urlImage!),
-          },
-        );
-
-        Response response;
-        var dio = await DioStruture().dioAction();
-        response =
-            await dio.put('perfil/${client.perfilDio.id}', data: formData);
-        DioStruture().statusRequest(response);
-        getBydDioId();
-      }
+      Response response;
+      var dio = await DioStruture().dioAction();
+      response = await dio.put('perfil/${client.perfilDio.id}', data: formData);
+      DioStruture().statusRequest(response);
+      getBydDioId();
     } else {
-      XFile? image;
-      switch (origemImagem) {
-        case "camera":
-          image = await picker.pickImage(
-            source: ImageSource.camera,
-            maxWidth: 1800,
-            maxHeight: 1800,
-          );
-          break;
-        case "galeria":
-          image = await picker.pickImage(
-            source: ImageSource.gallery,
-            maxWidth: 1800,
-            maxHeight: 1800,
-          );
-          break;
-      }
-
-      var imagebytes = await image?.readAsBytes();
-      List<int>? listData = imagebytes!.cast();
+      var imagebytes = await image.readAsBytes();
+      List<int>? listData = imagebytes.cast();
 
       FormData formData = FormData.fromMap(
         {

@@ -39,6 +39,7 @@ class _ActionFaseSaveWidgetState extends State<ActionFaseSaveWidget> {
                   cursor: SystemMouseCursors.click,
                   child: Text(
                     ConvertIcon().nameStatus(store.clientCreate.faseTarefa),
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: widget.constraint >

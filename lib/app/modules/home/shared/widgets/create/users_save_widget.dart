@@ -46,6 +46,7 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                         : Chip(
                             label: Text(
                               'Equipe',
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: widget.constraint >
                                           LarguraLayoutBuilder().larguraModal
