@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:crop_image/crop_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -11,7 +10,7 @@ import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
-// import 'package:image_cropper_for_web/image_cropper_for_web.dart';
+//import 'package:image_cropper_for_web/image_cropper_for_web.dart';
 
 class ImagemPerfilWidget extends StatefulWidget {
   final dynamic errorName;
@@ -34,11 +33,6 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
   final PerfilStore store = Modular.get();
   final ImagePicker picker = ImagePicker();
   CroppedFile? imageFile;
-
-  final controller = CropController(
-    aspectRatio: 1,
-    defaultCrop: const Rect.fromLTRB(0.1, 0.1, 0.9, 0.9),
-  );
 
   List<PlatformUiSettings>? buildUiSettings(BuildContext context) {
     return [
