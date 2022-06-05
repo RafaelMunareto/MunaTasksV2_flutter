@@ -7,7 +7,9 @@ import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class SubtarefasWidget extends StatefulWidget {
-  const SubtarefasWidget({Key? key}) : super(key: key);
+  final TextEditingController controller;
+  const SubtarefasWidget({Key? key, required this.controller})
+      : super(key: key);
 
   @override
   State<SubtarefasWidget> createState() => _SubtarefasWidgetState();
@@ -19,7 +21,7 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.35,
+      height: MediaQuery.of(context).size.height * 0.3,
       child: SingleChildScrollView(
         child: Observer(
           builder: (_) {
@@ -40,6 +42,7 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                           store.clientCreate.setSubtarefaUpdate(model);
                           store.clientCreate.setSubtarefasUpdate(
                               store.clientCreate.subtarefas);
+                          widget.controller.text = model.texto;
                         },
                         child: Dismissible(
                           background: Padding(

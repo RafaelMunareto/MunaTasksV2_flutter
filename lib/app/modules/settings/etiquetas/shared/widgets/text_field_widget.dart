@@ -6,13 +6,15 @@ class TextFieldWidget extends StatefulWidget {
   final bool loading;
   final Function setEtiqueta;
   final String? reference;
-  const TextFieldWidget(
-      {Key? key,
-      this.etiqueta = "",
-      this.loading = false,
-      required this.setEtiqueta,
-      required this.reference})
-      : super(key: key);
+  final TextEditingController controller;
+  const TextFieldWidget({
+    Key? key,
+    this.etiqueta = "",
+    this.loading = false,
+    required this.setEtiqueta,
+    required this.reference,
+    required this.controller,
+  }) : super(key: key);
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -21,6 +23,16 @@ class TextFieldWidget extends StatefulWidget {
 class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) {
+    if (widget.etiqueta != '') {
+      setState(() {
+        widget.controller.text = widget.etiqueta.toString();
+      });
+    } else {
+      setState(() {
+        widget.controller.text = '';
+      });
+    }
+
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Padding(
@@ -31,10 +43,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               : widget.loading
                   ? Key(widget.etiqueta.toString())
                   : null,
-          initialValue: widget.etiqueta,
-          onChanged: (value) {
-            widget.setEtiqueta(value);
-          },
+          controller: widget.controller,
           decoration: const InputDecoration(
             label: AutoSizeText(
               'Etiqueta',

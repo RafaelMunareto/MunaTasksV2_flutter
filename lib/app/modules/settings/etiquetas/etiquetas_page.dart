@@ -10,7 +10,6 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/text_fi
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/widgets/validate_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/button_widget.dart';
-import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
@@ -27,7 +26,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
     with SingleTickerProviderStateMixin {
   final EtiquetasStore store = Modular.get();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  TextEditingController controller = TextEditingController();
   late AnimationController _controller;
   late Animation<double> opacidade;
   late Animation<double> radius;
@@ -159,6 +158,8 @@ class EtiquetasPageState extends State<EtiquetasPage>
                                               .setCleanVariables();
                                           store.etiquetaStore
                                               .setUpdateLoading(false);
+                                          FocusScope.of(context)
+                                              .requestFocus(FocusNode());
                                         },
                                         icon: const Icon(
                                           Icons.add,
@@ -176,6 +177,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
                       Observer(builder: (_) {
                         return TextFieldWidget(
                           etiqueta: store.etiquetaStore.etiqueta,
+                          controller: controller,
                           loading: store.etiquetaStore.loading,
                           reference: store.etiquetaStore.id,
                           setEtiqueta: store.etiquetaStore.setEtiqueta,
@@ -215,11 +217,13 @@ class EtiquetasPageState extends State<EtiquetasPage>
                           padding: const EdgeInsets.all(8.0),
                           child: ButtonWidget(
                             theme: store.etiquetaStore.theme,
+                            setEtiqueta: store.etiquetaStore.setEtiqueta,
                             label: store.etiquetaStore.updateLoading
                                 ? 'ATUALIZAR'
                                 : 'SALVAR',
                             width: MediaQuery.of(context).size.width * 0.5,
                             loading: store.etiquetaStore.loading,
+                            controller: controller,
                             function: store.submitDio,
                           ),
                         );
@@ -237,17 +241,7 @@ class EtiquetasPageState extends State<EtiquetasPage>
                               : Container();
                         },
                       ),
-                      Observer(builder: (_) {
-                        return store.etiquetaStore.loading
-                            ? SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.4,
-                                width: MediaQuery.of(context).size.width,
-                                child: const Center(
-                                    child: CircularProgressWidget()),
-                              )
-                            : const EtiquetasWidget();
-                      })
+                      const EtiquetasWidget(),
                     ],
                   ),
                 ),

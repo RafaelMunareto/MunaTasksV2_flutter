@@ -62,9 +62,11 @@ class _SubItemWidgetState extends State<SubItemWidget> {
                         widget.subTarefa,
                         widget.tarefaModel,
                       );
-                      setState(() {
-                        widget.subTarefa.status = linha;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          widget.subTarefa.status = linha;
+                        });
+                      }
                       Modular.to.pop();
                     },
                   ),

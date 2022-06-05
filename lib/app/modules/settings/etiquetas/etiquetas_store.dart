@@ -69,6 +69,7 @@ abstract class _EtiquetasStoreBase with Store {
         etiquetaStore.setLoading(false);
         etiquetaStore.setCleanVariables();
         etiquetaStore.setUpdateLoading(false);
+        etiquetaStore.setEtiqueta('');
         etiquetaStore.setExpansionTitle(false);
         getDio();
       }, onError: (erro) {

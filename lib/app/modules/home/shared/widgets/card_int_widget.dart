@@ -305,17 +305,19 @@ class _CardIntWidgetState extends State<CardIntWidget> {
                       ),
                     ),
                     onPressed: () {
-                      setState(() {
-                        store.client.setRetardSelection(linha.tempoValue);
-                        Modular.to.pop();
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        store.updateDate(widget.tarefaDioModel);
+                      if (mounted) {
                         setState(() {
-                          widget.tarefaDioModel.data = widget
-                              .tarefaDioModel.data
-                              .add(Duration(hours: linha.tempoValue));
+                          store.client.setRetardSelection(linha.tempoValue);
+                          Modular.to.pop();
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          store.updateDate(widget.tarefaDioModel);
+                          setState(() {
+                            widget.tarefaDioModel.data = widget
+                                .tarefaDioModel.data
+                                .add(Duration(hours: linha.tempoValue));
+                          });
                         });
-                      });
+                      }
                     },
                   ),
                 ),
@@ -364,12 +366,14 @@ class _CardIntWidgetState extends State<CardIntWidget> {
                       ),
                     ),
                     onPressed: () {
-                      setState(() {
-                        store.client.setPrioridadeSelection(linha);
-                        store.changePrioridadeList(widget.tarefaDioModel);
-                        FocusScope.of(context).unfocus();
-                        Modular.to.pop();
-                      });
+                      if (mounted) {
+                        setState(() {
+                          store.client.setPrioridadeSelection(linha);
+                          store.changePrioridadeList(widget.tarefaDioModel);
+                          FocusScope.of(context).unfocus();
+                          Modular.to.pop();
+                        });
+                      }
                     },
                   ),
                 ),

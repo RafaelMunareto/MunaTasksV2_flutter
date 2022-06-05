@@ -35,79 +35,95 @@ class _ListSettingsWidgetState extends State<ListSettingsWidget> {
             },
             itemBuilder: (BuildContext context, int index) {
               var linha = store.client.escolha[index];
-              return Wrap(
-                children: [
-                  Dismissible(
-                    background: Container(
-                      color: Colors.green,
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Row(
-                          children: const [
-                            Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              'Editar',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
+              return GestureDetector(
+                onDoubleTap: () {
+                  store.client.setValueEscolha(linha);
+                  DialogButtom().showDialog(
+                    DialogInputWidget(
+                      value: linha,
+                      editar: store.edit,
+                      constraint: widget.constraint,
                     ),
-                    secondaryBackground: Container(
-                      color: Colors.red,
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
-                            Icon(
-                              Icons.delete,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              'Excluir',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    key: UniqueKey(),
-                    onDismissed: (direction) {
-                      if (direction == DismissDirection.startToEnd) {
-                        store.client.setValueEscolha(linha);
-                        DialogButtom().showDialog(
-                          DialogInputWidget(
-                            value: linha,
-                            editar: store.edit,
-                            constraint: widget.constraint,
+                    store.client.isSwitched,
+                    widget.constraint,
+                    context,
+                  );
+                  store.client.setEscolha(store.client.escolha);
+                },
+                child: Wrap(
+                  children: [
+                    Dismissible(
+                      background: Container(
+                        color: Colors.green,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                'Editar',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
                           ),
-                          store.client.isSwitched,
-                          widget.constraint,
-                          context,
-                        );
-                        store.client.setEscolha(store.client.escolha);
-                      } else {
-                        dialogDelete(linha, context);
-                      }
-                    },
-                    child: ListTile(
-                      title: Text(
-                        store.client.label == 'Tempo'
-                            ? linha.tempoName.toUpperCase()
-                            : linha.toString().toUpperCase(),
-                        style: TextStyle(
-                            fontSize: widget.constraint >=
-                                    LarguraLayoutBuilder().telaPc
-                                ? 18
-                                : 14),
+                        ),
+                      ),
+                      secondaryBackground: Container(
+                        color: Colors.red,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: const [
+                              Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                'Excluir',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      key: UniqueKey(),
+                      onDismissed: (direction) {
+                        if (direction == DismissDirection.startToEnd) {
+                          store.client.setValueEscolha(linha);
+                          DialogButtom().showDialog(
+                            DialogInputWidget(
+                              value: linha,
+                              editar: store.edit,
+                              constraint: widget.constraint,
+                            ),
+                            store.client.isSwitched,
+                            widget.constraint,
+                            context,
+                          );
+                          store.client.setEscolha(store.client.escolha);
+                        } else {
+                          dialogDelete(linha, context);
+                        }
+                      },
+                      child: ListTile(
+                        title: Text(
+                          store.client.label == 'Tempo'
+                              ? linha.tempoName.toUpperCase()
+                              : linha.toString().toUpperCase(),
+                          style: TextStyle(
+                              fontSize: widget.constraint >=
+                                      LarguraLayoutBuilder().telaPc
+                                  ? 18
+                                  : 14),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             });
       }),

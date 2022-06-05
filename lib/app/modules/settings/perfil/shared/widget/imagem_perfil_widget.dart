@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:crop_image/crop_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -10,6 +11,7 @@ import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
+// import 'package:image_cropper_for_web/image_cropper_for_web.dart';
 
 class ImagemPerfilWidget extends StatefulWidget {
   final dynamic errorName;
@@ -33,8 +35,27 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
   final ImagePicker picker = ImagePicker();
   CroppedFile? imageFile;
 
+  final controller = CropController(
+    aspectRatio: 1,
+    defaultCrop: const Rect.fromLTRB(0.1, 0.1, 0.9, 0.9),
+  );
+
   List<PlatformUiSettings>? buildUiSettings(BuildContext context) {
     return [
+      // WebUiSettings(
+      //   context: context,
+      //   presentStyle: CropperPresentStyle.dialog,
+      //   boundary: Boundary(
+      //     width: 330,
+      //     height: 330,
+      //   ),
+      //   viewPort: ViewPort(width: 280, height: 280, type: 'circle'),
+      //   enableExif: false,
+      //   enableZoom: true,
+      //   showZoomer: true,
+      //   mouseWheelZoom: true,
+      //   enforceBoundary: false,
+      // ),
       AndroidUiSettings(
           toolbarTitle: 'Recortar',
           toolbarColor: Colors.deepOrange,
@@ -71,6 +92,13 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
         sourcePath: filePath.path!,
         compressFormat: ImageCompressFormat.jpg,
         compressQuality: 100,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio3x2,
+          CropAspectRatioPreset.original,
+          CropAspectRatioPreset.ratio4x3,
+          CropAspectRatioPreset.ratio16x9
+        ],
         uiSettings: buildUiSettings(context),
       );
       if (croppedFile != null) {

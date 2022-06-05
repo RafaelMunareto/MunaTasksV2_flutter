@@ -21,20 +21,6 @@ class PopMenuWidget extends StatelessWidget {
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
-          child: perfil.urlImage != ''
-              ? InputChip(
-                  avatar: CircleAvatar(
-                    backgroundImage:
-                        CachedNetworkImageProvider(perfil.urlImage ?? ''),
-                  ),
-                  label: Text(
-                    perfil.name.name,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                )
-              : Container(),
-        ),
-        PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () => Modular.to.navigate('/settings/'),
           child: ListTile(

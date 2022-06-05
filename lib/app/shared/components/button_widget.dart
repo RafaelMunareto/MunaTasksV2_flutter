@@ -7,15 +7,19 @@ class ButtonWidget extends StatefulWidget {
   final bool loading;
   final double? width;
   final bool theme;
+  final Function? setEtiqueta;
+  final TextEditingController? controller;
 
-  const ButtonWidget(
-      {Key? key,
-      this.label = '',
-      this.function,
-      this.loading = false,
-      required this.theme,
-      this.width})
-      : super(key: key);
+  const ButtonWidget({
+    Key? key,
+    this.label = '',
+    this.function,
+    this.loading = false,
+    required this.theme,
+    this.width,
+    this.controller,
+    this.setEtiqueta,
+  }) : super(key: key);
 
   @override
   _ButtonWidgetState createState() => _ButtonWidgetState();
@@ -90,10 +94,15 @@ class _ButtonWidgetState extends State<ButtonWidget>
                 ),
               ),
               onPressed: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-                if (widget.function != null) {
-                  widget.function();
+                if (widget.controller == null) {
+                  widget.controller!.text = '';
+                } else {
+                  widget.setEtiqueta!(widget.controller!.text);
+                  if (widget.function != null) {
+                    widget.function();
+                  }
                 }
+                FocusScope.of(context).requestFocus(FocusNode());
               },
               child: widget.loading
                   ? const CircularProgressIndicator(

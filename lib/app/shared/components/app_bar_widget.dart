@@ -114,25 +114,25 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                   ),
                 ],
               )
-            : Observer(builder: (_) {
-                return SizedBox(
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      search
-                          ? PopSearchWidget(
-                              setValueSearch: widget.setValueSearch,
-                              changeFilterSearch: widget.changeFilterSearch,
-                            )
-                          : Container(),
-                      !search
-                          ? Tooltip(
-                              message: "Filtra Etiquetas",
-                              child: MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: GestureDetector(
+            : SizedBox(
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    search
+                        ? PopSearchWidget(
+                            setValueSearch: widget.setValueSearch,
+                            changeFilterSearch: widget.changeFilterSearch,
+                          )
+                        : Container(),
+                    !search
+                        ? Tooltip(
+                            message: "Filtra Etiquetas",
+                            child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: Observer(builder: (_) {
+                                return GestureDetector(
                                   child: widget.client.icon != 0
                                       ? Icon(
                                           IconData(widget.client.icon,
@@ -158,160 +158,162 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                       context,
                                     );
                                   },
-                                ),
-                              ),
-                            )
-                          : Container(),
-                      !search
-                          ? Tooltip(
-                              message: "Faz o ordenamento.",
-                              child: GestureDetector(
-                                child: const MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: Icon(
-                                    Icons.filter_alt,
-                                  ),
-                                ),
-                                onTap: () => DialogButtom().showDialog(
-                                  const RadioOrderWidget(),
-                                  widget.client.theme,
-                                  constraint.maxWidth,
-                                  context,
-                                  width:
-                                      MediaQuery.of(context).size.height * 0.4,
-                                ),
-                              ),
-                            )
-                          : Container(),
-                      GestureDetector(
-                        child: MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: Observer(
-                            builder: (_) {
-                              return widget.client.loadingRefresh
-                                  ? const SizedBox(
-                                      width: 30,
-                                      height: 30,
-                                      child: CircularProgressIndicator(
-                                        color: Colors.blue,
-                                        strokeWidth: 3,
-                                      ),
-                                    )
-                                  : const Icon(
-                                      Icons.refresh,
-                                      size: 32,
-                                    );
-                            },
-                          ),
-                        ),
-                        onTap: () {
-                          widget.getPass!();
-                        },
-                      ),
-                      !search
-                          ? Tooltip(
-                              message: "Faz filtro de datas.",
-                              child: MouseRegion(
+                                );
+                              }),
+                            ),
+                          )
+                        : Container(),
+                    !search
+                        ? Tooltip(
+                            message: "Faz o ordenamento.",
+                            child: GestureDetector(
+                              child: const MouseRegion(
                                 cursor: SystemMouseCursors.click,
-                                child: GestureDetector(
-                                    child: Icon(
-                                      widget.client.filterDate
-                                          ? Icons.history
-                                          : Icons.timelapse,
-                                      color: widget.client.filterDate
-                                          ? Colors.red
-                                          : widget.client.theme
-                                              ? darkThemeData(context)
-                                                  .iconTheme
-                                                  .color
-                                              : lightThemeData(context)
-                                                  .iconTheme
-                                                  .color,
-                                    ),
-                                    onTap: () {
-                                      if (!widget.client.filterDate) {
-                                        DialogButtom().showDialog(
-                                          const DateFilterWidget(),
-                                          widget.client.theme,
-                                          constraint.maxWidth,
-                                          context,
-                                        );
-                                      } else {
-                                        widget.client.setFilterDate(false);
-                                        widget.getDioFase!();
-                                      }
-                                    }),
+                                child: Icon(
+                                  Icons.filter_alt,
+                                ),
                               ),
-                            )
-                          : Container(),
-                      !search && widget.client.perfilUserLogado.manager
-                          ? MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: GestureDetector(
+                              onTap: () => DialogButtom().showDialog(
+                                const RadioOrderWidget(),
+                                widget.client.theme,
+                                constraint.maxWidth,
+                                context,
+                                width: MediaQuery.of(context).size.height * 0.4,
+                              ),
+                            ),
+                          )
+                        : Container(),
+                    // GestureDetector(
+                    //   child: MouseRegion(
+                    //     cursor: SystemMouseCursors.click,
+                    //     child: Observer(
+                    //       builder: (_) {
+                    //         return widget.client.loadingRefresh
+                    //             ? const SizedBox(
+                    //                 width: 30,
+                    //                 height: 30,
+                    //                 child: CircularProgressIndicator(
+                    //                   color: Colors.blue,
+                    //                   strokeWidth: 3,
+                    //                 ),
+                    //               )
+                    //             : const Icon(
+                    //                 Icons.refresh,
+                    //                 size: 32,
+                    //               );
+                    //       },
+                    //     ),
+                    //   ),
+                    //   onTap: () {
+                    //     widget.getPass!();
+                    //   },
+                    // ),
+                    !search
+                        ? Tooltip(
+                            message: "Faz filtro de datas.",
+                            child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
                                 child: Observer(
                                   builder: (_) {
-                                    return widget.client.userSelection == null
-                                        ? CircleAvatarWidget(
-                                            nameUser: 'TODOS',
-                                            url: widget.client.imgUrl,
-                                          )
-                                        : CircleAvatarWidget(
-                                            nameUser: widget.client
-                                                .userSelection.name!.name,
-                                            url: widget.client.imgUrl,
-                                          );
+                                    return GestureDetector(
+                                        child: Icon(
+                                          widget.client.filterDate
+                                              ? Icons.history
+                                              : Icons.timelapse,
+                                          color: widget.client.filterDate
+                                              ? Colors.red
+                                              : widget.client.theme
+                                                  ? darkThemeData(context)
+                                                      .iconTheme
+                                                      .color
+                                                  : lightThemeData(context)
+                                                      .iconTheme
+                                                      .color,
+                                        ),
+                                        onTap: () {
+                                          if (!widget.client.filterDate) {
+                                            DialogButtom().showDialog(
+                                              const DateFilterWidget(),
+                                              widget.client.theme,
+                                              constraint.maxWidth,
+                                              context,
+                                            );
+                                          } else {
+                                            widget.client.setFilterDate(false);
+                                            widget.getDioFase!();
+                                          }
+                                        });
                                   },
-                                ),
-                                onTap: () {
-                                  if (widget.client.perfilUserLogado.manager) {
-                                    DialogButtom().showDialog(
-                                      const TeamsSelectionWidget(),
-                                      widget.client.theme,
-                                      constraint.maxWidth,
-                                      context,
-                                    );
-                                  }
+                                )),
+                          )
+                        : Container(),
+                    !search && widget.client.perfilUserLogado.manager
+                        ? MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              child: Observer(
+                                builder: (_) {
+                                  return widget.client.userSelection == null
+                                      ? CircleAvatarWidget(
+                                          nameUser: 'TODOS',
+                                          url: widget.client.imgUrl,
+                                        )
+                                      : CircleAvatarWidget(
+                                          nameUser: widget
+                                              .client.userSelection.name!.name,
+                                          url: widget.client.imgUrl,
+                                        );
                                 },
                               ),
-                            )
-                          : Container(),
-                      GestureDetector(
-                          child: !search
-                              ? MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: Icon(
-                                    Icons.search,
-                                    size: constraint.maxWidth >=
-                                            LarguraLayoutBuilder().telaPc
-                                        ? 36
-                                        : 24,
-                                  ),
-                                )
-                              : MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: Icon(
-                                    Icons.close,
-                                    size: constraint.maxWidth >=
-                                            LarguraLayoutBuilder().telaPc
-                                        ? 36
-                                        : 24,
-                                  ),
+                              onTap: () {
+                                if (widget.client.perfilUserLogado.manager) {
+                                  DialogButtom().showDialog(
+                                    const TeamsSelectionWidget(),
+                                    widget.client.theme,
+                                    constraint.maxWidth,
+                                    context,
+                                  );
+                                }
+                              },
+                            ),
+                          )
+                        : Container(),
+                    GestureDetector(
+                        child: !search
+                            ? MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: Icon(
+                                  Icons.search,
+                                  size: constraint.maxWidth >=
+                                          LarguraLayoutBuilder().telaPc
+                                      ? 36
+                                      : 24,
                                 ),
-                          onTap: () {
+                              )
+                            : MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: Icon(
+                                  Icons.close,
+                                  size: constraint.maxWidth >=
+                                          LarguraLayoutBuilder().telaPc
+                                      ? 36
+                                      : 24,
+                                ),
+                              ),
+                        onTap: () {
+                          setState(() {
+                            search = !search;
+                          });
+                          if (search == false) {
                             setState(() {
-                              search = !search;
+                              widget.setValueSearch!('');
                             });
-                            if (search == false) {
-                              setState(() {
-                                widget.setValueSearch!('');
-                              });
-                              widget.changeFilterSearch!();
-                            }
-                          })
-                    ],
-                  ),
-                );
-              }),
+                            widget.changeFilterSearch!();
+                          }
+                        })
+                  ],
+                ),
+              ),
         leading: widget.back
             ? IconButton(
                 icon: const Icon(

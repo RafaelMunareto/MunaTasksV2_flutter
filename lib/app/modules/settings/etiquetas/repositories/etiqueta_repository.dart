@@ -42,7 +42,7 @@ class EtiquetaRepository implements IEtiquetaRepository {
     Response response;
     if (model.id != null) {
       var dio = await DioStruture().dioAction();
-      response = await dio.put('etiquetas/${model.id.toString()}', data: model);
+      response = await dio.put('etiquetas/${model.id}', data: model);
       DioStruture().statusRequest(response);
       return response;
     } else {

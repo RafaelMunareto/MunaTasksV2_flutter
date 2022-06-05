@@ -68,8 +68,7 @@ abstract class _PerfilStoreBase with Store {
               return perfil;
             }).toList();
       client.setUsersDio(users);
-      client.setLoadingImagem(false);
-    });
+    }).whenComplete(() => client.setLoadingImagem(false));
   }
 
   getDioUsers() {
