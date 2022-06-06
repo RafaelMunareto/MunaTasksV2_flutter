@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -91,50 +92,35 @@ abstract class _PerfilStoreBase with Store {
     getBydDioId();
   }
 
-  Future atualizaImagem(CroppedFile image) async {
+  Future atualizaImagem({CroppedFile? image, File? imageDesktop}) async {
     client.setLoadingImagem(true);
-    if (!kIsWeb && defaultTargetPlatform != TargetPlatform.android) {
-      var imagebytes = await image.readAsBytes();
-      List<int> listData = imagebytes.cast();
-      FormData formData = FormData.fromMap(
-        {
-          "urlImage": MultipartFile.fromBytes(listData,
-              filename:
-                  client.perfilDio.urlImage == 'http://api.munatask.com/files/'
-                      ? client.perfilDio.id
-                      : client.perfilDio.urlImage!),
-        },
-      );
+    List<int>? listData;
+    if (defaultTargetPlatform == TargetPlatform.windows) {
+      var imagebytes = await imageDesktop!.readAsBytes();
+      listData = imagebytes.cast();
+    } else {
+      var imagebytes = await image!.readAsBytes();
+      listData = imagebytes.cast();
+    }
 
+    FormData formData = FormData.fromMap(
+      {
+        "urlImage": MultipartFile.fromBytes(listData,
+            filename:
+                client.perfilDio.urlImage == 'http://api.munatask.com/files/'
+                    ? client.perfilDio.id
+                    : client.perfilDio.urlImage!),
+      },
+    );
+    try {
       Response response;
       var dio = await DioStruture().dioAction();
       response = await dio.put('perfil/${client.perfilDio.id}', data: formData);
       DioStruture().statusRequest(response);
       getBydDioId();
-    } else {
-      var imagebytes = await image.readAsBytes();
-      List<int>? listData = imagebytes.cast();
-
-      FormData formData = FormData.fromMap(
-        {
-          "urlImage": MultipartFile.fromBytes(listData,
-              filename:
-                  client.perfilDio.urlImage == 'http://api.munatask.com/files/'
-                      ? client.perfilDio.id
-                      : client.perfilDio.urlImage!),
-        },
-      );
-      try {
-        Response response;
-        var dio = await DioStruture().dioAction();
-        response =
-            await dio.put('perfil/${client.perfilDio.id}', data: formData);
-        DioStruture().statusRequest(response);
-        getBydDioId();
-      } catch (e) {
-        if (kDebugMode) {
-          print(e.toString());
-        }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
       }
     }
   }

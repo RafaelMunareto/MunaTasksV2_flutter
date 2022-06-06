@@ -1,15 +1,24 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:image_cropper_view/clipper.dart';
+import 'package:image_cropper_view/image_cropper_view.dart' as croppView;
 import 'package:image_picker/image_picker.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/controller/client_store.dart';
 import 'package:munatasks2/app/shared/components/icon_redonded_widget.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
+import 'package:path_provider/path_provider.dart';
+
+// Import package
 //import 'package:image_cropper_for_web/image_cropper_for_web.dart';
 
 class ImagemPerfilWidget extends StatefulWidget {
@@ -33,7 +42,6 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
   final PerfilStore store = Modular.get();
   final ImagePicker picker = ImagePicker();
   CroppedFile? imageFile;
-
   List<PlatformUiSettings>? buildUiSettings(BuildContext context) {
     return [
       // WebUiSettings(
@@ -62,13 +70,43 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
     ];
   }
 
+  Future<File> writeToFile(ByteData data) async {
+    final buffer = data.buffer;
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    var filePath =
+        tempPath + '/file_01.tmp'; // file_01.tmp is dump file, can be anything
+    return File(filePath).writeAsBytes(
+        buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+  }
+
   _getFromGallery() async {
-    XFile? pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    _cropImage(pickedFile);
+    if (defaultTargetPlatform == TargetPlatform.windows) {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        var data = await Navigator.of(context)
+            .push<ByteData>(MaterialPageRoute(builder: (contex) {
+          return croppView.ImageCropper(
+            image: Image.file(file),
+            exportSize: const Size(400, 400),
+            clipShape: ClipShape.circle,
+          );
+        }));
+        if (data != null) {
+          var fileTratado = await writeToFile(data);
+          store.atualizaImagem(imageDesktop: fileTratado);
+        }
+      }
+    } else {
+      XFile? pickedFile = await picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 1800,
+        maxHeight: 1800,
+      );
+
+      _cropImage(pickedFile);
+    }
   }
 
   _getFromCamera() async {
@@ -97,7 +135,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
       );
       if (croppedFile != null) {
         setState(() {
-          store.atualizaImagem(croppedFile);
+          store.atualizaImagem(image: croppedFile);
         });
       }
     }

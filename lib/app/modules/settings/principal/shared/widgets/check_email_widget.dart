@@ -85,9 +85,8 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
               update();
             },
             rollingInfoRight: RollingIconInfo(
-              iconColor: theme
-                  ? darkThemeData(context).primaryColor
-                  : lightThemeData(context).primaryColor,
+              iconColor: darkThemeData(context).primaryColor,
+              backgroundColor: darkThemeData(context).primaryColor,
               icon: Icons.nights_stay,
               text: const Text(
                 'Dark',
