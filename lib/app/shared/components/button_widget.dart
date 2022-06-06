@@ -94,14 +94,13 @@ class _ButtonWidgetState extends State<ButtonWidget>
                 ),
               ),
               onPressed: () {
-                if (widget.controller == null) {
-                  widget.controller!.text = '';
-                } else {
+                if (widget.setEtiqueta != null) {
                   widget.setEtiqueta!(widget.controller!.text);
-                  if (widget.function != null) {
-                    widget.function();
-                  }
                 }
+                if (widget.function != null) {
+                  widget.function();
+                }
+
                 FocusScope.of(context).requestFocus(FocusNode());
               },
               child: widget.loading

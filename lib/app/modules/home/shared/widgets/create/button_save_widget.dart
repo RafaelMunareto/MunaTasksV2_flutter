@@ -95,16 +95,18 @@ class _ButtonSaveWidgetState extends State<ButtonSaveWidget> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.08,
                     child: Center(
-                      child: Text(
-                        store.clientCreate.tarefaModelSave.id != ''
-                            ? "EDITAR TAREFA"
-                            : 'SALVAR TAREFA',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      child: store.client.loadingRefresh
+                          ? const CircularProgressWidget()
+                          : Text(
+                              store.clientCreate.tarefaModelSave.id != ''
+                                  ? "EDITAR TAREFA"
+                                  : 'SALVAR TAREFA',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                     ),
                   ),
           );

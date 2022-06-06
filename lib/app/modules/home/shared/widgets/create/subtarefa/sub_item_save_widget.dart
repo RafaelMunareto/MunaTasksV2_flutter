@@ -61,17 +61,17 @@ class _SubItemSaveWidgetState extends State<SubItemSaveWidget> {
                           : Wrap(
                               children: [
                                 ListTile(
-                                  title: SizedBox(
+                                  leading: SizedBox(
                                     child: Text(
                                       widget.subtarefa.title,
+                                      textAlign: TextAlign.center,
                                       style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 10),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                ListTile(
-                                  leading: Icon(
+                                  title: Icon(
                                     ConvertIcon()
                                         .iconStatus(widget.subtarefa.status),
                                     color: ConvertIcon().iconStatusColor(

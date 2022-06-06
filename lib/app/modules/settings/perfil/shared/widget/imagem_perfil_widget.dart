@@ -9,6 +9,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_cropper_view/clipper.dart';
+// ignore: library_prefixes
 import 'package:image_cropper_view/image_cropper_view.dart' as croppView;
 import 'package:image_picker/image_picker.dart';
 import 'package:munatasks2/app/modules/settings/perfil/perfil_store.dart';

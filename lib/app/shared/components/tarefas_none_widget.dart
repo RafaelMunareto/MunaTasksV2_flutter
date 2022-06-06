@@ -46,7 +46,7 @@ class TarefasNoneWidget extends StatelessWidget {
                     title,
                     style: TextStyle(
                       color: theme
-                          ? darkThemeData(context).primaryColor
+                          ? Colors.white
                           : lightThemeData(context).primaryColor,
                     ),
                   ),

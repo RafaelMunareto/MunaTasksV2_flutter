@@ -34,6 +34,10 @@ class _HomePageState extends State<HomePage> {
   final HomeStore store = Modular.get();
   final drawerController = ZoomDrawerController();
   bool appVisible = false;
+  String? version = '';
+  String? storeVersion = '';
+  String? storeUrl = '';
+  String? packageName = '';
 
   @override
   void didChangeDependencies() {
@@ -48,13 +52,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   verifyVersion() async {
-    final versionCheck =
-        ShowUpdateDialog(androidId: 'munacorp.munatasks2.br.munatasks2');
+    final versionCheck = ShowUpdateDialog(
+      androidId: 'munacorp.munatasks2.br.munatasks2',
+    );
 
-    final VersionModel vs = await versionCheck.fetchVersionInfo();
+    VersionModel vs = await versionCheck.fetchVersionInfo();
+
     versionCheck.showCustomDialogUpdate(
       context: context,
       versionStatus: vs,
+      forceUpdate: true,
       buttonText: "Atualizar",
       buttonColor: Colors.blueGrey,
       bodyoverride: Column(
@@ -98,13 +105,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     store.buscaTheme(context);
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      verifyVersion();
-    }
 
     tz.initializeTimeZones();
     sendNotification();
     super.initState();
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      verifyVersion();
+    }
   }
 
   void sendNotification() {

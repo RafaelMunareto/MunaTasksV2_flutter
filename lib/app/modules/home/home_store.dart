@@ -24,6 +24,7 @@ import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_in
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/notification_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+// ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 part 'home_store.g.dart';
@@ -305,7 +306,8 @@ abstract class HomeStoreBase with Store {
               dashboardService.emailDio(value.data['id'], '1');
             }
           });
-    socket!.emit('updateList', true);
+    Timer(const Duration(seconds: 30), () => socket!.emit('updateList', true));
+
     getPass();
   }
 
@@ -337,20 +339,23 @@ abstract class HomeStoreBase with Store {
         dashboardService.emailDio(value.data['id'], '0');
       }
     });
-    socket!.emit('newTaskFront', true);
+    Timer(
+        const Duration(seconds: 30), () => socket!.emit('newTaskFront', true));
 
     getPass();
   }
 
   Future updateNewTarefa() async {
     await dashboardService.updateDio(clientCreate.tarefaModelSave);
-    socket!.emit('updateList', true);
+    Timer(const Duration(seconds: 30), () => socket!.emit('updateList', true));
     getPass();
   }
 
   void deleteDioTasks(TarefaDioModel model) async {
     await dashboardService.deleteDio(model);
-    socket!.emit('updateList', true);
+
+    Timer(const Duration(seconds: 30), () => socket!.emit('updateList', true));
+
     badgets();
     getDioTotal();
   }
@@ -416,8 +421,8 @@ abstract class HomeStoreBase with Store {
 
   changePrioridadeList(TarefaDioModel model) {
     model.prioridade = client.prioridadeSelection;
-    socket!.emit('updateList', true);
     dashboardService.updateDio(model);
+    Timer(const Duration(seconds: 30), () => socket!.emit('updateList', true));
   }
 
   changeSubtarefaDioAction(
@@ -427,12 +432,13 @@ abstract class HomeStoreBase with Store {
         a.status = client.subtarefaAction;
       }
     }
+    Timer(const Duration(seconds: 30), () => socket!.emit('updateList', true));
     dashboardService.updateDio(tarefaModel);
   }
 
   updateDate(TarefaDioModel model) {
     model.data = model.data.add(Duration(hours: client.retardSelection));
-    socket!.emit('updateList', true);
+    Timer(const Duration(seconds: 30), () => socket!.emit('updateList', true));
     dashboardService.updateDio(model);
   }
 
