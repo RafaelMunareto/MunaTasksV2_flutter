@@ -83,7 +83,7 @@ abstract class _ClientStoreBase with Store {
       perfilDio.idStaff = await perfilDio.idStaff
           .map((e) => PerfilDioModel.fromJson(e))
           .toList();
-      if (perfilDio.idStaff!.where((e) => e.id == value.id).isEmpty) {
+      if (perfilDio.idStaff!.where((e) => e.id == value.id).toList().isEmpty) {
         perfilDio.idStaff?.add(value);
       } else {
         perfilDio.idStaff.removeWhere((element) => element.id == value.id);

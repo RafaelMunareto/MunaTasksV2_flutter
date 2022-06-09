@@ -37,7 +37,7 @@ class _CreateWidgetState extends State<CreateWidget> {
               alignment: Alignment.topCenter,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.85,
+                height: MediaQuery.of(context).size.height * 0.90,
                 child: Card(
                   shape: RoundedRectangleBorder(
                     side: BorderSide(

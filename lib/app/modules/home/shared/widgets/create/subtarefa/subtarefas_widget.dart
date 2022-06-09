@@ -21,7 +21,7 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.24,
       child: SingleChildScrollView(
         child: Observer(
           builder: (_) {

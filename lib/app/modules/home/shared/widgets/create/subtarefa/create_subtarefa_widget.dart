@@ -255,7 +255,8 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
               ],
             ),
           ),
-          Expanded(
+          ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 50),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
               child: TextField(
@@ -281,8 +282,8 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
           ),
           if (store.clientCreate.subtarefas.isNotEmpty)
             SubtarefasWidget(controller: textSubtarefaController),
-          SizedBox(
-            height: 50,
+          ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 30),
             child: ButtonSaveCreateSubtarefaWidget(
               texto: textSubtarefaController,
               constraint: widget.constraint,

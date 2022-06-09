@@ -4,7 +4,7 @@ import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 class PerfilDioModel {
   dynamic idStaff;
   dynamic manager;
-  String id;
+  dynamic id;
   dynamic name;
   dynamic urlImage;
   dynamic nameTime;

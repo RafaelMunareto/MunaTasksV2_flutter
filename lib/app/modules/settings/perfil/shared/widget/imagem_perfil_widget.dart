@@ -20,7 +20,7 @@ import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Import package
-//import 'package:image_cropper_for_web/image_cropper_for_web.dart';
+// import 'package:image_cropper_for_web/image_cropper_for_web.dart';
 
 class ImagemPerfilWidget extends StatefulWidget {
   final dynamic errorName;
@@ -99,15 +99,17 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
           store.atualizaImagem(imageDesktop: fileTratado);
         }
       }
-    } else {
-      XFile? pickedFile = await picker.pickImage(
-        source: ImageSource.gallery,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-
-      _cropImage(pickedFile);
     }
+  }
+
+  _getFromGalleryWebMobile() async {
+    XFile? pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+
+    _cropImage(pickedFile);
   }
 
   _getFromCamera() async {
@@ -173,7 +175,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
         const PopupMenuDivider(),
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
-          onTap: () => _getFromGallery(),
+          onTap: () => _getFromGalleryWebMobile(),
           child: SizedBox(
             width: double.infinity,
             child: ListTile(
@@ -395,7 +397,7 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
                 left: 165,
                 child: GestureDetector(
                   child:
-                      kIsWeb || defaultTargetPlatform == TargetPlatform.windows
+                      !kIsWeb && defaultTargetPlatform != TargetPlatform.android
                           ? popMenuDesktop()
                           : popMenu(),
                 ),
