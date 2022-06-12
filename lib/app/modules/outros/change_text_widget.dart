@@ -9,36 +9,32 @@ class ChangeTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-        alignment: WrapAlignment.start,
-        direction: Axis.vertical,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: Wrap(
-              alignment: WrapAlignment.start,
-              children: [
-                const Icon(Icons.verified),
-                AutoSizeText(
-                  ' $title',
-                  maxLines: 1,
-                  textAlign: TextAlign.justify,
-                  style: const TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
-            child: AutoSizeText(
-              corpo,
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Wrap(
+          alignment: WrapAlignment.start,
+          children: [
+            const Icon(Icons.verified),
+            AutoSizeText(
+              ' $title',
+              maxLines: 1,
               textAlign: TextAlign.justify,
-              style: const TextStyle(
-                fontSize: 16,
-              ),
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
+          ],
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
+        child: AutoSizeText(
+          corpo,
+          textAlign: TextAlign.justify,
+          style: const TextStyle(
+            fontSize: 16,
           ),
-        ]);
+        ),
+      ),
+    ]);
   }
 }
