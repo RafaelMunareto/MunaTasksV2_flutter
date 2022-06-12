@@ -53,51 +53,54 @@ class _HomePageState extends State<HomePage> {
 
   verifyVersion() async {
     final versionCheck = ShowUpdateDialog(
-      androidId: 'munacorp.munatasks2.br.munatasks2',
-    );
+        androidId: 'munacorp.munatasks2.br.munatasks2',
+        iOSAppStoreCountry: 'BR');
 
-    VersionModel vs = await versionCheck.fetchVersionInfo();
-
+    final VersionModel vs = await versionCheck.fetchVersionInfo();
+    var _releaseNotes = vs.releaseNotes!.replaceAll("<br>", "\n");
     versionCheck.showCustomDialogUpdate(
       context: context,
       versionStatus: vs,
-      forceUpdate: true,
       buttonText: "Atualizar",
-      buttonColor: Colors.blueGrey,
-      bodyoverride: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(
-                Icons.update,
-                size: 150,
-                color: Colors.blueGrey,
-              ),
-            ],
-          ),
-          const Text(
-            "Por favor atualize a versão",
-            style: TextStyle(
-                fontWeight: FontWeight.w700, fontSize: 18, color: Colors.black),
-          ),
-          Text(
-            "Versão do seu aparelho: ${vs.localVersion}",
-            style: const TextStyle(fontSize: 17, color: Colors.black),
-          ),
-          Text(
-            "Versão vigente: ${vs.storeVersion}",
-            style: const TextStyle(fontSize: 17, color: Colors.black),
-          ),
-          const SizedBox(height: 30),
-          vs.releaseNotes == null
-              ? Container()
-              : Text(
-                  "${vs.releaseNotes}",
-                  style: const TextStyle(fontSize: 15, color: Colors.black),
+      buttonColor: store.client.theme
+          ? darkThemeData(context).primaryColor
+          : lightThemeData(context).primaryColor,
+      bodyoverride: Container(
+        margin: const EdgeInsets.only(left: 20, right: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.update,
+                  size: 150,
+                  color: store.client.theme
+                      ? darkThemeData(context).primaryColor
+                      : lightThemeData(context).primaryColor,
                 ),
-        ],
+              ],
+            ),
+            const Text(
+              "Por favor atualize seu App.",
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+            ),
+            Text(
+              "Versão do aparelho: ${vs.localVersion}",
+              style: const TextStyle(fontSize: 17),
+            ),
+            Text(
+              "Versão da loja: ${vs.storeVersion}",
+              style: const TextStyle(fontSize: 17),
+            ),
+            const SizedBox(height: 30),
+            Text(
+              _releaseNotes,
+              style: const TextStyle(fontSize: 15),
+            ),
+          ],
+        ),
       ),
     );
   }

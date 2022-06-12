@@ -27,7 +27,7 @@ class _ButtonSaveCreateSubtarefaWidgetState
     final HomeStore store = Modular.get();
 
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.only(top: 8, right: 8),
       child: Align(
         alignment: Alignment.bottomRight,
         child: ElevatedButton.icon(

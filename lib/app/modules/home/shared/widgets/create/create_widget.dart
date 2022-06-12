@@ -29,154 +29,149 @@ class _CreateWidgetState extends State<CreateWidget> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 24),
-        child: Observer(
-          builder: (_) {
-            return Align(
-              alignment: Alignment.topCenter,
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.90,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: ConvertIcon().convertColor(
-                            store.clientCreate.tarefaModelSaveEtiqueta.color,
-                          ) ??
-                          Colors.grey,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(5.0),
+      return Observer(
+        builder: (_) {
+          return Align(
+            alignment: Alignment.topCenter,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.94,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: ConvertIcon().convertColor(
+                          store.clientCreate.tarefaModelSaveEtiqueta.color,
+                        ) ??
+                        Colors.grey,
+                    width: 2,
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.05,
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () => Modular.to.pop(),
+                            child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: Icon(
+                                  Icons.close,
+                                  color: ConvertIcon().convertColor(
+                                        store.clientCreate
+                                            .tarefaModelSaveEtiqueta.color,
+                                      ) ??
+                                      Colors.grey,
+                                  size: 36,
+                                )),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width,
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceAround,
+                          crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
-                            GestureDetector(
-                              onTap: () => Modular.to.pop(),
-                              child: MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: Icon(
-                                    Icons.close,
-                                    color: ConvertIcon().convertColor(
-                                          store.clientCreate
-                                              .tarefaModelSaveEtiqueta.color,
-                                        ) ??
-                                        Colors.grey,
-                                    size: 36,
-                                  )),
-                            )
+                            EtiquetasSaveWidget(
+                              constraint: constraint.maxWidth,
+                            ),
+                            ActionFaseSaveWidget(
+                                constraint: constraint.maxWidth),
+                            PrioridadeSaveWidget(
+                                constraint: constraint.maxWidth),
+                            constraint.maxWidth >
+                                    LarguraLayoutBuilder().larguraModal
+                                ? SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.1,
+                                    child: MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      child: UsersSaveWidget(
+                                          constraint: constraint.maxWidth),
+                                    ),
+                                  )
+                                : Container(),
+                            constraint.maxWidth >
+                                    LarguraLayoutBuilder().larguraModal
+                                ? SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.2,
+                                    child: DateSaveWidget(
+                                      dateController: dateController,
+                                      constraint: constraint.maxWidth,
+                                    ),
+                                  )
+                                : Container()
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.05,
-                        width: MediaQuery.of(context).size.width,
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: Wrap(
-                            alignment: WrapAlignment.spaceAround,
-                            crossAxisAlignment: WrapCrossAlignment.center,
+                    ),
+                    constraint.maxWidth <= LarguraLayoutBuilder().larguraModal
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              EtiquetasSaveWidget(
-                                constraint: constraint.maxWidth,
-                              ),
-                              ActionFaseSaveWidget(
-                                  constraint: constraint.maxWidth),
-                              PrioridadeSaveWidget(
-                                  constraint: constraint.maxWidth),
-                              constraint.maxWidth >
-                                      LarguraLayoutBuilder().larguraModal
-                                  ? SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.1,
-                                      child: MouseRegion(
-                                        cursor: SystemMouseCursors.click,
-                                        child: UsersSaveWidget(
-                                            constraint: constraint.maxWidth),
-                                      ),
-                                    )
-                                  : Container(),
-                              constraint.maxWidth >
-                                      LarguraLayoutBuilder().larguraModal
-                                  ? SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.2,
-                                      child: DateSaveWidget(
-                                        dateController: dateController,
-                                        constraint: constraint.maxWidth,
-                                      ),
-                                    )
-                                  : Container()
-                            ],
-                          ),
-                        ),
-                      ),
-                      constraint.maxWidth <= LarguraLayoutBuilder().larguraModal
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.5,
-                                  child: MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    child: UsersSaveWidget(
-                                        constraint: constraint.maxWidth),
-                                  ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                child: MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: UsersSaveWidget(
+                                      constraint: constraint.maxWidth),
                                 ),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  child: DateSaveWidget(
-                                    dateController: dateController,
-                                    constraint: constraint.maxWidth,
-                                  ),
-                                )
-                              ],
-                            )
-                          : Container(),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.15,
-                        width: MediaQuery.of(context).size.width,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
-                          child: TextSaveWidget(controller: textController),
-                        ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                child: DateSaveWidget(
+                                  dateController: dateController,
+                                  constraint: constraint.maxWidth,
+                                ),
+                              )
+                            ],
+                          )
+                        : Container(),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
+                        child: TextSaveWidget(controller: textController),
                       ),
-                      Expanded(
-                        child: CreateSubtarefaWidget(
+                    ),
+                    Expanded(
+                      child: CreateSubtarefaWidget(
+                        constraint: constraint.maxWidth,
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ButtonSaveWidget(
+                          color: ConvertIcon().convertColor(
+                                store
+                                    .clientCreate.tarefaModelSaveEtiqueta.color,
+                              ) ??
+                              Colors.grey,
                           constraint: constraint.maxWidth,
                         ),
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        width: MediaQuery.of(context).size.width,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ButtonSaveWidget(
-                            color: ConvertIcon().convertColor(
-                                  store.clientCreate.tarefaModelSaveEtiqueta
-                                      .color,
-                                ) ??
-                                Colors.grey,
-                            constraint: constraint.maxWidth,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       );
     });
   }
