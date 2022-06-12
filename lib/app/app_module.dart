@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/auth/auth_module.dart';
-import 'package:munatasks2/app/modules/privacy/privacy_module.dart';
+import 'package:munatasks2/app/modules/outros/outros_module.dart';
 import 'package:munatasks2/app/modules/settings/settings_module.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/auth/repositories/auth_repository.dart';
@@ -36,10 +36,11 @@ class AppModule extends Module {
     ModuleRoute('/home',
         module: HomeModule(), transition: TransitionType.leftToRightWithFade),
     ModuleRoute('/privacy',
-        module: PrivacyModule(),
-        transition: TransitionType.leftToRightWithFade),
+        module: OutrosModule(), transition: TransitionType.leftToRightWithFade),
     ModuleRoute('/settings',
         module: SettingsModule(),
         transition: TransitionType.leftToRightWithFade),
+    ModuleRoute('/outros',
+        module: OutrosModule(), transition: TransitionType.leftToRightWithFade),
   ];
 }

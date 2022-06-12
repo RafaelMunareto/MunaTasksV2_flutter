@@ -105,12 +105,12 @@ class _MenuScreenState extends State<MenuScreen> {
                                       ),
                                       const ListMenuWidget(
                                         label: "Privacy",
-                                        rota: '/privacy/',
+                                        rota: '/outros/privacy',
                                         icon: Icons.privacy_tip,
                                       ),
                                       ListMenuWidget(
                                         label: "Versão ${widget.version}",
-                                        rota: '',
+                                        rota: '/outros/changelog',
                                         icon: Icons.verified,
                                       ),
                                     ],

@@ -56,19 +56,17 @@ class PopMenuWidget extends StatelessWidget {
         PopupMenuItem(
           mouseCursor: SystemMouseCursors.click,
           onTap: () => Modular.to.navigate('/home/tarefas'),
-          child: constraint < 1280
-              ? ListTile(
-                  leading: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: Icon(
-                      Icons.account_circle,
-                      color: lightThemeData(context).iconTheme.color,
-                    ),
-                  ),
-                  title: const MouseRegion(
-                      cursor: SystemMouseCursors.click, child: Text('Tarefas')),
-                )
-              : null,
+          child: ListTile(
+            leading: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Icon(
+                Icons.account_circle,
+                color: lightThemeData(context).iconTheme.color,
+              ),
+            ),
+            title: const MouseRegion(
+                cursor: SystemMouseCursors.click, child: Text('Tarefas')),
+          ),
         ),
       ],
     );
