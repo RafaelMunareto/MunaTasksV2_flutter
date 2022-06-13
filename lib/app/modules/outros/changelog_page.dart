@@ -29,7 +29,7 @@ class ChangelogPageState extends State<ChangelogPage> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: const ChangeTextWidget(
-                    title: 'Versão 1.6.6',
+                    title: 'Versão 2.1.8',
                     corpo:
                         ' - Criação do changelog ao clicar no ícone da versão. \n\n'
                         ' - Ajuste do botão incluir subtarefas nos aparelhos mais antigos.\n\n'
