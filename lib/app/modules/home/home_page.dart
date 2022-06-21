@@ -151,6 +151,8 @@ class _HomePageState extends State<HomePage> {
                         client: store.client,
                         getDioFase: store.getDioFase,
                         getPass: store.getPass,
+                        closeSearch: store.client.closeSearch,
+                        setCloseSearch: store.client.setCloseSearch,
                       )
                     : PreferredSize(
                         child: Container(),

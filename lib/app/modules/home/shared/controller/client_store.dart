@@ -288,4 +288,10 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setVersionBd(value) => versionBd = value;
+
+  @observable
+  bool closeSearch = false;
+
+  @action
+  setCloseSearch(value) => closeSearch = value;
 }

@@ -38,26 +38,12 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                         store.client.theme,
                         widget.constraint,
                         context),
-                    child: widget.constraint < LarguraLayoutBuilder().telaPc
-                        ? const Icon(
-                            Icons.people,
-                            color: Colors.grey,
-                          )
-                        : Chip(
-                            label: Text(
-                              'Equipe',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: widget.constraint >
-                                          LarguraLayoutBuilder().larguraModal
-                                      ? 14
-                                      : 12),
-                            ),
-                            avatar: const Icon(
-                              Icons.people,
-                              color: Colors.grey,
-                            ),
-                          ),
+                    child: const Text(
+                      'Equipe',
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
                   ),
                 if (store.clientCreate.users.isNotEmpty &&
                     !store.clientCreate.loadingUser)

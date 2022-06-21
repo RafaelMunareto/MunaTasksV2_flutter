@@ -51,8 +51,10 @@ class _ButtonSaveCreateSubtarefaWidgetState
             } else {
               DialogButtom().showDialog(
                 ErrorsWidget(
+                  constraint: widget.constraint,
                   tarefa: false,
                   theme: store.client.theme,
+                  erro: '',
                 ),
                 store.client.theme,
                 widget.constraint,

@@ -24,12 +24,13 @@ class _ButtonSaveWidgetState extends State<ButtonSaveWidget> {
   @override
   Widget build(BuildContext context) {
     final HomeStore store = Modular.get();
-    errors(constraint) {
+    errors(constraint, erro) {
       DialogButtom().showDialog(
         ErrorsWidget(
-          theme: store.client.theme,
-          tarefa: true,
-        ),
+            constraint: constraint,
+            theme: store.client.theme,
+            tarefa: true,
+            erro: erro),
         store.client.theme,
         constraint,
         context,
@@ -56,10 +57,8 @@ class _ButtonSaveWidgetState extends State<ButtonSaveWidget> {
                     );
                     Modular.to.pop();
                   }, onError: (error) {
-                    SnackbarCustom().createSnackBar(
-                        error.response?.data['error'] ?? error?.message,
-                        Colors.red,
-                        context);
+                    errors(widget.constraint,
+                        error.response?.data['error'] ?? error?.message);
                   });
                 } else {
                   store.saveNewTarefa().then((e) {
@@ -79,14 +78,12 @@ class _ButtonSaveWidgetState extends State<ButtonSaveWidget> {
 
                     Modular.to.pop();
                   }, onError: (error) {
-                    SnackbarCustom().createSnackBar(
-                        error.response?.data['error'] ?? error?.message,
-                        Colors.red,
-                        context);
+                    errors(widget.constraint,
+                        error.response?.data['error'] ?? error?.message);
                   });
                 }
               } else {
-                errors(widget.constraint);
+                errors(widget.constraint, '');
               }
             },
             child: store.clientCreate.loadingTarefa

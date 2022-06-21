@@ -158,6 +158,7 @@ abstract class HomeStoreBase with Store {
     await client.setOrderAscDesc(true);
     await client.setOrderSelection('DATA');
     await client.setColor('blue');
+    await client.setCloseSearch(false);
     await client.setIcon(0);
     changeFilterUserList();
   }
@@ -299,16 +300,29 @@ abstract class HomeStoreBase with Store {
   }
 
   save(TarefaDioModel model) async {
-    model.id == null
-        ? await dashboardService.saveDio(model)
-        : await dashboardService.updateDio(model).then((value) {
-            if (client.settingsUser.emailFinal && model.fase == 2) {
-              dashboardService.emailDio(value.data['id'], '1');
-            }
-          });
-    Timer(const Duration(seconds: 30), () => socket!.emit('updateList', true));
-
-    getPass();
+    if (model.id == null) {
+      await dashboardService.saveDio(model);
+      client.taskDioSearch.add(clientCreate.tarefaModelSave);
+      client.setTaskDioSearch(client.taskDioSearch);
+    } else {
+      await dashboardService.updateDio(model).then((value) {
+        if (client.settingsUser.emailFinal && model.fase == 2) {
+          dashboardService.emailDio(value.data['id'], '1');
+        }
+      });
+      client.taskDioSearch = client.taskDioSearch.map((e) {
+        if (e.id == model.id) {
+          return model;
+        } else {
+          return e;
+        }
+      }).toList();
+      client.setTaskDio(client.taskDioSearch);
+    }
+    getDio();
+    badgets();
+    getDioTotal();
+    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 
   connectToServer() {
@@ -339,25 +353,37 @@ abstract class HomeStoreBase with Store {
         dashboardService.emailDio(value.data['id'], '0');
       }
     });
-    Timer(
-        const Duration(seconds: 30), () => socket!.emit('newTaskFront', true));
-
-    getPass();
+    client.taskDioSearch.add(clientCreate.tarefaModelSave);
+    client.setTaskDioSearch(client.taskDioSearch);
+    getDio();
+    badgets();
+    getDioTotal();
+    Timer(const Duration(minutes: 2), () => socket!.emit('newTaskFront', true));
   }
 
   Future updateNewTarefa() async {
     await dashboardService.updateDio(clientCreate.tarefaModelSave);
-    Timer(const Duration(seconds: 30), () => socket!.emit('updateList', true));
-    getPass();
+    client.taskDioSearch.map((e) {
+      if (e.id == clientCreate.tarefaModelSave.id) {
+        return clientCreate.tarefaModelSave as TarefaDioModel;
+      } else {
+        return e;
+      }
+    }).toList();
+    getDio();
+    badgets();
+    getDioTotal();
+    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 
   void deleteDioTasks(TarefaDioModel model) async {
     await dashboardService.deleteDio(model);
-
-    Timer(const Duration(seconds: 30), () => socket!.emit('updateList', true));
-
+    client.taskDioSearch.removeWhere((element) => element.id == model.id);
+    client.setTaskDioSearch(client.taskDioSearch);
+    getDio();
     badgets();
     getDioTotal();
+    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 
   changeFilterEtiquetaList() {
@@ -422,7 +448,7 @@ abstract class HomeStoreBase with Store {
   changePrioridadeList(TarefaDioModel model) {
     model.prioridade = client.prioridadeSelection;
     dashboardService.updateDio(model);
-    Timer(const Duration(seconds: 30), () => socket!.emit('updateList', true));
+    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 
   changeSubtarefaDioAction(
@@ -432,14 +458,14 @@ abstract class HomeStoreBase with Store {
         a.status = client.subtarefaAction;
       }
     }
-    Timer(const Duration(seconds: 30), () => socket!.emit('updateList', true));
+    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
     dashboardService.updateDio(tarefaModel);
   }
 
   updateDate(TarefaDioModel model) {
     model.data = model.data.add(Duration(hours: client.retardSelection));
-    Timer(const Duration(seconds: 30), () => socket!.emit('updateList', true));
     dashboardService.updateDio(model);
+    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 
   changeOrderList() {

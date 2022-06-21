@@ -37,26 +37,30 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   final Function? getDioFase;
   final Function? getPass;
   final dynamic client;
+  final bool? closeSearch;
+  final Function? setCloseSearch;
 
-  AppBarWidget({
-    Key? key,
-    this.title = "",
-    this.size = 55,
-    this.context,
-    this.home = false,
-    this.icon = Icons.person,
-    this.settings = false,
-    this.back = true,
-    this.setOpen,
-    this.zoomController,
-    this.etiquetaList,
-    this.rota = '/auth',
-    this.setValueSearch,
-    this.changeFilterSearch,
-    this.getDioFase,
-    this.getPass,
-    this.client,
-  }) : super(key: key);
+  AppBarWidget(
+      {Key? key,
+      this.title = "",
+      this.size = 55,
+      this.context,
+      this.home = false,
+      this.icon = Icons.person,
+      this.settings = false,
+      this.back = true,
+      this.setOpen,
+      this.zoomController,
+      this.etiquetaList,
+      this.rota = '/auth',
+      this.setValueSearch,
+      this.changeFilterSearch,
+      this.getDioFase,
+      this.getPass,
+      this.client,
+      this.closeSearch,
+      this.setCloseSearch})
+      : super(key: key);
 
   @override
   State<AppBarWidget> createState() => _AppBarWidgetState();
@@ -66,7 +70,6 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
 }
 
 class _AppBarWidgetState extends State<AppBarWidget> {
-  bool search = false;
   PerfilDioModel perfil = PerfilDioModel();
   AuthRepository auth = AuthRepository();
   ILocalStorage storage = LocalStorageShare();
@@ -120,13 +123,13 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    search
+                    widget.closeSearch!
                         ? PopSearchWidget(
                             setValueSearch: widget.setValueSearch,
                             changeFilterSearch: widget.changeFilterSearch,
                           )
                         : Container(),
-                    !search
+                    !widget.closeSearch!
                         ? Tooltip(
                             message: "Filtra Etiquetas",
                             child: MouseRegion(
@@ -163,7 +166,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                             ),
                           )
                         : Container(),
-                    !search
+                    !widget.closeSearch!
                         ? Tooltip(
                             message: "Faz o ordenamento.",
                             child: GestureDetector(
@@ -183,32 +186,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                             ),
                           )
                         : Container(),
-                    // GestureDetector(
-                    //   child: MouseRegion(
-                    //     cursor: SystemMouseCursors.click,
-                    //     child: Observer(
-                    //       builder: (_) {
-                    //         return widget.client.loadingRefresh
-                    //             ? const SizedBox(
-                    //                 width: 30,
-                    //                 height: 30,
-                    //                 child: CircularProgressIndicator(
-                    //                   color: Colors.blue,
-                    //                   strokeWidth: 3,
-                    //                 ),
-                    //               )
-                    //             : const Icon(
-                    //                 Icons.refresh,
-                    //                 size: 32,
-                    //               );
-                    //       },
-                    //     ),
-                    //   ),
-                    //   onTap: () {
-                    //     widget.getPass!();
-                    //   },
-                    // ),
-                    !search
+                    !widget.closeSearch!
                         ? Tooltip(
                             message: "Faz filtro de datas.",
                             child: MouseRegion(
@@ -247,7 +225,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                 )),
                           )
                         : Container(),
-                    !search && widget.client.perfilUserLogado.manager
+                    !widget.closeSearch! &&
+                            widget.client.perfilUserLogado.manager
                         ? MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: GestureDetector(
@@ -279,7 +258,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                           )
                         : Container(),
                     GestureDetector(
-                        child: !search
+                        child: !widget.closeSearch!
                             ? MouseRegion(
                                 cursor: SystemMouseCursors.click,
                                 child: Icon(
@@ -302,9 +281,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                               ),
                         onTap: () {
                           setState(() {
-                            search = !search;
+                            widget.setCloseSearch!(!widget.closeSearch!);
                           });
-                          if (search == false) {
+                          if (widget.closeSearch == false) {
                             setState(() {
                               widget.setValueSearch!('');
                             });

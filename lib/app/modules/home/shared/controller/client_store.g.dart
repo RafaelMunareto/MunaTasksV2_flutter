@@ -696,6 +696,22 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  late final _$closeSearchAtom =
+      Atom(name: '_ClientStoreBase.closeSearch', context: context);
+
+  @override
+  bool get closeSearch {
+    _$closeSearchAtom.reportRead();
+    return super.closeSearch;
+  }
+
+  @override
+  set closeSearch(bool value) {
+    _$closeSearchAtom.reportWrite(value, super.closeSearch, () {
+      super.closeSearch = value;
+    });
+  }
+
   late final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase', context: context);
 
@@ -1184,6 +1200,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setCloseSearch(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setCloseSearch');
+    try {
+      return super.setCloseSearch(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgetNavigate: ${badgetNavigate},
@@ -1228,7 +1255,8 @@ settingsUser: ${settingsUser},
 version: ${version},
 loadingRefresh: ${loadingRefresh},
 checkUpdateDesktop: ${checkUpdateDesktop},
-versionBd: ${versionBd}
+versionBd: ${versionBd},
+closeSearch: ${closeSearch}
     ''';
   }
 }

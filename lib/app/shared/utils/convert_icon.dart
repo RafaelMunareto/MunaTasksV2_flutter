@@ -140,6 +140,8 @@ class ConvertIcon {
         return Colors.orange;
       case 'brown':
         return Colors.brown;
+      default:
+        return Colors.grey.shade300;
     }
   }
 

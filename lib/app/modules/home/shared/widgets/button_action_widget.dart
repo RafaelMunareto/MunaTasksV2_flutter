@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
+import 'package:munatasks2/app/shared/components/circular_p_min_widget.dart';
 
 class ButtonActionWidget extends StatefulWidget {
   final TarefaDioModel tarefa;
@@ -19,8 +20,16 @@ class ButtonActionWidget extends StatefulWidget {
 }
 
 class _ButtonActionWidgetState extends State<ButtonActionWidget> {
-  atRemove() {
-    widget.save(widget.tarefa);
+  bool atualizando = false;
+
+  atRemove() async {
+    setState(() {
+      atualizando = true;
+    });
+    await widget.save(widget.tarefa);
+    setState(() {
+      atualizando = false;
+    });
   }
 
   @override
@@ -57,12 +66,14 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.tarefa.fase = 1;
                 atRemove();
               },
-              child: const MouseRegion(
+              child: MouseRegion(
                 cursor: SystemMouseCursors.click,
-                child: Icon(
-                  Icons.play_circle,
-                  color: Colors.green,
-                ),
+                child: atualizando && navigate == 0 && widget.tarefa.fase == 1
+                    ? const CircularPMinWidget()
+                    : const Icon(
+                        Icons.play_circle,
+                        color: Colors.green,
+                      ),
               ),
             ),
             GestureDetector(
@@ -70,12 +81,14 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.tarefa.fase = 2;
                 atRemove();
               },
-              child: const MouseRegion(
+              child: MouseRegion(
                 cursor: SystemMouseCursors.click,
-                child: Icon(
-                  Icons.check_circle,
-                  color: Colors.blue,
-                ),
+                child: atualizando && navigate == 0 && widget.tarefa.fase == 2
+                    ? const CircularPMinWidget()
+                    : const Icon(
+                        Icons.check_circle,
+                        color: Colors.blue,
+                      ),
               ),
             ),
           ],
@@ -89,12 +102,14 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.tarefa.fase = 0;
                 atRemove();
               },
-              child: const MouseRegion(
+              child: MouseRegion(
                 cursor: SystemMouseCursors.click,
-                child: Icon(
-                  Icons.pause_circle,
-                  color: Colors.amber,
-                ),
+                child: atualizando && navigate == 1 && widget.tarefa.fase == 0
+                    ? const CircularPMinWidget()
+                    : const Icon(
+                        Icons.pause_circle,
+                        color: Colors.amber,
+                      ),
               ),
             ),
             GestureDetector(
@@ -102,12 +117,14 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.tarefa.fase = 2;
                 atRemove();
               },
-              child: const MouseRegion(
+              child: MouseRegion(
                 cursor: SystemMouseCursors.click,
-                child: Icon(
-                  Icons.check_circle,
-                  color: Colors.blue,
-                ),
+                child: atualizando && navigate == 1 && widget.tarefa.fase == 2
+                    ? const CircularPMinWidget()
+                    : const Icon(
+                        Icons.check_circle,
+                        color: Colors.blue,
+                      ),
               ),
             ),
           ],
@@ -121,12 +138,14 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.tarefa.fase = 0;
                 atRemove();
               },
-              child: const MouseRegion(
+              child: MouseRegion(
                 cursor: SystemMouseCursors.click,
-                child: Icon(
-                  Icons.pause_circle,
-                  color: Colors.amber,
-                ),
+                child: atualizando && navigate == 2 && widget.tarefa.fase == 0
+                    ? const CircularPMinWidget()
+                    : const Icon(
+                        Icons.pause_circle,
+                        color: Colors.amber,
+                      ),
               ),
             ),
             GestureDetector(
@@ -134,12 +153,14 @@ class _ButtonActionWidgetState extends State<ButtonActionWidget> {
                 widget.tarefa.fase = 1;
                 atRemove();
               },
-              child: const MouseRegion(
+              child: MouseRegion(
                 cursor: SystemMouseCursors.click,
-                child: Icon(
-                  Icons.play_circle,
-                  color: Colors.green,
-                ),
+                child: atualizando && navigate == 2 && widget.tarefa.fase == 1
+                    ? const CircularPMinWidget()
+                    : const Icon(
+                        Icons.play_circle,
+                        color: Colors.green,
+                      ),
               ),
             ),
           ],

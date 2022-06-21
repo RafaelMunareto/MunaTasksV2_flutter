@@ -38,6 +38,11 @@ class _TextSaveWidgetState extends State<TextSaveWidget> {
             minLines: 4,
             maxLines: 20,
             decoration: InputDecoration(
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
                 suffixIcon: InkWell(
                     child: const Icon(Icons.replay),
                     onTap: () {
