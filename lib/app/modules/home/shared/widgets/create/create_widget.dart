@@ -2,18 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/action_fase_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/button_header_tarefa_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/button_save_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/date_save_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/etiquetas_save_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/prioridade_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_subtarefa_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/text_save_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/users_save_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
-import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class CreateWidget extends StatefulWidget {
   const CreateWidget({Key? key}) : super(key: key);
@@ -60,17 +54,39 @@ class _CreateWidgetState extends State<CreateWidget> {
                           ButtonHeaderTarefaWidget(
                             constraint: constraint.maxWidth,
                             tipo: 0,
-                            tamanho: 0.27,
+                            tamanho: constraint.maxWidth >=
+                                    LarguraLayoutBuilder().telaPc
+                                ? 0.20
+                                : 0.27,
                           ),
                           ButtonHeaderTarefaWidget(
                             constraint: constraint.maxWidth,
                             tipo: 1,
-                            tamanho: 0.27,
+                            tamanho: constraint.maxWidth >=
+                                    LarguraLayoutBuilder().telaPc
+                                ? 0.20
+                                : 0.27,
                           ),
                           ButtonHeaderTarefaWidget(
                             constraint: constraint.maxWidth,
                             tipo: 2,
-                            tamanho: 0.27,
+                            tamanho: constraint.maxWidth >=
+                                    LarguraLayoutBuilder().telaPc
+                                ? 0.12
+                                : 0.27,
+                          ),
+                          if (constraint.maxWidth >=
+                              LarguraLayoutBuilder().telaPc)
+                            ButtonHeaderTarefaWidget(
+                              constraint: constraint.maxWidth,
+                              tipo: 3,
+                              tamanho: 0.31,
+                            ),
+                          ButtonHeaderTarefaWidget(
+                            constraint: constraint.maxWidth,
+                            tipo: 4,
+                            dateController: dateController,
+                            tamanho: 0.12,
                           ),
                           Center(
                             child: GestureDetector(
@@ -89,25 +105,26 @@ class _CreateWidgetState extends State<CreateWidget> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ButtonHeaderTarefaWidget(
-                            constraint: constraint.maxWidth,
-                            tipo: 3,
-                            tamanho: 0.55,
-                          ),
-                          ButtonHeaderTarefaWidget(
-                            constraint: constraint.maxWidth,
-                            tipo: 4,
-                            dateController: dateController,
-                            tamanho: 0.35,
-                          ),
-                        ],
+                    if (constraint.maxWidth < LarguraLayoutBuilder().telaPc)
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            ButtonHeaderTarefaWidget(
+                              constraint: constraint.maxWidth,
+                              tipo: 3,
+                              tamanho: 0.55,
+                            ),
+                            ButtonHeaderTarefaWidget(
+                              constraint: constraint.maxWidth,
+                              tipo: 4,
+                              dateController: dateController,
+                              tamanho: 0.35,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
                     // SizedBox(
                     //   height: MediaQuery.of(context).size.height * 0.05,
                     //   width: MediaQuery.of(context).size.width,

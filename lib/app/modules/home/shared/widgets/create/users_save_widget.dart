@@ -5,7 +5,6 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/users_selection_widget.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
-import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class UsersSaveWidget extends StatefulWidget {
   final double constraint;

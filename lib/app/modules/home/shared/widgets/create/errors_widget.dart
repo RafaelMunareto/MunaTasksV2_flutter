@@ -79,6 +79,8 @@ class _ErrorsWidgetState extends State<ErrorsWidget> {
           context,
         );
       });
+    } else {
+      Modular.to.pop();
     }
 
     List? errors;
