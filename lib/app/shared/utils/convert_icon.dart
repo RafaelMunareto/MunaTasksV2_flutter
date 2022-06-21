@@ -141,7 +141,7 @@ class ConvertIcon {
       case 'brown':
         return Colors.brown;
       default:
-        return Colors.grey.shade300;
+        return Colors.grey.shade500;
     }
   }
 

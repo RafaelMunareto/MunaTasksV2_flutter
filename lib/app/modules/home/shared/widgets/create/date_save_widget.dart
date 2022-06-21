@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
+import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class DateSaveWidget extends StatefulWidget {
   final TextEditingController dateController;
@@ -52,25 +53,25 @@ class _DateSaveWidgetState extends State<DateSaveWidget> {
       }
     }
 
-    return TextField(
-      textAlign: TextAlign.justify,
-      style: TextStyle(
-          fontSize:
-              widget.constraint < LarguraLayoutBuilder().telaPc ? 14 : 16),
-      autofocus: false,
-      controller: widget.dateController,
-      onChanged: (value) => store.clientCreate.setTarefaDateSave(value),
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        contentPadding: widget.constraint < LarguraLayoutBuilder().telaPc
-            ? null
-            : const EdgeInsets.fromLTRB(0, 14, 0, 0),
-        prefixIcon: InkWell(
-          child: Icon(
-            Icons.calendar_today,
-            color: widget.dateController.text != "" ? Colors.blue : Colors.grey,
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: TextField(
+        textAlign: TextAlign.left,
+        style: TextStyle(
+            fontSize:
+                widget.constraint < LarguraLayoutBuilder().telaPc ? 14 : 16),
+        autofocus: false,
+        controller: widget.dateController,
+        onChanged: (value) => store.clientCreate.setTarefaDateSave(value),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          prefixIcon: InkWell(
+            child: Icon(Icons.calendar_today,
+                color: store.client.theme
+                    ? darkThemeData(context).primaryColor
+                    : lightThemeData(context).primaryColor),
+            onTap: () => _selectDate(),
           ),
-          onTap: () => _selectDate(),
         ),
       ),
     );

@@ -208,6 +208,7 @@ abstract class HomeStoreBase with Store {
         .then((value) {
       client.setTaskDioSearch(value);
       client.setTaskDio(value);
+      client.setCloseSearch(false);
     });
   }
 

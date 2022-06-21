@@ -44,7 +44,7 @@ class _CreateSubtarefaWidgetState extends State<CreateSubtarefaWidget> {
               ),
               BoxShadow(
                 color: store.client.theme
-                    ? darkThemeData(context).dialogBackgroundColor
+                    ? darkThemeData(context).scaffoldBackgroundColor
                     : lightThemeData(context).dialogBackgroundColor,
                 spreadRadius: -3.0,
                 blurRadius: 4.0,

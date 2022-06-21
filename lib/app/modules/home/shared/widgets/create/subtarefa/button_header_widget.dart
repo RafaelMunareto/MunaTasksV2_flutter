@@ -62,16 +62,16 @@ class _ButtonHeaderWidgetState extends State<ButtonHeaderWidget> {
         return store.clientCreate.subtarefaModelSaveTitle != "" &&
                 store.clientCreate.subtarefaModelSaveTitle != "Subtarefa"
             ? Colors.blue
-            : Colors.grey.shade300;
+            : Colors.grey.shade500;
       case 1:
         return store.clientCreate.subtarefaModelSaveTitle != "" &&
                 store.clientCreate.subtarefaModelSaveTitle != "Subtarefa"
             ? Colors.blue
-            : Colors.grey.shade300;
+            : Colors.grey.shade500;
       case 2:
         return ConvertIcon().colorStatusDark(store.clientCreate.fase);
       case 3:
-        return Colors.grey.shade300;
+        return Colors.grey.shade500;
     }
   }
 

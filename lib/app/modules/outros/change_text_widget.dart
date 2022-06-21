@@ -19,7 +19,7 @@ class ChangeTextWidget extends StatelessWidget {
             AutoSizeText(
               ' $title',
               maxLines: 1,
-              textAlign: TextAlign.justify,
+              textAlign: TextAlign.left,
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
           ],
@@ -29,7 +29,7 @@ class ChangeTextWidget extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
         child: AutoSizeText(
           corpo,
-          textAlign: TextAlign.justify,
+          textAlign: TextAlign.left,
           style: const TextStyle(
             fontSize: 16,
           ),

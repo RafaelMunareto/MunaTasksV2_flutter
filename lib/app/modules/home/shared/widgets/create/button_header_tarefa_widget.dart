@@ -119,9 +119,9 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
           store.clientCreate.tarefaModelPrioritario,
         );
       case 3:
-        return Colors.grey.shade300;
+        return Colors.grey.shade500;
       case 4:
-        return Colors.grey.shade300;
+        return Colors.grey.shade500;
     }
   }
 
