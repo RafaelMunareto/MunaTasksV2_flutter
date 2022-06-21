@@ -82,12 +82,14 @@ class _CreateWidgetState extends State<CreateWidget> {
                               tipo: 3,
                               tamanho: 0.31,
                             ),
-                          ButtonHeaderTarefaWidget(
-                            constraint: constraint.maxWidth,
-                            tipo: 4,
-                            dateController: dateController,
-                            tamanho: 0.12,
-                          ),
+                          if (constraint.maxWidth >=
+                              LarguraLayoutBuilder().telaPc)
+                            ButtonHeaderTarefaWidget(
+                              constraint: constraint.maxWidth,
+                              tipo: 4,
+                              dateController: dateController,
+                              tamanho: 0.12,
+                            ),
                           Center(
                             child: GestureDetector(
                               onTap: () => Modular.to.pop(),
