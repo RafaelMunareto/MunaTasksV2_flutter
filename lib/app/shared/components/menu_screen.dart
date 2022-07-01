@@ -45,84 +45,106 @@ class _MenuScreenState extends State<MenuScreen> {
             }
           },
           child: Padding(
-            padding: widget.constraint >= LarguraLayoutBuilder().telaPc
-                ? const EdgeInsets.all(16.0)
-                : const EdgeInsets.all(0),
-            child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/icon/icon.png'),
-                    opacity: 0.1,
-                  ),
-                ),
-                child: widget.open
-                    ? SizedBox(
-                        width:
-                            widget.constraint >= LarguraLayoutBuilder().telaPc
-                                ? MediaQuery.of(context).size.width * 0.2
-                                : MediaQuery.of(context).size.width,
-                        child: ListView(
-                          controller: ScrollController(),
-                          padding: const EdgeInsets.all(8),
-                          children: <Widget>[
-                            Center(
-                              child: SizedBox(
-                                height: MediaQuery.of(context).size.height,
-                                child: DrawerHeader(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.topLeft,
-                                        child: NameWidget(
-                                          store: store,
-                                          constraint: widget.constraint,
+              padding: widget.constraint >= LarguraLayoutBuilder().telaPc
+                  ? const EdgeInsets.all(16.0)
+                  : const EdgeInsets.all(0),
+              child: widget.open
+                  ? SizedBox(
+                      width: widget.constraint >= LarguraLayoutBuilder().telaPc
+                          ? MediaQuery.of(context).size.width * 0.2
+                          : MediaQuery.of(context).size.width,
+                      child: ListView(
+                        controller: ScrollController(),
+                        padding: const EdgeInsets.all(8),
+                        children: <Widget>[
+                          Center(
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.8,
+                              child: DrawerHeader(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.topLeft,
+                                            child: NameWidget(
+                                              store: store,
+                                              constraint: widget.constraint,
+                                            ),
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.only(top: 16),
+                                            child: ListMenuWidget(
+                                              label: "Editar Perfil",
+                                              rota: '/settings/perfil',
+                                              icon: Icons.emoji_people,
+                                            ),
+                                          ),
+                                          const ListMenuWidget(
+                                            label: "Configurações",
+                                            rota: '/settings/',
+                                            icon: Icons.settings,
+                                          ),
+                                          const ListMenuWidget(
+                                            label: "Etiquetas",
+                                            rota: '/settings/etiquetas',
+                                            icon: Icons.bookmark,
+                                          ),
+                                          const ListMenuWidget(
+                                            label: "Tarefas",
+                                            rota: '/home/tarefas',
+                                            icon: Icons.people,
+                                          ),
+                                          const ListMenuWidget(
+                                            label: "Privacy",
+                                            rota: '/outros/privacy',
+                                            icon: Icons.privacy_tip,
+                                          ),
+                                          ListMenuWidget(
+                                            label: "Versão ${widget.version}",
+                                            rota: '/outros/changelog',
+                                            icon: Icons.verified,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.15,
+                                      width: widget.constraint <
+                                              LarguraLayoutBuilder().telaPc
+                                          ? MediaQuery.of(context).size.width *
+                                              0.4
+                                          : MediaQuery.of(context).size.width,
+                                      decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/icon/icon.png'),
+                                          opacity: 0.07,
                                         ),
                                       ),
-                                      const Padding(
-                                        padding: EdgeInsets.only(top: 16),
-                                        child: ListMenuWidget(
-                                          label: "Editar Perfil",
-                                          rota: '/settings/perfil',
-                                          icon: Icons.emoji_people,
-                                        ),
-                                      ),
-                                      const ListMenuWidget(
-                                        label: "Configurações",
-                                        rota: '/settings/',
-                                        icon: Icons.settings,
-                                      ),
-                                      const ListMenuWidget(
-                                        label: "Etiquetas",
-                                        rota: '/settings/etiquetas',
-                                        icon: Icons.bookmark,
-                                      ),
-                                      const ListMenuWidget(
-                                        label: "Tarefas",
-                                        rota: '/home/tarefas',
-                                        icon: Icons.people,
-                                      ),
-                                      const ListMenuWidget(
-                                        label: "Privacy",
-                                        rota: '/outros/privacy',
-                                        icon: Icons.privacy_tip,
-                                      ),
-                                      ListMenuWidget(
-                                        label: "Versão ${widget.version}",
-                                        rota: '/outros/changelog',
-                                        icon: Icons.verified,
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.05,
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      )
-                    : Container()),
-          ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container()),
         ),
       ),
     );

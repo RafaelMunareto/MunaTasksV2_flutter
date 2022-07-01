@@ -14,64 +14,25 @@ abstract class _ChangeStoreBase with Store {
   ILocalStorage storage = Modular.get();
 
   _ChangeStoreBase() {
-    buscaTheme();
+    client.buscaTheme();
   }
-
-  @observable
-  bool loading = false;
-
-  @observable
-  String code = '';
-
-  @action
-  setCode(value) => code = value;
-
-  @observable
-  String msg = '';
-
-  @action
-  setMsg(value) => msg = value;
-
-  @action
-  setLoading(value) => loading = value;
-
-  @observable
-  bool msgErrOrGoal = false;
-
-  @action
-  setMsgErrOrGoal(value) => msgErrOrGoal = value;
-
-  @observable
-  bool theme = false;
-
-  @action
-  setTheme(value) => value = theme;
-
-  buscaTheme() {
-    storage.get('theme').then((value) {
-      if (value?[0] == 'dark') {
-        setTheme(true);
-      } else {
-        setTheme(false);
-      }
-    });
-  }
-
   submit() {
-    if (code != '') {
-      setLoading(true);
-      auth.changeUserPassword(code, client.confirmPassword).then((value) {
-        setLoading(false);
-        setMsgErrOrGoal(true);
-        setMsg('Senha alterada com sucesso!');
+    if (client.code != '') {
+      client.setLoading(true);
+      auth
+          .changeUserPassword(client.code, client.confirmPassword)
+          .then((value) {
+        client.setLoading(false);
+        client.setMsgErrOrGoal(true);
+        client.setMsg('Senha alterada com sucesso!');
       }).catchError((erro) {
-        setLoading(false);
-        setMsgErrOrGoal(false);
-        setMsg('Erro na alteração de senha!');
+        client.setLoading(false);
+        client.setMsgErrOrGoal(false);
+        client.setMsg('Erro na alteração de senha!');
       });
     } else {
-      setMsgErrOrGoal(false);
-      setMsg('Usuário não encontrado na base');
+      client.setMsgErrOrGoal(false);
+      client.setMsg('Usuário não encontrado na base');
     }
   }
 }

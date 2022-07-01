@@ -1,10 +1,85 @@
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
+import 'package:munatasks2/app/modules/auth/login/login_store.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 
 part 'client_store.g.dart';
 
 class ClientStore = _ClientStoreBase with _$ClientStore;
 
 abstract class _ClientStoreBase with Store {
+  ILocalStorage storage = Modular.get();
+  final LocalAuthentication bio = Modular.get();
+
+  buscaTheme() {
+    storage.get('theme').then((value) {
+      if (value?[0] == 'dark') {
+        setTheme(true);
+      } else {
+        setTheme(false);
+      }
+    });
+  }
+
+  @observable
+  String code = '';
+
+  @action
+  setCode(value) => code = value;
+
+  //biometric
+  @observable
+  bool canCheckBiometrics = false;
+
+  @observable
+  List<BiometricType> availableBiometrics = [];
+
+  @observable
+  String authorized = 'Não autorizado!';
+
+  @observable
+  bool isAuthenticating = false;
+
+  @observable
+  dynamic user;
+
+  @action
+  setUser(value) => user = value;
+
+  @observable
+  SupportState supportState = SupportState.unknown;
+
+  @observable
+  bool faceOrFinger = true;
+
+  @observable
+  List<String>? loginStorage;
+
+  @observable
+  bool loading = false;
+
+  @observable
+  String msg = '';
+
+  @observable
+  bool msgErrOrGoal = false;
+
+  @action
+  setMsgErrOrGoal(value) => msgErrOrGoal = value;
+
+  @action
+  setLoading(value) => loading = value;
+
+  @observable
+  bool theme = false;
+
+  @action
+  setTheme(value) => value = theme;
+
+  @action
+  setMsg(value) => msg = value;
+
   @observable
   String name = '';
 

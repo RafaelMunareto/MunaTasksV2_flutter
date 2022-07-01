@@ -31,17 +31,17 @@ class ForgetPageState extends State<ForgetPage> {
     super.didChangeDependencies();
     autorun(
       (_) {
-        if (store.msg != '') {
+        if (store.client.msg != '') {
           FocusScope.of(context).requestFocus(FocusNode());
           SnackbarCustom().createSnackBareErrOrGoal(_scaffoldKey,
-              message: store.msg,
-              errOrGoal: store.msgErrOrGoal,
+              message: store.client.msg,
+              errOrGoal: store.client.msgErrOrGoal,
               rota: '/auth/');
-          if (store.msgErrOrGoal) {
+          if (store.client.msgErrOrGoal) {
             Timer(const Duration(seconds: 2),
                 () => store.client.setCleanVariables());
           }
-          store.setMsg('');
+          store.client.setMsg('');
         }
       },
     );
@@ -79,6 +79,8 @@ class ForgetPageState extends State<ForgetPage> {
                     child: TextFieldWidget(
                         labelText: 'E-mail',
                         onChanged: store.client.changeEmail,
+                        functionBool: store.client.isValidEmail,
+                        function: store.submit,
                         errorText: store.client.validateEmail)),
                 SizedBox(height: size.height * 0.05),
                 Observer(builder: (_) {
@@ -88,9 +90,9 @@ class ForgetPageState extends State<ForgetPage> {
                         horizontal: 40, vertical: 10),
                     child: ButtonWidget(
                         label: 'ENVIAR SENHA',
-                        theme: store.theme,
+                        theme: store.client.theme,
                         width: size.width * 0.5,
-                        loading: store.loading,
+                        loading: store.client.loading,
                         function:
                             store.client.isValidEmail ? store.submit : null),
                   );

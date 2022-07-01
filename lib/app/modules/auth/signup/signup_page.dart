@@ -30,16 +30,16 @@ class SignupPageState extends State<SignupPage> {
     super.didChangeDependencies();
     autorun(
       (_) {
-        if (store.msg != '') {
+        if (store.client.msg != '') {
           SnackbarCustom().createSnackBareErrOrGoal(_scaffoldKey,
-              errOrGoal: store.msgErrOrGoal,
-              message: store.msg,
+              errOrGoal: store.client.msgErrOrGoal,
+              message: store.client.msg,
               rota: '/auth/');
-          if (store.msgErrOrGoal) {
+          if (store.client.msgErrOrGoal) {
             Timer(const Duration(seconds: 2),
                 () => store.client.setCleanVariables());
           }
-          store.setMsg('');
+          store.client.setMsg('');
         }
       },
     );
@@ -109,9 +109,9 @@ class SignupPageState extends State<SignupPage> {
                         horizontal: 40, vertical: 10),
                     child: ButtonWidget(
                         label: 'CADASTRAR',
-                        theme: store.theme,
+                        theme: store.client.theme,
                         width: size.width * 0.5,
-                        loading: store.loading,
+                        loading: store.client.loading,
                         function: store.isValidRegisterEmailGrupo
                             ? store.submit
                             : null),

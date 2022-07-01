@@ -19,42 +19,8 @@ abstract class _SignupStoreBase with Store {
   ILocalStorage storage = Modular.get();
 
   _SignupStoreBase() {
-    buscaTheme();
+    client.buscaTheme();
   }
-
-  @observable
-  bool loading = false;
-
-  @observable
-  String msg = '';
-
-  @observable
-  bool msgErrOrGoal = false;
-
-  @action
-  setMsgErrOrGoal(value) => msgErrOrGoal = value;
-
-  @action
-  setLoading(value) => loading = value;
-
-  @observable
-  bool theme = false;
-
-  @action
-  setTheme(value) => value = theme;
-
-  buscaTheme() {
-    storage.get('theme').then((value) {
-      if (value?[0] == 'dark') {
-        setTheme(true);
-      } else {
-        setTheme(false);
-      }
-    });
-  }
-
-  @action
-  setMsg(value) => msg = value;
 
   @computed
   bool get isValidRegisterEmailGrupo {
@@ -67,11 +33,11 @@ abstract class _SignupStoreBase with Store {
   void submit() {
     UserDioClientModel model = UserDioClientModel(
         email: client.email, name: client.name, password: client.password);
-    setLoading(true);
+    client.setLoading(true);
     auth.saveUser(model).then((value) {
-      setMsgErrOrGoal(true);
-      setMsg('Usuário criado com sucesso');
-      setLoading(false);
+      client.setMsgErrOrGoal(true);
+      client.setMsg('Usuário criado com sucesso');
+      client.setLoading(false);
       UserDioClientModel user = UserDioClientModel.fromJson(value.data);
       auth.perfilUser(user);
       auth.getLoginDio(client.email, client.password).then((value) async {
@@ -83,9 +49,9 @@ abstract class _SignupStoreBase with Store {
         Modular.to.navigate('/auth/');
       });
     }).catchError((error) {
-      setMsgErrOrGoal(false);
-      setMsg(error.response?.data['error'] ?? error?.message);
-      setLoading(false);
+      client.setMsgErrOrGoal(false);
+      client.setMsg(error.response?.data['error'] ?? error?.message);
+      client.setLoading(false);
     });
   }
 }

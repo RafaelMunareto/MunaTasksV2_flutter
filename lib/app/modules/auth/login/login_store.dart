@@ -24,85 +24,22 @@ abstract class _LoginStoreBase with Store {
   AuthController auth = Modular.get();
   ClientStore client = Modular.get();
   ILocalStorage storage = Modular.get();
-  final LocalAuthentication bio = Modular.get();
 
   _LoginStoreBase() {
-    buscaTheme();
+    client.buscaTheme();
   }
-
-  @observable
-  SupportState supportState = SupportState.unknown;
-
-  @observable
-  bool loading = false;
-
-  @observable
-  String msg = '';
-
-  @observable
-  bool faceOrFinger = true;
-
-  @observable
-  bool errOrGoal = false;
-
-  @observable
-  List<String>? loginStorage;
-
-  @action
-  setErrOrGoal(value) => errOrGoal = value;
-
-  @action
-  setMsg(value) => msg = value;
-
-  @action
-  setLoading(value) => loading = value;
-
-  @observable
-  bool theme = false;
-
-  @action
-  setTheme(value) => value = theme;
-
-  buscaTheme() {
-    storage.get('theme').then((value) {
-      if (value?[0] == 'dark') {
-        setTheme(true);
-      } else {
-        setTheme(false);
-      }
-    });
-  }
-
-  //biometric
-  @observable
-  bool canCheckBiometrics = false;
-
-  @observable
-  List<BiometricType> availableBiometrics = [];
-
-  @observable
-  String authorized = 'Não autorizado!';
-
-  @observable
-  bool isAuthenticating = false;
-
-  @observable
-  dynamic user;
-
-  @action
-  setUser(value) => user = value;
 
   String textToMd5(String text) {
     return md5.convert(utf8.encode(text)).toString();
   }
 
   submit() async {
-    await setLoading(true);
+    await client.setLoading(true);
     await auth
         .getLoginDio(client.email.trim(), client.password)
         .then((value) async {
-      setLoading(false);
-      setErrOrGoal(false);
+      client.setLoading(false);
+      client.setMsgErrOrGoal(false);
       UserDioModel user = UserDioModel.fromJson(value.data);
       SessionManager().set("token", user.token);
       await storage.put('token', [user.token]);
@@ -117,9 +54,9 @@ abstract class _LoginStoreBase with Store {
       ]);
       await getPerfil(user.user.id);
     }).catchError((error) {
-      setLoading(false);
-      setErrOrGoal(false);
-      setMsg(error.response?.data['error'] ?? error?.message);
+      client.setLoading(false);
+      client.setMsgErrOrGoal(false);
+      client.setMsg(error.response?.data['error'] ?? error?.message);
     });
   }
 
@@ -144,7 +81,7 @@ abstract class _LoginStoreBase with Store {
       saveSettings(settings);
     } else {
       var settings = SettingsUserModel.fromJson(response.data[0]);
-      setTheme(settings.theme);
+      client.setTheme(settings.theme);
       storage.put('theme', settings.theme ? ['dark'] : ['light']);
       Modular.to.navigate('/home/');
     }
@@ -156,13 +93,13 @@ abstract class _LoginStoreBase with Store {
     response = await dio.post('perfil/settingsUser', data: model.toJson(model));
     var settings = SettingsUserModel.fromJson(response.data);
     storage.put('theme', settings.theme ? ['dark'] : ['light']);
-    setTheme(settings.theme);
+    client.setTheme(settings.theme);
     Modular.to.navigate('/home/');
   }
 
   //gooole
   loginWithGoogle() async {
-    setLoading(true);
+    client.setLoading(true);
     try {
       await auth.loginWithGoogle().then((value) {
         auth.getLoginDio(value.email, value.password).then((e) async {
@@ -174,18 +111,18 @@ abstract class _LoginStoreBase with Store {
               [textToMd5(value.email), textToMd5(value.password)]);
           await storage.put(
               'biometric', [textToMd5(value.email), textToMd5(value.password)]);
-          setLoading(false);
+          client.setLoading(false);
           Modular.to.navigate('/home/');
         });
       }).onError((error, stackTrace) {
-        setLoading(false);
-        setErrOrGoal(false);
-        setMsg(error.toString());
+        client.setLoading(false);
+        client.setMsgErrOrGoal(false);
+        client.setMsg(error.toString());
       });
     } catch (erro) {
-      setLoading(false);
-      setErrOrGoal(false);
-      setMsg(erro.toString());
+      client.setLoading(false);
+      client.setMsgErrOrGoal(false);
+      client.setMsg(erro.toString());
     }
   }
 
@@ -194,32 +131,32 @@ abstract class _LoginStoreBase with Store {
   checkBiometrics() {
     auth.biometricRepository
         .checkBiometrics()
-        .then((value) => canCheckBiometrics = value);
+        .then((value) => client.canCheckBiometrics = value);
   }
 
   @action
   getAvailableBiometrics() async {
     await auth.biometricRepository
         .getAvailableBiometrics()
-        .then((value) => availableBiometrics = value);
-    if (availableBiometrics.contains(BiometricType.face)) {
-      faceOrFinger = true;
-    } else if (availableBiometrics.contains(BiometricType.fingerprint)) {
-      faceOrFinger = false;
+        .then((value) => client.availableBiometrics = value);
+    if (client.availableBiometrics.contains(BiometricType.face)) {
+      client.faceOrFinger = true;
+    } else if (client.availableBiometrics.contains(BiometricType.fingerprint)) {
+      client.faceOrFinger = false;
     }
   }
 
   @action
   authenticateBiometric() {
-    auth.authenticateWithBiometrics(faceOrFinger).then((value) {
+    auth.authenticateWithBiometrics(client.faceOrFinger).then((value) {
       if (value == 'Authorized') {
-        if (loginStorage![0] != '') {
-          setLoading(true);
+        if (client.loginStorage![0] != '') {
+          client.setLoading(true);
           auth
-              .getLoginDio(loginStorage![0], loginStorage![1])
+              .getLoginDio(client.loginStorage![0], client.loginStorage![1])
               .then((value) async {
-            setLoading(false);
-            setErrOrGoal(false);
+            client.setLoading(false);
+            client.setMsgErrOrGoal(false);
             UserDioModel user = UserDioModel.fromJson(value.data);
             SessionManager().set("token", user.token);
             await storage.put('token', [user.token]);
@@ -228,9 +165,9 @@ abstract class _LoginStoreBase with Store {
                 [textToMd5(client.email), textToMd5(client.password)]);
             Modular.to.navigate('/home/');
           }).catchError((error) {
-            setLoading(false);
-            setErrOrGoal(false);
-            setMsg(error.response?.data['error'] ?? error?.message);
+            client.setLoading(false);
+            client.setMsgErrOrGoal(false);
+            client.setMsg(error.response?.data['error'] ?? error?.message);
           });
         }
       }
@@ -241,7 +178,7 @@ abstract class _LoginStoreBase with Store {
   getStorageLogin() async {
     await storage.get('biometric').then((value) {
       if (value != null) {
-        loginStorage = value;
+        client.loginStorage = value;
       }
     });
   }
@@ -251,8 +188,8 @@ abstract class _LoginStoreBase with Store {
   checkSupportDevice() async {
     await getStorageLogin();
     if (!kIsWeb && defaultTargetPlatform != TargetPlatform.windows) {
-      await bio.isDeviceSupported().then((isSupported) => supportState =
-          isSupported && loginStorage != null
+      await client.bio.isDeviceSupported().then((isSupported) =>
+          client.supportState = isSupported && client.loginStorage != null
               ? SupportState.supported
               : SupportState.unsupported);
       await checkBiometrics();
@@ -266,13 +203,13 @@ abstract class _LoginStoreBase with Store {
       if (value != null) {
         if (value.isNotEmpty) {
           auth.getLoginDio(value[0], value[1]).then((value) {
-            setLoading(false);
-            setErrOrGoal(false);
+            client.setLoading(false);
+            client.setMsgErrOrGoal(false);
             Modular.to.navigate('/home/');
           }).catchError((error) {
-            setLoading(false);
-            setErrOrGoal(false);
-            setMsg(error.response?.data['error'] ?? error?.message);
+            client.setLoading(false);
+            client.setMsgErrOrGoal(false);
+            client.setMsg(error.response?.data['error'] ?? error?.message);
           });
         }
       }

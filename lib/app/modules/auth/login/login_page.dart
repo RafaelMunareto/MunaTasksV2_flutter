@@ -37,16 +37,16 @@ class LoginPageState extends State<LoginPage> {
     super.didChangeDependencies();
     autorun(
       (_) {
-        if (store.msg != '') {
+        if (store.client.msg != '') {
           SnackbarCustom().createSnackBareErrOrGoal(_scaffoldKey,
-              message: store.msg, errOrGoal: store.errOrGoal);
-          if (store.errOrGoal) {
+              message: store.client.msg, errOrGoal: store.client.msgErrOrGoal);
+          if (store.client.msgErrOrGoal) {
             Timer(
               const Duration(seconds: 2),
               () => store.client.setCleanVariables(),
             );
           }
-          store.setMsg('');
+          store.client.setMsg('');
         }
       },
     );
@@ -109,9 +109,9 @@ class LoginPageState extends State<LoginPage> {
                         horizontal: 40, vertical: 10),
                     child: ButtonWidget(
                         label: 'LOGIN',
-                        theme: store.theme,
+                        theme: store.client.theme,
                         width: size.width * 0.5,
-                        loading: store.loading,
+                        loading: store.client.loading,
                         function:
                             store.client.isValidLogin ? store.submit : null),
                   );
@@ -128,30 +128,14 @@ class LoginPageState extends State<LoginPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        // defaultTargetPlatform == TargetPlatform.android
-                        //     ? Container(
-                        //         margin:
-                        //             const EdgeInsets.symmetric(horizontal: 40),
-                        //         child: MouseRegion(
-                        //           cursor: SystemMouseCursors.click,
-                        //           child: GestureDetector(
-                        //             child: const Image(
-                        //               image:
-                        //                   AssetImage('assets/img/google.png'),
-                        //             ),
-                        //             onTap: store.loginWithGoogle,
-                        //           ),
-                        //         ),
-                        //       )
-                        //     : Container(),
-                        store.supportState == SupportState.supported
+                        store.client.supportState == SupportState.supported
                             ? GestureDetector(
                                 onTap: store.authenticateBiometric,
                                 child: Container(
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 20),
                                   width: 64,
-                                  child: store.faceOrFinger
+                                  child: store.client.faceOrFinger
                                       ? const Image(
                                           image:
                                               AssetImage('assets/img/face.png'))

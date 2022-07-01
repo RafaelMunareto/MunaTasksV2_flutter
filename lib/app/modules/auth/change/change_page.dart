@@ -29,7 +29,7 @@ class ChangePageState extends State<ChangePage> {
 
   @override
   void initState() {
-    store.setCode(widget.code);
+    store.client.setCode(widget.code);
     super.initState();
   }
 
@@ -38,14 +38,14 @@ class ChangePageState extends State<ChangePage> {
     super.didChangeDependencies();
     autorun(
       (_) {
-        if (store.msg != '') {
+        if (store.client.msg != '') {
           FocusScope.of(context).requestFocus(FocusNode());
           SnackbarCustom().createSnackBareErrOrGoal(_scaffoldKey,
-              message: store.msg,
-              errOrGoal: store.msgErrOrGoal,
+              message: store.client.msg,
+              errOrGoal: store.client.msgErrOrGoal,
               rota: '/auth/');
-          store.setMsg('');
-          if (store.msgErrOrGoal) {
+          store.client.setMsg('');
+          if (store.client.msgErrOrGoal) {
             Timer(const Duration(seconds: 2),
                 () => store.client.setCleanVariables());
           }
@@ -109,9 +109,9 @@ class ChangePageState extends State<ChangePage> {
                         horizontal: 40, vertical: 10),
                     child: ButtonWidget(
                       label: 'ALTERAR',
-                      theme: store.theme,
+                      theme: store.client.theme,
                       width: size.width * 0.5,
-                      loading: store.loading,
+                      loading: store.client.loading,
                       function: store.client.isValidChangePassword
                           ? store.submit
                           : null,

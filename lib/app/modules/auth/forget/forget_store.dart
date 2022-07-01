@@ -16,59 +16,22 @@ abstract class _ForgetStoreBase with Store {
   ILocalStorage storage = Modular.get();
 
   _ForgetStoreBase() {
-    buscaTheme();
-  }
-
-  @observable
-  bool loading = false;
-
-  @observable
-  bool checkError = false;
-
-  @observable
-  String msg = '';
-
-  @action
-  setMsg(value) => msg = value;
-
-  @action
-  setLoading(value) => loading = value;
-
-  @observable
-  bool msgErrOrGoal = false;
-
-  @action
-  setMsgErrOrGoal(value) => msgErrOrGoal = value;
-
-  @observable
-  bool theme = false;
-
-  @action
-  setTheme(value) => value = theme;
-
-  buscaTheme() {
-    storage.get('theme').then((value) {
-      if (value?[0] == 'dark') {
-        setTheme(true);
-      } else {
-        setTheme(false);
-      }
-    });
+    client.buscaTheme();
   }
 
   @action
   submit() {
-    setLoading(true);
+    client.setLoading(true);
     auth.sendEmailChangePassword(client.email).then((value) async {
-      setLoading(false);
+      client.setLoading(false);
       value?.data == 'Email enviado com sucesso!'
-          ? setMsgErrOrGoal(true)
-          : setMsgErrOrGoal(false);
-      setMsg(value?.data);
+          ? client.setMsgErrOrGoal(true)
+          : client.setMsgErrOrGoal(false);
+      client.setMsg(value?.data);
     }).catchError((error) {
-      setLoading(false);
-      setMsgErrOrGoal(false);
-      setMsg(error.response?.data['error'] ?? error?.message);
+      client.setLoading(false);
+      client.setMsgErrOrGoal(false);
+      client.setMsg(error.response?.data['error'] ?? error?.message);
     });
   }
 }
