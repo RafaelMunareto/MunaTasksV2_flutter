@@ -1,8 +1,12 @@
+import 'dart:convert';
+
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/principal/shared/model/settings_user_model.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 
 part 'principal_client_store_store.g.dart';
 
@@ -10,6 +14,32 @@ class PrincipalClientStoreStore = _PrincipalClientStoreStoreBase
     with _$PrincipalClientStoreStore;
 
 abstract class _PrincipalClientStoreStoreBase with Store {
+  final ILocalStorage storage = Modular.get();
+
+  @action
+  buscaTheme() async {
+    await storage.get('theme').then((value) {
+      if (value?[0] == 'dark') {
+        setIsSwitched(true);
+      } else {
+        setIsSwitched(false);
+      }
+    });
+    setfinalize(true);
+  }
+
+  getUid() {
+    storage.get('userDio').then((value) {
+      setUser(UserDioClientModel.fromJson(jsonDecode(value[0])));
+    });
+  }
+
+  @action
+  changeSwitch(value) {
+    value = value ? ['dark'] : ['light'];
+    storage.put('theme', value);
+  }
+
   @observable
   UserDioClientModel user = UserDioClientModel();
 

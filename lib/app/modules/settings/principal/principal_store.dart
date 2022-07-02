@@ -8,8 +8,7 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_d
 import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/principal/controller/principal_client_store_store.dart';
 import 'package:munatasks2/app/modules/settings/principal/services/interfaces/principal_service_interface.dart';
-import 'package:munatasks2/app/shared/auth/auth_controller.dart';
-import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
+import 'package:munatasks2/app/shared/auth/repositories/auth_repository_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
@@ -20,26 +19,21 @@ part 'principal_store.g.dart';
 class PrincipalStore = _PrincipalStoreBase with _$PrincipalStore;
 
 abstract class _PrincipalStoreBase with Store {
-  final ILocalStorage storage = Modular.get();
   final IPrincipalService principalService;
   PrincipalClientStoreStore client = PrincipalClientStoreStore();
+  IAuthRepository auth = Modular.get();
+  final ILocalStorage storage = Modular.get();
 
   _PrincipalStoreBase({required this.principalService}) {
     getList();
-    buscaTheme();
+    client.buscaTheme();
     settingsAction();
   }
 
   getList() async {
-    await getUid();
+    await client.getUid();
     await getBydDioId();
     await getSettingsUser();
-  }
-
-  getUid() {
-    storage.get('userDio').then((value) {
-      client.setUser(UserDioClientModel.fromJson(jsonDecode(value[0])));
-    });
   }
 
   getBydDioId() async {
@@ -47,24 +41,6 @@ abstract class _PrincipalStoreBase with Store {
     var dio = await DioStruture().dioAction();
     response = await dio.get('perfil/user/${client.user.id}');
     client.setPerfil(PerfilDioModel.fromJson(response.data[0]));
-  }
-
-  @action
-  buscaTheme() async {
-    await storage.get('theme').then((value) {
-      if (value?[0] == 'dark') {
-        client.setIsSwitched(true);
-      } else {
-        client.setIsSwitched(false);
-      }
-    });
-    client.setfinalize(true);
-  }
-
-  @action
-  changeSwitch(value) {
-    value = value ? ['dark'] : ['light'];
-    storage.put('theme', value);
   }
 
   getSettingsUser() {
@@ -78,12 +54,8 @@ abstract class _PrincipalStoreBase with Store {
     principalService.updateSettingsUser(settings);
   }
 
-  logoff() async {
-    await storage.delete('login-normal');
-    await storage.delete('user');
-    await storage.delete('token');
-    await SessionManager().remove('token');
-    await Modular.get<AuthController>().logout();
+  logout() async {
+    auth.getLogout();
   }
 
   settingsAction() {

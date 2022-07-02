@@ -178,9 +178,29 @@ mixin _$PrincipalClientStoreStore on _PrincipalClientStoreStoreBase, Store {
     });
   }
 
+  late final _$buscaThemeAsyncAction = AsyncAction(
+      '_PrincipalClientStoreStoreBase.buscaTheme',
+      context: context);
+
+  @override
+  Future buscaTheme() {
+    return _$buscaThemeAsyncAction.run(() => super.buscaTheme());
+  }
+
   late final _$_PrincipalClientStoreStoreBaseActionController =
       ActionController(
           name: '_PrincipalClientStoreStoreBase', context: context);
+
+  @override
+  dynamic changeSwitch(dynamic value) {
+    final _$actionInfo = _$_PrincipalClientStoreStoreBaseActionController
+        .startAction(name: '_PrincipalClientStoreStoreBase.changeSwitch');
+    try {
+      return super.changeSwitch(value);
+    } finally {
+      _$_PrincipalClientStoreStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic setUser(dynamic value) {

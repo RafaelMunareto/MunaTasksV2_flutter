@@ -63,7 +63,7 @@ class _ConfiguracaoWidgetState extends State<ConfiguracaoWidget> {
                   ),
                 ),
                 onPressed: () {
-                  store.logoff();
+                  store.logout();
                 },
                 icon: const Icon(
                   Icons.logout,

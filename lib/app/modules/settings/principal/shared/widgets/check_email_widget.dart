@@ -80,7 +80,7 @@ class _CheckEmailWidgetState extends State<CheckEmailWidget> {
                     .changeTheme(state ? ThemeMode.dark : ThemeMode.light);
                 theme = state;
                 store.client.setIsSwitched(state);
-                store.changeSwitch(state);
+                store.client.changeSwitch(state);
               });
               update();
             },

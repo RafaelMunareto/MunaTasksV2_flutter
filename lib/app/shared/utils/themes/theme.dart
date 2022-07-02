@@ -60,10 +60,10 @@ ThemeData darkThemeData(BuildContext context) {
     appBarTheme: AppBarTheme(
       backgroundColor: kDardBlueGrey,
       iconTheme: const IconThemeData(
-        color: kblue,
+        color: darkblue,
       ),
     ),
-    iconTheme: const IconThemeData(color: kblue),
+    iconTheme: const IconThemeData(color: darkblue),
     textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme)
         .apply(bodyColor: darkWhite),
     colorScheme: ColorScheme.light(

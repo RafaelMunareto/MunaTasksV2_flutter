@@ -15,10 +15,7 @@ class ListMenuWidget extends StatelessWidget {
     return ListTile(
       title: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Icon(icon),
-          ),
+          Icon(icon),
           Flexible(
             child: SizedBox(
               child: AutoSizeText(

@@ -75,13 +75,15 @@ class ForgetPageState extends State<ForgetPage> {
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
-                SizedBox(
-                    child: TextFieldWidget(
-                        labelText: 'E-mail',
-                        onChanged: store.client.changeEmail,
-                        functionBool: store.client.isValidEmail,
-                        function: store.submit,
-                        errorText: store.client.validateEmail)),
+                Observer(builder: (_) {
+                  return SizedBox(
+                      child: TextFieldWidget(
+                          labelText: 'E-mail',
+                          onChanged: store.client.changeEmail,
+                          functionBool: store.client.isValidEmail,
+                          function: store.submit,
+                          errorText: store.client.validateEmail));
+                }),
                 SizedBox(height: size.height * 0.05),
                 Observer(builder: (_) {
                   return Container(
