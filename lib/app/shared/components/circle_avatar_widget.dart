@@ -13,8 +13,8 @@ class CircleAvatarWidget extends StatelessWidget {
     return Tooltip(
       message: nameUser,
       child: CircleAvatar(
-        minRadius: 10,
-        maxRadius: 15,
+        minRadius: 8,
+        maxRadius: 12,
         backgroundImage: CachedNetworkImageProvider(url),
         backgroundColor: Colors.transparent,
       ),

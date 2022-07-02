@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +46,8 @@ class _HomePageState extends State<HomePage> {
     super.didChangeDependencies();
     autorun(
       (_) {
-        if (Platform.isWindows && store.client.checkUpdateDesktop) {
+        if (defaultTargetPlatform == Platform.isWindows &&
+            store.client.checkUpdateDesktop) {
           checkUpdateDesktop();
         }
       },
@@ -177,15 +180,15 @@ class _HomePageState extends State<HomePage> {
                         : 24,
                   ),
                 ),
-                floatingActionButtonLocation:
-                    FloatingActionButtonLocation.endDocked,
-                bottomNavigationBar: Observer(builder: (_) {
-                  return NavigationBarWidget(
-                    theme: store.client.theme,
-                    navigateBarSelection: store.client.navigateBarSelection,
-                    setNavigateBarSelection: store.setNavigateBarSelection,
-                  );
-                }),
+                // floatingActionButtonLocation:
+                //     FloatingActionButtonLocation.endDocked,
+                // bottomNavigationBar: Observer(builder: (_) {
+                //   return NavigationBarWidget(
+                //     theme: store.client.theme,
+                //     navigateBarSelection: store.client.navigateBarSelection,
+                //     setNavigateBarSelection: store.setNavigateBarSelection,
+                //   );
+                // }),
                 body: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
                     ? Observer(
                         builder: (_) {
@@ -195,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                                 )
                               : Row(
                                   children: [
-                                    Expanded(
+                                    Flexible(
                                       flex: 2,
                                       child: MenuScreen(
                                         constraint: constraint.maxWidth,
@@ -205,10 +208,37 @@ class _HomePageState extends State<HomePage> {
                                         version: store.client.version,
                                       ),
                                     ),
-                                    Expanded(
-                                      flex: 10,
+                                    const SizedBox(
+                                      width: 24,
+                                    ),
+                                    Flexible(
+                                      flex: 2,
                                       child: BodyHomePageWidget(
                                         constraint: constraint.maxWidth,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 24,
+                                    ),
+                                    Flexible(
+                                      flex: 2,
+                                      child: BodyHomePageWidget(
+                                        constraint: constraint.maxWidth,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 24,
+                                    ),
+                                    Flexible(
+                                      flex: 2,
+                                      child: BodyHomePageWidget(
+                                        constraint: constraint.maxWidth,
+                                      ),
+                                    ),
+                                    Flexible(
+                                      flex: 4,
+                                      child: SizedBox(
+                                        width: 24,
                                       ),
                                     ),
                                   ],

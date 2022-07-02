@@ -29,22 +29,22 @@ class _CardWidgetState extends State<CardWidget>
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: store.client.theme
-                            ? Colors.black45
-                            : lightThemeData(context)
-                                .shadowColor
-                                .withOpacity(0.2),
-                      ),
-                      BoxShadow(
-                        color: store.client.theme
-                            ? darkThemeData(context).scaffoldBackgroundColor
-                            : lightThemeData(context).scaffoldBackgroundColor,
-                        spreadRadius: -3.0,
-                        blurRadius: 4.0,
-                      ),
-                    ],
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: store.client.theme
+                    //         ? Colors.black45
+                    //         : lightThemeData(context)
+                    //             .shadowColor
+                    //             .withOpacity(0.2),
+                    //   ),
+                    //   BoxShadow(
+                    //     color: store.client.theme
+                    //         ? darkThemeData(context).scaffoldBackgroundColor
+                    //         : lightThemeData(context).scaffoldBackgroundColor,
+                    //     spreadRadius: -3.0,
+                    //     blurRadius: 4.0,
+                    //   ),
+                    // ],
                   ),
                   child: LayoutBuilder(builder: (context, constraint) {
                     return Padding(

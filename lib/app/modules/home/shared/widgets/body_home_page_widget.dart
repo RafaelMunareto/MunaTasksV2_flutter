@@ -36,17 +36,17 @@ class _BodyHomePageWidgetState extends State<BodyHomePageWidget> {
               ),
             ),
           ),
-          widget.constraint >= LarguraLayoutBuilder().telaPc
-              ? Expanded(
-                  flex: 3,
-                  child: Center(
-                    child: LandscapeWidget(
-                      theme: store.client.theme,
-                      constraint: widget.constraint,
-                    ),
-                  ),
-                )
-              : Container()
+          // widget.constraint >= LarguraLayoutBuilder().telaPc
+          //     ? Expanded(
+          //         flex: 3,
+          //         child: Center(
+          //           child: LandscapeWidget(
+          //             theme: store.client.theme,
+          //             constraint: widget.constraint,
+          //           ),
+          //         ),
+          //       )
+          //     : Container()
         ],
       ),
     );

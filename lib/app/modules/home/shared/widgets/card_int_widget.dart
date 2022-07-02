@@ -40,197 +40,155 @@ class _CardIntWidgetState extends State<CardIntWidget> {
         DialogButtom().showDialogCreate(const CreateWidget(), widget.constraint,
             context, store.changeFilterUserList);
       },
-      child: Dismissible(
-        background: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.green,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                children: const [
-                  Icon(
-                    Icons.edit,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    'Editar',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        secondaryBackground: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.red,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: const [
-                  Icon(
-                    Icons.delete,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    'Excluir',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        key: UniqueKey(),
-        onDismissed: (direction) {
-          if (direction == DismissDirection.startToEnd) {
-            store.clientCreate.setTarefaUpdate(
-              widget.tarefaDioModel,
-            );
-            store.clientCreate.cleanSubtarefa();
-            DialogButtom().showDialogCreate(const CreateWidget(),
-                widget.constraint, context, store.changeFilterUserList);
-          } else {
-            dialogDelete(
-              widget.tarefaDioModel.texto,
-              widget.tarefaDioModel,
-              context,
-            );
-          }
-        },
+      child: PhysicalModel(
+        color: Colors.transparent,
         child: PhysicalModel(
           color: Colors.transparent,
-          child: PhysicalModel(
-            color: Colors.transparent,
-            child: Card(
-              key: UniqueKey(),
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: ClipPath(
-                clipper: ShapeBorderClipper(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+          child: Card(
+            key: UniqueKey(),
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: ClipPath(
+              clipper: ShapeBorderClipper(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                        left: BorderSide(
-                            color: ConvertIcon().convertColor(
-                                widget.tarefaDioModel.etiqueta.color),
-                            width: 15)),
-                  ),
-                  alignment: Alignment.centerLeft,
-                  child: ExpansionTile(
-                    textColor: Colors.black,
-                    title: HeaderWidget(
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                      left: BorderSide(
+                          color: ConvertIcon().convertColor(
+                              widget.tarefaDioModel.etiqueta.color),
+                          width: 15)),
+                ),
+                alignment: Alignment.centerLeft,
+                child: Wrap(
+                  children: [
+                    HeaderWidget(
                       tarefa: widget.tarefaDioModel,
                       theme: store.client.theme,
                     ),
-                    subtitle: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Wrap(
-                        alignment: WrapAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () => DialogButtom().showDialog(
-                              retard(),
-                              store.client.theme,
-                              widget.constraint,
-                              context,
-                            ),
-                            child: Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 4.0),
-                                  child: Icon(
-                                    changeIconeAndColorTime(
-                                        widget.tarefaDioModel.data)[1],
-                                    color: changeIconeAndColorTime(
-                                        widget.tarefaDioModel.data)[0],
-                                  ),
-                                ),
-                                Text(
-                                  DateFormat('dd/MM/yyyy')
-                                      .format(widget.tarefaDioModel.data)
-                                      .toString(),
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: store.client.theme
-                                          ? Colors.white
-                                          : Colors.black),
-                                ),
-                              ],
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () => DialogButtom().showDialog(
-                              prioridade(),
-                              store.client.theme,
-                              widget.constraint,
-                              context,
-                            ),
-                            child: Icon(
-                              widget.tarefaDioModel.prioridade > 3
-                                  ? Icons.flag_outlined
-                                  : Icons.flag,
-                              color: ConvertIcon().convertColorFlaf(
-                                  widget.tarefaDioModel.prioridade),
-                            ),
-                          )
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 16, 8, 4),
+                      child: Text(
+                        widget.tarefaDioModel.texto,
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                            fontSize: 11,
+                            color: store.client.theme
+                                ? Colors.white
+                                : Colors.black),
                       ),
                     ),
-                    children: [
-                      Wrap(
-                        children: [
-                          BodyTextWidget(
-                            tarefa: widget.tarefaDioModel,
-                            theme: store.client.theme,
-                            setSubtarefaModel: store.client.setSubtarefaModel,
-                            subtarefaActionList:
-                                store.client.subtarefaActionList,
-                          ),
-                          ButtonActionWidget(
-                            constraint: widget.constraint,
-                            tarefa: widget.tarefaDioModel,
-                            navigate: store.client.navigateBarSelection,
-                            save: store.save,
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+                  ],
                 ),
+
+                // InputChip(
+                //   onPressed: () {},
+                //   shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(5)),
+                //   label: Text(
+                //     tarefa.etiqueta.etiqueta,
+                //     overflow: TextOverflow.ellipsis,
+                //     style: const TextStyle(fontSize: 10),
+                //   ),
+                //   avatar: Icon(
+                //     IconData(tarefa.etiqueta.icon ?? 0,
+                //         fontFamily: 'MaterialIcons'),
+                //     color: ConvertIcon().convertColor(tarefa.etiqueta.color),
+                //   ),
+                // ),
+
+                // ExpansionTile(
+                //   textColor: Colors.black,
+                //   title: HeaderWidget(
+                //     tarefa: widget.tarefaDioModel,
+                //     theme: store.client.theme,
+                //   ),
+                //   subtitle: SizedBox(
+                //     width: MediaQuery.of(context).size.width,
+                //     child: Wrap(
+                //       alignment: WrapAlignment.spaceBetween,
+                //       children: [
+                //         GestureDetector(
+                //           onTap: () => DialogButtom().showDialog(
+                //             retard(),
+                //             store.client.theme,
+                //             widget.constraint,
+                //             context,
+                //           ),
+                //           child: Wrap(
+                //             crossAxisAlignment: WrapCrossAlignment.center,
+                //             children: [
+                //               Padding(
+                //                 padding: const EdgeInsets.only(right: 4.0),
+                //                 child: Icon(
+                //                   changeIconeAndColorTime(
+                //                       widget.tarefaDioModel.data)[1],
+                //                   color: changeIconeAndColorTime(
+                //                       widget.tarefaDioModel.data)[0],
+                //                 ),
+                //               ),
+                //               Text(
+                //                 DateFormat('dd/MM/yyyy')
+                //                     .format(widget.tarefaDioModel.data)
+                //                     .toString(),
+                //                 style: TextStyle(
+                //                     fontSize: 12,
+                //                     color: store.client.theme
+                //                         ? Colors.white
+                //                         : Colors.black),
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //         GestureDetector(
+                //           onTap: () => DialogButtom().showDialog(
+                //             prioridade(),
+                //             store.client.theme,
+                //             widget.constraint,
+                //             context,
+                //           ),
+                //           child: Icon(
+                //             widget.tarefaDioModel.prioridade > 3
+                //                 ? Icons.flag_outlined
+                //                 : Icons.flag,
+                //             color: ConvertIcon().convertColorFlaf(
+                //                 widget.tarefaDioModel.prioridade),
+                //           ),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                //   children: [
+                //     Wrap(
+                //       children: [
+                //         BodyTextWidget(
+                //           tarefa: widget.tarefaDioModel,
+                //           theme: store.client.theme,
+                //           setSubtarefaModel: store.client.setSubtarefaModel,
+                //           subtarefaActionList:
+                //               store.client.subtarefaActionList,
+                //         ),
+                //         ButtonActionWidget(
+                //           constraint: widget.constraint,
+                //           tarefa: widget.tarefaDioModel,
+                //           navigate: store.client.navigateBarSelection,
+                //           save: store.save,
+                //         ),
+                //       ],
+                //     )
+                //   ],
+                // ),
               ),
             ),
           ),
         ),
       ),
     );
-  }
-
-  changeIconeAndColorTime(date) {
-    DateTime now = DateTime.now();
-    if (date.isAfter(now)) {
-      return [Colors.blue, Icons.timelapse_sharp];
-    } else if (date.day == now.day) {
-      return [Colors.amber, Icons.alarm];
-    } else {
-      return [Colors.red, Icons.history];
-    }
   }
 
   dialogDelete(String message, TarefaDioModel tarefa, context) {
