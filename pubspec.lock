@@ -232,6 +232,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.0"
+  collapsible_sidebar:
+    dependency: "direct main"
+    description:
+      name: collapsible_sidebar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1+2"
   collection:
     dependency: transitive
     description:
@@ -480,13 +487,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  flutter_speed_dial:
-    dependency: "direct main"
-    description:
-      name: flutter_speed_dial
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -1134,6 +1134,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.10"
+  sidebarx:
+    dependency: "direct main"
+    description:
+      name: sidebarx
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.0"
   simple_animations:
     dependency: "direct main"
     description:

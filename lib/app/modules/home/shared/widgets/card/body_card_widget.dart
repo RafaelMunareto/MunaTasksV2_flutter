@@ -1,22 +1,26 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
-import 'package:munatasks2/app/shared/utils/convert_icon.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
-class HeaderWidget extends StatefulWidget {
+class BodyCardWidget extends StatefulWidget {
   final dynamic tarefa;
   final bool theme;
-  const HeaderWidget({Key? key, required this.tarefa, required this.theme})
+  final double constraints;
+  const BodyCardWidget(
+      {Key? key,
+      required this.tarefa,
+      required this.theme,
+      required this.constraints})
       : super(key: key);
 
   @override
-  State<HeaderWidget> createState() => _HeaderWidgetState();
+  State<BodyCardWidget> createState() => _BodyCardWidgetState();
 }
 
-class _HeaderWidgetState extends State<HeaderWidget> {
+class _BodyCardWidgetState extends State<BodyCardWidget> {
   HomeStore store = Modular.get();
   @override
   Widget build(BuildContext context) {
@@ -46,8 +50,11 @@ class _HeaderWidgetState extends State<HeaderWidget> {
           ),
         ),
         Expanded(
-          child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(4, 4, 0, 0),
             child: Wrap(
+              runSpacing: 4,
+              spacing: 4,
               direction: Axis.horizontal,
               runAlignment: WrapAlignment.end,
               children: [

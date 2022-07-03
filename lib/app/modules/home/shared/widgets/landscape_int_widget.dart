@@ -28,131 +28,53 @@ class _LandscapeIntWidgetState extends State<LandscapeIntWidget> {
     final HomeStore store = Modular.get();
 
     return Observer(builder: (_) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: widget.constraint >= LarguraLayoutBuilder().telaPc
-                ? MediaQuery.of(context).size.width * 0.5
-                : MediaQuery.of(context).size.width,
-            child: SingleChildScrollView(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.9,
-                width: MediaQuery.of(context).size.width,
-                child: Accordion(
-                  maxOpenSections: 1,
-                  children: [
-                    for (var totais in store.client.tarefasTotais)
-                      AccordionSection(
-                        headerBackgroundColor: widget.theme
-                            ? darkThemeData(context).primaryColorLight
-                            : lightThemeData(context).primaryColorLight,
-                        contentBackgroundColor: widget.theme
-                            ? darkThemeData(context).scaffoldBackgroundColor
-                            : lightThemeData(context).scaffoldBackgroundColor,
-                        header: Wrap(
-                          alignment: WrapAlignment.spaceBetween,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: [
-                            SizedBox(
-                              child: InputChip(
-                                backgroundColor: widget.theme
-                                    ? Colors.grey.shade700
-                                    : Colors.grey.shade300,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                key: UniqueKey(),
-                                labelPadding: const EdgeInsets.all(2),
-                                elevation: 1.0,
-                                avatar: CircleAvatarWidget(
+      return store.client.loading
+          ? const Center(child: CircularProgressIndicator())
+          : Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width * 0.1,
+                  child: SingleChildScrollView(
+                    child: Wrap(
+                      direction: Axis.vertical,
+                      alignment: WrapAlignment.spaceBetween,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        for (var totais in store.client.tarefasTotais)
+                          Wrap(
+                            alignment: WrapAlignment.center,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(12),
+                                child: CircleAvatarWidget(
                                   nameUser: totais.name.name.name,
                                   url: totais.name!.urlImage,
                                 ),
-                                label: SizedBox(
-                                  width: widget.constraint >=
-                                          LarguraLayoutBuilder().telaPc
-                                      ? MediaQuery.of(context).size.width * 0.07
-                                      : MediaQuery.of(context).size.width * 0.3,
-                                  child: Text(
-                                    ' ' + totais.name!.name.name,
-                                    textAlign: TextAlign.justify,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: widget.theme
-                                            ? Colors.white
-                                            : Colors.grey.shade800),
-                                  ),
-                                ),
-                                onPressed: () {},
                               ),
-                            ),
-                            totais.qtd > 0
-                                ? AutoSizeText(
-                                    totais.qtd > 1
-                                        ? totais.qtd.toString() + ' Tarefas'
-                                        : totais.qtd.toString() + ' Tarefa',
-                                    maxLines: 1,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ))
-                                : const AutoSizeText('Nenhuma tarefa',
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                          ],
-                        ),
-                        content: Wrap(
-                          children: [
-                            for (var task in totais.tarefa ?? [])
-                              totais.tarefa.isEmpty
-                                  ? Container()
-                                  : Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: InputChip(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(10),
-                                          ),
-                                        ),
-                                        key: UniqueKey(),
-                                        labelPadding: const EdgeInsets.all(2),
-                                        elevation: 1.0,
-                                        avatar: Icon(
-                                          IconData(task.etiqueta.icon ?? 0,
-                                              fontFamily: 'MaterialIcons'),
-                                          color: ConvertIcon().convertColor(
-                                              task.etiqueta.color),
-                                        ),
-                                        label: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: Text(
-                                            task.texto,
-                                            textAlign: TextAlign.justify,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style:
-                                                const TextStyle(fontSize: 12),
-                                          ),
-                                        ),
-                                        onPressed: () {},
-                                      ),
-                                    ),
-                          ],
-                        ),
-                      ),
-                  ],
+                              totais.qtd > 0
+                                  ? AutoSizeText(
+                                      totais.qtd > 1
+                                          ? totais.qtd.toString()
+                                          : totais.qtd.toString(),
+                                      maxLines: 1,
+                                    )
+                                  : const AutoSizeText('0',
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                            ],
+                          )
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
-      );
+            );
     });
   }
 }

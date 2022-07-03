@@ -826,22 +826,11 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
-  dynamic setLoadingTasks(dynamic value) {
+  dynamic setLoading(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setLoadingTasks');
+        name: '_ClientStoreBase.setLoading');
     try {
-      return super.setLoadingTasks(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setLoadingTasksTotal(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setLoadingTasksTotal');
-    try {
-      return super.setLoadingTasksTotal(value);
+      return super.setLoading(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -864,17 +853,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
         name: '_ClientStoreBase.setTheme');
     try {
       return super.setTheme(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setLoading(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setLoading');
-    try {
-      return super.setLoading(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }

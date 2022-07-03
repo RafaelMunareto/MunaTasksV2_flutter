@@ -1,6 +1,10 @@
 import 'package:munatasks2/app/modules/home/shared/model/notifications_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_total_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/principal/shared/model/settings_user_model.dart';
 
 abstract class IDashboardService {
   Future<List<TarefaDioModel>> getDio(String id, int fase);
@@ -13,4 +17,10 @@ abstract class IDashboardService {
   updateDio(TarefaDioModel model);
   deleteDio(TarefaDioModel model);
   deleteNotifications(String id);
+
+  Future<List<PerfilDioModel>> getPerfis();
+  Future<PerfilDioModel> getPerfil(String id);
+  Future<SettingsUserModel> getSettingsUser(String id);
+  Future<SettingsModel> getSettings();
+  Future<List<EtiquetaDioModel>> getEtiquetas();
 }

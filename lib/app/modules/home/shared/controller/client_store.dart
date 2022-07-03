@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:munatasks2/app/app_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/model/notifications_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
@@ -8,6 +11,7 @@ import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_d
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/principal/shared/model/settings_user_model.dart';
+import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 import '../../../../shared/auth/model/user_dio_client.model.dart';
@@ -17,6 +21,21 @@ part 'client_store.g.dart';
 class ClientStore = _ClientStoreBase with _$ClientStore;
 
 abstract class _ClientStoreBase with Store {
+  final ILocalStorage storage = Modular.get();
+  buscaTheme(context) async {
+    await storage.get('theme').then((value) {
+      if (value?[0] == 'dark') {
+        setTheme(true);
+      } else {
+        setTheme(false);
+      }
+      setThemeLoading(true);
+    });
+
+    AppWidget.of(context)
+        ?.changeTheme(theme ? ThemeMode.dark : ThemeMode.light);
+  }
+
   @observable
   List<int> badgetNavigate = [0, 0, 0];
 
@@ -96,10 +115,7 @@ abstract class _ClientStoreBase with Store {
   bool loadingTasksTotal = true;
 
   @action
-  setLoadingTasks(value) => loadingTasks = value;
-
-  @action
-  setLoadingTasksTotal(value) => loadingTasksTotal = value;
+  setLoading(value) => loading = value;
 
   @observable
   bool theme = false;
@@ -112,9 +128,6 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setTheme(value) => theme = value;
-
-  @action
-  setLoading(value) => loading = value;
 
   @observable
   int navigateBarSelection = 0;

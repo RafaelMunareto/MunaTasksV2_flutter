@@ -4,6 +4,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/auth/auth_controller.dart';
 import 'package:munatasks2/app/shared/components/list_menu_widget.dart';
+import 'package:munatasks2/app/shared/components/logo_widget.dart';
 import 'package:munatasks2/app/shared/components/name_widget.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
@@ -114,23 +115,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                         ],
                                       ),
                                     ),
-                                    Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.15,
-                                      width: widget.constraint <
-                                              LarguraLayoutBuilder().telaPc
-                                          ? MediaQuery.of(context).size.width *
-                                              0.4
-                                          : MediaQuery.of(context).size.width,
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/icon/icon.png'),
-                                          opacity: 0.07,
-                                        ),
-                                      ),
-                                    ),
+                                    LogoWidget(constraint: widget.constraint),
                                     SizedBox(
                                       height:
                                           MediaQuery.of(context).size.height *

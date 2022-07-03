@@ -107,135 +107,131 @@ class _AppBarWidgetState extends State<AppBarWidget> {
         title: !widget.home
             ? Wrap(
                 children: [
+                  GestureDetector(
+                    onTap: () => Modular.to.navigate('/home/'),
+                    child: const MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Icon(Icons.arrow_back),
+                    ),
+                  ),
+                  const SizedBox(width: 15),
                   Icon(widget.icon),
                   Text(
-                    ' ' + widget.title.toUpperCase(),
-                    style: TextStyle(
+                    '' + widget.title.toUpperCase(),
+                    style: const TextStyle(
                       fontSize: 20,
-                      color: lightThemeData(context).iconTheme.color,
                     ),
                   ),
                 ],
               )
-            : SizedBox(
-                width: double.infinity,
+            : Center(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    widget.closeSearch!
-                        ? PopSearchWidget(
-                            setValueSearch: widget.setValueSearch,
-                            changeFilterSearch: widget.changeFilterSearch,
-                          )
-                        : Container(),
-                    !widget.closeSearch!
-                        ? Tooltip(
-                            message: "Filtra Etiquetas",
-                            child: MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: Observer(builder: (_) {
-                                return GestureDetector(
-                                  child: widget.client.icon != 0
-                                      ? Icon(
-                                          IconData(widget.client.icon,
-                                              fontFamily: 'MaterialIcons'),
-                                          color: ConvertIcon().convertColor(
-                                              widget.client.color),
-                                        )
-                                      : Icon(
-                                          Icons.bookmark,
-                                          color: widget.client.theme
-                                              ? darkThemeData(context)
-                                                  .iconTheme
-                                                  .color
-                                              : lightThemeData(context)
-                                                  .iconTheme
-                                                  .color,
-                                        ),
-                                  onTap: () {
-                                    DialogButtom().showDialog(
-                                      const RadioEtiquetasFilterWidget(),
-                                      widget.client.theme,
-                                      constraint.maxWidth,
-                                      context,
-                                    );
-                                  },
-                                );
-                              }),
-                            ),
-                          )
-                        : Container(),
-                    !widget.closeSearch!
-                        ? Tooltip(
-                            message: "Faz o ordenamento.",
-                            child: GestureDetector(
-                              child: const MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Icon(
-                                  Icons.filter_alt,
-                                ),
-                              ),
-                              onTap: () => DialogButtom().showDialog(
-                                const RadioOrderWidget(),
+                    PopSearchWidget(
+                      setValueSearch: widget.setValueSearch,
+                      changeFilterSearch: widget.changeFilterSearch,
+                    ),
+                    Tooltip(
+                      message: "Filtra Etiquetas",
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: Observer(builder: (_) {
+                          return GestureDetector(
+                            child: widget.client.icon != 0
+                                ? Icon(
+                                    IconData(widget.client.icon,
+                                        fontFamily: 'MaterialIcons'),
+                                    color: ConvertIcon()
+                                        .convertColor(widget.client.color),
+                                  )
+                                : Icon(
+                                    Icons.bookmark,
+                                    color: widget.client.theme
+                                        ? darkThemeData(context).iconTheme.color
+                                        : lightThemeData(context)
+                                            .iconTheme
+                                            .color,
+                                  ),
+                            onTap: () {
+                              DialogButtom().showDialog(
+                                const RadioEtiquetasFilterWidget(),
                                 widget.client.theme,
                                 constraint.maxWidth,
                                 context,
-                                width: MediaQuery.of(context).size.height * 0.4,
-                              ),
-                            ),
-                          )
-                        : Container(),
-                    !widget.closeSearch!
-                        ? Tooltip(
-                            message: "Faz filtro de datas.",
-                            child: MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Observer(
-                                  builder: (_) {
-                                    return GestureDetector(
-                                        child: Icon(
-                                          widget.client.filterDate
-                                              ? Icons.history
-                                              : Icons.timelapse,
-                                          color: widget.client.filterDate
-                                              ? Colors.red
-                                              : widget.client.theme
-                                                  ? darkThemeData(context)
-                                                      .iconTheme
-                                                      .color
-                                                  : lightThemeData(context)
-                                                      .iconTheme
-                                                      .color,
-                                        ),
-                                        onTap: () {
-                                          if (!widget.client.filterDate) {
-                                            DialogButtom().showDialog(
-                                              const DateFilterWidget(),
-                                              widget.client.theme,
-                                              constraint.maxWidth,
-                                              context,
-                                            );
-                                          } else {
-                                            widget.client.setFilterDate(false);
-                                            widget.getDioFase!();
-                                          }
-                                        });
-                                  },
-                                )),
-                          )
-                        : Container(),
-                    !widget.closeSearch! &&
-                            widget.client.perfilUserLogado.manager
+                              );
+                            },
+                          );
+                        }),
+                      ),
+                    ),
+                    Tooltip(
+                      message: "Faz o ordenamento.",
+                      child: GestureDetector(
+                        child: const MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Icon(
+                            Icons.filter_alt,
+                          ),
+                        ),
+                        onTap: () => DialogButtom().showDialog(
+                          const RadioOrderWidget(),
+                          widget.client.theme,
+                          constraint.maxWidth,
+                          context,
+                          width: MediaQuery.of(context).size.height * 0.4,
+                        ),
+                      ),
+                    ),
+                    Tooltip(
+                      message: "Faz filtro de datas.",
+                      child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Observer(
+                            builder: (_) {
+                              return GestureDetector(
+                                  child: Icon(
+                                    widget.client.filterDate
+                                        ? Icons.history
+                                        : Icons.timelapse,
+                                    color: widget.client.filterDate
+                                        ? Colors.red
+                                        : widget.client.theme
+                                            ? darkThemeData(context)
+                                                .iconTheme
+                                                .color
+                                            : lightThemeData(context)
+                                                .iconTheme
+                                                .color,
+                                  ),
+                                  onTap: () {
+                                    if (!widget.client.filterDate) {
+                                      DialogButtom().showDialog(
+                                        const DateFilterWidget(),
+                                        widget.client.theme,
+                                        constraint.maxWidth,
+                                        context,
+                                      );
+                                    } else {
+                                      widget.client.setFilterDate(false);
+                                      widget.getDioFase!();
+                                    }
+                                  });
+                            },
+                          )),
+                    ),
+                    widget.client.perfilUserLogado.manager
                         ? MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: GestureDetector(
                               child: Observer(
                                 builder: (_) {
                                   return widget.client.userSelection == null
-                                      ? CircleAvatarWidget(
-                                          nameUser: 'TODOS',
-                                          url: widget.client.imgUrl,
+                                      ? const MouseRegion(
+                                          cursor: SystemMouseCursors.click,
+                                          child: Icon(
+                                            Icons.people,
+                                          ),
                                         )
                                       : CircleAvatarWidget(
                                           nameUser: widget
@@ -256,64 +252,208 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                               },
                             ),
                           )
-                        : Container(),
-                    GestureDetector(
-                        child: !widget.closeSearch!
-                            ? MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Icon(
-                                  Icons.search,
-                                  size: constraint.maxWidth >=
-                                          LarguraLayoutBuilder().telaPc
-                                      ? 36
-                                      : 24,
-                                ),
-                              )
-                            : MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Icon(
-                                  Icons.close,
-                                  size: constraint.maxWidth >=
-                                          LarguraLayoutBuilder().telaPc
-                                      ? 36
-                                      : 24,
-                                ),
-                              ),
-                        onTap: () {
-                          setState(() {
-                            widget.setCloseSearch!(!widget.closeSearch!);
-                          });
-                          if (widget.closeSearch == false) {
-                            setState(() {
-                              widget.setValueSearch!('');
-                            });
-                            widget.changeFilterSearch!();
-                          }
-                        })
+                        : Container()
                   ],
                 ),
               ),
-        leading: widget.back
-            ? IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                ),
-                onPressed: () => Modular.to.navigate(widget.rota))
-            : InkWell(
-                onTap: () {
-                  widget.zoomController.toggle!();
-                  widget.setOpen!(
-                      widget.zoomController.stateNotifier.value.toString() ==
-                              'DrawerState.opening'
-                          ? true
-                          : false);
-                },
-                child: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                    ? Container()
-                    : const Icon(
-                        Icons.menu,
-                      ),
-              ),
+
+        //     SizedBox(
+        //         width: double.infinity,
+        //         child: Row(
+        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //           crossAxisAlignment: CrossAxisAlignment.center,
+        //           children: [
+        //             widget.closeSearch!
+        //                 ? PopSearchWidget(
+        //                     setValueSearch: widget.setValueSearch,
+        //                     changeFilterSearch: widget.changeFilterSearch,
+        //                   )
+        //                 : Container(),
+        //             !widget.closeSearch!
+        //                 ? Tooltip(
+        //                     message: "Filtra Etiquetas",
+        //                     child: MouseRegion(
+        //                       cursor: SystemMouseCursors.click,
+        //                       child: Observer(builder: (_) {
+        //                         return GestureDetector(
+        //                           child: widget.client.icon != 0
+        //                               ? Icon(
+        //                                   IconData(widget.client.icon,
+        //                                       fontFamily: 'MaterialIcons'),
+        //                                   color: ConvertIcon().convertColor(
+        //                                       widget.client.color),
+        //                                 )
+        //                               : Icon(
+        //                                   Icons.bookmark,
+        //                                   color: widget.client.theme
+        //                                       ? darkThemeData(context)
+        //                                           .iconTheme
+        //                                           .color
+        //                                       : lightThemeData(context)
+        //                                           .iconTheme
+        //                                           .color,
+        //                                 ),
+        //                           onTap: () {
+        //                             DialogButtom().showDialog(
+        //                               const RadioEtiquetasFilterWidget(),
+        //                               widget.client.theme,
+        //                               constraint.maxWidth,
+        //                               context,
+        //                             );
+        //                           },
+        //                         );
+        //                       }),
+        //                     ),
+        //                   )
+        //                 : Container(),
+        //             !widget.closeSearch!
+        //                 ? Tooltip(
+        //                     message: "Faz o ordenamento.",
+        //                     child: GestureDetector(
+        //                       child: const MouseRegion(
+        //                         cursor: SystemMouseCursors.click,
+        //                         child: Icon(
+        //                           Icons.filter_alt,
+        //                         ),
+        //                       ),
+        //                       onTap: () => DialogButtom().showDialog(
+        //                         const RadioOrderWidget(),
+        //                         widget.client.theme,
+        //                         constraint.maxWidth,
+        //                         context,
+        //                         width: MediaQuery.of(context).size.height * 0.4,
+        //                       ),
+        //                     ),
+        //                   )
+        //                 : Container(),
+        //             !widget.closeSearch!
+        //                 ? Tooltip(
+        //                     message: "Faz filtro de datas.",
+        //                     child: MouseRegion(
+        //                         cursor: SystemMouseCursors.click,
+        //                         child: Observer(
+        //                           builder: (_) {
+        //                             return GestureDetector(
+        //                                 child: Icon(
+        //                                   widget.client.filterDate
+        //                                       ? Icons.history
+        //                                       : Icons.timelapse,
+        //                                   color: widget.client.filterDate
+        //                                       ? Colors.red
+        //                                       : widget.client.theme
+        //                                           ? darkThemeData(context)
+        //                                               .iconTheme
+        //                                               .color
+        //                                           : lightThemeData(context)
+        //                                               .iconTheme
+        //                                               .color,
+        //                                 ),
+        //                                 onTap: () {
+        //                                   if (!widget.client.filterDate) {
+        //                                     DialogButtom().showDialog(
+        //                                       const DateFilterWidget(),
+        //                                       widget.client.theme,
+        //                                       constraint.maxWidth,
+        //                                       context,
+        //                                     );
+        //                                   } else {
+        //                                     widget.client.setFilterDate(false);
+        //                                     widget.getDioFase!();
+        //                                   }
+        //                                 });
+        //                           },
+        //                         )),
+        //                   )
+        //                 : Container(),
+        //             !widget.closeSearch! &&
+        //                     widget.client.perfilUserLogado.manager
+        //                 ? MouseRegion(
+        //                     cursor: SystemMouseCursors.click,
+        //                     child: GestureDetector(
+        //                       child: Observer(
+        //                         builder: (_) {
+        //                           return widget.client.userSelection == null
+        //                               ? CircleAvatarWidget(
+        //                                   nameUser: 'TODOS',
+        //                                   url: widget.client.imgUrl,
+        //                                 )
+        //                               : CircleAvatarWidget(
+        //                                   nameUser: widget
+        //                                       .client.userSelection.name!.name,
+        //                                   url: widget.client.imgUrl,
+        //                                 );
+        //                         },
+        //                       ),
+        //                       onTap: () {
+        //                         if (widget.client.perfilUserLogado.manager) {
+        //                           DialogButtom().showDialog(
+        //                             const TeamsSelectionWidget(),
+        //                             widget.client.theme,
+        //                             constraint.maxWidth,
+        //                             context,
+        //                           );
+        //                         }
+        //                       },
+        //                     ),
+        //                   )
+        //                 : Container(),
+        //             GestureDetector(
+        //                 child: !widget.closeSearch!
+        //                     ? MouseRegion(
+        //                         cursor: SystemMouseCursors.click,
+        //                         child: Icon(
+        //                           Icons.search,
+        //                           size: constraint.maxWidth >=
+        //                                   LarguraLayoutBuilder().telaPc
+        //                               ? 36
+        //                               : 24,
+        //                         ),
+        //                       )
+        //                     : MouseRegion(
+        //                         cursor: SystemMouseCursors.click,
+        //                         child: Icon(
+        //                           Icons.close,
+        //                           size: constraint.maxWidth >=
+        //                                   LarguraLayoutBuilder().telaPc
+        //                               ? 36
+        //                               : 24,
+        //                         ),
+        //                       ),
+        //                 onTap: () {
+        //                   setState(() {
+        //                     widget.setCloseSearch!(!widget.closeSearch!);
+        //                   });
+        //                   if (widget.closeSearch == false) {
+        //                     setState(() {
+        //                       widget.setValueSearch!('');
+        //                     });
+        //                     widget.changeFilterSearch!();
+        //                   }
+        //                 })
+        //           ],
+        //         ),
+        //       ),
+        // leading: widget.back
+        //     ? IconButton(
+        //         icon: const Icon(
+        //           Icons.arrow_back,
+        //         ),
+        //         onPressed: () => Modular.to.navigate(widget.rota))
+        //     : InkWell(
+        //         onTap: () {
+        //           widget.zoomController.toggle!();
+        //           widget.setOpen!(
+        //               widget.zoomController.stateNotifier.value.toString() ==
+        //                       'DrawerState.opening'
+        //                   ? true
+        //                   : false);
+        //         },
+        //         child: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
+        //             ? Container()
+        //             : const Icon(
+        //                 Icons.menu,
+        //               ),
+        //       ),
       );
     });
   }

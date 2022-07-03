@@ -26,7 +26,7 @@ class DialogButtom {
             ),
             margin: const EdgeInsets.only(bottom: 50, left: 12, right: 12),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(5),
               color: theme
                   ? darkThemeData(context).scaffoldBackgroundColor
                   : lightThemeData(context).scaffoldBackgroundColor,

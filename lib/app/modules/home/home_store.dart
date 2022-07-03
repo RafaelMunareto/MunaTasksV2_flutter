@@ -2,14 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
-import 'package:munatasks2/app/app_widget.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_create_store.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
-import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/fase_dio_model.dart';
@@ -44,38 +41,39 @@ abstract class HomeStoreBase with Store {
   }
 
   void getList() async {
+    await client.setLoading(true);
     await connectToServer();
     await getVersion();
-    await client.setLoading(true);
-    await client.setLoadingTasks(true);
-    await client.setLoadingTasksTotal(true);
+    await checkUpdateWindows();
+    await getPerfis();
+    await settings();
     await getUid();
     await getPerfil();
-    await settings();
-    await badgets();
+    await getNotificationsBd();
     await getEtiquetas();
     await getSettingsUser();
-    await getUser();
-    await getDioTotal();
     await getDio();
-    await getDioFase();
-    await getNotificationsBd();
-    await getSettings();
-    await checkUpdateWindows();
+    await getDioTotal();
+    await badgets();
+    await client.setLoading(false);
   }
 
-  buscaTheme(context) async {
-    await storage.get('theme').then((value) {
-      if (value?[0] == 'dark') {
-        client.setTheme(true);
-      } else {
-        client.setTheme(false);
-      }
-      client.setThemeLoading(true);
+  connectToServer() {
+    socket = IO.io('http://api.munatask.com:3030', <String, dynamic>{
+      'transports': ['websocket']
     });
-
-    AppWidget.of(context)
-        ?.changeTheme(client.theme ? ThemeMode.dark : ThemeMode.light);
+    socket!.onConnect((_) {
+      debugPrint('connect');
+    });
+    socket!.on('new_task', (data) => getNotificationsBd());
+    socket!.on('updateList', (data) {
+      getDio();
+      badgets();
+      getDioTotal();
+    });
+    socket!.onDisconnect((_) {
+      debugPrint('disconnect');
+    });
   }
 
   getVersion() {
@@ -84,19 +82,49 @@ abstract class HomeStoreBase with Store {
     });
   }
 
-  getSettings() async {
-    Response response;
-    var dio = await DioStruture().dioAction();
-    response = await dio.get('settings');
-    DioStruture().statusRequest(response);
-    var resposta = SettingsModel.fromJson(response.data[0]);
-    client.setVersionBd(resposta.version![0]);
-  }
-
   checkUpdateWindows() {
     if (client.versionBd != client.version) {
       client.setCheckUpdateDesktop(true);
     }
+  }
+
+  getPerfis() async {
+    dashboardService.getPerfis().then((value) {
+      client.setPerfis(value);
+    }).catchError((erro) {
+      debugPrint(erro);
+    });
+  }
+
+  settings() async {
+    dashboardService.getSettings().then((value) {
+      client.setVersionBd(value.version![0]);
+      client.setFase((value.fase as List).map((e) {
+        return FaseDioModel.fromJson(e);
+      }).toList());
+      client.setRetard((value.retard as List).map((e) {
+        return RetardDioModel.fromJson(e);
+      }).toList());
+      client.setSettings(value);
+    }).catchError((erro) {
+      debugPrint(erro);
+    });
+  }
+
+  getUid() async {
+    storage.get('userDio').then((value) {
+      if (value != null) {
+        client.setUserDio(UserDioClientModel.fromJson(jsonDecode(value[0])));
+      }
+    });
+  }
+
+  getPerfil() async {
+    dashboardService.getSettingsUser(client.userDio.id).then((value) {
+      client.setPerfilUserlogado(value);
+    }).catchError((erro) {
+      debugPrint(erro);
+    });
   }
 
   getNotificationsBd() async {
@@ -105,36 +133,14 @@ abstract class HomeStoreBase with Store {
           .getNotifications(client.perfilUserLogado.id)
           .then((e) {
         client.setNotifications(e);
+      }).catchError((erro) {
+        debugPrint(erro);
       }).whenComplete(() =>
               dashboardService.deleteNotifications(client.perfilUserLogado.id));
-
       if (client.notifications.isNotEmpty) {
         retornaNotifications(client.notifications);
       }
     }
-  }
-
-  getSettingsUser() async {
-    Response response;
-    var dio = await DioStruture().dioAction();
-    response =
-        await dio.get('perfil/settingsUser/${client.perfilUserLogado.id}');
-    DioStruture().statusRequest(response);
-    if (response.data.isEmpty) {
-      SettingsUserModel settings =
-          SettingsUserModel(user: client.perfilUserLogado.id);
-      saveSettings(settings);
-    } else {
-      client.setSettingsUser(SettingsUserModel.fromJson(response.data[0]));
-    }
-  }
-
-  Future saveSettings(SettingsUserModel model) async {
-    Response response;
-    var dio = await DioStruture().dioAction();
-    response = await dio.post('perfil/settingsUser', data: model.toJson(model));
-    DioStruture().statusRequest(response);
-    return client.setSettingsUser(SettingsUserModel.fromJson(response.data));
   }
 
   retornaNotifications(e) async {
@@ -151,55 +157,20 @@ abstract class HomeStoreBase with Store {
     }
   }
 
-  setNavigateBarSelection(value) async {
-    await client.setLoadingTasks(true);
-    await client.setNavigateBarSelection(value);
-    await client.setEtiquetaSelection(57585);
-    await client.setOrderAscDesc(true);
-    await client.setOrderSelection('DATA');
-    await client.setColor('blue');
-    await client.setCloseSearch(false);
-    await client.setIcon(0);
-    changeFilterUserList();
-  }
-
-  getPass() async {
-    await client.setUserSelection(PerfilDioModel(
-        name: UserDioClientModel(
-            name: "TODOS", email: "todos@todos.com.br", password: ""),
-        nameTime: "",
-        idStaff: [],
-        manager: true,
-        urlImage: DioStruture().baseUrlMunatasks + 'files/todos.png'));
-    await client.setImgUrl(DioStruture().baseUrlMunatasks + 'files/todos.png');
-    await client.setLoadingRefresh(true);
-    await getDio();
-    await badgets();
-    getDioTotal();
-  }
-
   getEtiquetas() async {
-    Response response;
-    var dio = await DioStruture().dioAction();
-    response = await dio.get('etiquetas');
-    DioStruture().statusRequest(response);
-    client.setEtiquetas((response.data as List).map((e) {
-      return EtiquetaDioModel.fromJson(e);
-    }).toList());
+    dashboardService.getSettingsUser(client.perfilUserLogado.id).then((value) {
+      client.setEtiquetas(value);
+    }).catchError((erro) {
+      debugPrint(erro);
+    });
   }
 
-  getDioFase() {
-    dashboardService
-        .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
-        .then((value) {
-      value.sort((a, b) => a.etiqueta.etiqueta
-          .toLowerCase()
-          .compareTo(b.etiqueta.etiqueta.toLowerCase()));
-      client.setTaskDio(value);
-      client.setTaskDioSearch(value
-          .where((element) => element.fase == client.navigateBarSelection)
-          .toList());
-    }).whenComplete(() => client.setLoadingTasks(false));
+  getSettingsUser() async {
+    dashboardService.getSettingsUser(client.perfilUserLogado.id).then((value) {
+      client.setSettingsUser(value);
+    }).catchError((erro) {
+      debugPrint(erro);
+    });
   }
 
   getDio() {
@@ -209,6 +180,17 @@ abstract class HomeStoreBase with Store {
       client.setTaskDioSearch(value);
       client.setTaskDio(value);
       client.setCloseSearch(false);
+    }).catchError((erro) {
+      debugPrint(erro);
+    });
+  }
+
+  getDioTotal() {
+    dashboardService.getDioTotal().then((value) {
+      value.sort((a, b) => b.qtd.compareTo(a.qtd));
+      client.setTarefasTotais(value);
+    }).catchError((erro) {
+      debugPrint(erro);
     });
   }
 
@@ -224,80 +206,19 @@ abstract class HomeStoreBase with Store {
     });
   }
 
-  getDioTotal() {
-    dashboardService.getDioTotal().then((value) {
-      value.sort((a, b) => b.qtd.compareTo(a.qtd));
-      client.setTarefasTotais(value);
-      client.setLoadingTasksTotal(false);
-    }).whenComplete(() => client.setLoadingRefresh(false));
-  }
-
-  settings() async {
-    Response response;
-    var dio = await DioStruture().dioAction();
-    response = await dio.get('settings');
-    if (response.statusCode == 401) {
-      storage.put('token', []);
-      storage.put('userDio', []);
-      storage.put('login-normal', []);
-      Modular.to.navigate('/auth/');
-    }
-    DioStruture().statusRequest(response);
-    var resposta = SettingsModel.fromJson(response.data[0]);
-    client.setFase((resposta.fase as List).map((e) {
-      return FaseDioModel.fromJson(e);
-    }).toList());
-    client.setRetard((resposta.retard as List).map((e) {
-      return RetardDioModel.fromJson(e);
-    }).toList());
-    client.setSettings(resposta);
-  }
-
-  getUid() async {
-    storage.get('userDio').then((value) {
-      if (value != null) {
-        client.setUserDio(UserDioClientModel.fromJson(jsonDecode(value[0])));
-      }
-    });
-  }
-
-  getUser() async {
-    Response response;
-    var dio = await DioStruture().dioAction();
-    response = await dio.get('perfil');
-    DioStruture().statusRequest(response);
-    client.setPerfis((response.data as List).map((e) {
-      return PerfilDioModel.fromJson(e);
-    }).toList());
-    client.setLoading(false);
-  }
-
-  getPerfil() async {
-    Response response;
-    if (client.userDio.id != null) {
-      var dio = await DioStruture().dioAction();
-      try {
-        response = await dio.get('perfil/user/${client.userDio.id}');
-        if (response.statusCode == 401) {
-          storage.put('token', []);
-          storage.put('userDio', []);
-          storage.put('login-normal', []);
-          Modular.to.navigate('/auth/');
-        }
-        DioStruture().statusRequest(response);
-
-        if (response.data != null) {
-          var resposta = PerfilDioModel.fromJson(response.data[0]);
-          client.setPerfilUserlogado(resposta);
-        }
-      } catch (e) {
-        await SessionManager().remove('token');
-        await storage.put('token', []);
-        await storage.put('userDio', []);
-        await storage.put('login-normal', []);
-        Modular.to.navigate('/auth/');
-      }
-    }
+  getPass() async {
+    await client.setUserSelection(PerfilDioModel(
+        name: UserDioClientModel(
+            name: "TODOS", email: "todos@todos.com.br", password: ""),
+        nameTime: "",
+        idStaff: [],
+        manager: true,
+        urlImage: DioStruture().baseUrlMunatasks + 'files/todos.png'));
+    await client.setImgUrl(DioStruture().baseUrlMunatasks + 'files/todos.png');
+    await client.setLoadingRefresh(true);
+    await getDio();
+    await badgets();
+    await getDioTotal();
   }
 
   save(TarefaDioModel model) async {
@@ -326,29 +247,7 @@ abstract class HomeStoreBase with Store {
     Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 
-  connectToServer() {
-    socket = IO.io('http://api.munatask.com:3030', <String, dynamic>{
-      'transports': ['websocket']
-    });
-    socket!.onConnect((_) {
-      if (kDebugMode) {
-        print('connect');
-      }
-    });
-    socket!.on('new_task', (data) => getNotificationsBd());
-    socket!.on('updateList', (data) {
-      getDio();
-      badgets();
-      getDioTotal();
-    });
-    socket!.onDisconnect((_) {
-      if (kDebugMode) {
-        print('disconnect');
-      }
-    });
-  }
-
-  Future saveNewTarefa() async {
+  saveNewTarefa() async {
     await dashboardService.saveDio(clientCreate.tarefaModelSave).then((value) {
       if (client.settingsUser.emailInicial) {
         dashboardService.emailDio(value.data['id'], '0');
@@ -362,7 +261,7 @@ abstract class HomeStoreBase with Store {
     Timer(const Duration(minutes: 2), () => socket!.emit('newTaskFront', true));
   }
 
-  Future updateNewTarefa() async {
+  updateNewTarefa() async {
     await dashboardService.updateDio(clientCreate.tarefaModelSave);
     client.taskDioSearch.map((e) {
       if (e.id == clientCreate.tarefaModelSave.id) {
@@ -377,7 +276,7 @@ abstract class HomeStoreBase with Store {
     Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 
-  void deleteDioTasks(TarefaDioModel model) async {
+  deleteDioTasks(TarefaDioModel model) async {
     await dashboardService.deleteDio(model);
     client.taskDioSearch.removeWhere((element) => element.id == model.id);
     client.setTaskDioSearch(client.taskDioSearch);
@@ -390,7 +289,6 @@ abstract class HomeStoreBase with Store {
   changeFilterEtiquetaList() {
     if (client.etiquetaSelection == 57585) {
       getDio();
-      getDioFase();
     } else {
       dashboardService
           .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
@@ -432,41 +330,18 @@ abstract class HomeStoreBase with Store {
 
   changeFilterUserList() async {
     if (client.userSelection == null) {
-      getDioFase();
+      getDio();
     } else {
       if (client.userSelection?.name.name != 'TODOS') {
         dashboardService.getFilterUser(client.userSelection!.id).then((value) {
           client.setTaskDioSearch(value
               .where((element) => element.fase == client.navigateBarSelection)
               .toList());
-        }).whenComplete(() => client.setLoadingTasks(false));
+        });
       } else {
-        getDioFase();
+        getDio();
       }
     }
-  }
-
-  changePrioridadeList(TarefaDioModel model) {
-    model.prioridade = client.prioridadeSelection;
-    dashboardService.updateDio(model);
-    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
-  }
-
-  changeSubtarefaDioAction(
-      SubtarefasDioModel subtarefaModel, TarefaDioModel tarefaModel) {
-    for (var a in tarefaModel.subTarefa!) {
-      if (a.title == subtarefaModel.title && a.texto == subtarefaModel.texto) {
-        a.status = client.subtarefaAction;
-      }
-    }
-    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
-    dashboardService.updateDio(tarefaModel);
-  }
-
-  updateDate(TarefaDioModel model) {
-    model.data = model.data.add(Duration(hours: client.retardSelection));
-    dashboardService.updateDio(model);
-    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 
   changeOrderList() {

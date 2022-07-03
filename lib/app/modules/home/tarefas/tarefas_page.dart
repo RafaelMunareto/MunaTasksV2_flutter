@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/landscape_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/landscape_int_widget.dart';
 import 'package:munatasks2/app/modules/home/tarefas/tarefas_store.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
@@ -77,8 +77,8 @@ class TarefasPageState extends State<TarefasPage> {
                         ),
                       ],
                     ),
-                    child: LandscapeWidget(
-                      theme: store.theme,
+                    child: LandscapeIntWidget(
+                      theme: store.client.theme,
                       constraint: constraint.maxWidth,
                     ),
                   ),

@@ -9,15 +9,16 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/body_home_page_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/card/list_card_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/landscape_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/navigation_bar_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/landscape_int_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
+import 'package:munatasks2/app/shared/components/logo_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
+import 'package:munatasks2/app/shared/utils/splash_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:show_update_dialog/show_update_dialog.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -46,9 +47,11 @@ class _HomePageState extends State<HomePage> {
     super.didChangeDependencies();
     autorun(
       (_) {
-        if (defaultTargetPlatform == Platform.isWindows &&
-            store.client.checkUpdateDesktop) {
-          checkUpdateDesktop();
+        if (!kIsWeb) {
+          if (defaultTargetPlatform == Platform.isWindows &&
+              store.client.checkUpdateDesktop) {
+            checkUpdateDesktop();
+          }
         }
       },
     );
@@ -110,7 +113,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    store.buscaTheme(context);
+    store.client.buscaTheme(context);
 
     tz.initializeTimeZones();
     sendNotification();
@@ -139,110 +142,90 @@ class _HomePageState extends State<HomePage> {
               (kIsWeb || defaultTargetPlatform == TargetPlatform.windows)) {
             return Observer(builder: (_) {
               return Scaffold(
-                appBar: !appVisible
-                    ? AppBarWidget(
-                        icon: Icons.bookmark,
-                        home: true,
-                        context: context,
-                        zoomController: drawerController,
-                        setOpen: store.client.setOpen,
-                        settings: true,
-                        back: false,
-                        etiquetaList: store.client.etiquetas,
-                        setValueSearch: store.client.setSearchValue,
-                        changeFilterSearch: store.changeFilterSearchList,
-                        client: store.client,
-                        getDioFase: store.getDioFase,
-                        getPass: store.getPass,
-                        closeSearch: store.client.closeSearch,
-                        setCloseSearch: store.client.setCloseSearch,
-                      )
-                    : PreferredSize(
-                        child: Container(),
-                        preferredSize: const Size(0, 32),
-                      ),
-                floatingActionButton: FloatingActionButton(
-                  onPressed: () {
-                    store.clientCreate.cleanSave();
-                    store.clientCreate.cleanSubtarefa();
-                    store.clientCreate.setEditar(false);
-                    DialogButtom().showDialogCreate(
-                      const CreateWidget(),
-                      constraint.maxWidth,
-                      context,
-                      store.changeFilterUserList,
-                    );
-                  },
-                  child: Icon(
-                    Icons.add,
-                    size: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                        ? 48
-                        : 24,
+                appBar: AppBarWidget(
+                  icon: Icons.bookmark,
+                  home: true,
+                  context: context,
+                  zoomController: drawerController,
+                  setOpen: store.client.setOpen,
+                  settings: true,
+                  back: false,
+                  etiquetaList: store.client.etiquetas,
+                  setValueSearch: store.client.setSearchValue,
+                  changeFilterSearch: store.changeFilterSearchList,
+                  client: store.client,
+                  getDioFase: store.getDio,
+                  getPass: store.getPass,
+                  closeSearch: store.client.closeSearch,
+                  setCloseSearch: store.client.setCloseSearch,
+                ),
+                drawer: Drawer(
+                  child: MenuScreen(
+                    constraint: constraint.maxWidth,
+                    open: store.client.open,
+                    setOpen: store.client.setOpen,
+                    controller: drawerController,
+                    version: store.client.version,
                   ),
                 ),
-                // floatingActionButtonLocation:
-                //     FloatingActionButtonLocation.endDocked,
-                // bottomNavigationBar: Observer(builder: (_) {
-                //   return NavigationBarWidget(
-                //     theme: store.client.theme,
-                //     navigateBarSelection: store.client.navigateBarSelection,
-                //     setNavigateBarSelection: store.setNavigateBarSelection,
-                //   );
-                // }),
                 body: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
                     ? Observer(
                         builder: (_) {
-                          return store.client.loading
-                              ? const Scaffold(
-                                  body: Center(child: CircularProgressWidget()),
-                                )
-                              : Row(
-                                  children: [
-                                    Flexible(
-                                      flex: 2,
-                                      child: MenuScreen(
-                                        constraint: constraint.maxWidth,
-                                        open: store.client.open,
-                                        setOpen: store.client.setOpen,
-                                        controller: drawerController,
-                                        version: store.client.version,
+                          return Scaffold(
+                            body: store.client.loading
+                                ? LogoWidget(constraint: constraint.maxWidth)
+                                : Row(
+                                    children: [
+                                      // SizedBox(
+                                      //   width: 40,
+                                      // ),
+                                      // Flexible(
+                                      //   flex: 3,
+                                      //   child: ListCardWidget(
+                                      //     color: Colors.amber,
+                                      //     title: 'BACKLOG',
+                                      //   ),
+                                      // ),
+                                      // SizedBox(
+                                      //   width: 40,
+                                      // ),
+                                      // Flexible(
+                                      //   flex: 3,
+                                      //   child: ListCardWidget(
+                                      //     color: Colors.green,
+                                      //     title: 'FAZENDO',
+                                      //   ),
+                                      // ),
+                                      // SizedBox(
+                                      //   width: 40,
+                                      // ),
+                                      // Flexible(
+                                      //   flex: 3,
+                                      //   child: ListCardWidget(
+                                      //     color: Colors.blue,
+                                      //     title: 'FEITO',
+                                      //   ),
+                                      // ),
+                                      // SizedBox(
+                                      //   width: 40,
+                                      // ),
+                                      // Flexible(
+                                      //   flex: 3,
+                                      //   child: ListCardWidget(
+                                      //     color: Colors.red,
+                                      //     title: 'PRIORITÁRIO',
+                                      //   ),
+                                      // ),
+                                      Flexible(
+                                        flex: 1,
+                                        child: LandscapeIntWidget(
+                                          constraint: constraint.maxWidth,
+                                          theme: store.client.theme,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 24,
-                                    ),
-                                    Flexible(
-                                      flex: 2,
-                                      child: BodyHomePageWidget(
-                                        constraint: constraint.maxWidth,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 24,
-                                    ),
-                                    Flexible(
-                                      flex: 2,
-                                      child: BodyHomePageWidget(
-                                        constraint: constraint.maxWidth,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 24,
-                                    ),
-                                    Flexible(
-                                      flex: 2,
-                                      child: BodyHomePageWidget(
-                                        constraint: constraint.maxWidth,
-                                      ),
-                                    ),
-                                    Flexible(
-                                      flex: 4,
-                                      child: SizedBox(
-                                        width: 24,
-                                      ),
-                                    ),
-                                  ],
-                                );
+                                    ],
+                                  ),
+                          );
                         },
                       )
                     : ZoomDrawer(
@@ -261,8 +244,10 @@ class _HomePageState extends State<HomePage> {
                                   );
                           },
                         ),
-                        mainScreen:
-                            BodyHomePageWidget(constraint: constraint.maxWidth),
+                        mainScreen: const ListCardWidget(
+                          color: Colors.amber,
+                          title: 'BACKLOG',
+                        ),
                         borderRadius: 24.0,
                         showShadow: false,
                         backgroundColor: Colors.transparent,
@@ -273,7 +258,7 @@ class _HomePageState extends State<HomePage> {
               );
             });
           } else {
-            return LandscapeWidget(
+            return LandscapeIntWidget(
               constraint: constraint.maxWidth,
               theme: store.client.theme,
             );
