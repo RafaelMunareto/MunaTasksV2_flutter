@@ -11,7 +11,8 @@ class NameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 80),
       child: Wrap(
         direction: constraint <= LarguraLayoutBuilder().larguraModal
             ? Axis.vertical
@@ -19,37 +20,41 @@ class NameWidget extends StatelessWidget {
         crossAxisAlignment: WrapCrossAlignment.center,
         alignment: WrapAlignment.center,
         children: [
-          Container(
-            width: 70.0,
-            height: 70.0,
-            decoration: store.client.perfilUserLogado.urlImage != ''
-                ? BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: CachedNetworkImageProvider(
-                        store.client.perfilUserLogado.urlImage,
-                      ),
-                    ),
-                  )
-                : const BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage('assets/img/person.png'),
-                    ),
-                  ),
-          ),
+          !store.client.loading
+              ? Container(
+                  width: 70.0,
+                  height: 70.0,
+                  decoration: store.client.perfilUserLogado.urlImage != ''
+                      ? BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: CachedNetworkImageProvider(
+                              store.client.perfilUserLogado.urlImage,
+                            ),
+                          ),
+                        )
+                      : const BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage('assets/img/person.png'),
+                          ),
+                        ),
+                )
+              : const CircularProgressIndicator(),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: AutoSizeText(
-              'Olá, ' + store.client.perfilUserLogado.name.name,
-              maxLines: 1,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
+            child: store.client.loading
+                ? const Text('')
+                : AutoSizeText(
+                    'Olá, ' + store.client.perfilUserLogado.name.name,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
           )
         ],
       ),
