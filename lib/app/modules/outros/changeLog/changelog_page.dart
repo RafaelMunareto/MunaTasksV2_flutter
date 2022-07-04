@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
-import 'package:munatasks2/app/modules/outros/change_text_widget.dart';
+import 'package:munatasks2/app/modules/outros/changeLog/change_text_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
 

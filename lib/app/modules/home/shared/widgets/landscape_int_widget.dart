@@ -113,7 +113,7 @@ class _LandscapeIntWidgetState extends State<LandscapeIntWidget> {
                                       ),
                                     ),
                             ],
-                          )
+                          ),
                       ],
                     ),
                   ),
