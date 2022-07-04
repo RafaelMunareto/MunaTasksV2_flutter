@@ -3,7 +3,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
-import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class BodyCardWidget extends StatefulWidget {
   final dynamic tarefa;
@@ -56,7 +55,7 @@ class _BodyCardWidgetState extends State<BodyCardWidget> {
               runSpacing: 4,
               spacing: 4,
               direction: Axis.horizontal,
-              runAlignment: WrapAlignment.end,
+              alignment: WrapAlignment.end,
               children: [
                 for (var model in widget.tarefa.users!)
                   CircleAvatarWidget(

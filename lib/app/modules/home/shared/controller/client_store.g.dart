@@ -9,19 +9,19 @@ part of 'client_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ClientStore on _ClientStoreBase, Store {
-  late final _$badgetNavigateAtom =
-      Atom(name: '_ClientStoreBase.badgetNavigate', context: context);
+  late final _$badgetsAtom =
+      Atom(name: '_ClientStoreBase.badgets', context: context);
 
   @override
-  List<int> get badgetNavigate {
-    _$badgetNavigateAtom.reportRead();
-    return super.badgetNavigate;
+  List<BadgetsModel> get badgets {
+    _$badgetsAtom.reportRead();
+    return super.badgets;
   }
 
   @override
-  set badgetNavigate(List<int> value) {
-    _$badgetNavigateAtom.reportWrite(value, super.badgetNavigate, () {
-      super.badgetNavigate = value;
+  set badgets(List<BadgetsModel> value) {
+    _$badgetsAtom.reportWrite(value, super.badgets, () {
+      super.badgets = value;
     });
   }
 
@@ -421,6 +421,22 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   set expandTarefa(bool value) {
     _$expandTarefaAtom.reportWrite(value, super.expandTarefa, () {
       super.expandTarefa = value;
+    });
+  }
+
+  late final _$msgErrorAtom =
+      Atom(name: '_ClientStoreBase.msgError', context: context);
+
+  @override
+  String get msgError {
+    _$msgErrorAtom.reportRead();
+    return super.msgError;
+  }
+
+  @override
+  set msgError(String value) {
+    _$msgErrorAtom.reportWrite(value, super.msgError, () {
+      super.msgError = value;
     });
   }
 
@@ -947,6 +963,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setMsgError(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setMsgError');
+    try {
+      return super.setMsgError(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setExpandTarefa(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setExpandTarefa');
@@ -1191,7 +1218,7 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   @override
   String toString() {
     return '''
-badgetNavigate: ${badgetNavigate},
+badgets: ${badgets},
 cardSelection: ${cardSelection},
 settings: ${settings},
 subtarefaActionList: ${subtarefaActionList},
@@ -1217,6 +1244,7 @@ imgUrl: ${imgUrl},
 searchValue: ${searchValue},
 perfilUserLogado: ${perfilUserLogado},
 expandTarefa: ${expandTarefa},
+msgError: ${msgError},
 taskDio: ${taskDio},
 taskDioSearch: ${taskDioSearch},
 userDio: ${userDio},

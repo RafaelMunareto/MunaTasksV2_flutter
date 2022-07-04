@@ -57,7 +57,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
                       ? darkThemeData(context).secondaryHeaderColor
                       : lightThemeData(context).secondaryHeaderColor,
                   badge: Text(
-                    store.client.badgetNavigate[0].toString(),
+                    store.client.badgets[0].toString(),
                     style: TextStyle(
                         fontSize:
                             constraint.maxWidth >= LarguraLayoutBuilder().telaPc
@@ -89,7 +89,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
                   badgeColor: widget.theme
                       ? darkThemeData(context).secondaryHeaderColor
                       : lightThemeData(context).secondaryHeaderColor,
-                  badge: Text(store.client.badgetNavigate[1].toString(),
+                  badge: Text(store.client.badgets[1].toString(),
                       style: TextStyle(
                           fontSize: constraint.maxWidth >=
                                   LarguraLayoutBuilder().telaPc
@@ -121,7 +121,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
                   badgeColor: widget.theme
                       ? darkThemeData(context).secondaryHeaderColor
                       : lightThemeData(context).secondaryHeaderColor,
-                  badge: Text(store.client.badgetNavigate[2].toString(),
+                  badge: Text(store.client.badgets[2].toString(),
                       style: TextStyle(
                           fontSize: constraint.maxWidth >=
                                   LarguraLayoutBuilder().telaPc

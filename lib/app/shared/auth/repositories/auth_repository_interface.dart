@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 
 abstract class IAuthRepository {
@@ -10,4 +11,5 @@ abstract class IAuthRepository {
   getUser();
   Future getFacebookLogin();
   getLogout();
+  globalError(DioError error);
 }

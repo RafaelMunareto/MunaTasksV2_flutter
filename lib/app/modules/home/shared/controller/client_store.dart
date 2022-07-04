@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/app_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/model/badgets_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/notifications_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
@@ -37,10 +38,10 @@ abstract class _ClientStoreBase with Store {
   }
 
   @observable
-  List<int> badgetNavigate = [0, 0, 0];
+  List<BadgetsModel> badgets = [];
 
   @action
-  setBadgetNavigate(value) => badgetNavigate = value;
+  setBadgetNavigate(value) => badgets = value;
 
   @observable
   String cardSelection = '';
@@ -176,6 +177,12 @@ abstract class _ClientStoreBase with Store {
 
   @observable
   bool expandTarefa = false;
+
+  @observable
+  String msgError = '';
+
+  @action
+  setMsgError(value) => msgError = value;
 
   @action
   setExpandTarefa(value) => expandTarefa = value;

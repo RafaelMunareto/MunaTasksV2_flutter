@@ -1,13 +1,9 @@
-import 'package:accordion/accordion.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
-import 'package:munatasks2/app/shared/utils/convert_icon.dart';
-import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
-import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class LandscapeIntWidget extends StatefulWidget {
   final double constraint;

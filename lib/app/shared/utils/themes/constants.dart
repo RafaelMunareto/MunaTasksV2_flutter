@@ -13,7 +13,7 @@ const kContentColorLightTheme = Color(0xFF1D1D35);
 const kContentColorDarkTheme = Color(0xFFF5FCF9);
 const kWarninngColor = Color(0xFFF3BB1C);
 const kErrorColor = Color(0xFFF03738);
-var kLight = Color.fromARGB(255, 219, 219, 253);
+var kLight = const Color.fromARGB(255, 219, 219, 253);
 var kligthBlueGrey = Colors.blueGrey;
 const kElevation = 16.00;
 //dark

@@ -3,11 +3,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card/body_card_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/card/functions.dart';
+import 'package:munatasks2/app/modules/home/shared/utils/functions_utils.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
-import 'package:munatasks2/app/shared/utils/simple_button_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class CardWidget extends StatefulWidget {
@@ -38,7 +37,7 @@ class _CardWidgetState extends State<CardWidget> {
             context, store.changeFilterUserList);
       },
       onLongPress: () =>
-          Functions().dialogDelete(context, widget.tarefaDioModel, store),
+          FunctionsUtils().dialogDelete(context, widget.tarefaDioModel, store),
       child: PhysicalModel(
         color: Colors.transparent,
         child: Card(

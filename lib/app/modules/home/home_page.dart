@@ -3,26 +3,21 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
+import 'package:munatasks2/app/modules/home/shared/utils/functions_utils.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card/list_card_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/landscape_int_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/logo_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
-import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
-import 'package:munatasks2/app/shared/utils/splash_widget.dart';
-import 'package:munatasks2/app/shared/utils/themes/theme.dart';
-import 'package:show_update_dialog/show_update_dialog.dart';
+import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 import 'package:timezone/data/latest.dart' as tz;
-import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -36,11 +31,7 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey expansionTile = GlobalKey();
   final HomeStore store = Modular.get();
   final drawerController = ZoomDrawerController();
-  bool appVisible = false;
-  String? version = '';
-  String? storeVersion = '';
-  String? storeUrl = '';
-  String? packageName = '';
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void didChangeDependencies() {
@@ -50,88 +41,34 @@ class _HomePageState extends State<HomePage> {
         if (!kIsWeb) {
           if (defaultTargetPlatform == Platform.isWindows &&
               store.client.checkUpdateDesktop) {
-            checkUpdateDesktop();
+            FunctionsUtils().checkUpdateDesktop(context);
+          }
+          if (store.client.msgError != '') {
+            SnackbarCustom().createSnackBareErrOrGoal(_scaffoldKey,
+                message: store.client.msgError, errOrGoal: false);
+
+            store.client.setMsgError('');
           }
         }
       },
     );
   }
 
-  verifyVersion() async {
-    final versionCheck = ShowUpdateDialog(
-        androidId: 'munacorp.munatasks2.br.munatasks2',
-        iOSAppStoreCountry: 'BR');
-
-    final VersionModel vs = await versionCheck.fetchVersionInfo();
-    var _releaseNotes = vs.releaseNotes!.replaceAll("<br>", "\n");
-    versionCheck.showCustomDialogUpdate(
-      context: context,
-      versionStatus: vs,
-      buttonText: "Atualizar",
-      buttonColor: store.client.theme
-          ? darkThemeData(context).primaryColor
-          : lightThemeData(context).primaryColor,
-      bodyoverride: Container(
-        margin: const EdgeInsets.only(left: 20, right: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.update,
-                  size: 150,
-                  color: store.client.theme
-                      ? darkThemeData(context).primaryColor
-                      : lightThemeData(context).primaryColor,
-                ),
-              ],
-            ),
-            const Text(
-              "Por favor atualize seu App.",
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
-            ),
-            Text(
-              "Versão do aparelho: ${vs.localVersion}",
-              style: const TextStyle(fontSize: 17),
-            ),
-            Text(
-              "Versão da loja: ${vs.storeVersion}",
-              style: const TextStyle(fontSize: 17),
-            ),
-            const SizedBox(height: 30),
-            Text(
-              _releaseNotes,
-              style: const TextStyle(fontSize: 15),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   void initState() {
     store.client.buscaTheme(context);
-
+    store.connectToServer();
     tz.initializeTimeZones();
-    sendNotification();
+    FunctionsUtils().sendNotification();
     super.initState();
     if (defaultTargetPlatform == TargetPlatform.android) {
-      verifyVersion();
+      FunctionsUtils().verifyVersion(context);
     }
-  }
-
-  void sendNotification() {
-    // ignore: unused_local_variable
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
   }
 
   @override
   Widget build(BuildContext context) {
-    sendNotification();
+    FunctionsUtils().sendNotification();
     return LayoutBuilder(builder: (context, constraint) {
       if (constraint.maxWidth >= LarguraLayoutBuilder().telaPc) {
         store.client.setOpen(true);
@@ -174,56 +111,43 @@ class _HomePageState extends State<HomePage> {
                           return Scaffold(
                             body: store.client.loading
                                 ? LogoWidget(constraint: constraint.maxWidth)
-                                : Row(
-                                    children: [
-                                      // SizedBox(
-                                      //   width: 40,
-                                      // ),
-                                      // Flexible(
-                                      //   flex: 3,
-                                      //   child: ListCardWidget(
-                                      //     color: Colors.amber,
-                                      //     title: 'BACKLOG',
-                                      //   ),
-                                      // ),
-                                      // SizedBox(
-                                      //   width: 40,
-                                      // ),
-                                      // Flexible(
-                                      //   flex: 3,
-                                      //   child: ListCardWidget(
-                                      //     color: Colors.green,
-                                      //     title: 'FAZENDO',
-                                      //   ),
-                                      // ),
-                                      // SizedBox(
-                                      //   width: 40,
-                                      // ),
-                                      // Flexible(
-                                      //   flex: 3,
-                                      //   child: ListCardWidget(
-                                      //     color: Colors.blue,
-                                      //     title: 'FEITO',
-                                      //   ),
-                                      // ),
-                                      // SizedBox(
-                                      //   width: 40,
-                                      // ),
-                                      // Flexible(
-                                      //   flex: 3,
-                                      //   child: ListCardWidget(
-                                      //     color: Colors.red,
-                                      //     title: 'PRIORITÁRIO',
-                                      //   ),
-                                      // ),
-                                      Flexible(
-                                        flex: 1,
-                                        child: LandscapeIntWidget(
-                                          constraint: constraint.maxWidth,
-                                          theme: store.client.theme,
+                                : Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Row(
+                                      children: [
+                                        Flexible(
+                                          flex: 3,
+                                          child: ListCardWidget(
+                                            badgets: store.client.badgets[0],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                        Flexible(
+                                          flex: 3,
+                                          child: ListCardWidget(
+                                            badgets: store.client.badgets[1],
+                                          ),
+                                        ),
+                                        Flexible(
+                                          flex: 3,
+                                          child: ListCardWidget(
+                                            badgets: store.client.badgets[2],
+                                          ),
+                                        ),
+                                        Flexible(
+                                          flex: 3,
+                                          child: ListCardWidget(
+                                            badgets: store.client.badgets[3],
+                                          ),
+                                        ),
+                                        Flexible(
+                                          flex: 1,
+                                          child: LandscapeIntWidget(
+                                            constraint: constraint.maxWidth,
+                                            theme: store.client.theme,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                           );
                         },
@@ -244,10 +168,7 @@ class _HomePageState extends State<HomePage> {
                                   );
                           },
                         ),
-                        mainScreen: const ListCardWidget(
-                          color: Colors.amber,
-                          title: 'BACKLOG',
-                        ),
+                        mainScreen: Container(),
                         borderRadius: 24.0,
                         showShadow: false,
                         backgroundColor: Colors.transparent,
@@ -266,38 +187,5 @@ class _HomePageState extends State<HomePage> {
         },
       );
     });
-  }
-
-  checkUpdateDesktop() {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SizedBox(
-          width: 200,
-          height: 200,
-          child: AlertDialog(
-            title: Text(
-              'Atualizar versão',
-              style: TextStyle(
-                  color: store.client.theme
-                      ? darkThemeData(context).primaryColor
-                      : lightThemeData(context).primaryColor),
-            ),
-            content: Text(
-              'Sua versão está desatualizada a nova versão é a ${store.client.version}',
-            ),
-            actions: [
-              ElevatedButton(
-                  onPressed: () => Modular.to.pop(),
-                  child: const Text('Cancelar')),
-              ElevatedButton(
-                  onPressed: () => launchUrl(Uri.parse(
-                      'https://github.com/RafaelMunareto/MunaTasksV2_flutter/raw/main/assets/exe/Output/munatask.exe')),
-                  child: const Text('Atualizar')),
-            ],
-          ),
-        );
-      },
-    );
   }
 }
