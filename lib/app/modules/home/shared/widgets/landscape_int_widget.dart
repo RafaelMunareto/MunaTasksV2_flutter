@@ -31,7 +31,6 @@ class _LandscapeIntWidgetState extends State<LandscapeIntWidget> {
                 padding: const EdgeInsets.all(8),
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width * 0.1,
                   child: SingleChildScrollView(
                     child: Wrap(
                       direction: Axis.vertical,

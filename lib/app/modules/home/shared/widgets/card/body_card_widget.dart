@@ -50,7 +50,7 @@ class _BodyCardWidgetState extends State<BodyCardWidget> {
         ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(4, 4, 0, 0),
+            padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
             child: Wrap(
               runSpacing: 4,
               spacing: 4,

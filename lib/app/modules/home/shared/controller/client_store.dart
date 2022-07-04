@@ -314,4 +314,10 @@ abstract class _ClientStoreBase with Store {
 
   @action
   setCloseSearch(value) => closeSearch = value;
+
+  @observable
+  bool loadingITens = false;
+
+  @action
+  setLoadingItens(value) => loadingITens = value;
 }

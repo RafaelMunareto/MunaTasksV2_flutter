@@ -728,6 +728,22 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  late final _$loadingITensAtom =
+      Atom(name: '_ClientStoreBase.loadingITens', context: context);
+
+  @override
+  bool get loadingITens {
+    _$loadingITensAtom.reportRead();
+    return super.loadingITens;
+  }
+
+  @override
+  set loadingITens(bool value) {
+    _$loadingITensAtom.reportWrite(value, super.loadingITens, () {
+      super.loadingITens = value;
+    });
+  }
+
   late final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase', context: context);
 
@@ -1216,6 +1232,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setLoadingItens(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setLoadingItens');
+    try {
+      return super.setLoadingItens(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 badgets: ${badgets},
@@ -1262,7 +1289,8 @@ version: ${version},
 loadingRefresh: ${loadingRefresh},
 checkUpdateDesktop: ${checkUpdateDesktop},
 versionBd: ${versionBd},
-closeSearch: ${closeSearch}
+closeSearch: ${closeSearch},
+loadingITens: ${loadingITens}
     ''';
   }
 }

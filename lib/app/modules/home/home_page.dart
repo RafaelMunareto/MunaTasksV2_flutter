@@ -87,6 +87,7 @@ class _HomePageState extends State<HomePage> {
                   setOpen: store.client.setOpen,
                   settings: true,
                   back: false,
+                  loadingItens: store.client.loadingITens,
                   etiquetaList: store.client.etiquetas,
                   setValueSearch: store.client.setSearchValue,
                   changeFilterSearch: store.changeFilterSearchList,
@@ -115,11 +116,17 @@ class _HomePageState extends State<HomePage> {
                                     padding: const EdgeInsets.all(16.0),
                                     child: Row(
                                       children: [
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
                                         Flexible(
                                           flex: 3,
                                           child: ListCardWidget(
                                             badgets: store.client.badgets[0],
                                           ),
+                                        ),
+                                        const SizedBox(
+                                          width: 50,
                                         ),
                                         Flexible(
                                           flex: 3,
@@ -127,17 +134,26 @@ class _HomePageState extends State<HomePage> {
                                             badgets: store.client.badgets[1],
                                           ),
                                         ),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
                                         Flexible(
                                           flex: 3,
                                           child: ListCardWidget(
                                             badgets: store.client.badgets[2],
                                           ),
                                         ),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
                                         Flexible(
                                           flex: 3,
                                           child: ListCardWidget(
                                             badgets: store.client.badgets[3],
                                           ),
+                                        ),
+                                        const SizedBox(
+                                          width: 50,
                                         ),
                                         Flexible(
                                           flex: 1,

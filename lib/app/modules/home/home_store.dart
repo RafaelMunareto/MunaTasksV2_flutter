@@ -234,6 +234,7 @@ abstract class HomeStoreBase with Store {
               .toList()),
     ];
     client.setBadgetNavigate(badgets);
+    client.setLoadingItens(false);
   }
 
   getPass() async {
@@ -305,7 +306,7 @@ abstract class HomeStoreBase with Store {
         return e;
       }
     }).toList();
-    getPass();
+    badgets();
     Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 
@@ -315,13 +316,14 @@ abstract class HomeStoreBase with Store {
     });
     client.taskDioSearch.removeWhere((element) => element.id == model.id);
     client.setTaskDioSearch(client.taskDioSearch);
-    getDio();
+    badgets();
     Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 
   changeFilterEtiquetaList() async {
+    await client.setLoadingItens(true);
     if (client.etiquetaSelection == 57585) {
-      badgets();
+      getDio();
     } else {
       await client.setTaskDioSearch(client.taskDio
           .where((e) => e.etiqueta.icon == client.etiquetaSelection)
@@ -330,7 +332,8 @@ abstract class HomeStoreBase with Store {
     }
   }
 
-  filterDate() {
+  filterDate() async {
+    await client.setLoadingItens(true);
     dashboardService
         .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
         .then((value) async {
@@ -347,7 +350,8 @@ abstract class HomeStoreBase with Store {
     });
   }
 
-  changeFilterSearchList() {
+  changeFilterSearchList() async {
+    await client.setLoadingItens(true);
     if (client.searchValue != '') {
       Timer(const Duration(milliseconds: 600), () async {
         await client.setTaskDioSearch(client.taskDio
@@ -364,16 +368,16 @@ abstract class HomeStoreBase with Store {
   }
 
   changeFilterUserList() async {
+    await client.setLoadingItens(true);
     if (client.userSelection == null) {
       getDio();
     } else {
       if (client.userSelection?.name.name != 'TODOS') {
         await dashboardService
             .getFilterUser(client.userSelection!.id)
-            .then((value) {
-          client.setTaskDioSearch(value
-              .where((element) => element.fase == client.navigateBarSelection)
-              .toList());
+            .then((value) async {
+          await client.setTaskDioSearch(value.toList());
+          badgets();
         }).catchError((erro) {
           debugPrint(erro);
         }).whenComplete(() => badgets());
@@ -383,7 +387,8 @@ abstract class HomeStoreBase with Store {
     }
   }
 
-  changeOrderList() {
+  changeOrderList() async {
+    await client.setLoadingItens(true);
     switch (client.orderSelection) {
       case 'ETIQUETA':
         client.taskDioSearch.sort((a, b) => client.orderAscDesc

@@ -28,6 +28,7 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   final bool back;
   final String rota;
   final bool home;
+  final bool? loadingItens;
   final dynamic zoomController;
   final Function? setOpen;
   final dynamic etiquetaList;
@@ -49,6 +50,7 @@ class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
       this.settings = false,
       this.back = true,
       this.setOpen,
+      this.loadingItens,
       this.zoomController,
       this.etiquetaList,
       this.rota = '/auth',
@@ -131,6 +133,16 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                       setValueSearch: widget.setValueSearch,
                       changeFilterSearch: widget.changeFilterSearch,
                     ),
+                    if (widget.loadingItens != null)
+                      widget.loadingItens!
+                          ? const Center(
+                              child: SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(),
+                              ),
+                            )
+                          : Container(),
                     Tooltip(
                       message: "Filtra Etiquetas",
                       child: MouseRegion(
@@ -214,39 +226,39 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                             },
                           )),
                     ),
-                    widget.client.perfilUserLogado.manager
-                        ? MouseRegion(
-                            cursor: SystemMouseCursors.click,
-                            child: GestureDetector(
-                              child: Observer(
-                                builder: (_) {
-                                  return widget.client.userSelection == null
-                                      ? const MouseRegion(
-                                          cursor: SystemMouseCursors.click,
-                                          child: Icon(
-                                            Icons.people,
-                                          ),
-                                        )
-                                      : CircleAvatarWidget(
-                                          nameUser: widget
-                                              .client.userSelection.name!.name,
-                                          url: widget.client.imgUrl,
-                                        );
-                                },
-                              ),
-                              onTap: () {
-                                if (widget.client.perfilUserLogado.manager) {
-                                  DialogButtom().showDialog(
-                                    const TeamsSelectionWidget(),
-                                    widget.client.theme,
-                                    constraint.maxWidth,
-                                    context,
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        child: Observer(
+                          builder: (_) {
+                            return widget.client.userSelection == null ||
+                                    widget.client.userSelection.name!.name ==
+                                        'TODOS'
+                                ? const MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: Icon(
+                                      Icons.people,
+                                    ),
+                                  )
+                                : CircleAvatarWidget(
+                                    nameUser:
+                                        widget.client.userSelection.name!.name,
+                                    url: widget.client.imgUrl,
                                   );
-                                }
-                              },
-                            ),
-                          )
-                        : Container()
+                          },
+                        ),
+                        onTap: () {
+                          if (widget.client.perfilUserLogado.manager) {
+                            DialogButtom().showDialog(
+                              const TeamsSelectionWidget(),
+                              widget.client.theme,
+                              constraint.maxWidth,
+                              context,
+                            );
+                          }
+                        },
+                      ),
+                    )
                   ],
                 ),
               ),

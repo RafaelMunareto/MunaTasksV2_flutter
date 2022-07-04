@@ -24,9 +24,20 @@ class _PopSearchWidgetState extends State<PopSearchWidget> {
       child: Container(
         width: MediaQuery.of(context).size.width * 0.7,
         decoration: BoxDecoration(
-          color: store.client.theme
-              ? darkThemeData(context).scaffoldBackgroundColor
-              : lightThemeData(context).scaffoldBackgroundColor,
+          boxShadow: [
+            BoxShadow(
+              color: store.client.theme
+                  ? Colors.black45
+                  : lightThemeData(context).shadowColor.withOpacity(0.2),
+            ),
+            BoxShadow(
+              color: store.client.theme
+                  ? darkThemeData(context).scaffoldBackgroundColor
+                  : lightThemeData(context).dialogBackgroundColor,
+              spreadRadius: -2.0,
+              blurRadius: 2.0,
+            ),
+          ],
           borderRadius: BorderRadius.circular(5),
         ),
         child: TextFormField(
