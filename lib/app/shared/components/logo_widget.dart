@@ -23,7 +23,7 @@ class LogoWidget extends StatelessWidget {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/icon/icon.png'),
-            opacity: 0.07,
+            opacity: 0.15,
           ),
         ),
       ),

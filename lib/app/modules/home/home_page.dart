@@ -97,10 +97,6 @@ class _HomePageState extends State<HomePage> {
                 drawer: Drawer(
                   child: MenuScreen(
                     constraint: constraint.maxWidth,
-                    open: store.client.open,
-                    setOpen: store.client.setOpen,
-                    controller: drawerController,
-                    version: store.client.version,
                   ),
                 ),
                 body: Observer(

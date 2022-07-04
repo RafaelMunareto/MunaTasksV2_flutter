@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/date_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_order_widget.dart';
@@ -10,7 +9,7 @@ import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_m
 import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/auth/repositories/auth_repository.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
-import 'package:munatasks2/app/shared/components/pop_menu_widget.dart';
+import 'package:munatasks2/app/shared/components/logo_widget.dart';
 import 'package:munatasks2/app/shared/components/pop_search_widget.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
@@ -100,25 +99,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
       return AppBar(
-        actions: [
-          !widget.home
-              ? PopMenuWidget(constraint: constraint.maxWidth, perfil: perfil)
-              : Container()
-        ],
         title: !widget.home
             ? Wrap(
                 children: [
-                  GestureDetector(
-                    onTap: () => Modular.to.navigate('/home/'),
-                    child: const MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: Icon(Icons.arrow_back),
-                    ),
-                  ),
-                  const SizedBox(width: 15),
                   Icon(widget.icon),
                   Text(
-                    '' + widget.title.toUpperCase(),
+                    ' ' + widget.title.toUpperCase(),
                     style: const TextStyle(
                       fontSize: 20,
                     ),
@@ -129,6 +115,16 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    Container(
+                      height: 30,
+                      width: 30,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/icon/icon.png'),
+                          opacity: 0.1,
+                        ),
+                      ),
+                    ),
                     PopSearchWidget(
                       constraint: constraint.maxWidth,
                       setValueSearch: widget.setValueSearch,

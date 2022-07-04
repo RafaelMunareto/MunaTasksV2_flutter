@@ -1,9 +1,12 @@
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/settings/principal/shared/widgets/check_email_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
+import 'package:munatasks2/app/shared/components/logo_widget.dart';
+import 'package:munatasks2/app/shared/components/menu_screen.dart';
 import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 
 class PrincipalPage extends StatefulWidget {
@@ -17,7 +20,7 @@ class PrincipalPage extends StatefulWidget {
 class PrincipalPageState extends State<PrincipalPage>
     with SingleTickerProviderStateMixin {
   final PrincipalStore store = Modular.get();
-
+  final ClientStore client = ClientStore();
   late Animation<double> opacidade;
   late AnimationController _controller;
 
@@ -56,6 +59,11 @@ class PrincipalPageState extends State<PrincipalPage>
             context: context,
             settings: true,
             rota: '/home/'),
+        drawer: Drawer(
+          child: MenuScreen(
+            constraint: constraint.maxWidth,
+          ),
+        ),
         body: Observer(
           builder: (_) {
             return !store.client.finalize
@@ -76,13 +84,13 @@ class PrincipalPageState extends State<PrincipalPage>
                                     )
                                   : Expanded(
                                       child: SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height:
-                                            MediaQuery.of(context).size.height,
-                                        child: const Center(
-                                            child: CircularProgressWidget()),
-                                      ),
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: MediaQuery.of(context)
+                                              .size
+                                              .height,
+                                          child: LogoWidget(
+                                              constraint: constraint.maxWidth)),
                                     ),
                             ],
                           ),
@@ -90,7 +98,7 @@ class PrincipalPageState extends State<PrincipalPage>
                       ),
                     ),
                   )
-                : const Center(child: CircularProgressWidget());
+                : LogoWidget(constraint: constraint.maxWidth);
           },
         ),
       );

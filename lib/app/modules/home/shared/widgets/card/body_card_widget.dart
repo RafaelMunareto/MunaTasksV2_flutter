@@ -23,51 +23,56 @@ class _BodyCardWidgetState extends State<BodyCardWidget> {
   HomeStore store = Modular.get();
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(
-          flex: 3,
-          child: Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 4.0, left: 8),
-                child: Icon(
-                  changeIconeAndColorTime(widget.tarefa.data)[1],
-                  color: changeIconeAndColorTime(widget.tarefa.data)[0],
-                  size: 18,
-                ),
-              ),
-              Text(
-                DateFormat('dd/MM/yyyy').format(widget.tarefa.data).toString(),
-                style: TextStyle(
-                    fontSize: 10,
-                    color: store.client.theme ? Colors.white : Colors.black),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            flex: 3,
             child: Wrap(
-              runSpacing: 4,
-              spacing: 4,
-              direction: Axis.horizontal,
-              alignment: WrapAlignment.end,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                for (var model in widget.tarefa.users!)
-                  CircleAvatarWidget(
-                    nameUser: model.name.name,
-                    key: Key(model.id.toString()),
-                    url: model.urlImage,
-                  )
+                Padding(
+                  padding: const EdgeInsets.only(right: 4.0, left: 8),
+                  child: Icon(
+                    changeIconeAndColorTime(widget.tarefa.data)[1],
+                    color: changeIconeAndColorTime(widget.tarefa.data)[0],
+                    size: 18,
+                  ),
+                ),
+                Text(
+                  DateFormat('dd/MM/yyyy')
+                      .format(widget.tarefa.data)
+                      .toString(),
+                  style: TextStyle(
+                      fontSize: 10,
+                      color: store.client.theme ? Colors.white : Colors.black),
+                ),
               ],
             ),
           ),
-        ),
-      ],
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
+              child: Wrap(
+                runSpacing: 4,
+                spacing: 4,
+                direction: Axis.horizontal,
+                alignment: WrapAlignment.end,
+                children: [
+                  for (var model in widget.tarefa.users!)
+                    CircleAvatarWidget(
+                      nameUser: model.name.name,
+                      key: Key(model.id.toString()),
+                      url: model.urlImage,
+                    )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

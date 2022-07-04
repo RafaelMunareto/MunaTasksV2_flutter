@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
-import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class PopSearchWidget extends StatefulWidget {
   final Function? setValueSearch;
@@ -26,23 +25,9 @@ class _PopSearchWidgetState extends State<PopSearchWidget> {
     return Center(
       child: Container(
         width: widget.constraint >= LarguraLayoutBuilder().telaPc
-            ? MediaQuery.of(context).size.width * 0.65
+            ? MediaQuery.of(context).size.width * 0.70
             : MediaQuery.of(context).size.width * 0.3,
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: store.client.theme
-                  ? Colors.black45
-                  : lightThemeData(context).shadowColor.withOpacity(0.2),
-            ),
-            BoxShadow(
-              color: store.client.theme
-                  ? darkThemeData(context).scaffoldBackgroundColor
-                  : lightThemeData(context).dialogBackgroundColor,
-              spreadRadius: -2.0,
-              blurRadius: 2.0,
-            ),
-          ],
           borderRadius: BorderRadius.circular(5),
         ),
         child: TextFormField(

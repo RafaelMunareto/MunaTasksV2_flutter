@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/landscape_int_widget.dart';
 import 'package:munatasks2/app/modules/home/tarefas/tarefas_store.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
+import 'package:munatasks2/app/shared/components/menu_screen.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
@@ -22,19 +23,10 @@ class TarefasPageState extends State<TarefasPage> {
   bool theme = false;
   ILocalStorage storage = LocalStorageShare();
   TarefasStore store = Modular.get();
+
   @override
   void initState() {
-    storage.get('theme').then((value) {
-      if (value?[0] == 'dark') {
-        setState(() {
-          theme = true;
-        });
-      } else {
-        setState(() {
-          theme = false;
-        });
-      }
-    });
+    store.client.buscaTheme(context);
     super.initState();
   }
 
@@ -49,6 +41,11 @@ class TarefasPageState extends State<TarefasPage> {
               settings: true,
               rota: '/home/',
               back: true),
+          drawer: Drawer(
+            child: MenuScreen(
+              constraint: constraint.maxWidth,
+            ),
+          ),
           body: Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
