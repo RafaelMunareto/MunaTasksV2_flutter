@@ -9,7 +9,7 @@ import 'app/app_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  NotificationService().initNotification();
+  await NotificationService().initNotification();
   runApp(ModularApp(module: AppModule(), child: const AppWidget()));
   if (defaultTargetPlatform == TargetPlatform.windows) {
     doWhenWindowReady(() {

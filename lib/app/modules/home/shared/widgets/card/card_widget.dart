@@ -25,6 +25,16 @@ class CardWidget extends StatefulWidget {
 class _CardWidgetState extends State<CardWidget> {
   final HomeStore store = Modular.get();
 
+  calc() {
+    if (widget.tarefaDioModel.subTarefa!.isEmpty) {
+      return 0;
+    }
+    return (widget.tarefaDioModel.subTarefa!
+            .where((element) => element.status == 'check')
+            .length /
+        widget.tarefaDioModel.subTarefa!.length);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -103,31 +113,38 @@ class _CardWidgetState extends State<CardWidget> {
                           ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: LinearProgressIndicator(
-                              key: UniqueKey(),
-                              minHeight: 2,
-                              backgroundColor: store.client.theme
-                                  ? darkThemeData(context)
-                                      .scaffoldBackgroundColor
-                                  : lightThemeData(context)
-                                      .scaffoldBackgroundColor,
-                              color: ConvertIcon().convertColor(
-                                  widget.tarefaDioModel.etiqueta.color),
-                              value: 0.7,
+                      widget.tarefaDioModel.subTarefa!.isEmpty
+                          ? Container()
+                          : Row(
+                              children: [
+                                Expanded(
+                                  child: LinearProgressIndicator(
+                                    key: UniqueKey(),
+                                    minHeight: 2,
+                                    backgroundColor: store.client.theme
+                                        ? darkThemeData(context)
+                                            .scaffoldBackgroundColor
+                                        : lightThemeData(context)
+                                            .scaffoldBackgroundColor,
+                                    color: ConvertIcon().convertColor(
+                                        widget.tarefaDioModel.etiqueta.color),
+                                    value: calc(),
+                                  ),
+                                ),
+                                Tooltip(
+                                  message:
+                                      "Qtd de Subtarefas feitas sobre o o total.",
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 4, right: 4),
+                                    child: Text(
+                                      '${widget.tarefaDioModel.subTarefa!.where((element) => element.status == 'check').length}/${widget.tarefaDioModel.subTarefa!.length}',
+                                      style: const TextStyle(fontSize: 10),
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 4, right: 4),
-                            child: Text(
-                              '18/20',
-                              style: TextStyle(fontSize: 10),
-                            ),
-                          )
-                        ],
-                      ),
                     ],
                   ),
                 ),

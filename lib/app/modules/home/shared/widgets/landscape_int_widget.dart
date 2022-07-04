@@ -1,4 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -31,6 +31,7 @@ class _LandscapeIntWidgetState extends State<LandscapeIntWidget> {
                 padding: const EdgeInsets.all(8),
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height,
+                  width: 100,
                   child: SingleChildScrollView(
                     child: Wrap(
                       direction: Axis.vertical,
@@ -44,24 +45,73 @@ class _LandscapeIntWidgetState extends State<LandscapeIntWidget> {
                             children: [
                               Container(
                                 padding: const EdgeInsets.all(12),
-                                child: CircleAvatarWidget(
-                                  nameUser: totais.name.name.name,
-                                  url: totais.name!.urlImage,
+                                child: Wrap(
+                                  children: [
+                                    CircleAvatarWidget(
+                                      nameUser: totais.name.name.name,
+                                      url: totais.name!.urlImage,
+                                    ),
+                                  ],
                                 ),
                               ),
                               totais.qtd > 0
-                                  ? AutoSizeText(
-                                      totais.qtd > 1
-                                          ? totais.qtd.toString()
-                                          : totais.qtd.toString(),
-                                      maxLines: 1,
+                                  ? Tooltip(
+                                      message: "Qtd de Tarefas",
+                                      child: Badge(
+                                        toAnimate: false,
+                                        badgeColor: Colors.grey.shade400,
+                                        badgeContent: Text(
+                                            totais.qtd > 1
+                                                ? totais.qtd.toString()
+                                                : totais.qtd.toString(),
+                                            style:
+                                                const TextStyle(fontSize: 14)),
+                                      ),
                                     )
-                                  : const AutoSizeText('0',
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                      )),
+                                  : Tooltip(
+                                      message: "Qtd de Tarefas",
+                                      child: Badge(
+                                        toAnimate: false,
+                                        badgeColor: Colors.red,
+                                        badgeContent: const Text('0',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                            )),
+                                      ),
+                                    ),
+                              totais.qtdSubtarefas > 0
+                                  ? Tooltip(
+                                      message: "Qtd de Subtarefas",
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Badge(
+                                          toAnimate: false,
+                                          badgeColor: Colors.blueGrey.shade400,
+                                          badgeContent: Text(
+                                              totais.qtdSubtarefas > 1
+                                                  ? totais.qtdSubtarefas
+                                                      .toString()
+                                                  : totais.qtdSubtarefas
+                                                      .toString(),
+                                              style:
+                                                  const TextStyle(fontSize: 9)),
+                                        ),
+                                      ),
+                                    )
+                                  : Tooltip(
+                                      message: "Qtd de Subtarefas",
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Badge(
+                                          toAnimate: false,
+                                          badgeColor: Colors.red,
+                                          badgeContent: const Text('0',
+                                              style: TextStyle(
+                                                fontSize: 9,
+                                              )),
+                                        ),
+                                      ),
+                                    ),
                             ],
                           )
                       ],

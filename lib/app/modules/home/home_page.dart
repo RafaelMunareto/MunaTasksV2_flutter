@@ -14,7 +14,6 @@ import 'package:munatasks2/app/modules/home/shared/widgets/landscape_int_widget.
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/logo_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
-import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -75,10 +74,8 @@ class _HomePageState extends State<HomePage> {
       }
       return OrientationBuilder(
         builder: (context, orientation) {
-          if (orientation == Orientation.portrait ||
-              (kIsWeb || defaultTargetPlatform == TargetPlatform.windows)) {
-            return Observer(builder: (_) {
-              return Scaffold(
+          return Observer(builder: (_) {
+            return Scaffold(
                 appBar: AppBarWidget(
                   icon: Icons.bookmark,
                   home: true,
@@ -106,100 +103,34 @@ class _HomePageState extends State<HomePage> {
                     version: store.client.version,
                   ),
                 ),
-                body: constraint.maxWidth >= LarguraLayoutBuilder().telaPc
-                    ? Observer(
-                        builder: (_) {
-                          return Scaffold(
-                            body: store.client.loading
-                                ? LogoWidget(constraint: constraint.maxWidth)
-                                : Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Row(
-                                      children: [
-                                        const SizedBox(
-                                          width: 50,
-                                        ),
-                                        Flexible(
-                                          flex: 3,
-                                          child: ListCardWidget(
-                                            badgets: store.client.badgets[0],
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 50,
-                                        ),
-                                        Flexible(
-                                          flex: 3,
-                                          child: ListCardWidget(
-                                            badgets: store.client.badgets[1],
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 50,
-                                        ),
-                                        Flexible(
-                                          flex: 3,
-                                          child: ListCardWidget(
-                                            badgets: store.client.badgets[2],
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 50,
-                                        ),
-                                        Flexible(
-                                          flex: 3,
-                                          child: ListCardWidget(
-                                            badgets: store.client.badgets[3],
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 50,
-                                        ),
-                                        Flexible(
-                                          flex: 1,
-                                          child: LandscapeIntWidget(
-                                            constraint: constraint.maxWidth,
-                                            theme: store.client.theme,
-                                          ),
-                                        ),
-                                      ],
+                body: Observer(
+                  builder: (_) {
+                    return Scaffold(
+                      body: store.client.loading
+                          ? LogoWidget(constraint: constraint.maxWidth)
+                          : Center(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    for (var linha in store.client.badgets)
+                                      ListCardWidget(
+                                        badgets: linha,
+                                      ),
+                                    LandscapeIntWidget(
+                                      constraint: constraint.maxWidth,
+                                      theme: store.client.theme,
                                     ),
-                                  ),
-                          );
-                        },
-                      )
-                    : ZoomDrawer(
-                        controller: drawerController,
-                        style: DrawerStyle.Style1,
-                        menuScreen: Observer(
-                          builder: (_) {
-                            return store.client.loading
-                                ? const Center(child: CircularProgressWidget())
-                                : MenuScreen(
-                                    constraint: constraint.maxWidth,
-                                    open: store.client.open,
-                                    setOpen: store.client.setOpen,
-                                    controller: drawerController,
-                                    version: store.client.version,
-                                  );
-                          },
-                        ),
-                        mainScreen: Container(),
-                        borderRadius: 24.0,
-                        showShadow: false,
-                        backgroundColor: Colors.transparent,
-                        slideWidth: MediaQuery.of(context).size.width * .65,
-                        openCurve: Curves.fastOutSlowIn,
-                        closeCurve: Curves.easeInOut,
-                      ),
-              );
-            });
-          } else {
-            return LandscapeIntWidget(
-              constraint: constraint.maxWidth,
-              theme: store.client.theme,
-            );
-          }
+                                  ],
+                                ),
+                              ),
+                            ),
+                    );
+                  },
+                ));
+          });
         },
       );
     });

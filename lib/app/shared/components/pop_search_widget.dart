@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class PopSearchWidget extends StatefulWidget {
   final Function? setValueSearch;
+  final double constraint;
   final Function? changeFilterSearch;
   const PopSearchWidget(
       {Key? key,
       required this.setValueSearch,
-      required this.changeFilterSearch})
+      required this.changeFilterSearch,
+      required this.constraint})
       : super(key: key);
 
   @override
@@ -22,7 +25,9 @@ class _PopSearchWidgetState extends State<PopSearchWidget> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.7,
+        width: widget.constraint >= LarguraLayoutBuilder().telaPc
+            ? MediaQuery.of(context).size.width * 0.65
+            : MediaQuery.of(context).size.width * 0.3,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(

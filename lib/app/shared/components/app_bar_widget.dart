@@ -130,6 +130,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     PopSearchWidget(
+                      constraint: constraint.maxWidth,
                       setValueSearch: widget.setValueSearch,
                       changeFilterSearch: widget.changeFilterSearch,
                     ),
@@ -137,8 +138,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                       widget.loadingItens!
                           ? const Center(
                               child: SizedBox(
-                                width: 24,
-                                height: 24,
+                                width: 22,
+                                height: 22,
                                 child: CircularProgressIndicator(),
                               ),
                             )

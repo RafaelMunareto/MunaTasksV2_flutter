@@ -39,17 +39,18 @@ abstract class HomeStoreBase with Store {
 
   void getList() async {
     await client.setLoading(true);
-    await getVersion();
-    await checkUpdateWindows();
     await settings();
     await getEtiquetas();
+    await getPerfis();
     await getUid();
     await getPerfil();
-    await getPerfis();
+    await getDioTotal();
     await getSettingsUser();
-    await getNotificationsBd();
     await getDio();
     await client.setLoading(false);
+    await getVersion();
+    await checkUpdateWindows();
+    await getNotificationsBd();
   }
 
   connectToServer() {
@@ -177,6 +178,7 @@ abstract class HomeStoreBase with Store {
   }
 
   getDio() async {
+    await await client.setLoadingItens(true);
     await dashboardService
         .getDioIndividual(client.perfilUserLogado.id)
         .then((value) {
@@ -185,7 +187,6 @@ abstract class HomeStoreBase with Store {
     }).catchError((erro) {
       FunctionsUtils().showErrors(erro);
     }).whenComplete(() {
-      getDioTotal();
       badgets();
     });
   }
@@ -306,7 +307,7 @@ abstract class HomeStoreBase with Store {
         return e;
       }
     }).toList();
-    badgets();
+    getDio();
     Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 
@@ -325,6 +326,7 @@ abstract class HomeStoreBase with Store {
     if (client.etiquetaSelection == 57585) {
       getDio();
     } else {
+      await client.setLoadingItens(true);
       await client.setTaskDioSearch(client.taskDio
           .where((e) => e.etiqueta.icon == client.etiquetaSelection)
           .toList());
@@ -335,7 +337,7 @@ abstract class HomeStoreBase with Store {
   filterDate() async {
     await client.setLoadingItens(true);
     dashboardService
-        .getDio(client.perfilUserLogado.id, client.navigateBarSelection)
+        .getDioIndividual(client.perfilUserLogado.id)
         .then((value) async {
       await client.setTaskDioSearch(value
           .where((element) =>

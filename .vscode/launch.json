@@ -9,7 +9,7 @@
             "name": "Flutter",
             "request": "launch",
             "type": "dart",
-            "args": ["verbose", "-d", "chrome", "--web-renderer", "canvaskit", "release","--web-port", "52230"],
+            //"args": ["verbose", "-d", "chrome", "--web-renderer", "canvaskit", "release","--web-port", "52230"],
             //"verbose"
         },
     

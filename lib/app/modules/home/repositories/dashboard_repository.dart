@@ -82,9 +82,6 @@ class DashboardRepository implements IDashboardRepository {
     return (response.data as List).map((e) {
       e = TarefaDioTotalModel.fromJson(e);
       e.name = PerfilDioModel.fromJson(e.name);
-      e.tarefa = e.tarefa!.map((u) {
-        return TarefaDioModel.fromJson(u);
-      }).toList();
       return e as TarefaDioTotalModel;
     }).toList();
   }
