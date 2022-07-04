@@ -34,126 +34,121 @@ class _CreateWidgetState extends State<CreateWidget> {
               height: MediaQuery.of(context).size.height,
               child: Card(
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    color: ConvertIcon().convertColor(
-                          store.clientCreate.tarefaModelSaveEtiqueta.color,
-                        ) ??
-                        Colors.grey,
-                    width: 2,
-                  ),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
-                child: Column(
+                child: Wrap(
                   children: [
-                    SizedBox(height: MediaQuery.of(context).padding.top),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ButtonHeaderTarefaWidget(
-                            constraint: constraint.maxWidth,
-                            tipo: 0,
-                            tamanho: constraint.maxWidth >=
-                                    LarguraLayoutBuilder().telaPc
-                                ? 0.20
-                                : 0.27,
-                          ),
-                          ButtonHeaderTarefaWidget(
-                            constraint: constraint.maxWidth,
-                            tipo: 1,
-                            tamanho: constraint.maxWidth >=
-                                    LarguraLayoutBuilder().telaPc
-                                ? 0.20
-                                : 0.27,
-                          ),
-                          ButtonHeaderTarefaWidget(
-                            constraint: constraint.maxWidth,
-                            tipo: 2,
-                            tamanho: constraint.maxWidth >=
-                                    LarguraLayoutBuilder().telaPc
-                                ? 0.12
-                                : 0.27,
-                          ),
-                          if (constraint.maxWidth >=
-                              LarguraLayoutBuilder().telaPc)
-                            ButtonHeaderTarefaWidget(
-                              constraint: constraint.maxWidth,
-                              tipo: 3,
-                              tamanho: 0.31,
-                            ),
-                          if (constraint.maxWidth >=
-                              LarguraLayoutBuilder().telaPc)
-                            ButtonHeaderTarefaWidget(
-                              constraint: constraint.maxWidth,
-                              tipo: 4,
-                              dateController: dateController,
-                              tamanho: 0.12,
-                            ),
-                          Center(
-                            child: GestureDetector(
-                              onTap: () => Modular.to.pop(),
-                              child: MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: Icon(
-                                    Icons.close_rounded,
-                                    color: store.client.theme
-                                        ? Colors.white
-                                        : Colors.black,
-                                    size: 36,
-                                  )),
-                            ),
-                          ),
-                        ],
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () => Modular.to.pop(),
+                          child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: Icon(
+                                Icons.close_rounded,
+                                color: store.client.theme
+                                    ? Colors.white
+                                    : Colors.black,
+                                size: 28,
+                              )),
+                        ),
+                      ],
                     ),
-                    if (constraint.maxWidth < LarguraLayoutBuilder().telaPc)
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    Row(
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ButtonHeaderTarefaWidget(
+                                    constraint: constraint.maxWidth,
+                                    tipo: 0,
+                                  ),
+                                  ButtonHeaderTarefaWidget(
+                                    constraint: constraint.maxWidth,
+                                    tipo: 1,
+                                  ),
+                                  ButtonHeaderTarefaWidget(
+                                    constraint: constraint.maxWidth,
+                                    tipo: 2,
+                                  ),
+                                  ButtonHeaderTarefaWidget(
+                                    constraint: constraint.maxWidth,
+                                    tipo: 4,
+                                    dateController: dateController,
+                                  ),
+                                  ButtonHeaderTarefaWidget(
+                                    constraint: constraint.maxWidth,
+                                    tipo: 3,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            TextSaveWidget(controller: textController),
                             ButtonHeaderTarefaWidget(
                               constraint: constraint.maxWidth,
                               tipo: 3,
-                              tamanho: 0.55,
-                            ),
-                            ButtonHeaderTarefaWidget(
-                              constraint: constraint.maxWidth,
-                              tipo: 4,
-                              dateController: dateController,
-                              tamanho: 0.35,
                             ),
                           ],
                         ),
-                      ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
-                        child: TextSaveWidget(controller: textController),
-                      ),
-                    ),
-                    Expanded(
-                      child: CreateSubtarefaWidget(
-                        constraint: constraint.maxWidth,
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.1,
-                      width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ButtonSaveWidget(
-                          color: ConvertIcon().convertColor(
-                                store
-                                    .clientCreate.tarefaModelSaveEtiqueta.color,
-                              ) ??
-                              Colors.grey,
-                          constraint: constraint.maxWidth,
-                        ),
-                      ),
+
+                        // if (constraint.maxWidth < LarguraLayoutBuilder().telaPc)
+                        //   Padding(
+                        //     padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //       children: [
+                        //         ButtonHeaderTarefaWidget(
+                        //           constraint: constraint.maxWidth,
+                        //           tipo: 3,
+                        //           tamanho: 0.55,
+                        //         ),
+                        //         ButtonHeaderTarefaWidget(
+                        //           constraint: constraint.maxWidth,
+                        //           tipo: 4,
+                        //           dateController: dateController,
+                        //           tamanho: 0.35,
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // SizedBox(
+                        //   height: MediaQuery.of(context).size.height * 0.15,
+                        //   width: MediaQuery.of(context).size.width,
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
+                        //     child: TextSaveWidget(controller: textController),
+                        //   ),
+                        // ),
+                        // Expanded(
+                        //   child: CreateSubtarefaWidget(
+                        //     constraint: constraint.maxWidth,
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   height: MediaQuery.of(context).size.height * 0.1,
+                        //   width: MediaQuery.of(context).size.width,
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.all(8.0),
+                        //     child: ButtonSaveWidget(
+                        //       color: ConvertIcon().convertColor(
+                        //             store
+                        //                 .clientCreate.tarefaModelSaveEtiqueta.color,
+                        //           ) ??
+                        //           Colors.grey,
+                        //       constraint: constraint.maxWidth,
+                        //     ),
+                        //   ),
+                        // )
+                      ],
                     )
                   ],
                 ),

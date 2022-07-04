@@ -29,7 +29,7 @@ class _ChangeTextWidgetState extends State<ChangeTextWidget> {
             ? MediaQuery.of(context).size.width * 0.55
             : MediaQuery.of(context).size.width * 0.90,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
               color: widget.theme

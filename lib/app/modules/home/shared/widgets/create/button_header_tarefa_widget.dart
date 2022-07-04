@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/actions_fase_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/date_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/users_save_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/prioridade_selection_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/users_selection_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
@@ -13,14 +11,13 @@ import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class ButtonHeaderTarefaWidget extends StatefulWidget {
   final double constraint;
-  final double tamanho;
+
   final int tipo;
   final TextEditingController? dateController;
   const ButtonHeaderTarefaWidget(
       {Key? key,
       required this.constraint,
       required this.tipo,
-      required this.tamanho,
       this.dateController})
       : super(key: key);
 
@@ -31,18 +28,27 @@ class ButtonHeaderTarefaWidget extends StatefulWidget {
 
 class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
   HomeStore store = Modular.get();
-
+  bool priorioritario = false;
+  int fase = 0;
   retornaTipo(int tipo) {
     switch (tipo) {
       case 0:
-        return text(
-            store.clientCreate.tarefaModelSaveEtiqueta.etiqueta == 'TODOS'
-                ? 'Etiqueta'
-                : store.clientCreate.tarefaModelSaveEtiqueta.icon != null
-                    ? store.clientCreate.tarefaModelSaveEtiqueta.etiqueta
-                    : 'Etiqueta');
+        return Icon(
+          store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+              ? IconData(store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
+                  fontFamily: 'MaterialIcons')
+              : Icons.bookmark,
+          color: Colors.black,
+        );
       case 1:
-        return text(ConvertIcon().nameStatus(store.clientCreate.faseTarefa));
+        return GestureDetector(
+          child: Icon(
+            ConvertIcon().iconFaseIconData(store.clientCreate.faseTarefa),
+            color: Colors.black,
+          ),
+          onTap: () => actionFase(),
+        );
+
       case 2:
         return Icon(
           store.clientCreate.tarefaModelPrioritario == 4
@@ -56,7 +62,8 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
         );
       case 4:
         return SizedBox(
-          width: MediaQuery.of(context).size.width * 0.3,
+          width: 24,
+          height: 24,
           child: DateSaveWidget(
             dateController: widget.dateController!,
             constraint: widget.constraint,
@@ -70,7 +77,7 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
       text,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
-        fontSize: 12,
+        fontSize: 9,
         fontWeight: FontWeight.bold,
         color: store.clientCreate.subtarefaModelSaveTitle != "" &&
                 store.clientCreate.subtarefaModelSaveTitle != "Subtarefa"
@@ -81,17 +88,12 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
   }
 
   prioridade() {
-    DialogButtom().showDialog(
-      PrioridadeSelectionWidget(
-        constraint: widget.constraint,
-        create: true,
-        prioridadeSelection: store.clientCreate.tarefaModelPrioritario,
-        setPrioridadeSelection: store.clientCreate.setPrioridadeSaveSelection,
-      ),
-      store.client.theme,
-      widget.constraint,
-      context,
-    );
+    setState(() {
+      priorioritario = !priorioritario;
+    });
+    priorioritario
+        ? store.clientCreate.setPrioridadeSaveSelection(1)
+        : store.clientCreate.setPrioridadeSaveSelection(4);
   }
 
   retornaFuncaoTipo(int tipo) {
@@ -119,22 +121,95 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
           store.clientCreate.tarefaModelPrioritario,
         );
       case 3:
-        return Colors.grey.shade500;
+        return Colors.grey.shade300;
       case 4:
-        return Colors.grey.shade500;
+        return Colors.grey.shade300;
     }
   }
 
   actionFase() {
-    DialogButtom().showDialog(
-      ActionsFaseWidget(
-        faseList: store.client.fase,
-        setActionsFase: store.clientCreate.setFaseTarefa,
-        constraint: widget.constraint,
+    setState(() {
+      fase = fase + 1;
+      switch (fase) {
+        case 0:
+          store.clientCreate.setFaseTarefa('pause');
+          break;
+        case 1:
+          store.clientCreate.setFaseTarefa('play');
+          break;
+        case 2:
+          store.clientCreate.setFaseTarefa('check');
+          break;
+        default:
+          fase = 0;
+          store.clientCreate.setFaseTarefa('pause');
+          break;
+      }
+    });
+    return PopupMenuButton(
+      icon: const Icon(
+        Icons.pause,
+        color: Colors.black,
       ),
-      store.client.theme,
-      widget.constraint,
-      context,
+      itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+        PopupMenuItem(
+          mouseCursor: SystemMouseCursors.click,
+          onTap: () => store.clientCreate.setFaseTarefa('pause'),
+          child: const ListTile(
+            leading: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Icon(
+                Icons.pause_circle_outline,
+                color: Colors.amber,
+              ),
+            ),
+            title: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Text(
+                  'Backlog',
+                  maxLines: 1,
+                )),
+          ),
+        ),
+        PopupMenuItem(
+          mouseCursor: SystemMouseCursors.click,
+          onTap: () => store.clientCreate.setFaseTarefa('play'),
+          child: const ListTile(
+            leading: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Icon(
+                Icons.play_circle_outline,
+                color: Colors.green,
+              ),
+            ),
+            title: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Text(
+                  'Fazendo',
+                  maxLines: 1,
+                )),
+          ),
+        ),
+        PopupMenuItem(
+          mouseCursor: SystemMouseCursors.click,
+          onTap: () => store.clientCreate.setFaseTarefa('check'),
+          child: const ListTile(
+            leading: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Icon(
+                Icons.check_circle_outline,
+                color: Colors.blue,
+              ),
+            ),
+            title: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Text(
+                  'Feito',
+                  maxLines: 1,
+                )),
+          ),
+        ),
+      ],
     );
   }
 
@@ -166,22 +241,18 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
       return GestureDetector(
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: colors(widget.tipo),
-              ),
-              width: MediaQuery.of(context).size.width * widget.tamanho,
-              height: MediaQuery.of(context).size.height * 0.05,
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Center(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: retornaTipo(widget.tipo),
-                  ),
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              color: colors(widget.tipo),
+            ),
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Center(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: retornaTipo(widget.tipo),
                 ),
               ),
             ),

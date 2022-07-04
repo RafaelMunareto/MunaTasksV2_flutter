@@ -23,6 +23,17 @@ class ConvertIcon {
     }
   }
 
+  iconFaseIconData(String status) {
+    switch (status) {
+      case 'pause':
+        return Icons.pause_circle;
+      case 'play':
+        return Icons.play_circle;
+      case 'check':
+        return Icons.check_circle;
+    }
+  }
+
   colorStatus(String status) {
     switch (status) {
       case 'play':
@@ -131,7 +142,7 @@ class ConvertIcon {
       case 'grey':
         return Colors.grey;
       case 'dark':
-        return Colors.black;
+        return Colors.grey.shade800;
       case 'yellow':
         return Colors.yellow;
       case 'amber':
@@ -140,6 +151,8 @@ class ConvertIcon {
         return Colors.orange;
       case 'brown':
         return Colors.brown;
+      default:
+        return Colors.grey.shade200;
     }
   }
 

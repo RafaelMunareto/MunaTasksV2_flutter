@@ -27,23 +27,19 @@ class _TextSaveWidgetState extends State<TextSaveWidget> {
 
     return Padding(
       padding: const EdgeInsets.all(4),
-      child: SizedBox(
-        width: double.infinity,
-        child: Center(
+      child: Center(
+        child: SizedBox(
+          width: 450,
           child: TextFormField(
             autocorrect: true,
             autofocus: false,
             controller: widget.controller,
             onChanged: (value) => store.clientCreate.setTarefaTextSave(value),
-            minLines: 4,
-            maxLines: 20,
+            minLines: 6,
+            maxLines: 6,
             decoration: InputDecoration(
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                disabledBorder: InputBorder.none,
-                suffixIcon: InkWell(
+                border: const OutlineInputBorder(),
+                suffix: InkWell(
                     child: const Icon(Icons.replay),
                     onTap: () {
                       setState(() {

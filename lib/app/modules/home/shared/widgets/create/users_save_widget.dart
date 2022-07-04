@@ -29,27 +29,31 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                 if (store.clientCreate.users.isEmpty &
                     !store.clientCreate.loadingUser)
                   GestureDetector(
-                    onTap: () => DialogButtom().showDialog(
+                      onTap: () => DialogButtom().showDialog(
+                          UsersSelectionWidget(
+                            constraint: widget.constraint,
+                            subtarefa: false,
+                          ),
+                          store.client.theme,
+                          widget.constraint,
+                          context),
+                      child: const Icon(
+                        Icons.people,
+                        color: Colors.black,
+                      )),
+                if (store.clientCreate.users.isNotEmpty &&
+                    !store.clientCreate.loadingUser)
+                  for (var linha in store.clientCreate.users)
+                    GestureDetector(
+                      onTap: () => DialogButtom().showDialog(
                         UsersSelectionWidget(
                           constraint: widget.constraint,
                           subtarefa: false,
                         ),
                         store.client.theme,
                         widget.constraint,
-                        context),
-                    child: const Text(
-                      'Equipe',
-                      overflow: TextOverflow.ellipsis,
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                if (store.clientCreate.users.isNotEmpty &&
-                    !store.clientCreate.loadingUser)
-                  for (var linha in store.clientCreate.users)
-                    Baseline(
-                      baseline: 38,
-                      baselineType: TextBaseline.alphabetic,
+                        context,
+                      ),
                       child: GestureDetector(
                         onTap: () => DialogButtom().showDialog(
                           UsersSelectionWidget(
@@ -60,24 +64,10 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                           widget.constraint,
                           context,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                          child: GestureDetector(
-                            onTap: () => DialogButtom().showDialog(
-                              UsersSelectionWidget(
-                                constraint: widget.constraint,
-                                subtarefa: false,
-                              ),
-                              store.client.theme,
-                              widget.constraint,
-                              context,
-                            ),
-                            child: CircleAvatarWidget(
-                              nameUser: linha.name.name,
-                              key: Key(linha.id),
-                              url: linha.urlImage,
-                            ),
-                          ),
+                        child: CircleAvatarWidget(
+                          nameUser: linha.name.name,
+                          key: Key(linha.id),
+                          url: linha.urlImage,
                         ),
                       ),
                     ),
