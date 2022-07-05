@@ -117,9 +117,7 @@ class _ButtonHeaderWidgetState extends State<ButtonHeaderWidget> {
         .setSubtarefaTextSave(widget.textSubtarefaController.text);
     DialogButtom().showDialog(
       CreateUserSubtarefaWidget(
-        userLista: store.client.perfis,
-        setCreateImageUser: store.clientCreate.setCreateImageUser,
-        setUserCreateSelection: store.clientCreate.setUserCreateSelection,
+        subtarefa: false,
       ),
       store.client.theme,
       widget.constraint,

@@ -118,13 +118,24 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                           ),
                                         ),
                                         onSelected: (bool value) {
-                                          setState(() {
+                                          if (widget.subtarefa) {
+                                            store.clientCreate
+                                                .setUserCreateSelection(linha);
+                                            store.clientCreate
+                                                .setCreateImageUser(
+                                                    linha.urlImage);
+                                            store.clientCreate
+                                                .setIdReferenceStaff(
+                                              linha,
+                                            );
+                                          } else {
                                             store.clientCreate
                                                 .setIdReferenceStaff(linha);
-                                            FocusScope.of(context).unfocus();
                                             store.clientCreate
                                                 .setLoadingUser(false);
-                                          });
+                                          }
+                                          FocusScope.of(context).unfocus();
+                                          Modular.to.pop();
                                         },
                                       ),
                                     ),

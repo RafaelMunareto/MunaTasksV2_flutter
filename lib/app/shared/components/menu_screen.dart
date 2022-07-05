@@ -80,7 +80,7 @@ class _MenuScreenState extends State<MenuScreen> {
               children: <Widget>[
                 Center(
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.93,
                     child: DrawerHeader(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -140,9 +140,6 @@ class _MenuScreenState extends State<MenuScreen> {
                                 ],
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.01,
                           ),
                           LogoWidget(constraint: widget.constraint),
                         ],

@@ -69,10 +69,8 @@ class _ErrorsWidgetState extends State<ErrorsWidget> {
     if (store.clientCreate.validaUserSubtarefa() != null && !widget.tarefa) {
       Future.delayed(const Duration(milliseconds: 1), () {
         DialogButtom().showDialog(
-          CreateUserSubtarefaWidget(
-            userLista: store.client.perfis,
-            setCreateImageUser: store.clientCreate.setCreateImageUser,
-            setUserCreateSelection: store.clientCreate.setUserCreateSelection,
+          const CreateUserSubtarefaWidget(
+            subtarefa: false,
           ),
           store.client.theme,
           widget.constraint,

@@ -64,10 +64,13 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                           widget.constraint,
                           context,
                         ),
-                        child: CircleAvatarWidget(
-                          nameUser: linha.name.name,
-                          key: Key(linha.id),
-                          url: linha.urlImage,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 2.0),
+                          child: CircleAvatarWidget(
+                            nameUser: linha.name.name,
+                            key: Key(linha.id),
+                            url: linha.urlImage,
+                          ),
                         ),
                       ),
                     ),

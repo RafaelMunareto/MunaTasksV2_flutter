@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/button_header_tarefa_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/button_save_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/button_header_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_subtarefa_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/text_save_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
@@ -19,8 +20,13 @@ class CreateWidget extends StatefulWidget {
 class _CreateWidgetState extends State<CreateWidget> {
   TextEditingController textController = TextEditingController();
   TextEditingController dateController = TextEditingController();
-
+  TextEditingController textSubtarefaController = TextEditingController();
   final HomeStore store = Modular.get();
+  @override
+  void initState() {
+    super.initState();
+    textSubtarefaController.text = store.clientCreate.subtarefaTextSave;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,61 +99,37 @@ class _CreateWidgetState extends State<CreateWidget> {
                               ),
                             ),
                             TextSaveWidget(controller: textController),
-                            ButtonHeaderTarefaWidget(
-                              constraint: constraint.maxWidth,
-                              tipo: 3,
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.01,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ButtonHeaderTarefaWidget(
+                                    constraint: constraint.maxWidth,
+                                    tipo: 5,
+                                  ),
+                                  ButtonHeaderTarefaWidget(
+                                    constraint: constraint.maxWidth,
+                                    tipo: 6,
+                                  ),
+                                  ButtonHeaderTarefaWidget(
+                                    constraint: constraint.maxWidth,
+                                    tipo: 7,
+                                    dateController: dateController,
+                                  ),
+                                  ButtonHeaderTarefaWidget(
+                                    constraint: constraint.maxWidth,
+                                    tipo: 8,
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
-
-                        // if (constraint.maxWidth < LarguraLayoutBuilder().telaPc)
-                        //   Padding(
-                        //     padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
-                        //     child: Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        //       children: [
-                        //         ButtonHeaderTarefaWidget(
-                        //           constraint: constraint.maxWidth,
-                        //           tipo: 3,
-                        //           tamanho: 0.55,
-                        //         ),
-                        //         ButtonHeaderTarefaWidget(
-                        //           constraint: constraint.maxWidth,
-                        //           tipo: 4,
-                        //           dateController: dateController,
-                        //           tamanho: 0.35,
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // SizedBox(
-                        //   height: MediaQuery.of(context).size.height * 0.15,
-                        //   width: MediaQuery.of(context).size.width,
-                        //   child: Padding(
-                        //     padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
-                        //     child: TextSaveWidget(controller: textController),
-                        //   ),
-                        // ),
-                        // Expanded(
-                        //   child: CreateSubtarefaWidget(
-                        //     constraint: constraint.maxWidth,
-                        //   ),
-                        // ),
-                        // SizedBox(
-                        //   height: MediaQuery.of(context).size.height * 0.1,
-                        //   width: MediaQuery.of(context).size.width,
-                        //   child: Padding(
-                        //     padding: const EdgeInsets.all(8.0),
-                        //     child: ButtonSaveWidget(
-                        //       color: ConvertIcon().convertColor(
-                        //             store
-                        //                 .clientCreate.tarefaModelSaveEtiqueta.color,
-                        //           ) ??
-                        //           Colors.grey,
-                        //       constraint: constraint.maxWidth,
-                        //     ),
-                        //   ),
-                        // )
                       ],
                     )
                   ],

@@ -36,7 +36,7 @@ class _TextSaveWidgetState extends State<TextSaveWidget> {
             controller: widget.controller,
             onChanged: (value) => store.clientCreate.setTarefaTextSave(value),
             minLines: 6,
-            maxLines: 6,
+            maxLines: 20,
             decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 suffix: InkWell(

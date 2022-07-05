@@ -56,6 +56,7 @@ class _SplashWidgetState extends State<SplashWidget> {
 
   @override
   Widget build(BuildContext context) {
+    changeThemeStorage();
     return Scaffold(
       backgroundColor: color,
       body: LayoutBuilder(
@@ -63,13 +64,13 @@ class _SplashWidgetState extends State<SplashWidget> {
           double withDevice = constraint.maxWidth;
 
           if (withDevice < 600) {
-            withDevice = withDevice * 0.30;
+            withDevice = withDevice * 0.20;
           } else if (withDevice < 960) {
-            withDevice = withDevice * 0.3;
-          } else if (withDevice < 1025) {
-            withDevice = withDevice * 0.2;
-          } else {
             withDevice = withDevice * 0.15;
+          } else if (withDevice < 1025) {
+            withDevice = withDevice * 0.07;
+          } else {
+            withDevice = withDevice * 0.03;
           }
           return Center(
             child: SizedBox(

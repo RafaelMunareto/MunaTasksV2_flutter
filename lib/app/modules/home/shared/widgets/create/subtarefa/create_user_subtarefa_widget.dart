@@ -9,14 +9,10 @@ import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class CreateUserSubtarefaWidget extends StatefulWidget {
-  final dynamic userLista;
-  final Function setUserCreateSelection;
-  final Function setCreateImageUser;
+  final bool subtarefa;
   const CreateUserSubtarefaWidget({
     Key? key,
-    required this.userLista,
-    required this.setCreateImageUser,
-    required this.setUserCreateSelection,
+    required this.subtarefa,
   }) : super(key: key);
 
   @override
@@ -128,19 +124,24 @@ class _CreateUserSubtarefaWidgetState extends State<CreateUserSubtarefaWidget>
                                           ),
                                         ),
                                         onPressed: () {
-                                          setState(() {
-                                            widget
+                                          if (widget.subtarefa) {
+                                            store.clientCreate
                                                 .setUserCreateSelection(linha);
-                                            widget.setCreateImageUser(
-                                                linha.urlImage);
+                                            store.clientCreate
+                                                .setCreateImageUser(
+                                                    linha.urlImage);
                                             store.clientCreate
                                                 .setIdReferenceStaff(
                                               linha,
                                             );
-
-                                            FocusScope.of(context).unfocus();
-                                            Modular.to.pop();
-                                          });
+                                          } else {
+                                            store.clientCreate
+                                                .setIdReferenceStaff(linha);
+                                            store.clientCreate
+                                                .setLoadingUser(false);
+                                          }
+                                          FocusScope.of(context).unfocus();
+                                          Modular.to.pop();
                                         },
                                       ),
                                     ),

@@ -3,6 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/date_save_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_subtarefa_insert_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_user_subtarefa_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/users_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/users_selection_widget.dart';
@@ -11,13 +13,14 @@ import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
 class ButtonHeaderTarefaWidget extends StatefulWidget {
   final double constraint;
-
   final int tipo;
   final TextEditingController? dateController;
+  final TextEditingController? textSubtarefaController;
   const ButtonHeaderTarefaWidget(
       {Key? key,
       required this.constraint,
       required this.tipo,
+      this.textSubtarefaController,
       this.dateController})
       : super(key: key);
 
@@ -30,23 +33,27 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
   HomeStore store = Modular.get();
   bool priorioritario = false;
   int fase = 0;
+  int subfase = 0;
   retornaTipo(int tipo) {
     switch (tipo) {
       case 0:
-        return Icon(
-          store.clientCreate.tarefaModelSaveEtiqueta.icon != null
-              ? IconData(store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
-                  fontFamily: 'MaterialIcons')
-              : Icons.bookmark,
-          color: Colors.black,
+        return Tooltip(
+          message: store.clientCreate.tarefaModelSaveEtiqueta.etiqueta,
+          child: Icon(
+            store.clientCreate.tarefaModelSaveEtiqueta.icon != null
+                ? IconData(store.clientCreate.tarefaModelSaveEtiqueta.icon ?? 0,
+                    fontFamily: 'MaterialIcons')
+                : Icons.bookmark,
+            color: Colors.black,
+          ),
         );
       case 1:
-        return GestureDetector(
+        return Tooltip(
+          message: store.clientCreate.faseTarefa,
           child: Icon(
             ConvertIcon().iconFaseIconData(store.clientCreate.faseTarefa),
             color: Colors.black,
           ),
-          onTap: () => actionFase(),
         );
 
       case 2:
@@ -69,7 +76,110 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
             constraint: widget.constraint,
           ),
         );
+      case 5:
+        return const Tooltip(
+            message: 'Limpa a subtarefa',
+            child: Icon(Icons.add, color: Colors.black));
+      case 6:
+        return Tooltip(
+          message: store.clientCreate.subtarefaModelSaveTitle,
+          child: const MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Icon(Icons.business_center_rounded)),
+        );
+      case 7:
+        return Tooltip(
+          message: store.clientCreate.fase,
+          child: Icon(
+            ConvertIcon().iconFaseIconData(store.clientCreate.fase),
+            color: Colors.black,
+          ),
+        );
+      case 8:
+        return const Icon(
+          Icons.people_alt_outlined,
+          color: Colors.black,
+        );
     }
+  }
+
+  retornaFuncaoTipo(int tipo) {
+    switch (tipo) {
+      case 0:
+        return etiquetas();
+      case 1:
+        return actionFase(true, store.clientCreate.setFaseTarefa);
+      case 2:
+        return prioridade();
+      case 3:
+        return users(false);
+      case 5:
+        return novo();
+      case 6:
+        return subtarefa();
+      case 7:
+        return actionFase(false, store.clientCreate.setFase);
+      case 8:
+        return users(true);
+    }
+  }
+
+  colors(int tipo) {
+    switch (tipo) {
+      case 0:
+        return ConvertIcon()
+            .convertColor(store.clientCreate.tarefaModelSaveEtiqueta.color);
+      case 1:
+        return ConvertIcon().colorStatusDark(store.clientCreate.faseTarefa);
+      case 2:
+        return ConvertIcon().convertColorFlaf(
+          store.clientCreate.tarefaModelPrioritario,
+        );
+      case 3:
+        return Colors.grey.shade300;
+      case 4:
+        return Colors.grey.shade300;
+      case 5:
+        return Colors.grey.shade300;
+      case 6:
+        return Colors.grey.shade300;
+      case 7:
+        return ConvertIcon().colorStatusDark(store.clientCreate.fase);
+      case 8:
+        return Colors.grey.shade300;
+    }
+  }
+
+  subtarefa() {
+    DialogButtom().showDialog(
+      CreateSubtarefaInsertWidget(
+        subtarefaInserSelection: store.clientCreate.subtarefaModelSaveTitle,
+        setSubtarefaSelection: store.clientCreate.setSubtarefaInsertCreate,
+      ),
+      store.client.theme,
+      widget.constraint,
+      context,
+    );
+  }
+
+  novo() {
+    widget.textSubtarefaController!.text = '';
+
+    store.clientCreate
+        .setSubtarefaTextSave(widget.textSubtarefaController!.text);
+    store.clientCreate.cleanSubtarefa();
+    store.clientCreate.setEditar(false);
+  }
+
+  users(subtarefa) {
+    DialogButtom().showDialog(
+      CreateUserSubtarefaWidget(
+        subtarefa: subtarefa,
+      ),
+      store.client.theme,
+      widget.constraint,
+      context,
+    );
   }
 
   text(text) {
@@ -96,132 +206,44 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
         : store.clientCreate.setPrioridadeSaveSelection(4);
   }
 
-  retornaFuncaoTipo(int tipo) {
-    switch (tipo) {
-      case 0:
-        return etiquetas();
-      case 1:
-        return actionFase();
-      case 2:
-        return prioridade();
-      case 3:
-        return users();
-    }
-  }
-
-  colors(int tipo) {
-    switch (tipo) {
-      case 0:
-        return ConvertIcon()
-            .convertColor(store.clientCreate.tarefaModelSaveEtiqueta.color);
-      case 1:
-        return ConvertIcon().colorStatusDark(store.clientCreate.faseTarefa);
-      case 2:
-        return ConvertIcon().convertColorFlaf(
-          store.clientCreate.tarefaModelPrioritario,
-        );
-      case 3:
-        return Colors.grey.shade300;
-      case 4:
-        return Colors.grey.shade300;
-    }
-  }
-
-  actionFase() {
-    setState(() {
-      fase = fase + 1;
-      switch (fase) {
-        case 0:
-          store.clientCreate.setFaseTarefa('pause');
-          break;
-        case 1:
-          store.clientCreate.setFaseTarefa('play');
-          break;
-        case 2:
-          store.clientCreate.setFaseTarefa('check');
-          break;
-        default:
-          fase = 0;
-          store.clientCreate.setFaseTarefa('pause');
-          break;
-      }
-    });
-    return PopupMenuButton(
-      icon: const Icon(
-        Icons.pause,
-        color: Colors.black,
-      ),
-      itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-        PopupMenuItem(
-          mouseCursor: SystemMouseCursors.click,
-          onTap: () => store.clientCreate.setFaseTarefa('pause'),
-          child: const ListTile(
-            leading: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: Icon(
-                Icons.pause_circle_outline,
-                color: Colors.amber,
-              ),
-            ),
-            title: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Text(
-                  'Backlog',
-                  maxLines: 1,
-                )),
-          ),
-        ),
-        PopupMenuItem(
-          mouseCursor: SystemMouseCursors.click,
-          onTap: () => store.clientCreate.setFaseTarefa('play'),
-          child: const ListTile(
-            leading: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: Icon(
-                Icons.play_circle_outline,
-                color: Colors.green,
-              ),
-            ),
-            title: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Text(
-                  'Fazendo',
-                  maxLines: 1,
-                )),
-          ),
-        ),
-        PopupMenuItem(
-          mouseCursor: SystemMouseCursors.click,
-          onTap: () => store.clientCreate.setFaseTarefa('check'),
-          child: const ListTile(
-            leading: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: Icon(
-                Icons.check_circle_outline,
-                color: Colors.blue,
-              ),
-            ),
-            title: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Text(
-                  'Feito',
-                  maxLines: 1,
-                )),
-          ),
-        ),
-      ],
-    );
-  }
-
-  users() {
-    DialogButtom().showDialog(
-        UsersSelectionWidget(
-          constraint: widget.constraint,
-          subtarefa: false,
-        ),
-        store.client.theme,
-        widget.constraint,
-        context);
+  actionFase(faseAction, Function function) {
+    faseAction
+        ? setState(() {
+            fase = fase + 1;
+            switch (fase) {
+              case 0:
+                function('pause');
+                break;
+              case 1:
+                function('play');
+                break;
+              case 2:
+                function('check');
+                break;
+              default:
+                fase = 0;
+                function('pause');
+                break;
+            }
+          })
+        : setState(() {
+            subfase = subfase + 1;
+            switch (subfase) {
+              case 0:
+                function('pause');
+                break;
+              case 1:
+                function('play');
+                break;
+              case 2:
+                function('check');
+                break;
+              default:
+                subfase = 0;
+                function('pause');
+                break;
+            }
+          });
   }
 
   etiquetas() {
@@ -238,29 +260,32 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      return GestureDetector(
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: colors(widget.tipo),
-            ),
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: Center(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: retornaTipo(widget.tipo),
+      return Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: GestureDetector(
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color: colors(widget.tipo),
+              ),
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Center(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: retornaTipo(widget.tipo),
+                  ),
                 ),
               ),
             ),
           ),
+          onTap: () {
+            retornaFuncaoTipo(widget.tipo);
+          },
         ),
-        onTap: () {
-          retornaFuncaoTipo(widget.tipo);
-        },
       );
     });
   }
