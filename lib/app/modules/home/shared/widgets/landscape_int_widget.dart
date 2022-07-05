@@ -22,6 +22,7 @@ class _LandscapeIntWidgetState extends State<LandscapeIntWidget> {
   @override
   Widget build(BuildContext context) {
     final HomeStore store = Modular.get();
+    final ScrollController scrollController = ScrollController();
 
     return Observer(builder: (_) {
       return store.client.loading
@@ -33,86 +34,98 @@ class _LandscapeIntWidgetState extends State<LandscapeIntWidget> {
                   height: MediaQuery.of(context).size.height,
                   width: 100,
                   child: SingleChildScrollView(
+                    controller: scrollController,
                     child: Wrap(
                       direction: Axis.vertical,
                       alignment: WrapAlignment.spaceBetween,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         for (var totais in store.client.tarefasTotais)
-                          Wrap(
-                            alignment: WrapAlignment.center,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(12),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(minWidth: 100),
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
                                 child: Wrap(
+                                  alignment: WrapAlignment.center,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
                                   children: [
-                                    CircleAvatarWidget(
-                                      nameUser: totais.name.name.name,
-                                      url: totais.name!.urlImage,
+                                    Container(
+                                      padding: const EdgeInsets.only(right: 4),
+                                      child: CircleAvatarWidget(
+                                        nameUser: totais.name.name.name,
+                                        url: totais.name!.urlImage,
+                                      ),
                                     ),
+                                    totais.qtd > 0
+                                        ? Tooltip(
+                                            message: "Qtd de Tarefas",
+                                            child: Badge(
+                                              toAnimate: false,
+                                              badgeColor: Colors.grey.shade400,
+                                              badgeContent: Text(
+                                                  totais.qtd > 1
+                                                      ? totais.qtd.toString()
+                                                      : totais.qtd.toString(),
+                                                  style: const TextStyle(
+                                                      fontSize: 14)),
+                                            ),
+                                          )
+                                        : Tooltip(
+                                            message: "Qtd de Tarefas",
+                                            child: Badge(
+                                              toAnimate: false,
+                                              badgeColor: Colors.red,
+                                              badgeContent: const Text('0',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                  )),
+                                            ),
+                                          ),
+                                    totais.qtdSubtarefas > 0
+                                        ? Tooltip(
+                                            message: "Qtd de Subtarefas",
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(4.0),
+                                              child: Badge(
+                                                toAnimate: false,
+                                                badgeColor:
+                                                    Colors.blueGrey.shade400,
+                                                badgeContent: Text(
+                                                    totais.qtdSubtarefas > 1
+                                                        ? totais.qtdSubtarefas
+                                                            .toString()
+                                                        : totais.qtdSubtarefas
+                                                            .toString(),
+                                                    style: const TextStyle(
+                                                        fontSize: 9)),
+                                              ),
+                                            ),
+                                          )
+                                        : Tooltip(
+                                            message: "Qtd de Subtarefas",
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(4.0),
+                                              child: Badge(
+                                                toAnimate: false,
+                                                badgeColor: Colors.red,
+                                                badgeContent: const Text('0',
+                                                    style: TextStyle(
+                                                      fontSize: 9,
+                                                    )),
+                                              ),
+                                            ),
+                                          ),
                                   ],
                                 ),
                               ),
-                              totais.qtd > 0
-                                  ? Tooltip(
-                                      message: "Qtd de Tarefas",
-                                      child: Badge(
-                                        toAnimate: false,
-                                        badgeColor: Colors.grey.shade400,
-                                        badgeContent: Text(
-                                            totais.qtd > 1
-                                                ? totais.qtd.toString()
-                                                : totais.qtd.toString(),
-                                            style:
-                                                const TextStyle(fontSize: 14)),
-                                      ),
-                                    )
-                                  : Tooltip(
-                                      message: "Qtd de Tarefas",
-                                      child: Badge(
-                                        toAnimate: false,
-                                        badgeColor: Colors.red,
-                                        badgeContent: const Text('0',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                            )),
-                                      ),
-                                    ),
-                              totais.qtdSubtarefas > 0
-                                  ? Tooltip(
-                                      message: "Qtd de Subtarefas",
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Badge(
-                                          toAnimate: false,
-                                          badgeColor: Colors.blueGrey.shade400,
-                                          badgeContent: Text(
-                                              totais.qtdSubtarefas > 1
-                                                  ? totais.qtdSubtarefas
-                                                      .toString()
-                                                  : totais.qtdSubtarefas
-                                                      .toString(),
-                                              style:
-                                                  const TextStyle(fontSize: 9)),
-                                        ),
-                                      ),
-                                    )
-                                  : Tooltip(
-                                      message: "Qtd de Subtarefas",
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Badge(
-                                          toAnimate: false,
-                                          badgeColor: Colors.red,
-                                          badgeContent: const Text('0',
-                                              style: TextStyle(
-                                                fontSize: 9,
-                                              )),
-                                        ),
-                                      ),
-                                    ),
-                            ],
+                            ),
                           ),
                       ],
                     ),
