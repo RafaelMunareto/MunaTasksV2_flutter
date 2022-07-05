@@ -106,29 +106,31 @@ class _HomePageState extends State<HomePage> {
                     return Scaffold(
                       body: store.client.loading
                           ? LogoWidget(constraint: constraint.maxWidth)
-                          : ScrollConfiguration(
-                              behavior: ScrollConfiguration.of(context)
-                                  .copyWith(dragDevices: {
-                                PointerDeviceKind.touch,
-                                PointerDeviceKind.mouse,
-                              }),
-                              child: SingleChildScrollView(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                scrollDirection: Axis.horizontal,
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      for (var linha in store.client.badgets)
-                                        ListCardWidget(
-                                          badgets: linha,
+                          : Center(
+                              child: ScrollConfiguration(
+                                behavior: ScrollConfiguration.of(context)
+                                    .copyWith(dragDevices: {
+                                  PointerDeviceKind.touch,
+                                  PointerDeviceKind.mouse,
+                                }),
+                                child: SingleChildScrollView(
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  scrollDirection: Axis.horizontal,
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        for (var linha in store.client.badgets)
+                                          ListCardWidget(
+                                            badgets: linha,
+                                          ),
+                                        LandscapeIntWidget(
+                                          constraint: constraint.maxWidth,
+                                          theme: store.client.theme,
                                         ),
-                                      LandscapeIntWidget(
-                                        constraint: constraint.maxWidth,
-                                        theme: store.client.theme,
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
