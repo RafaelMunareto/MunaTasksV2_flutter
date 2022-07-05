@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -30,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey expansionTile = GlobalKey();
   final HomeStore store = Modular.get();
   final drawerController = ZoomDrawerController();
+  final ScrollController controller = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -104,22 +106,30 @@ class _HomePageState extends State<HomePage> {
                     return Scaffold(
                       body: store.client.loading
                           ? LogoWidget(constraint: constraint.maxWidth)
-                          : Center(
+                          : ScrollConfiguration(
+                              behavior: ScrollConfiguration.of(context)
+                                  .copyWith(dragDevices: {
+                                PointerDeviceKind.touch,
+                                PointerDeviceKind.mouse,
+                              }),
                               child: SingleChildScrollView(
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
                                 scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    for (var linha in store.client.badgets)
-                                      ListCardWidget(
-                                        badgets: linha,
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      for (var linha in store.client.badgets)
+                                        ListCardWidget(
+                                          badgets: linha,
+                                        ),
+                                      LandscapeIntWidget(
+                                        constraint: constraint.maxWidth,
+                                        theme: store.client.theme,
                                       ),
-                                    LandscapeIntWidget(
-                                      constraint: constraint.maxWidth,
-                                      theme: store.client.theme,
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

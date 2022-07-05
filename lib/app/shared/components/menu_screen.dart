@@ -30,6 +30,7 @@ class _MenuScreenState extends State<MenuScreen> {
   final AuthController auth = Modular.get();
   final ILocalStorage storage = LocalStorageShare();
   final ClientStore client = ClientStore();
+  final ScrollController scrollController = ScrollController();
   final DashboardRepository dashboard = DashboardRepository();
   String version = '2.0.0';
   getVersion() {
@@ -86,61 +87,64 @@ class _MenuScreenState extends State<MenuScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: NameWidget(
-                                    client: client,
-                                    constraint: widget.constraint,
+                            child: SingleChildScrollView(
+                              controller: scrollController,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: NameWidget(
+                                      client: client,
+                                      constraint: widget.constraint,
+                                    ),
                                   ),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 16),
-                                  child: ListMenuWidget(
-                                    label: " Dashboard",
-                                    rota: '/home/',
-                                    icon: Icons.dashboard,
+                                  const Padding(
+                                    padding: EdgeInsets.only(top: 16),
+                                    child: ListMenuWidget(
+                                      label: " Dashboard",
+                                      rota: '/home/',
+                                      icon: Icons.dashboard,
+                                    ),
                                   ),
-                                ),
-                                const ListMenuWidget(
-                                  label: " Editar Perfil",
-                                  rota: '/settings/perfil',
-                                  icon: Icons.emoji_people,
-                                ),
-                                const ListMenuWidget(
-                                  label: " Configurações",
-                                  rota: '/settings/',
-                                  icon: Icons.settings,
-                                ),
-                                const ListMenuWidget(
-                                  label: " Etiquetas",
-                                  rota: '/settings/etiquetas',
-                                  icon: Icons.bookmark,
-                                ),
-                                const ListMenuWidget(
-                                  label: " Tarefas",
-                                  rota: '/home/tarefas',
-                                  icon: Icons.people,
-                                ),
-                                const ListMenuWidget(
-                                  label: " Privacy",
-                                  rota: '/outros/privacy',
-                                  icon: Icons.privacy_tip,
-                                ),
-                                ListMenuWidget(
-                                  label: " Versão $version",
-                                  rota: '/outros/changelog',
-                                  icon: Icons.verified,
-                                ),
-                              ],
+                                  const ListMenuWidget(
+                                    label: " Editar Perfil",
+                                    rota: '/settings/perfil',
+                                    icon: Icons.emoji_people,
+                                  ),
+                                  const ListMenuWidget(
+                                    label: " Configurações",
+                                    rota: '/settings/',
+                                    icon: Icons.settings,
+                                  ),
+                                  const ListMenuWidget(
+                                    label: " Etiquetas",
+                                    rota: '/settings/etiquetas',
+                                    icon: Icons.bookmark,
+                                  ),
+                                  const ListMenuWidget(
+                                    label: " Tarefas",
+                                    rota: '/home/tarefas',
+                                    icon: Icons.people,
+                                  ),
+                                  const ListMenuWidget(
+                                    label: " Privacy",
+                                    rota: '/outros/privacy',
+                                    icon: Icons.privacy_tip,
+                                  ),
+                                  ListMenuWidget(
+                                    label: " Versão $version",
+                                    rota: '/outros/changelog',
+                                    icon: Icons.verified,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          LogoWidget(constraint: widget.constraint),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05,
-                          )
+                            height: MediaQuery.of(context).size.height * 0.01,
+                          ),
+                          LogoWidget(constraint: widget.constraint),
                         ],
                       ),
                     ),
