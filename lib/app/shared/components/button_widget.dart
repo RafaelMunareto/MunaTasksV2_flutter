@@ -55,7 +55,7 @@ class _ButtonWidgetState extends State<ButtonWidget>
     altura = Tween<double>(begin: 0, end: 50).animate(
         CurvedAnimation(parent: _controller, curve: const Interval(0.5, 0.7)));
     radius = Tween<double>(begin: 0, end: 20).animate(
-        CurvedAnimation(parent: _controller, curve: const Interval(0.6, 1)));
+        CurvedAnimation(parent: _controller, curve: const Interval(0.5, 1)));
     opacidade = Tween<double>(begin: 0, end: 1).animate(
         CurvedAnimation(parent: _controller, curve: const Interval(0.6, 0.8)));
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:munatasks2/app/modules/auth/shared/models/client_store.dart';
+import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
 import 'package:munatasks2/app/modules/outros/privacy/privacy_text_widget.dart';
 
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
@@ -15,6 +15,13 @@ class PrivacyPage extends StatefulWidget {
 
 class PrivacyPageState extends State<PrivacyPage> {
   final ClientStore client = ClientStore();
+
+  @override
+  void initState() {
+    client.buscaTheme(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {

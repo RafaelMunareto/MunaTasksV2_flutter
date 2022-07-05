@@ -139,7 +139,10 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                 child: CircularProgressIndicator(),
                               ),
                             )
-                          : Container(),
+                          : const SizedBox(
+                              width: 22,
+                              height: 22,
+                            ),
                     Tooltip(
                       message: "Filtra Etiquetas",
                       child: MouseRegion(

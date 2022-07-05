@@ -7,6 +7,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/card/card_widget.dart
 import 'package:munatasks2/app/modules/home/shared/widgets/card/tarefas_none_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/scrool_speed.dart';
 
 class ListCardWidget extends StatefulWidget {
   final BadgetsModel badgets;
@@ -19,7 +20,7 @@ class ListCardWidget extends StatefulWidget {
 class _ListCardWidgetState extends State<ListCardWidget>
     with SingleTickerProviderStateMixin {
   final HomeStore store = Modular.get();
-
+  final ScrollController controller = ScrollController();
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -108,18 +109,19 @@ class _ListCardWidgetState extends State<ListCardWidget>
                         height: MediaQuery.of(context).size.height * 0.90,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 32),
-                          child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            controller: ScrollController(),
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.all(8),
-                            itemCount: widget.badgets.dados!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return CardWidget(
-                                tarefaDioModel: widget.badgets.dados![index],
-                                constraint: constraint.maxWidth,
-                              );
-                            },
+                          child: ScrollSpeed(
+                            child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.all(8),
+                              itemCount: widget.badgets.dados!.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return CardWidget(
+                                  tarefaDioModel: widget.badgets.dados![index],
+                                  constraint: constraint.maxWidth,
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
