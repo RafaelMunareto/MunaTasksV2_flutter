@@ -1,14 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
 class ScrollSpeed extends StatelessWidget {
   final Widget child;
-  static const _extraScrollSpeed = 80; // your "extra" scroll speed
+  static const _extraScrollSpeed = kIsWeb ? 20 : 80;
   final ScrollController _scrollController = ScrollController();
-
-  // Constructor
 
   ScrollSpeed({Key? key, required this.child}) : super(key: key) {
     _scrollController.addListener(() {

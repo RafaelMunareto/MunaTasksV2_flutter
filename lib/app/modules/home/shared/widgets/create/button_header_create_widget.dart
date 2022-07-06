@@ -4,19 +4,19 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/date_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_subtarefa_insert_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_user_subtarefa_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/users_save_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/radio_etiquetas_filter_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/users_selection_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/users_selection_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/filters/radio_etiquetas_filter_widget.dart';
+import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 
-class ButtonHeaderTarefaWidget extends StatefulWidget {
+class ButtonHeaderCreateWidget extends StatefulWidget {
   final double constraint;
   final int tipo;
   final TextEditingController? dateController;
   final TextEditingController? textSubtarefaController;
-  const ButtonHeaderTarefaWidget(
+  const ButtonHeaderCreateWidget(
       {Key? key,
       required this.constraint,
       required this.tipo,
@@ -25,11 +25,11 @@ class ButtonHeaderTarefaWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<ButtonHeaderTarefaWidget> createState() =>
-      _ButtonHeaderTarefaWidgetState();
+  State<ButtonHeaderCreateWidget> createState() =>
+      _ButtonHeaderCreateWidgetState();
 }
 
-class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
+class _ButtonHeaderCreateWidgetState extends State<ButtonHeaderCreateWidget> {
   HomeStore store = Modular.get();
   bool priorioritario = false;
   int fase = 0;
@@ -64,9 +64,7 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
           color: Colors.black,
         );
       case 3:
-        return UsersSaveWidget(
-          constraint: widget.constraint,
-        );
+        return UsersSaveWidget(constraint: widget.constraint);
       case 4:
         return SizedBox(
           width: 24,
@@ -96,10 +94,7 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
           ),
         );
       case 8:
-        return const Icon(
-          Icons.people_alt_outlined,
-          color: Colors.black,
-        );
+        return usersSaveSubtarefa();
     }
   }
 
@@ -111,17 +106,38 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
         return actionFase(true, store.clientCreate.setFaseTarefa);
       case 2:
         return prioridade();
-      case 3:
-        return users(false);
-      case 5:
-        return novo();
-      case 6:
-        return subtarefa();
       case 7:
         return actionFase(false, store.clientCreate.setFase);
-      case 8:
-        return users(true);
     }
+  }
+
+  usersSaveSubtarefa() {
+    return Observer(builder: (_) {
+      return GestureDetector(
+          onTap: () {
+            store.clientCreate.setSubtarefaAction(true);
+            DialogButtom().showDialog(
+              UsersSelectionWidget(
+                constraint: widget.constraint,
+              ),
+              store.client.theme,
+              widget.constraint,
+              context,
+            );
+          },
+          child: Padding(
+              padding: const EdgeInsets.only(right: 2.0),
+              child: store.clientCreate.imageUser != ''
+                  ? CircleAvatarWidget(
+                      nameUser: store.clientCreate.createUser.name.name,
+                      key: UniqueKey(),
+                      url: store.clientCreate.imageUser,
+                    )
+                  : const Icon(
+                      Icons.people,
+                      color: Colors.black,
+                    )));
+    });
   }
 
   colors(int tipo) {
@@ -150,6 +166,10 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
     }
   }
 
+  actionSubtarefa(subtarefa) {
+    store.clientCreate.setSubtarefaAction(subtarefa);
+  }
+
   subtarefa() {
     DialogButtom().showDialog(
       CreateSubtarefaInsertWidget(
@@ -163,23 +183,8 @@ class _ButtonHeaderTarefaWidgetState extends State<ButtonHeaderTarefaWidget> {
   }
 
   novo() {
-    widget.textSubtarefaController!.text = '';
-
-    store.clientCreate
-        .setSubtarefaTextSave(widget.textSubtarefaController!.text);
     store.clientCreate.cleanSubtarefa();
     store.clientCreate.setEditar(false);
-  }
-
-  users(subtarefa) {
-    DialogButtom().showDialog(
-      CreateUserSubtarefaWidget(
-        subtarefa: subtarefa,
-      ),
-      store.client.theme,
-      widget.constraint,
-      context,
-    );
   }
 
   text(text) {

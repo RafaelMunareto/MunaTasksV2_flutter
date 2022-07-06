@@ -27,7 +27,7 @@ class _ButtonSaveCreateSubtarefaWidgetState
     final HomeStore store = Modular.get();
 
     return Padding(
-      padding: const EdgeInsets.only(top: 8, right: 8),
+      padding: const EdgeInsets.only(top: 8, left: 4),
       child: Align(
         alignment: Alignment.bottomRight,
         child: ElevatedButton.icon(
@@ -63,13 +63,16 @@ class _ButtonSaveCreateSubtarefaWidgetState
             }
             FocusScope.of(context).unfocus();
           },
-          icon: const Icon(Icons.add_circle, size: 16),
+          icon: const Icon(Icons.add_circle, size: 24),
           label: store.clientCreate.loadingSubtarefa
               ? const CircularProgressWidget()
-              : Text(
-                  store.clientCreate.editar
-                      ? 'EDITAR SUBTAREFA'
-                      : "INCLUIR SUBTAREFA",
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    store.clientCreate.editar
+                        ? 'EDITAR SUBTAREFA'
+                        : "INCLUIR SUBTAREFA",
+                  ),
                 ),
         ),
       ),

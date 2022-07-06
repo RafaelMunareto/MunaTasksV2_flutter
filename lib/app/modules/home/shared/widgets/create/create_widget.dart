@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/button_header_tarefa_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/button_header_create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/button_save_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/button_header_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_subtarefa_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/button_save_create_subtarefa_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/subtarefas_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/text_save_widget.dart';
-import 'package:munatasks2/app/shared/utils/convert_icon.dart';
-import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
+import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 
 class CreateWidget extends StatefulWidget {
   const CreateWidget({Key? key}) : super(key: key);
@@ -62,76 +61,93 @@ class _CreateWidgetState extends State<CreateWidget> {
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ButtonHeaderTarefaWidget(
-                                    constraint: constraint.maxWidth,
-                                    tipo: 0,
-                                  ),
-                                  ButtonHeaderTarefaWidget(
-                                    constraint: constraint.maxWidth,
-                                    tipo: 1,
-                                  ),
-                                  ButtonHeaderTarefaWidget(
-                                    constraint: constraint.maxWidth,
-                                    tipo: 2,
-                                  ),
-                                  ButtonHeaderTarefaWidget(
-                                    constraint: constraint.maxWidth,
-                                    tipo: 4,
-                                    dateController: dateController,
-                                  ),
-                                  ButtonHeaderTarefaWidget(
-                                    constraint: constraint.maxWidth,
-                                    tipo: 3,
-                                  ),
-                                ],
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ButtonHeaderCreateWidget(
+                                      constraint: constraint.maxWidth,
+                                      tipo: 0,
+                                    ),
+                                    ButtonHeaderCreateWidget(
+                                      constraint: constraint.maxWidth,
+                                      tipo: 1,
+                                    ),
+                                    ButtonHeaderCreateWidget(
+                                      constraint: constraint.maxWidth,
+                                      tipo: 2,
+                                    ),
+                                    ButtonHeaderCreateWidget(
+                                      constraint: constraint.maxWidth,
+                                      tipo: 4,
+                                      dateController: dateController,
+                                    ),
+                                    ButtonHeaderCreateWidget(
+                                      constraint: constraint.maxWidth,
+                                      tipo: 3,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            TextSaveWidget(controller: textController),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.01,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ButtonHeaderTarefaWidget(
-                                    constraint: constraint.maxWidth,
-                                    tipo: 5,
-                                  ),
-                                  ButtonHeaderTarefaWidget(
-                                    constraint: constraint.maxWidth,
-                                    tipo: 6,
-                                  ),
-                                  ButtonHeaderTarefaWidget(
-                                    constraint: constraint.maxWidth,
-                                    tipo: 7,
-                                    dateController: dateController,
-                                  ),
-                                  ButtonHeaderTarefaWidget(
-                                    constraint: constraint.maxWidth,
-                                    tipo: 8,
-                                  ),
-                                ],
+                              TextSaveWidget(
+                                controller: textController,
+                                subtarefa: false,
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.01,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(4, 0, 2, 4),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ButtonHeaderCreateWidget(
+                                      constraint: constraint.maxWidth,
+                                      tipo: 5,
+                                    ),
+                                    ButtonHeaderCreateWidget(
+                                      constraint: constraint.maxWidth,
+                                      tipo: 6,
+                                    ),
+                                    ButtonHeaderCreateWidget(
+                                      constraint: constraint.maxWidth,
+                                      tipo: 7,
+                                      dateController: dateController,
+                                    ),
+                                    ButtonHeaderCreateWidget(
+                                      constraint: constraint.maxWidth,
+                                      tipo: 8,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              TextSaveWidget(
+                                controller: textSubtarefaController,
+                                subtarefa: true,
+                              ),
+                              ButtonSaveCreateSubtarefaWidget(
+                                texto: textSubtarefaController,
+                                constraint: constraint.maxWidth,
+                              ),
+                            ],
+                          ),
+                          SubtarefasWidget(controller: textSubtarefaController)
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -142,3 +158,6 @@ class _CreateWidgetState extends State<CreateWidget> {
     });
   }
 }
+//  ButtonSaveWidget(
+//                                       constraint: constraint.maxWidth,
+//                                       color: kblue)

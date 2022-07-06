@@ -421,4 +421,10 @@ abstract class _ClientCreateStoreBase with Store {
 
   @action
   setLoadingSearch(value) => loadingSearch = value;
+
+  @observable
+  bool subtarefaAction = false;
+
+  @action
+  setSubtarefaAction(value) => subtarefaAction = value;
 }

@@ -364,6 +364,22 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
+  late final _$subtarefaActionAtom =
+      Atom(name: '_ClientCreateStoreBase.subtarefaAction', context: context);
+
+  @override
+  bool get subtarefaAction {
+    _$subtarefaActionAtom.reportRead();
+    return super.subtarefaAction;
+  }
+
+  @override
+  set subtarefaAction(bool value) {
+    _$subtarefaActionAtom.reportWrite(value, super.subtarefaAction, () {
+      super.subtarefaAction = value;
+    });
+  }
+
   late final _$_ClientCreateStoreBaseActionController =
       ActionController(name: '_ClientCreateStoreBase', context: context);
 
@@ -885,6 +901,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic setSubtarefaAction(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setSubtarefaAction');
+    try {
+      return super.setSubtarefaAction(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 tarefaModelSave: ${tarefaModelSave},
@@ -908,6 +935,7 @@ id: ${id},
 subtarefaModel: ${subtarefaModel},
 editar: ${editar},
 loadingSearch: ${loadingSearch},
+subtarefaAction: ${subtarefaAction},
 isValidTarefa: ${isValidTarefa},
 isValidSubtarefa: ${isValidSubtarefa}
     ''';

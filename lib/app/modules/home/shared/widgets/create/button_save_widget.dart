@@ -37,78 +37,75 @@ class _ButtonSaveWidgetState extends State<ButtonSaveWidget> {
       );
     }
 
-    return Wrap(
-      alignment: WrapAlignment.end,
-      children: [
-        Observer(builder: (_) {
-          return ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(widget.color),
-            ),
-            onPressed: () {
-              store.clientCreate.setTarefa();
-              if (store.clientCreate.isValidTarefa) {
-                if (store.clientCreate.tarefaModelSave.id != "") {
-                  store.updateNewTarefa().then((e) {
-                    SnackbarCustom().createSnackBar(
-                      "Tarefa editada com sucesso!",
-                      Colors.green,
-                      context,
-                    );
-                    Modular.to.pop();
-                  }, onError: (error) {
-                    errors(widget.constraint,
-                        error.response?.data['error'] ?? error?.message);
-                  });
+    return Padding(
+      padding: const EdgeInsets.only(top: 8, left: 4),
+      child: Wrap(
+        alignment: WrapAlignment.end,
+        children: [
+          Observer(builder: (_) {
+            return ElevatedButton.icon(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(widget.color),
+              ),
+              onPressed: () {
+                store.clientCreate.setTarefa();
+                if (store.clientCreate.isValidTarefa) {
+                  if (store.clientCreate.tarefaModelSave.id != "") {
+                    store.updateNewTarefa().then((e) {
+                      SnackbarCustom().createSnackBar(
+                        "Tarefa editada com sucesso!",
+                        Colors.green,
+                        context,
+                      );
+                      Modular.to.pop();
+                    }, onError: (error) {
+                      errors(widget.constraint,
+                          error.response?.data['error'] ?? error?.message);
+                    });
+                  } else {
+                    store.saveNewTarefa().then((e) {
+                      SnackbarCustom().createSnackBar(
+                        "Tarefa salva com sucesso!",
+                        Colors.green,
+                        context,
+                      );
+
+                      if (store.clientCreate.tarefaModelSave.fase ==
+                          store.client.navigateBarSelection) {
+                        var newIndex = store.client.taskDio.length;
+                        final newItem =
+                            (List.of(store.client.taskDio)..shuffle()).first;
+                        store.client.taskDio.insert(newIndex, newItem);
+                      }
+
+                      Modular.to.pop();
+                    }, onError: (error) {
+                      errors(widget.constraint,
+                          error.response?.data['error'] ?? error?.message);
+                    });
+                  }
                 } else {
-                  store.saveNewTarefa().then((e) {
-                    SnackbarCustom().createSnackBar(
-                      "Tarefa salva com sucesso!",
-                      Colors.green,
-                      context,
-                    );
-
-                    if (store.clientCreate.tarefaModelSave.fase ==
-                        store.client.navigateBarSelection) {
-                      var newIndex = store.client.taskDio.length;
-                      final newItem =
-                          (List.of(store.client.taskDio)..shuffle()).first;
-                      store.client.taskDio.insert(newIndex, newItem);
-                    }
-
-                    Modular.to.pop();
-                  }, onError: (error) {
-                    errors(widget.constraint,
-                        error.response?.data['error'] ?? error?.message);
-                  });
+                  errors(widget.constraint, '');
                 }
-              } else {
-                errors(widget.constraint, '');
-              }
-            },
-            child: store.clientCreate.loadingTarefa
-                ? const CircularProgressWidget()
-                : SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.08,
-                    child: Center(
-                      child: store.client.loadingRefresh
-                          ? const CircularProgressWidget()
-                          : Text(
-                              store.clientCreate.tarefaModelSave.id != ''
-                                  ? "EDITAR TAREFA"
-                                  : 'SALVAR TAREFA',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                    ),
-                  ),
-          );
-        })
-      ],
+              },
+              icon: const Icon(Icons.add_circle, size: 24),
+              label: store.clientCreate.loadingTarefa
+                  ? const CircularProgressWidget()
+                  : store.client.loadingRefresh
+                      ? const CircularProgressWidget()
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            store.clientCreate.tarefaModelSave.id != ''
+                                ? "EDITAR TAREFA"
+                                : 'SALVAR TAREFA',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+            );
+          })
+        ],
+      ),
     );
   }
 }

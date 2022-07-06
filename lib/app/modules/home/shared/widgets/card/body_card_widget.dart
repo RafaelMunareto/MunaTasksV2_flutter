@@ -52,7 +52,8 @@ class _BodyCardWidgetState extends State<BodyCardWidget> {
               ],
             ),
           ),
-          Expanded(
+          Flexible(
+            flex: 7,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
               child: Wrap(
