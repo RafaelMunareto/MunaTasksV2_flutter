@@ -60,6 +60,7 @@ dependencies:
   collapsible_sidebar: ^2.0.1+2
   sidebarx: ^0.5.0
   getwidget: ^3.0.1
+  easy_autocomplete: ^1.5.0
 
 dev_dependencies:
   flutter_test:
