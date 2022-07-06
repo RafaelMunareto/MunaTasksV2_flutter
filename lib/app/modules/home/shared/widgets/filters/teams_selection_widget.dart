@@ -100,12 +100,17 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
                         ),
                       ),
                       onPressed: () {
-                        setState(() {
+                        if (store.clientCreate.subtarefaAction) {
+                          store.clientCreate.setUserCreateSelection(linha);
+                          store.clientCreate.setCreateImageUser(linha.urlImage);
+                          store.clientCreate.setLoadingUser(false);
+                          Modular.to.pop();
+                        } else {
                           store.client.setUserSelection(linha);
                           store.changeFilterUserList();
                           store.client.setImgUrl(linha.urlImage);
                           Modular.to.pop();
-                        });
+                        }
                       },
                     ),
                   ),

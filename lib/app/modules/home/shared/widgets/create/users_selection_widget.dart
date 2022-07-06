@@ -112,26 +112,13 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                                   color: Colors.blue.shade700),
                                             ),
                                           ),
-                                          onSelected: (bool value) {
-                                            if (store
-                                                .clientCreate.subtarefaAction) {
-                                              store.clientCreate
-                                                  .setUserCreateSelection(
-                                                      linha);
-                                              store.clientCreate
-                                                  .setCreateImageUser(
-                                                      linha.urlImage);
-                                              store.clientCreate
-                                                  .setLoadingUser(false);
-                                              Modular.to.pop();
-                                            } else {
+                                          onSelected: (bool value) {                                                                               
                                               store.clientCreate
                                                   .setIdReferenceStaff(linha);
                                               store.clientCreate
                                                   .setIndividualChip(linha);
                                               store.clientCreate
                                                   .setLoadingUser(false);
-                                            }
                                             FocusScope.of(context).unfocus();
                                           },
                                         ),

@@ -7,9 +7,9 @@ import 'package:munatasks2/app/shared/utils/notification_service.dart';
 import 'app/app_module.dart';
 import 'app/app_widget.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService().initNotification();
+  NotificationService().initNotification();
   runApp(ModularApp(module: AppModule(), child: const AppWidget()));
   if (defaultTargetPlatform == TargetPlatform.windows) {
     doWhenWindowReady(() {
