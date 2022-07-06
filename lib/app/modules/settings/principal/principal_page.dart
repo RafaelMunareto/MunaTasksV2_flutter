@@ -7,7 +7,6 @@ import 'package:munatasks2/app/modules/settings/principal/shared/widgets/check_e
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
 import 'package:munatasks2/app/shared/components/logo_widget.dart';
 import 'package:munatasks2/app/shared/components/menu_screen.dart';
-import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 
 class PrincipalPage extends StatefulWidget {
   final String title;

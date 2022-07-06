@@ -5,8 +5,8 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/date_save_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_subtarefa_insert_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/users_save_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/users_selection_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/filters/radio_etiquetas_filter_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/filters/teams_selection_widget.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
@@ -15,12 +15,12 @@ class ButtonHeaderCreateWidget extends StatefulWidget {
   final double constraint;
   final int tipo;
   final TextEditingController? dateController;
-  final TextEditingController? textSubtarefaController;
+  final TextEditingController textSubtarefaController;
   const ButtonHeaderCreateWidget(
       {Key? key,
       required this.constraint,
       required this.tipo,
-      this.textSubtarefaController,
+      required this.textSubtarefaController,
       this.dateController})
       : super(key: key);
 
@@ -106,6 +106,10 @@ class _ButtonHeaderCreateWidgetState extends State<ButtonHeaderCreateWidget> {
         return actionFase(true, store.clientCreate.setFaseTarefa);
       case 2:
         return prioridade();
+      case 5:
+        return novo();
+      case 6:
+        return subtarefa();
       case 7:
         return actionFase(false, store.clientCreate.setFase);
     }
@@ -117,9 +121,7 @@ class _ButtonHeaderCreateWidgetState extends State<ButtonHeaderCreateWidget> {
           onTap: () {
             store.clientCreate.setSubtarefaAction(true);
             DialogButtom().showDialog(
-              UsersSelectionWidget(
-                constraint: widget.constraint,
-              ),
+              const TeamsSelectionWidget(),
               store.client.theme,
               widget.constraint,
               context,
@@ -185,6 +187,7 @@ class _ButtonHeaderCreateWidgetState extends State<ButtonHeaderCreateWidget> {
   novo() {
     store.clientCreate.cleanSubtarefa();
     store.clientCreate.setEditar(false);
+    widget.textSubtarefaController.text = '';
   }
 
   text(text) {

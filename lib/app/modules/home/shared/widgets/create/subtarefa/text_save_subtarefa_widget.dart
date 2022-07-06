@@ -4,24 +4,22 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
-class TextSaveWidget extends StatefulWidget {
+class TextSaveSubtarefaWidget extends StatefulWidget {
   final TextEditingController controller;
-  const TextSaveWidget({Key? key, required this.controller}) : super(key: key);
+  const TextSaveSubtarefaWidget({Key? key, required this.controller})
+      : super(key: key);
 
   @override
-  State<TextSaveWidget> createState() => _TextSaveWidgetState();
+  State<TextSaveSubtarefaWidget> createState() =>
+      _TextSaveSubtarefaWidgetState();
 }
 
-class _TextSaveWidgetState extends State<TextSaveWidget> {
+class _TextSaveSubtarefaWidgetState extends State<TextSaveSubtarefaWidget> {
   final HomeStore store = Modular.get();
 
   @override
   void initState() {
-    if (store.clientCreate.tarefaModelSaveTexto != '') {
-      widget.controller.text = store.clientCreate.tarefaModelSaveTexto;
-    } else {
-      widget.controller.text = '';
-    }
+    widget.controller.text = store.clientCreate.subtarefaTextSave;
     super.initState();
   }
 
@@ -34,7 +32,7 @@ class _TextSaveWidgetState extends State<TextSaveWidget> {
           autocorrect: true,
           autofocus: false,
           controller: widget.controller,
-          onChanged: (value) => store.clientCreate.setTarefaTextSave(value),
+          onChanged: (value) => store.clientCreate.setSubtarefaTextSave(value),
           minLines: 15,
           maxLines: 20,
           decoration: InputDecoration(
@@ -46,12 +44,12 @@ class _TextSaveWidgetState extends State<TextSaveWidget> {
               suffix: InkWell(
                   child: const Icon(Icons.replay),
                   onTap: () {
-                    store.clientCreate.setTarefaTextSave('');
+                    store.clientCreate.setSubtarefaTextSave('');
                     widget.controller.text = '';
 
                     FocusScope.of(context).requestFocus(FocusNode());
                   }),
-              hintText: "Insira sua tarefa"),
+              hintText: "Insira sua subtarefa"),
         ),
       );
     });
