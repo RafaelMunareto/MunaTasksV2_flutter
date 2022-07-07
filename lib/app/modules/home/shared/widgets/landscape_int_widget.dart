@@ -79,6 +79,7 @@ class _LandscapeIntWidgetState extends State<LandscapeIntWidget> {
                                             message: totais.name!.name.name,
                                             child: GFAvatar(
                                               radius: 18,
+                                              //backgroundColor: Colors.grey,
                                               shape: GFAvatarShape.standard,
                                               backgroundImage: NetworkImage(
                                                   totais.name!.urlImage),
