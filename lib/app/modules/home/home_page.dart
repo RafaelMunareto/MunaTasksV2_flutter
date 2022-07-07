@@ -40,8 +40,9 @@ class _HomePageState extends State<HomePage> {
     autorun(
       (_) {
         if (!kIsWeb) {
-          if (defaultTargetPlatform == Platform.isWindows &&
-              store.client.checkUpdateDesktop) {
+          if (defaultTargetPlatform == Platform.isWindows ||
+              defaultTargetPlatform == Platform.isLinux &&
+                  store.client.checkUpdateDesktop) {
             FunctionsUtils().checkUpdateDesktop(context);
           }
           if (store.client.msgError != '') {

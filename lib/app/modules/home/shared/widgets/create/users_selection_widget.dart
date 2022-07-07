@@ -112,13 +112,12 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                                   color: Colors.blue.shade700),
                                             ),
                                           ),
-                                          onSelected: (bool value) {                                                                               
-                                              store.clientCreate
-                                                  .setIdReferenceStaff(linha);
-                                              store.clientCreate
-                                                  .setIndividualChip(linha);
-                                              store.clientCreate
-                                                  .setLoadingUser(false);
+                                          onSelected: (bool value) {
+                                            store.clientCreate
+                                                .setIdReferenceStaff(linha);
+
+                                            store.clientCreate
+                                                .setLoadingUser(false);
                                             FocusScope.of(context).unfocus();
                                           },
                                         ),

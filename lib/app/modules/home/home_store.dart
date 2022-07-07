@@ -226,7 +226,7 @@ abstract class HomeStoreBase with Store {
               .where((element) => element.fase == 2)
               .toList()),
       BadgetsModel(
-          name: 'Prioritario',
+          name: 'Prioritário',
           colors: Colors.red,
           qtd: client.taskDioSearch
               .where((element) => element.prioridade == 1)
@@ -241,13 +241,7 @@ abstract class HomeStoreBase with Store {
   }
 
   getPass() async {
-    await client.setUserSelection(PerfilDioModel(
-        name: UserDioClientModel(
-            name: "TODOS", email: "todos@todos.com.br", password: ""),
-        nameTime: "",
-        idStaff: [],
-        manager: true,
-        urlImage: DioStruture().baseUrlMunatasks + 'files/todos.png'));
+    await client.setTodos();
     await client.setImgUrl(DioStruture().baseUrlMunatasks + 'files/todos.png');
     getDio();
   }
@@ -293,6 +287,7 @@ abstract class HomeStoreBase with Store {
     client.taskDioSearch.add(clientCreate.tarefaModelSave);
     client.setTaskDioSearch(client.taskDioSearch);
     getPass();
+    getDioTotal();
     Timer(const Duration(minutes: 2), () => socket!.emit('newTaskFront', true));
   }
 
@@ -310,6 +305,7 @@ abstract class HomeStoreBase with Store {
       }
     }).toList();
     getDio();
+    getDioTotal();
     Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 

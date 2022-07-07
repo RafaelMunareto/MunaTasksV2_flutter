@@ -23,6 +23,17 @@ class ConvertIcon {
     }
   }
 
+  badgetToFase(String name) {
+    switch (name) {
+      case 'Backlog':
+        return 'pause';
+      case 'Fazendo':
+        return 'play';
+      case 'Feito':
+        return 'check';
+    }
+  }
+
   iconFaseIconData(String status) {
     switch (status) {
       case 'pause':
@@ -152,7 +163,7 @@ class ConvertIcon {
       case 'brown':
         return Colors.brown;
       default:
-        return Colors.grey.shade200;
+        return Colors.grey.shade300;
     }
   }
 

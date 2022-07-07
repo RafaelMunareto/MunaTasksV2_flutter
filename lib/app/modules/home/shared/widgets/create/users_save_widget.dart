@@ -57,7 +57,7 @@ class _UsersSaveWidgetState extends State<UsersSaveWidget> {
                       );
                     },
                     child: Padding(
-                        padding: const EdgeInsets.only(right: 2.0),
+                        padding: const EdgeInsets.fromLTRB(0, 0, 2, 2),
                         child: CircleAvatarWidget(
                           nameUser: linha.name.name,
                           key: Key(linha.id),
