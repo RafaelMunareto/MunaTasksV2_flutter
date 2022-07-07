@@ -8,6 +8,7 @@ import 'package:munatasks2/app/modules/settings/principal/shared/model/settings_
 
 abstract class IDashboardRepository {
   Future<List<TarefaDioModel>> getDio(String id, int fase);
+  Future<List<TarefaDioModel>> getTasksTodas();
   Future<List<NotificationsDioModel>> getNotifications(String id);
   Future<List<TarefaDioModel>> getDioIndividual(String id);
   Future<List<TarefaDioModel>> getFilterUser(String id);

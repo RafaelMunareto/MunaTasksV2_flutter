@@ -208,4 +208,15 @@ class DashboardRepository implements IDashboardRepository {
     DioStruture().statusRequest(response);
     return PerfilDioModel.fromJson(response.data[0]);
   }
+
+  @override
+  Future<List<TarefaDioModel>> getTasksTodas() async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('tasks');
+    DioStruture().statusRequest(response);
+    return (response.data as List).map((e) {
+      return TarefaDioModel.fromJson(e);
+    }).toList();
+  }
 }

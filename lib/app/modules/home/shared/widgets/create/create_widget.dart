@@ -8,7 +8,6 @@ import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/subt
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/text_save_subtarefa_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/text_save_widget.dart';
 import 'package:munatasks2/app/shared/components/logo_widget.dart';
-import 'package:munatasks2/app/shared/utils/splash_widget.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class CreateWidget extends StatefulWidget {
