@@ -51,7 +51,11 @@ class _CreateWidgetState extends State<CreateWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             GestureDetector(
-                              onTap: () => Modular.to.pop(),
+                              onTap: () {
+                                Modular.to.pop();
+                                store.getDio();
+                                store.getDioTotal();
+                              },
                               child: MouseRegion(
                                   cursor: SystemMouseCursors.click,
                                   child: Icon(
@@ -168,7 +172,9 @@ class _CreateWidgetState extends State<CreateWidget> {
                                           controller: textSubtarefaController,
                                         ),
                                         ButtonSaveCreateSubtarefaWidget(
-                                          texto: textSubtarefaController,
+                                          texto: textController,
+                                          textoSubtarefa:
+                                              textSubtarefaController,
                                           constraint: constraint.maxWidth,
                                         ),
                                       ],

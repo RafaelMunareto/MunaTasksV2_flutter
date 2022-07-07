@@ -65,14 +65,18 @@ class PrincipalPageState extends State<PrincipalPage>
         ),
         body: Observer(
           builder: (_) {
-            return !store.client.finalize
-                ? SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 18.0),
-                      child: Center(
-                        child: SizedBox(
-                          width: withDevice,
-                          height: MediaQuery.of(context).size.height,
+            return SingleChildScrollView(
+              child: Center(
+                child: SizedBox(
+                  width: withDevice,
+                  height: MediaQuery.of(context).size.height,
+                  child: store.client.finalize
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 18.0),
+                          child: LogoWidget(constraint: constraint.maxWidth),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(top: 18.0),
                           child: Column(
                             children: [
                               store.client.settingsUser.user != ''
@@ -94,10 +98,9 @@ class PrincipalPageState extends State<PrincipalPage>
                             ],
                           ),
                         ),
-                      ),
-                    ),
-                  )
-                : LogoWidget(constraint: constraint.maxWidth);
+                ),
+              ),
+            );
           },
         ),
       );

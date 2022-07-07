@@ -18,7 +18,7 @@ ThemeData lightThemeData(BuildContext context) {
       elevation: kElevation,
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: Color.fromARGB(255, 228, 233, 255),
+      backgroundColor: const Color.fromARGB(255, 228, 233, 255),
       foregroundColor: kDarkGrey,
       iconTheme: const IconThemeData(
         color: kblue,

@@ -254,7 +254,7 @@ abstract class HomeStoreBase with Store {
     if (model.id == null) {
       await dashboardService.saveDio(model).catchError((erro) {
         debugPrint(erro);
-      });
+      }).whenComplete(() => clientCreate.setLoadingTarefa(true));
       client.taskDioSearch.add(clientCreate.tarefaModelSave);
       client.setTaskDioSearch(client.taskDioSearch);
     } else {

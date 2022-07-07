@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/tarefas/tarefas_store.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
