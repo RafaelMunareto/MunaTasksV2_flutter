@@ -11,7 +11,7 @@ abstract class IDashboardService {
   Future<List<NotificationsDioModel>> getNotifications(String id);
   Future<List<TarefaDioModel>> getDioIndividual(String id);
   Future<List<TarefaDioModel>> getFilterUser(String id);
-  Future<List<TarefaDioTotalModel>> getDioTotal();
+  Future<List<TarefaDioTotalModel>> getDioTotal(String id);
   Future<dynamic> saveDio(TarefaDioModel model);
   Future<dynamic> emailDio(String id, String tipo);
   updateDio(TarefaDioModel model);

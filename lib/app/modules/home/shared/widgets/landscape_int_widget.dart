@@ -77,11 +77,28 @@ class _LandscapeIntWidgetState extends State<LandscapeIntWidget> {
                                               right: 4, bottom: 4),
                                           child: Tooltip(
                                             message: totais.name!.name.name,
-                                            child: GFAvatar(
-                                              radius: 18,
-                                              shape: GFAvatarShape.standard,
-                                              backgroundImage: NetworkImage(
-                                                  totais.name!.urlImage),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                if (totais.id == 'todos') {
+                                                  store.getDio();
+                                                } else {
+                                                  store.client.setUserSelection(
+                                                      totais.name);
+                                                  store.changeFilterUserList();
+                                                  store.client.setImgUrl(
+                                                      totais.name.urlImage);
+                                                }
+                                              },
+                                              child: MouseRegion(
+                                                cursor:
+                                                    SystemMouseCursors.click,
+                                                child: GFAvatar(
+                                                  radius: 18,
+                                                  shape: GFAvatarShape.standard,
+                                                  backgroundImage: NetworkImage(
+                                                      totais.name!.urlImage),
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),

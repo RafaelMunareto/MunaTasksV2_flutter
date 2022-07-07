@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/errors_widget.dart';
-import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
@@ -124,11 +123,12 @@ class _ButtonSaveCreateSubtarefaWidgetState
                 ),
                 onPressed: () {
                   if (widget.texto.text != "") {
-                    tarefaSave();
                     if (widget.textoSubtarefa.text != "") {
                       subtarefaSave();
                     }
+                    tarefaSave();
                   }
+                  store.clientCreate.setLoadingTarefa(false);
                   FocusScope.of(context).unfocus();
                 },
                 icon: store.clientCreate.loadingTarefa

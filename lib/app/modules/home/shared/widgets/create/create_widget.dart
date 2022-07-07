@@ -53,8 +53,6 @@ class _CreateWidgetState extends State<CreateWidget> {
                             GestureDetector(
                               onTap: () {
                                 Modular.to.pop();
-                                store.getDio();
-                                store.getDioTotal();
                               },
                               child: MouseRegion(
                                   cursor: SystemMouseCursors.click,

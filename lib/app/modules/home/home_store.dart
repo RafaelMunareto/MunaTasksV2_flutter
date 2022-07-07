@@ -169,7 +169,9 @@ abstract class HomeStoreBase with Store {
   }
 
   getDioTotal() async {
-    await dashboardService.getDioTotal().then((value) {
+    await dashboardService
+        .getDioTotal(client.perfilUserLogado.id)
+        .then((value) {
       value.sort((a, b) => b.qtd.compareTo(a.qtd));
       client.setTarefasTotais(value);
     }).catchError((erro) {
@@ -254,7 +256,7 @@ abstract class HomeStoreBase with Store {
     if (model.id == null) {
       await dashboardService.saveDio(model).catchError((erro) {
         debugPrint(erro);
-      }).whenComplete(() => clientCreate.setLoadingTarefa(true));
+      });
       client.taskDioSearch.add(clientCreate.tarefaModelSave);
       client.setTaskDioSearch(client.taskDioSearch);
     } else {
