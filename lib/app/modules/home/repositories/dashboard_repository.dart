@@ -74,10 +74,10 @@ class DashboardRepository implements IDashboardRepository {
   }
 
   @override
-  Future<List<TarefaDioTotalModel>> getDioTotal() async {
+  Future<List<TarefaDioTotalModel>> getDioTotal(String id) async {
     Response response;
     var dio = await DioStruture().dioAction();
-    response = await dio.get('tasks/total');
+    response = await dio.get('tasks/total/$id');
     DioStruture().statusRequest(response);
     return (response.data as List).map((e) {
       e = TarefaDioTotalModel.fromJson(e);

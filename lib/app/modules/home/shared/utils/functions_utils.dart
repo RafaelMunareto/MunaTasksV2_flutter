@@ -48,7 +48,7 @@ class FunctionsUtils {
                 scnack: true,
                 msgSnack: 'Deletado com sucesso!',
                 delete: true,
-                getFase: store.getDioFase(),
+                getFase: store.getDio,
               ),
             ],
           ),

@@ -49,12 +49,13 @@ class _ButtonHeaderCreateWidgetState extends State<ButtonHeaderCreateWidget> {
         );
       case 1:
         return Tooltip(
-          message: store.clientCreate.faseTarefa,
-          child: Icon(
-            ConvertIcon().iconFaseIconData(store.clientCreate.faseTarefa),
-            color: Colors.black,
-          ),
-        );
+            message: store.clientCreate.faseTarefa,
+            child: Observer(builder: (_) {
+              return Icon(
+                ConvertIcon().iconFaseIconData(store.clientCreate.faseTarefa),
+                color: Colors.black,
+              );
+            }));
 
       case 2:
         return Icon(
@@ -116,30 +117,28 @@ class _ButtonHeaderCreateWidgetState extends State<ButtonHeaderCreateWidget> {
   }
 
   usersSaveSubtarefa() {
-    return Observer(builder: (_) {
-      return GestureDetector(
-          onTap: () {
-            store.clientCreate.setSubtarefaAction(true);
-            DialogButtom().showDialog(
-              const TeamsSelectionWidget(),
-              store.client.theme,
-              widget.constraint,
-              context,
-            );
-          },
-          child: Padding(
-              padding: const EdgeInsets.only(right: 2.0),
-              child: store.clientCreate.imageUser != ''
-                  ? CircleAvatarWidget(
-                      nameUser: store.clientCreate.createUser.name.name,
-                      key: UniqueKey(),
-                      url: store.clientCreate.imageUser,
-                    )
-                  : const Icon(
-                      Icons.people,
-                      color: Colors.black,
-                    )));
-    });
+    return GestureDetector(
+        onTap: () {
+          store.clientCreate.setSubtarefaAction(true);
+          DialogButtom().showDialog(
+            const TeamsSelectionWidget(),
+            store.client.theme,
+            widget.constraint,
+            context,
+          );
+        },
+        child: Padding(
+            padding: const EdgeInsets.only(right: 2.0),
+            child: store.clientCreate.createUser.id != ''
+                ? CircleAvatarWidget(
+                    nameUser: store.clientCreate.createUser.name.name,
+                    key: UniqueKey(),
+                    url: store.clientCreate.imageUser,
+                  )
+                : const Icon(
+                    Icons.people,
+                    color: Colors.black,
+                  )));
   }
 
   colors(int tipo) {
@@ -282,8 +281,9 @@ class _ButtonHeaderCreateWidgetState extends State<ButtonHeaderCreateWidget> {
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: Center(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.14),
                     child: retornaTipo(widget.tipo),
                   ),
                 ),

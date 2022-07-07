@@ -6,6 +6,7 @@ import 'package:munatasks2/app/modules/home/shared/model/badgets_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card/card_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/card/tarefas_none_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/create_widget.dart';
+import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/scrool_speed.dart';
 
@@ -80,22 +81,27 @@ class _ListCardWidgetState extends State<ListCardWidget>
                                   ),
                                 ],
                               ),
-                              GestureDetector(
-                                child: const MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    child: Icon(Icons.add)),
-                                onTap: () {
-                                  store.clientCreate.cleanSave();
-                                  store.clientCreate.cleanSubtarefa();
-                                  store.clientCreate.setEditar(false);
-                                  DialogButtom().showDialogCreate(
-                                    const CreateWidget(),
-                                    constraint.maxWidth,
-                                    context,
-                                    store.changeFilterUserList,
-                                  );
-                                },
-                              )
+                              widget.badgets.name == "Prioritário"
+                                  ? Container()
+                                  : GestureDetector(
+                                      child: const MouseRegion(
+                                          cursor: SystemMouseCursors.click,
+                                          child: Icon(Icons.add)),
+                                      onTap: () {
+                                        store.clientCreate.cleanSave();
+                                        store.clientCreate.cleanSubtarefa();
+                                        store.clientCreate.setEditar(false);
+                                        store.clientCreate.setFaseTarefa(
+                                            ConvertIcon().badgetToFase(
+                                                widget.badgets.name));
+                                        DialogButtom().showDialogCreate(
+                                          const CreateWidget(),
+                                          constraint.maxWidth,
+                                          context,
+                                          store.changeFilterUserList,
+                                        );
+                                      },
+                                    )
                             ],
                           ),
                         ),

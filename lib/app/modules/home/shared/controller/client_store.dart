@@ -100,6 +100,15 @@ abstract class _ClientStoreBase with Store {
   @action
   setUserSelection(value) => userSelection = value;
 
+  @action
+  setTodos() => userSelection = PerfilDioModel(
+      name: UserDioClientModel(
+          name: "TODOS", email: "todos@todos.com.br", password: ""),
+      nameTime: "",
+      idStaff: [],
+      manager: true,
+      urlImage: DioStruture().baseUrlMunatasks + 'files/todos.png');
+
   @observable
   bool orderAscDesc = true;
 

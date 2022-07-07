@@ -33,8 +33,8 @@ class _TextSaveSubtarefaWidgetState extends State<TextSaveSubtarefaWidget> {
           autofocus: false,
           controller: widget.controller,
           onChanged: (value) => store.clientCreate.setSubtarefaTextSave(value),
-          minLines: 15,
-          maxLines: 20,
+          minLines: 10,
+          maxLines: 15,
           decoration: InputDecoration(
               filled: true,
               fillColor: store.client.theme

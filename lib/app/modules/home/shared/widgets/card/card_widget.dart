@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
@@ -46,7 +48,8 @@ class _CardWidgetState extends State<CardWidget> {
         await store.clientCreate.cleanSubtarefa();
         await DialogButtom().showDialogCreate(const CreateWidget(),
             widget.constraint, context, store.changeFilterUserList);
-        store.clientCreate.setLoadingSubtarefa(false);
+        Timer(const Duration(seconds: 1),
+            () => store.clientCreate.setLoadingSubtarefa(false));
       },
       onLongPress: () =>
           FunctionsUtils().dialogDelete(context, widget.tarefaDioModel, store),

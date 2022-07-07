@@ -35,8 +35,8 @@ class _TextSaveWidgetState extends State<TextSaveWidget> {
           autofocus: false,
           controller: widget.controller,
           onChanged: (value) => store.clientCreate.setTarefaTextSave(value),
-          minLines: 15,
-          maxLines: 20,
+          minLines: 10,
+          maxLines: 15,
           decoration: InputDecoration(
               filled: true,
               fillColor: store.client.theme

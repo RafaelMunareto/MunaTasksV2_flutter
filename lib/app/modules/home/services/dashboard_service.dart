@@ -32,8 +32,8 @@ class DashboardService extends Disposable implements IDashboardService {
   }
 
   @override
-  getDioTotal() {
-    return dashboardRepository.getDioTotal();
+  getDioTotal(String id) {
+    return dashboardRepository.getDioTotal(id);
   }
 
   @override
