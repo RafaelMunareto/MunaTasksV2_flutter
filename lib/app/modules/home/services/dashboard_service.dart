@@ -90,4 +90,9 @@ class DashboardService extends Disposable implements IDashboardService {
   Future<PerfilDioModel> getPerfil(String id) {
     return dashboardRepository.getPerfil(id);
   }
+
+  @override
+  Future<List<TarefaDioModel>> getTasksTodas() {
+    return dashboardRepository.getTasksTodas();
+  }
 }

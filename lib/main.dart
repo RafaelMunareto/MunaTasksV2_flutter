@@ -1,7 +1,5 @@
 // ignore_for_file: unrelated_type_equality_checks
 
-import 'dart:io';
-
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +11,8 @@ import 'app/app_widget.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  if (defaultTargetPlatform == Platform.isAndroid) {
-    NotificationService().initNotification();
-  }
+  NotificationService().initNotification();
+
   runApp(ModularApp(module: AppModule(), child: const AppWidget()));
   if (defaultTargetPlatform == TargetPlatform.windows) {
     doWhenWindowReady(() {
