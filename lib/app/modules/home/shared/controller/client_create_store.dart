@@ -199,14 +199,14 @@ abstract class _ClientCreateStoreBase with Store {
   @action
   setSubtarefaTextSave(value) => subtarefaTextSave = value;
 
-  @action
-  setCreateImageUser(value) {
-    if (users.map((e) => e.id).contains(createUser.id)) {
-      users.removeWhere((e) => e.id == createUser.id);
-    }
+  // @action
+  // setCreateImageUser(value) {
+  //   if (users.map((e) => e.id).contains(createUser.id)) {
+  //     users.removeWhere((e) => e.id == createUser.id);
+  //   }
 
-    imageUser = value;
-  }
+  //   imageUser = value;
+  // }
 
   @action
   setUserCreateSelection(value) {
@@ -222,7 +222,15 @@ abstract class _ClientCreateStoreBase with Store {
     tarefaModelSave.subTarefa = subtarefas;
     tarefaModelSave.users = users.map((e) => e).toList();
     tarefaModelSave.prioridade = tarefaModelPrioritario;
+    if (createUser.id != "") {
+      users.where((a) => a.id == createUser.id).isEmpty
+          ? users.add(createUser)
+          : null;
+    }
   }
+
+  @action
+  setTarefaId(value) => tarefaModelSave.id = value;
 
   @action
   setSubtarefaId(value) => subtarefaModel.id = value;
@@ -236,7 +244,7 @@ abstract class _ClientCreateStoreBase with Store {
     setSubtarefaInsertCreate(model.title);
     setFase(model.status);
     setUserCreateSelection(model.user);
-    setCreateImageUser(model.user.urlImage);
+    //setCreateImageUser(model.user.urlImage);
     setIdReferenceStaff(
       model.user,
     );
@@ -317,21 +325,7 @@ abstract class _ClientCreateStoreBase with Store {
     subtarefaModel.status = fase;
     subtarefaModel.user = createUser;
     subtarefaModel.texto = subtarefaTextSave;
-    users.where((e) => e.name.email == createUser.name.email).length;
-    // ignore: prefer_is_empty
-    if (users.where((e) => e.name.email == createUser.name.email).length < 1) {
-      setLoadingUser(true);
-      users.add(createUser);
-      setIdReferenceStaff(createUser);
-    } else if (users
-            .where((e) => e.name.email == createUser.name.email)
-            .length >
-        1) {
-      users.removeWhere((e) => e.name.email == createUser.name.email);
-      if (users.isEmpty) {
-        users = [];
-      }
-    }
+
     if (subtarefas.where((e) => e.id == subtarefaModel.id).isNotEmpty) {
       subtarefas = subtarefas.map((e) {
         if (e.id == subtarefaModel.id) {
@@ -352,8 +346,7 @@ abstract class _ClientCreateStoreBase with Store {
 
   @computed
   bool get isValidTarefa {
-    return validTextoTarefa() == null &&
-        validTitleTarefa() == null &&
+    return validTitleTarefa() == null &&
         validaUserTarefa() == null &&
         validaDataTarefa() == null;
   }
@@ -389,13 +382,11 @@ abstract class _ClientCreateStoreBase with Store {
 
   @computed
   bool get isValidSubtarefa {
-    return validTextoSubtarefa() == null &&
-        validTitleSubtarefa() == null &&
-        validaUserSubtarefa() == null;
+    return validTitleSubtarefa() == null && validaUserSubtarefa() == null;
   }
 
   String? validTextoSubtarefa() {
-    if (subtarefaTextSave.length < 3) {
+    if (tarefaModelSaveTexto.length < 3) {
       return 'Descrição deve ser > 3 caracteres.';
     }
     return null;

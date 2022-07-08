@@ -1,4 +1,3 @@
-import 'package:munatasks2/app/modules/home/tarefas/shared/controller/client_tarefas_store.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_create_store.dart';
 import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
 import 'package:munatasks2/app/modules/home/repositories/interfaces/dashboard_interfaces.dart';
@@ -14,7 +13,6 @@ import 'home_page.dart';
 class HomeModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.lazySingleton((i) => ClientTarefasStore()),
     Bind.lazySingleton((i) => ClientStore()),
     Bind.lazySingleton((i) => ClientCreateStore()),
     Bind.lazySingleton<IDashboardService>(

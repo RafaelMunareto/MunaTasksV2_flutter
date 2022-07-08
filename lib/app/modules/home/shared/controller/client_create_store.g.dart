@@ -780,17 +780,6 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
-  dynamic setCreateImageUser(dynamic value) {
-    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
-        name: '_ClientCreateStoreBase.setCreateImageUser');
-    try {
-      return super.setCreateImageUser(value);
-    } finally {
-      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic setUserCreateSelection(dynamic value) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setUserCreateSelection');
@@ -807,6 +796,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
         name: '_ClientCreateStoreBase.setTarefa');
     try {
       return super.setTarefa();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setTarefaId(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setTarefaId');
+    try {
+      return super.setTarefaId(value);
     } finally {
       _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
     }

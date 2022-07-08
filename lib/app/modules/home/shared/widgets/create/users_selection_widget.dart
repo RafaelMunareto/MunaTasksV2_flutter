@@ -24,6 +24,13 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
   late AnimationController _controller;
   late Animation<double> _animacaoOpacity;
   final HomeStore store = Modular.get();
+  List<dynamic> userSelections = [];
+
+  verificaSelection(dynamic perfil) {
+    return store.clientCreate.individualChip
+        .where((e) => e.id == perfil.id)
+        .isNotEmpty;
+  }
 
   @override
   void initState() {
@@ -94,10 +101,7 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                         child: InputChip(
                                           key: ObjectKey(linha.id),
                                           labelPadding: const EdgeInsets.all(2),
-                                          selected: store
-                                              .clientCreate.individualChip
-                                              .where((a) => a.id == linha.id)
-                                              .isNotEmpty,
+                                          selected: verificaSelection(linha),
                                           elevation: 4.0,
                                           avatar: CircleAvatarWidget(
                                             nameUser: '',
@@ -113,11 +117,17 @@ class _UsersSelectionWidgetState extends State<UsersSelectionWidget>
                                             ),
                                           ),
                                           onSelected: (bool value) {
+                                            setState(() {
+                                              verificaSelection(linha)
+                                                  ? userSelections.removeWhere(
+                                                      (a) => a.id == linha.id)
+                                                  : userSelections.add(linha);
+                                            });
                                             store.clientCreate
                                                 .setIdReferenceStaff(linha);
-
                                             store.clientCreate
                                                 .setLoadingUser(false);
+
                                             FocusScope.of(context).unfocus();
                                           },
                                         ),

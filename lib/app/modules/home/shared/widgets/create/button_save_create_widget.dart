@@ -7,11 +7,11 @@ import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
-class ButtonSaveCreateSubtarefaWidget extends StatefulWidget {
+class ButtonSaveCreateWidget extends StatefulWidget {
   final double constraint;
   final TextEditingController texto;
   final TextEditingController textoSubtarefa;
-  const ButtonSaveCreateSubtarefaWidget({
+  const ButtonSaveCreateWidget({
     Key? key,
     required this.constraint,
     required this.texto,
@@ -19,55 +19,21 @@ class ButtonSaveCreateSubtarefaWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ButtonSaveCreateSubtarefaWidget> createState() =>
-      _ButtonSaveCreateSubtarefaWidgetState();
+  State<ButtonSaveCreateWidget> createState() => _ButtonSaveCreateWidgetState();
 }
 
-class _ButtonSaveCreateSubtarefaWidgetState
-    extends State<ButtonSaveCreateSubtarefaWidget> {
+class _ButtonSaveCreateWidgetState extends State<ButtonSaveCreateWidget> {
   HomeStore store = Modular.get();
-  errors(constraint, erro) {
-    DialogButtom().showDialog(
-      ErrorsWidget(
-          constraint: constraint,
-          theme: store.client.theme,
-          tarefa: true,
-          erro: erro),
-      store.client.theme,
-      constraint,
-      context,
-    );
-  }
-
-  subtarefaSave() {
-    store.clientCreate.setLoadingTarefa(true);
-    if (!store.clientCreate.editar) {
-      store.clientCreate
-          .setSubtarefaId(DateTime.now().millisecondsSinceEpoch.toString());
-    }
-    store.clientCreate.setSubtarefaTextSave(widget.textoSubtarefa.text);
-    if (store.clientCreate.isValidSubtarefa) {
-      store.clientCreate.setSubtarefas();
-      widget.textoSubtarefa.text = '';
-      store.clientCreate.cleanSubtarefa();
-    } else {
-      DialogButtom().showDialog(
-        ErrorsWidget(
-          constraint: widget.constraint,
-          tarefa: false,
-          theme: store.client.theme,
-          erro: '',
-        ),
-        store.client.theme,
-        widget.constraint,
-        context,
-      );
-    }
+  errors() {
+    return ErrorsWidget(
+        constraint: widget.constraint, theme: store.client.theme, tarefa: true);
   }
 
   tarefaSave() {
     store.clientCreate.setLoadingTarefa(true);
     if (store.clientCreate.createUser.id != '') {
+      store.clientCreate
+          .setTarefaId(DateTime.now().millisecondsSinceEpoch.toString());
       store.clientCreate.setIdReferenceStaff(store.clientCreate.createUser);
     }
     store.clientCreate.setTarefa();
@@ -79,9 +45,6 @@ class _ButtonSaveCreateSubtarefaWidgetState
             Colors.green,
             context,
           );
-        }, onError: (error) {
-          errors(widget.constraint,
-              error.response?.data['error'] ?? error?.message);
         });
       } else {
         store.saveNewTarefa().then((e) {
@@ -90,11 +53,25 @@ class _ButtonSaveCreateSubtarefaWidgetState
             Colors.green,
             context,
           );
-        }, onError: (error) {
-          errors(widget.constraint,
-              error.response?.data['error'] ?? error?.message);
         });
       }
+    } else {
+      errors();
+    }
+  }
+
+  subtarefaSave() async {
+    store.clientCreate.setLoadingTarefa(true);
+    if (!store.clientCreate.editar) {
+      store.clientCreate
+          .setSubtarefaId(DateTime.now().millisecondsSinceEpoch.toString());
+    }
+    store.clientCreate.setSubtarefaTextSave(widget.textoSubtarefa.text);
+    if (store.clientCreate.isValidSubtarefa) {
+      store.clientCreate.setSubtarefas();
+      widget.textoSubtarefa.text = '';
+    } else {
+      errors();
     }
   }
 
@@ -124,7 +101,18 @@ class _ButtonSaveCreateSubtarefaWidgetState
                   );
                 }
                 if (widget.texto.text != "") {
-                  await tarefaSave();
+                  tarefaSave();
+                  if (store.clientCreate.createUser.id != '' &&
+                      store.clientCreate.subtarefaModelSaveTitle != '' &&
+                      widget.textoSubtarefa.text == "") {
+                    SnackbarCustom().createSnackBar(
+                      "Subtarefa sem descrição, primeiro faça a descrição tarefa principal.",
+                      Colors.red,
+                      context,
+                    );
+                    store.clientCreate.setLoadingTarefa(false);
+                    return;
+                  }
                   if (widget.textoSubtarefa.text != "") {
                     subtarefaSave();
                   }

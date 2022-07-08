@@ -4,40 +4,74 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/create_subtarefa_insert_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/filters/radio_etiquetas_filter_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/users_selection_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/filters/teams_selection_widget.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 
 class ErrorsWidget extends StatefulWidget {
   final bool tarefa;
   final bool theme;
-  final String erro;
   final double constraint;
-  const ErrorsWidget(
-      {Key? key,
-      required this.constraint,
-      required this.theme,
-      this.tarefa = false,
-      required this.erro})
-      : super(key: key);
+  const ErrorsWidget({
+    Key? key,
+    required this.constraint,
+    required this.theme,
+    this.tarefa = false,
+  }) : super(key: key);
 
   @override
   State<ErrorsWidget> createState() => _ErrorsWidgetState();
 }
 
 class _ErrorsWidgetState extends State<ErrorsWidget> {
+  HomeStore store = Modular.get();
+
+  tarefaSave() {
+    store.clientCreate.setLoadingTarefa(true);
+    if (store.clientCreate.createUser.id != '') {
+      store.clientCreate
+          .setTarefaId(DateTime.now().millisecondsSinceEpoch.toString());
+      store.clientCreate.setIdReferenceStaff(store.clientCreate.createUser);
+    }
+    store.clientCreate.setTarefa();
+    if (store.clientCreate.isValidTarefa) {
+      if (store.clientCreate.tarefaModelSave.id != "") {
+        store.updateNewTarefa().then((e) {
+          SnackbarCustom().createSnackBar(
+            "Tarefa editada com sucesso!",
+            Colors.green,
+            context,
+          );
+        });
+      } else {
+        store.saveNewTarefa().then((e) {
+          SnackbarCustom().createSnackBar(
+            "Tarefa salva com sucesso!",
+            Colors.green,
+            context,
+          );
+        });
+      }
+    }
+  }
+
+  subtarefaSave() async {
+    store.clientCreate.setLoadingTarefa(true);
+    if (!store.clientCreate.editar) {
+      store.clientCreate
+          .setSubtarefaId(DateTime.now().millisecondsSinceEpoch.toString());
+    }
+    store.clientCreate
+        .setSubtarefaTextSave(store.clientCreate.subtarefaTextSave);
+    if (store.clientCreate.isValidSubtarefa) {
+      store.clientCreate.setSubtarefas();
+      store.clientCreate.setSubtarefaTextSave('');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final HomeStore store = Modular.get();
-    if (store.clientCreate.validaUserTarefa() != null && widget.tarefa) {
-      Future.delayed(const Duration(milliseconds: 1), () {
-        DialogButtom().showDialog(
-            UsersSelectionWidget(
-              constraint: widget.constraint,
-            ),
-            store.client.theme,
-            widget.constraint,
-            context);
-      });
-    }
     if (store.clientCreate.validTitleTarefa() != null && widget.tarefa) {
       Future.delayed(const Duration(milliseconds: 1), () {
         DialogButtom().showDialog(
@@ -48,6 +82,17 @@ class _ErrorsWidgetState extends State<ErrorsWidget> {
           widget.constraint,
           context,
         );
+      });
+    }
+    if (store.clientCreate.validaUserTarefa() != null && widget.tarefa) {
+      Future.delayed(const Duration(milliseconds: 1), () {
+        DialogButtom().showDialog(
+            UsersSelectionWidget(
+              constraint: widget.constraint,
+            ),
+            store.client.theme,
+            widget.constraint,
+            context);
       });
     }
     //subtarefa
@@ -67,64 +112,19 @@ class _ErrorsWidgetState extends State<ErrorsWidget> {
     if (store.clientCreate.validaUserSubtarefa() != null && !widget.tarefa) {
       Future.delayed(const Duration(milliseconds: 1), () {
         DialogButtom().showDialog(
-          UsersSelectionWidget(
-            constraint: widget.constraint,
-          ),
+          const TeamsSelectionWidget(),
           store.client.theme,
           widget.constraint,
           context,
         );
       });
+    }
+    if (widget.tarefa) {
+      tarefaSave();
     } else {
-      Modular.to.pop();
+      subtarefaSave();
     }
 
-    List? errors;
-    !widget.tarefa
-        ? errors = [
-            store.clientCreate.validTextoSubtarefa(),
-            widget.erro != '' ? widget.erro : null,
-          ]
-        : errors = [
-            store.clientCreate.validTextoTarefa(),
-            store.clientCreate.validaDataTarefa(),
-            widget.erro != '' ? widget.erro : null,
-          ];
-
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.05,
-        width: MediaQuery.of(context).size.width,
-        child: ListView.separated(
-            scrollDirection: Axis.vertical,
-            controller: ScrollController(),
-            shrinkWrap: true,
-            padding: const EdgeInsets.all(4),
-            itemCount: errors.length,
-            separatorBuilder: (context, index) {
-              return const Divider();
-            },
-            itemBuilder: (BuildContext context, int index) {
-              var erro = errors![index];
-              return ListTile(
-                leading: erro == null
-                    ? const Text('')
-                    : Icon(
-                        Icons.error,
-                        color: widget.theme ? Colors.redAccent : Colors.red,
-                      ),
-                title: Text(
-                  erro ?? '',
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                    color: widget.theme ? Colors.white : Colors.red,
-                    fontSize: 12,
-                  ),
-                ),
-              );
-            }),
-      ),
-    );
+    return Container();
   }
 }

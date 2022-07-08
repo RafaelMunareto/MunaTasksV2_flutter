@@ -242,7 +242,9 @@ abstract class HomeStoreBase with Store {
   getPass() async {
     await client.setTodos();
     await client.setImgUrl(DioStruture().baseUrlMunatasks + 'files/todos.png');
-    getDio();
+    await getDio();
+    await changeFilterSearchList();
+    getDioTotal();
   }
 
   save(TarefaDioModel model) async {
@@ -286,7 +288,6 @@ abstract class HomeStoreBase with Store {
     client.taskDioSearch.add(clientCreate.tarefaModelSave);
     client.setTaskDioSearch(client.taskDioSearch);
     getPass();
-    getDioTotal();
     Timer(const Duration(minutes: 2), () => socket!.emit('newTaskFront', true));
   }
 
@@ -303,8 +304,7 @@ abstract class HomeStoreBase with Store {
         return e;
       }
     }).toList();
-    getDio();
-    getDioTotal();
+    getPass();
     Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 
@@ -312,9 +312,7 @@ abstract class HomeStoreBase with Store {
     await dashboardService.deleteDio(model).catchError((erro) {
       FunctionsUtils().showErrors(erro);
     });
-    client.taskDioSearch.removeWhere((element) => element.id == model.id);
-    client.setTaskDioSearch(client.taskDioSearch);
-    badgets();
+    getPass();
     Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 

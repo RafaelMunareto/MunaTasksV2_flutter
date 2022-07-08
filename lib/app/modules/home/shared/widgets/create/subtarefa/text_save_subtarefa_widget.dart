@@ -18,14 +18,11 @@ class _TextSaveSubtarefaWidgetState extends State<TextSaveSubtarefaWidget> {
   final HomeStore store = Modular.get();
 
   @override
-  void initState() {
-    widget.controller.text = store.clientCreate.subtarefaTextSave;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
+      if (store.clientCreate.subtarefaTextSave == '') {
+        widget.controller.text = '';
+      }
       return Padding(
         padding: const EdgeInsets.all(4),
         child: TextFormField(

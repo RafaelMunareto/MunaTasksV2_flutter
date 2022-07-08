@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/button_header_create_widget.dart';
-import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/button_save_create_subtarefa_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/button_save_create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/subtarefas_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/text_save_subtarefa_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/text_save_widget.dart';
@@ -186,7 +186,7 @@ class _CreateWidgetState extends State<CreateWidget> {
                                               controller:
                                                   textSubtarefaController,
                                             ),
-                                            ButtonSaveCreateSubtarefaWidget(
+                                            ButtonSaveCreateWidget(
                                               texto: textController,
                                               textoSubtarefa:
                                                   textSubtarefaController,

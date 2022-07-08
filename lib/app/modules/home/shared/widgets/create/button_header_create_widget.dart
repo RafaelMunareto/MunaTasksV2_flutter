@@ -82,9 +82,14 @@ class _ButtonHeaderCreateWidgetState extends State<ButtonHeaderCreateWidget> {
       case 6:
         return Tooltip(
           message: store.clientCreate.subtarefaModelSaveTitle,
-          child: const MouseRegion(
+          child: MouseRegion(
               cursor: SystemMouseCursors.click,
-              child: Icon(Icons.business_center_rounded)),
+              child: Icon(
+                Icons.business_center_rounded,
+                color: store.clientCreate.subtarefaModelSaveTitle != ""
+                    ? Colors.blue
+                    : Colors.grey,
+              )),
         );
       case 7:
         return Tooltip(
@@ -133,7 +138,7 @@ class _ButtonHeaderCreateWidgetState extends State<ButtonHeaderCreateWidget> {
                 ? CircleAvatarWidget(
                     nameUser: store.clientCreate.createUser.name.name,
                     key: UniqueKey(),
-                    url: store.clientCreate.imageUser,
+                    url: store.clientCreate.createUser.urlImage,
                   )
                 : const Icon(
                     Icons.people,

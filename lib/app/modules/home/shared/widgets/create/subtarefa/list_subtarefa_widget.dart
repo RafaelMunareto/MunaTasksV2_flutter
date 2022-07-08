@@ -109,7 +109,9 @@ class _ListSubtarefaWidgetState extends State<ListSubtarefaWidget> {
                   .where((element) => element.status == widget.tipo)
                   .length,
               itemBuilder: (BuildContext context, int index) {
-                var linha = store.clientCreate.subtarefas[index];
+                var linha = store.clientCreate.subtarefas
+                    .where((element) => element.status == widget.tipo)
+                    .toList()[index];
                 return GestureDetector(
                   key: ValueKey(linha.id),
                   onDoubleTap: () {

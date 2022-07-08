@@ -123,11 +123,6 @@ class _MenuScreenState extends State<MenuScreen> {
                                     icon: Icons.bookmark,
                                   ),
                                   const ListMenuWidget(
-                                    label: " Tarefas",
-                                    rota: '/home/tarefas',
-                                    icon: Icons.people,
-                                  ),
-                                  const ListMenuWidget(
                                     label: " Privacy",
                                     rota: '/outros/privacy',
                                     icon: Icons.privacy_tip,
