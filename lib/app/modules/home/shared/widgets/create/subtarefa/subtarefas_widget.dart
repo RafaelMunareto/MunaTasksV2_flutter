@@ -4,7 +4,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefas_qtd_model.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/list_subtarefa_widget.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 import 'package:munatasks2/app/shared/utils/themes/constants.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
@@ -19,6 +22,40 @@ class SubtarefasWidget extends StatefulWidget {
 
 class _SubtarefasWidgetState extends State<SubtarefasWidget> {
   final HomeStore store = Modular.get();
+  List<SubtarefasQtdModel> totais = [];
+  List<dynamic> subtarefasTotal = [];
+  @override
+  void initState() {
+    setState(() {
+      subtarefasTotal = store.clientCreate.subtarefas;
+    });
+    subtarefasVsPerfil();
+    super.initState();
+  }
+
+  subtarefasVsPerfil() async {
+    totais.add(SubtarefasQtdModel.fromDocument({
+      "name": 'TODOS',
+      "urlImage": DioStruture().baseUrlMunatasks + 'files/todos.png',
+      "qtdSubtarefa": store.clientCreate.subtarefas.length
+    }));
+    store.clientCreate.subtarefas.forEach((e) {
+      if (totais.where((element) => element.name == e.user.name.name).isEmpty) {
+        totais.add(SubtarefasQtdModel.fromDocument({
+          "name": e.user.name.name,
+          "urlImage": e.user.urlImage,
+          "qtdSubtarefa": calculaQtdSubtarefa(e.user.id)
+        }));
+      }
+    });
+  }
+
+  calculaQtdSubtarefa(String id) {
+    return store.clientCreate.subtarefas
+        .where((element) => element.user.id == id)
+        .length;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Observer(
@@ -31,7 +68,7 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                 ? darkThemeData(context).scaffoldBackgroundColor
                 : lightThemeData(context).scaffoldBackgroundColor,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Flexible(
@@ -69,7 +106,7 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                           alignment: WrapAlignment.spaceBetween,
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
-                            for (var totais in store.client.tarefasTotais)
+                            for (var linha in totais)
                               Padding(
                                 padding: const EdgeInsets.only(top: 3.0),
                                 child: ConstrainedBox(
@@ -90,12 +127,11 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                                                   Colors.blue.withOpacity(0.5),
                                               child: Center(
                                                   child: Text(
-                                                totais.name.name.name,
+                                                linha.name,
                                                 style: const TextStyle(
                                                     fontSize: 8, color: kWhite),
                                               ))),
                                         ),
-
                                         Wrap(
                                           alignment: WrapAlignment.center,
                                           crossAxisAlignment:
@@ -105,19 +141,31 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                                               padding: const EdgeInsets.only(
                                                   right: 4, bottom: 4),
                                               child: Tooltip(
-                                                message: totais.name!.name.name,
+                                                message: linha.name,
                                                 child: GestureDetector(
                                                   onTap: () {
-                                                    if (totais.id == 'todos') {
-                                                      store.getDio();
+                                                    if (linha.name == 'TODOS') {
+                                                      store.clientCreate
+                                                          .setSubtarefasSearch(
+                                                              subtarefasTotal);
                                                     } else {
-                                                      store.client
-                                                          .setUserSelection(
-                                                              totais.name);
-                                                      store
-                                                          .changeFilterUserList();
-                                                      store.client.setImgUrl(
-                                                          totais.name.urlImage);
+                                                      store.clientCreate
+                                                          .setSubtarefasSearch(
+                                                              subtarefasTotal);
+                                                      store.clientCreate
+                                                          .setSubtarefasSearch(store
+                                                                  .clientCreate
+                                                                  .subtarefas =
+                                                              store.clientCreate
+                                                                  .subtarefas
+                                                                  .where((element) =>
+                                                                      element
+                                                                          .user
+                                                                          .name
+                                                                          .name ==
+                                                                      linha
+                                                                          .name)
+                                                                  .toList());
                                                     }
                                                   },
                                                   child: MouseRegion(
@@ -128,14 +176,14 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                                                       shape: GFAvatarShape
                                                           .standard,
                                                       backgroundImage:
-                                                          NetworkImage(totais
-                                                              .name!.urlImage),
+                                                          NetworkImage(
+                                                              linha.urlImage),
                                                     ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                            totais.qtdSubtarefas > 0
+                                            linha.qtdSubtarefa > 0
                                                 ? Tooltip(
                                                     message:
                                                         "Qtd de Subtarefas",
@@ -148,13 +196,13 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                                                         badgeColor: Colors
                                                             .grey.shade300,
                                                         badgeContent: Text(
-                                                            totais.qtdSubtarefas >
+                                                            linha.qtdSubtarefa >
                                                                     1
-                                                                ? totais
-                                                                    .qtdSubtarefas
+                                                                ? linha
+                                                                    .qtdSubtarefa
                                                                     .toString()
-                                                                : totais
-                                                                    .qtdSubtarefas
+                                                                : linha
+                                                                    .qtdSubtarefa
                                                                     .toString(),
                                                             style:
                                                                 const TextStyle(
@@ -184,7 +232,6 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                                                   ),
                                           ],
                                         ),
-                                        // ),
                                       ],
                                     ),
                                   ),

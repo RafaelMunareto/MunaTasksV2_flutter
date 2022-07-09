@@ -351,6 +351,9 @@ abstract class _ClientCreateStoreBase with Store {
     setEditar(false);
   }
 
+  @action
+  setSubtarefasSearch(value) => subtarefas = value;
+
   @computed
   bool get isValidTarefa {
     return validTitleTarefa() == null &&

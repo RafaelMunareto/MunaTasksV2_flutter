@@ -933,6 +933,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic setSubtarefasSearch(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setSubtarefasSearch');
+    try {
+      return super.setSubtarefasSearch(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setLoadingSearch(dynamic value) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setLoadingSearch');
