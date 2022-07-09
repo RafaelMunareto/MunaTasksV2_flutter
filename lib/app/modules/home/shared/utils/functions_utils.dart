@@ -152,4 +152,8 @@ class FunctionsUtils {
   showErrors(DioError error) {
     store.client.setMsgError(auth.globalError(error));
   }
+
+  showErrorsReturn(DioError error) {
+    return auth.globalError(error);
+  }
 }

@@ -316,6 +316,22 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
+  late final _$tarefaIdAtom =
+      Atom(name: '_ClientCreateStoreBase.tarefaId', context: context);
+
+  @override
+  dynamic get tarefaId {
+    _$tarefaIdAtom.reportRead();
+    return super.tarefaId;
+  }
+
+  @override
+  set tarefaId(dynamic value) {
+    _$tarefaIdAtom.reportWrite(value, super.tarefaId, () {
+      super.tarefaId = value;
+    });
+  }
+
   late final _$subtarefaModelAtom =
       Atom(name: '_ClientCreateStoreBase.subtarefaModel', context: context);
 
@@ -377,6 +393,22 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   set subtarefaAction(bool value) {
     _$subtarefaActionAtom.reportWrite(value, super.subtarefaAction, () {
       super.subtarefaAction = value;
+    });
+  }
+
+  late final _$editarSubtarefaAtom =
+      Atom(name: '_ClientCreateStoreBase.editarSubtarefa', context: context);
+
+  @override
+  bool get editarSubtarefa {
+    _$editarSubtarefaAtom.reportRead();
+    return super.editarSubtarefa;
+  }
+
+  @override
+  set editarSubtarefa(bool value) {
+    _$editarSubtarefaAtom.reportWrite(value, super.editarSubtarefa, () {
+      super.editarSubtarefa = value;
     });
   }
 
@@ -714,6 +746,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic cleanTarefaId() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanTarefaId');
+    try {
+      return super.cleanTarefaId();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic cleanTarefaModelSaveEtiqueta() {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.cleanTarefaModelSaveEtiqueta');
@@ -912,6 +955,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic setEditarSubtarefa(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setEditarSubtarefa');
+    try {
+      return super.setEditarSubtarefa(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 tarefaModelSave: ${tarefaModelSave},
@@ -932,10 +986,12 @@ loadingSubtarefa: ${loadingSubtarefa},
 loadingUser: ${loadingUser},
 loadingTarefa: ${loadingTarefa},
 id: ${id},
+tarefaId: ${tarefaId},
 subtarefaModel: ${subtarefaModel},
 editar: ${editar},
 loadingSearch: ${loadingSearch},
 subtarefaAction: ${subtarefaAction},
+editarSubtarefa: ${editarSubtarefa},
 isValidTarefa: ${isValidTarefa},
 isValidSubtarefa: ${isValidSubtarefa}
     ''';

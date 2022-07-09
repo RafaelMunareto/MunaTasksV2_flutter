@@ -115,6 +115,7 @@ class _ListSubtarefaWidgetState extends State<ListSubtarefaWidget> {
                 return GestureDetector(
                   key: ValueKey(linha.id),
                   onDoubleTap: () {
+                    store.clientCreate.setEditarSubtarefa(true);
                     store.clientCreate.setEditar(true);
                     store.clientCreate.setSubtarefaUpdate(linha);
                     store.clientCreate

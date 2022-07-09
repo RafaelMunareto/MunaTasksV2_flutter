@@ -102,7 +102,6 @@ class _TeamsSelectionWidgetState extends State<TeamsSelectionWidget>
                       onPressed: () {
                         if (store.clientCreate.tarefaModelSaveTexto != '') {
                           store.clientCreate.setUserCreateSelection(linha);
-                          //store.clientCreate.setCreateImageUser(linha.urlImage);
                           store.clientCreate.setLoadingUser(false);
                           Modular.to.pop();
                         } else {

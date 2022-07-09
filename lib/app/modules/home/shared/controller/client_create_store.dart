@@ -155,6 +155,9 @@ abstract class _ClientCreateStoreBase with Store {
   cleanReference() => tarefaModelSave.id = '';
 
   @action
+  cleanTarefaId() => tarefaId = '';
+
+  @action
   cleanTarefaModelSaveEtiqueta() =>
       tarefaModelSaveEtiqueta = EtiquetaDioModel();
 
@@ -164,6 +167,7 @@ abstract class _ClientCreateStoreBase with Store {
   @action
   cleanSave() {
     cleanUsersSave();
+    cleanTarefaId();
     cleanSaveEtiqueta();
     cleanIndividualChip();
     cleanTarefaTextSave();
@@ -227,10 +231,14 @@ abstract class _ClientCreateStoreBase with Store {
           ? users.add(createUser)
           : null;
     }
+    cleanSubtarefa();
   }
 
+  @observable
+  dynamic tarefaId;
+
   @action
-  setTarefaId(value) => tarefaModelSave.id = value;
+  setTarefaId(value) => tarefaId = value;
 
   @action
   setSubtarefaId(value) => subtarefaModel.id = value;
@@ -244,7 +252,6 @@ abstract class _ClientCreateStoreBase with Store {
     setSubtarefaInsertCreate(model.title);
     setFase(model.status);
     setUserCreateSelection(model.user);
-    //setCreateImageUser(model.user.urlImage);
     setIdReferenceStaff(
       model.user,
     );
@@ -253,6 +260,7 @@ abstract class _ClientCreateStoreBase with Store {
 
   @action
   setTarefaUpdate(TarefaDioModel tarefa) {
+    setTarefaId(tarefa.id);
     setSaveEtiqueta(tarefa.etiqueta);
     setTarefaTextSave(tarefa.texto);
     setFaseTarefa(changeFaseTarefaReverse(tarefa.fase));
@@ -341,7 +349,6 @@ abstract class _ClientCreateStoreBase with Store {
     setLoadingSubtarefa(false);
     setLoadingUser(false);
     setEditar(false);
-    cleanSubtarefa();
   }
 
   @computed
@@ -418,4 +425,10 @@ abstract class _ClientCreateStoreBase with Store {
 
   @action
   setSubtarefaAction(value) => subtarefaAction = value;
+
+  @observable
+  bool editarSubtarefa = false;
+
+  @action
+  setEditarSubtarefa(value) => editarSubtarefa = value;
 }

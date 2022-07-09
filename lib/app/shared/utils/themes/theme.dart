@@ -8,6 +8,7 @@ ThemeData lightThemeData(BuildContext context) {
     primaryColorLight: kPrimaryColorLight,
     primaryColorDark: kPrimaryColorDark,
     secondaryHeaderColor: kblue,
+    hintColor: Colors.grey.shade500,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: kblue, foregroundColor: kLight),
     indicatorColor: kPrimaryColor,
@@ -47,6 +48,7 @@ ThemeData darkThemeData(BuildContext context) {
     primaryColor: darkPrimaryColor,
     primaryColorLight: darkPrimaryColorLight,
     primaryColorDark: darkPrimaryColorDark,
+    hintColor: Colors.grey.shade500,
     secondaryHeaderColor: darkblue,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: darkblue, foregroundColor: darkLight),

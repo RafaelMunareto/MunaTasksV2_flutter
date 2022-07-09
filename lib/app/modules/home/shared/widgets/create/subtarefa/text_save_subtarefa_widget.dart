@@ -37,13 +37,15 @@ class _TextSaveSubtarefaWidgetState extends State<TextSaveSubtarefaWidget> {
               fillColor: store.client.theme
                   ? darkThemeData(context).cardColor
                   : lightThemeData(context).cardColor,
-              border: const OutlineInputBorder(),
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                borderSide: BorderSide(width: 1, color: Colors.green),
+              ),
               suffix: InkWell(
                   child: const Icon(Icons.replay),
                   onTap: () {
                     store.clientCreate.setSubtarefaTextSave('');
                     widget.controller.text = '';
-
                     FocusScope.of(context).requestFocus(FocusNode());
                   }),
               hintText: "Insira sua subtarefa"),

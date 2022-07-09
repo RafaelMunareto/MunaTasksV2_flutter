@@ -29,7 +29,7 @@ class _ListCardWidgetState extends State<ListCardWidget>
         return Padding(
           padding: const EdgeInsets.only(left: 24, right: 8),
           child: SizedBox(
-            width: 375,
+            width: 340,
             height: MediaQuery.of(context).size.height * 0.95,
             child: Wrap(
               children: [

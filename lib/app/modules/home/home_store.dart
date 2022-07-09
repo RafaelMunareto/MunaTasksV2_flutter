@@ -47,9 +47,6 @@ abstract class HomeStoreBase with Store {
     await getSettingsUser();
     await getDio();
     await client.setLoading(false);
-    await getVersion();
-    await checkUpdateWindows();
-    await getNotificationsBd();
   }
 
   connectToServer() {
@@ -269,10 +266,10 @@ abstract class HomeStoreBase with Store {
           return e;
         }
       }).toList();
+      client.taskDioSearch.add(model);
       client.setTaskDio(client.taskDioSearch);
     }
-    getPass();
-    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
+    Timer(const Duration(minutes: 10), () => socket!.emit('updateList', true));
   }
 
   saveNewTarefa() async {
@@ -282,30 +279,27 @@ abstract class HomeStoreBase with Store {
       if (client.settingsUser.emailInicial) {
         await dashboardService.emailDio(value.data['id'], '0');
       }
+      clientCreate.setTarefaId(value.data['id']);
     }).catchError((erro) {
       FunctionsUtils().showErrors(erro);
     });
     client.taskDioSearch.add(clientCreate.tarefaModelSave);
     client.setTaskDioSearch(client.taskDioSearch);
-    getPass();
-    Timer(const Duration(minutes: 2), () => socket!.emit('newTaskFront', true));
+    badgets();
+    Timer(
+        const Duration(minutes: 10), () => socket!.emit('newTaskFront', true));
   }
 
-  updateNewTarefa() async {
-    await dashboardService
-        .updateDio(clientCreate.tarefaModelSave)
-        .catchError((erro) {
+  updateNewTarefa(model) async {
+    await dashboardService.updateDio(model).catchError((erro) {
       FunctionsUtils().showErrors(erro);
     });
     client.taskDioSearch.map((e) {
-      if (e.id == clientCreate.tarefaModelSave.id) {
-        return clientCreate.tarefaModelSave as TarefaDioModel;
-      } else {
-        return e;
-      }
-    }).toList();
-    getPass();
-    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
+      e.id == model.id ? model : e;
+    });
+    client.setTaskDioSearch(client.taskDioSearch);
+    badgets();
+    Timer(const Duration(minutes: 10), () => socket!.emit('updateList', true));
   }
 
   deleteDioTasks(TarefaDioModel model) async {
@@ -313,7 +307,7 @@ abstract class HomeStoreBase with Store {
       FunctionsUtils().showErrors(erro);
     });
     getPass();
-    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
+    Timer(const Duration(minutes: 10), () => socket!.emit('updateList', true));
   }
 
   changeFilterEtiquetaList() async {

@@ -58,6 +58,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    store.getVersion();
+    store.checkUpdateWindows();
+    store.getNotificationsBd();
     store.client.buscaTheme(context);
     store.connectToServer();
     tz.initializeTimeZones();

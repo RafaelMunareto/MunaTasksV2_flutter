@@ -53,6 +53,7 @@ class _CreateWidgetState extends State<CreateWidget> {
                           GestureDetector(
                             onTap: () {
                               store.client.setTodos();
+                              store.clientCreate.cleanSave();
                               Modular.to.pop();
                             },
                             child: MouseRegion(
