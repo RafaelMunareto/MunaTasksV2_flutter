@@ -49,6 +49,25 @@ class ChangelogPageState extends State<ChangelogPage> {
                         ChangeTextWidget(
                           constraint: constraint.maxWidth,
                           theme: client.theme,
+                          title: 'Versão 2.3.0',
+                          corpo:
+                              ' ✓ Alteração do layout do dashboard com todas as fases. \n\n'
+                              ' ✓ Vizualização e filtros laterais com qtd de tarefas e subtarefas.\n\n'
+                              ' ✓ Ajuste nos componentes de filtro no header. \n\n'
+                              ' ✓ Repaginação dos cards das tarefas com inclusão de progresso das subtarefas. \n\n'
+                              ' ✓ Reformulação da aba de criação com divisão das tarefas em fases.\n\n'
+                              ' ✓ Ajuste do Bug na inclusão dos funcionários na nova tarefa. \n\n'
+                              ' ✓ Lista e filtro da quantidade de subtarefas no create. \n\n'
+                              ' ✓ Reformulação das páginas de privacy e change log.\n\n'
+                              ' ✓ Refatoração do componente do menu lateral e inclusão em todas as páginas \n\n'
+                              ' ✓ Ajuste do backend para a cadeia de vinculação tanto nos totais quanto nas tarefas. \n\n'
+                              ' ✓ Inclusão do componente de quantidade das subtarefas na página de criação. \n\n'
+                              ' ✓ Melhora no controle de erros na criação das tarefas. \n\n'
+                              ' ✓ Criação na versão linux disponível na versão 2.3.0. \n\n',
+                        ),
+                        ChangeTextWidget(
+                          constraint: constraint.maxWidth,
+                          theme: client.theme,
                           title: 'Versão 2.2.0',
                           corpo:
                               ' ✓ Alteração do layout do thead do create. \n\n'
