@@ -53,17 +53,20 @@ class _DateSaveWidgetState extends State<DateSaveWidget> {
 
     return Tooltip(
       message: widget.dateController.text,
-      child: TextField(
-        textAlign: TextAlign.left,
-        style: const TextStyle(fontSize: 12),
-        autofocus: false,
-        controller: widget.dateController,
-        onChanged: (value) => store.clientCreate.setTarefaDateSave(value),
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          prefix: InkWell(
-            child: const Icon(Icons.calendar_today, color: Colors.black),
-            onTap: () => _selectDate(),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: TextField(
+          textAlign: TextAlign.left,
+          style: const TextStyle(fontSize: 0),
+          autofocus: false,
+          controller: widget.dateController,
+          onChanged: (value) => store.clientCreate.setTarefaDateSave(value),
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            prefix: InkWell(
+              child: const Icon(Icons.calendar_today, color: Colors.black),
+              onTap: () => _selectDate(),
+            ),
           ),
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/button_header_create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/button_save_create_widget.dart';
+import 'package:munatasks2/app/modules/home/shared/widgets/create/layoutCreate/layout_create_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/subtarefas_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/subtarefa/text_save_subtarefa_widget.dart';
 import 'package:munatasks2/app/modules/home/shared/widgets/create/text_save_widget.dart';
@@ -78,131 +79,110 @@ class _CreateWidgetState extends State<CreateWidget> {
                               ? LogoWidget(
                                   constraint: constraint.maxWidth,
                                 )
-                              : Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Flexible(
-                                      flex: 3,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 18),
-                                        child: Wrap(
-                                          alignment: WrapAlignment.start,
-                                          crossAxisAlignment:
-                                              WrapCrossAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 8),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  ButtonHeaderCreateWidget(
-                                                    textSubtarefaController:
-                                                        textSubtarefaController,
-                                                    constraint:
-                                                        constraint.maxWidth,
-                                                    tipo: 0,
-                                                  ),
-                                                  ButtonHeaderCreateWidget(
-                                                    textSubtarefaController:
-                                                        textSubtarefaController,
-                                                    constraint:
-                                                        constraint.maxWidth,
-                                                    tipo: 1,
-                                                  ),
-                                                  ButtonHeaderCreateWidget(
-                                                    textSubtarefaController:
-                                                        textSubtarefaController,
-                                                    constraint:
-                                                        constraint.maxWidth,
-                                                    tipo: 2,
-                                                  ),
-                                                  ButtonHeaderCreateWidget(
-                                                    textSubtarefaController:
-                                                        textSubtarefaController,
-                                                    constraint:
-                                                        constraint.maxWidth,
-                                                    tipo: 4,
-                                                    dateController:
-                                                        dateController,
-                                                  ),
-                                                  ButtonHeaderCreateWidget(
-                                                    textSubtarefaController:
-                                                        textSubtarefaController,
-                                                    constraint:
-                                                        constraint.maxWidth,
-                                                    tipo: 3,
-                                                  ),
-                                                ],
+                              : LayoutCreateWidget(
+                                  constraint: constraint.maxWidth,
+                                  widget1: Padding(
+                                    padding: const EdgeInsets.only(top: 18),
+                                    child: Wrap(
+                                      alignment: WrapAlignment.start,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              ButtonHeaderCreateWidget(
+                                                textSubtarefaController:
+                                                    textSubtarefaController,
+                                                constraint: constraint.maxWidth,
+                                                tipo: 0,
                                               ),
-                                            ),
-                                            TextSaveWidget(
-                                              controller: textController,
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      4, 12, 2, 4),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  ButtonHeaderCreateWidget(
-                                                    textSubtarefaController:
-                                                        textSubtarefaController,
-                                                    constraint:
-                                                        constraint.maxWidth,
-                                                    tipo: 5,
-                                                  ),
-                                                  ButtonHeaderCreateWidget(
-                                                    constraint:
-                                                        constraint.maxWidth,
-                                                    textSubtarefaController:
-                                                        textSubtarefaController,
-                                                    tipo: 6,
-                                                  ),
-                                                  ButtonHeaderCreateWidget(
-                                                    constraint:
-                                                        constraint.maxWidth,
-                                                    textSubtarefaController:
-                                                        textSubtarefaController,
-                                                    tipo: 7,
-                                                    dateController:
-                                                        dateController,
-                                                  ),
-                                                  ButtonHeaderCreateWidget(
-                                                    constraint:
-                                                        constraint.maxWidth,
-                                                    textSubtarefaController:
-                                                        textSubtarefaController,
-                                                    tipo: 8,
-                                                  ),
-                                                ],
+                                              ButtonHeaderCreateWidget(
+                                                textSubtarefaController:
+                                                    textSubtarefaController,
+                                                constraint: constraint.maxWidth,
+                                                tipo: 1,
                                               ),
-                                            ),
-                                            TextSaveSubtarefaWidget(
-                                              controller:
-                                                  textSubtarefaController,
-                                            ),
-                                            ButtonSaveCreateWidget(
-                                              texto: textController,
-                                              textoSubtarefa:
-                                                  textSubtarefaController,
-                                              constraint: constraint.maxWidth,
-                                            ),
-                                          ],
+                                              ButtonHeaderCreateWidget(
+                                                textSubtarefaController:
+                                                    textSubtarefaController,
+                                                constraint: constraint.maxWidth,
+                                                tipo: 2,
+                                              ),
+                                              ButtonHeaderCreateWidget(
+                                                textSubtarefaController:
+                                                    textSubtarefaController,
+                                                constraint: constraint.maxWidth,
+                                                tipo: 4,
+                                                dateController: dateController,
+                                              ),
+                                              ButtonHeaderCreateWidget(
+                                                textSubtarefaController:
+                                                    textSubtarefaController,
+                                                constraint: constraint.maxWidth,
+                                                tipo: 3,
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
+                                        TextSaveWidget(
+                                          controller: textController,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              4, 12, 2, 4),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              ButtonHeaderCreateWidget(
+                                                textSubtarefaController:
+                                                    textSubtarefaController,
+                                                constraint: constraint.maxWidth,
+                                                tipo: 5,
+                                              ),
+                                              ButtonHeaderCreateWidget(
+                                                constraint: constraint.maxWidth,
+                                                textSubtarefaController:
+                                                    textSubtarefaController,
+                                                tipo: 6,
+                                              ),
+                                              ButtonHeaderCreateWidget(
+                                                constraint: constraint.maxWidth,
+                                                textSubtarefaController:
+                                                    textSubtarefaController,
+                                                tipo: 7,
+                                                dateController: dateController,
+                                              ),
+                                              ButtonHeaderCreateWidget(
+                                                constraint: constraint.maxWidth,
+                                                textSubtarefaController:
+                                                    textSubtarefaController,
+                                                tipo: 8,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        TextSaveSubtarefaWidget(
+                                          controller: textSubtarefaController,
+                                        ),
+                                        ButtonSaveCreateWidget(
+                                          texto: textController,
+                                          textoSubtarefa:
+                                              textSubtarefaController,
+                                          constraint: constraint.maxWidth,
+                                        ),
+                                      ],
                                     ),
-                                    Flexible(
-                                      flex: 7,
-                                      child: SubtarefasWidget(
-                                          controller: textSubtarefaController),
-                                    ),
-                                  ],
+                                  ),
+                                  widget2: SubtarefasWidget(
+                                      controller: textSubtarefaController),
                                 ),
                         ),
                       ),

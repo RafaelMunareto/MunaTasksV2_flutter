@@ -10,6 +10,7 @@ import 'package:munatasks2/app/modules/home/shared/widgets/filters/teams_selecti
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class ButtonHeaderCreateWidget extends StatefulWidget {
   final double constraint;
@@ -288,7 +289,10 @@ class _ButtonHeaderCreateWidgetState extends State<ButtonHeaderCreateWidget> {
                 child: Center(
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width * 0.14),
+                        maxWidth:
+                            widget.constraint >= LarguraLayoutBuilder().telaPc
+                                ? MediaQuery.of(context).size.width * 0.14
+                                : MediaQuery.of(context).size.width * 0.50),
                     child: retornaTipo(widget.tipo),
                   ),
                 ),
