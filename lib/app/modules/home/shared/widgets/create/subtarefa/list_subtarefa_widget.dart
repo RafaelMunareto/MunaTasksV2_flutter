@@ -116,7 +116,7 @@ class _ListSubtarefaWidgetState extends State<ListSubtarefaWidget> {
                       .toList()[index];
                   return GestureDetector(
                     key: ValueKey(linha.id),
-                    onDoubleTap: () {
+                    onTap: () {
                       store.clientCreate.setEditarSubtarefa(true);
                       store.clientCreate.setEditar(true);
                       store.clientCreate.setSubtarefaUpdate(linha);
@@ -125,7 +125,7 @@ class _ListSubtarefaWidgetState extends State<ListSubtarefaWidget> {
 
                       widget.controller.text = linha.texto;
                     },
-                    onLongPress: () {
+                    onDoubleTap: () {
                       dialogDelete(context, linha);
                     },
                     child: linha == null

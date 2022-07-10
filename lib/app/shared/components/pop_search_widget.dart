@@ -60,7 +60,7 @@ class _PopSearchWidgetState extends State<PopSearchWidget> {
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
           ),
-          autofocus: true,
+          autofocus: false,
         ),
       ),
     );

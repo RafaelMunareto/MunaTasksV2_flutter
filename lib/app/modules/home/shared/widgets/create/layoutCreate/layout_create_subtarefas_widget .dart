@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
