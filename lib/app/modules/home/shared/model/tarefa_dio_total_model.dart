@@ -1,14 +1,14 @@
 class TarefaDioTotalModel {
   String? id;
   dynamic name;
-  dynamic qtd;
-  List<dynamic>? tarefa;
+  int qtd;
+  int qtdSubtarefas;
 
   TarefaDioTotalModel({
     this.id,
     this.name,
-    this.qtd,
-    this.tarefa,
+    this.qtd = 0,
+    this.qtdSubtarefas = 0,
   });
 
   factory TarefaDioTotalModel.fromDocument(doc) {
@@ -16,7 +16,7 @@ class TarefaDioTotalModel {
         id: doc['id'],
         name: doc['name'],
         qtd: doc['qtd'],
-        tarefa: doc['tarefa']);
+        qtdSubtarefas: doc['qtdSubtarefas']);
   }
 
   factory TarefaDioTotalModel.fromJson(Map<String, dynamic> json) {
@@ -24,7 +24,7 @@ class TarefaDioTotalModel {
         id: json['id'],
         name: json['name'],
         qtd: json['qtd'],
-        tarefa: json['tarefa']);
+        qtdSubtarefas: json['qtdSubtarefas']);
   }
 
   Map<String, dynamic> toJson() => {};

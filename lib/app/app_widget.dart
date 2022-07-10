@@ -9,6 +9,7 @@ import 'package:munatasks2/app/shared/auth/model/user_dio_client.model.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
 import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
+import 'package:munatasks2/app/shared/utils/my_custom_scroll_behavior.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -123,6 +124,7 @@ class _AppWidgetState extends State<AppWidget> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'MunaTask',
+      scrollBehavior: MyCustomScrollBehavior(),
       debugShowCheckedModeBanner: false,
       theme: lightThemeData(context),
       darkTheme: darkThemeData(context),

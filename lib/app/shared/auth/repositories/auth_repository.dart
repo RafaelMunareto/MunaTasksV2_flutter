@@ -157,4 +157,14 @@ class AuthRepository implements IAuthRepository {
     DioStruture().statusRequest(response);
     return response;
   }
+
+  @override
+  globalError(DioError error) {
+    if (error.response != null) {
+      if (error.response!.statusCode == 401) {
+        getLogout();
+      }
+      return error.response!.data['error'];
+    }
+  }
 }

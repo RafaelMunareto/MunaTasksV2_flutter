@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/retard_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/getwidget.dart';
 
 class CircleAvatarWidget extends StatelessWidget {
   final dynamic url;
@@ -12,11 +13,10 @@ class CircleAvatarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Tooltip(
       message: nameUser,
-      child: CircleAvatar(
-        minRadius: 10,
-        maxRadius: 15,
+      child: GFAvatar(
+        radius: 12,
+        shape: GFAvatarShape.standard,
         backgroundImage: CachedNetworkImageProvider(url),
-        backgroundColor: Colors.transparent,
       ),
     );
   }

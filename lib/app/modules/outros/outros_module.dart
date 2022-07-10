@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:munatasks2/app/modules/outros/changelog_page.dart';
-import 'package:munatasks2/app/modules/outros/privacy_page.dart';
+import 'package:munatasks2/app/modules/outros/changeLog/changelog_page.dart';
+import 'package:munatasks2/app/modules/outros/privacy/privacy_page.dart';
 
 class OutrosModule extends Module {
   @override

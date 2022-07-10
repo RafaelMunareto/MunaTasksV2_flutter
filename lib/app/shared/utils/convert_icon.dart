@@ -23,6 +23,28 @@ class ConvertIcon {
     }
   }
 
+  badgetToFase(String name) {
+    switch (name) {
+      case 'Backlog':
+        return 'pause';
+      case 'Fazendo':
+        return 'play';
+      case 'Feito':
+        return 'check';
+    }
+  }
+
+  iconFaseIconData(String status) {
+    switch (status) {
+      case 'pause':
+        return Icons.pause_circle;
+      case 'play':
+        return Icons.play_circle;
+      case 'check':
+        return Icons.check_circle;
+    }
+  }
+
   colorStatus(String status) {
     switch (status) {
       case 'play':
@@ -131,7 +153,7 @@ class ConvertIcon {
       case 'grey':
         return Colors.grey;
       case 'dark':
-        return Colors.black;
+        return Colors.grey.shade800;
       case 'yellow':
         return Colors.yellow;
       case 'amber':
@@ -141,7 +163,7 @@ class ConvertIcon {
       case 'brown':
         return Colors.brown;
       default:
-        return Colors.grey.shade500;
+        return Colors.grey.shade300;
     }
   }
 

@@ -39,12 +39,12 @@ class SimpleButtonWidget extends StatelessWidget {
         ),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
+            borderRadius: BorderRadius.circular(5.0),
             side: BorderSide(
               color: theme
                   ? darkThemeData(context).primaryColorLight
                   : lightThemeData(context).primaryColorLight,
-              width: 2.0,
+              width: 1.0,
             ),
           ),
         ),

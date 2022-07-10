@@ -9,19 +9,19 @@ part of 'client_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ClientStore on _ClientStoreBase, Store {
-  late final _$badgetNavigateAtom =
-      Atom(name: '_ClientStoreBase.badgetNavigate', context: context);
+  late final _$badgetsAtom =
+      Atom(name: '_ClientStoreBase.badgets', context: context);
 
   @override
-  List<int> get badgetNavigate {
-    _$badgetNavigateAtom.reportRead();
-    return super.badgetNavigate;
+  List<BadgetsModel> get badgets {
+    _$badgetsAtom.reportRead();
+    return super.badgets;
   }
 
   @override
-  set badgetNavigate(List<int> value) {
-    _$badgetNavigateAtom.reportWrite(value, super.badgetNavigate, () {
-      super.badgetNavigate = value;
+  set badgets(List<BadgetsModel> value) {
+    _$badgetsAtom.reportWrite(value, super.badgets, () {
+      super.badgets = value;
     });
   }
 
@@ -424,6 +424,22 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  late final _$msgErrorAtom =
+      Atom(name: '_ClientStoreBase.msgError', context: context);
+
+  @override
+  String get msgError {
+    _$msgErrorAtom.reportRead();
+    return super.msgError;
+  }
+
+  @override
+  set msgError(String value) {
+    _$msgErrorAtom.reportWrite(value, super.msgError, () {
+      super.msgError = value;
+    });
+  }
+
   late final _$taskDioAtom =
       Atom(name: '_ClientStoreBase.taskDio', context: context);
 
@@ -712,6 +728,22 @@ mixin _$ClientStore on _ClientStoreBase, Store {
     });
   }
 
+  late final _$loadingITensAtom =
+      Atom(name: '_ClientStoreBase.loadingITens', context: context);
+
+  @override
+  bool get loadingITens {
+    _$loadingITensAtom.reportRead();
+    return super.loadingITens;
+  }
+
+  @override
+  set loadingITens(bool value) {
+    _$loadingITensAtom.reportWrite(value, super.loadingITens, () {
+      super.loadingITens = value;
+    });
+  }
+
   late final _$_ClientStoreBaseActionController =
       ActionController(name: '_ClientStoreBase', context: context);
 
@@ -815,6 +847,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setTodos() {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setTodos');
+    try {
+      return super.setTodos();
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setOrderAscDesc(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
         name: '_ClientStoreBase.setOrderAscDesc');
@@ -826,22 +869,11 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
-  dynamic setLoadingTasks(dynamic value) {
+  dynamic setLoading(dynamic value) {
     final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setLoadingTasks');
+        name: '_ClientStoreBase.setLoading');
     try {
-      return super.setLoadingTasks(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setLoadingTasksTotal(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setLoadingTasksTotal');
-    try {
-      return super.setLoadingTasksTotal(value);
+      return super.setLoading(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -864,17 +896,6 @@ mixin _$ClientStore on _ClientStoreBase, Store {
         name: '_ClientStoreBase.setTheme');
     try {
       return super.setTheme(value);
-    } finally {
-      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setLoading(dynamic value) {
-    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
-        name: '_ClientStoreBase.setLoading');
-    try {
-      return super.setLoading(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -963,6 +984,17 @@ mixin _$ClientStore on _ClientStoreBase, Store {
         name: '_ClientStoreBase.setPerfilUserlogado');
     try {
       return super.setPerfilUserlogado(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setMsgError(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setMsgError');
+    try {
+      return super.setMsgError(value);
     } finally {
       _$_ClientStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -1211,9 +1243,20 @@ mixin _$ClientStore on _ClientStoreBase, Store {
   }
 
   @override
+  dynamic setLoadingItens(dynamic value) {
+    final _$actionInfo = _$_ClientStoreBaseActionController.startAction(
+        name: '_ClientStoreBase.setLoadingItens');
+    try {
+      return super.setLoadingItens(value);
+    } finally {
+      _$_ClientStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-badgetNavigate: ${badgetNavigate},
+badgets: ${badgets},
 cardSelection: ${cardSelection},
 settings: ${settings},
 subtarefaActionList: ${subtarefaActionList},
@@ -1239,6 +1282,7 @@ imgUrl: ${imgUrl},
 searchValue: ${searchValue},
 perfilUserLogado: ${perfilUserLogado},
 expandTarefa: ${expandTarefa},
+msgError: ${msgError},
 taskDio: ${taskDio},
 taskDioSearch: ${taskDioSearch},
 userDio: ${userDio},
@@ -1256,7 +1300,8 @@ version: ${version},
 loadingRefresh: ${loadingRefresh},
 checkUpdateDesktop: ${checkUpdateDesktop},
 versionBd: ${versionBd},
-closeSearch: ${closeSearch}
+closeSearch: ${closeSearch},
+loadingITens: ${loadingITens}
     ''';
   }
 }

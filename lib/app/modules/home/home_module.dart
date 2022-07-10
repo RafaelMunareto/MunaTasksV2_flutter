@@ -5,7 +5,6 @@ import 'package:munatasks2/app/modules/home/repositories/dashboard_repository.da
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/services/dashboard_service.dart';
-import 'package:munatasks2/app/modules/home/tarefas/tarefas_module.dart';
 import 'package:munatasks2/app/shared/auth/repositories/guard.dart';
 import '../home/home_store.dart';
 
@@ -25,9 +24,8 @@ class HomeModule extends Module {
   @override
   final List<ModularRoute> routes = [
     ChildRoute('/',
-        child: (context, args) => const HomePage(), guards: [AuthGuard()]),
-    ModuleRoute('/tarefas',
-        module: TarefasModule(),
-        transition: TransitionType.leftToRightWithFade),
+        child: (context, args) => const HomePage(),
+        transition: TransitionType.rightToLeftWithFade,
+        guards: [AuthGuard()]),
   ];
 }

@@ -316,6 +316,22 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
+  late final _$tarefaIdAtom =
+      Atom(name: '_ClientCreateStoreBase.tarefaId', context: context);
+
+  @override
+  dynamic get tarefaId {
+    _$tarefaIdAtom.reportRead();
+    return super.tarefaId;
+  }
+
+  @override
+  set tarefaId(dynamic value) {
+    _$tarefaIdAtom.reportWrite(value, super.tarefaId, () {
+      super.tarefaId = value;
+    });
+  }
+
   late final _$subtarefaModelAtom =
       Atom(name: '_ClientCreateStoreBase.subtarefaModel', context: context);
 
@@ -361,6 +377,38 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   set loadingSearch(bool value) {
     _$loadingSearchAtom.reportWrite(value, super.loadingSearch, () {
       super.loadingSearch = value;
+    });
+  }
+
+  late final _$subtarefaActionAtom =
+      Atom(name: '_ClientCreateStoreBase.subtarefaAction', context: context);
+
+  @override
+  bool get subtarefaAction {
+    _$subtarefaActionAtom.reportRead();
+    return super.subtarefaAction;
+  }
+
+  @override
+  set subtarefaAction(bool value) {
+    _$subtarefaActionAtom.reportWrite(value, super.subtarefaAction, () {
+      super.subtarefaAction = value;
+    });
+  }
+
+  late final _$editarSubtarefaAtom =
+      Atom(name: '_ClientCreateStoreBase.editarSubtarefa', context: context);
+
+  @override
+  bool get editarSubtarefa {
+    _$editarSubtarefaAtom.reportRead();
+    return super.editarSubtarefa;
+  }
+
+  @override
+  set editarSubtarefa(bool value) {
+    _$editarSubtarefaAtom.reportWrite(value, super.editarSubtarefa, () {
+      super.editarSubtarefa = value;
     });
   }
 
@@ -698,6 +746,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic cleanTarefaId() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanTarefaId');
+    try {
+      return super.cleanTarefaId();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic cleanTarefaModelSaveEtiqueta() {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.cleanTarefaModelSaveEtiqueta');
@@ -764,17 +823,6 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
-  dynamic setCreateImageUser(dynamic value) {
-    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
-        name: '_ClientCreateStoreBase.setCreateImageUser');
-    try {
-      return super.setCreateImageUser(value);
-    } finally {
-      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic setUserCreateSelection(dynamic value) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setUserCreateSelection');
@@ -791,6 +839,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
         name: '_ClientCreateStoreBase.setTarefa');
     try {
       return super.setTarefa();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setTarefaId(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setTarefaId');
+    try {
+      return super.setTarefaId(value);
     } finally {
       _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -874,11 +933,44 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic setSubtarefasSearch(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setSubtarefasSearch');
+    try {
+      return super.setSubtarefasSearch(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setLoadingSearch(dynamic value) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setLoadingSearch');
     try {
       return super.setLoadingSearch(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setSubtarefaAction(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setSubtarefaAction');
+    try {
+      return super.setSubtarefaAction(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setEditarSubtarefa(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setEditarSubtarefa');
+    try {
+      return super.setEditarSubtarefa(value);
     } finally {
       _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -905,9 +997,12 @@ loadingSubtarefa: ${loadingSubtarefa},
 loadingUser: ${loadingUser},
 loadingTarefa: ${loadingTarefa},
 id: ${id},
+tarefaId: ${tarefaId},
 subtarefaModel: ${subtarefaModel},
 editar: ${editar},
 loadingSearch: ${loadingSearch},
+subtarefaAction: ${subtarefaAction},
+editarSubtarefa: ${editarSubtarefa},
 isValidTarefa: ${isValidTarefa},
 isValidSubtarefa: ${isValidSubtarefa}
     ''';

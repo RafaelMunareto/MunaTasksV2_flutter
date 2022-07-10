@@ -4,13 +4,13 @@ import 'package:munatasks2/app/modules/home/shared/model/notifications_dio_model
 import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_total_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';
-import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_interface.dart';
-import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_share.dart';
+import 'package:munatasks2/app/modules/settings/principal/shared/model/settings_user_model.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 class DashboardRepository implements IDashboardRepository {
-  final ILocalStorage storage = LocalStorageShare();
   DashboardRepository();
 
   void dispose() {}
@@ -74,17 +74,14 @@ class DashboardRepository implements IDashboardRepository {
   }
 
   @override
-  Future<List<TarefaDioTotalModel>> getDioTotal() async {
+  Future<List<TarefaDioTotalModel>> getDioTotal(String id) async {
     Response response;
     var dio = await DioStruture().dioAction();
-    response = await dio.get('tasks/total');
+    response = await dio.get('tasks/total/$id');
     DioStruture().statusRequest(response);
     return (response.data as List).map((e) {
       e = TarefaDioTotalModel.fromJson(e);
       e.name = PerfilDioModel.fromJson(e.name);
-      e.tarefa = e.tarefa!.map((u) {
-        return TarefaDioModel.fromJson(u);
-      }).toList();
       return e as TarefaDioTotalModel;
     }).toList();
   }
@@ -146,5 +143,80 @@ class DashboardRepository implements IDashboardRepository {
     response = await dio.get('tasks/new_email/$id/$tipo');
     DioStruture().statusRequest(response);
     return response;
+  }
+
+  @override
+  Future<List<PerfilDioModel>> getPerfis() async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('perfil');
+    DioStruture().statusRequest(response);
+    return (response.data as List).map((e) {
+      return PerfilDioModel.fromJson(e);
+    }).toList();
+  }
+
+  @override
+  Future<SettingsUserModel> getSettingsUser(String id) async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('perfil/settingsUser/$id');
+    DioStruture().statusRequest(response);
+    if (response.data.isEmpty) {
+      SettingsUserModel settings = SettingsUserModel(user: id);
+      saveSettings(settings);
+      return settings;
+    } else {
+      return SettingsUserModel.fromJson(response.data[0]);
+    }
+  }
+
+  @override
+  saveSettings(model) async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response = await dio.post('perfil/settingsUser', data: model.toJson(model));
+    DioStruture().statusRequest(response);
+    return response;
+  }
+
+  @override
+  Future<SettingsModel> getSettings() async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('settings');
+    DioStruture().statusRequest(response);
+    return SettingsModel.fromJson(response.data[0]);
+  }
+
+  @override
+  Future<List<EtiquetaDioModel>> getEtiquetas() async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('etiquetas');
+    DioStruture().statusRequest(response);
+    return (response.data as List).map((e) {
+      return EtiquetaDioModel.fromJson(e);
+    }).toList();
+  }
+
+  @override
+  Future<PerfilDioModel> getPerfil(String id) async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('perfil/user/$id');
+    DioStruture().statusRequest(response);
+    return PerfilDioModel.fromJson(response.data[0]);
+  }
+
+  @override
+  Future<List<TarefaDioModel>> getTasksTodas() async {
+    Response response;
+    var dio = await DioStruture().dioAction();
+    response = await dio.get('tasks');
+    DioStruture().statusRequest(response);
+    return (response.data as List).map((e) {
+      return TarefaDioModel.fromJson(e);
+    }).toList();
   }
 }

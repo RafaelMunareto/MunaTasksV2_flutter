@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:simple_animations/simple_animations.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/home/home_store.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 
 class PopSearchWidget extends StatefulWidget {
   final Function? setValueSearch;
+  final double constraint;
   final Function? changeFilterSearch;
+
   const PopSearchWidget(
       {Key? key,
       required this.setValueSearch,
-      required this.changeFilterSearch})
+      required this.changeFilterSearch,
+      required this.constraint})
       : super(key: key);
 
   @override
@@ -15,36 +20,48 @@ class PopSearchWidget extends StatefulWidget {
 }
 
 class _PopSearchWidgetState extends State<PopSearchWidget> {
+  HomeStore store = Modular.get();
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: PlayAnimation<double>(
-        tween: Tween(begin: 0.1, end: MediaQuery.of(context).size.width * 0.7),
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.easeIn,
-        builder: (context, child, value) {
-          return Container(
-            width: value,
-            decoration: BoxDecoration(
-              color: Colors.black26,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: TextFormField(
-              onChanged: (value) async {
-                await widget.setValueSearch!(value);
-                await widget.changeFilterSearch!();
+      child: Container(
+        width: widget.constraint >= LarguraLayoutBuilder().telaPc
+            ? MediaQuery.of(context).size.width * 0.70
+            : MediaQuery.of(context).size.width * 0.3,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: TextFormField(
+          controller: controller,
+          onChanged: (value) async {
+            await widget.setValueSearch!(value);
+            await widget.changeFilterSearch!();
+          },
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.search),
+            suffixIcon: GestureDetector(
+              onTap: () {
+                widget.setValueSearch!('');
+                widget.changeFilterSearch!();
               },
-              style: const TextStyle(fontSize: 12),
-              decoration: const InputDecoration(
-                contentPadding:
-                    EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    controller.text = '';
+                    widget.setValueSearch!('');
+                    widget.changeFilterSearch!();
+                  },
+                  child: const Icon(Icons.clear),
+                ),
               ),
-              autofocus: true,
             ),
-          );
-        },
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+          ),
+          autofocus: false,
+        ),
       ),
     );
   }

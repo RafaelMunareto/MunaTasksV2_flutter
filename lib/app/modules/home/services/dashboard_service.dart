@@ -3,6 +3,10 @@ import 'package:munatasks2/app/modules/home/repositories/interfaces/dashboard_in
 import 'package:munatasks2/app/modules/home/services/interfaces/dashboard_service_interface.dart';
 import 'package:munatasks2/app/modules/home/shared/model/notifications_dio_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/etiqueta_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/etiquetas/shared/models/settings_model.dart';
+import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';
+import 'package:munatasks2/app/modules/settings/principal/shared/model/settings_user_model.dart';
 
 class DashboardService extends Disposable implements IDashboardService {
   final IDashboardRepository dashboardRepository;
@@ -28,8 +32,8 @@ class DashboardService extends Disposable implements IDashboardService {
   }
 
   @override
-  getDioTotal() {
-    return dashboardRepository.getDioTotal();
+  getDioTotal(String id) {
+    return dashboardRepository.getDioTotal(id);
   }
 
   @override
@@ -60,5 +64,35 @@ class DashboardService extends Disposable implements IDashboardService {
   @override
   Future emailDio(String id, String tipo) {
     return dashboardRepository.emailDio(id, tipo);
+  }
+
+  @override
+  Future<List<PerfilDioModel>> getPerfis() {
+    return dashboardRepository.getPerfis();
+  }
+
+  @override
+  Future<SettingsUserModel> getSettingsUser(String id) {
+    return dashboardRepository.getSettingsUser(id);
+  }
+
+  @override
+  Future<SettingsModel> getSettings() {
+    return dashboardRepository.getSettings();
+  }
+
+  @override
+  Future<List<EtiquetaDioModel>> getEtiquetas() {
+    return dashboardRepository.getEtiquetas();
+  }
+
+  @override
+  Future<PerfilDioModel> getPerfil(String id) {
+    return dashboardRepository.getPerfil(id);
+  }
+
+  @override
+  Future<List<TarefaDioModel>> getTasksTodas() {
+    return dashboardRepository.getTasksTodas();
   }
 }

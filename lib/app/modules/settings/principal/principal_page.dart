@@ -1,10 +1,12 @@
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:munatasks2/app/modules/home/shared/controller/client_store.dart';
 import 'package:munatasks2/app/modules/settings/principal/principal_store.dart';
 import 'package:flutter/material.dart';
 import 'package:munatasks2/app/modules/settings/principal/shared/widgets/check_email_widget.dart';
 import 'package:munatasks2/app/shared/components/app_bar_widget.dart';
-import 'package:munatasks2/app/shared/utils/circular_progress_widget.dart';
+import 'package:munatasks2/app/shared/components/logo_widget.dart';
+import 'package:munatasks2/app/shared/components/menu_screen.dart';
 
 class PrincipalPage extends StatefulWidget {
   final String title;
@@ -17,7 +19,7 @@ class PrincipalPage extends StatefulWidget {
 class PrincipalPageState extends State<PrincipalPage>
     with SingleTickerProviderStateMixin {
   final PrincipalStore store = Modular.get();
-
+  final ClientStore client = ClientStore();
   late Animation<double> opacidade;
   late AnimationController _controller;
 
@@ -56,16 +58,25 @@ class PrincipalPageState extends State<PrincipalPage>
             context: context,
             settings: true,
             rota: '/home/'),
+        drawer: Drawer(
+          child: MenuScreen(
+            constraint: constraint.maxWidth,
+          ),
+        ),
         body: Observer(
           builder: (_) {
-            return !store.client.finalize
-                ? SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 18.0),
-                      child: Center(
-                        child: SizedBox(
-                          width: withDevice,
-                          height: MediaQuery.of(context).size.height,
+            return SingleChildScrollView(
+              child: Center(
+                child: SizedBox(
+                  width: withDevice,
+                  height: MediaQuery.of(context).size.height,
+                  child: store.client.finalize
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 18.0),
+                          child: LogoWidget(constraint: constraint.maxWidth),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(top: 18.0),
                           child: Column(
                             children: [
                               store.client.settingsUser.user != ''
@@ -76,21 +87,20 @@ class PrincipalPageState extends State<PrincipalPage>
                                     )
                                   : Expanded(
                                       child: SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height:
-                                            MediaQuery.of(context).size.height,
-                                        child: const Center(
-                                            child: CircularProgressWidget()),
-                                      ),
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: MediaQuery.of(context)
+                                              .size
+                                              .height,
+                                          child: LogoWidget(
+                                              constraint: constraint.maxWidth)),
                                     ),
                             ],
                           ),
                         ),
-                      ),
-                    ),
-                  )
-                : const Center(child: CircularProgressWidget());
+                ),
+              ),
+            );
           },
         ),
       );
