@@ -20,7 +20,7 @@ import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Import package
-import 'package:image_cropper_for_web/image_cropper_for_web.dart';
+// import 'package:image_cropper_for_web/image_cropper_for_web.dart';
 
 class ImagemPerfilWidget extends StatefulWidget {
   final dynamic errorName;
@@ -45,20 +45,20 @@ class _ImagemPerfilWidgetState extends State<ImagemPerfilWidget>
   CroppedFile? imageFile;
   List<PlatformUiSettings>? buildUiSettings(BuildContext context) {
     return [
-      WebUiSettings(
-        context: context,
-        presentStyle: CropperPresentStyle.dialog,
-        boundary: Boundary(
-          width: 330,
-          height: 330,
-        ),
-        viewPort: ViewPort(width: 280, height: 280, type: 'circle'),
-        enableExif: false,
-        enableZoom: true,
-        showZoomer: true,
-        mouseWheelZoom: true,
-        enforceBoundary: false,
-      ),
+      // WebUiSettings(
+      //   context: context,
+      //   presentStyle: CropperPresentStyle.dialog,
+      //   boundary: Boundary(
+      //     width: 330,
+      //     height: 330,
+      //   ),
+      //   viewPort: ViewPort(width: 280, height: 280, type: 'circle'),
+      //   enableExif: false,
+      //   enableZoom: true,
+      //   showZoomer: true,
+      //   mouseWheelZoom: true,
+      //   enforceBoundary: false,
+      // ),
       AndroidUiSettings(
           toolbarTitle: 'Recortar',
           toolbarColor: Colors.deepOrange,
