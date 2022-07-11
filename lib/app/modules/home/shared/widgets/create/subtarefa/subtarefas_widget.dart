@@ -69,168 +69,170 @@ class _SubtarefasWidgetState extends State<SubtarefasWidget> {
                   ? darkThemeData(context).scaffoldBackgroundColor
                   : lightThemeData(context).scaffoldBackgroundColor,
               child: LayoutCreateSubtarefasWidget(
-                constraint: constraint.maxWidth,
-                widget1: ListSubtarefaWidget(
-                  tipo: 'pause',
-                  controller: widget.controller,
-                ),
-                widget2: ListSubtarefaWidget(
-                  tipo: 'play',
-                  controller: widget.controller,
-                ),
-                widget3: ListSubtarefaWidget(
-                  tipo: 'check',
-                  controller: widget.controller,
-                ),
-                widget4: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    width: 120,
-                    child: SingleChildScrollView(
-                      controller: ScrollController(),
-                      child: Wrap(
-                        direction: Axis.vertical,
-                        alignment: WrapAlignment.spaceBetween,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          for (var linha in totais)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 3.0),
-                              child: ConstrainedBox(
-                                constraints: const BoxConstraints(
-                                    minWidth: 95, minHeight: 50),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    if (linha.name == 'TODOS') {
-                                      store.clientCreate
-                                          .setSubtarefasSearch(subtarefasTotal);
-                                    } else {
-                                      store.clientCreate
-                                          .setSubtarefasSearch(subtarefasTotal);
-                                      store.clientCreate.setSubtarefasSearch(
-                                          store.clientCreate.subtarefas = store
-                                              .clientCreate.subtarefas
-                                              .where((element) =>
-                                                  element.user.name.name ==
-                                                  linha.name)
-                                              .toList());
-                                    }
-                                  },
-                                  child: MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    child: SizedBox(
-                                      width: 110,
-                                      child: Card(
-                                        elevation: 5,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            ConstrainedBox(
-                                              constraints: const BoxConstraints(
-                                                  minWidth: 90, minHeight: 20),
-                                              child: Card(
-                                                  color: Colors.blue
-                                                      .withOpacity(0.5),
-                                                  child: Center(
-                                                      child: Text(
-                                                    linha.name,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        fontSize: 8,
-                                                        color: kWhite),
-                                                  ))),
-                                            ),
-                                            Wrap(
-                                              alignment: WrapAlignment.center,
-                                              crossAxisAlignment:
-                                                  WrapCrossAlignment.center,
-                                              children: [
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 4, bottom: 4),
-                                                  child: Tooltip(
-                                                    message: linha.name,
-                                                    child: GFAvatar(
-                                                      radius: 18,
-                                                      shape: GFAvatarShape
-                                                          .standard,
-                                                      backgroundImage:
-                                                          NetworkImage(
-                                                              linha.urlImage),
-                                                    ),
-                                                  ),
-                                                ),
-                                                linha.qtdSubtarefa > 0
-                                                    ? Tooltip(
-                                                        message:
-                                                            "Qtd de Subtarefas",
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(4.0),
-                                                          child: Badge(
-                                                            toAnimate: false,
-                                                            badgeColor: Colors
-                                                                .grey.shade300,
-                                                            badgeContent: Text(
-                                                                linha.qtdSubtarefa >
-                                                                        1
-                                                                    ? linha
-                                                                        .qtdSubtarefa
-                                                                        .toString()
-                                                                    : linha
-                                                                        .qtdSubtarefa
-                                                                        .toString(),
-                                                                style:
-                                                                    const TextStyle(
-                                                                        fontSize:
-                                                                            14)),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : Tooltip(
-                                                        message:
-                                                            "Qtd de Subtarefas",
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(4.0),
-                                                          child: Badge(
-                                                            toAnimate: false,
-                                                            badgeColor:
-                                                                Colors.red,
-                                                            badgeContent:
-                                                                const Text('0',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                    )),
-                                                          ),
-                                                        ),
-                                                      ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
+                  constraint: constraint.maxWidth,
+                  widget1: ListSubtarefaWidget(
+                    tipo: 'pause',
+                    controller: widget.controller,
                   ),
-                ),
-              ),
+                  widget2: ListSubtarefaWidget(
+                    tipo: 'play',
+                    controller: widget.controller,
+                  ),
+                  widget3: ListSubtarefaWidget(
+                    tipo: 'check',
+                    controller: widget.controller,
+                  ),
+                  widget4: Container()
+
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8),
+                  //   child: SizedBox(
+                  //     height: MediaQuery.of(context).size.height,
+                  //     width: 120,
+                  //     child: SingleChildScrollView(
+                  //       controller: ScrollController(),
+                  //       child: Wrap(
+                  //         direction: Axis.vertical,
+                  //         alignment: WrapAlignment.spaceBetween,
+                  //         crossAxisAlignment: WrapCrossAlignment.center,
+                  //         children: [
+                  //           for (var linha in totais)
+                  //             Padding(
+                  //               padding: const EdgeInsets.only(top: 3.0),
+                  //               child: ConstrainedBox(
+                  //                 constraints: const BoxConstraints(
+                  //                     minWidth: 95, minHeight: 50),
+                  //                 child: GestureDetector(
+                  //                   onTap: () {
+                  //                     if (linha.name == 'TODOS') {
+                  //                       store.clientCreate
+                  //                           .setSubtarefasSearch(subtarefasTotal);
+                  //                     } else {
+                  //                       store.clientCreate
+                  //                           .setSubtarefasSearch(subtarefasTotal);
+                  //                       store.clientCreate.setSubtarefasSearch(
+                  //                           store.clientCreate.subtarefas = store
+                  //                               .clientCreate.subtarefas
+                  //                               .where((element) =>
+                  //                                   element.user.name.name ==
+                  //                                   linha.name)
+                  //                               .toList());
+                  //                     }
+                  //                   },
+                  //                   child: MouseRegion(
+                  //                     cursor: SystemMouseCursors.click,
+                  //                     child: SizedBox(
+                  //                       width: 110,
+                  //                       child: Card(
+                  //                         elevation: 5,
+                  //                         shape: RoundedRectangleBorder(
+                  //                           borderRadius:
+                  //                               BorderRadius.circular(5),
+                  //                         ),
+                  //                         child: Column(
+                  //                           children: [
+                  //                             ConstrainedBox(
+                  //                               constraints: const BoxConstraints(
+                  //                                   minWidth: 90, minHeight: 20),
+                  //                               child: Card(
+                  //                                   color: Colors.blue
+                  //                                       .withOpacity(0.5),
+                  //                                   child: Center(
+                  //                                       child: Text(
+                  //                                     linha.name,
+                  //                                     overflow:
+                  //                                         TextOverflow.ellipsis,
+                  //                                     style: const TextStyle(
+                  //                                         fontSize: 8,
+                  //                                         color: kWhite),
+                  //                                   ))),
+                  //                             ),
+                  //                             Wrap(
+                  //                               alignment: WrapAlignment.center,
+                  //                               crossAxisAlignment:
+                  //                                   WrapCrossAlignment.center,
+                  //                               children: [
+                  //                                 Container(
+                  //                                   padding:
+                  //                                       const EdgeInsets.only(
+                  //                                           right: 4, bottom: 4),
+                  //                                   child: Tooltip(
+                  //                                     message: linha.name,
+                  //                                     child: GFAvatar(
+                  //                                       radius: 18,
+                  //                                       shape: GFAvatarShape
+                  //                                           .standard,
+                  //                                       backgroundImage:
+                  //                                           NetworkImage(
+                  //                                               linha.urlImage),
+                  //                                     ),
+                  //                                   ),
+                  //                                 ),
+                  //                                 linha.qtdSubtarefa > 0
+                  //                                     ? Tooltip(
+                  //                                         message:
+                  //                                             "Qtd de Subtarefas",
+                  //                                         child: Padding(
+                  //                                           padding:
+                  //                                               const EdgeInsets
+                  //                                                   .all(4.0),
+                  //                                           child: Badge(
+                  //                                             toAnimate: false,
+                  //                                             badgeColor: Colors
+                  //                                                 .grey.shade300,
+                  //                                             badgeContent: Text(
+                  //                                                 linha.qtdSubtarefa >
+                  //                                                         1
+                  //                                                     ? linha
+                  //                                                         .qtdSubtarefa
+                  //                                                         .toString()
+                  //                                                     : linha
+                  //                                                         .qtdSubtarefa
+                  //                                                         .toString(),
+                  //                                                 style:
+                  //                                                     const TextStyle(
+                  //                                                         fontSize:
+                  //                                                             14)),
+                  //                                           ),
+                  //                                         ),
+                  //                                       )
+                  //                                     : Tooltip(
+                  //                                         message:
+                  //                                             "Qtd de Subtarefas",
+                  //                                         child: Padding(
+                  //                                           padding:
+                  //                                               const EdgeInsets
+                  //                                                   .all(4.0),
+                  //                                           child: Badge(
+                  //                                             toAnimate: false,
+                  //                                             badgeColor:
+                  //                                                 Colors.red,
+                  //                                             badgeContent:
+                  //                                                 const Text('0',
+                  //                                                     style:
+                  //                                                         TextStyle(
+                  //                                                       fontSize:
+                  //                                                           14,
+                  //                                                     )),
+                  //                                           ),
+                  //                                         ),
+                  //                                       ),
+                  //                               ],
+                  //                             ),
+                  //                           ],
+                  //                         ),
+                  //                       ),
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  ),
             ),
           );
         },

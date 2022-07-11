@@ -158,6 +158,7 @@ class _ButtonSaveCreateWidgetState extends State<ButtonSaveCreateWidget> {
 
     return Observer(builder: (_) {
       return Padding(
+        key: UniqueKey(),
         padding: const EdgeInsets.only(top: 8, left: 4, right: 8),
         child: Align(
             alignment: Alignment.bottomRight,
