@@ -93,7 +93,7 @@ scripts:
   chrome: flutter run -d Chrome --dart-define=FLUTTER_WEB_CANVASKIT_FORCE_CPU_ONLY=true --release --web-port 52230
   build_web: flutter build web --web-renderer canvaskit --release && scp -r .\build\web\* root@45.82.75.3:/home/munatask/public_html/
   build_windows: flutter build windows
-  build_linux: flutter build linux
+  build_linux: flutter build linux && snapcraft clean && snapcraft && snapcraft upload --release=stable munatask_2.3.1_amd64.snap
   build_bundle: flutter build appbundle --build-name=2.3.1 --build-number=231 --no-tree-shake-icons
   build_apk: flutter build apk --build-name=2.1.5+5 --build-number=215 --no-tree-shake-icons
   launch_icon: flutter pub run flutter_launcher_icons:main

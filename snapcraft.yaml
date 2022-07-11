@@ -1,5 +1,5 @@
 name: munatask
-version: 2.3.0
+version: 2.3.1
 summary: Munatask kanban
 description: Kanban para controller de tarefas
 confinement: strict
