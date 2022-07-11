@@ -7,28 +7,23 @@ base: core18
 grade: stable
 icon: snap/gui/icon.png
 
+apps:
+  munatask:
+    command: munatask
+    extensions: [flutter-master]
+    plugs:
+      - network
+      - desktop
+
 parts:
   munatask:
-    source: .
-    # stage:
-    #   - -root/parts/munatask/install/usr/libexec/flutter/bin/flutter
+    source: build/linux/x64/release/bundle
     plugin: flutter
     flutter-target: lib/main.dart
     stage:
       - -usr/bin/flutter
-      - -usr/libexec/flutter/linux/flutter/ephemeral/.plugin_symlinks/bitsdojo_window_linux
-      - -usr/libexec/flutter/linux/flutter/ephemeral/.plugin_symlinks/package_info_plus_linux
-      - -usr/libexec/flutter/linux/flutter/ephemeral/.plugin_symlinks/shared_preferences_linux
-      - -usr/libexec/flutter/linux/flutter/ephemeral/.plugin_symlinks/url_launcher_linux
-      - -usr/libexec/flutter/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux
     override-build: |
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/bin
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/libexec
       cp -r $SNAPCRAFT_PART_SRC $SNAPCRAFT_PART_INSTALL/usr/libexec/flutter
       ln -s $SNAPCRAFT_PART_INSTALL/usr/libexec/flutter/bin/flutter $SNAPCRAFT_PART_INSTALL/usr/bin/flutter
-
-apps:
-  munatask:
-    command: munatask
-    extensions: [flutter-master]
-# usr/bin/flutter -> /root/parts/munatask/install/usr/libexec/flutter/bin/flutter, usr/libexec/flutter/linux/flutter/ephemeral/.plugin_symlinks/bitsdojo_window_linux -> /home/munareto/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/bitsdojo_window_linux-0.1.2, usr/libexec/flutter/linux/flutter/ephemeral/.plugin_symlinks/package_info_plus_linux -> /home/munareto/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/package_info_plus_linux-1.0.5, usr/libexec/flutter/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux -> /home/munareto/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.1.6, usr/libexec/flutter/linux/flutter/ephemeral/.plugin_symlinks/shared_preferences_linux -> /home/munareto/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_linux-2.1.1, usr/libexec/flutter/linux/flutter/ephemeral/.plugin_symlinks/url_launcher_linux -> /home/munareto/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-3.0.1
