@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "MunaTasks"
-#define MyAppVersion "2.3.0+0"
+#define MyAppVersion "2.3.1+2"
 #define MyAppPublisher "MunaCorp"
 #define MyAppURL "http://www.munatask.com/"
-#define MyAppExeName "munatasks.exe"
+#define MyAppExeName "munatask.exe"
 #define MyAppAssocName "MunaTask"
 #define MyAppAssocExt ".exe"
 #define MyAppAssocKey StringChange(MyAppAssocName, " ", "") + MyAppAssocExt
