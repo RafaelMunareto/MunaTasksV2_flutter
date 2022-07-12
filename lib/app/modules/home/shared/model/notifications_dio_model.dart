@@ -2,7 +2,7 @@ import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_m
 
 class NotificationsDioModel {
   dynamic id;
-  String texto;
+  dynamic texto;
   dynamic user;
 
   NotificationsDioModel({

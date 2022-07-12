@@ -103,15 +103,15 @@ class _ListSubtarefaWidgetState extends State<ListSubtarefaWidget> {
                       newIndex -= 1;
                     }
                     final dynamic item =
-                        store.clientCreate.subtarefas.removeAt(oldIndex);
-                    store.clientCreate.subtarefas.insert(newIndex, item);
+                        store.clientCreate.subtarefasFilter.removeAt(oldIndex);
+                    store.clientCreate.subtarefasFilter.insert(newIndex, item);
                   });
                 },
-                itemCount: store.clientCreate.subtarefas
+                itemCount: store.clientCreate.subtarefasFilter
                     .where((element) => element.status == widget.tipo)
                     .length,
                 itemBuilder: (BuildContext context, int index) {
-                  var linha = store.clientCreate.subtarefas
+                  var linha = store.clientCreate.subtarefasFilter
                       .where((element) => element.status == widget.tipo)
                       .toList()[index];
                   return GestureDetector(
@@ -120,6 +120,7 @@ class _ListSubtarefaWidgetState extends State<ListSubtarefaWidget> {
                       store.clientCreate.setEditarSubtarefa(true);
                       store.clientCreate.setEditar(true);
                       store.clientCreate.setSubtarefaUpdate(linha);
+                      store.clientCreate.setSubtarefasFilter(linha);
                       store.clientCreate
                           .setSubtarefasUpdate(store.clientCreate.subtarefas);
 

@@ -252,6 +252,22 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
+  late final _$subtarefasFilterAtom =
+      Atom(name: '_ClientCreateStoreBase.subtarefasFilter', context: context);
+
+  @override
+  List<dynamic> get subtarefasFilter {
+    _$subtarefasFilterAtom.reportRead();
+    return super.subtarefasFilter;
+  }
+
+  @override
+  set subtarefasFilter(List<dynamic> value) {
+    _$subtarefasFilterAtom.reportWrite(value, super.subtarefasFilter, () {
+      super.subtarefasFilter = value;
+    });
+  }
+
   late final _$loadingSubtarefaAtom =
       Atom(name: '_ClientCreateStoreBase.loadingSubtarefa', context: context);
 
@@ -414,6 +430,17 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
 
   late final _$_ClientCreateStoreBaseActionController =
       ActionController(name: '_ClientCreateStoreBase', context: context);
+
+  @override
+  dynamic setSubtarefasFilter(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.setSubtarefasFilter');
+    try {
+      return super.setSubtarefasFilter(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic setSubtarefasUpdate(dynamic value) {
@@ -993,6 +1020,7 @@ imageUser: ${imageUser},
 createUser: ${createUser},
 subtarefaTextSave: ${subtarefaTextSave},
 subtarefas: ${subtarefas},
+subtarefasFilter: ${subtarefasFilter},
 loadingSubtarefa: ${loadingSubtarefa},
 loadingUser: ${loadingUser},
 loadingTarefa: ${loadingTarefa},

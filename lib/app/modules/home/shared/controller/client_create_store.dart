@@ -52,6 +52,12 @@ abstract class _ClientCreateStoreBase with Store {
   @observable
   List<dynamic> subtarefas = [];
 
+  @observable
+  List<dynamic> subtarefasFilter = [];
+
+  @action
+  setSubtarefasFilter(value) => subtarefasFilter = value;
+
   @action
   setSubtarefasUpdate(value) => subtarefas = value;
 
