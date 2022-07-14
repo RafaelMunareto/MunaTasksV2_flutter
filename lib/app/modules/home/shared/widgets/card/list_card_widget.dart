@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:badges/badges.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:munatasks2/app/modules/home/home_store.dart';
@@ -118,7 +119,7 @@ class _ListCardWidgetState extends State<ListCardWidget>
                         height: MediaQuery.of(context).size.height * 0.90,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 32),
-                          child: Platform.isAndroid
+                          child: defaultTargetPlatform == TargetPlatform.android
                               ? ListView.builder(
                                   scrollDirection: Axis.vertical,
                                   physics: const ScrollPhysics(),
