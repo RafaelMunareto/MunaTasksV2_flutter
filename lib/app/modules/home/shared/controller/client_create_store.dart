@@ -1,7 +1,9 @@
 import 'package:mobx/mobx.dart';
 import 'package:munatasks2/app/modules/home/shared/model/subtarefas_dio_model.dart';
+import 'package:munatasks2/app/modules/home/shared/model/subtarefas_qtd_model.dart';
 import 'package:munatasks2/app/modules/home/shared/model/tarefa_dio_model.dart';
 import 'package:munatasks2/app/modules/settings/perfil/shared/model/perfil_dio_model.dart';
+import 'package:munatasks2/app/shared/utils/dio_struture.dart';
 
 import '../../../settings/etiquetas/shared/models/etiqueta_dio_model.dart';
 
@@ -224,19 +226,24 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   @action
-  setTarefa() {
+  setTarefa() async {
     tarefaModelSave.etiqueta = tarefaModelSaveEtiqueta;
     tarefaModelSave.texto = tarefaModelSaveTexto;
     tarefaModelSave.fase = changeFaseTarefa(faseTarefa);
     tarefaModelSave.data = tarefaModelData;
     tarefaModelSave.subTarefa = subtarefas;
+    if (createUser.id != "") {
+      if (tarefaModelSave.subtarefas
+          .where((a) => a.user.id == createUser.id)
+          .isEmpty) {
+        users.removeWhere((element) => element.id == createUser.id);
+      }
+      if (users.where((a) => a.id == createUser.id).isEmpty) {
+        users.add(createUser);
+      }
+    }
     tarefaModelSave.users = users.map((e) => e).toList();
     tarefaModelSave.prioridade = tarefaModelPrioritario;
-    if (createUser.id != "") {
-      users.where((a) => a.id == createUser.id).isEmpty
-          ? users.add(createUser)
-          : null;
-    }
     cleanSubtarefa();
   }
 
@@ -319,8 +326,28 @@ abstract class _ClientCreateStoreBase with Store {
           e.title == model.title &&
           e.user.name == model.user.name,
     );
+
+    // if (subtarefasFilter
+    //         .map((e) => e.user.email == model.user.name.email)
+    //         .length >
+    //     2) {
+    //   users.removeWhere((e) => e.name.email == model.user.name.email);
+    // } else if (subtarefasFilter
+    //         .map((e) => e.user.email == model.user.name.email)
+    //         .length ==
+    //     1) {
+    //   users.removeWhere((e) => e.name.email == model.user.name.email);
+    // }
+
+    // subtarefasFilter.removeWhere(
+    //   (e) =>
+    //       e.texto == model.texto &&
+    //       e.title == model.title &&
+    //       e.user.name == model.user.name,
+    // );
     setLoadingSubtarefa(false);
     setLoadingUser(false);
+    subtarefasVsPerfil();
   }
 
   @observable
@@ -438,6 +465,61 @@ abstract class _ClientCreateStoreBase with Store {
   @observable
   bool editarSubtarefa = false;
 
+  @observable
+  List<SubtarefasQtdModel> totais = [];
+
   @action
   setEditarSubtarefa(value) => editarSubtarefa = value;
+
+  @action
+  cleanSubtarefasFilter() => subtarefasFilter = [];
+
+  @action
+  subtarefasVsPerfil() async {
+    totais = [];
+    await cleanSubtarefasFilter();
+    await setSubtarefasFilter(subtarefas);
+    totais.add(SubtarefasQtdModel.fromDocument({
+      "name": 'TODOS',
+      "urlImage": DioStruture().baseUrlMunatasks + 'files/todos.png',
+      "qtdSubtarefa": subtarefas.length
+    }));
+    for (var e in subtarefasFilter) {
+      if (totais.where((element) => element.name == e.user.name.name).isEmpty) {
+        totais.add(SubtarefasQtdModel.fromDocument({
+          "name": e.user.name.name,
+          "urlImage": e.user.urlImage,
+          "qtdSubtarefa": calculaQtdSubtarefa(e.user.id)
+        }));
+      }
+    }
+  }
+
+  @action
+  totaisDelete(value) {
+    totais.map((e) {
+      if (e.name == value.name.name) {
+        return e.qtdSubtarefa - 1;
+      }
+      return e;
+    });
+  }
+
+  @action
+  subtarefasVsPerfilUpdate() async {
+    totais = [];
+    for (var e in subtarefas) {
+      if (totais.where((element) => element.name == e.user.name.name).isEmpty) {
+        totais.add(SubtarefasQtdModel.fromDocument({
+          "name": e.user.name.name,
+          "urlImage": e.user.urlImage,
+          "qtdSubtarefa": calculaQtdSubtarefa(e.user.id)
+        }));
+      }
+    }
+  }
+
+  calculaQtdSubtarefa(String id) {
+    return subtarefas.where((element) => element.user.id == id).length;
+  }
 }

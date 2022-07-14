@@ -49,6 +49,20 @@ class ChangelogPageState extends State<ChangelogPage> {
                         ChangeTextWidget(
                           constraint: constraint.maxWidth,
                           theme: client.theme,
+                          title: 'Versão 2.3.2',
+                          corpo:
+                              ' ✓ Inclusão do compoenente de filtro e quantidade da subtarefa. \n\n'
+                              ' ✓ Ajuste do bug de atualização dos cards das tarefas e subtarefas.\n\n'
+                              ' ✓ Ajuste do bug do web socket. \n\n'
+                              ' ✓ Ajuste do bug da mensagem do botão de incluir ou editar subtarefa. \n\n'
+                              ' ✓ Ajuste do tamanho inicial na tela do windows.\n\n'
+                              ' ✓ Ajuste da versão no popup de atualização do windows para a versão atual e não há local. \n\n'
+                              ' ✓ Ajuste do scroll das listas de tarefas na versão mobile. \n\n'
+                              ' ✓ Ajuste no salvamento do users no create. \n\n',
+                        ),
+                        ChangeTextWidget(
+                          constraint: constraint.maxWidth,
+                          theme: client.theme,
                           title: 'Versão 2.3.0',
                           corpo:
                               ' ✓ Alteração do layout do dashboard com todas as fases. \n\n'

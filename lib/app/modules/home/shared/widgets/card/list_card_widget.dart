@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -88,6 +90,7 @@ class _ListCardWidgetState extends State<ListCardWidget>
                                           cursor: SystemMouseCursors.click,
                                           child: Icon(Icons.add)),
                                       onTap: () {
+                                        store.clientCreate.subtarefasVsPerfil();
                                         store.clientCreate.cleanSave();
                                         store.clientCreate.cleanSubtarefa();
                                         store.clientCreate.setEditar(false);
@@ -115,20 +118,40 @@ class _ListCardWidgetState extends State<ListCardWidget>
                         height: MediaQuery.of(context).size.height * 0.90,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 32),
-                          child: ScrollSpeed(
-                            child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              padding: const EdgeInsets.all(8),
-                              itemCount: widget.badgets.dados!.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return CardWidget(
-                                  tarefaDioModel: widget.badgets.dados![index],
-                                  constraint: constraint.maxWidth,
-                                );
-                              },
-                            ),
-                          ),
+                          child: Platform.isAndroid
+                              ? ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  physics: const ScrollPhysics(),
+                                  shrinkWrap: true,
+                                  padding: const EdgeInsets.all(8),
+                                  itemCount: widget.badgets.dados!.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return CardWidget(
+                                      tarefaDioModel:
+                                          widget.badgets.dados![index],
+                                      constraint: constraint.maxWidth,
+                                    );
+                                  },
+                                )
+                              : ScrollSpeed(
+                                  child: ScrollSpeed(
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      padding: const EdgeInsets.all(8),
+                                      itemCount: widget.badgets.dados!.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return CardWidget(
+                                          tarefaDioModel:
+                                              widget.badgets.dados![index],
+                                          constraint: constraint.maxWidth,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
                         ),
                       ),
               ],

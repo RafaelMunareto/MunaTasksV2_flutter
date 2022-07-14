@@ -7,6 +7,7 @@ import 'package:munatasks2/app/modules/home/home_store.dart';
 import 'package:munatasks2/app/shared/components/circle_avatar_widget.dart';
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/simple_button_widget.dart';
+import 'package:munatasks2/app/shared/utils/snackbar_custom.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class ListSubtarefaWidget extends StatefulWidget {
@@ -120,7 +121,6 @@ class _ListSubtarefaWidgetState extends State<ListSubtarefaWidget> {
                       store.clientCreate.setEditarSubtarefa(true);
                       store.clientCreate.setEditar(true);
                       store.clientCreate.setSubtarefaUpdate(linha);
-                      store.clientCreate.setSubtarefasFilter(linha);
                       store.clientCreate
                           .setSubtarefasUpdate(store.clientCreate.subtarefas);
 
@@ -231,11 +231,6 @@ class _ListSubtarefaWidgetState extends State<ListSubtarefaWidget> {
     });
   }
 
-  clean() {
-    store.clientCreate.cleanSubtarefa();
-    widget.controller.text = '';
-  }
-
   dialogDelete(context, tarefa) {
     showDialog(
       context: context,
@@ -262,17 +257,46 @@ class _ListSubtarefaWidgetState extends State<ListSubtarefaWidget> {
                 buttonName: 'CANCELAR',
                 popUp: true,
               ),
-              SimpleButtonWidget(
-                theme: store.client.theme,
-                buttonName: 'EXCLUIR',
-                popUp: true,
-                function: store.clientCreate.removeDismissSubtarefa,
-                dataFunction: tarefa,
-                scnack: true,
-                msgSnack: 'Deletado com sucesso!',
-                delete: true,
-                getFase: clean,
-              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    store.client.theme
+                        ? darkThemeData(context).primaryColor
+                        : lightThemeData(context).primaryColor,
+                  ),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      side: BorderSide(
+                        color: store.client.theme
+                            ? darkThemeData(context).primaryColorLight
+                            : lightThemeData(context).primaryColorLight,
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  store.clientCreate.subtarefas
+                      .removeWhere((element) => element.id == tarefa.id);
+                  store.clientCreate.cleanSubtarefa();
+                  store.clientCreate.setTarefa();
+                  store.updateNewTarefa(store.clientCreate.tarefaModelSave);
+                  widget.controller.text = '';
+                  SnackbarCustom().createSnackBar(
+                      'Deletado com sucesso!', Colors.green, context);
+                  Modular.to.pop();
+                  store.clientCreate.subtarefasVsPerfil();
+                },
+                child: Text(
+                  'DELETAR',
+                  style: TextStyle(
+                    color: store.client.theme
+                        ? darkThemeData(context).scaffoldBackgroundColor
+                        : lightThemeData(context).scaffoldBackgroundColor,
+                  ),
+                ),
+              )
             ],
           ),
         );

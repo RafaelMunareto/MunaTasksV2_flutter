@@ -132,7 +132,7 @@ class FunctionsUtils {
                       : lightThemeData(context).primaryColor),
             ),
             content: Text(
-              'Sua versão está desatualizada a nova versão é a ${store.client.version}',
+              'Sua versão está desatualizada a nova versão é a ${store.client.versionBd}',
             ),
             actions: [
               ElevatedButton(

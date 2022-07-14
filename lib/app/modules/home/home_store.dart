@@ -285,9 +285,8 @@ abstract class HomeStoreBase with Store {
     });
     client.taskDioSearch.add(clientCreate.tarefaModelSave);
     client.setTaskDioSearch(client.taskDioSearch);
-    badgets();
-    Timer(
-        const Duration(minutes: 10), () => socket!.emit('newTaskFront', true));
+    getPass();
+    Timer(const Duration(minutes: 2), () => socket!.emit('newTaskFront', true));
   }
 
   updateNewTarefa(model) async {
@@ -298,8 +297,8 @@ abstract class HomeStoreBase with Store {
       e.id == model.id ? model : e;
     });
     client.setTaskDioSearch(client.taskDioSearch);
-    badgets();
-    Timer(const Duration(minutes: 10), () => socket!.emit('updateList', true));
+    getPass();
+    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
   }
 
   deleteDioTasks(TarefaDioModel model) async {

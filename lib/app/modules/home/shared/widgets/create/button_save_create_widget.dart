@@ -28,6 +28,7 @@ class ButtonSaveCreateWidget extends StatefulWidget {
 class _ButtonSaveCreateWidgetState extends State<ButtonSaveCreateWidget> {
   HomeStore store = Modular.get();
   bool envioMsg = false;
+
   List checkErrors() {
     if (store.clientCreate.tarefaModelSaveTexto != "" &&
         store.clientCreate.subtarefaTextSave != "" &&
@@ -111,10 +112,11 @@ class _ButtonSaveCreateWidgetState extends State<ButtonSaveCreateWidget> {
             context,
           );
         });
-        store.clientCreate.setEditarSubtarefa(false);
-        store.clientCreate.setEditar(false);
-        store.clientCreate.setLoadingTarefa(false);
       }
+      store.clientCreate.setEditarSubtarefa(false);
+      store.clientCreate.setEditar(false);
+      store.clientCreate.setLoadingTarefa(false);
+      store.clientCreate.subtarefasVsPerfil();
     }
   }
 
@@ -127,7 +129,7 @@ class _ButtonSaveCreateWidgetState extends State<ButtonSaveCreateWidget> {
     }
     store.clientCreate.setSubtarefaTextSave(widget.textoSubtarefa.text);
     if (store.clientCreate.isValidSubtarefa) {
-      store.clientCreate.setSubtarefas();
+      await store.clientCreate.setSubtarefas();
       widget.textoSubtarefa.text = '';
       if (store.clientCreate.editarSubtarefa) {
         SnackbarCustom().createSnackBar(
@@ -135,6 +137,9 @@ class _ButtonSaveCreateWidgetState extends State<ButtonSaveCreateWidget> {
           Colors.green,
           context,
         );
+        await store.clientCreate
+            .setSubtarefasFilter(store.clientCreate.subtarefas);
+
         setState(() {
           envioMsg = true;
         });

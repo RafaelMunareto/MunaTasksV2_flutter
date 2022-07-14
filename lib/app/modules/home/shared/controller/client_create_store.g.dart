@@ -428,6 +428,50 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
     });
   }
 
+  late final _$totaisAtom =
+      Atom(name: '_ClientCreateStoreBase.totais', context: context);
+
+  @override
+  List<SubtarefasQtdModel> get totais {
+    _$totaisAtom.reportRead();
+    return super.totais;
+  }
+
+  @override
+  set totais(List<SubtarefasQtdModel> value) {
+    _$totaisAtom.reportWrite(value, super.totais, () {
+      super.totais = value;
+    });
+  }
+
+  late final _$setTarefaAsyncAction =
+      AsyncAction('_ClientCreateStoreBase.setTarefa', context: context);
+
+  @override
+  Future setTarefa() {
+    return _$setTarefaAsyncAction.run(() => super.setTarefa());
+  }
+
+  late final _$subtarefasVsPerfilAsyncAction = AsyncAction(
+      '_ClientCreateStoreBase.subtarefasVsPerfil',
+      context: context);
+
+  @override
+  Future subtarefasVsPerfil() {
+    return _$subtarefasVsPerfilAsyncAction
+        .run(() => super.subtarefasVsPerfil());
+  }
+
+  late final _$subtarefasVsPerfilUpdateAsyncAction = AsyncAction(
+      '_ClientCreateStoreBase.subtarefasVsPerfilUpdate',
+      context: context);
+
+  @override
+  Future subtarefasVsPerfilUpdate() {
+    return _$subtarefasVsPerfilUpdateAsyncAction
+        .run(() => super.subtarefasVsPerfilUpdate());
+  }
+
   late final _$_ClientCreateStoreBaseActionController =
       ActionController(name: '_ClientCreateStoreBase', context: context);
 
@@ -861,17 +905,6 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
-  dynamic setTarefa() {
-    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
-        name: '_ClientCreateStoreBase.setTarefa');
-    try {
-      return super.setTarefa();
-    } finally {
-      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic setTarefaId(dynamic value) {
     final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
         name: '_ClientCreateStoreBase.setTarefaId');
@@ -1004,6 +1037,28 @@ mixin _$ClientCreateStore on _ClientCreateStoreBase, Store {
   }
 
   @override
+  dynamic cleanSubtarefasFilter() {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.cleanSubtarefasFilter');
+    try {
+      return super.cleanSubtarefasFilter();
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic totaisDelete(dynamic value) {
+    final _$actionInfo = _$_ClientCreateStoreBaseActionController.startAction(
+        name: '_ClientCreateStoreBase.totaisDelete');
+    try {
+      return super.totaisDelete(value);
+    } finally {
+      _$_ClientCreateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 tarefaModelSave: ${tarefaModelSave},
@@ -1031,6 +1086,7 @@ editar: ${editar},
 loadingSearch: ${loadingSearch},
 subtarefaAction: ${subtarefaAction},
 editarSubtarefa: ${editarSubtarefa},
+totais: ${totais},
 isValidTarefa: ${isValidTarefa},
 isValidSubtarefa: ${isValidSubtarefa}
     ''';
