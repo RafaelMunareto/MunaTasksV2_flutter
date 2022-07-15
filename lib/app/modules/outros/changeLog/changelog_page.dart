@@ -49,7 +49,7 @@ class ChangelogPageState extends State<ChangelogPage> {
                         ChangeTextWidget(
                           constraint: constraint.maxWidth,
                           theme: client.theme,
-                          title: 'Versão 2.3.2',
+                          title: 'Versão 2.3.3',
                           corpo: ' ✓ Ajuste do bug de salvamento. \n\n'
                               ' ✓ Aumento no tamanho do header no mobile.\n\n'
                               ' ✓ Implementação do botão de refresh no header. \n\n'
