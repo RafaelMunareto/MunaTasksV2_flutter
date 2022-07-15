@@ -15,6 +15,7 @@ import 'package:munatasks2/app/shared/repositories/localstorage/local_storage_sh
 import 'package:munatasks2/app/shared/utils/convert_icon.dart';
 import 'package:munatasks2/app/shared/utils/dialog_buttom.dart';
 import 'package:munatasks2/app/shared/utils/dio_struture.dart';
+import 'package:munatasks2/app/shared/utils/largura_layout_builder.dart';
 import 'package:munatasks2/app/shared/utils/themes/theme.dart';
 
 class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
@@ -114,16 +115,17 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      height: 30,
-                      width: 30,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/icon/icon.png'),
-                          opacity: 0.1,
+                    if (constraint.maxWidth >= LarguraLayoutBuilder().telaPc)
+                      Container(
+                        height: 30,
+                        width: 30,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/icon/icon.png'),
+                            opacity: 0.1,
+                          ),
                         ),
                       ),
-                    ),
                     PopSearchWidget(
                       constraint: constraint.maxWidth,
                       setValueSearch: widget.setValueSearch,
@@ -138,9 +140,18 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                 child: CircularProgressIndicator(),
                               ),
                             )
-                          : const SizedBox(
-                              width: 22,
-                              height: 22,
+                          : Center(
+                              child: SizedBox(
+                                width: 22,
+                                height: 22,
+                                child: GestureDetector(
+                                  onTap: () => widget.getPass!(),
+                                  child: const MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: Icon(Icons.refresh),
+                                  ),
+                                ),
+                              ),
                             ),
                     Tooltip(
                       message: "Filtra Etiquetas",

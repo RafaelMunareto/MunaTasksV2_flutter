@@ -29,68 +29,15 @@ class _ButtonSaveCreateWidgetState extends State<ButtonSaveCreateWidget> {
   HomeStore store = Modular.get();
   bool envioMsg = false;
 
-  List checkErrors() {
-    if (store.clientCreate.tarefaModelSaveTexto != "" &&
-        store.clientCreate.subtarefaTextSave != "" &&
-        (store.clientCreate.createUser.id == '' ||
-            store.clientCreate.subtarefaModelSaveTitle == '' ||
-            store.clientCreate.users.isEmpty ||
-            store.clientCreate.tarefaModelSaveEtiqueta.id == '')) {
-      return [false, 'VERIFICAR ERROS'];
-    }
-
-    if (store.clientCreate.tarefaModelSaveTexto != "" &&
-        store.clientCreate.subtarefaTextSave == "" &&
-        store.clientCreate.createUser.id != '' &&
-        store.clientCreate.subtarefaModelSaveTitle != '' &&
-        store.clientCreate.users.isEmpty &&
-        store.clientCreate.tarefaModelSaveEtiqueta.id == '') {
-      return [false, 'VERIFICAR ERROS'];
-    }
-
-    if (store.clientCreate.tarefaModelSaveTexto != "" &&
-        store.clientCreate.subtarefaTextSave != "" &&
-        store.clientCreate.createUser.id != '' &&
-        store.clientCreate.subtarefaModelSaveTitle != '' &&
-        store.clientCreate.users.isNotEmpty &&
-        store.clientCreate.tarefaModelSaveEtiqueta.id != '') {
-      return store.clientCreate.editarSubtarefa
-          ? [true, 'EDITAR SUBTAREFA']
-          : [true, 'INCLUIR SUBTAREFA'];
-    }
-
-    if (store.clientCreate.tarefaModelSaveTexto == "" &&
-        (store.clientCreate.users.isEmpty ||
-            store.clientCreate.tarefaModelSaveEtiqueta.id == '')) {
-      return [false, 'VERIFICAR ERROS'];
-    }
-    if (store.clientCreate.tarefaModelSaveTexto != "" &&
-        (store.clientCreate.users.isEmpty ||
-            store.clientCreate.tarefaModelSaveEtiqueta.id == '')) {
-      return [false, 'VERIFICAR ERROS'];
-    }
-
-    if (store.clientCreate.tarefaModelSaveTexto != "" &&
-        store.clientCreate.subtarefaTextSave == "" &&
-        store.clientCreate.users.isNotEmpty &&
-        store.clientCreate.tarefaModelSaveEtiqueta.id != '') {
-      return store.clientCreate.tarefaId != ""
-          ? [true, 'EDITAR TAREFA']
-          : [true, 'SALVAR TAREFA'];
-    }
-
-    return [false, 'VERIFICAR ERROS'];
-  }
-
-  tarefaSave() {
+  tarefaSave() async {
     store.clientCreate.setLoadingTarefa(true);
 
-    store.clientCreate.setTarefa();
     if (store.clientCreate.isValidTarefa) {
       if (store.clientCreate.tarefaId != '') {
         if (store.clientCreate.tarefaModelSave.id == '') {
           store.clientCreate.tarefaModelSave.id = store.clientCreate.tarefaId;
         }
+        store.clientCreate.setTarefa();
         store.updateNewTarefa(store.clientCreate.tarefaModelSave).then((e) {
           if (!envioMsg) {
             SnackbarCustom().createSnackBar(
@@ -105,6 +52,7 @@ class _ButtonSaveCreateWidgetState extends State<ButtonSaveCreateWidget> {
         });
         store.clientCreate.setLoadingTarefa(false);
       } else {
+        store.clientCreate.setTarefa();
         store.saveNewTarefa().then((e) {
           SnackbarCustom().createSnackBar(
             "Tarefa salva com sucesso!",
@@ -129,7 +77,6 @@ class _ButtonSaveCreateWidgetState extends State<ButtonSaveCreateWidget> {
     }
     store.clientCreate.setSubtarefaTextSave(widget.textoSubtarefa.text);
     if (store.clientCreate.isValidSubtarefa) {
-      await store.clientCreate.setSubtarefas();
       widget.textoSubtarefa.text = '';
       if (store.clientCreate.editarSubtarefa) {
         SnackbarCustom().createSnackBar(
@@ -137,13 +84,16 @@ class _ButtonSaveCreateWidgetState extends State<ButtonSaveCreateWidget> {
           Colors.green,
           context,
         );
+        await store.clientCreate.setSubtarefas();
         await store.clientCreate
             .setSubtarefasFilter(store.clientCreate.subtarefas);
-
         setState(() {
           envioMsg = true;
         });
       } else {
+        await store.clientCreate.setSubtarefas();
+        await store.clientCreate
+            .setSubtarefasFilter(store.clientCreate.subtarefas);
         SnackbarCustom().createSnackBar(
           "Subtarefa salva com sucesso!",
           Colors.green,
@@ -171,7 +121,7 @@ class _ButtonSaveCreateWidgetState extends State<ButtonSaveCreateWidget> {
               return ElevatedButton.icon(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
-                    (checkErrors()[0] ? Colors.blue : kDarkGrey),
+                    (Colors.blue),
                   ),
                 ),
                 onPressed: () async {
@@ -263,12 +213,10 @@ class _ButtonSaveCreateWidgetState extends State<ButtonSaveCreateWidget> {
                           color: Colors.white,
                         ),
                       )
-                    : checkErrors()[0]
-                        ? const Icon(Icons.add_circle, size: 18)
-                        : const Icon(Icons.warning),
-                label: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(checkErrors()[1]),
+                    : const Icon(Icons.add_circle, size: 18),
+                label: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('Salvar'),
                 ),
               );
             })),

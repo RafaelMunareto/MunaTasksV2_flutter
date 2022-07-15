@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
     tz.initializeTimeZones();
     FunctionsUtils().sendNotification();
     super.initState();
-    if (defaultTargetPlatform == TargetPlatform.android) {
+    if (defaultTargetPlatform == TargetPlatform.android && !kIsWeb) {
       FunctionsUtils().verifyVersion(context);
     }
   }

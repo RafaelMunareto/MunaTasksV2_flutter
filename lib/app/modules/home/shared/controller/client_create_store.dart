@@ -226,18 +226,13 @@ abstract class _ClientCreateStoreBase with Store {
   }
 
   @action
-  setTarefa() async {
+  setTarefa() {
     tarefaModelSave.etiqueta = tarefaModelSaveEtiqueta;
     tarefaModelSave.texto = tarefaModelSaveTexto;
     tarefaModelSave.fase = changeFaseTarefa(faseTarefa);
     tarefaModelSave.data = tarefaModelData;
     tarefaModelSave.subTarefa = subtarefas;
     if (createUser.id != "") {
-      if (tarefaModelSave.subtarefas
-          .where((a) => a.user.id == createUser.id)
-          .isEmpty) {
-        users.removeWhere((element) => element.id == createUser.id);
-      }
       if (users.where((a) => a.id == createUser.id).isEmpty) {
         users.add(createUser);
       }

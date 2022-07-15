@@ -38,6 +38,8 @@ abstract class HomeStoreBase with Store {
 
   void getList() async {
     await client.setLoading(true);
+    await getVersion();
+    await checkUpdateWindows();
     await settings();
     await getEtiquetas();
     await getPerfis();
@@ -47,6 +49,8 @@ abstract class HomeStoreBase with Store {
     await getSettingsUser();
     await getDio();
     await client.setLoading(false);
+    await getNotificationsBd();
+    await connectToServer();
   }
 
   connectToServer() {
@@ -286,19 +290,16 @@ abstract class HomeStoreBase with Store {
     client.taskDioSearch.add(clientCreate.tarefaModelSave);
     client.setTaskDioSearch(client.taskDioSearch);
     getPass();
-    Timer(const Duration(minutes: 2), () => socket!.emit('newTaskFront', true));
+    Timer(const Duration(minutes: 1), () => socket!.emit('newTaskFront', true));
   }
 
   updateNewTarefa(model) async {
     await dashboardService.updateDio(model).catchError((erro) {
       FunctionsUtils().showErrors(erro);
     });
-    client.taskDioSearch.map((e) {
-      e.id == model.id ? model : e;
-    });
-    client.setTaskDioSearch(client.taskDioSearch);
+
     getPass();
-    Timer(const Duration(minutes: 2), () => socket!.emit('updateList', true));
+    Timer(const Duration(minutes: 1), () => socket!.emit('updateList', true));
   }
 
   deleteDioTasks(TarefaDioModel model) async {

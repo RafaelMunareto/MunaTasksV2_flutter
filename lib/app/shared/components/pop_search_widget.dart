@@ -28,7 +28,7 @@ class _PopSearchWidgetState extends State<PopSearchWidget> {
       child: Container(
         width: widget.constraint >= LarguraLayoutBuilder().telaPc
             ? MediaQuery.of(context).size.width * 0.70
-            : MediaQuery.of(context).size.width * 0.3,
+            : MediaQuery.of(context).size.width * 0.45,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
         ),

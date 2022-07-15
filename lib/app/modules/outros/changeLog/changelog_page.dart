@@ -50,6 +50,15 @@ class ChangelogPageState extends State<ChangelogPage> {
                           constraint: constraint.maxWidth,
                           theme: client.theme,
                           title: 'Versão 2.3.2',
+                          corpo: ' ✓ Ajuste do bug de salvamento. \n\n'
+                              ' ✓ Aumento no tamanho do header no mobile.\n\n'
+                              ' ✓ Implementação do botão de refresh no header. \n\n'
+                              ' ✓ Implementação do scroll na tela do create. \n\n',
+                        ),
+                        ChangeTextWidget(
+                          constraint: constraint.maxWidth,
+                          theme: client.theme,
+                          title: 'Versão 2.3.2',
                           corpo:
                               ' ✓ Inclusão do compoenente de filtro e quantidade da subtarefa. \n\n'
                               ' ✓ Ajuste do bug de atualização dos cards das tarefas e subtarefas.\n\n'
